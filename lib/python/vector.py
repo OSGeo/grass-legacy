@@ -161,7 +161,11 @@ def vector_info_topo(map):
     @return parsed output
     """
     s = read_command('v.info', flags = 't', map = map)
-    return parse_key_val(s, val_type = int)
+    ret = parse_key_val(s, val_type = int)
+    if 'map3d' in ret:
+        ret['map3d'] = bool(ret['map3d'])
+    
+    return ret
 
 # interface for v.db.select
 
@@ -189,7 +193,7 @@ def vector_db_select(map, layer = 1, **kwargs):
                   { 'layer' : layer, 'map' : map })
         return { 'columns' : [], 'values' : {} }
         
-    if kwargs.has_key('columns'):
+    if 'columns' in kwargs:
         if key not in kwargs['columns'].split(','):
             # add key column if missing
             debug("Adding key column to the output")
@@ -260,7 +264,7 @@ def vector_what(map, coord, distance = 0.0):
 
     @return parsed list
     """
-    if os.environ.has_key("LC_ALL"):
+    if "LC_ALL" in os.environ:
         locale = os.environ["LC_ALL"]
         os.environ["LC_ALL"] = "C"
 
@@ -283,7 +287,7 @@ def vector_what(map, coord, distance = 0.0):
                        east_north = ','.join(coord_list),
                        distance   = float(distance))
     
-    if os.environ.has_key("LC_ALL"):
+    if "LC_ALL" in os.environ:
         os.environ["LC_ALL"] = locale
         
     data = list()
