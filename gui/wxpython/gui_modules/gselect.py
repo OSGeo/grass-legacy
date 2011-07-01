@@ -1410,7 +1410,7 @@ class GdalSelect(wx.Panel):
                     self.btn_run.Enable(False)
                 return
             layerId = 1
-            for line in ret.splitlines():
+            for line in ret.split(','):
                 layerName = line.strip()
                 grassName = utils.GetValidLayerName(layerName)
                 data.append((layerId, layerName.strip(), grassName.strip()))
