@@ -290,7 +290,7 @@ int main(int argc, char **argv)
 	if (!get_legend_box(&x0, &x1, &y0, &y1))
 	    exit(EXIT_SUCCESS);
 	G_debug(1, "mouse placement as percentage of display window "
-		"[bottom,top,left,right]:\n  \"at=%.1f,%.1f,%.1f,%.1f\"",
+		"[bottom,top,left,right]:\n  \"at=%.2f,%.2f,%.2f,%.2f\"",
 		100. * (b - y1) / (b - t), 100. * (b - y0) / (b - t),
 		100. * x0 / (r - l), 100. * x1 / (r - l));
 
@@ -923,7 +923,7 @@ int main(int argc, char **argv)
 	char buf[512];
 
 	mouse->answer = 0;
-	sprintf(buf, "%s at=%.1f,%.1f,%.1f,%.1f", G_recreate_command(),
+	sprintf(buf, "%s at=%.2f,%.2f,%.2f,%.2f", G_recreate_command(),
 		Y1, Y0, X0, X1);
 	D_add_to_list(buf);
     }
