@@ -23,14 +23,14 @@ void read_ppm(void)
 
     mask_name[strlen(mask_name) - 2] = 'g';
 
-    input = fopen(mask_name, "rb");
-    if (!input)
+    mask = fopen(mask_name, "rb");
+    if (!mask)
 	G_fatal_error("cairo: couldn't open input mask file %s", mask_name);
 
-    if (fscanf(input, "P5 %d %d %d", &i_width, &i_height, &maxval) != 3)
+    if (fscanf(mask, "P5 %d %d %d", &i_width, &i_height, &maxval) != 3)
 	G_fatal_error("cairo: invalid input mask file %s", mask_name);
 
-    fgetc(input);
+    fgetc(mask);
 
     if (i_width != width || i_height != height)
 	G_fatal_error
