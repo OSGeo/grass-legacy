@@ -133,6 +133,7 @@ prune(struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 		/* Vect_line_intersection is quite slow, hopefully not so bad because only few 
 		 * intersections should be found if any */
 
+		AXLines = BXLines = NULL;
 		Vect_line_intersection(TPoints, BPoints, &AXLines, &BXLines,
 				       &naxlines, &nbxlines, 0);
 
@@ -145,14 +146,16 @@ prune(struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 		    for (j = 0; j < naxlines; j++) {
 			Vect_destroy_line_struct(AXLines[j]);
 		    }
-		    G_free(AXLines);
 		}
+		if (AXLines)
+		    G_free(AXLines);
 		if (nbxlines > 0) {
 		    for (j = 0; j < nbxlines; j++) {
 			Vect_destroy_line_struct(BXLines[j]);
 		    }
-		    G_free(BXLines);
 		}
+		if (BXLines)
+		    G_free(BXLines);
 
 		if (naxlines > 1 || nbxlines > 1) {
 		    intersect = 1;
