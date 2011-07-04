@@ -1,6 +1,6 @@
 #include <grass/sqlp.h>
 
-#define DBF_COL_NAME 20		/* maximum column name (in fact shouldn't be > 10) */
+#define DBF_COL_NAME 11		/* maximum column name (10 characters plus \0) */
 
 /* 
  * DBF API:      http://shapelib.maptools.org/dbf_api.html
@@ -78,10 +78,5 @@ typedef struct
     int *order;			/* array of row indexes (sorted by ORDER BY) */
 } cursor;
 
-#ifdef MAIN
-DATABASE db;
-dbString *errMsg = NULL;
-#else
 extern DATABASE db;
 extern dbString *errMsg;
-#endif
