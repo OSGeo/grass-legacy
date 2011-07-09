@@ -17134,7 +17134,7 @@ echo "  MacOSX SDK:                 ${MACOSX_SDK}"
 echo ""
 
 
-echo "  NVIZ:                       `if test -n "${USE_TOGL}" ; then echo yes ; else echo no ; fi`"
+echo "  Tcl/Tk NVIZ:                `if test -n "${USE_TOGL}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
