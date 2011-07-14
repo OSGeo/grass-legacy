@@ -3602,7 +3602,7 @@ msgid ""
 msgstr "数値属性の列を使用して、ベクトルのカラールールを設定"
 
 #: ../gui/wxpython/menustrings.py:550
-msgid "Interacrive management of vector color tables."
+msgid "Interactive management of vector color tables."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:551

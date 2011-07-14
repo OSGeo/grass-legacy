@@ -2016,7 +2016,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Color rules</label>
-	      <help>Interacrive management of vector color tables.</help>
+	      <help>Interactive management of vector color tables.</help>
 	      <handler>RulesCmd</handler>
 	      <keywords>vector,color table</keywords>
 	      <command>v.colors</command>

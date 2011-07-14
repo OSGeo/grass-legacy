@@ -3758,7 +3758,7 @@ msgstr ""
 "cột thuộc tính kiểu số."
 
 #: ../gui/wxpython/menustrings.py:550
-msgid "Interacrive management of vector color tables."
+msgid "Interactive management of vector color tables."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:551
