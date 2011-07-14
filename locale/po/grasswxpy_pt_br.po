@@ -3672,7 +3672,7 @@ msgid "Set color rules for features in a vector using a numeric attribute column
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:550
-msgid "Interacrive management of vector color tables."
+msgid "Interactive management of vector color tables."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:551
