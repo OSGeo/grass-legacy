@@ -51,4 +51,4 @@ falls on a co-ordinate that is a reference point for the projection in
 question, resulting in a division by zero error. (we had an earlier
 discussion on this).
 
-Morten Hulden <morten@ngb.se>
+Morten Hulden <morten@untamo.net>
