@@ -619,10 +619,7 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         else:
             GError(parent = parent,
                    message = stderr)
-
-    if ret != 0:
-        return None
-    
+        
     Debug.msg(3, "gcmd.RunCommand(): print read error")
     if not read:
         if not getErrorMsg:
