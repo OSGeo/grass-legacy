@@ -272,8 +272,12 @@ def ListSortLower(list):
     """!Sort list items (not case-sensitive)"""
     list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
 
-def GetVectorNumberOfLayers(parent, vector):
-    """!Get list of vector layers"""
+def GetVectorNumberOfLayers(vector, parent = None):
+    """!Get list of vector layers
+
+    @param vector name of vector map
+    @param parent parent window (to show dialog) or None
+    """
     layers = []
     if not vector:
         return layers
@@ -283,19 +287,19 @@ def GetVectorNumberOfLayers(parent, vector):
         Debug.msg(5, "utils.GetVectorNumberOfLayers(): vector map '%s' not found" % vector)
         return layers
     
-    ret = gcmd.RunCommand('v.db.connect',
-                          parent = parent,
-                          flags = 'g',
-                          read = True,
-                          map = fullname,
-                          fs = ';')
-        
-    if not ret:
+    ret, out, msg = gcmd.RunCommand('v.db.connect',
+                                    getErrorMsg = True,
+                                    read = True,
+                                    flags = 'g',
+                                    map = fullname,
+                                    fs = ';')
+    if ret != 0:
+        sys.stderr.write(_("Vector map <%s>") % fullname + ": " + msg + "\n")
         return layers
-    else:
-        Debug.msg(1, "GetVectorNumberOfLayers(): ret %s" % ret)
     
-    for line in ret.splitlines():
+    Debug.msg(1, "GetVectorNumberOfLayers(): ret %s" % ret)
+    
+    for line in out.splitlines():
         try:
             layer = line.split(';')[0]
             if '/' in layer:
