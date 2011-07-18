@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-09 20:20+0200\n"
-"PO-Revision-Date: 2011-07-17 18:16+0100\n"
+"PO-Revision-Date: 2011-07-18 13:57+0100\n"
 "Last-Translator: Anne Ghisla <a.ghisla@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -127,7 +127,7 @@ msgstr "Colore del simbolo scorretto: '%s', uso quello predefinito."
 
 #: ../lib/cairodriver/Draw_bitmap.c:47
 msgid "Cairo_draw_bitmap: Failed to create source"
-msgstr ""
+msgstr "Cairo_draw_bitmap: Fallimento della creazione della sorgente"
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -145,7 +145,7 @@ msgstr "Il messaggio d'errore: %s"
 
 #: ../lib/proj/get_proj.c:296
 msgid "Option input overflowed option table"
-msgstr ""
+msgstr "L'input di opzioni supera la lunghezza della tabella di opzioni"
 
 #: ../lib/proj/get_proj.c:327
 #, c-format
@@ -158,7 +158,7 @@ msgstr "Parametri della proiezione di input"
 
 #: ../lib/proj/get_proj.c:406
 msgid "Input Unit Factor"
-msgstr "Fattori dell'unità di input"
+msgstr "Fattore dell'unità di input"
 
 #: ../lib/proj/get_proj.c:416
 msgid "Output Projection Parameters"
@@ -166,7 +166,7 @@ msgstr "Parametri di proiezione in output"
 
 #: ../lib/proj/get_proj.c:419
 msgid "Output Unit Factor"
-msgstr ""
+msgstr "Fattore dell'unità di output"
 
 #: ../lib/proj/datum.c:251
 msgid "Unable to open temporary file"
@@ -200,7 +200,7 @@ msgstr "Ellissoide <%s> invalido nel file"
 
 #: ../lib/proj/ellipse.c:98
 msgid "No secondary ellipsoid descriptor (rf, es or b) in file"
-msgstr ""
+msgstr "Nel file manca il descrittore secondario dell'ellissoide (rf, es o b)"
 
 #: ../lib/proj/ellipse.c:102
 msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
@@ -231,17 +231,17 @@ msgstr "Impossibile analizzare il file di GRASS PROJ_INFO"
 
 #: ../lib/proj/convert.c:115
 msgid "Unable get PROJ.4-style parameter string"
-msgstr ""
+msgstr "Impossibile ottenere la stringa di parametri in stile PROJ.4"
 
 #: ../lib/proj/convert.c:127
 #, c-format
 msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
-msgstr ""
+msgstr "OGR non sa parsare la stringa di parametri in stile PROJ.4: %s (il codice di errore OGR era %d)"
 
 #: ../lib/proj/convert.c:133
 #, c-format
 msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
-msgstr ""
+msgstr "OGR non sa ottenere la stringa di parametri in stile WKT (il codice di errore OGR era %d)"
 
 #: ../lib/proj/convert.c:390
 msgid "No projection name! Projection parameters likely to be meaningless."
@@ -260,7 +260,7 @@ msgstr "Datum <%s> è stato apparentemente riconosciuto da GRASS ma nessun param
 #: ../lib/proj/convert.c:446
 #, c-format
 msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
-msgstr ""
+msgstr "Numero di trasformazione %d non valido; il range valido è da 1 a %d. I parametri di trasformazione del datum non vengono specificati."
 
 #: ../lib/gis/sample.c:71
 msgid "Unknown interpolation type"
@@ -272,12 +272,12 @@ msgstr "Trovato label \"no data\"; settando a zero"
 
 #: ../lib/gis/sample.c:299
 msgid "Problem reading raster map"
-msgstr "Problemi leggendo la mappa raster"
+msgstr "Problemi leggendo il raster"
 
 #: ../lib/gis/make_colr.c:40
 #, c-format
 msgid " The raster map %s@%s is empty"
-msgstr " La mappa raster %s@%s è vuota"
+msgstr "Il raster %s@%s è vuoto"
 
 #: ../lib/gis/make_colr.c:49
 #, c-format
@@ -312,7 +312,7 @@ msgstr "    2:  Rampe colori di rosso, verde e blu\n"
 #: ../lib/gis/make_colr.c:55
 #, c-format
 msgid "    3:  Color wave\n"
-msgstr "    3:  Colore onda\n"
+msgstr "    3:  Color wave\n"
 
 #: ../lib/gis/make_colr.c:56
 #, c-format
@@ -395,7 +395,7 @@ msgstr "quantization file [%s] nel mapset [%s] %s"
 #: ../lib/gis/put_row.c:215
 #, c-format
 msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
-msgstr ""
+msgstr "G_put_map_row: %s non è intero! Usare G_put_[f/d]_raster_row()!"
 
 #: ../lib/gis/put_row.c:251
 #, c-format
@@ -415,7 +415,7 @@ msgstr "%s: mappa [%s] non è stata aperta per scrivere - richiesta ignorata"
 #: ../lib/gis/put_row.c:270
 #, c-format
 msgid "%s: unopened file descriptor - request ignored"
-msgstr ""
+msgstr "%s: descrittore di file non aperto - richiesta ignorata"
 
 #: ../lib/gis/put_row.c:310
 #, c-format
@@ -425,7 +425,7 @@ msgstr "mappa [%s] - impossibile scrivere nella riga %d"
 #: ../lib/gis/put_row.c:393
 #, c-format
 msgid "xdr_float failed for index %d of row %d"
-msgstr ""
+msgstr "xdr_float fallito per l'indice %d della riga %d"
 
 #: ../lib/gis/put_row.c:419
 #, c-format
@@ -661,7 +661,7 @@ msgstr "Nome del sottogruppo di immagini di input"
 
 #: ../lib/gis/parser.c:414 ../lib/gis/parser.c:439
 msgid "Name of input raster map"
-msgstr "Nome della mappa raster in input"
+msgstr "Nome del raster in input"
 
 #: ../lib/gis/parser.c:423 ../lib/gis/parser.c:448
 msgid "Name of input raster map(s)"
@@ -689,7 +689,7 @@ msgstr "Nome del raster dell'elevazione"
 
 #: ../lib/gis/parser.c:491 ../lib/gis/parser.c:516
 msgid "Name of input raster3d map"
-msgstr "Nome della mappa raster 3d in input"
+msgstr "Nome del raster 3d in input"
 
 #: ../lib/gis/parser.c:500 ../lib/gis/parser.c:525
 msgid "Name of input raster3d map(s)"
@@ -697,11 +697,11 @@ msgstr "Nome delle mappe raster 3d in input"
 
 #: ../lib/gis/parser.c:508
 msgid "Name for output raster3d map"
-msgstr "Nome della mappa raster 3d in output"
+msgstr "Nome del raster 3d in output"
 
 #: ../lib/gis/parser.c:535 ../lib/gis/parser.c:560
 msgid "Name of input vector map"
-msgstr "Nome della mappa vettoriale in input"
+msgstr "Nome del vettoriale in input"
 
 #: ../lib/gis/parser.c:544 ../lib/gis/parser.c:569
 msgid "Name of input vector map(s)"
@@ -721,7 +721,7 @@ msgstr "Numero layer"
 
 #: ../lib/gis/parser.c:596
 msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
-msgstr "Una singola mappa vettoriale può essere connessa a database multiple. Questo numero determina quale tabella viene usata."
+msgstr "Un singolo vettoriale può essere connessa a database multiple. Questo numero determina quale tabella viene usata."
 
 #: ../lib/gis/parser.c:605
 msgid "Category value"
@@ -2362,7 +2362,7 @@ msgstr "Impossibile eliminare l'elemento %d dall'indice spaziale"
 
 #: ../lib/vector/Vlib/sindex.c:127
 msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
-msgstr ""
+msgstr "Impossibile costruire l'indice spaziale dalla topologia, il vettoriale non è aperto al livello 2 della topologia"
 
 #: ../lib/vector/Vlib/sindex.c:168
 msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
@@ -2422,7 +2422,7 @@ msgstr "%d errori nella stringa della categoria"
 
 #: ../lib/vector/Vlib/array.c:145 ../lib/vector/Vlib/array.c:269
 msgid "Mixed area and other type requested for vector array"
-msgstr ""
+msgstr "Richesta mista di area e altri tipi per l'array vettoriale"
 
 #: ../lib/vector/Vlib/array.c:155 ../lib/vector/Vlib/array.c:178
 #: ../lib/vector/Vlib/array.c:306 ../lib/vector/Vlib/array.c:339
@@ -2461,7 +2461,7 @@ msgstr "Il vettoriale non è aperto"
 #: ../lib/vector/Vlib/geos.c:56
 #, c-format
 msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
-msgstr "Vect_read_line_geos(): l'id %d della feature è irragionevole (numero massimo di features nella mappa vettoriale <%s>: %d)"
+msgstr "Vect_read_line_geos(): l'id %d della feature è irragionevole (numero massimo di features nel vettoriale <%s>: %d)"
 
 #: ../lib/vector/Vlib/geos.c:61
 msgid "only native format supported"
@@ -2534,7 +2534,7 @@ msgstr "Errore GngFlatten"
 
 #: ../lib/vector/Vlib/graph.c:143
 msgid "Unable to add network arc"
-msgstr ""
+msgstr "Impossibile aggiungere un arco alla rete"
 
 #: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
@@ -2712,7 +2712,7 @@ msgstr "Errore nella regola alla riga %d in %s"
 #: ../lib/vector/Vlib/field.c:709
 #, c-format
 msgid "Unable to open vector database definition file '%s'"
-msgstr ""
+msgstr "Impossibile aprire il file %s delle definizioni del database vettoriale"
 
 #: ../lib/vector/Vlib/field.c:804
 msgid "Bug: attempt to update map which is not in current mapset"
@@ -2756,7 +2756,7 @@ msgstr "Parola chiave %s sconosciuta nell'header del vettoriale"
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
 msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
-msgstr "Vect_read_line(): l'id %d della feature è irragionevole (numero massimo di features nella mappa vettoriale <%s>: %d)"
+msgstr "Vect_read_line(): l'id %d della feature è irragionevole (numero massimo di features nel vettoriale <%s>: %d)"
 
 #: ../lib/vector/Vlib/build_nat.c:93
 msgid "Unable to add area (map closed, topo saved)"
@@ -2950,12 +2950,12 @@ msgstr "Impossibile aggiungere il database collegato al vettoriale <%s>"
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
 msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
-msgstr "Il file coor della mappa vettoriale <%s@%s> è più grande dell'atteso (%ld bytes in eccesso)"
+msgstr "Il file coor del vettoriale <%s@%s> è più grande dell'atteso (%ld bytes in eccesso)"
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
 msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
-msgstr "Il file coor della mappa vettoriale <%s@%s> è più piccolo dell'atteso (%ld bytes mancanti)"
+msgstr "Il file coor del vettoriale <%s@%s> è più piccolo dell'atteso (%ld bytes mancanti)"
 
 #: ../lib/vector/Vlib/net.c:121
 msgid "Building graph..."
@@ -3001,7 +3001,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
 msgid "Cannot add network arc"
-msgstr ""
+msgstr "Impossibile aggiugnere arco alla rete"
 
 #: ../lib/vector/Vlib/net.c:346
 msgid "Setting node costs..."
@@ -3243,7 +3243,7 @@ msgstr "Errore nella scrittura del file di indici di categoria <%s>"
 #: ../lib/vector/Vlib/cindex.c:511
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
-msgstr "Impossibile aprire il file di indici di categoria per la mappa vettoriale <%s@%s>"
+msgstr "Impossibile aprire il file di indici di categoria per il vettoriale <%s@%s>"
 
 #: ../lib/vector/Vlib/build_ogr.c:272
 #, c-format
@@ -3333,9 +3333,9 @@ msgstr ""
 
 #: ../lib/vector/neta/timetables.c:46 ../lib/vector/neta/timetables.c:203
 #: ../lib/vector/neta/timetables.c:244 ../lib/vector/neta/timetables.c:286
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open select cursor: %s"
-msgstr "Impossibile cambiare la directory %s"
+msgstr "Impossibile aprire il cursore di selezione: %s"
 
 #: ../lib/nviz/render.c:104
 msgid "Bad server connection"
@@ -3419,7 +3419,7 @@ msgstr "Impossibile creare il raster <%s>"
 #: ../lib/gpde/N_arrays_io.c:211
 #, c-format
 msgid "Write 2d array to raster map <%s>"
-msgstr "Scrittura dell'array 2d nella mappa raster <%s>"
+msgstr "Scrittura dell'array 2d nel raster <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
@@ -3866,7 +3866,7 @@ msgstr "Nessun punto nella region settata"
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
 msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
-msgstr ""
+msgstr "Parametri di segmentazione impostati a valori non validi: npmin= %d, segmax= %d per connessione continua dei segmenti, npmin > segmax (consultare il manuale)"
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
@@ -4014,7 +4014,7 @@ msgstr "%s: Errore nell'algoritmo di classificazionr"
 #: ../lib/arraystats/class.c:221
 #, c-format
 msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
-msgstr ""
+msgstr "Ci sono interruzioni di classe fuori dal range min-max. Numero di classi ridotto a %i, ma saranno usate probabiltà per %i classi."
 
 #: ../lib/ogsf/GVL2.c:248
 #, c-format
@@ -4023,7 +4023,7 @@ msgstr "Caricando raster 3d <%s>"
 
 #: ../lib/ogsf/trans.c:180
 msgid "Out of matrix stack space"
-msgstr ""
+msgstr "Spazio dello stack di matrice insufficiente"
 
 #: ../lib/ogsf/trans.c:200
 msgid "Tried to pop an empty stack"
@@ -4051,7 +4051,7 @@ msgstr "Impossibile leggere il range del raster <%s>"
 
 #: ../lib/ogsf/gsd_legend.c:294
 msgid "Range request error for legend"
-msgstr ""
+msgstr "Errore di richiesta range per la legenda"
 
 #: ../lib/ogsf/gsd_legend.c:384
 msgid "Unable to show discrete FP range (use list"
@@ -4110,7 +4110,6 @@ msgid "Unable to open file <%s> for writing"
 msgstr "Impossibile aprire il file <%s> per la scrittura"
 
 #: ../lib/ogsf/GK2.c:275 ../lib/ogsf/GK2.c:288
-#, fuzzy
 msgid "Check no. of frames requested and keyframes marked"
 msgstr "Controllare il numero di frame richieste e keyframe marcate"
 
@@ -4133,7 +4132,7 @@ msgstr "Il range della tabella di colori non corrisponde ai dati (mincol=%d, max
 #: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
 msgid "Translating colors from raster map <%s>..."
-msgstr "Convertendo i colori dalla mappa raster <%s>..."
+msgstr "Convertendo i colori dal raster <%s>..."
 
 #: ../lib/ogsf/Gs3.c:1020
 msgid "View not saved by this program,there may be some inconsistancies"
@@ -4146,7 +4145,7 @@ msgstr "Superato il numero massimo del dataset"
 #: ../lib/ogsf/Gv3.c:249
 #, c-format
 msgid "No features from vector map <%s> fall within current region"
-msgstr "Nessun elemento della mappa vettoriale <%s> ricade nella regione corrente"
+msgstr "Nessun elemento del vettoriale <%s> ricade nella regione corrente"
 
 #: ../lib/ogsf/Gv3.c:254
 #, c-format
@@ -4193,7 +4192,7 @@ msgstr "Raggiunto il numero massimo di etichette!"
 #: ../lib/ogsf/Gp3.c:204
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
-msgstr "Nessun punto della mappa vettoriale <%s> ricadono nella regione corrente"
+msgstr "Nessun punto del vettoriale <%s> ricadono nella regione corrente"
 
 #: ../lib/ogsf/Gp3.c:209
 #, c-format
@@ -4275,7 +4274,7 @@ msgstr "Nome della tabella della mappa <%s> non valido. Deve iniziare con una le
 #: ../lib/db/dbmi_base/legal_dbname.c:43
 #, c-format
 msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
-msgstr "Il nome <%s> non è valido per una mappa vettoriale. Il carattere <%c> non è permesso.\n"
+msgstr "Il nome <%s> non è valido per un vettoriale. Il carattere <%c> non è permesso.\n"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
@@ -4294,7 +4293,7 @@ msgstr "Impossibile aprire il database <%s> del driver <%s>"
 #: ../lib/db/dbmi_client/copy_tab.c:276 ../lib/sites/sites.c:381
 #, c-format
 msgid "Unable to open select cursor: '%s'"
-msgstr ""
+msgstr "Impossibile aprire il cursore di selezione: '%s'"
 
 #: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
 #: ../lib/db/dbmi_client/db.c:41
@@ -4392,7 +4391,7 @@ msgstr "Impossibile estrarre la riga"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
-msgstr ""
+msgstr "G_oldsite_new_struct: numero di dimensioni o campi non valido"
 
 #: ../lib/sites/sites.c:1249
 #, c-format
@@ -4558,7 +4557,7 @@ msgstr "prendendo FFT dall'immagine"
 
 #: ../lib/gmath/del2g.c:56
 msgid "    computing del**2 g..."
-msgstr ""
+msgstr "    calcolando del**2 g..."
 
 #: ../lib/gmath/del2g.c:59
 msgid "    taking FFT of del**2 g..."
@@ -4566,7 +4565,7 @@ msgstr ""
 
 #: ../lib/gmath/del2g.c:63
 msgid "    multiplying transforms..."
-msgstr ""
+msgstr "    moltiplicando le trasformate..."
 
 #: ../lib/gmath/del2g.c:66
 msgid "    taking inverse FFT..."
