@@ -626,16 +626,16 @@ class VectorDBInfo:
 
 class LayerSelect(wx.ComboBox):
     """!Creates combo box for selecting data layers defined for vector.
-    The 'layer' terminology is likely to change for GRASS 7
     """
     def __init__(self, parent,
-                 id=wx.ID_ANY, pos=wx.DefaultPosition,
-                 size=globalvar.DIALOG_LAYER_SIZE,
-                 vector=None, choices=[], initial=[], default=None):
-
+                 id = wx.ID_ANY, pos = wx.DefaultPosition,
+                 size = globalvar.DIALOG_LAYER_SIZE,
+                 vector = None, choices = [], initial = [], default = None):
+        
         super(LayerSelect, self).__init__(parent, id, pos=pos, size=size,
                                           choices=choices)
-
+        
+        self.parent  = parent
         self.initial = initial
         
         self.SetName("LayerSelect")
@@ -646,25 +646,39 @@ class LayerSelect(wx.ComboBox):
         self.InsertLayers(vector = vector)
         
     def InsertLayers(self, vector):
-        """!Insert layers for a vector into the layer combobox"""
+        """!Insert layers for a vector into the layer combobox
+
+        @param vector name of vector map
+        """
         if vector:
-            layers = utils.GetVectorNumberOfLayers(self, vector)
+            layers = utils.GetVectorNumberOfLayers(vector)
         else:
             layers = list()
-
+        
         for layer in self.initial:
             if layer in layers:
                 continue
             layers.append(layer)
-
+        
         if self.default:
             if len(layers) == 0:
                 layers.insert(0, str(self.default))
             elif self.default not in layers:
                 layers.append(self.default)
-
+        
         if len(layers) >= 1:
             self.SetItems(layers)
+
+    def Reset(self):
+        """!Reset value"""
+        items = self.GetItems()
+        if items:
+            if '-1' in items:
+                self.SetStringSelection('-1')
+            else:
+                self.SetSelection(0)
+        else:
+            self.SetValue('')
         
 class DriverSelect(wx.ComboBox):
     """!Creates combo box for selecting database driver.

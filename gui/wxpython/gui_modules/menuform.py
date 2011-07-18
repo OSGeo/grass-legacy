@@ -220,6 +220,7 @@ class UpdateThread(Thread):
             if name == 'LayerSelect':
                 if map in cparams and not cparams[map]['layers']:
                     win.InsertLayers(vector = map)
+                    win.Reset()
                     cparams[map]['layers'] = win.GetItems()
             
             elif name == 'TableSelect':
@@ -1149,16 +1150,16 @@ class cmdPanel(wx.Panel):
                                     if lyrvalue not in initial:
                                         initial.append(str(lyrvalue))
 
-                                win = gselect.LayerSelect(parent=which_panel,
-                                                          initial=initial,
-                                                          default=p['default'])
+                                win = gselect.LayerSelect(parent = which_panel,
+                                                          initial = initial,
+                                                          default = p['default'])
                                 p['wxGetValue'] = win.GetStringSelection
                                 win.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
                                 win.Bind(wx.EVT_TEXT, self.OnSetValue)
                                 win.SetValue(str(value))    # default or previously set value
                             else:
-                                win = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY,
-                                                  min=1, max=100, initial=int(p['default']))
+                                win = wx.SpinCtrl(parent = which_panel, id = wx.ID_ANY,
+                                                  min = 1, max = 100, initial = int(p['default']))
                                 win.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
                                 win.SetValue(int(value))    # default or previously set value
 
