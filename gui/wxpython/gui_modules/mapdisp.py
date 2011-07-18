@@ -1310,7 +1310,6 @@ class MapFrame(wx.Frame):
             
             vcmd.append('-a')
             vcmd.append('map=%s' % ','.join(vect))
-            vcmd.append('layer=%s' % ','.join(['-1'] * len(vect)))
             vcmd.append('east_north=%f,%f' % (float(east), float(north)))
             vcmd.append('distance=%f' % float(qdist))
         
