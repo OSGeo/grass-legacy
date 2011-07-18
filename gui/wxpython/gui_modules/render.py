@@ -32,6 +32,7 @@ except:
     sys.path.append(compatPath)
     import subprocess
 import tempfile
+import types
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -774,18 +775,18 @@ class Map(object):
         """
         selected = []
         
-        if type(l_type) == type(''):
+        if type(l_type) == types.StringType:
             one_type = True
         else:
             one_type = False
         
         if one_type and l_type == 'overlay':
-            list = self.overlays
+            llist = self.overlays
         else:
-            list = self.layers
+            llist = self.layers
         
         # ["raster", "vector", "wms", ... ]
-        for layer in list:
+        for layer in llist:
             # specified type only
             if l_type != None:
                 if one_type and layer.type != l_type:
@@ -794,7 +795,7 @@ class Map(object):
                     continue
             
             # mapset
-            if (l_mapset != None and type != 'overlay') and \
+            if (l_mapset != None and l_type != 'overlay') and \
                     layer.GetMapset() != l_mapset:
                 continue
             
