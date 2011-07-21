@@ -908,7 +908,7 @@ class InstallExtensionWindow(wx.Frame):
         
         log.RunCmd(['g.extension.py'] + flags + ['extension=' + name,
                                                  'svnurl=' + self.repo.GetValue().strip()])
-        self.OnCloseWindow(None)
+        ### self.OnCloseWindow(None)
         
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
