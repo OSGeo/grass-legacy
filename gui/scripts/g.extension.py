@@ -34,7 +34,7 @@
 #% key: operation
 #% type: string
 #% description: Operation to be performed
-#% required: no
+#% required: yes
 #% options: add,remove
 #% answer: add
 #%end
@@ -52,7 +52,7 @@
 #% key_desc: path
 #% description: Prefix where to install extension (ignored when flag -s is given)
 #% answer: $GRASS_ADDON_PATH
-#% required: yes
+#% required: no
 #%end
 
 #%flag
@@ -94,12 +94,11 @@ from grass.script import core as grass
 
 # temp dir
 remove_tmpdir = True
-tmpdir = grass.tempdir()
 
 def check():
-    for prog in ('svn', 'make', 'install', 'gcc'):
+    for prog in ('svn', 'make', 'gcc'):
         if not grass.find_program(prog, ['--help']):
-            grass.fatal(_("%s required. Please install '%s' first.") % (prog, prog))
+            grass.fatal(_("'%s' required. Please install '%s' first.") % (prog, prog))
     
 def expand_module_class_name(c):
     name = { 'd'   : 'display',
@@ -281,18 +280,17 @@ def get_module_script(f):
     return ret
 
 def cleanup():
-    global tmpdir, remove_tmpdir
     if remove_tmpdir:
         grass.try_rmdir(tmpdir)
     else:
-        grass.info(_("Path to the source code: '%s'") % tmpdir)
+        grass.info(_("Path to the source code: '%s'") % os.path.join(tmpdir, options['extension']))
                         
 def install_extension():
     gisbase = os.getenv('GISBASE')
     if not gisbase:
         grass.fatal(_('$GISBASE not defined'))
     
-    if grass.find_program(options['extension']):
+    if grass.find_program(options['extension'], ['--help']):
         grass.warning(_("Extension '%s' already installed. Will be updated...") % options['extension'])
     
     gui_list = list_wxgui_extensions(print_module = False)
@@ -307,7 +305,7 @@ def install_extension():
             grass.fatal(_("Installation of wxGUI extension requires -%s flag.") % 's')
         
     grass.message(_("Fetching '%s' from GRASS-Addons SVN (be patient)...") % options['extension'])
-    global tmpdir
+    
     os.chdir(tmpdir)
     if grass.verbosity() == 0:
         outdev = open(os.devnull, 'w')
@@ -317,29 +315,46 @@ def install_extension():
     if grass.call(['svn', 'checkout',
                    url], stdout = outdev) != 0:
         grass.fatal(_("GRASS Addons '%s' not found in repository") % options['extension'])
-
+    
+    dirs = { 'bin' : os.path.join(tmpdir, options['extension'], 'bin'),
+             'docs' : os.path.join(tmpdir, options['extension'], 'docs'),
+             'html' : os.path.join(tmpdir, options['extension'], 'docs', 'html'),
+             'man' : os.path.join(tmpdir, options['extension'], 'man'),
+             'man1' : os.path.join(tmpdir, options['extension'], 'man', 'man1'),
+             'scripts' : os.path.join(tmpdir, options['extension'], 'scripts'),
+             'etc' : os.path.join(tmpdir, options['extension'], 'etc'),
+             }
+    
+    makeCmd = ['make',
+               'MODULE_TOPDIR=%s' % gisbase.replace(' ', '\ '),
+               'BIN=%s' % dirs['bin'],
+               'HTMLDIR=%s' % dirs['html'],
+               'MANDIR=%s' % dirs['man1'],
+               'SCRIPTDIR=%s' % dirs['scripts'],
+               'ETC=%s' % dirs['etc']
+               ]
+    
+    installCmd = ['make',
+                  'MODULE_TOPDIR=%s' % gisbase,
+                  'ARCH_DISTDIR=%s' % os.path.join(tmpdir, options['extension']),
+                  'INST_DIR=%s' % options['prefix'],
+                  'install'
+                  ]
+    
     if flags['d']:
+        sys.stderr.write(' '.join(makeCmd) + '\n')
+        sys.stderr.write(' '.join(installCmd) + '\n')
         return
     
     os.chdir(os.path.join(tmpdir, options['extension']))
-
+    
     grass.message(_("Compiling '%s'...") % options['extension'])    
     if options['extension'] not in gui_list:
-        bin_dir  = os.path.join(tmpdir, options['extension'], 'bin')
-        docs_dir = os.path.join(tmpdir, options['extension'], 'docs')
-        html_dir = os.path.join(docs_dir, 'html')
-        man_dir  = os.path.join(tmpdir, options['extension'], 'man')
-        man1_dir = os.path.join(man_dir, 'man1')
-        script_dir = os.path.join(tmpdir, options['extension'], 'scripts')
-        for d in (bin_dir, docs_dir, html_dir, man_dir, man1_dir, script_dir):
-            os.mkdir(d)
+        for d in dirs.itervalues():
+            if not os.path.exists(d):
+                os.makedirs(d)
         
-        ret = grass.call(['make',
-                          'MODULE_TOPDIR=%s' % gisbase.replace(' ', '\ '),
-                          'BIN=%s' % bin_dir,
-                          'HTMLDIR=%s' % html_dir,
-                          'MANDIR=%s' % man1_dir,
-                          'SCRIPTDIR=%s' % script_dir],
+        ret = grass.call(makeCmd,
                          stdout = outdev)
     else:
         ret = grass.call(['make',
@@ -354,17 +369,18 @@ def install_extension():
     
     grass.message(_("Installing '%s'...") % options['extension'])
     
-    ret = grass.call(['make',
-                      'MODULE_TOPDIR=%s' % gisbase,
-                      'ARCH_DISTDIR=%s' % os.path.join(tmpdir, options['extension']),
-                      'INST_DIR=%s' % options['prefix'],
-                      'install'],
+    ret = grass.call(installCmd,
                      stdout = outdev)
     
     if ret != 0:
         grass.warning(_('Installation failed, sorry. Please check above error messages.'))
     else:
         grass.message(_("Installation of '%s' successfully finished.") % options['extension'])
+
+    if not os.environ.has_key('GRASS_ADDON_PATH') or \
+            not os.environ['GRASS_ADDON_PATH']:
+        grass.warning(_('This add-on module will not function until you set the '
+                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
 
 def remove_extension():
     # is module available?
@@ -445,5 +461,7 @@ def main():
 
 if __name__ == "__main__":
     options, flags = grass.parser()
+    global tmpdir
+    tmpdir = grass.tempdir()
     atexit.register(cleanup)
     sys.exit(main())

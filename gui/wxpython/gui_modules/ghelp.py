@@ -815,7 +815,7 @@ class InstallExtensionWindow(wx.Frame):
         self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
                                       label = " %s " % _("Options"))
         
-        task = gtask.parse_interface('g.extension.py')
+        task = gtask.parse_interface('g.extension')
         
         for f in task.get_options()['flags']:
             name = f.get('name', '')
@@ -908,7 +908,7 @@ class InstallExtensionWindow(wx.Frame):
     def _getCmd(self):
         item = self.tree.GetSelected()
         if not item or not item.IsOk():
-            return ['g.extension.py']
+            return ['g.extension']
         
         name = self.tree.GetItemText(item)
         if not name:
@@ -919,8 +919,8 @@ class InstallExtensionWindow(wx.Frame):
             if self.options[key].IsChecked():
                 flags.append('-%s' % key)
         
-        return ['g.extension.py'] + flags + ['extension=' + name,
-                                             'svnurl=' + self.repo.GetValue().strip()]
+        return ['g.extension'] + flags + ['extension=' + name,
+                                          'svnurl=' + self.repo.GetValue().strip()]
     
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
@@ -961,7 +961,7 @@ class InstallExtensionWindow(wx.Frame):
         log = self.parent.GetLogWindow()
         log.RunCmd(self._getCmd())
         
-        self.OnCloseWindow(None)
+        ### self.OnCloseWindow(None)
                 
     def OnItemSelected(self, event):
         """!Item selected"""
