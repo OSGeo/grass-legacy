@@ -830,7 +830,7 @@ class InstallExtensionWindow(wx.Frame):
             self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                              label = desc)
         
-        self.statusbar = self.CreateStatusBar(0)
+        self.statusbar = self.CreateStatusBar(number = 1)
         
         self.btnFetch = wx.Button(parent = self.panel, id = wx.ID_ANY,
                                   label = _("&Fetch"))
