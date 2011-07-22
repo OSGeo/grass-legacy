@@ -926,17 +926,18 @@ class Map(object):
         
         if maps:
             # run g.pngcomp to get composite image
-            ret = gcmd.RunCommand('g.pnmcomp',
-                                  input = '%s' % ",".join(maps),
-                                  mask = '%s' % ",".join(masks),
-                                  opacity = '%s' % ",".join(opacities),
-                                  background = bgcolor,
-                                  width = self.width,
-                                  height = self.height,
-                                  output = self.mapfile)
+            ret, msg = gcmd.RunCommand('g.pnmcomp',
+                                       getErrorMsg = True,
+                                       input = '%s' % ",".join(maps),
+                                       mask = '%s' % ",".join(masks),
+                                       opacity = '%s' % ",".join(opacities),
+                                       background = bgcolor,
+                                       width = self.width,
+                                       height = self.height,
+                                       output = self.mapfile)
             
             if ret != 0:
-                print >> sys.stderr, _("ERROR: Rendering failed")
+                print >> sys.stderr, _("ERROR: Rendering failed. Details: %s") % msg
                 return None
             
             Debug.msg (3, "Map.Render() force=%s file=%s" % (force, self.mapfile))
