@@ -918,15 +918,6 @@ class Map(object):
         bgcolor = ':'.join(map(str, UserSettings.Get(group = 'display', key = 'bgcolor',
                                                      subkey = 'color')))
         
-        complist = ["g.pnmcomp",
-                    "in=%s" % ",".join(maps),
-                    "mask=%s" % ",".join(masks),
-                    "opacity=%s" % ",".join(opacities),
-                    "background=%s" % bgcolor,
-                    "width=%s" % str(self.width),
-                    "height=%s" % str(self.height),
-                    "output=%s" % self.mapfile]
-        
         # render overlays
         if tmp_region:
             os.environ["GRASS_REGION"] = tmp_region
