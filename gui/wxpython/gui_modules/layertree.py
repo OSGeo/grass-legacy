@@ -807,7 +807,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 
                 render = False
                 name = None
-
+            
             if ctrl:
                 ctrlId = ctrl.GetId()
             else:
@@ -1348,7 +1348,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         if not lname:
             dcmd    = self.GetPyData(item)[0]['cmd']
             lname, found = utils.GetLayerNameFromCmd(dcmd, layerType = mapLayer.GetType(),
-                                                       fullyQualified = True)
+                                                     fullyQualified = True)
             if not found:
                 return None
         
