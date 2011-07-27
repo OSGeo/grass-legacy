@@ -184,23 +184,11 @@ class Layer(object):
                                            quiet = True,
                                            **self.cmd[1])
             
-            # if len(msg):
-            # sys.stderr.write(_("Running") + " '" + utils.GetCmdString(self.cmd) + "'")
-            # sys.stderr.write(msg)
-            
             if ret != 0:
-                # clean up after problem
-                try:
-                    os.remove(self.mapfile)
-                    os.remove(self.maskfile)
-                    os.remove(self.gtemp)
-                except (OSError, TypeError):
-                    pass
-                self.mapfile = None
-                self.maskfile = None
+                raise gcmd.GException(value = _("'%s' failed. Details: %s") % (self.cmd[0], msg))
         
         except gcmd.GException, e:
-            # sys.stderr.write(e.value)
+            print >> sys.stderr, e.value
             # clean up after problems
             try:
                 os.remove(self.mapfile)
