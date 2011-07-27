@@ -3,9 +3,13 @@
  *
  * MODULE:       db.select
  * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
- *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>, Stephan Holl
- * PURPOSE:      process one sql select statement
- * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
+ *               Huidae Cho <grass4u gmail.com>,
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>,
+ *               Markus Neteler <neteler itc.it>
+ *               Stephan Holl
+ * PURPOSE:      Process one sql select statement
+ * COPYRIGHT:    (C) 2002-2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -14,16 +18,17 @@
  *****************************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
+
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/codes.h>
 #include <grass/glocale.h>
 #include "local_proto.h"
 
-
 struct
 {
-    char *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
+    char *driver, *database, *table, *sql, *fs, *vs, *nv, *input, *output;
     int c, d, h, test_only;
 } parms;
 
@@ -120,6 +125,12 @@ static int sel(dbDriver * driver, dbString * stmt)
 	return OK;
     }
 
+    if (parms.output && strcmp(parms.output, "-") != 0) { 
+	if (NULL == freopen(parms.output, "w", stdout)) { 
+	    G_fatal_error(_("Unable to open file <%s> for writing"), parms.output); 
+	} 
+    } 
+    
     db_init_string(&value_string);
 
     /* column names if horizontal output */
@@ -167,7 +178,8 @@ static int sel(dbDriver * driver, dbString * stmt)
 
 static void parse_command_line(int argc, char **argv)
 {
-    struct Option *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
+    struct Option *driver, *database, *table, *sql,
+      *fs, *vs, *nv, *input, *output;
     struct Flag *c, *d, *v, *flag_test;
     struct GModule *module;
     const char *drv, *db;
@@ -215,6 +227,11 @@ static void parse_command_line(int argc, char **argv)
     nv->description = _("Null value indicator");
     nv->guisection = _("Format");
 
+    output = G_define_standard_option(G_OPT_F_OUTPUT); 
+    output->required = NO; 
+    output->description = 
+	_("Name for output file (if omitted or \"-\" output to stdout)"); 
+    
     c = G_define_flag();
     c->key = 'c';
     c->description = _("Do not include column names in output");
@@ -249,6 +266,8 @@ static void parse_command_line(int argc, char **argv)
     parms.vs = vs->answer;
     parms.nv = nv->answer;
     parms.input = input->answer;
+    parms.output = output->answer;
+
     if (!c->answer)
 	parms.c = 1;
     else
