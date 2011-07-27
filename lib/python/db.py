@@ -92,7 +92,7 @@ def db_select(table, sql, file = False, **args):
     @param file  True if sql is filename
     @param args  see db.select arguments
     """
-    fname = tempfile(create = False)
+    fname = tempfile()
     if not file:
         ret = run_command('db.select', quiet = True,
                           flags = 'c',
