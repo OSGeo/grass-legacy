@@ -14629,7 +14629,7 @@ else
   echo "$ac_t""no" 1>&6
 
 
-{ echo "configure: error: *** Unable to locate ." 1>&2; exit 1; }
+{ echo "configure: error: *** Unable to locate cairo_create." 1>&2; exit 1; }
 
 
 fi
