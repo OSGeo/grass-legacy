@@ -31,7 +31,7 @@
 #%End
 #%option
 #% key: column
-#% type: string
+#% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
 #% description: Column on which to calculate statistics (must be numeric)
 #% required : yes
 #%end
@@ -57,7 +57,7 @@
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
-fi   
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
