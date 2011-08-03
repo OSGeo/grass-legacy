@@ -27,7 +27,7 @@ sys.path.append(os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modul
 
 import wx
 
-from gui_modules.preferences import globalSettings as UserSettings
+from preferences import globalSettings as UserSettings
 
 import grass2_icons # default icon set
 iconPathDefault = grass2_icons.iconPath
@@ -473,4 +473,5 @@ Icons = {
 # testing ...
 if __name__ == '__main__':
     for k, v in iconSet.iteritems():
-        print v.GetImageName()
+        for kk, vv in v.iteritems():
+            print k, kk, vv.GetImageName()

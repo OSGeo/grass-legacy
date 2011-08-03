@@ -543,8 +543,10 @@ class MapCalcFrame(wx.Frame):
         self.Destroy()
 
 if __name__ == "__main__":
+    import gettext
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
+    
     app = wx.App(0)
     frame = MapCalcFrame(parent = None, cmd = 'r.mapcalc')
     frame.Show()
     app.MainLoop()
-
