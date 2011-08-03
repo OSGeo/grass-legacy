@@ -33,7 +33,7 @@
 
 #%option
 #% key: layer
-#% type: integer
+#% gisprompt: old_layer,layer,layer
 #% description: Layer where to drop column
 #% answer: 1
 #% required : no
@@ -41,17 +41,17 @@
 
 #%option
 #% key: column
-#% type: string
-##TODO: #% description: Name of the column(s) to drop
+#% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
 #% description: Name of the column to drop
+##TODO: #% description: Name of the column(s) to drop
 #% required : yes
 ##TODO #% multiple : yes
 #%end
 
 
 if  [ -z "$GISBASE" ] ; then
-    echo 'You must be in GRASS GIS to run this program' >&2
- exit 1
+    echo "You must be in GRASS GIS to run this program" >&2
+    exit 1
 fi
 
 # save command line
