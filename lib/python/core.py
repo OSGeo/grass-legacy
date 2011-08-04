@@ -599,7 +599,7 @@ def find_file(name, element = 'cell', mapset = None):
 
 # interface to g.list
 
-def list_grouped(type):
+def list_grouped(type, check_search_path = True):
     """!List elements grouped by mapsets.
 
     Returns the output from running g.list, as a dictionary where the
@@ -612,14 +612,16 @@ def list_grouped(type):
     @endcode
     
     @param type element type (rast, vect, rast3d, region, ...)
+    @param check_search_path True to add mapsets for the search path with no found elements
 
     @return directory of mapsets/elements
     """
     dashes_re = re.compile("^----+$")
     mapset_re = re.compile("<(.*)>")
     result = {}
-    for mapset in mapsets(accessible = True):
-        result[mapset] = []
+    if check_search_path:
+        for mapset in mapsets(accessible = True):
+            result[mapset] = []
     
     mapset = None
     for line in read_command("g.list", type = type).splitlines():
@@ -630,6 +632,8 @@ def list_grouped(type):
 	m = mapset_re.search(line)
 	if m:
 	    mapset = m.group(1)
+            if mapset not in result.keys():
+                result[mapset] = []
 	    continue
         if mapset:
             result[mapset].extend(line.split())
@@ -679,7 +683,7 @@ def list_strings(type):
 
 # interface to g.mlist
 
-def mlist_grouped(type, pattern = None):
+def mlist_grouped(type, pattern = None, check_search_path = True):
     """!List of elements grouped by mapsets.
 
     Returns the output from running g.mlist, as a dictionary where the
@@ -693,12 +697,14 @@ def mlist_grouped(type, pattern = None):
     
     @param type element type (rast, vect, rast3d, region, ...)
     @param pattern pattern string
+    @param check_search_path True to add mapsets for the search path with no found elements
 
     @return directory of mapsets/elements
     """
     result = {}
-    for mapset in mapsets(accessible = True):
-        result[mapset] = []
+    if check_search_path:
+        for mapset in mapsets(accessible = True):
+            result[mapset] = []
     
     mapset = None
     for line in read_command("g.mlist", flags = "m",
@@ -709,7 +715,10 @@ def mlist_grouped(type, pattern = None):
             warning(_("Invalid element '%s'") % line)
             continue
         
-        result[mapset].append(name)
+        if mapset in result:
+            result[mapset].append(name) 
+        else:  	  	 
+            result[mapset] = [name, ] 
     
     return result
 
