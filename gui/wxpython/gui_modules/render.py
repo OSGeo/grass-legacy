@@ -185,7 +185,8 @@ class Layer(object):
                                            **self.cmd[1])
             
             if ret != 0:
-                raise gcmd.GException(value = _("'%s' failed. Details: %s") % (self.cmd[0], msg))
+                raise gcmd.GException(value = _("'%(cmd)s' failed. Details: %(det)s") % \
+                                          { 'cmd' : self.cmd[0], 'det' : msg })
         
         except gcmd.GException, e:
             print >> sys.stderr, e.value
