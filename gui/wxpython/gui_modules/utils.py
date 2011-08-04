@@ -300,7 +300,7 @@ def GetVectorNumberOfLayers(vector, parent = None):
                                     map = fullname,
                                     fs = ';')
     if ret != 0:
-        sys.stderr.write(_("Vector map <%s>: %s\n") % (fullname, msg))
+        sys.stderr.write(_("Vector map <%(map)s>: %(msg)s\n") % { 'map' : fullname, 'msg' : msg })
         return layers
     
     Debug.msg(1, "GetVectorNumberOfLayers(): ret %s" % ret)
