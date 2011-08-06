@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -80,9 +81,9 @@ int main(int argc, char *argv[])
 
     /* initialize module */
     module = G_define_module();
-    module->description = _("Computes topografic correction of reflectance.");
+    module->description = _("Computes topographic correction of reflectance.");
     module->keywords =
-	_("imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent");
+	_("imagery, terrain, topographic correction");
     
     /* It defines the different parameters */
 
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
     input->required = NO;
     input->multiple = YES;
     input->description =
-	_("Name of reflectance raster maps to correct topographically");
+	_("Name of reflectance raster maps to be corrected topographically");
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
     output->description =
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
 
     base = G_define_standard_option(G_OPT_R_MAP);
     base->key = "basemap";
-    base->description = _("Name of input base raster map (elevation or ilumination)");
+    base->description = _("Name of input base raster map (elevation or illumination)");
 
     zeni = G_define_option();
     zeni->key = "zenith";
@@ -122,13 +123,13 @@ int main(int argc, char *argv[])
 
     ilum = G_define_flag();
     ilum->key = 'i';
-    ilum->description = _("To output sun ilumination terrain model");
+    ilum->description = _("Output sun illumination terrain model");
     
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
     if (ilum->answer && azim->answer == NULL)
-	G_fatal_error(_("Solar azimuth is necessary to calculate ilumination terrain model"));
+	G_fatal_error(_("Solar azimuth is necessary to calculate illumination terrain model"));
 
     if (!ilum->answer && input->answer == NULL)
 	G_fatal_error(_("Reflectance maps are necessary to make topographic correction"));
@@ -235,6 +236,19 @@ int main(int argc, char *argv[])
 	    /* TODO: better avoid system() */
 	    sprintf(command, "r.colors map=%s color=grey", out.name);
 	    system(command);
+
+/* new but not functional:
+	    {
+		struct FPRange range;
+		DCELL min, max;
+		struct Colors grey;
+		G_read_fp_range(out.name, G_mapset(), &range);
+		G_get_fp_range_min_max(&range, &min, &max);
+		G_make_grey_scale_colors(&grey, min, max);
+		G_write_colors(out.name, G_mapset(), &grey);
+	    }
+*/
+
 	}
 	G_close_cell(dem.fd);
     }
