@@ -60,29 +60,34 @@ d.rast.leg myplane_pyr
 
 #making the 'band' reflectance file
 r.mapcalc "myplane_pyr_band = double((myplane_pyr_shaded - 60.)/18.)"
-d.mon stop=x0
+d.mon stop=x0 > /dev/null
 d.mon x0
 d.rast.leg myplane_pyr_band
+echo "Original" | d.text color=black
 
 ## test it:
 # percent
 METHOD=percent
 i.topo.corr input=myplane_pyr_band output=myplane_pyr_topocorr_${METHOD} basemap=myplane_pyr_illumination zenith=$solarzenith method=$METHOD
-d.mon stop=x1
+d.mon stop=x1 > /dev/null
 d.mon x1
 d.rast.leg myplane_pyr_topocorr_${METHOD}.myplane_pyr_band
+echo "METHOD=percent" | d.text color=black
 
 # minnaert
 METHOD=minnaert
 i.topo.corr input=myplane_pyr_band output=myplane_pyr_topocorr_${METHOD} basemap=myplane_pyr_illumination zenith=$solarzenith method=$METHOD
-d.mon stop=x2
+d.mon stop=x2 > /dev/null
 d.mon x2
 d.rast.leg myplane_pyr_topocorr_${METHOD}.myplane_pyr_band
+echo "METHOD=minnaert" | d.text color=black
 
 # c-factor
 METHOD=c-factor
 i.topo.corr input=myplane_pyr_band output=myplane_pyr_topocorr_${METHOD} basemap=myplane_pyr_illumination zenith=$solarzenith method=$METHOD
-d.mon stop=x3
+d.mon stop=x3 > /dev/null
 d.mon x3
 d.rast.leg myplane_pyr_topocorr_${METHOD}.myplane_pyr_band
+echo "METHOD=c-factor" | d.text color=black
 
+exit 0
