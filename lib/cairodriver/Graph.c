@@ -1,9 +1,31 @@
+/*!
+  \file lib/cairodriver/Graph.c
+
+  \brief GRASS cairo display driver - driver settings
+
+  (C) 2007-2008, 2011 by Lars Ahlzen and the GRASS Development Team
+  
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+  
+  \author Lars Ahlzen <lars ahlzen.com> (original contibutor)
+  \author Glynn Clements  
+*/
+
 #include "cairodriver.h"
+
+#if CAIRO_HAS_PS_SURFACE
 #include <cairo-ps.h>
+#endif
+#if CAIRO_HAS_PDF_SURFACE
 #include <cairo-pdf.h>
+#endif
+#if CAIRO_HAS_SVG_SURFACE
 #include <cairo-svg.h>
-#if defined(USE_X11) && CAIRO_HAS_XLIB_SURFACE
+#endif
+#if CAIRO_HAS_XLIB_XRENDER_SURFACE
 #include <cairo-xlib.h>
+#include <cairo-xlib-xrender.h>
 #endif
 
 #include <unistd.h>
