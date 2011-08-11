@@ -352,7 +352,7 @@ static void map_file(void)
 	cairo_surface_destroy(surface);
 	G_free(grid);
     }
-    grid = (char *)ptr + HEADER_SIZE;
+    grid = (unsigned char *)ptr + HEADER_SIZE;
 
     close(fd);
 
