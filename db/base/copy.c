@@ -29,6 +29,9 @@ int main(int argc, char **argv)
     struct GModule *module;
     const char *drv, *db;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]);
+
     /* Set description */
     module = G_define_module();
     module->keywords = _("database, attribute table, SQL");
