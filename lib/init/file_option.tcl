@@ -12,10 +12,10 @@
 #         CREATED:  23/04/2006
 #        REVISION:  --- 
 #       CHANGELOG:  1.0.1 08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
-#			     :	1.2 - 6 Jan 2007 - Fixed file creation for windows and reformatted
-#					dialog widgets (Michael Barton).
-#				 	Added check for return status of g.proj to catch failed location 
-#					creation (by Maris Nartiss).
+#		    1.2 - 6 Jan 2007 - Fixed file creation for windows and reformatted
+#			dialog widgets (Michael Barton).
+#		 	Added check for return status of g.proj to catch failed location 
+#			creation (by Maris Nartiss).
 #=====================================================================================
 #
 #
@@ -32,8 +32,7 @@
 #
 #  You should have received a copy of the GNU Library General Public 
 #  License along with this library; if not, write to the Free 
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 
-#  USA 
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #
 #1. Redistributions of source code must retain the above copyright   
 #   notice, this list of conditions and the following disclaimer.   
