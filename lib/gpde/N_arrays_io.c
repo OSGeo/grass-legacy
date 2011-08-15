@@ -16,9 +16,10 @@
 *
 *****************************************************************************/
 
+#include <math.h>
+
 #include "grass/N_pde.h"
 #include "grass/glocale.h"
-#include <math.h>
 
 /* ******************** 2D ARRAY FUNCTIONS *********************** */
 
@@ -292,7 +293,7 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array,
 
 
     if (NULL == G_find_grid3(name, ""))
-	G3d_fatalError(_("Requested g3d map <%s> not found"), name);
+	G3d_fatalError(_("3D raster map <%s> not found"), name);
 
     /*Open all maps with default region */
     map =
@@ -300,7 +301,7 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array,
 			G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d map <%s>"), name);
+	G3d_fatalError(_("Unable to open 3D raster map <%s>"), name);
 
     type = G3d_tileTypeMap(map);
 
