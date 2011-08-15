@@ -144,23 +144,23 @@ int main(int argc, char *argv[])
     /* open 3D zoning raster with default region */
     if ((zonemap = param.zonefile->answer) != NULL) {
 	if (NULL == (mapset = G_find_grid3(zonemap, "")))
-	    G3d_fatalError(_("Requested g3d map <%s> not found"), zonemap);
+	    G3d_fatalError(_("3D raster map <%s> not found"), zonemap);
 
 	zmap =
 	    G3d_openCellOld(zonemap, G_find_grid3(zonemap, ""), &region,
 			    G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
 
 	if (zmap == NULL)
-	    G3d_fatalError(_("Error opening g3d map <%s>"), zonemap);
+	    G3d_fatalError(_("Unable to open 3D raster map <%s>"), zonemap);
 
 	zmap_type = G3d_tileTypeMap(zmap);
 	
 	if (G3d_readCats(zonemap, mapset, &(zone_info.cats)))
-	    G_warning("no category support for zoning raster");
+	    G_warning("No category support for zoning raster");
 	    
 	G3d_range_init(zmap);
 	if (!G3d_range_load(zmap))
-	    G_fatal_error(_("Unable it load G3d range"));
+	    G_fatal_error(_("Unable to load 3D raster range"));
 	G3d_range_min_max(zmap, &dmin, &dmax);
 
 	/* properly round dmin and dmax */
@@ -183,14 +183,14 @@ int main(int argc, char *argv[])
     infile = param.inputfile->answer;
 
     if (NULL == G_find_grid3(infile, ""))
-	G3d_fatalError(_("Requested g3d map <%s> not found"), infile);
+	G3d_fatalError(_("3D raster map <%s> not found"), infile);
 
     map =
 	G3d_openCellOld(infile, G_find_grid3(infile, ""), &region,
 			G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d map <%s>"), infile);
+	G3d_fatalError(_("Unable to open 3D raster map <%s>"), infile);
 
     map_type = G3d_tileTypeMap(map);
 
