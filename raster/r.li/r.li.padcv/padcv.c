@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     return calculateIndex(conf->answer, patchAreaDistributionCV, NULL,
 			  raster->answer, output->answer);
 }
+
 int patchAreaDistributionCV(int fd, char **par, area_des ad, double *result)
 {
     char *mapset;
@@ -94,6 +95,7 @@ int patchAreaDistributionCV(int fd, char **par, area_des ad, double *result)
     *result = indice;
     return RLI_OK;
 }
+
 int calculate(int fd, area_des ad, double *result)
 {
     CELL *buf;
@@ -491,6 +493,7 @@ int calculate(int fd, area_des ad, double *result)
     G_free(buf_sup);
     return RLI_OK;
 }
+
 int calculateD(int fd, area_des ad, double *result)
 {
     DCELL *buf;
@@ -884,6 +887,7 @@ int calculateD(int fd, area_des ad, double *result)
     *result = indice;
     return RLI_OK;
 }
+
 int calculateF(int fd, area_des ad, double *result)
 {
     FCELL *buf;

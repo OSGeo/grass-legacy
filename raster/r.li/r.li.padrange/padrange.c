@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     return calculateIndex(conf->answer, patchAreaDistributionRANGE, NULL,
 			  raster->answer, output->answer);
 }
+
 int patchAreaDistributionRANGE(int fd, char **par, area_des ad,
 			       double *result)
 {
