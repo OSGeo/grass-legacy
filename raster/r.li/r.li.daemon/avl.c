@@ -5,7 +5,6 @@
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
  *       
- *       \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
  */
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -18,7 +17,6 @@
 #include "defs.h"
 #include "avlDefs.h"
 #include "avl.h"
-
 
 
 static avl_node *avl_individua(const avl_tree root, const generic_cell k,
@@ -186,8 +184,6 @@ long avl_to_array(avl_node * root, long i, AVL_table * a)
     }
     return i;
 }
-
-
 
 
 static avl_node *avl_individua(const avl_tree root, const generic_cell k,
