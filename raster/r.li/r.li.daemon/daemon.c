@@ -104,8 +104,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
     /* strip off leading path if present */
     char testpath[GPATH_MAX];
+
     sprintf(testpath, "%s%s", G_home(), "/.r.li/history/");
-    if(strncmp(file, testpath, strlen(testpath)) == 0)
+    if (strncmp(file, testpath, strlen(testpath)) == 0)
 	file += strlen(testpath);
 
     /* TODO: check if this path is portable */
@@ -137,8 +138,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
-	    G_fatal_error(_("Cannot create %s/.r.li/ directory"),
-			  G_home());
+	    G_fatal_error(_("Cannot create %s/.r.li/ directory"), G_home());
 	sprintf(out, "%s/.r.li/output", G_home());
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
@@ -240,13 +240,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	wait(&status);
 
 	if (!(WIFEXITED(status)))
-	    G_warning(
-		    _("r.li.worker (pid %i) exited with abnormal status: %i"),
-		    donePid, status);
+	    G_warning(_("r.li.worker (pid %i) exited with abnormal status: %i"),
+		      donePid, status);
 	else
-	    G_verbose_message(
-		    _("r.li.worker (pid %i) terminated successfully"),
-		    donePid);
+	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
+			      donePid);
 
 	/* remove pipe */
 	if (close(child[j].channel) != 0)
@@ -265,13 +263,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	wait(&status);
 
 	if (!(WIFEXITED(status)))
-	    G_warning(
-		    _("r.li.worker (pid %i) exited with abnormal status: %i"),
-		    child[i].pid, status);
+	    G_warning(_("r.li.worker (pid %i) exited with abnormal status: %i"),
+		      child[i].pid, status);
 	else
-	    G_verbose_message(
-		    _("r.li.worker (pid %i) terminated successfully"),
-		    child[i].pid);
+	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
+			      child[i].pid);
 
 	/* remove pipe */
 	if (close(child[i].channel) != 0)
@@ -406,7 +402,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    }
 
 	} while ((token = strtok(NULL, " ")) != NULL &&
-	       strcmp(token, "SAMPLEAREA") == 0);
+		 strcmp(token, "SAMPLEAREA") == 0);
 
 	close(setup);
 
