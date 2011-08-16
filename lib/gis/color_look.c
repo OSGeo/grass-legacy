@@ -258,7 +258,7 @@ int G__lookup_colors(const void *raster, unsigned char *red,
     dmin = cp->min;
     dmax = cp->max;
     min = (CELL) dmin;
-    max = (CELL) dmax + 1;
+    max = (CELL) dmax;
 
     cell_type = (data_type == CELL_TYPE);
 
