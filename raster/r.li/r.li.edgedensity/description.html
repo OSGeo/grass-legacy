@@ -17,10 +17,20 @@
   <li> <B>Area</B>: total landscape area<BR>
 </ul>
 
-<h2>REFERENCES</h2>
-McGarigal, K., and B. J. Marks. 1995. FRAGSTATS: spatial pattern
-analysis program for quantifying landscape structure. USDA For. Serv.
-Gen. Tech. Rep. PNW-351.
+<h2>NOTES</h2>
+Do not use absolute path names for output files. They are raster if
+moving window disposition was selected, otherwise they are in
+~/.r.li/output folder.
+<br>
+If input raster is full of null values r.li.edgedensity consider to have 0
+patch.<br>
+If area is 0 r.li.edgedensity returns -1; this is possible only if input
+raster is masked.
+If you want to have null values instead run <br>
+<div class="code"><pre>
+r.null setnull=-1 map=my_map
+</pre></div>
+after index calculation.
 
 <h2>EXAMPLES</h2>
 To calculate edge density index on map my_map, using
@@ -61,9 +71,6 @@ after index calculation.
 Serena Pallecchi student of Computer Science University of Pisa (Italy).<br>
 Commission from Faunalia Pontedera (PI), Italy (www.faunalia.it)
 
-<h2>BUGS</h2>
-Please send bugs reports to 
-<a href="mailto:pallecch@cli.di.unipi.it">pallecch@cli.di.unipi.it</a><br>
-
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
 
