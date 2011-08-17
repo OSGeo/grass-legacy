@@ -20,7 +20,7 @@ int do_map_header(char *date)
     char temp[100];
 
     /* set color and font */
-    set_rgb_color(hdr.color);
+    set_ps_color(&hdr.color);
     fontsize = (double)hdr.fontsize;
     fprintf(PS.fp, "(%s) FN %.1f SF\n", hdr.font, fontsize);
 
@@ -96,6 +96,7 @@ static int output(char *line, char *date)
 			  72.0 * (PS.page_width - PS.right_marg),
 			  y + 0.2 * fontsize);
 		y -= dy;
+		set_ps_color(&hdr.color);
 		return 0;
 	    }
 	    else {
