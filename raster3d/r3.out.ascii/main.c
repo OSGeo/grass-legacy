@@ -55,7 +55,7 @@ void fatalError(char *errorMsg)
     if (map != NULL) {
 	/* should unopen map here! */
 	if (!G3d_closeCell(map))
-	    fatalError(_("Error closing 3d raster map"));
+	    fatalError(_("Unable to close 3D raster map"));
 
     }
 
@@ -73,7 +73,7 @@ void setParams()
     param.input->required = YES;
     param.input->gisprompt = "old,grid3,3d-raster";
     param.input->multiple = NO;
-    param.input->description = _("3d raster map to be converted to ASCII");
+    param.input->description = _("3D raster map to be converted to ASCII");
 
     param.output = G_define_option();
     param.output->key = "output";
@@ -104,7 +104,7 @@ void setParams()
 
     param.mask = G_define_flag();
     param.mask->key = 'm';
-    param.mask->description = _("Use G3D mask (if exists) with input map");
+    param.mask->description = _("Use 3D raster mask (if exists) with input map");
 }
 
 /*---------------------------------------------------------------------------*/
@@ -243,7 +243,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster3d, voxel, export");
     module->description =
-	_("Converts a 3D raster map layer into an ASCII text file");
+	_("Converts a 3D raster map layer into an ASCII text file.");
 
     /* Get parameters from user */
     setParams();
@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
     getParams(&input, &output, &decim);
 
     if (NULL == G_find_grid3(input, ""))
-	G3d_fatalError(_("Requested 3d raster map not found"));
+	G3d_fatalError(_("3D raster map <%s> not found"), input);
 
     /*  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
        G3D_TILE_SAME_AS_FILE,
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
     map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			  G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
     if (map == NULL)
-	G3d_fatalError(_("Error opening 3d raster map"));
+	G3d_fatalError(_("Unable to open 3D raster map <%s>"), input);
 
     /* Figure out the region from the map */
     /*  G3d_getRegionStructMap(map, &region); */
@@ -297,12 +297,12 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	fatalError(_("Error closing 3d raster map"));
+	fatalError(_("Unable to close 3D raster map"));
 
     map = NULL;
     if (output)
 	if (fclose(fp))
-	    fatalError(_("Error closing new ASCII file"));
+	    fatalError(_("Unable to close new ASCII file"));
 
     return 0;
 }
