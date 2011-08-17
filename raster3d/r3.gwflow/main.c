@@ -52,7 +52,7 @@ void set_params(void)
     param.phead->type = TYPE_STRING;
     param.phead->required = YES;
     param.phead->gisprompt = "old,grid3,3d-raster";
-    param.phead->description = _("The initial piezometric head in [m]");
+    param.phead->description = _("Input 3D raster map with initial piezometric heads in [m]");
 
     param.status = G_define_option();
     param.status->key = "status";
@@ -120,8 +120,9 @@ void set_params(void)
     param.vector->type = TYPE_STRING;
     param.vector->required = NO;
     param.vector->gisprompt = "new,grid3,3d-raster";
-    param.vector->description =
-	_("Calculates the groundwater distance velocity vector field and write the x, y and z components to maps named name_[xyz]. Name is basename for the new 3D raster maps.");
+    param.vector->description = _("Calculate the groundwater distance velocity vector field \n"
+	                          "and write the x, y, and z components to maps named name_[xyz].\n"
+	                          "Name is basename for the new 3D raster maps.");
 
 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
