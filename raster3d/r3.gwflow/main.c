@@ -62,8 +62,7 @@ void set_params(void)
     param.status->required = YES;
     param.status->gisprompt = "old,grid3,3d-raster";
     param.status->description =
-	_
-	("The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet");
+	_("The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet");
 
     param.hc_x = G_define_option();
     param.hc_x->key = "hc_x";
@@ -115,7 +114,8 @@ void set_params(void)
     param.output->type = TYPE_STRING;
     param.output->required = YES;
     param.output->gisprompt = "new,grid3,3d-raster";
-    param.output->description = _("The piezometric head result of the numerical calculation will be written to this map");
+    param.output->description =
+	_("The piezometric head result of the numerical calculation will be written to this map");
 
     param.vector = G_define_option();
     param.vector->key = "velocity";
@@ -124,7 +124,7 @@ void set_params(void)
     param.vector->gisprompt = "new,grid3,3d-raster";
     param.vector->description = _("Calculate the groundwater distance velocity vector field \n"
 	                          "and write the x, y, and z components to maps named name_[xyz].\n"
-	                          "Name is basename for the new raster3d maps");
+	                          "Name is basename for the new 3D raster maps.");
 
 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
@@ -135,7 +135,7 @@ void set_params(void)
 
     param.mask = G_define_flag();
     param.mask->key = 'm';
-    param.mask->description = _("Use G3D mask (if exists)");
+    param.mask->description = _("Use 3D raster mask (if exists) with input maps");
 
     param.sparse = G_define_flag();
     param.sparse->key = 's';
@@ -148,33 +148,21 @@ void set_params(void)
 int main(int argc, char *argv[])
 {
     struct GModule *module = NULL;
-
     N_gwflow_data3d *data = NULL;
-
     N_geom_data *geom = NULL;
-
     N_les *les = NULL;
-
     N_les_callback_3d *call = NULL;
-
     G3D_Region region;
-
     N_gradient_field_3d *field = NULL;
-
     N_array_3d *xcomp = NULL;
-
     N_array_3d *ycomp = NULL;
-
     N_array_3d *zcomp = NULL;
 
     double error;
 
     int maxit;
-
     const char *solver;
-
     int x, y, z, stat;
-
     char *buff = NULL;
 
     /* Initialize GRASS */
@@ -182,7 +170,8 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster3d, voxel");
-    module->description = _("Numerical calculation program for transient, confined groundwater flow in three dimensions");
+    module->description =
+	_("Calculates numerically transient, confined groundwater flow in three dimensions.");
 
     /* Get parameters from user */
     set_params();
@@ -199,8 +188,7 @@ int main(int argc, char *argv[])
     solver = param.solver->answer;
 
     if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0 && param.sparse->answer)
-	G_fatal_error(_("The direct cholesky solver do not work with sparse matrices"));
-
+	G_fatal_error(_("The direct Cholesky solver do not work with sparse matrices"));
 
 
     /*Set the defaults */
@@ -362,11 +350,8 @@ write_result(N_array_3d * status, N_array_3d * phead_start,
 	     char *name)
 {
     void *map = NULL;
-
     int changemask = 0;
-
     int z, y, x, rows, cols, depths, count, stat;
-
     double d1 = 0;
 
     rows = region->rows;
@@ -377,9 +362,7 @@ write_result(N_array_3d * status, N_array_3d * phead_start,
     map = G3d_openCellNew(name, DCELL_TYPE, G3D_USE_CACHE_DEFAULT, region);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d map <%s>"), name);
-
-    G_message(_("Write the result to g3d map <%s>"), name);
+	G3d_fatalError(_("Unable to create 3D raster map <%s>"), name);
 
     /*if requested set the Mask on */
     if (param.mask->answer) {
@@ -423,7 +406,7 @@ write_result(N_array_3d * status, N_array_3d * phead_start,
     }
 
     if (!G3d_closeCell(map))
-	G3d_fatalError(map, NULL, 0, _("Error closing g3d file"));
+	G3d_fatalError(map, NULL, 0, _("Unable to close 3D raster map <%s>"), name);
 
     return;
 }
