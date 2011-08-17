@@ -51,7 +51,7 @@ void fatalError(char *errorMsg)
     if (map != NULL) {
 	/* should unopen map here! */
 	if (!G3d_closeCell(map))
-	    fatalError("Unable to close 3D raster map");
+	    fatalError(_("Unable to close 3D raster map"));
     }
 
     G3d_fatalError(errorMsg);
