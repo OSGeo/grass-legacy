@@ -54,7 +54,7 @@ void set_params(void)
     param.phead->type = TYPE_STRING;
     param.phead->required = YES;
     param.phead->gisprompt = "old,grid3,3d-raster";
-    param.phead->description = _("The initial piezometric head in [m]");
+    param.phead->description = _("Input 3D raster map with initial piezometric heads in [m]");
 
     param.status = G_define_option();
     param.status->key = "status";
