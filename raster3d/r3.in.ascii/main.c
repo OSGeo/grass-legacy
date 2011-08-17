@@ -76,7 +76,7 @@ static void setParams()
     param.input->required = YES;
     param.input->key_desc = "name";
     param.input->gisprompt = "old_file,file,input";
-    param.input->description = _("Ascii raster map to be imported");
+    param.input->description = _("ASCII raster map to be imported");
 
     param.output = G_define_standard_option(G_OPT_R3_OUTPUT);
 
@@ -114,7 +114,7 @@ static void readHeaderString(FILE * fp, char *valueString, double *value)
     /* to avoid buffer overflows we use snprintf */
     G_snprintf(format, 100, "%s %%lf", valueString);
     if (fscanf(fp, format, value) != 1) {
-	G_debug(0, "bad value for [%s]", valueString);
+	G_debug(3, "bad value for [%s]", valueString);
 	fatalError("readHeaderString: header value invalid");
     }
     while (fgetc(fp) != '\n') ;
@@ -175,7 +175,7 @@ asciiToG3d(FILE * fp, G3D_Region * region, int convertNull, double nullValue)
 	      region->depths);
 
     G_debug(3,
-	    "asciiToG3d: writing the 3d raster map, with rows %i cols %i depths %i",
+	    "asciiToG3d: writing the 3D raster map, with rows %i cols %i depths %i",
 	    region->rows, region->cols, region->depths);
 
     for (z = 0; z < region->depths; z++) {
@@ -188,7 +188,7 @@ asciiToG3d(FILE * fp, G3D_Region * region, int convertNull, double nullValue)
 		if (fscanf(fp, "%lf", &value) != 1) {
 		    if (feof(fp))
 			G_warning(_("End of file reached while still loading data."));
-		    G_debug(0,
+		    G_debug(3,
 			    "missing data at col=%d row=%d depth=%d last_value=[%.4f]",
 			    x + 1, region->rows - y, z + 1, value);
 		    fatalError("asciiToG3d: read failed");
@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster3d, voxel, import");
     module->description =
-	_("Convert a 3D ASCII raster text file into a (binary) 3D raster map layer");
+	_("Converts a 3D ASCII raster text file into a (binary) 3D raster map layer.");
 
     setParams();
     G3d_setStandard3dInputParams();
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
 				 &usePrecisionDefault, &precision,
 				 &useDimensionDefault, &tileX, &tileY,
 				 &tileZ))
-	fatalError("main: error getting standard parameters");
+	fatalError("Error getting standard parameters");
 
     fp = openAscii(input, &region);
 
@@ -265,13 +265,13 @@ int main(int argc, char *argv[])
 			   tileZ);
 
     if (map == NULL)
-	fatalError(_("Error opening 3d raster map"));
+	fatalError(_("Unable to open 3D raster map"));
 
     /*Create the new G3D Map */
     asciiToG3d(fp, &region, convertNull, nullValue);
 
     if (!G3d_closeCell(map))
-	fatalError(_("Error closing new 3d raster map"));
+	fatalError(_("Unable to close 3D raster map"));
 
     /* write input name to map history */
     G3d_readHistory(output, G_mapset(), &history);
@@ -281,9 +281,9 @@ int main(int argc, char *argv[])
 
     map = NULL;
     if (fclose(fp))
-	fatalError(_("Error closing ascii file"));
+	fatalError(_("Unable to close ASCII file"));
 
-    G_done_msg("");
+    G_done_msg(" ");
 
     return EXIT_SUCCESS;
 }
