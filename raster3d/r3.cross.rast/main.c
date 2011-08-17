@@ -295,7 +295,7 @@ int main(int argc, char *argv[])
     /*If not equal, set the 2D windows correct */
     if (rows != region.rows || cols != region.cols) {
 	G_message
-	    (_("The 2D and 3D region settings are different. I will use the 3D raster map settings to adjust the 2D region."));
+	    (_("The 2D and 3D region settings are different. Using the 3D raster map settings to adjust the 2D region."));
 	G_get_set_window(&window2d);
 	window2d.ns_res = region.ns_res;
 	window2d.ew_res = region.ew_res;
