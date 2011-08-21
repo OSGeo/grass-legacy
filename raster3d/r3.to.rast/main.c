@@ -240,13 +240,13 @@ int main(int argc, char *argv[])
 			      G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
 			      G3D_USE_CACHE_DEFAULT);
 	if (map == NULL)
-	    G3d_fatalError(_("Error opening 3d raster map <%s>"),
+	    G3d_fatalError(_("Error opening 3D raster map <%s>"),
 			   param.input->answer);
 
 
 	/*Get the region of the map */
 	G3d_getRegionStructMap(map, &region);
-	/*set this region as current 3d window for map */
+	/*set this region as current 3D window for map */
 	G3d_setWindowMap(map, &region);
 	/*Set the 2d region appropriate */
 	G3d_extract2dRegion(&region, &region2d);
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
 
 	/*If not equal, set the 3D window correct */
 	if (rows != region.rows || cols != region.cols) {
-	    G_message(_("The 2d and 3d region settings are different. "
+	    G_message(_("The 2D and 3D region settings are different. "
 			"Using the 2D window settings to adjust the 2D part of the 3D region."));
 	    G_get_set_window(&region2d);
 	    region.ns_res = region2d.ns_res;
@@ -274,14 +274,14 @@ int main(int argc, char *argv[])
 	    G3d_setWindow(&region);
 	}
 
-	/*Open the 3d raster map */
+	/*Open the 3D raster map */
 	map = G3d_openCellOld(param.input->answer,
 			      G_find_grid3(param.input->answer, ""),
 			      &region, G3D_TILE_SAME_AS_FILE,
 			      G3D_USE_CACHE_DEFAULT);
 
 	if (map == NULL)
-	    G3d_fatalError(_("Error opening 3d raster map <%s>"),
+	    G3d_fatalError(_("Error opening 3D raster map <%s>"),
 			   param.input->answer);
     }
 
@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	fatal_error(map, NULL, 0, _("Error closing 3d raster map"));
+	fatal_error(map, NULL, 0, _("Unable to close 3D raster map"));
 
     map = NULL;
 
