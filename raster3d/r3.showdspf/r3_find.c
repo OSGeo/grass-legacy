@@ -39,14 +39,14 @@ char *check_get_any_dspname(dspf, g3f, mset)
 	return (NULL);
 
     if (!G_find_grid3(g3f, "")) {
-	fprintf(stderr, "[%s] 3D raster map not found\n", g3f);
+	fprintf(stderr, "3D raster map <%s> not found\n", g3f);
 	return (NULL);
     }
 
     if (mset) {			/* otherwise must be reading only  */
 
 	if (g3_find_dsp_file(g3f, dspf, mset)) {	/* already exists */
-	    sprintf(question, "\n** %s exists. ok to overwrite? ", dspf);
+	    sprintf(question, "\n** <%s> exists. ok to overwrite? ", dspf);
 	    if (!G_yes(question, 0)) {
 		if (NULL == G_ask_any("", dspout, element, "display", 1))
 		    return (NULL);
