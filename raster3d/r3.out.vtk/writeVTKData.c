@@ -128,11 +128,11 @@ void write_vtk_points(input_maps * in, FILE * fp, G3D_Region region, int dp,
 	    status++;
 
 	    if (!G_get_raster_row(in->top, rast_top, y, in->topMapType))
-		fatal_error(_("Could not get top raster row \n"), in);
+		fatal_error(_("Unable to read top raster row \n"), in);
 
 	    if (!G_get_raster_row
 		(in->bottom, rast_bottom, y, in->bottomMapType))
-		fatal_error(_("Could not get bottom raster row \n"), in);
+		fatal_error(_("Unable to read bottom raster row \n"), in);
 
 	    for (x = 0, ptr_top = rast_top, ptr_bottom = rast_bottom;
 		 x < cols;
@@ -331,7 +331,7 @@ void write_vtk_data(FILE * fp, void *map, G3D_Region region, char *varname,
     }
 
     G_debug(3,
-	    _("write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii file"),
+	    "write_vtk_data: Writing Celldata <%s> with rows <%i> cols <%i> depths <%i> to VTK-ASCII file",
 	    varname, rows, cols, depths);
 
     fprintf(fp, "SCALARS %s float 1\n", varname);
@@ -389,7 +389,7 @@ void write_vtk_rgb_data(void *map_r, void *map_g, void *map_b,
     int typeIntern[3];
     void *maprgb = NULL;
 
-    G_debug(3, _("write_vtk_rgb_data: writing rgb data"));
+    G_debug(3, "write_vtk_rgb_data: Writing RGB data");
 
     rows = region.rows;
     cols = region.cols;
@@ -426,7 +426,7 @@ void write_vtk_rgb_data(void *map_r, void *map_g, void *map_b,
 							   0.0);
 			/*Test of value range, the data should be 1 byte gray values */
 			if (value > 255 || value < 0) {
-			    G_warning(_("Wrong 3d raster map values! Values should in between 0 and 255!\n"));
+			    G_warning(_("Wrong 3D raster map values: Values should in between 0 and 255\n"));
 			    fprintf(fp, "0 ");
 			}
 			else {
@@ -459,7 +459,7 @@ void write_vtk_rgb_data(void *map_r, void *map_g, void *map_b,
 							   0.0);
 			/*Test of value range, the data should be 1 byte gray values */
 			if (value > 255 || value < 0) {
-			    G_warning(_("Wrong 3d raster map values! Values should in between 0 and 255!\n"));
+			    G_warning(_("Wrong 3D raster map values: Values should in between 0 and 255\n"));
 			    fprintf(fp, "0 ");
 			}
 			else {
@@ -489,7 +489,7 @@ void write_vtk_vector_data(void *map_x, void *map_y, void *map_z,
     int typeIntern[3];
     void *mapvect = NULL;
 
-    G_debug(3, _("write_vtk_vector_data: writing vector data"));
+    G_debug(3, "write_vtk_vector_data: Writing vector data");
 
     rows = region.rows;
     cols = region.cols;
