@@ -34,7 +34,7 @@
 #%End
 #%flag
 #% key: a
-#% description: also import quality map (SM status map layer) and filter NDVI map
+#% description: Also import quality map (SM status map layer) and filter NDVI map
 #%end
 #%option
 #% key: file
@@ -118,13 +118,13 @@ trap "exitprocedure" 2 3 15
 
 #### a function for writing VRT files
 create_VRT_file(){
- WESTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_LEFT_X  | tr -s ' ' ' ' | cut -d' ' -f2`
- NORTHCENTER=`cat $PROJFILE | grep CARTO_UPPER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
- EASTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_RIGHT_X | tr -s ' ' ' ' | cut -d' ' -f2`
- SOUTHCENTER=`cat $PROJFILE | grep CARTO_LOWER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
- MAP_PROJ_RESOLUTION=`cat $PROJFILE | grep MAP_PROJ_RESOLUTION  | tr -s ' ' ' ' | cut -d' ' -f2`
- XSIZE=`cat $PROJFILE  | grep IMAGE_UPPER_RIGHT_COL  | tr -s ' ' ' ' | cut -d' ' -f2`
- YSIZE=`cat $PROJFILE  | grep IMAGE_LOWER_RIGHT_ROW  | tr -s ' ' ' ' | cut -d' ' -f2`
+ WESTCENTER=`cat "$PROJFILE"  | grep CARTO_UPPER_LEFT_X  | tr -s ' ' ' ' | cut -d' ' -f2`
+ NORTHCENTER=`cat "$PROJFILE" | grep CARTO_UPPER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+ EASTCENTER=`cat "$PROJFILE"  | grep CARTO_UPPER_RIGHT_X | tr -s ' ' ' ' | cut -d' ' -f2`
+ SOUTHCENTER=`cat "$PROJFILE" | grep CARTO_LOWER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+ MAP_PROJ_RESOLUTION=`cat "$PROJFILE" | grep MAP_PROJ_RESOLUTION  | tr -s ' ' ' ' | cut -d' ' -f2`
+ XSIZE=`cat "$PROJFILE"  | grep IMAGE_UPPER_RIGHT_COL  | tr -s ' ' ' ' | cut -d' ' -f2`
+ YSIZE=`cat "$PROJFILE"  | grep IMAGE_LOWER_RIGHT_ROW  | tr -s ' ' ' ' | cut -d' ' -f2`
 
  # DEBUG (in terminal WEST is not printed?!?!?!)
  #echo "     $NORTHCENTER"
@@ -170,7 +170,7 @@ create_VRT_file(){
 ################### let's go
 
 if [ -n "$GIS_OPT_FILE" ] ; then
-    SPOTDIR="`dirname $GIS_OPT_FILE`"
+    SPOTDIR="`dirname \"$GIS_OPT_FILE\"`"
     SPOTNAME=`basename "$GIS_OPT_FILE" .HDF`
 fi
 
@@ -226,7 +226,6 @@ g.message message="Imported SPOT VEGETATION NDVI map <$NAME>."
 # Coefficient a = 0.004
 # Coefficient b = -0.1
 
-
 # clone current region
 g.region save="spot_$PID"
 
@@ -235,6 +234,7 @@ WIND_OVERRIDE="spot_$PID"
 export WIND_OVERRIDE
 
 g.region rast="$NAME" --quiet
+
 
 g.message "Remapping digital numbers to NDVI..."
 r.mapcalc "${NAME}_$PID = 0.004 * $NAME - 0.1"
@@ -275,7 +275,8 @@ r.colors "$NAME" color=ndvi --quiet
 if [ $GIS_FLAG_A -eq 1 ] ; then
   g.message "Importing SPOT VGT NDVI quality map..."
   rm -f "$VRTFILE"
-  create_VRT_file "$VRTFILE" `echo ${GIS_OPT_FILE} | sed 's+NDV+SM+g'`
+  SPOTSMNAME=`echo ${SPOTNAME} | sed 's+NDV+SM+g'`
+  create_VRT_file "$VRTFILE" "${SPOTDIR}/${SPOTSMNAME}.HDF"
 
   ## let's import the SM quality map...
   r.in.gdal "$VRTFILE" output="$NAME.sm"
@@ -297,14 +298,15 @@ r.colors "$NAME.sm" col=rules << EOF
 236 brown
 248 orange
 251 yellow
-252 green
+253 green
 EOF
 
   g.message message="Imported SPOT VEGETATION SM quality map <$NAME.sm>."
   g.message message="Note: A snow map can be extracted by category 252 (d.rast $NAME.sm cat=252)"
   g.message ""
   g.message message="Filtering NDVI map by Status Map quality layer..."
-  r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
+  # r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
+  r.mapcalc "${NAME}_filt=if($NAME.sm % 4 == 3 || ($NAME.sm / 16) % 16 == 0, null(), $NAME )"
   r.colors "${NAME}_filt" color=ndvi --quiet
   g.message message="Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
 fi
