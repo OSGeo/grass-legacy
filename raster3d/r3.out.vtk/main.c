@@ -115,7 +115,6 @@ void check_input_maps(void)
     if (param.structgrid->answer) {
 
 	if (!param.top->answer || !param.bottom->answer)
-	    G3d_fatalError(_("You have to specify top and bottom map"));
 	    G3d_fatalError(_("Specify top and bottom map"));
 
 	mapset = NULL;
@@ -207,7 +206,7 @@ void open_write_rgb_maps(input_maps * in, G3D_Region region, FILE * fp,
 				&region, G3D_TILE_SAME_AS_FILE,
 				G3D_USE_CACHE_DEFAULT);
 	    if (maprgb == NULL) {
-		G_warning(_("Unable to open 3D raster map <%s>"), 
+		G_warning(_("Unable to open 3D raster map <%s>"),
 			  param.rgbmaps->answers[i]);
 		fatal_error(_("No RGB Data will be created"), in);
 	    }
@@ -339,7 +338,7 @@ void open_write_vector_maps(input_maps * in, G3D_Region region, FILE * fp,
 	    if (!G3d_closeCell(mapvect)) {
 		fatal_error(_("Unable to close 3D raster map"), in);
 	    }
-	    /*Set the pointer to null so we noe later that these files are already closed */
+	    /*Set the pointer to null so we know later that these files are already closed */
 	    if (i == 0)
 		in->map_x = NULL;
 	    if (i == 1)
@@ -376,7 +375,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster3d, voxel, export");
     module->description =
-	_("Converts 3D raster maps (G3D) into the VTK-Ascii format");
+	_("Converts 3D raster maps into the VTK-ASCII format.");
 
     /* Get parameters from user */
     set_params();
@@ -487,12 +486,12 @@ int main(int argc, char *argv[])
 	}
 
 	if (G_close_cell(in->top) < 0) {
-	    G_fatal_error(_("unable to close top raster map"));
+	    G_fatal_error(_("Unable to close top raster map"));
 	}
 	in->top = -1;
 
 	if (G_close_cell(in->bottom) < 0) {
-	    G_fatal_error(_("unable to close bottom raster map"));
+	    G_fatal_error(_("Unable to close bottom raster map"));
 	}
 	in->bottom = -1;
     }
