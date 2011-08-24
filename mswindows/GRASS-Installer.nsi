@@ -651,6 +651,8 @@ Section "GRASS" SecGRASS
 	${EndIf}
 	FileWrite $0 'call "%GISBASE%\etc\env.bat"$\r$\n'
 	FileWrite $0 '$\r$\n'
+	FileWrite $0 'cd "%USERPROFILE%"'
+	FileWrite $0 '$\r$\n'
 	FileWrite $0 '"%WINGISBASE%\etc\Init.bat" %*'
 	FileClose $0
 	done_create_grass_command.bat:
