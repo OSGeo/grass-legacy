@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
     parm.target->required = NO;
     parm.target->description =
 	_("Name of location to read projection from for GCPs transformation");
+    parm.target->key_desc = "name";
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -125,6 +126,7 @@ int main(int argc, char *argv[])
     parm.outloc->type = TYPE_STRING;
     parm.outloc->required = NO;
     parm.outloc->description = _("Name for new location to create");
+    parm.outloc->key_desc = "name";
 
     flag_o = G_define_flag();
     flag_o->key = 'o';
@@ -256,10 +258,10 @@ int main(int argc, char *argv[])
     cellhd.cols = GDALGetRasterXSize(hDS);
     cellhd.cols3 = GDALGetRasterXSize(hDS);
 
-    if (GDALGetGeoTransform(hDS, adfGeoTransform) == CE_None
-	&& adfGeoTransform[5] < 0.0) {
-	if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0)
-	    G_fatal_error(_("Input raster map is rotated - cannot import. "
+    if (GDALGetGeoTransform(hDS, adfGeoTransform) == CE_None) {
+	if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0 ||
+	    adfGeoTransform[1] <= 0.0 || adfGeoTransform[5] >= 0.0)
+	    G_fatal_error(_("Input raster map is flipped or rotated - cannot import. "
 			    "You may use 'gdalwarp' to transform the map to North-up."));
 
 	cellhd.north = adfGeoTransform[3];
@@ -267,8 +269,8 @@ int main(int argc, char *argv[])
 	cellhd.ns_res3 = fabs(adfGeoTransform[5]);
 	cellhd.south = cellhd.north - cellhd.ns_res * cellhd.rows;
 	cellhd.west = adfGeoTransform[0];
-	cellhd.ew_res = adfGeoTransform[1];
-	cellhd.ew_res3 = adfGeoTransform[1];
+	cellhd.ew_res = fabs(adfGeoTransform[1]);
+	cellhd.ew_res3 = fabs(adfGeoTransform[1]);
 	cellhd.east = cellhd.west + cellhd.cols * cellhd.ew_res;
 	cellhd.top = 1.;
 	cellhd.bottom = 0.;
