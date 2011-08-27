@@ -60,19 +60,17 @@ class RulesPanel:
         self.attributeType = attributeType
         self.properties = properties
         self.parent = parent
+        self.panelWidth = panelWidth
         
-        self.mainPanel = scrolled.ScrolledPanel(parent, id = wx.ID_ANY,
-                                          size = (panelWidth, 300),
-                                          style = wx.TAB_TRAVERSAL | wx.SUNKEN_BORDER)
-        self.mainPanel.SetupScrolling(scroll_x = False)
         self.mainSizer = wx.FlexGridSizer(cols = 3, vgap = 6, hgap = 4)
         # put small border at the top of panel
         for i in range(3):
             self.mainSizer.Add(item = wx.Size(3, 3))
         
-        self.mainPanel.SetSizer(self.mainSizer)
-        self.mainPanel.SetAutoLayout(True)
-        
+        self.mainPanel = scrolled.ScrolledPanel(parent, id = wx.ID_ANY,
+                                          size = (self.panelWidth, 300),
+                                          style = wx.TAB_TRAVERSAL | wx.SUNKEN_BORDER)
+                
         # (un)check all
         self.checkAll = wx.CheckBox(parent, id = wx.ID_ANY, label = _("Check all"))
         self.checkAll.SetValue(True)
@@ -87,12 +85,15 @@ class RulesPanel:
         self.btnAdd.Bind(wx.EVT_BUTTON, self.OnAddRules)
         self.checkAll.Bind(wx.EVT_CHECKBOX, self.OnCheckAll)
         self.clearAll.Bind(wx.EVT_BUTTON, self.OnClearAll)
-    
+
+        self.mainPanel.SetSizer(self.mainSizer)
+        self.mainPanel.SetAutoLayout(True)
+        self.mainPanel.SetupScrolling()    
     
     def Clear(self):
         """!Clear and widgets and delete information"""
         self.ruleslines.clear()
-        self.mainPanel.DestroyChildren()
+        self.mainSizer.Clear(deleteWindows=True)
     
     def OnCheckAll(self, event):
         """!(Un)check all rules"""
@@ -113,10 +114,9 @@ class RulesPanel:
         self.AddRules(nrules)
         
     def AddRules(self, nrules, start = False):
-        """!Add rules
-        
+        """!Add rules 
         @param start set widgets (not append)"""
-        
+       
         snum = len(self.ruleslines.keys())
         if start:
             snum = 0
@@ -157,7 +157,7 @@ class RulesPanel:
                 if not start:
                     self.ruleslines[enable.GetId()] = { 'value' : '',
                                                         self.attributeType: init }
-            
+        
             self.mainSizer.Add(item = enable, proportion = 0,
                               flag = wx.ALIGN_CENTER_VERTICAL)
             self.mainSizer.Add(item = txt_ctrl, proportion = 0,
@@ -167,7 +167,6 @@ class RulesPanel:
         
         self.mainPanel.Layout()
         self.mainPanel.SetupScrolling(scroll_x = False)
-       
     
     def OnRuleEnable(self, event):
         """!Rule enabled/disabled"""
@@ -504,11 +503,7 @@ class ColorTable(wx.Frame):
                       flag = wx.ALIGN_CENTER_VERTICAL)
         bodySizer.Add(item = self.rulesPanel.btnAdd, pos = (row, 1))
         
-
-       
-                
-        return bodySizer
-    
+        return bodySizer    
         
     def InitDisplay(self):
         """!Initialize preview display, set dimensions and region
@@ -528,8 +523,13 @@ class ColorTable(wx.Frame):
         @return True on success otherwise False
         """
         ret = self.CreateColorTable()
-        if not self.colorTable:
-            self.UseAttrColumn()
+        if not ret:
+            gcmd.GMessage(parent = self, message = _("No valid color rules given."))
+
+        if self.colorTable:
+            self.UseAttrColumn(False)
+        else:
+            self.UseAttrColumn(True)            
         if ret:
             display = self.parent.GetLayerTree().GetMapDisplay()
             if display and display.IsAutoRendered():
@@ -629,8 +629,8 @@ class ColorTable(wx.Frame):
         """!Load current color table (using `r(v).colors.out`)
         
         @param mapType map type (raster or vector)"""
-        
         self.rulesPanel.Clear()
+
         if mapType == 'raster':
             cmd = ['r.colors.out',
                    'read=True',
@@ -653,7 +653,7 @@ class ColorTable(wx.Frame):
             self.OnPreview()
             return
         
-        self.ReadColorTable(ctable = ctable)    
+        self.ReadColorTable(ctable = ctable)     
     
     def CreateColorTable(self, tmp = False):
         """!Creates color table
@@ -677,7 +677,6 @@ class ColorTable(wx.Frame):
             rulestxt += rule['value'] + ' ' + rule['color'] + '\n'
            
         if not rulestxt:
-            gcmd.GMessage(parent = self, message = _("No color rules given."))
             return False
         
         gtemp = utils.GetTempfile()
@@ -1102,6 +1101,7 @@ class VectorColorTable(ColorTable):
   
     def OnCheckColumn(self, event):
         """!Use color column instead of color table"""
+
         if self.useColumn.GetValue():
             self.properties['loadColumn'] = self.fromColumn.GetStringSelection()
             self.properties['storeColumn'] = self.toColumn.GetStringSelection()
@@ -1119,9 +1119,7 @@ class VectorColorTable(ColorTable):
             self.fromColumn.Enable(False)
             self.toColumn.Enable(False)
             self.colorTable = True
-            
             self.LoadTable()
-        
             
     def EnableVectorAttributes(self, enable):
         """!Enable/disable part of dialog connected with db"""
@@ -1154,9 +1152,10 @@ class VectorColorTable(ColorTable):
                 self.inmap = None
         
         self.UpdateDialog()
-        
+       
     def UpdateDialog(self):
         """!Update dialog after map selection"""  
+        
         if not self.inmap:
             self.DisableClearAll()
             return
@@ -1188,7 +1187,6 @@ class VectorColorTable(ColorTable):
             for prop in ('sourceColumn', 'loadColumn', 'storeColumn'):
                 self.properties[prop] = ''
             self.EnableVectorAttributes(False)
-              
         else: # db connection exist
         # initialize layer selection combobox
             self.EnableVectorAttributes(True)
@@ -1207,10 +1205,11 @@ class VectorColorTable(ColorTable):
             # initialize column selection comboboxes 
             
             self.OnLayerSelection(event = None)
+
         if self.version7 and self.attributeType == 'color':
             self.useColumn.SetValue(False)
             self.OnCheckColumn(event = None) 
-        
+                    
         self.LoadTable()
             
         self.btnPreview.Enable(enable)
@@ -1529,27 +1528,29 @@ class VectorColorTable(ColorTable):
         cmd = 'v.colors'
         ColorTable.RunHelp(self, cmd = cmd)
         
-    def UseAttrColumn(self, useAttrColumn = True):
-        """!Use attribute column to render map"""
-        # TODO switch back to table, not only selected map
-        layer = self.parent.curr_page.maptree.layer_selected
-        if layer and self.parent.curr_page.maptree.GetPyData(layer)[0]['maplayer'].GetName() == self.inmap:
-##            cmd = self.parent.curr_page.maptree.GetPyData(layer)[0]['maplayer'].GetCmd()
-##            if useAttrColumn:
-##                cmd[1].update({'flags': 'a', })
-            cmdlist = ['d.vect',
-                        '-a',
-                       'map=%s' % self.inmap,
-                       'type=point,line,boundary,area']
-                
-            if self.attributeType == 'color':
-                cmdlist.append('rgb_column=%s' % self.properties['storeColumn'])
-            elif self.attributeType == 'size':
-                cmdlist.append('size_column=%s' % self.properties['storeColumn'])
-            elif self.attributeType == 'width':
-                cmdlist.append('width_column=%s' % self.properties['storeColumn'])
+    def UseAttrColumn(self, useAttrColumn):
+        """!Find layers and apply the changes in d.vect command"""
+        layers = self.parent.curr_page.maptree.FindItemByData(key = 'name', value = self.inmap)
+        if not layers:
+            return
+        for layer in layers:
+            if self.parent.curr_page.maptree.GetPyData(layer)[0]['type'] != 'vector':
+                continue
+            cmdlist = self.parent.curr_page.maptree.GetPyData(layer)[0]['maplayer'].GetCmd()
             
-            self.parent.curr_page.maptree.GetPyData(layer)[0]['maplayer'].SetCmd(cmdlist)
+            if self.attributeType == 'color':
+                if useAttrColumn:
+                    cmdlist[1].update({'flags': 'a'})
+                    cmdlist[1].update({'rgb_column': self.properties['storeColumn']})
+                else:
+                    if 'flags' in cmdlist[1]:
+                        cmdlist[1]['flags'] = cmdlist[1]['flags'].replace('a', '')
+                    cmdlist[1].pop('rgb_column', None)
+            elif self.attributeType == 'size':
+                cmdlist[1].update({'size_column': self.properties['storeColumn']})
+            elif self.attributeType == 'width':
+                cmdlist[1].update({'width_column' :self.properties['storeColumn']})
+            self.parent.curr_page.maptree.GetPyData(layer)[0]['cmd'] = cmdlist
         
     def CreateColorTable(self, tmp = False):
         """!Create color rules (color table or color column)"""
@@ -1610,10 +1611,8 @@ class ThematicVectorTable(VectorColorTable):
             for vector maps for thematic mapping in nviz"""
         self.vectorType = vectorType
         VectorColorTable.__init__(self, parent = parent, **kwargs)
-        
-        
-        self.SetTitle(_("Thematic mapping for vector map in 3D view"))
-        
+              
+        self.SetTitle(_("Thematic mapping for vector map in 3D view"))       
                     
     def _initLayer(self):
         """!Set initial layer when opening dialog"""
@@ -1629,7 +1628,7 @@ class ThematicVectorTable(VectorColorTable):
         
         ret = self.CreateColorTable()
         if not ret:
-            gcmd.GMessage(parent = self, message = _("No rules given."))
+            gcmd.GMessage(parent = self, message = _("No valid color rules given."))
         
         data = self.parent.GetLayerData(nvizType = 'vector')
         data['vector']['points']['thematic']['layer'] = int(self.properties['layer'])
