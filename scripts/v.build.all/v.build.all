@@ -38,7 +38,7 @@ for VECT in `g.list type=vect mapset="$MAPSET" | sed 1,2d | grep -v '^-*$'`
 do
     g.message "Build topology for vector '${VECT}@${MAPSET}'" 
     CMD="v.build map=${VECT}@${MAPSET}"
-    g.message "$CMD" 
+    g.message message="$CMD" 
     $CMD
 done
 
