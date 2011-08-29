@@ -798,19 +798,18 @@ Section "GRASS" SecGRASS
 	;replace \ with / in $GIS_DATABASE
 	${StrReplace} "$UNIX_LIKE_GIS_DATABASE_PATH" "\" "/" "$GIS_DATABASE"
   
-	;create $PROFILE\.grassrc6
+	;create $APPDATA\grass6\rc
 	SetShellVarContext current
 	ClearErrors
-	FileOpen $0 $PROFILE\.grassrc6 w
-	IfErrors done_create_.grassrc6
+	CreateDirectory	$APPDATA\grass6
+	FileOpen $0 $APPDATA\grassrc6\rc w
+	IfErrors done_create_grassrc6\rc
 	FileWrite $0 'GISDBASE: $UNIX_LIKE_GIS_DATABASE_PATH$\r$\n'
 	FileWrite $0 'LOCATION_NAME: demolocation$\r$\n'
 	FileWrite $0 'MAPSET: PERMANENT$\r$\n'
 	FileClose $0	
-	done_create_.grassrc6:
+	done_create_grassrc6\rc:
 	
-	CopyFiles $PROFILE\.grassrc6 $INSTALL_DIR\msys\home\$USERNAME
-                 
 SectionEnd
 
 Function DownloadDataSet
@@ -917,9 +916,9 @@ Section "Uninstall"
 	SetShellVarContext all
 	RMDir /r "$SMPROGRAMS\${GRASS_BASE}"
 	
-	;remove the .grassrc6 file
+	;remove the $APPDATA\grass6 folder
 	SetShellVarContext current
-	Delete "$PROFILE\.grassrc6"	
+	RMDir /r "$APPDATA\grass6"
 
 	;remove the Registry Entries
 	DeleteRegKey HKLM "Software\${GRASS_BASE}"
