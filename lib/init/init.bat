@@ -76,6 +76,7 @@ if exist "%WINGISRC%" (
 
 set HAVE_GISRC=false
 rem Create an initial GISRC file based on current directory
+mkdir "%APPDATA%\grass6"
 "%WINGISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"
