@@ -759,7 +759,9 @@ def GetSettingsPath():
     
     verFd.close()
     
+    # keep location of settings files rc and wx in sync with
+    # lib/init/init.sh and init.bat
     if sys.platform == 'win32':
-        return os.path.join(os.getenv('APPDATA'), '.grass%d' % version)
+        return os.path.join(os.getenv('APPDATA'), 'grass%d' % version)
     
     return os.path.join(os.getenv('HOME'), '.grass%d' % version)
