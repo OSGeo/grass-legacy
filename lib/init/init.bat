@@ -31,7 +31,7 @@ if not "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRAS
 set GIS_LOCK=1
 set GRASS_VERSION=GRASS_VERSION_NUMBER
 if "%HOME%"=="" set HOME=%USERPROFILE%
-set WINGISRC=%HOME%\.grassrc6
+set WINGISRC=%APPDATA%\grass6\rc
 rem Make sure %GISRC% is set so g.dirseps will work
 rem (not actually used)
 set GISRC=junk

@@ -162,12 +162,21 @@ export GIS_LOCK
 
 # Set the global grassrc file
 if [ -n "$GRASS_BATCH_JOB" ] ; then
-	GISRCRC="$HOME/.grassrc6.`uname -n`"
+	if [ "$MINGW" ] ; then
+		GISRCRC="$APPDATA/grassrc6/rc.`uname -n`"
+	else
+		GISRCRC="$HOME/.grass6/rc.`uname -n`"
 	if [ ! -f "$GISRCRC" ] ; then
-		GISRCRC="$HOME/.grassrc6"
+		if [ "$MINGW" ] ; then
+		    GISRCRC="$APPDATA/grass6/rc"
+		else
+		    GISRCRC="$HOME/.grass6/rc"
 	fi
 else
-	GISRCRC="$HOME/.grassrc6"
+	if [ "$MINGW" ] ; then
+	    GISRCRC="$APPDATA/grass6/rc"
+	else
+	    GISRCRC="$HOME/.grass6/rc"
 fi
 
 # Set the session grassrc file
