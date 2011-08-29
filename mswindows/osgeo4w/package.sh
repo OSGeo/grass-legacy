@@ -103,7 +103,6 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 		--disable-x --without-x \
 		--with-cxx \
 		--enable-shared \
-		--enable-largefile \
 		--with-opengl=windows \
 		--with-fftw \
 		--with-freetype \
