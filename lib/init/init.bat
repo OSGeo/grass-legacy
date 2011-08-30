@@ -31,7 +31,7 @@ if not "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRAS
 set GIS_LOCK=1
 set GRASS_VERSION=GRASS_VERSION_NUMBER
 if "%HOME%"=="" set HOME=%USERPROFILE%
-set WINGISRC=%APPDATA%\grass6\rc
+set WINGISRC=%HOME%\.grassrc6
 rem Make sure %GISRC% is set so g.dirseps will work
 rem (not actually used)
 set GISRC=junk
@@ -76,7 +76,6 @@ if exist "%WINGISRC%" (
 
 set HAVE_GISRC=false
 rem Create an initial GISRC file based on current directory
-mkdir "%APPDATA%\grass6"
 "%WINGISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"

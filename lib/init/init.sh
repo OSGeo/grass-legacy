@@ -160,23 +160,14 @@ done
 GIS_LOCK=$$
 export GIS_LOCK
 
-if [ "$MINGW" ] ; then
-    GISRC_BASEDIR="$APPDATA/grass6"
-else
-    GISRC_BASEDIR="$HOME/.grass6"
-fi
-if [ ! -d "$GISRC_BASEDIR" ] ; then
-    mkdir "$GISRC_BASEDIR"
-fi
-
 # Set the global grassrc file
 if [ -n "$GRASS_BATCH_JOB" ] ; then
-	GISRCRC="$GISRC_BASEDIR/rc.`uname -n`"
+	GISRCRC="$HOME/.grassrc6.`uname -n`"
 	if [ ! -f "$GISRCRC" ] ; then
-		GISRCRC="$GISRC_BASEDIR/rc"
+		GISRCRC="$HOME/.grassrc6"
 	fi
 else
-	GISRCRC="$GISRC_BASEDIR/rc"
+	GISRCRC="$HOME/.grassrc6"
 fi
 
 # Set the session grassrc file
@@ -1050,6 +1041,7 @@ rm -f "$lockfile"
 
 # Save GISRC
 cp "$GISRC" "$GISRCRC"
+
 
 cleanup_tmp
 #### after this point no more grass modules may be called ####
