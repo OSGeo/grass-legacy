@@ -788,6 +788,7 @@ class GMFrame(wx.Frame):
             mapdisp.SetProperties(render = display['render'],
                                   mode = display['mode'],
                                   showCompExtent = display['showCompExtent'],
+                                  alignExtent = display['alignExtent'],
                                   constrainRes = display['constrainRes'],
                                   projection = display['projection']['enabled'])
 
