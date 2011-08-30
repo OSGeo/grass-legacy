@@ -528,7 +528,7 @@ class Model(object):
     
 class ModelFrame(wx.Frame):
     def __init__(self, parent, id = wx.ID_ANY,
-                 title = _("GRASS GIS Graphical Modeler"), **kwargs):
+                 title = _("GRASS GIS Graphical Modeler (experimental prototype)"), **kwargs):
         """!Graphical modeler main window
         
         @param parent parent window
