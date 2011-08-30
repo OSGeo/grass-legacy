@@ -1022,14 +1022,18 @@ def version():
     """!Get GRASS version as dictionary
 
     @code
-    version()
+    print version()
 
-    {'date': '2011', 'libgis_revision': '45093 ', 'version': '6.4.svn',
-     'libgis_date': '2011-01-20 13:10:50 +0100 (Thu, 20 Jan 2011) ', 'revision': '45136'}
+    {'date': '2011', 'libgis_date': '2011-04-13 13:19:03 +0200 (Wed, 13 Apr 2011)',
+    'version': '6.4.2svn', 'libgis_revision': '45934', 'revision': '47445'}
     @endcode
     """
-    return parse_command('g.version',
+    data = parse_command('g.version',
                          flags = 'rg')
+    for k, v in data.iteritems():
+        data[k.strip()] = v.replace('"', '').strip()
+        
+    return data
 
 # get debug_level
 if find_program('g.gisenv', ['--help']):
