@@ -52,7 +52,7 @@ except ImportError:
     
 class PsMapFrame(wx.Frame):
     def __init__(self, parent = None, id = wx.ID_ANY,
-                 title = _("GRASS GIS Hardcopy Map Output Utility"), **kwargs):
+                 title = _("GRASS GIS Hardcopy Map Output Utility (experimental prototype)"), **kwargs):
         """!Main window of ps.map GUI
         
         @param parent parent window
