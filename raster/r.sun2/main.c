@@ -123,11 +123,11 @@ long int shadowoffset = 0;
 int varCount_global = 0;
 int bitCount_global = 0;
 int arrayNumInt = 1;
-float **z = NULL, **o = NULL, **s = NULL, **li = NULL, **a = NULL, **la =
-    NULL, **longitArray, **cbhr = NULL, **cdhr = NULL;
+float **z = NULL, **o = NULL, **s = NULL, **li = NULL, **a = NULL,
+    **latitudeArray = NULL, **longitudeArray, **cbhr = NULL, **cdhr = NULL;
 double op, dp;
 double invstepx, invstepy;
-double sr_min = 24., sr_max = 0., ss_min = 24., ss_max = 0.;
+double sunrise_min = 24., sunrise_max = 0., sunset_min = 24., sunset_max = 0.;
 
 float **lumcl, **beam, **insol, **diff, **refl, **globrad;
 unsigned char *horizonarray = NULL;
@@ -138,10 +138,10 @@ double civilTime;
  */
 double xmin, xmax, ymin, ymax;
 double declin, step, dist;
-double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max = -90.,
-    la_min = 90.;
+double linke_max = 0., linke_min = 100., albedo_max = 0., albedo_min = 1.0,
+    lat_max = -90., lat_min = 90.;
 double offsetx = 0.5, offsety = 0.5;
-char *tt, *lt;
+char *ttime;
 
 /*
  * double slope;
@@ -163,7 +163,7 @@ double o_orig, z1;
  */
 double horizonStep;
 double ltime, tim, timo;
-double declination;		/* Contains the negative of the declination at the chosen day */
+double declination;	/* Contains the negative of the declination at the chosen day */
 
 /*
  * double lum_C31_l, lum_C33_l;
@@ -172,10 +172,10 @@ double beam_e, diff_e, refl_e, rr, insol_t;
 double cbh, cdh;
 double TOLER;
 
-
+/* 1852m/nm * 60nm/degree = 111120 m/deg */
 #define DEGREEINMETERS 111120.
 
-int ll_correction = 0;
+int ll_correction = FALSE;
 double coslatsq;
 
 /* why not use G_distance() here which switches to geodesic/great
@@ -325,18 +325,8 @@ int main(int argc, char *argv[])
     parm.latin->required = NO;
     parm.latin->gisprompt = "old,cell,raster";
     parm.latin->description =
-	_("Name of the latitudes input raster map [decimal degrees]");
+	_("Name of input raster map containing latitudes [decimal degrees]");
     parm.latin->guisection = _("Input_options");
-
-    if (parm.latin->answer == NULL) {
-	parm.lat = G_define_option();
-	parm.lat->key = "lat";
-	parm.lat->type = TYPE_DOUBLE;
-	parm.lat->required = NO;
-	parm.lat->description =
-	    _("A single value of latitude [decimal degrees]");
-	parm.lat->guisection = _("Input_options");
-    }
 
     parm.longin = G_define_option();
     parm.longin->key = "longin";
@@ -344,7 +334,7 @@ int main(int argc, char *argv[])
     parm.longin->required = NO;
     parm.longin->gisprompt = "old,cell,raster";
     parm.longin->description =
-	_("Name of the longitude input raster map [decimal degrees]");
+	_("Name of input raster map containing longitudes [decimal degrees]");
     parm.longin->guisection = _("Input_options");
 
     parm.coefbh = G_define_option();
@@ -435,7 +425,6 @@ int main(int argc, char *argv[])
 	_("Output global (total) irradiance/irradiation [W.m-2] (mode 1) or irradiance/irradiation raster map [Wh.m-2.day-1] (mode 2)");
     parm.glob_rad->guisection = _("Output_options");
 
-
     parm.day = G_define_option();
     parm.day->key = "day";
     parm.day->type = TYPE_INTEGER;
@@ -504,6 +493,15 @@ int main(int argc, char *argv[])
     parm.civilTime->description =
 	_("Civil time zone value, if none, the time will be local solar time");
 
+    /* remove for GRASS 7 */
+    parm.lat = G_define_option();
+    parm.lat->key = "lat";
+    parm.lat->type = TYPE_DOUBLE;
+    parm.lat->required = NO;
+    parm.lat->description =
+    	_("This does nothing. It is retained for backwards compatibility");
+    parm.lat->guisection = _("Unused");
+
 
     flag.shade = G_define_flag();
     flag.shade->key = 's';
@@ -544,8 +542,6 @@ int main(int argc, char *argv[])
      * }
      */
     saveMemory = flag.saveMemory->answer;
-    civiltime = parm.civilTime->answer;
-
 
     elevin = parm.elevin->answer;
     aspin = parm.aspin->answer;
@@ -553,33 +549,34 @@ int main(int argc, char *argv[])
     linkein = parm.linkein->answer;
     albedo = parm.albedo->answer;
     latin = parm.latin->answer;
+    longin = parm.longin->answer;
 
+    civiltime = parm.civilTime->answer;
 
     if (civiltime != NULL) {
-	setUseCivilTime(1);
-	longin = parm.longin->answer;
+	setUseCivilTime(TRUE);
 
-	if (longin == NULL) {
-	    G_fatal_error(_("You must give the longitude raster if you use civil time"));
+	if (longin == NULL)
+	    G_fatal_error(
+		_("You must give the longitude raster if you use civil time"));
 
-	}
-	sscanf(parm.civilTime->answer, "%lf", &civilTime);
+	if (sscanf(parm.civilTime->answer, "%lf", &civilTime) != 1)
+	    G_fatal_error(_("Error reading civil time zone value"));
+
+	if (civilTime < -24. || civilTime > 24.)
+	    G_fatal_error(_("Invalid civil time zone value"));
 
 	/* Normalize if somebody should be weird enough to give more than +- 12 
 	 * hours offset. */
-
-	civilTime -= 24 * ((int)(civilTime / 24.));
-	if (civilTime < -12.) {
+	if (civilTime < -12.)
 	    civilTime += 24.;
-	}
-	else if (civilTime > 12.) {
+	else if (civilTime > 12.)
 	    civilTime -= 24;
-	}
-
     }
     else {
-	setUseCivilTime(0);
+	setUseCivilTime(FALSE);
     }
+
     coefbh = parm.coefbh->answer;
     coefdh = parm.coefdh->answer;
     incidout = parm.incidout->answer;
@@ -595,12 +592,12 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("insol_time and incidout are incompatible options"));
 
     sscanf(parm.day->answer, "%d", &day);
-    sscanf(parm.step->answer, "%lf", &step);
 
-    if (parm.step->answer != NULL) {
-	if (sscanf(parm.step->answer, "%lf", &step) != 1)
-	    G_fatal_error(_("Error reading time step size"));
-    }
+    if (sscanf(parm.step->answer, "%lf", &step) != 1)
+	G_fatal_error(_("Error reading time step size"));
+    if (step <= 0.0 || step > 24.0)
+	G_fatal_error(_("Invalid time step size"));
+
     if (parm.horizonstep->answer != NULL) {
 	if (sscanf(parm.horizonstep->answer, "%lf", &horizonStep) != 1)
 	    G_fatal_error(_("Error reading horizon step size"));
@@ -613,17 +610,18 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("If you use the horizon option you must also set the 'horizonstep' parameter."));
     }
 
-
-    tt = parm.ltime->answer;
+    ttime = parm.ltime->answer;
     if (parm.ltime->answer != NULL) {
 	if (insol_time != NULL)
 	    G_fatal_error(_("Time and insol_time are incompatible options"));
+
 	G_message(_("Mode 1: instantaneous solar incidence angle & irradiance using a set local time"));
 	sscanf(parm.ltime->answer, "%lf", &timo);
     }
     else {
 	if (incidout != NULL)
 	    G_fatal_error(_("incidout requires time parameter to be set"));
+
 	G_message(_("Mode 2: integrated daily irradiation for a given day of the year"));
     }
 
@@ -649,15 +647,6 @@ int main(int argc, char *argv[])
 	sscanf(parm.lin->answer, "%lf", &singleLinke);
     if (parm.albedo->answer == NULL)
 	sscanf(parm.alb->answer, "%lf", &singleAlbedo);
-    lt = parm.lat->answer;
-    /*
-     * if (parm.lat->answer != NULL)
-     * sscanf(parm.lat->answer, "%lf", &latitude);
-     */
-    /* HB 6/2008: why is the above commented out? instead of sscanf, maybe nicer to use:
-       G_scan_lat(parm.lat->answer, &latitude);
-       MN 2/2009: latitude doesn't exist! also G_scan_lat() does not exist in GRASS
-     */
 
     if (parm.slopein->answer == NULL)
 	sscanf(parm.slope->answer, "%lf", &singleSlope);
@@ -700,12 +689,7 @@ int main(int argc, char *argv[])
 	declination = -declin;
     }
 
-
-    /*
-     * if (lt != NULL)
-     * latitude = -latitude * deg2rad;
-     */
-    if (tt != 0) {
+    if (ttime != 0) {
 	/* Shadow for just one time during the day */
 	if (horizon == NULL) {
 	    arrayNumInt = 1;
@@ -721,7 +705,7 @@ int main(int argc, char *argv[])
 	}
     }
 
-    if (tt != NULL) {
+    if (ttime != NULL) {
 
 	tim = (timo - 12) * 15;
 	/* converting to degrees */
@@ -732,20 +716,24 @@ int main(int argc, char *argv[])
 	/* conv. to radians */
     }
 
-    /* Set up parameters for projection to lat/long if necessary */
 
-    if (latin == NULL && lt == NULL && (G_projection() != PROJECTION_LL)) {
+    /* Set up parameters for projection to lat/long if necessary */
+    /*  we need to do this even if latin= and longin= were given because
+	rsunlib's com_par() needs iproj and oproj */
+    if ((G_projection() != PROJECTION_LL)) {
 	struct Key_Value *in_proj_info, *in_unit_info;
 
 	if ((in_proj_info = G_get_projinfo()) == NULL)
-	    G_fatal_error
-		(_("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!"));
+	    G_fatal_error(
+		_("Can't get projection info of current location"));
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
-	    G_fatal_error(_("Can't get projection units of current location"));
+	    G_fatal_error(
+		_("Can't get projection units of current location"));
 
 	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-	    G_fatal_error(_("Can't get projection key values of current location"));
+	    G_fatal_error(
+		_("Can't get projection key values of current location"));
 
 	G_free_key_value(in_proj_info);
 	G_free_key_value(in_unit_info);
@@ -758,15 +746,23 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to set up lat/long projection parameters"));
     }
 
+    if ((latin != NULL || longin != NULL) && (G_projection() == PROJECTION_LL))
+	G_warning(_("latin and longin raster maps have no effect when in a Lat/Lon location"));
+	/* true about longin= when civiltime is used? */
+	/* civiltime needs longin= but not latin= for non-LL projections -
+	    better would be it just use pj_proj() if it needs those?? */
+    if (latin != NULL && longin == NULL)
+	G_fatal_error(_("Both latin and longin raster maps must be given, or neither"));
+
 /**********end of parser - ******************************/
 
-    if ((G_projection() == PROJECTION_LL)) {
-	ll_correction = 1;
-    }
 
-    G_debug(3, "calculate starts...");
+    if ((G_projection() == PROJECTION_LL))
+	ll_correction = TRUE;
+
+    G_debug(3, "calculate() starts...");
     calculate(singleSlope, singleAspect, singleAlbedo, singleLinke, gridGeom);
-    G_debug(3, "OUTGR starts...");
+    G_debug(3, "OUTGR() starts...");
     OUTGR();
 
     exit(EXIT_SUCCESS);
@@ -784,8 +780,8 @@ int INPUT_part(int offset, double *zmax)
     FCELL *rast1 = NULL, *rast2 = NULL;
     static FCELL **horizonbuf;
     unsigned char *horizonpointer;
-    int fd1 = -1, fd2 = -1, fd3 = -1, fd4 = -1, fd5 = -1, fd6 = -1, fd7 =
-	-1, row, row_rev;
+    int fd1 = -1, fd2 = -1, fd3 = -1, fd4 = -1, fd5 = -1, fd6 = -1,
+	fd7 = -1, row, row_rev;
     static int *fd_shad;
     int fr1 = -1, fr2 = -1;
     int l, i, j;
@@ -876,10 +872,10 @@ int INPUT_part(int offset, double *zmax)
 
     if (latin != NULL) {
 	cell6 = G_allocate_f_raster_buf();
-	if (la == NULL) {
-	    la = (float **)G_malloc(sizeof(float *) * (numRows));
+	if (latitudeArray == NULL) {
+	    latitudeArray = (float **)G_malloc(sizeof(float *) * (numRows));
 	    for (l = 0; l < numRows; l++)
-		la[l] = (float *)G_malloc(sizeof(float) * (n));
+		latitudeArray[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 	if ((mapset = G_find_cell2(latin, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), latin);
@@ -888,9 +884,9 @@ int INPUT_part(int offset, double *zmax)
 
     if (longin != NULL) {
 	cell7 = G_allocate_f_raster_buf();
-	longitArray = (float **)G_malloc(sizeof(float *) * (numRows));
+	longitudeArray = (float **)G_malloc(sizeof(float *) * (numRows));
 	for (l = 0; l < numRows; l++)
-	    longitArray[l] = (float *)G_malloc(sizeof(float) * (n));
+	    longitudeArray[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell2(longin, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), longin);
@@ -931,7 +927,7 @@ int INPUT_part(int offset, double *zmax)
 	    fd_shad = (int *)G_malloc(sizeof(int) * arrayNumInt);
 	}
 	/*
-	 * if(tt != NULL)
+	 * if(ttime != NULL)
 	 * {
 	 * 
 	 * horizonbuf[0]=G_allocate_f_raster_buf();
@@ -1040,16 +1036,16 @@ int INPUT_part(int offset, double *zmax)
 
 	    if (latin != NULL) {
 		if (!G_is_f_null_value(cell6 + j))
-		    la[rowrevoffset][j] = (float)cell6[j];
+		    latitudeArray[rowrevoffset][j] = (float)cell6[j];
 		else
-		    la[rowrevoffset][j] = UNDEFZ;
+		    latitudeArray[rowrevoffset][j] = UNDEFZ;
 	    }
 
 	    if (longin != NULL) {
 		if (!G_is_f_null_value(cell7 + j))
-		    longitArray[rowrevoffset][j] = (float)cell7[j];
+		    longitudeArray[rowrevoffset][j] = (float)cell7[j];
 		else
-		    longitArray[rowrevoffset][j] = UNDEFZ;
+		    longitudeArray[rowrevoffset][j] = UNDEFZ;
 	    }
 
 	    if (coefbh != NULL) {
@@ -1140,7 +1136,7 @@ int INPUT_part(int offset, double *zmax)
 		    z[i][j] = UNDEFZ;
 		if (albedo != NULL && a[i][j] == UNDEFZ)
 		    z[i][j] = UNDEFZ;
-		if (latin != NULL && la[i][j] == UNDEFZ)
+		if (latin != NULL && latitudeArray[i][j] == UNDEFZ)
 		    z[i][j] = UNDEFZ;
 		if (coefbh != NULL && cbhr[i][j] == UNDEFZ)
 		    z[i][j] = UNDEFZ;
@@ -1334,7 +1330,7 @@ void joules2(struct SunGeometryConstDay *sunGeom,
 
     com_par(sunGeom, sunVarGeom, gridGeom, latitude, longitude);
 
-    if (tt != NULL) {		/*irradiance */
+    if (ttime != NULL) {		/*irradiance */
 
 	s0 = lumcline2(sunGeom, sunVarGeom, sunSlopeGeom, gridGeom,
 		       horizonpointer);
@@ -1809,7 +1805,8 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 	for (i = 0; i < n; i++) {
 
 	    if (useCivilTime()) {
-		longitTime = -longitArray[arrayOffset][i] / 15.;
+		/* sun travels 15deg per hour, so 1 TZ every 15 deg and 15 TZs * 24hrs = 360deg */
+		longitTime = -longitudeArray[arrayOffset][i] / 15.;
 	    }
 
 	    gridGeom.xg0 = gridGeom.xx0 = (double)i *gridGeom.stepx;
@@ -1840,42 +1837,49 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 		}
 		if (linkein != NULL) {
 		    sunRadVar.linke = li[arrayOffset][i];
-		    li_max = AMAX1(li_max, sunRadVar.linke);
-		    li_min = AMIN1(li_min, sunRadVar.linke);
+		    linke_max = AMAX1(linke_max, sunRadVar.linke);
+		    linke_min = AMIN1(linke_min, sunRadVar.linke);
 		}
 		if (albedo != NULL) {
 		    sunRadVar.alb = a[arrayOffset][i];
-		    al_max = AMAX1(al_max, sunRadVar.alb);
-		    al_min = AMIN1(al_min, sunRadVar.alb);
+		    albedo_max = AMAX1(albedo_max, sunRadVar.alb);
+		    albedo_min = AMIN1(albedo_min, sunRadVar.alb);
 		}
 		if (latin != NULL) {
-		    latitude = la[arrayOffset][i];
-		    la_max = AMAX1(la_max, latitude);
-		    la_min = AMIN1(la_min, latitude);
+		    latitude = latitudeArray[arrayOffset][i];
+		    lat_max = AMAX1(lat_max, latitude);
+		    lat_min = AMIN1(lat_min, latitude);
 		    latitude *= deg2rad;
 		}
-		/* MN 2/2009: should it be?? 
-		   if (latin == NULL && lt == NULL && (G_projection() != PROJECTION_LL)) { 
-		 */
+		if (longin != NULL) {
+		    longitude = longitudeArray[arrayOffset][i];
+		    /* lon_max = AMAX1(lon_max, longitude); */
+		    /* lon_min = AMIN1(lon_min, longitude); */
+		    longitude *= deg2rad;
+		}
+
 		if ((G_projection() != PROJECTION_LL)) {
 
-		    longitude = gridGeom.xp;
-		    latitude = gridGeom.yp;
+		    if (latin == NULL || longin == NULL) {
+			/* if either is missing we have to calc both from current projection */
+			longitude = gridGeom.xp;
+			latitude = gridGeom.yp;
 
-		    if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0) {
-			G_fatal_error("Error in pj_do_proj");
+			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0) {
+			    G_fatal_error("Error in pj_do_proj");
+			}
+
+			lat_max = AMAX1(lat_max, latitude);
+			lat_min = AMIN1(lat_min, latitude);
+			latitude *= deg2rad;
+			longitude *= deg2rad;
 		    }
-
-		    la_max = AMAX1(la_max, latitude);
-		    la_min = AMIN1(la_min, latitude);
-		    latitude *= deg2rad;
-		    longitude *= deg2rad;
 		}
 		else {		/* ll projection */
 		    latitude = gridGeom.yp;
 		    longitude = gridGeom.xp;
-		    la_max = AMAX1(la_max, latitude);
-		    la_min = AMIN1(la_min, latitude);
+		    lat_max = AMAX1(lat_max, latitude);
+		    lat_min = AMIN1(lat_min, latitude);
 		    latitude *= deg2rad;
 		    longitude *= deg2rad;
 		}
@@ -1891,7 +1895,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 		cos_v = cos(M_PI / 2 + sunSlopeGeom.aspect);
 		sin_v = sin(M_PI / 2 + sunSlopeGeom.aspect);
 
-		if (tt != NULL)
+		if (ttime != NULL)
 		    sunGeom.timeAngle = tim;
 
 		gridGeom.sinlat = sin(-latitude);
@@ -1911,10 +1915,10 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 
 		if ((incidout != NULL) || someRadiation) {
 		    com_par_const(longitTime, &sunGeom, &gridGeom);
-		    sr_min = AMIN1(sr_min, sunGeom.sunrise_time);
-		    sr_max = AMAX1(sr_max, sunGeom.sunrise_time);
-		    ss_min = AMIN1(ss_min, sunGeom.sunset_time);
-		    ss_max = AMAX1(ss_max, sunGeom.sunset_time);
+		    sunrise_min = AMIN1(sunrise_min, sunGeom.sunrise_time);
+		    sunrise_max = AMAX1(sunrise_max, sunGeom.sunrise_time);
+		    sunset_min = AMIN1(sunset_min, sunGeom.sunset_time);
+		    sunset_max = AMAX1(sunset_max, sunGeom.sunset_time);
 
 		}
 
@@ -1984,7 +1988,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 	    day);
     hist.edlinecnt = 2;
 
-    if (tt != NULL) {
+    if (ttime != NULL) {
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Local (solar) time (decimal hr.):         %.4f", timo);
 	hist.edlinecnt++;
@@ -1999,17 +2003,12 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 	    " Declination (rad):                        %f", -declination);
     hist.edlinecnt += 3;
 
-    if (lt != NULL)
-	sprintf(hist.edhist[hist.edlinecnt],
-		" Latitude (deg):                           %.4f",
-		-latitude * rad2deg);
-    else
-	sprintf(hist.edhist[hist.edlinecnt],
-		" Latitude min-max(deg):                    %.4f - %.4f",
-		la_min, la_max);
+    sprintf(hist.edhist[hist.edlinecnt],
+	    " Latitude min-max(deg):                    %.4f - %.4f",
+	    lat_min, lat_max);
     hist.edlinecnt++;
 
-    if (tt != NULL) {
+    if (ttime != NULL) {
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Sunrise time (hr.):                       %.2f",
 		sunGeom.sunrise_time);
@@ -2023,16 +2022,16 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
     else {
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Sunrise time min-max (hr.):               %.2f - %.2f",
-		sr_min, sr_max);
+		sunrise_min, sunrise_max);
 	sprintf(hist.edhist[hist.edlinecnt + 1],
 		" Sunset time min-max (hr.):                %.2f - %.2f",
-		ss_min, ss_max);
+		sunset_min, sunset_max);
 	sprintf(hist.edhist[hist.edlinecnt + 2],
 		" Time step (hr.):                          %.4f", step);
     }
     hist.edlinecnt += 3;
 
-    if (incidout != NULL || tt != NULL) {
+    if (incidout != NULL || ttime != NULL) {
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Solar altitude (deg):                     %.4f",
 		sunVarGeom.solarAltitude * rad2deg);
@@ -2049,7 +2048,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
     else
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Linke turbidity factor min-max:           %.1f-%.1f",
-		li_min, li_max);
+		linke_min, linke_max);
     hist.edlinecnt++;
 
     if (albedo == NULL)
@@ -2059,7 +2058,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
     else
 	sprintf(hist.edhist[hist.edlinecnt],
 		" Ground albedo min-max:                    %.3f-%.3f",
-		al_min, al_max);
+		albedo_min, albedo_max);
     hist.edlinecnt++;
 
     sprintf(hist.edhist[hist.edlinecnt],
