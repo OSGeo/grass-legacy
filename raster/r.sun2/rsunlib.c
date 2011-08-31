@@ -385,18 +385,17 @@ double lumcline2(struct SunGeometryConstDay *sungeom,
 		(horizonHeight > sunVarGeom->solarAltitude);
 
 	    if (!sunVarGeom->isShadow) {
-		/*
-		   if (z_orig != UNDEFZ) 
-		   {
-		   s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l; 
-
-		   }
-		   else
-		   {
-		   s = sunVarGeom->sinSolarAltitude;
+		/* if (z_orig != UNDEFZ) {
+		      s = sunSlopeGeom->lum_C31_l
+			* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+			+ sunSlopeGeom->lum_C33_l;
+		   } else {
+		     s = sunVarGeom->sinSolarAltitude;
 		   }
 		 */
-		s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l;	/* Jenco */
+		s = sunSlopeGeom->lum_C31_l
+			* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+			+ sunSlopeGeom->lum_C33_l;	/* Jenco */
 	    }
 
 	}			/*  End if useHorizonData() */
@@ -412,35 +411,32 @@ double lumcline2(struct SunGeometryConstDay *sungeom,
 	    }
 	    else {
 
-		/*
-		   if (z_orig != UNDEFZ) 
-		   {
-
-		   s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l; 
-		   }
-		   else
-		   {
-		   s = sunVarGeom->sinSolarAltitude;
+		/* if (z_orig != UNDEFZ) {
+		      s = sunSlopeGeom->lum_C31_l
+			* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+			+ sunSlopeGeom->lum_C33_l;
+		   } else {
+		     s = sunVarGeom->sinSolarAltitude;
 		   }
 		 */
-		s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l;	/* Jenco */
+		s = sunSlopeGeom->lum_C31_l
+			* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+			+ sunSlopeGeom->lum_C33_l;	/* Jenco */
 	    }
 	}
     }
     else {
-	/*
-	   if (z_orig != UNDEFZ) 
-	   {
-	   s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l; 
-	   }
-	   else
-	   {
-	   s = sunVarGeom->sinSolarAltitude;
+	/* if (z_orig != UNDEFZ) {
+	     s = sunSlopeGeom->lum_C31_l
+		* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+		+ sunSlopeGeom->lum_C33_l;
+	   } else {
+	     s = sunVarGeom->sinSolarAltitude;
 	   }
 	 */
-	s = sunSlopeGeom->lum_C31_l * cos(-sungeom->timeAngle - sunSlopeGeom->longit_l) + sunSlopeGeom->lum_C33_l;	/* Jenco */
-
-
+	s = sunSlopeGeom->lum_C31_l
+		* cos(-sungeom->timeAngle - sunSlopeGeom->longit_l)
+		+ sunSlopeGeom->lum_C33_l;	/* Jenco */
     }
 
     /* if (s <= 0) return UNDEFZ; ?? */
