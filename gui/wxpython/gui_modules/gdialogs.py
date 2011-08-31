@@ -107,13 +107,13 @@ class ElementDialog(wx.Dialog):
         if self.etype:
             self.dataSizer.Add(item = wx.StaticText(parent = self.panel, id = wx.ID_ANY,
                                                     label = _("Type of element:")),
-                               proportion=0, flag=wx.ALL, border=1)
+                               proportion = 0, flag = wx.ALL, border = 1)
             self.dataSizer.Add(item = self.typeSelect,
-                               proportion=0, flag=wx.ALL, border=1)
+                               proportion = 0, flag = wx.ALL, border = 1)
         
         self.dataSizer.Add(item = wx.StaticText(parent = self.panel, id = wx.ID_ANY,
                                                 label = self.label),
-                           proportion=0, flag=wx.ALL, border=1)
+                           proportion = 0, flag = wx.ALL, border = 1)
         
         # buttons
         btnSizer = wx.StdDialogButtonSizer()
@@ -121,11 +121,11 @@ class ElementDialog(wx.Dialog):
         btnSizer.AddButton(self.btnOK)
         btnSizer.Realize()
         
-        self.sizer.Add(item=self.dataSizer, proportion=1,
-                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        self.sizer.Add(item = self.dataSizer, proportion = 1,
+                       flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border = 5)
         
-        self.sizer.Add(item=btnSizer, proportion=0,
-                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        self.sizer.Add(item = btnSizer, proportion = 0,
+                       flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border = 5)
         
     def GetElement(self):
         """!Return (mapName, overwrite)"""
@@ -154,15 +154,15 @@ class LocationDialog(ElementDialog):
 
     def __Layout(self):
         """!Do layout"""
-        self.dataSizer.Add(self.element, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
+        self.dataSizer.Add(self.element, proportion = 0,
+                      flag = wx.EXPAND | wx.ALL, border = 1)
  
         self.dataSizer.Add(wx.StaticText(parent = self.panel, id = wx.ID_ANY,
-                                         label = _("Name of mapset:")), proportion=0,
-                           flag=wx.EXPAND | wx.ALL, border=1)
+                                         label = _("Name of mapset:")), proportion = 0,
+                           flag = wx.EXPAND | wx.ALL, border = 1)
 
-        self.dataSizer.Add(self.element1, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
+        self.dataSizer.Add(self.element1, proportion = 0,
+                           flag = wx.EXPAND | wx.ALL, border = 1)
        
         self.panel.SetSizer(self.sizer)
         self.sizer.Fit(self)
@@ -206,8 +206,8 @@ class MapsetDialog(ElementDialog):
 
     def __Layout(self):
         """!Do layout"""
-        self.dataSizer.Add(self.element, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
+        self.dataSizer.Add(self.element, proportion = 0,
+                           flag = wx.EXPAND | wx.ALL, border = 1)
         
         self.panel.SetSizer(self.sizer)
         self.sizer.Fit(self)
@@ -401,7 +401,7 @@ def CreateNewVector(parent, cmd, title = _('Create new vector map'),
     return dlg
 
 class SavedRegion(wx.Dialog):
-    def __init__(self, parent, id = wx.ID_ANY, title="", loadsave='load',
+    def __init__(self, parent, id = wx.ID_ANY, title = "", loadsave = 'load',
                  **kwargs):
         """!Loading and saving of display extents to saved region file
 
@@ -415,27 +415,27 @@ class SavedRegion(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
         
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(parent=self, id=wx.ID_ANY)
-        box.Add(item=label, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+        label = wx.StaticText(parent = self, id = wx.ID_ANY)
+        box.Add(item = label, proportion = 0, flag = wx.ALIGN_CENTRE | wx.ALL, border = 5)
         if loadsave == 'load':
             label.SetLabel(_("Load region:"))
-            selection = gselect.Select(parent=self, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
-                                       type='windows')
+            selection = gselect.Select(parent = self, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE,
+                                       type = 'windows')
         elif loadsave == 'save':
             label.SetLabel(_("Save region:"))
-            selection = gselect.Select(parent=self, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
-                                       type='windows', mapsets = [grass.gisenv()['MAPSET']])
+            selection = gselect.Select(parent = self, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE,
+                                       type = 'windows', mapsets  =  [grass.gisenv()['MAPSET']])
         
-        box.Add(item=selection, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+        box.Add(item = selection, proportion = 0, flag = wx.ALIGN_CENTRE | wx.ALL, border = 5)
         selection.SetFocus()
         selection.Bind(wx.EVT_TEXT, self.OnRegion)
         
-        sizer.Add(item=box, proportion=0, flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
-                  border=5)
+        sizer.Add(item = box, proportion = 0, flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
+                  border = 5)
         
-        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20, -1), style=wx.LI_HORIZONTAL)
-        sizer.Add(item=line, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
+        line = wx.StaticLine(parent = self, id = wx.ID_ANY, size = (20, -1), style = wx.LI_HORIZONTAL)
+        sizer.Add(item = line, proportion = 0,
+                  flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border = 5)
         
         btnsizer = wx.StdDialogButtonSizer()
         
@@ -447,7 +447,7 @@ class SavedRegion(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
         
-        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
+        sizer.Add(item = btnsizer, proportion = 0, flag = wx.ALIGN_RIGHT | wx.ALL, border = 5)
         
         self.SetSizer(sizer)
         sizer.Fit(self)
@@ -460,9 +460,9 @@ class DecorationDialog(wx.Dialog):
     """
     Controls setting options and displaying/hiding map overlay decorations
     """
-    def __init__(self, parent, ovlId, title, cmd, name=None,
-                 pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE,
-                 checktxt='', ctrltxt=''):
+    def __init__(self, parent, ovlId, title, cmd, name = None,
+                 pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE,
+                 checktxt = '', ctrltxt = ''):
 
         wx.Dialog.__init__(self, parent, wx.ID_ANY, title, pos, size, style)
 
@@ -474,64 +474,64 @@ class DecorationDialog(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        self.chkbox = wx.CheckBox(parent=self, id=wx.ID_ANY, label=checktxt)
+        self.chkbox = wx.CheckBox(parent = self, id = wx.ID_ANY, label = checktxt)
         if self.parent.Map.GetOverlay(self.ovlId) is None:
             self.chkbox.SetValue(True)
         else:
             self.chkbox.SetValue(self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive())
-        box.Add(item=self.chkbox, proportion=0,
-                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+        box.Add(item = self.chkbox, proportion = 0,
+                flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
+        sizer.Add(item = box, proportion = 0,
+                  flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        optnbtn = wx.Button(parent=self, id=wx.ID_ANY, label=_("Set options"))
-        box.Add(item=optnbtn, proportion=0, flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+        optnbtn = wx.Button(parent = self, id = wx.ID_ANY, label = _("Set options"))
+        box.Add(item = optnbtn, proportion = 0, flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
+        sizer.Add(item = box, proportion = 0,
+                  flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
         if self.name == 'legend':
             box = wx.BoxSizer(wx.HORIZONTAL)
-            resize = wx.ToggleButton(parent=self, id=wx.ID_ANY, label=_("Set size and position"))
+            resize = wx.ToggleButton(parent = self, id = wx.ID_ANY, label = _("Set size and position"))
             resize.SetToolTipString(_("Click and drag on the map display to set legend"
                                         " size and position and then press OK"))
             resize.SetName('resize')
             if self.parent.toolbars['nviz']:
                 resize.Disable()
-            box.Add(item=resize, proportion=0, flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-            sizer.Add(item=box, proportion=0,
-                      flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+            box.Add(item = resize, proportion = 0, flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
+            sizer.Add(item = box, proportion = 0,
+                      flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Drag %s with mouse in pointer mode to position.\n"
+        label = wx.StaticText(parent = self, id = wx.ID_ANY,
+                              label = _("Drag %s with mouse in pointer mode to position.\n"
                                       "Double-click to change options." % ctrltxt))
         if self.name == 'legend':
             label.SetLabel(label.GetLabel() + _('\nDefine raster map name for legend in '
                                                 'properties dialog.'))
-        box.Add(item=label, proportion=0,
-                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+        box.Add(item = label, proportion = 0,
+                flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
+        sizer.Add(item = box, proportion = 0,
+                  flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
 
-        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(item=line, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+        line = wx.StaticLine(parent = self, id = wx.ID_ANY, size = (20,-1), style = wx.LI_HORIZONTAL)
+        sizer.Add(item = line, proportion = 0,
+                  flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
 
         # buttons
         btnsizer = wx.StdDialogButtonSizer()
 
-        self.btnOK = wx.Button(parent=self, id=wx.ID_OK)
+        self.btnOK = wx.Button(parent = self, id = wx.ID_OK)
         self.btnOK.SetDefault()
         if self.name == 'legend':
             self.btnOK.Enable(False)
         btnsizer.AddButton(self.btnOK)
 
-        btnCancel = wx.Button(parent=self, id=wx.ID_CANCEL)
+        btnCancel = wx.Button(parent = self, id = wx.ID_CANCEL)
         btnsizer.AddButton(btnCancel)
         btnsizer.Realize()
 
-        sizer.Add(item=btnsizer, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        sizer.Add(item = btnsizer, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border = 5)
 
         #
         # bindings
@@ -561,9 +561,9 @@ class DecorationDialog(wx.Dialog):
         
     def _CreateOverlay(self):
         if not self.parent.Map.GetOverlay(self.ovlId):
-            self.newOverlay = self.parent.Map.AddOverlay(id=self.ovlId, type=self.name,
-                                                 command=self.cmd,
-                                                 l_active=False, l_render=False, l_hidden=True)
+            self.newOverlay = self.parent.Map.AddOverlay(id = self.ovlId, type = self.name,
+                                                         command = self.cmd,
+                                                         l_active = False, l_render = False, l_hidden = True)
             
             prop = { 'layer' : self.newOverlay,
                      'params' : None,
@@ -589,8 +589,8 @@ class DecorationDialog(wx.Dialog):
         """
         if self.parent.MapWindow.overlays[self.ovlId]['propwin'] is None:
             # build properties dialog
-            menuform.GUI(parent = self.parent).ParseCommand(cmd=self.cmd,
-                                                            completed=(self.GetOptData, self.name, ''))
+            menuform.GUI(parent = self.parent).ParseCommand(cmd = self.cmd,
+                                                            completed = (self.GetOptData, self.name, ''))
             
         else:
             if self.parent.MapWindow.overlays[self.ovlId]['propwin'].IsShown():
@@ -649,10 +649,10 @@ class DecorationDialog(wx.Dialog):
         except ValueError:
             pass
             
-        self.parent.Map.ChangeOverlay(id=self.ovlId, type=self.name,
-                                      command=self.parent.MapWindow.overlays[self.ovlId]['cmd'],
-                                      l_active=self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive(),
-                                      l_render=False, l_hidden=True)
+        self.parent.Map.ChangeOverlay(id = self.ovlId, type = self.name,
+                                      command = self.parent.MapWindow.overlays[self.ovlId]['cmd'],
+                                      l_active = self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive(),
+                                      l_render = False, l_hidden = True)
         if  self.name == 'legend':
             if params and not self.btnOK.IsEnabled():
                 self.btnOK.Enable()
@@ -662,8 +662,8 @@ class TextLayerDialog(wx.Dialog):
     Controls setting options and displaying/hiding map overlay decorations
     """
 
-    def __init__(self, parent, ovlId, title, name='text',
-                 pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE):
+    def __init__(self, parent, ovlId, title, name = 'text',
+                 pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE):
 
         wx.Dialog.__init__(self, parent, wx.ID_ANY, title, pos, size, style)
         from wx.lib.expando import ExpandoTextCtrl, EVT_ETC_LAYOUT_NEEDED
@@ -685,84 +685,84 @@ class TextLayerDialog(wx.Dialog):
             self.currCoords = [10, 10, 10, 10]
 
         self.sizer = wx.BoxSizer(wx.VERTICAL)
-        box = wx.GridBagSizer(vgap=5, hgap=5)
+        box = wx.GridBagSizer(vgap = 5, hgap = 5)
 
         # show/hide
-        self.chkbox = wx.CheckBox(parent=self, id=wx.ID_ANY, \
-            label = _('Show text object'))
+        self.chkbox = wx.CheckBox(parent = self, id = wx.ID_ANY,
+                                  label = _('Show text object'))
         if self.parent.Map.GetOverlay(self.ovlId) is None:
             self.chkbox.SetValue(True)
         else:
             self.chkbox.SetValue(self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive())
-        box.Add(item=self.chkbox, span=(1,2),
-                flag=wx.ALIGN_LEFT|wx.ALL, border=5,
-                pos=(0, 0))
+        box.Add(item = self.chkbox, span = (1,2),
+                flag = wx.ALIGN_LEFT|wx.ALL, border = 5,
+                pos = (0, 0))
 
         # text entry
-        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Enter text:"))
-        box.Add(item=label,
-                flag=wx.ALIGN_CENTER_VERTICAL,
-                pos=(1, 0))
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Enter text:"))
+        box.Add(item = label,
+                flag = wx.ALIGN_CENTER_VERTICAL,
+                pos = (1, 0))
 
-        self.textentry = ExpandoTextCtrl(parent=self, id=wx.ID_ANY, value="", size=(300,-1))
+        self.textentry = ExpandoTextCtrl(parent = self, id = wx.ID_ANY, value = "", size = (300,-1))
         self.textentry.SetFont(self.currFont)
         self.textentry.SetForegroundColour(self.currClr)
         self.textentry.SetValue(self.currText)
         # get rid of unneeded scrollbar when text box first opened
         self.textentry.SetClientSize((300,-1))
         
-        box.Add(item=self.textentry,
-                pos=(1, 1))
+        box.Add(item = self.textentry,
+                pos = (1, 1))
 
         # rotation
-        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Rotation:"))
-        box.Add(item=label,
-                flag=wx.ALIGN_CENTER_VERTICAL,
-                pos=(2, 0))
-        self.rotation = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
-                                    size=(75,-1), style=wx.SP_ARROW_KEYS)
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Rotation:"))
+        box.Add(item = label,
+                flag = wx.ALIGN_CENTER_VERTICAL,
+                pos = (2, 0))
+        self.rotation = wx.SpinCtrl(parent = self, id = wx.ID_ANY, value = "", pos = (30, 50),
+                                    size = (75,-1), style = wx.SP_ARROW_KEYS)
         self.rotation.SetRange(-360, 360)
         self.rotation.SetValue(int(self.currRot))
-        box.Add(item=self.rotation,
-                flag=wx.ALIGN_RIGHT,
-                pos=(2, 1))
+        box.Add(item = self.rotation,
+                flag = wx.ALIGN_RIGHT,
+                pos = (2, 1))
 
         # font
-        fontbtn = wx.Button(parent=self, id=wx.ID_ANY, label=_("Set font"))
-        box.Add(item=fontbtn,
-                flag=wx.ALIGN_RIGHT,
-                pos=(3, 1))
+        fontbtn = wx.Button(parent = self, id = wx.ID_ANY, label = _("Set font"))
+        box.Add(item = fontbtn,
+                flag = wx.ALIGN_RIGHT,
+                pos = (3, 1))
 
-        self.sizer.Add(item=box, proportion=1,
-                  flag=wx.ALL, border=10)
+        self.sizer.Add(item = box, proportion = 1,
+                  flag = wx.ALL, border = 10)
 
         # note
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Drag text with mouse in pointer mode "
+        label = wx.StaticText(parent = self, id = wx.ID_ANY,
+                              label = _("Drag text with mouse in pointer mode "
                                       "to position.\nDouble-click to change options"))
-        box.Add(item=label, proportion=0,
-                flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
-        self.sizer.Add(item=box, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.ALL, border=5)
+        box.Add(item = label, proportion = 0,
+                flag = wx.ALIGN_CENTRE | wx.ALL, border = 5)
+        self.sizer.Add(item = box, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.ALL, border = 5)
 
-        line = wx.StaticLine(parent=self, id=wx.ID_ANY,
-                             size=(20,-1), style=wx.LI_HORIZONTAL)
-        self.sizer.Add(item=line, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTRE | wx.ALL, border=5)
+        line = wx.StaticLine(parent = self, id = wx.ID_ANY,
+                             size = (20,-1), style = wx.LI_HORIZONTAL)
+        self.sizer.Add(item = line, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTRE | wx.ALL, border = 5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
-        btn = wx.Button(parent=self, id=wx.ID_OK)
+        btn = wx.Button(parent = self, id = wx.ID_OK)
         btn.SetDefault()
         btnsizer.AddButton(btn)
 
-        btn = wx.Button(parent=self, id=wx.ID_CANCEL)
+        btn = wx.Button(parent = self, id = wx.ID_CANCEL)
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        self.sizer.Add(item=btnsizer, proportion=0,
-                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        self.sizer.Add(item = btnsizer, proportion = 0,
+                       flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border = 5)
 
         self.SetSizer(self.sizer)
         self.sizer.Fit(self)
@@ -819,8 +819,8 @@ class TextLayerDialog(wx.Dialog):
 
 class AddMapLayersDialog(wx.Dialog):
     """!Add selected map layers (raster, vector) into layer tree"""
-    def __init__(self, parent, title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+    def __init__(self, parent, title, style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+        wx.Dialog.__init__(self, parent = parent, id = wx.ID_ANY, title = title, style = style)
 
         self.parent = parent # GMFrame
         
@@ -849,10 +849,10 @@ class AddMapLayersDialog(wx.Dialog):
         btnSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=self.bodySizer, proportion=1,
-                      flag=wx.EXPAND | wx.ALL, border=5)
-        mainSizer.Add(item=btnSizer, proportion=0,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        mainSizer.Add(item = self.bodySizer, proportion = 1,
+                      flag = wx.EXPAND | wx.ALL, border = 5)
+        mainSizer.Add(item = btnSizer, proportion = 0,
+                      flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border = 5)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -861,61 +861,61 @@ class AddMapLayersDialog(wx.Dialog):
         self.SetMinSize(self.GetSize())
         
     def __createDialogBody(self):
-        bodySizer = wx.GridBagSizer(vgap=3, hgap=3)
+        bodySizer = wx.GridBagSizer(vgap = 3, hgap = 3)
         bodySizer.AddGrowableCol(1)
         bodySizer.AddGrowableRow(3)
         
         # layer type
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Map layer type:")),
-                      flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(0,0))
+        bodySizer.Add(item = wx.StaticText(parent = self, label = _("Map layer type:")),
+                      flag = wx.ALIGN_CENTER_VERTICAL,
+                      pos = (0,0))
 
-        self.layerType = wx.Choice(parent=self, id=wx.ID_ANY,
-                                   choices=['raster', 'vector'], size=(100,-1))
+        self.layerType = wx.Choice(parent = self, id = wx.ID_ANY,
+                                   choices = ['raster', 'vector'], size = (100,-1))
         self.layerType.SetSelection(0)
-        bodySizer.Add(item=self.layerType,
-                      pos=(0,1))
+        bodySizer.Add(item = self.layerType,
+                      pos = (0,1))
 
         # select toggle
-        self.toggle = wx.CheckBox(parent=self, id=wx.ID_ANY,
-                                  label=_("Select toggle"))
+        self.toggle = wx.CheckBox(parent = self, id = wx.ID_ANY,
+                                  label = _("Select toggle"))
         self.toggle.SetValue(True)
-        bodySizer.Add(item=self.toggle,
-                      flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(0,2))
+        bodySizer.Add(item = self.toggle,
+                      flag = wx.ALIGN_CENTER_VERTICAL,
+                      pos = (0,2))
         
         # mapset filter
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Mapset:")),
-                      flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(1,0))
+        bodySizer.Add(item = wx.StaticText(parent = self, label = _("Mapset:")),
+                      flag = wx.ALIGN_CENTER_VERTICAL,
+                      pos = (1,0))
 
         self.mapset = gselect.MapsetSelect(parent = self)
         self.mapset.SetStringSelection(grass.gisenv()['MAPSET'])
-        bodySizer.Add(item=self.mapset,
-                      pos=(1,1), span=(1, 2))
+        bodySizer.Add(item = self.mapset,
+                      pos = (1,1), span = (1, 2))
 
         # map name filter
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Filter:")),
-                      flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(2,0))
+        bodySizer.Add(item = wx.StaticText(parent = self, label = _("Filter:")),
+                      flag = wx.ALIGN_CENTER_VERTICAL,
+                      pos = (2,0))
 
-        self.filter = wx.TextCtrl(parent=self, id=wx.ID_ANY,
-                                  value="",
-                                  size=(250,-1))
-        bodySizer.Add(item=self.filter,
-                      flag=wx.EXPAND,
-                      pos=(2,1), span=(1, 2))
+        self.filter = wx.TextCtrl(parent = self, id = wx.ID_ANY,
+                                  value = "",
+                                  size = (250,-1))
+        bodySizer.Add(item = self.filter,
+                      flag = wx.EXPAND,
+                      pos = (2,1), span = (1, 2))
 
         # layer list 
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("List of maps:")),
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_TOP,
-                      pos=(3,0))
-        self.layers = wx.CheckListBox(parent=self, id=wx.ID_ANY,
-                                      size=(250, 100),
-                                      choices=[])
-        bodySizer.Add(item=self.layers,
-                      flag=wx.EXPAND,
-                      pos=(3,1), span=(1, 2))
+        bodySizer.Add(item = wx.StaticText(parent = self, label = _("List of maps:")),
+                      flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_TOP,
+                      pos = (3,0))
+        self.layers = wx.CheckListBox(parent = self, id = wx.ID_ANY,
+                                      size = (250, 100),
+                                      choices = [])
+        bodySizer.Add(item = self.layers,
+                      flag = wx.EXPAND,
+                      pos = (3,1), span = (1, 2))
 
         # bindings
         self.layerType.Bind(wx.EVT_CHOICE, self.OnChangeParams)
@@ -953,9 +953,9 @@ class AddMapLayersDialog(wx.Dialog):
             self.popupDataID2 = wx.NewId()
             self.popupDataID3 = wx.NewId()
 
-            self.Bind(wx.EVT_MENU, self.OnSelectAll,    id=self.popupDataID1)
-            self.Bind(wx.EVT_MENU, self.OnSelectInvert, id=self.popupDataID2)
-            self.Bind(wx.EVT_MENU, self.OnDeselectAll,  id=self.popupDataID3)
+            self.Bind(wx.EVT_MENU, self.OnSelectAll,    id = self.popupDataID1)
+            self.Bind(wx.EVT_MENU, self.OnSelectInvert, id = self.popupDataID2)
+            self.Bind(wx.EVT_MENU, self.OnDeselectAll,  id = self.popupDataID3)
 
         # generate popup-menu
         menu = wx.Menu()
@@ -1042,13 +1042,13 @@ class ImportDialog(wx.Dialog):
         
         self.commandId = -1  # id of running command
         
-        wx.Dialog.__init__(self, parent, id, title, style=style,
+        wx.Dialog.__init__(self, parent, id, title, style = style,
                            name = "MultiImportDialog")
         
-        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
-        self.layerBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                     label=_(" List of %s layers ") % self.importType.upper())
+        self.layerBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
+                                     label = _(" List of %s layers ") % self.importType.upper())
         
         #
         # list of layers
@@ -1056,8 +1056,8 @@ class ImportDialog(wx.Dialog):
         self.list = LayersList(self.panel)
         self.list.LoadData()
 
-        self.optionBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                      label="%s" % _("Options"))
+        self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
+                                      label = "%s" % _("Options"))
         
         cmd = self._getCommand()
         task = gtask.parse_interface(cmd)
@@ -1082,21 +1082,21 @@ class ImportDialog(wx.Dialog):
                                              label = desc)
         
         
-        self.overwrite = wx.CheckBox(parent=self.panel, id=wx.ID_ANY,
-                                     label=_("Allow output files to overwrite existing files"))
-        self.overwrite.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
+        self.overwrite = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
+                                     label = _("Allow output files to overwrite existing files"))
+        self.overwrite.SetValue(UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'))
         
-        self.add = wx.CheckBox(parent=self.panel, id=wx.ID_ANY)
+        self.add = wx.CheckBox(parent = self.panel, id = wx.ID_ANY)
         
         #
         # buttons
         #
         # cancel
-        self.btn_cancel = wx.Button(parent=self.panel, id=wx.ID_CANCEL)
+        self.btn_cancel = wx.Button(parent = self.panel, id = wx.ID_CANCEL)
         self.btn_cancel.SetToolTipString(_("Close dialog"))
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         # run
-        self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label = _("&Import"))
+        self.btn_run = wx.Button(parent = self.panel, id = wx.ID_OK, label = _("&Import"))
         self.btn_run.SetToolTipString(_("Import selected layers"))
         self.btn_run.SetDefault()
         self.btn_run.Enable(False)
@@ -1119,45 +1119,45 @@ class ImportDialog(wx.Dialog):
         #
         layerSizer = wx.StaticBoxSizer(self.layerBox, wx.HORIZONTAL)
 
-        layerSizer.Add(item=self.list, proportion=1,
-                      flag=wx.ALL | wx.EXPAND, border=5)
+        layerSizer.Add(item = self.list, proportion = 1,
+                      flag = wx.ALL | wx.EXPAND, border = 5)
         
-        dialogSizer.Add(item=layerSizer, proportion=1,
-                        flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+        dialogSizer.Add(item = layerSizer, proportion = 1,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
 
         # options
         optionSizer = wx.StaticBoxSizer(self.optionBox, wx.VERTICAL)
         for key in self.options.keys():
-            optionSizer.Add(item=self.options[key], proportion=0)
+            optionSizer.Add(item = self.options[key], proportion = 0)
             
-        dialogSizer.Add(item=optionSizer, proportion=0,
-                        flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+        dialogSizer.Add(item = optionSizer, proportion = 0,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
         
-        dialogSizer.Add(item=self.overwrite, proportion=0,
-                        flag=wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
+        dialogSizer.Add(item = self.overwrite, proportion = 0,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
         
-        dialogSizer.Add(item=self.add, proportion=0,
-                        flag=wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
+        dialogSizer.Add(item = self.add, proportion = 0,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
         
         #
         # buttons
         #
-        btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
+        btnsizer = wx.BoxSizer(orient = wx.HORIZONTAL)
         
-        btnsizer.Add(item=self.btn_cmd, proportion=0,
-                     flag=wx.ALL | wx.ALIGN_CENTER,
-                     border=10)
+        btnsizer.Add(item = self.btn_cmd, proportion = 0,
+                     flag = wx.ALL | wx.ALIGN_CENTER,
+                     border = 10)
         
-        btnsizer.Add(item=self.btn_run, proportion=0,
-                     flag=wx.ALL | wx.ALIGN_CENTER,
-                     border=10)
+        btnsizer.Add(item = self.btn_run, proportion = 0,
+                     flag = wx.ALL | wx.ALIGN_CENTER,
+                     border = 10)
         
-        btnsizer.Add(item=self.btn_cancel, proportion=0,
-                     flag=wx.ALL | wx.ALIGN_CENTER,
-                     border=10)
+        btnsizer.Add(item = self.btn_cancel, proportion = 0,
+                     flag = wx.ALL | wx.ALIGN_CENTER,
+                     border = 10)
         
-        dialogSizer.Add(item=btnsizer, proportion=0,
-                        flag=wx.ALIGN_CENTER)
+        dialogSizer.Add(item = btnsizer, proportion = 0,
+                        flag = wx.ALIGN_CENTER)
         
         # dialogSizer.SetSizeHints(self.panel)
         self.panel.SetAutoLayout(True)
@@ -1169,14 +1169,14 @@ class ImportDialog(wx.Dialog):
         self.SetMinSize(size)
         self.SetSize((size.width, size.height + 100))
         width = self.GetSize()[0]
-        self.list.SetColumnWidth(col=1, width=width/2 - 50)
+        self.list.SetColumnWidth(col = 1, width = width/2 - 50)
         self.Layout()
 
     def _getCommand(self):
         """!Get command"""
         return ''
     
-    def OnCancel(self, event=None):
+    def OnCancel(self, event = None):
         """!Close dialog"""
         self.Close()
 
@@ -1208,7 +1208,7 @@ class ImportDialog(wx.Dialog):
         if self.importType == 'gdal':
             cmd = ['d.rast',
                    'map=%s' % name]
-            if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
+            if UserSettings.Get(group = 'cmd', key = 'rasterOverlay', subkey = 'enabled'):
                 cmd.append('-o')
                 
             item = maptree.AddLayer(ltype = 'raster',
@@ -1255,7 +1255,7 @@ class GdalImportDialog(ImportDialog):
         else:
             self.add.SetLabel(_("Add imported layers into layer tree"))
         
-        self.add.SetValue(UserSettings.Get(group='cmd', key='addNewLayer', subkey='enabled'))
+        self.add.SetValue(UserSettings.Get(group = 'cmd', key = 'addNewLayer', subkey = 'enabled'))
 
         if link:
             self.btn_run.SetLabel(_("&Link"))
@@ -1320,7 +1320,7 @@ class GdalImportDialog(ImportDialog):
                 if self.options[key].IsChecked():
                     cmd.append('-%s' % key)
             
-            if UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'):
+            if UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'):
                 cmd.append('--overwrite')
             
             # run in Layer Manager
@@ -1355,17 +1355,17 @@ class DxfImportDialog(ImportDialog):
         ImportDialog.__init__(self, parent, itype = 'dxf',
                               title = _("Import DXF layers"))
         
-        self.dsnInput = filebrowse.FileBrowseButton(parent=self.panel, id=wx.ID_ANY, 
-                                                    size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
-                                                    dialogTitle=_('Choose DXF file to import'),
-                                                    buttonText=_('Browse'),
-                                                    startDirectory=os.getcwd(), fileMode=0,
-                                                    changeCallback=self.OnSetDsn,
-                                                    fileMask="DXF File (*.dxf)|*.dxf")
+        self.dsnInput = filebrowse.FileBrowseButton(parent = self.panel, id = wx.ID_ANY, 
+                                                    size = globalvar.DIALOG_GSELECT_SIZE, labelText = '',
+                                                    dialogTitle = _('Choose DXF file to import'),
+                                                    buttonText = _('Browse'),
+                                                    startDirectory = os.getcwd(), fileMode = 0,
+                                                    changeCallback = self.OnSetDsn,
+                                                    fileMask = "DXF File (*.dxf)|*.dxf")
         
         self.add.SetLabel(_("Add imported layers into layer tree"))
         
-        self.add.SetValue(UserSettings.Get(group='cmd', key='addNewLayer', subkey='enabled'))
+        self.add.SetValue(UserSettings.Get(group = 'cmd', key = 'addNewLayer', subkey = 'enabled'))
         
         self.doLayout()
 
@@ -1393,11 +1393,11 @@ class DxfImportDialog(ImportDialog):
                     cmd.append('-%s' % key)
             
             if self.overwrite.IsChecked() or \
-                    UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'):
+                    UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'):
                 cmd.append('--overwrite')
             
             # run in Layer Manager
-            self.parent.goutput.RunCmd(cmd, switchPage=True,
+            self.parent.goutput.RunCmd(cmd, switchPage = True,
                                        onDone = self.AddLayers)
         
         self.OnCancel()
@@ -1444,7 +1444,7 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         self.parent = parent
         
         wx.ListCtrl.__init__(self, parent, wx.ID_ANY,
-                             style=wx.LC_REPORT)
+                             style = wx.LC_REPORT)
         listmix.CheckListCtrlMixin.__init__(self)
         self.log = log
 
@@ -1484,8 +1484,8 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             self.popupDataID1 = wx.NewId()
             self.popupDataID2 = wx.NewId()
             
-            self.Bind(wx.EVT_MENU, self.OnSelectAll,  id=self.popupDataID1)
-            self.Bind(wx.EVT_MENU, self.OnSelectNone, id=self.popupDataID2)
+            self.Bind(wx.EVT_MENU, self.OnSelectAll,  id = self.popupDataID1)
+            self.Bind(wx.EVT_MENU, self.OnSelectNone, id = self.popupDataID2)
         
         # generate popup-menu
         menu = wx.Menu()
@@ -1556,58 +1556,58 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
 class SetOpacityDialog(wx.Dialog):
     """!Set opacity of map layers"""
-    def __init__(self, parent, id=wx.ID_ANY, title=_("Set Map Layer Opacity"),
-                 size=wx.DefaultSize, pos=wx.DefaultPosition,
-                 style=wx.DEFAULT_DIALOG_STYLE, opacity=100):
+    def __init__(self, parent, id = wx.ID_ANY, title = _("Set Map Layer Opacity"),
+                 size = wx.DefaultSize, pos = wx.DefaultPosition,
+                 style = wx.DEFAULT_DIALOG_STYLE, opacity = 100):
 
         self.parent = parent    # GMFrame
         self.opacity = opacity  # current opacity
 
-        super(SetOpacityDialog, self).__init__(parent, id=id, pos=pos,
-                                               size=size, style=style, title=title)
+        super(SetOpacityDialog, self).__init__(parent, id = id, pos = pos,
+                                               size = size, style = style, title = title)
 
-        panel = wx.Panel(parent=self, id=wx.ID_ANY)
+        panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        box = wx.GridBagSizer(vgap=5, hgap=5)
-        self.value = wx.Slider(panel, id=wx.ID_ANY, value=self.opacity,
-                               style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | \
+        box = wx.GridBagSizer(vgap = 5, hgap = 5)
+        self.value = wx.Slider(panel, id = wx.ID_ANY, value = self.opacity,
+                               style = wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | \
                                    wx.SL_TOP | wx.SL_LABELS,
-                               minValue=0, maxValue=100,
-                               size=(350, -1))
+                               minValue = 0, maxValue = 100,
+                               size = (350, -1))
 
-        box.Add(item=self.value,
-                flag=wx.ALIGN_CENTRE, pos=(0, 0), span=(1, 2))
-        box.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                   label=_("transparent")),
-                pos=(1, 0))
-        box.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                   label=_("opaque")),
-                flag=wx.ALIGN_RIGHT,
-                pos=(1, 1))
+        box.Add(item = self.value,
+                flag = wx.ALIGN_CENTRE, pos = (0, 0), span = (1, 2))
+        box.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                   label = _("transparent")),
+                pos = (1, 0))
+        box.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                   label = _("opaque")),
+                flag = wx.ALIGN_RIGHT,
+                pos = (1, 1))
 
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        sizer.Add(item = box, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border = 5)
 
-        line = wx.StaticLine(parent=panel, id=wx.ID_ANY,
-                             style=wx.LI_HORIZONTAL)
-        sizer.Add(item=line, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        line  =  wx.StaticLine(parent = panel, id = wx.ID_ANY,
+                             style = wx.LI_HORIZONTAL)
+        sizer.Add(item = line, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border = 5)
 
         # buttons
         btnsizer = wx.StdDialogButtonSizer()
 
-        btnOK = wx.Button(parent=panel, id=wx.ID_OK)
+        btnOK = wx.Button(parent = panel, id = wx.ID_OK)
         btnOK.SetDefault()
         btnsizer.AddButton(btnOK)
 
-        btnCancel = wx.Button(parent=panel, id=wx.ID_CANCEL)
+        btnCancel = wx.Button(parent = panel, id = wx.ID_CANCEL)
         btnsizer.AddButton(btnCancel)
         btnsizer.Realize()
 
-        sizer.Add(item=btnsizer, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        sizer.Add(item = btnsizer, proportion = 0,
+                  flag = wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border = 5)
 
         panel.SetSizer(sizer)
         sizer.Fit(panel)
@@ -1702,11 +1702,11 @@ class StaticWrapText(wx.StaticText):
 
 class ImageSizeDialog(wx.Dialog):
     """!Set size for saved graphic file"""
-    def __init__(self, parent, id = wx.ID_ANY, title=_("Set image size"),
+    def __init__(self, parent, id = wx.ID_ANY, title = _("Set image size"),
                  style = wx.DEFAULT_DIALOG_STYLE, **kwargs):
         self.parent = parent
         
-        wx.Dialog.__init__(self, parent, id = id, style=style, title=title, **kwargs)
+        wx.Dialog.__init__(self, parent, id = id, style = style, title = title, **kwargs)
         
         self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
@@ -1765,7 +1765,7 @@ class ImageSizeDialog(wx.Dialog):
         box.Add(item = fbox, proportion = 1,
                 flag = wx.EXPAND | wx.ALL, border = 5)
         sizer.Add(item = box, proportion = 1,
-                  flag=wx.EXPAND | wx.ALL, border = 3)
+                  flag = wx.EXPAND | wx.ALL, border = 3)
         
         # buttons
         btnsizer = wx.StdDialogButtonSizer()
@@ -1774,7 +1774,7 @@ class ImageSizeDialog(wx.Dialog):
         btnsizer.Realize()
 
         sizer.Add(item = btnsizer, proportion = 0,
-                  flag = wx.EXPAND | wx.ALIGN_RIGHT | wx.ALL, border=5)
+                  flag = wx.EXPAND | wx.ALIGN_RIGHT | wx.ALL, border = 5)
         
         self.panel.SetSizer(sizer)
         sizer.Fit(self.panel)
