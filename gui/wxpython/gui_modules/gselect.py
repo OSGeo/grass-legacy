@@ -1162,7 +1162,8 @@ class GdalSelect(wx.Panel):
         self.format.Bind(wx.EVT_CHOICE, self.OnSetFormat)
         self.extension = wx.TextCtrl(parent = self, id = wx.ID_ANY)
         self.extension.Bind(wx.EVT_TEXT, self.OnSetExtension)
-
+        self.extension.Hide()
+        
         if ogr:
             fType = 'ogr'
         else:
@@ -1193,6 +1194,7 @@ class GdalSelect(wx.Panel):
                                      size = (75, -1))
         self.extensionText = wx.StaticText(parent = self, id = wx.ID_ANY,
                                            label = _("Extension:"))
+        self.extensionText.Hide()
         
         self._layout()
         
