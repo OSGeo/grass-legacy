@@ -1418,11 +1418,20 @@ class GdalSelect(wx.Panel):
         
         if not path:
             return 
+
+        self._reloadLayers()
         
-        data = list()        
+        if event:
+            event.Skip()
         
-        layerId = 1
+    def _reloadLayers(self):
+        """!Reload list of layers"""
         dsn = self._getDsn()
+        if not dsn:
+            return
+
+        data = list()        
+        layerId = 1
         
         if self.dsnType == 'file':
             baseName = os.path.basename(dsn)
@@ -1466,9 +1475,6 @@ class GdalSelect(wx.Panel):
                 self.parent.btn_run.Enable(True)
             else:
                 self.parent.btn_run.Enable(False)
-        
-        if event:
-            event.Skip()
         
     def OnSetFormat(self, event, format = None):
         """!Format changed"""
@@ -1538,7 +1544,10 @@ class GdalSelect(wx.Panel):
                           flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                           pos = (0, 1))
         self.dsnSizer.Layout()
-
+        
+        # reload layers
+        self._reloadLayers()
+        
     def GetType(self):
         """!Get source type"""
         return self.dsnType
