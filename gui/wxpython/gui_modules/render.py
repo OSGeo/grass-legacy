@@ -864,7 +864,8 @@ class Map(object):
         maps = []
         masks = []
         opacities = []
-        
+
+        wx.BeginBusyCursor()
         # use external gisrc if defined
         gisrc_orig = os.getenv("GISRC")
         if self.gisrc:
@@ -928,6 +929,7 @@ class Map(object):
             
             if ret != 0:
                 print >> sys.stderr, _("ERROR: Rendering failed. Details: %s") % msg
+                wx.EndBusyCursor()
                 return None
             
             Debug.msg (3, "Map.Render() force=%s file=%s" % (force, self.mapfile))
@@ -936,6 +938,7 @@ class Map(object):
         if self.gisrc:
             os.environ["GISRC"] = gisrc_orig
         
+        wx.EndBusyCursor()
         if not maps:
             return None
         
