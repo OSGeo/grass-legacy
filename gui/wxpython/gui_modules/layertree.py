@@ -224,13 +224,17 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         return self.mapdisplay
     
     def OnIdle(self, event):
-        """
-        Only re-order and re-render a composite map image from GRASS during
+        """!Only re-order and re-render a composite map image from GRASS during
         idle time instead of multiple times during layer changing.
         """
         if self.rerender:
+            if self.mapdisplay.toolbars['vdigit']:
+                vector = True
+            else:
+                vector = False
             if self.mapdisplay.statusbarWin['render'].GetValue():
-                self.mapdisplay.MapWindow.UpdateMap(render = True)
+                self.mapdisplay.MapWindow.UpdateMap(render = True, renderVector = vector)
+            
             self.rerender = False
         
         event.Skip()
@@ -578,16 +582,17 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         
     def OnSetBgMap(self, event):
         """!Set background vector map for editing sesstion"""
+        digit = self.mapdisplay.GetWindow().digit
         if event.IsChecked():
             mapName = self.GetPyData(self.layer_selected)[0]['maplayer'].GetName()
             UserSettings.Set(group = 'vdigit', key = 'bgmap', subkey = 'value',
                              value = str(mapName), internal = True)
-            self.mapdisplay.digit.OpenBackgroundMap(mapName)
+            digit.OpenBackgroundMap(mapName)
             self._setGradient('bgmap')
         else:
             UserSettings.Set(group = 'vdigit', key = 'bgmap', subkey = 'value',
                              value = '', internal = True)
-            self.mapdisplay.digit.CloseBackgroundMap()
+            digit.CloseBackgroundMap()
             self._setGradient()
         
         self.RefreshLine(self.layer_selected)
@@ -619,7 +624,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             if self.mapdisplay.toolbars['vdigit'] and \
                     self.mapdisplay.toolbars['vdigit'].GetLayer() == maplayer:   
                 alpha = int(new_opacity * 255)
-                self.mapdisplay.digit.driver.UpdateSettings(alpha)
+                self.mapdisplay.GetWindow().digit.GetDisplay().UpdateSettings(alpha = alpha)
                 
             # redraw map if auto-rendering is enabled
             self.rerender = True
