@@ -1607,9 +1607,9 @@ class BufferedWindow(MapWindow, wx.Window):
         # if new region has been calculated, set the values
         if newreg != {}:
             # LL locations
-            if self.parent.Map.projinfo['proj'] == 'll':
-                self.region['n'] = min(self.region['n'], 90.0)
-                self.region['s'] = max(self.region['s'], -90.0)
+            if self.Map.projinfo['proj'] == 'll':
+                self.Map.region['n'] = min(self.Map.region['n'], 90.0)
+                self.Map.region['s'] = max(self.Map.region['s'], -90.0)
             
             ce = newreg['w'] + (newreg['e'] - newreg['w']) / 2
             cn = newreg['s'] + (newreg['n'] - newreg['s']) / 2
