@@ -641,8 +641,9 @@ proc Nv_closeAllPanels { } {
 ############################################################################
 # procedure to make	 PANEL pulldown menu
 ###########################################################################
-proc Nv_mkPanelMenu { P { name "Visualize   " } } {
+proc Nv_mkPanelMenu { P } {
 	global Nv_ DEBUG
+	set name [G_msg "Visualize"]
 
 	menubutton $P -text $name -menu $P.m -underline 0
 	menu $P.m
@@ -674,8 +675,9 @@ proc Nv_mkPanelMenu { P { name "Visualize   " } } {
 ############################################################################
 # procedure to make	 CONFIG pulldown menu
 ###########################################################################
-proc Nv_mkConfigMenu { P { name "Appearance" } } {
+proc Nv_mkConfigMenu { P } {
 	global Nv_ DEBUG
+	set name [G_msg "Appearance"]
 
 	menubutton $P -text $name -menu $P.m -underline 0
 	menu $P.m

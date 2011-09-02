@@ -326,12 +326,12 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 	}
     
     # permits loading of 3D points without surface
-    if {$name == "height" && $curr == inf} {
+    if {$name == [G_msg "height"] && $curr == inf} {
         set from 10000
         set to 0
         set curr 5000
     }
-    if {$name == "z-exag" && $from == 0.0 && $to == 0.0 && $curr == 0.0 } {
+    if {$name == [G_msg "z-exag"] && $from == 0.0 && $to == 0.0 && $curr == 0.0 } {
         set from 10.0 
         set to 0.0 
         set curr 1.000000

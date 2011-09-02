@@ -243,8 +243,8 @@ proc mkmainPanel { BASE } {
 	frame $BASE.bframe -relief flat -bd 0
 	frame $BASE.bframe.cframe -relief flat -borderwidth 0
 
-	set P [Nv_mkScale $BASE.bframe.cframe.pers h perspective 120 3 40 Nchange_persp 0]
-	set T [Nv_mkScale $BASE.bframe.cframe.tw h twist -180 180 0 Nchange_twist 0]
+	set P [Nv_mkScale $BASE.bframe.cframe.pers h [G_msg "perspective"] 120 3 40 Nchange_persp 0]
+	set T [Nv_mkScale $BASE.bframe.cframe.tw h [G_msg "twist"] -180 180 0 Nchange_twist 0]
 
 	help $BASE.bframe.cframe.pers balloon [G_msg "Set field of view size (degrees)"]
 	help $BASE.bframe.cframe.tw balloon [G_msg "Set twist angle (degrees)"]
@@ -413,7 +413,7 @@ proc mk_exag_slider {W} {
 	set exag [expr $val * 10]
 	set min 0
 
-	Nv_mkFloatScale $W.zexag v z-exag $exag $min $val update_exag 1
+	Nv_mkFloatScale $W.zexag v [G_msg "z-exag"] $exag $min $val update_exag 1
 
 	return $W.zexag
 }
@@ -429,7 +429,7 @@ proc mk_hgt_slider {W} {
 
 	# make sliders
 	set Nv_(HEIGHT_SLIDER) $W.height
-	Nv_mkFloatScale $Nv_(HEIGHT_SLIDER) v height $max $min $val update_height 1
+	Nv_mkFloatScale $Nv_(HEIGHT_SLIDER) v [G_msg "height"] $max $min $val update_height 1
 
 	return $Nv_(HEIGHT_SLIDER)
 }
