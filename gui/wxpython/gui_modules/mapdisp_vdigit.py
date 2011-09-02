@@ -928,20 +928,17 @@ class VDigitWindow(BufferedWindow):
                 return
             self._geomAttrbUpdate([fid,])
         elif action in ("copyCats", "copyAttrs"):
-            try:
-                if action == 'copyCats':
-                    if self.digit.CopyCats(self.copyCatsList,
-                                           self.copyCatsIds, copyAttrb = False) < 0:
-                        return
-                else:
-                    if self.digit.CopyCats(self.copyCatsList,
-                                           self.copyCatsIds, copyAttrb = True) < 0:
-                        return
+            if action == 'copyCats':
+                if self.digit.CopyCats(self.copyCatsList,
+                                       self.copyCatsIds, copyAttrb = False) < 0:
+                    return
+            else:
+                if self.digit.CopyCats(self.copyCatsList,
+                                       self.copyCatsIds, copyAttrb = True) < 0:
+                    return
                 
-                del self.copyCatsList
-                del self.copyCatsIds
-            except AttributeError:
-                pass
+            del self.copyCatsList
+            del self.copyCatsIds
             
             self._updateATM()
                 
