@@ -933,9 +933,15 @@ if { [searchGISRC $gisrc_name] } {
 } else {
     # Something has gone terribly wrong
     # GISRC file is missing or corrupted
+    set errormsg  [format [G_msg "Something went wrong while processing GISRC file named \"%s\".\nIt's a fatal error. GRASS will not start till issue with GISRC file is fixed."] $env(GISRC) ] 
+    if { $mingw } {
+            append errormsg [G_msg "\n\nOn MS-Windows systems failure might be caused by non-latin letter in GISRC file path. \
+            Check that Your username doesn't contain non-latin letters. \
+            Due to non-latin letter encoding handling in MS-Windows, it's not possible to run GRASS if username contains non-latin letters."] 
+    }
     DialogGen .wrnDlg [G_msg "ERROR: unable to read GISRC"] warning \
-          [format [G_msg "Something went wrong while processing GISRC file named \"%s\".\nIt's a fatal error. GRASS will not start till issue with GISRC file is fixed."] $env(GISRC) ]\
-          0 OK;
+        $errormsg \
+        0 OK;
     exit 2
 }
 
