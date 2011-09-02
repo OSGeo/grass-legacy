@@ -961,6 +961,7 @@ class Map(object):
         @return new layer on success
         @return None on failure
         """
+        wx.BeginBusyCursor()
         # l_opacity must be <0;1>
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
@@ -978,6 +979,8 @@ class Map(object):
             if not layer.Render():
                 raise gcmd.GException(_("Unable to render map layer <%s>.") % name)
         
+        wx.EndBusyCursor()
+
         return layer
 
     def DeleteLayer(self, layer, overlay = False):
