@@ -1356,9 +1356,9 @@ class AttributeManager(wx.Frame):
                 data.append((col, ''))
             colIdx += 1
                 
-        dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
-                                title=_("Insert new record"),
-                                data=data, keyEditable=(keyId, True))
+        dlg = ModifyTableRecord(parent = self,
+                                title = _("Insert new record"),
+                                data = data, keyEditable = (keyId, True))
 
         if dlg.ShowModal() == wx.ID_OK:
             try: # get category number
@@ -1471,9 +1471,9 @@ class AttributeManager(wx.Frame):
                     value = list.GetItem(item, i).GetText()
                 data.append((columnName[i], value))
 
-        dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
-                                title=_("Update existing record"),
-                                data=data, keyEditable=(keyId, False))
+        dlg = ModifyTableRecord(parent = self, 
+                                title = _("Update existing record"),
+                                data = data, keyEditable = (keyId, False))
 
         if dlg.ShowModal() == wx.ID_OK:
             values = dlg.GetValues() # string
