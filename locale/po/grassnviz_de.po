@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:10+0200\n"
+"POT-Creation-Date: 2011-09-04 18:33+0200\n"
 "PO-Revision-Date: 2011-05-14 22:47+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -66,7 +66,7 @@ msgstr "Löschen"
 #: ../visualization/nviz/scripts/panel_tst.tcl:53
 #: ../visualization/nviz/scripts/panel_pos.tcl:125
 #: ../visualization/nviz/scripts/panel_scale.tcl:94
-#: ../visualization/nviz/scripts/nviz2.2_script:819
+#: ../visualization/nviz/scripts/nviz2.2_script:821
 #: ../visualization/nviz/scripts/panel_site.tcl:114
 #: ../visualization/nviz/scripts/panel_lights.tcl:83
 #: ../visualization/nviz/scripts/panel_label.tcl:96
@@ -233,7 +233,7 @@ msgstr "Fertig"
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
-#: ../visualization/nviz/scripts/nviz2.2_script:924
+#: ../visualization/nviz/scripts/nviz2.2_script:926
 #: ../visualization/nviz/scripts/mapBrowser.tcl:229
 #: ../visualization/nviz/scripts/script_get_line:19
 msgid "Cancel"
@@ -269,7 +269,7 @@ msgstr "Abfrage an/aus"
 #: ../visualization/nviz/scripts/panel_surf.tcl:725
 #: ../visualization/nviz/scripts/panel_vol.tcl:1169
 #: ../visualization/nviz/scripts/nviz2.2_script:377
-#: ../visualization/nviz/scripts/nviz2.2_script:923
+#: ../visualization/nviz/scripts/nviz2.2_script:925
 #: ../visualization/nviz/scripts/panel_lights.tcl:81
 #: ../visualization/nviz/scripts/site_attr.tcl:483
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:182
@@ -672,7 +672,7 @@ msgstr "Frame:"
 #: ../visualization/nviz/scripts/panel_animation.tcl:577
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:924
+#: ../visualization/nviz/scripts/nviz2.2_script:926
 #: ../visualization/nviz/scripts/script_get_line:18
 msgid "Ok"
 msgstr "Ok"
@@ -701,7 +701,7 @@ msgstr "Fehler - Alle Werte müssen zumindest 0 sein."
 #: ../visualization/nviz/scripts/panel_animation.tcl:644
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:1054
+#: ../visualization/nviz/scripts/nviz2.2_script:1056
 #: ../visualization/nviz/scripts/script_play:32
 msgid "Dismiss"
 msgstr "Verwerfe"
@@ -833,7 +833,7 @@ msgid "Warning - Current animation has not been saved, continue?"
 msgstr "Warnung - Aktuelle Animation wurde noch nicht gespeichert, fortfahren?"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
-#: ../visualization/nviz/scripts/nviz2.2_script:1053
+#: ../visualization/nviz/scripts/nviz2.2_script:1055
 #: ../visualization/nviz/scripts/script_play:30
 msgid "File Error"
 msgstr "Datei-Fehler"
@@ -889,8 +889,8 @@ msgstr ""
 "Felder laden?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
-#: ../visualization/nviz/scripts/nviz2.2_script:871
-#: ../visualization/nviz/scripts/nviz2.2_script:1025
+#: ../visualization/nviz/scripts/nviz2.2_script:873
+#: ../visualization/nviz/scripts/nviz2.2_script:1027
 #, fuzzy, tcl-format
 msgid "Error while opening file: %s"
 msgstr "Fehler bei Öffnen der Datei: %s"
@@ -1102,6 +1102,15 @@ msgstr "oben"
 msgid "View directly from above"
 msgstr "Zeige direkt an"
 
+#: ../visualization/nviz/scripts/panel_main.tcl:246
+msgid "perspective"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:247
+#, fuzzy
+msgid "twist"
+msgstr "Neigung"
+
 #: ../visualization/nviz/scripts/panel_main.tcl:249
 #, fuzzy
 msgid "Set field of view size (degrees)"
@@ -1121,6 +1130,21 @@ msgstr "Zurücksetzen"
 #, fuzzy
 msgid "Reset view to default"
 msgstr "Zurücksetzen auf Standardansicht"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:416
+#: ../visualization/nviz/scripts/widgets.tcl:334
+msgid "z-exag"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:432
+#: ../visualization/nviz/scripts/panel_resize.tcl:43
+#: ../visualization/nviz/scripts/panel_vol.tcl:457
+#: ../visualization/nviz/scripts/panel_vol.tcl:460
+#: ../visualization/nviz/scripts/panel_vol.tcl:735
+#: ../visualization/nviz/scripts/panel_vol.tcl:738
+#: ../visualization/nviz/scripts/widgets.tcl:329
+msgid "height"
+msgstr "Höhe"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:517
 #, fuzzy
@@ -1476,14 +1500,6 @@ msgstr "Verändere Größe: "
 #: ../visualization/nviz/scripts/panel_resize.tcl:42
 msgid "width"
 msgstr "Breite"
-
-#: ../visualization/nviz/scripts/panel_resize.tcl:43
-#: ../visualization/nviz/scripts/panel_vol.tcl:457
-#: ../visualization/nviz/scripts/panel_vol.tcl:460
-#: ../visualization/nviz/scripts/panel_vol.tcl:735
-#: ../visualization/nviz/scripts/panel_vol.tcl:738
-msgid "height"
-msgstr "Höhe"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:52
 msgid "Resize"
@@ -1952,7 +1968,7 @@ msgid "Bearing"
 msgstr "Bearing"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:68
-#: ../visualization/nviz/scripts/nviz2.2_script:803
+#: ../visualization/nviz/scripts/nviz2.2_script:805
 msgid "Height"
 msgstr "Höhe"
 
@@ -2015,7 +2031,7 @@ msgstr "Zeige Einstellungen"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:204
 #: ../visualization/nviz/scripts/nviz2.2_script:327
-#: ../visualization/nviz/scripts/nviz2.2_script:686
+#: ../visualization/nviz/scripts/nviz2.2_script:688
 msgid "Hide Panels"
 msgstr "Blende Einstellungen aus"
 
@@ -2125,20 +2141,29 @@ msgstr "TIFF-Bild"
 msgid "Maximum Resolution PPM"
 msgstr "Maximale Auflösung PPM"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:798
+#: ../visualization/nviz/scripts/nviz2.2_script:646
+#, fuzzy
+msgid "Visualize"
+msgstr "Visualisierungstyp..."
+
+#: ../visualization/nviz/scripts/nviz2.2_script:680
+msgid "Appearance"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:800
 #, fuzzy
 msgid "Set Size of Display Canvas"
 msgstr "Stelle Größe des Darstellungsfensters ein"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:801
+#: ../visualization/nviz/scripts/nviz2.2_script:803
 msgid "Width"
 msgstr "Breite"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:809
+#: ../visualization/nviz/scripts/nviz2.2_script:811
 msgid "Unconstrained"
 msgstr "Zwanglos"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:924
+#: ../visualization/nviz/scripts/nviz2.2_script:926
 #, fuzzy
 msgid "Really reset Nviz?"
 msgstr "Nviz wirklich zurückstellen?"

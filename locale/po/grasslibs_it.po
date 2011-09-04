@@ -12,14 +12,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:10+0200\n"
+"POT-Creation-Date: 2011-09-04 18:33+0200\n"
 "PO-Revision-Date: 2011-07-18 14:34+0100\n"
 "Last-Translator: Anne Ghisla <a.ghisla@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
-"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -606,8 +606,8 @@ msgstr "Valore di latitudine Nord non valido"
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
 msgstr ""
-"Risolto leggero errore di arrotondamento del dato in input del confine sud "
-"(%g>%g)"
+"Risolto leggero errore di arrotondamento del dato in input del confine sud (%"
+"g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:95 ../lib/gis/adj_cellhd.c:263
 msgid "Illegal latitude for South"
@@ -624,8 +624,8 @@ msgstr ""
 #, c-format
 msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
 msgstr ""
-"Risolto leggero errore di arrotondamento del dato in input del confine est "
-"(%g>%g)"
+"Risolto leggero errore di arrotondamento del dato in input del confine est (%"
+"g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:131 ../lib/gis/adj_cellhd.c:299
 msgid "North must be north of South"
@@ -1195,55 +1195,55 @@ msgstr "Non riesco a riallocare il buffer"
 msgid "CreateProcess() failed: error = %d"
 msgstr "Errore di CreateProcess(): errore = %d"
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: impossibile duplicare la descrizione %d"
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: impossibile aprire il file %s"
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 msgid "Unable to execute command"
 msgstr "Impossibile eseguire il comando"
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: impossibile recuperare il segnale %d"
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: impossibile resettare il segnale %d"
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: impossibile ignorare il segnale %d"
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: impossibile bloccare il segnale %d"
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: impossibile sbloccare il segnale %d"
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: impossibile duplicare la descrizione %d in %d"
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 msgid "Unable to create a new process"
 msgstr "Impossibile creare un nuovo processo"
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Impossibile cambiare la directory %s"
@@ -1498,7 +1498,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "Il nome '%s' del raster di output non è un nome valido"
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -1633,8 +1633,8 @@ msgstr "Impossibile ottenere il valore della variabile d'ambiente GIS_LOCK"
 #: ../lib/gis/distance.c:160
 #, c-format
 msgid ""
-"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
-"%f)(%f,%f)"
+"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%"
+"f)(%f,%f)"
 msgstr ""
 "G_distance_point_to_line_segment: non dovrebbe accadere: code=%d P=(%f,%f) S="
 "(%f,%f)(%f,%f)"
@@ -1677,11 +1677,11 @@ msgstr "Impossibile trovare <%s@%s>"
 #: ../lib/gis/opencell.c:188
 #, c-format
 msgid ""
-"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
-"%s> which does not exist"
+"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%"
+"s> which does not exist"
 msgstr ""
-"impossibile aprire il raster <%s@%s> poiché è una riclassificazione di <%s@"
-"%s> che non esiste"
+"impossibile aprire il raster <%s@%s> poiché è una riclassificazione di <%s@%"
+"s> che non esiste"
 
 #: ../lib/gis/opencell.c:212
 #, c-format
@@ -2227,8 +2227,8 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node %d, line %d"
 msgstr ""
-"Tentativo di leggere l'angolo della linea che non è connesso al nodo: nodo "
-"%d, linea %d"
+"Tentativo di leggere l'angolo della linea che non è connesso al nodo: nodo %"
+"d, linea %d"
 
 #: ../lib/vector/diglib/plus.c:288
 msgid "Unable read topology for nodes"
@@ -2286,50 +2286,50 @@ msgstr "Impossibile scrivere aree nel file plus"
 msgid "Unable to write isles to plus file"
 msgstr "Impossibile scrivere isole nel file plus"
 
-#: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
-#: ../lib/vector/diglib/plus_area.c:659
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
 #, c-format
 msgid "Line %d already has area/isle %d to left"
 msgstr "La linea %d ha già un'area/isola %d alla propria sinistra"
 
-#: ../lib/vector/diglib/plus_area.c:205
+#: ../lib/vector/diglib/plus_area.c:217
 #, c-format
 msgid "Line %d already has area/isle %d to right"
 msgstr "La linea %d ha già un'area/isola %d alla propria destra"
 
-#: ../lib/vector/diglib/plus_area.c:287
+#: ../lib/vector/diglib/plus_area.c:299
 msgid "Attempt to delete isle from dead area"
 msgstr "Tentativo di cancellare isola da area inesistente"
 
-#: ../lib/vector/diglib/plus_area.c:304
+#: ../lib/vector/diglib/plus_area.c:316
 #, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
 msgstr "Tentativo di cancellare isola %d non registrata dall'area %d"
 
-#: ../lib/vector/diglib/plus_area.c:342
+#: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
 msgstr "Tentativo di cancellare area inesistente"
 
-#: ../lib/vector/diglib/plus_area.c:382
+#: ../lib/vector/diglib/plus_area.c:394
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr ""
 "Centroide inesistente %d registrato per l'area (baco nella libreria "
 "vettoriale)"
 
-#: ../lib/vector/diglib/plus_area.c:406
+#: ../lib/vector/diglib/plus_area.c:418
 #, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
 msgstr ""
-"Tentativo di cancellare le informazioni dell'area %d dall'isola inesistente "
-"%d"
+"Tentativo di cancellare le informazioni dell'area %d dall'isola inesistente %"
+"d"
 
-#: ../lib/vector/diglib/plus_area.c:749
+#: ../lib/vector/diglib/plus_area.c:773
 #, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
 msgstr ""
-"Tentativo di cancellare le informazioni dell'isola %d dall'area inesistente "
-"%d"
+"Tentativo di cancellare le informazioni dell'isola %d dall'area inesistente %"
+"d"
 
 #: ../lib/vector/diglib/file.c:157
 msgid "Writing to file loaded to memory not supported"
@@ -2618,7 +2618,7 @@ msgstr "Errore GngFlatten"
 msgid "Unable to add network arc"
 msgstr "Impossibile aggiungere un arco alla rete"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "Errore dglShortestPath: %s"
@@ -3128,7 +3128,7 @@ msgstr ""
 msgid "Graph was built"
 msgstr "Il grafico è stata creato"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Direzione sbagliata della linea in Vect_net_get_line_cost()"
 
@@ -3437,12 +3437,12 @@ msgstr "Indice fuori dal range in "
 msgid "Segment outside line, no segment created"
 msgstr "Segmento esterno alla linea, nessun segmento creato"
 
-#: ../lib/vector/vedit/cats.c:66
+#: ../lib/vector/vedit/cats.c:63
 #, c-format
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "Impossibile impostare la categoria %d per (elemento id %d)"
 
-#: ../lib/vector/vedit/select.c:233
+#: ../lib/vector/vedit/select.c:230
 msgid "Unknown query tool"
 msgstr "Strumento di interrogazione sconosciuto"
 
@@ -3528,65 +3528,71 @@ msgstr "Errore caricando il raster 3d <%s>"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): tipo di dato non supportato"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Impossibile aprire il raster <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "Leggendo il raster <%s> nella memoria"
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 msgid "Could not get raster row"
 msgstr "Non è possibile ottenere la riga del raster"
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 msgid "Unable to close input map"
 msgstr "Impossibile chiudere la mappa di input"
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr "Array N_array_2d * vuoto"
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Impossibile creare il raster <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Scrittura dell'array 2d nel raster <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, c-format
 msgid "Unable to write raster row %i"
 msgstr "Impossibile scrivere la riga del raster %i"
 
-#: ../lib/gpde/N_arrays_io.c:295
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
 #, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr "Impossibile trovare la mappa g3d <%s>"
+msgid "3D raster map <%s> not found"
+msgstr "Raster 3D <%s> non trovato"
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
 #, c-format
-msgid "Error opening g3d map <%s>"
-msgstr "Errore nell'apertura della mappa g3d <%s>"
+msgid "Unable to open 3D raster map <%s>"
+msgstr "Impossibile aprire il raster 3D <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Mappa g3d <%s> caricata in memoria"
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr "Errore nella chiusura del file g3d"
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr "Errore nell'apertura della mappa g3d <%s>"
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Scrittura dell'array 3d nella mappa g3d <%s>"
@@ -4130,8 +4136,8 @@ msgstr "Ignorati %d punti (densità eccessiva)"
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
 msgid ""
-"%d points given for interpolation (after thinning) is less than given NPMIN="
-"%d"
+"%d points given for interpolation (after thinning) is less than given NPMIN=%"
+"d"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:340
@@ -4362,16 +4368,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr "Superato il numero massimo del datafiles"
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, c-format
-msgid "3D raster map <%s> not found"
-msgstr "Raster 3D <%s> non trovato"
-
-#: ../lib/ogsf/gvl_file.c:437
-#, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "Impossibile aprire il raster 3D <%s>"
-
 #: ../lib/ogsf/gvl_file.c:443
 #, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4421,8 +4417,8 @@ msgstr "Caricando raster <%s>"
 #, c-format
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
 msgstr ""
-"Il range della tabella di colori non corrisponde ai dati (mincol=%d, maxcol="
-"%d"
+"Il range della tabella di colori non corrisponde ai dati (mincol=%d, maxcol=%"
+"d"
 
 #: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
@@ -4900,8 +4896,8 @@ msgstr ""
 #, c-format
 msgid "Bad format in control point file for group [%s in %s]"
 msgstr ""
-"Formato non supportato nel file dei punti di controllo per il gruppo [%s in "
-"%s]"
+"Formato non supportato nel file dei punti di controllo per il gruppo [%s in %"
+"s]"
 
 #: ../lib/imagery/points.c:159
 #, c-format
@@ -4966,3 +4962,6 @@ msgstr "subgrou <%s> del group <%s> è vuoto\n"
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "subgroup <%s> del gruppo <%s> fa riferimento ai seguenti raster\n"
+
+#~ msgid "Requested g3d map <%s> not found"
+#~ msgstr "Impossibile trovare la mappa g3d <%s>"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:10+0200\n"
+"POT-Creation-Date: 2011-09-04 18:33+0200\n"
 "PO-Revision-Date: 2010-09-17 23:56+0100\n"
 "Last-Translator: Maciej Sieczka <msieczka at msieczka dot org>\n"
 "Language-Team: GRASS Translation Team\n"
@@ -1183,55 +1183,55 @@ msgstr "Nie można ponownie przydzielić bufora"
 msgid "CreateProcess() failed: error = %d"
 msgstr "CreateProcess() nie powiodło się: błąd = %d"
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: nie można przekierować deskryptora: %d"
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: nie można otworzyć pliku %s"
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 msgid "Unable to execute command"
 msgstr "Nie można wykonać polecenia"
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: nie można przywrócić sygnału %d"
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: nie można odświeżyć sygnału %d"
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: nie można zignorować sygnału %d"
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: nie można zablokować sygnału %d"
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: nie można odblokować sygnału %d"
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: nie można zduplikować deskryptora %d do %d"
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 msgid "Unable to create a new process"
 msgstr "Nie można utworzyć nowego procesu"
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Nie można zmienić katalogu %s"
@@ -1486,7 +1486,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "Nazwa wyjściowej mapy rastrowej <%s> nie jest poprawną nazwą mapy."
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -2269,42 +2269,42 @@ msgstr "Nie można zapisać obszarów do pliku plus"
 msgid "Unable to write isles to plus file"
 msgstr "Nie można zapisać wysp do pliku plus"
 
-#: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
-#: ../lib/vector/diglib/plus_area.c:659
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
 #, c-format
 msgid "Line %d already has area/isle %d to left"
 msgstr "Linia %d już ma obszar/wyspę %d po lewej"
 
-#: ../lib/vector/diglib/plus_area.c:205
+#: ../lib/vector/diglib/plus_area.c:217
 #, c-format
 msgid "Line %d already has area/isle %d to right"
 msgstr "Linia %d już ma obszar/wyspę %d po prawej"
 
-#: ../lib/vector/diglib/plus_area.c:287
+#: ../lib/vector/diglib/plus_area.c:299
 msgid "Attempt to delete isle from dead area"
 msgstr "Próba usunięcia wyspy z martwego obszaru"
 
-#: ../lib/vector/diglib/plus_area.c:304
+#: ../lib/vector/diglib/plus_area.c:316
 #, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
 msgstr "Próba usunięcia nie zarejestrowanej wyspy %d z obszaru %d"
 
-#: ../lib/vector/diglib/plus_area.c:342
+#: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
 msgstr "Próba usunięcia martwego obszaru"
 
-#: ../lib/vector/diglib/plus_area.c:382
+#: ../lib/vector/diglib/plus_area.c:394
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr ""
 "Martwy centroid %d zarejestrowany dla obszaru (bug w bibliotece vector)"
 
-#: ../lib/vector/diglib/plus_area.c:406
+#: ../lib/vector/diglib/plus_area.c:418
 #, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
 msgstr "Próba usunięcia informacji o obszarze %d z martwej wyspy %d"
 
-#: ../lib/vector/diglib/plus_area.c:749
+#: ../lib/vector/diglib/plus_area.c:773
 #, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
 msgstr "Próba usunięcia informacji o wyspie %d z martwego obszaru %d"
@@ -2591,7 +2591,7 @@ msgstr "Błąd GngFlatten"
 msgid "Unable to add network arc"
 msgstr "Nie można dodać odcinka sieci"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "dglShortestPath błąd: %s"
@@ -3107,7 +3107,7 @@ msgstr "Spłaszczanie grafu..."
 msgid "Graph was built"
 msgstr "Graf został zbudowany"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Błędny kierunek linii w Vect_net_get_line_cost()"
 
@@ -3411,12 +3411,12 @@ msgstr "Indeks poza zakresem w"
 msgid "Segment outside line, no segment created"
 msgstr "Segment poza linią. Nie stworzono segmentu"
 
-#: ../lib/vector/vedit/cats.c:66
+#: ../lib/vector/vedit/cats.c:63
 #, c-format
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "Nie można przydzielić kategorii %d obiektowi o id %d)"
 
-#: ../lib/vector/vedit/select.c:233
+#: ../lib/vector/vedit/select.c:230
 msgid "Unknown query tool"
 msgstr "Nieznane narzędzie zapytań"
 
@@ -3504,65 +3504,71 @@ msgstr "Błąd podczas wczytywania mapy rastrowej 3D <%s>"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): nieobsługiwany typ danych"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Nie można otworzyć mapy rastrowej <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "Wczytywanie mapy rastrowej <%s> do pamięci"
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 msgid "Could not get raster row"
 msgstr "Nie można pobrać wiersza rastra"
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 msgid "Unable to close input map"
 msgstr "Nie można zamknąć mapy wejściowej"
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * tablica jest pusta"
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Nie można utworzyć mapy rastrowej <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Zapisz tablicę 2d do mapy rastrowej <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, c-format
 msgid "Unable to write raster row %i"
 msgstr "Nie można zapisać wiersza %i mapy rastrowej"
 
-#: ../lib/gpde/N_arrays_io.c:295
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
 #, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
+msgid "3D raster map <%s> not found"
+msgstr "Nie znaleziono mapy rastrowej 3D <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
 #, c-format
-msgid "Error opening g3d map <%s>"
-msgstr "Błąd podczas otwierania mapy rastrowej 3D <%s>"
+msgid "Unable to open 3D raster map <%s>"
+msgstr "Nie można otworzyć mapy rastrowej 3D <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Wczytaj mapę rastrową 3D <%s> do pamięci"
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr "Błąd podczas zamykania mapy rastrowej 3D"
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr "Błąd podczas otwierania mapy rastrowej 3D <%s>"
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Zapisz tablicę 3d do mapy rastrowej 3D <%s>"
@@ -4352,16 +4358,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr "Przekroczono maksymalną ilość plików danych"
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, c-format
-msgid "3D raster map <%s> not found"
-msgstr "Nie znaleziono mapy rastrowej 3D <%s>"
-
-#: ../lib/ogsf/gvl_file.c:437
-#, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "Nie można otworzyć mapy rastrowej 3D <%s>"
-
 #: ../lib/ogsf/gvl_file.c:443
 #, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4944,3 +4940,6 @@ msgstr "podgrupa <%s> grupy <%s> jest pusta\n"
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 "podgrupa <%s> grupy <%s> odwołuje się do następujących map rastrowych\n"
+
+#~ msgid "Requested g3d map <%s> not found"
+#~ msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
