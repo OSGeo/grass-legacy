@@ -1,16 +1,25 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
+
+<em>r.mapcalculator</em> provides a GUI frontend to <em>r.mapcalc</em>.
+Up to 5 maps can be combined using simple expressions.
+In the expert mode, it runs <em>r.mapcalc</em> for more complex expressions.
+
+Enter an <em>r.mapcalc</em> expression in the formula field using the
+format: A+C or exp(A+C)+(B-2)*7 where A, B, C are raster maps entered
+in the A field, B field, and C field. 
+<p>
+Do not enter output file in the formula field: correct: A+B; incorrect: newfile = A+B. Use no spaces or blanks. 
+<p>
+Expert mode runs <em>r.mapcalc</em> for more complex expressions.
+
+<h2>SEE ALSO</h2>
+
+<em><A HREF="r.mapcalc.html">r.mapcalc</A></em>
 
 
-<EM>r.mapcalculator</EM> Provides a GUI frontend to r.mapcalc. Up to 5 maps can be combined using simple expressions. Expert mode runs r.mapcalc for more complex expressions.
-<br>
+<h2>AUTHOR</h2>
 
-<H2>SEE ALSO</H2>
-
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>,
-
-
-<H2>AUTHOR</H2>
-
-R. Brunzema (r.brunzema@web.de)<BR>
+R. Brunzema (r.brunzema@web.de)<br>
 Updated to GRASS 5.7 by Michael Barton, Arizona State University
+
 <p><i>Last changed: $Date$</i>
