@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:10+0200\n"
+"POT-Creation-Date: 2011-09-04 18:33+0200\n"
 "PO-Revision-Date: 2011-05-08 20:58+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -1189,55 +1189,55 @@ msgstr "Kann Buffer nicht wieder belegen."
 msgid "CreateProcess() failed: error = %d"
 msgstr "CreateProcess() fehlgeschlagen: Fehler = %d"
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: Kann den Deskriptor %d nicht umlenken."
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: Kann die Datei %s nicht öffnen."
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 msgid "Unable to execute command"
 msgstr "Kann den Befehl nicht ausführen."
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht wieder herstellen."
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht zurücksetzen."
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht ignorieren."
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht blocken."
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht entsperren."
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: Kann den Deskriptor %d nicht zu %d dublizieren."
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 msgid "Unable to create a new process"
 msgstr "Kann keinen neuen Prozess erzeugen."
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Kann nicht in das Verzeichnis %s wechseln."
@@ -1493,7 +1493,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "Name der Ausgabe-Rasterkarte <%s> ist kein gültiger Kartenname."
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -2285,42 +2285,42 @@ msgstr "Kann Flächen nicht in die 'plus' Datei schreiben."
 msgid "Unable to write isles to plus file"
 msgstr "Kann Inseln nicht in die 'plus' Datei schreiben."
 
-#: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
-#: ../lib/vector/diglib/plus_area.c:659
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
 #, c-format
 msgid "Line %d already has area/isle %d to left"
 msgstr "Linie %d hat bereits Fläche/Insel %d zu ihrer Linken."
 
-#: ../lib/vector/diglib/plus_area.c:205
+#: ../lib/vector/diglib/plus_area.c:217
 #, c-format
 msgid "Line %d already has area/isle %d to right"
 msgstr "Linie %d hat bereits Fläche/Insel %d zu ihrer Rechten."
 
-#: ../lib/vector/diglib/plus_area.c:287
+#: ../lib/vector/diglib/plus_area.c:299
 msgid "Attempt to delete isle from dead area"
 msgstr "Versuche Insel von einer toten Fläche zu löschen"
 
-#: ../lib/vector/diglib/plus_area.c:304
+#: ../lib/vector/diglib/plus_area.c:316
 #, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
 msgstr "Versuche nicht registrierte Insel %d der Fläche %d zu löschen"
 
-#: ../lib/vector/diglib/plus_area.c:342
+#: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
 msgstr "Versuche tote Fläche zu löschen"
 
-#: ../lib/vector/diglib/plus_area.c:382
+#: ../lib/vector/diglib/plus_area.c:394
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr ""
 "Toter Zentroid %d für Fläche registriert (Bug in der Vektorbibliothek)."
 
-#: ../lib/vector/diglib/plus_area.c:406
+#: ../lib/vector/diglib/plus_area.c:418
 #, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
 msgstr "Versuche Fläche %d von toter Insel %d zu löschen"
 
-#: ../lib/vector/diglib/plus_area.c:749
+#: ../lib/vector/diglib/plus_area.c:773
 #, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
 msgstr "Versuche Insel %d von toter Fläche %d zu löschen"
@@ -2616,7 +2616,7 @@ msgstr "GngFlatten Fehler"
 msgid "Unable to add network arc"
 msgstr "Kann Netzwerkverbindung 'network arc' nicht hinzufügen."
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "dglShortestPath Fehler: %s"
@@ -3131,7 +3131,7 @@ msgstr "Mache den Graph flach..."
 msgid "Graph was built"
 msgstr "Graph wurde erstellt"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Falsche Linienrichtung in Vect_net_get_line_cost()"
 
@@ -3441,12 +3441,12 @@ msgstr "Index liegt außerhalb des Wertebereichs in"
 msgid "Segment outside line, no segment created"
 msgstr "Segment außerhalb der Linie. Kein Segment erzeugt."
 
-#: ../lib/vector/vedit/cats.c:66
+#: ../lib/vector/vedit/cats.c:63
 #, c-format
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "Kann Kategorie %d für (Objekt ID %d) nicht setzen"
 
-#: ../lib/vector/vedit/select.c:233
+#: ../lib/vector/vedit/select.c:230
 msgid "Unknown query tool"
 msgstr "Unbekanntes Abfragewerkzeug"
 
@@ -3535,65 +3535,71 @@ msgstr "Fehler beim Laden der 3D-Rasterkarte <%s>."
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): nicht unterstützter Datentyp."
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Kann die Rasterkarte <%s> nicht öffnen."
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "Lese Rasterkarte <%s> in den Speicher."
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 msgid "Could not get raster row"
 msgstr "Kann die Rasterzeile nicht bekommen."
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 msgid "Unable to close input map"
 msgstr "Kann die Eingabekarte nicht schließen."
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * Array ist leer"
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Kann die Rasterkarte <%s> nicht erzeugen."
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Schreibe 2D Array in die Rasterkarte <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, c-format
 msgid "Unable to write raster row %i"
 msgstr "Kann die Rasterzeile %i nicht schreiben"
 
-#: ../lib/gpde/N_arrays_io.c:295
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
 #, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr "Angeforderte G3D Karte <%s> nicht gefunden"
+msgid "3D raster map <%s> not found"
+msgstr "3D-Rasterkarte <%s> nicht gefunden."
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
 #, c-format
-msgid "Error opening g3d map <%s>"
-msgstr "Fehler beim Öffnen der G3D-Rasterkarte <%s>."
+msgid "Unable to open 3D raster map <%s>"
+msgstr "Kann 3D Rasterkarte <%s> nicht öffnen."
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Lese G3D-Karte <%s> in den Speicher"
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr "Fehler beim Schließen der G3D-Datei."
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr "Fehler beim Öffnen der G3D-Rasterkarte <%s>."
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Schreibe 3D Array in die G3D-Karte <%s>"
@@ -4391,16 +4397,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr "Maximalanzahl von Dateien überschritten."
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, c-format
-msgid "3D raster map <%s> not found"
-msgstr "3D-Rasterkarte <%s> nicht gefunden."
-
-#: ../lib/ogsf/gvl_file.c:437
-#, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "Kann 3D Rasterkarte <%s> nicht öffnen."
-
 #: ../lib/ogsf/gvl_file.c:443
 #, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4992,6 +4988,9 @@ msgstr "Untergruppe <%s> der Gruppe <%s> ist leer\n"
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 "Untergruppe <%s> der Gruppe <%s> referenziert die folgenden Rasterkarten\n"
+
+#~ msgid "Requested g3d map <%s> not found"
+#~ msgstr "Angeforderte G3D Karte <%s> nicht gefunden"
 
 #~ msgid "Unable to feature %d from vector map <%s>"
 #~ msgstr "Unable to feature %d from vector map <%s>"

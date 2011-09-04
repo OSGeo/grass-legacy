@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:10+0200\n"
+"POT-Creation-Date: 2011-09-04 18:33+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -1177,55 +1177,55 @@ msgstr "ไม่สามารถกำหนด  buffer ได้"
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, fuzzy, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: ไม่สามารถทำซ้ำตัวอธิบาย %d ถึง %d ได้"
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: ไม่สามารถเปิดไฟล์ %s ได้"
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 msgid "Unable to execute command"
 msgstr "ไม่สามารถทำงานคำสั่งนี้ได้"
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: ไม่สามารถนำค่า %d ได้"
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: ไม่สามารถกำหนดค่า %d ได้"
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: ไม่สามารถยกเลิกค่า %d ได้"
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: ไม่สามารถกั้นค่า %d ได้"
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: ไม่สามารถปิดการกั้นค่า %d ได้"
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: ไม่สามารถทำซ้ำตัวอธิบาย %d ถึง %d ได้"
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 msgid "Unable to create a new process"
 msgstr "ไม่สามารถสร้างการทำงานใหม่ได้"
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "ไม่สามารถเปลี่ยน directory ไปที่ %s ได้"
@@ -1480,7 +1480,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "ชื่อผลลัพธ์แผนที่เชิงเส้น <%s> ไม่ถูกต้อง"
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -2259,41 +2259,41 @@ msgstr "ไม่สามารถแถวของแผนที่เชิ
 msgid "Unable to write isles to plus file"
 msgstr "ไม่สามารถแถวของแผนที่เชิงภาพ %i"
 
-#: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
-#: ../lib/vector/diglib/plus_area.c:659
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
 #, fuzzy, c-format
 msgid "Line %d already has area/isle %d to left"
 msgstr "เส้น [%d] มี area/isle อยู่ [%d] ทางซ้าย"
 
-#: ../lib/vector/diglib/plus_area.c:205
+#: ../lib/vector/diglib/plus_area.c:217
 #, fuzzy, c-format
 msgid "Line %d already has area/isle %d to right"
 msgstr "เส้น [%d] มี area/isle อยู่ [%d] ทางขวา"
 
-#: ../lib/vector/diglib/plus_area.c:287
+#: ../lib/vector/diglib/plus_area.c:299
 msgid "Attempt to delete isle from dead area"
 msgstr "ตั้งใจที่จะลบ  isle จากพื้นที่"
 
-#: ../lib/vector/diglib/plus_area.c:304
+#: ../lib/vector/diglib/plus_area.c:316
 #, fuzzy, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
 msgstr "ตั้งใจที่จะลบ  isle ที่ไม่ได้ระบุ  [%d] จากพื้นที่ [%d]"
 
-#: ../lib/vector/diglib/plus_area.c:342
+#: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
 msgstr "ตั้งใจที่จะลบพื้นที่"
 
-#: ../lib/vector/diglib/plus_area.c:382
+#: ../lib/vector/diglib/plus_area.c:394
 #, fuzzy, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr "จุดศูนย์ถ่วง [%d] ระบุในพื้นที่ (ข้อผิดพลาดใน library)."
 
-#: ../lib/vector/diglib/plus_area.c:406
+#: ../lib/vector/diglib/plus_area.c:418
 #, fuzzy, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
 msgstr "ตั้งใจที่จะลบข้อมูลพื้นที่ [%d] จาก dead isle [%d]"
 
-#: ../lib/vector/diglib/plus_area.c:749
+#: ../lib/vector/diglib/plus_area.c:773
 #, fuzzy, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
 msgstr "ตั้งใจที่จะลบข้อมูล isle  [%d] จาก dead area  [%d]"
@@ -2584,7 +2584,7 @@ msgstr "GngFlatten ผิดพลาด"
 msgid "Unable to add network arc"
 msgstr "ไม่สามารถเพิ่ม network arc"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
@@ -3109,7 +3109,7 @@ msgstr "Flattening the graph ..."
 msgid "Graph was built"
 msgstr "Graph ถูกสร้าง"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "ทิศทางผิดใน  Vect_net_get_line_cost()"
 
@@ -3409,12 +3409,12 @@ msgstr "ดัชนี ชั้นข้อมูล ไม่อยู่ใ�
 msgid "Segment outside line, no segment created"
 msgstr ""
 
-#: ../lib/vector/vedit/cats.c:66
+#: ../lib/vector/vedit/cats.c:63
 #, fuzzy, c-format
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "ไม่สามารถอ่าน ส่วนหัวของไฟล์ได้"
 
-#: ../lib/vector/vedit/select.c:233
+#: ../lib/vector/vedit/select.c:230
 #, fuzzy
 msgid "Unknown query tool"
 msgstr "ไม่ทราบข้อผิดพลาด"
@@ -3506,65 +3506,71 @@ msgstr "เกิดข้อผิดพลาดระหว่างเปิ
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "ไม่สามารถเปิดแผนที่เชิงภาพ <%s> "
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "กำลังอ่านแผนที่เชิงภาพ <%s> ไปเก็บไว้ในหน่วยความจำ"
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 msgid "Could not get raster row"
 msgstr "ไม่สามารถอ่าน แถวข้อมูลเชิงภาพ"
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 msgid "Unable to close input map"
 msgstr "ไม่สามารถปิดการนำเข้าแผนที่"
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * กลุ่มข้อมูลว่างเปล่า"
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "ไม่สามารถสร้างแผนที่เชิงภาพ <%s> "
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "เขียนข้อมูล 2d ไปที่ แผนที่เชิงภาพ <%s> "
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, fuzzy, c-format
 msgid "Unable to write raster row %i"
 msgstr "ไม่สามารถแถวของแผนที่เชิงภาพ %i"
 
-#: ../lib/gpde/N_arrays_io.c:295
-#, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr "ไม่พบแผนที่ g3d <%s>"
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
+#, fuzzy, c-format
+msgid "3D raster map <%s> not found"
+msgstr "ไม่พบแผนที่เชิงภาพ <%s> "
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
-#, c-format
-msgid "Error opening g3d map <%s>"
-msgstr "เกิดข้อผิดพลาดระหว่างเปิด แผนที่ g3d <%s>"
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
+#, fuzzy, c-format
+msgid "Unable to open 3D raster map <%s>"
+msgstr "ไม่สามารถเปิดแผนที่เชิงภาพ <%s> "
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "อ่านแผนที่ g3d <%s> ไปเก็บไว้ในหน่วยความจำ"
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr "การปิดไฟล์ g3d ผิดพลาด"
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr "เกิดข้อผิดพลาดระหว่างเปิด แผนที่ g3d <%s>"
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "เขียน กลุ่มข้อมูล 3d ไปที่ แผนที่ g3d <%s>"
@@ -4347,16 +4353,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr ""
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, fuzzy, c-format
-msgid "3D raster map <%s> not found"
-msgstr "ไม่พบแผนที่เชิงภาพ <%s> "
-
-#: ../lib/ogsf/gvl_file.c:437
-#, fuzzy, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "ไม่สามารถเปิดแผนที่เชิงภาพ <%s> "
-
 #: ../lib/ogsf/gvl_file.c:443
 #, fuzzy, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4941,6 +4937,9 @@ msgstr ""
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
+
+#~ msgid "Requested g3d map <%s> not found"
+#~ msgstr "ไม่พบแผนที่ g3d <%s>"
 
 #, fuzzy
 #~ msgid "Unable to feature %d from vector map <%s>"
