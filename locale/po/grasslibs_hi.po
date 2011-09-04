@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:20+0200\n"
+"POT-Creation-Date: 2011-09-04 18:52+0200\n"
 "PO-Revision-Date: 2005-12-22 14:34+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Hindi <grass-translations@lists.osgeo.org>\n"
@@ -1162,57 +1162,57 @@ msgstr "नहीं"
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, fuzzy, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "जी अनुकृति"
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, fuzzy, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "जी"
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 #, fuzzy
 msgid "Unable to execute command"
 msgstr "n"
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, fuzzy, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "जी"
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, fuzzy, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "जी"
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, fuzzy, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "जी"
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, fuzzy, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "जी ब्लॉक"
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, fuzzy, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "जी"
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, fuzzy, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "जी अनुकृति"
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 #, fuzzy
 msgid "Unable to create a new process"
 msgstr "a"
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr "के लिए"
@@ -1451,7 +1451,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "है नहीं."
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -2517,7 +2517,7 @@ msgstr ""
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/neta/timetables.c:133
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/db/dbmi_client/copy_tab.c:105
 #: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
-#: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
+#: ../lib/sites/sites.c:372
 #, fuzzy, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "के लिए"
@@ -3532,67 +3532,73 @@ msgstr "के लिए"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "के लिए"
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, fuzzy, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "है"
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 #, fuzzy
 msgid "Could not get raster row"
 msgstr "नहीं"
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 #, fuzzy
 msgid "Unable to close input map"
 msgstr "n"
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, fuzzy, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "के लिए"
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, fuzzy, c-format
 msgid "Unable to write raster row %i"
 msgstr "a"
 
-#: ../lib/gpde/N_arrays_io.c:295
-#, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr ""
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
+#, fuzzy, c-format
+msgid "3D raster map <%s> not found"
+msgstr "नहीं"
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
-#, c-format
-msgid "Error opening g3d map <%s>"
-msgstr ""
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
+#, fuzzy, c-format
+msgid "Unable to open 3D raster map <%s>"
+msgstr "के लिए"
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr ""
@@ -4200,16 +4206,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr ""
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, fuzzy, c-format
-msgid "3D raster map <%s> not found"
-msgstr "नहीं"
-
-#: ../lib/ogsf/gvl_file.c:437
-#, fuzzy, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "के लिए"
-
 #: ../lib/ogsf/gvl_file.c:443
 #, fuzzy, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4424,7 +4420,7 @@ msgstr ""
 msgid "Programmer error"
 msgstr ""
 
-#: ../lib/db/dbmi_client/table.c:46
+#: ../lib/db/dbmi_client/table.c:46 ../lib/db/dbmi_client/delete_tab.c:40
 #, fuzzy, c-format
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "के लिए"
@@ -4485,12 +4481,7 @@ msgstr ""
 msgid "Unable select records from table <%s>"
 msgstr "के लिए"
 
-#: ../lib/db/dbmi_client/delete_tab.c:44
-#, fuzzy, c-format
-msgid "Unable to open driver <%s>"
-msgstr "का"
-
-#: ../lib/db/dbmi_client/delete_tab.c:62
+#: ../lib/db/dbmi_client/delete_tab.c:53
 #, fuzzy, c-format
 msgid "Unable to drop table: '%s'"
 msgstr "का"
@@ -4998,6 +4989,10 @@ msgstr ""
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unable to open driver <%s>"
+#~ msgstr "का"
 
 #, fuzzy
 #~ msgid ""

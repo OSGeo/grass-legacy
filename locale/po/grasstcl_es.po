@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:20+0200\n"
+"POT-Creation-Date: 2011-09-04 18:52+0200\n"
 "PO-Revision-Date: 2011-06-15 18:11+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -195,8 +195,8 @@ msgstr "Tabla creada con éxito"
 msgid "Settings already opened"
 msgstr "Configuración ya abierta"
 
-#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
-#: ../lib/init/file_option.tcl:264 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:309
+#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/rules.tcl:170
 #: ../gui/tcltk/gis.m/gm.tcl:465 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../gui/tcltk/gis.m/animate.tcl:536
 msgid "OK"
@@ -286,9 +286,9 @@ msgstr "Seleccionar item"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
-#: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:115
-#: ../lib/init/file_option.tcl:267 ../gui/tcltk/gis.m/rules.tcl:172
+#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:165
+#: ../lib/init/epsg_option.tcl:312 ../lib/init/file_option.tcl:114
+#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/rules.tcl:172
 #: ../gui/tcltk/gis.m/georect.tcl:703 ../gui/tcltk/gis.m/gm.tcl:468
 #: ../gui/tcltk/gis.m/gm.tcl:543 ../gui/tcltk/gis.m/dnviz.tcl:230
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/mapcanvas.tcl:921
@@ -375,8 +375,8 @@ msgstr "Ayuda"
 msgid "Clear"
 msgstr "Limpiar"
 
-#: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:394
-#: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
+#: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:392
+#: ../lib/init/epsg_option.tcl:436 ../gui/tcltk/gis.m/runandoutput.tcl:48
 #: ../gui/tcltk/gis.m/mapprint.tcl:372 ../gui/tcltk/gis.m/gmmenu.tcl:90
 #: ../gui/tcltk/d.m/print.tcl:281 ../gui/tcltk/d.m/menu.tcl:176
 msgid "Close"
@@ -394,94 +394,96 @@ msgstr "opcional"
 msgid "multiple"
 msgstr "múltiple"
 
-#: ../lib/init/epsg_option.tcl:93
+#: ../lib/init/epsg_option.tcl:91
 msgid "WARNING: cant get enviromental variable"
 msgstr "AVISO: no se puede obtener variable de entorno"
 
-#: ../lib/init/epsg_option.tcl:94
+#: ../lib/init/epsg_option.tcl:92
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
 msgstr ""
 "Aviso: no se puede obtener la variable de entorno GRASS_PROJSHARE. \n"
 "Esto es un error de la instalación de GRASS\n"
-"Establezca la variable de entorno GRASS_PROJSHARE para que apunte al directorio con el archivo Proj4 SPSG. "
+"Establezca la variable de entorno GRASS_PROJSHARE para que apunte al "
+"directorio con el archivo Proj4 SPSG. "
 
-#: ../lib/init/epsg_option.tcl:103
+#: ../lib/init/epsg_option.tcl:101
 msgid "Define location using EPSG projection codes"
 msgstr "Definir localización usando códigos de proyección EPSG"
 
-#: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:93
+#: ../lib/init/epsg_option.tcl:120 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
 msgstr "Nombre de la nueva localización"
 
-#: ../lib/init/epsg_option.tcl:125
+#: ../lib/init/epsg_option.tcl:123
 msgid "Enter name for location to be created"
 msgstr "Introducir nombre para la localización a crear"
 
-#: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
+#: ../lib/init/epsg_option.tcl:127 ../lib/init/epsg_option.tcl:130
 msgid "Path to the EPSG-codes file"
 msgstr "Ruta al archivo de códigos EPSG"
 
-#: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
-#: ../lib/init/gis_set.tcl:267 ../lib/init/file_option.tcl:106
+#: ../lib/init/epsg_option.tcl:133 ../lib/init/epsg_option.tcl:146
+#: ../lib/init/gis_set.tcl:267 ../lib/init/file_option.tcl:105
 msgid "Browse..."
 msgstr "Explorar..."
 
-#: ../lib/init/epsg_option.tcl:136
+#: ../lib/init/epsg_option.tcl:134
 msgid "Browse to locate EPSG file"
 msgstr "Explorar para localizar archivo EPSG"
 
-#: ../lib/init/epsg_option.tcl:143
+#: ../lib/init/epsg_option.tcl:141
 msgid "EPSG code number of projection"
 msgstr "Número de código EPSG de la proyección"
 
-#: ../lib/init/epsg_option.tcl:146
+#: ../lib/init/epsg_option.tcl:144
 msgid "Enter EPSG code for selected projection"
 msgstr "Introducir código EPSG para la proyección seleccionada"
 
-#: ../lib/init/epsg_option.tcl:149
+#: ../lib/init/epsg_option.tcl:147
 msgid "View EPSG codes and projection information."
 msgstr "Ver códigos EPSG e información de la proyección."
 
-#: ../lib/init/epsg_option.tcl:155
+#: ../lib/init/epsg_option.tcl:153
 msgid "WARNING: epsg-codes file not found"
 msgstr "AVISO: códigos EPSG no encontrados"
 
-#: ../lib/init/epsg_option.tcl:156
+#: ../lib/init/epsg_option.tcl:154
 msgid "WARNING: The epsg-codes file was not found!"
 msgstr "AVISO: ¡El archivo de códigos EPSG no se encontró!"
 
-#: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:112
+#: ../lib/init/epsg_option.tcl:162 ../lib/init/file_option.tcl:111
 msgid "Define location"
 msgstr "Definir la localización"
 
-#: ../lib/init/epsg_option.tcl:187
+#: ../lib/init/epsg_option.tcl:185
 msgid "Invalid EPSG Code!"
 msgstr "¡Código EPSG no válido!"
 
-#: ../lib/init/epsg_option.tcl:188
+#: ../lib/init/epsg_option.tcl:186
 #, tcl-format
 msgid "ERROR: Invalid EPSG code %s: should be an integer."
 msgstr "ERROR: código EPSG %s no válido: debería ser un entero."
 
-#: ../lib/init/epsg_option.tcl:198
+#: ../lib/init/epsg_option.tcl:196
 msgid "Location Exists!"
 msgstr "¡La localización existe!"
 
-#: ../lib/init/epsg_option.tcl:199
+#: ../lib/init/epsg_option.tcl:197
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
 msgstr "AVISO: la localización '%s' ya existe: por favor, pruebe otro nombre."
 
-#: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
-#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
+#: ../lib/init/epsg_option.tcl:234 ../lib/init/epsg_option.tcl:261
+#: ../lib/init/file_option.tcl:185 ../lib/init/file_option.tcl:212
 msgid "Error creating location!"
 msgstr "¡Error al crear localización!"
 
-#: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
-#: ../lib/init/file_option.tcl:187 ../lib/init/file_option.tcl:214
+#: ../lib/init/epsg_option.tcl:235 ../lib/init/epsg_option.tcl:262
+#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
 #, tcl-format
 msgid ""
 "g.proj returned the following message:\n"
@@ -490,13 +492,13 @@ msgstr ""
 "g.proj devolvió el siguiente mensaje:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
-#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
+#: ../lib/init/epsg_option.tcl:242 ../lib/init/epsg_option.tcl:266
+#: ../lib/init/file_option.tcl:193 ../lib/init/file_option.tcl:217
 msgid "Informational output from g.proj"
 msgstr "Salida informativa de g.proj"
 
-#: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
-#: ../lib/init/file_option.tcl:195 ../lib/init/file_option.tcl:219
+#: ../lib/init/epsg_option.tcl:243 ../lib/init/epsg_option.tcl:267
+#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
 #, tcl-format
 msgid ""
 "g.proj returned the following informational message:\n"
@@ -505,44 +507,52 @@ msgstr ""
 "g.proj devolvió el siguiente mensaje informativo:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:288 ../lib/init/file_option.tcl:241
+#: ../lib/init/epsg_option.tcl:286 ../lib/init/file_option.tcl:240
 msgid "Select datum transformation parameters:"
 msgstr "Seleccionar parámetros de transformación del datum:"
 
-#: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
-msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
-msgstr "Continuar sin especificar parámetros - si se usa al crear una localización, otros módulos de GRASS usarán los parámetros \"por defecto\" (probablemente no óptimos) para este datum si es necesario en el futuro."
+#: ../lib/init/epsg_option.tcl:290 ../lib/init/file_option.tcl:244
+msgid ""
+"Continue without specifying parameters - if used when creating a location, "
+"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
+"for this datum if necessary in the future."
+msgstr ""
+"Continuar sin especificar parámetros - si se usa al crear una localización, "
+"otros módulos de GRASS usarán los parámetros \"por defecto\" (probablemente "
+"no óptimos) para este datum si es necesario en el futuro."
 
-#: ../lib/init/epsg_option.tcl:344
+#: ../lib/init/epsg_option.tcl:342
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr "Puede seleccionar el código EPSG (entre <corchetes>) y copiarlo para uso posterior."
+msgstr ""
+"Puede seleccionar el código EPSG (entre <corchetes>) y copiarlo para uso "
+"posterior."
 
-#: ../lib/init/epsg_option.tcl:381
+#: ../lib/init/epsg_option.tcl:379
 msgid "GUESS THAT IS NOT THE EPSG FILE"
 msgstr "SUPONGA QUE NO ES EL ARCHIVO EPSG"
 
-#: ../lib/init/epsg_option.tcl:387 ../lib/init/epsg_option.tcl:416
-#: ../lib/init/epsg_option.tcl:435
+#: ../lib/init/epsg_option.tcl:385 ../lib/init/epsg_option.tcl:414
+#: ../lib/init/epsg_option.tcl:433
 msgid "Search"
 msgstr "Buscar"
 
-#: ../lib/init/epsg_option.tcl:389
+#: ../lib/init/epsg_option.tcl:387
 msgid "Grab code"
 msgstr "Copiar código"
 
-#: ../lib/init/epsg_option.tcl:422
+#: ../lib/init/epsg_option.tcl:420
 msgid "Search text: "
 msgstr "Buscar texto: "
 
-#: ../lib/init/epsg_option.tcl:423
+#: ../lib/init/epsg_option.tcl:421
 msgid "Search for entered text in EPSG file"
 msgstr "Buscar el texto introducido en archivo EPSG"
 
-#: ../lib/init/epsg_option.tcl:428
+#: ../lib/init/epsg_option.tcl:426
 msgid "forward search"
 msgstr "buscar hacia delante"
 
-#: ../lib/init/epsg_option.tcl:429
+#: ../lib/init/epsg_option.tcl:427
 msgid "backward search"
 msgstr "buscar hacia atrás"
 
@@ -568,8 +578,10 @@ msgstr "AVISO: localización no válida"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr "AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr ""
+"AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -710,8 +722,14 @@ msgid "Starting GRASS for the first time"
 msgstr "Iniciando GRASS por primera vez"
 
 #: ../lib/init/gis_set.tcl:584
-msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
-msgstr "GRASS necesita un directorio donde almacenar sus datos. Crear uno si todavía no se ha hecho. Una opción muy utilizada es \"grassdata\", situada en tu directorio local."
+msgid ""
+"GRASS needs a directory in which to store its data.  Create one now if you "
+"have not already done so.  A popular choice is \"grassdata\", located in "
+"your home directory."
+msgstr ""
+"GRASS necesita un directorio donde almacenar sus datos. Crear uno si todavía "
+"no se ha hecho. Una opción muy utilizada es \"grassdata\", situada en tu "
+"directorio local."
 
 #: ../lib/init/gis_set.tcl:589
 msgid "Select GIS data directory"
@@ -723,7 +741,9 @@ msgstr "AVISO: La base de datos no es válida"
 
 #: ../lib/init/gis_set.tcl:595
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "AVISO: La base de datos no es válida. Buscando el primer directorio válido en directorios superiores"
+msgstr ""
+"AVISO: La base de datos no es válida. Buscando el primer directorio válido "
+"en directorios superiores"
 
 #: ../lib/init/gis_set.tcl:642 ../lib/init/gis_set.tcl:663
 #: ../lib/init/gis_set.tcl:681 ../lib/init/gis_set.tcl:709
@@ -764,33 +784,37 @@ msgid ""
 "It's a fatal error. GRASS will not start till issue with GISRC file is fixed."
 msgstr ""
 "Algo falló mientras se procesaba el archivo GISRC llamado  \"%s\".\n"
-"Es un error. GRASS no empezará hasta que este problema con el archivo GISRC esté solucionado."
+"Es un error. GRASS no empezará hasta que este problema con el archivo GISRC "
+"esté solucionado."
 
-#: ../lib/init/file_option.tcl:73
+#: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
-msgstr "Definir localización usando la proyección contenida en archivo georreferenciado"
+msgstr ""
+"Definir localización usando la proyección contenida en archivo "
+"georreferenciado"
 
-#: ../lib/init/file_option.tcl:96
+#: ../lib/init/file_option.tcl:95
 msgid "Enter name of location to be created"
 msgstr "Introducir nombre de la nueva localización"
 
-#: ../lib/init/file_option.tcl:100
+#: ../lib/init/file_option.tcl:99
 msgid "Path to georeferenced file"
 msgstr "Ruta de archivo georreferenciado"
 
-#: ../lib/init/file_option.tcl:103
+#: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr "Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
+msgstr ""
+"Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
 
-#: ../lib/init/file_option.tcl:107
+#: ../lib/init/file_option.tcl:106
 msgid "Browse to locate georeferenced file"
 msgstr "Buscar archivo georreferenciado"
 
-#: ../lib/init/file_option.tcl:132 ../lib/init/file_option.tcl:135
+#: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
 msgid "Choose georeferenced file"
 msgstr "Elegir archivo georreferenciado"
 
-#: ../lib/init/file_option.tcl:153
+#: ../lib/init/file_option.tcl:152
 msgid ""
 "WARNING: Please supply a\n"
 "valid georeferenced file"
@@ -1046,12 +1070,14 @@ msgstr "Restringir mapa a la geometría de la región?"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
+"cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
 "Los valores de celda sólo se pueden mostrar para \n"
-"regiones de <10,000 celdas. El mapa en modo de exploración tiene que contener más de 10,000 celdas.\n"
+"regiones de <10,000 celdas. El mapa en modo de exploración tiene que "
+"contener más de 10,000 celdas.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 
@@ -1101,7 +1127,8 @@ msgstr "\tCobertura de color opcional. Usar mapa base para sombrear."
 
 #: ../gui/tcltk/gis.m/raster.tcl:231
 msgid "\tdrape map for color in color relief map or data fusion"
-msgstr "\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
+msgstr ""
+"\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
 
 #: ../gui/tcltk/gis.m/raster.tcl:236
 msgid "\tdrape map:  "
@@ -1162,7 +1189,9 @@ msgstr "Las funciones que requieren X Windows no están disponibles en Windows"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:284
 msgid "This module requires X11 support, but no xmons were found"
-msgstr "Este módulo requiere soporte para X11, pero no se encontró ningún monitor X (xmon)"
+msgstr ""
+"Este módulo requiere soporte para X11, pero no se encontró ningún monitor X "
+"(xmon)"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:108
 msgid "Raster map for histogram"
@@ -1232,7 +1261,8 @@ msgstr "Ubicación de la escala: 0-100% f desde la esquina superior izquierda"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
-msgstr "\t introducir X, Y de la esquina superior izquierda de la escala/flecha"
+msgstr ""
+"\t introducir X, Y de la esquina superior izquierda de la escala/flecha"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "    "
@@ -1432,7 +1462,8 @@ msgstr "Guardar las límites de la visualización en la región designada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:194
 msgid "Zoom display to computational region (set with g.region)"
-msgstr "Zum de la visualización a la región computacional (establecida con g.region)"
+msgstr ""
+"Zum de la visualización a la región computacional (establecida con g.region)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:197
 msgid "Zoom display to default region"
@@ -1440,7 +1471,9 @@ msgstr "Zum de la visualización a la región predeterminada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:200
 msgid "Set computational region extents to match display"
-msgstr "Establecer la extensión de la región computacional para ajustar a la visualización"
+msgstr ""
+"Establecer la extensión de la región computacional para ajustar a la "
+"visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:640
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:2195 ../gui/tcltk/d.m/menu.tcl:560
@@ -1500,12 +1533,20 @@ msgid "Could not create TIF"
 msgstr "No se pudo crear TIF"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
-msgstr "No hay ningún archivo de grupo ráster (REF). Debe seleccionar la opción 'Crear/editar grupo' para crear un archivo de grupo."
+msgid ""
+"There is no raster group file (REF). You must select the 'create/edit group' "
+"option to create a group file."
+msgstr ""
+"No hay ningún archivo de grupo ráster (REF). Debe seleccionar la opción "
+"'Crear/editar grupo' para crear un archivo de grupo."
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
-msgstr "No hay ningún archivo de grupo vectorial (REF). Debe seleccionar la opción 'Crear/editar grupo' para crear un archivo de grupo."
+msgid ""
+"There is no vector group file (VREF). You must select the 'create/edit "
+"group' option to create a group file."
+msgstr ""
+"No hay ningún archivo de grupo vectorial (REF). Debe seleccionar la opción "
+"'Crear/editar grupo' para crear un archivo de grupo."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -1584,8 +1625,12 @@ msgid "4. Select map"
 msgstr "4. Seleccionar mapa"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid "Select non-georectified raster or vector to display for marking ground control points"
-msgstr "Seleccionar ráster o vectorial no georrectificado a mostrar para hacer puntos de control sobre el terreno"
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
+msgstr ""
+"Seleccionar ráster o vectorial no georrectificado a mostrar para hacer "
+"puntos de control sobre el terreno"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
 msgid "5. Start georectifying"
@@ -1613,7 +1658,9 @@ msgstr "Primer orden"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1014
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
-msgstr "transformación afín  (ráster y vectoriales). Requiere 3 o más puntos de control."
+msgstr ""
+"transformación afín  (ráster y vectoriales). Requiere 3 o más puntos de "
+"control."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1019
 msgid "2nd order"
@@ -1629,7 +1676,9 @@ msgstr "Tercer orden"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1025
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
-msgstr "transformación polinomial  (sólo rásters). Requiere 10 o más puntos de control."
+msgstr ""
+"transformación polinomial  (sólo rásters). Requiere 10 o más puntos de "
+"control."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Clip map/image to target region"
@@ -1684,16 +1733,32 @@ msgid "Exit georectifier"
 msgstr "Salir del módulo de goerrectificar"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
-msgstr "No hay ningún archivo de PUNTOS de puntos de control sobre el terreno para el grupo. Debe crear puntos de control sobre el terreno antes de georrectificar un mapa."
+msgid ""
+"There is no POINTS file of ground control points for group. You must create "
+"ground control points before georectifying map."
+msgstr ""
+"No hay ningún archivo de PUNTOS de puntos de control sobre el terreno para "
+"el grupo. Debe crear puntos de control sobre el terreno antes de "
+"georrectificar un mapa."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
-msgstr "Puntos de control sobre el terreno insuficientes para el método de georrectificación. Necesita al menos 3 puntos para el primer orden, 6 para el segundo orden y 10 para el tercer orden."
+msgid ""
+"Insufficient ground control points for georectification method. You need at "
+"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
+"order."
+msgstr ""
+"Puntos de control sobre el terreno insuficientes para el método de "
+"georrectificación. Necesita al menos 3 puntos para el primer orden, 6 para "
+"el segundo orden y 10 para el tercer orden."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
-msgstr "Ningún punto de control sobre el terreno válido en el archivo GCP. Debe crear puntos de control sobre el terreno válidos antes de georrectificar un mapa."
+msgid ""
+"No valid ground control points in GCP file. You must create valid ground "
+"control points before georectifying map."
+msgstr ""
+"Ningún punto de control sobre el terreno válido en el archivo GCP. Debe "
+"crear puntos de control sobre el terreno válidos antes de georrectificar un "
+"mapa."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -1716,8 +1781,12 @@ msgid "Drag with mouse to pan"
 msgstr "Arrastrar con el ratón para panorámica"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
-msgstr "BASEDATOSGIS O NOMBRE_POBLACIÓN o DIRECTORIO DE MAPAS. És un error graves. gis.m no puede trabajar sin los ajustes adecuados."
+msgid ""
+"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
+"can not work without proper settings."
+msgstr ""
+"BASEDATOSGIS O NOMBRE_POBLACIÓN o DIRECTORIO DE MAPAS. És un error graves. "
+"gis.m no puede trabajar sin los ajustes adecuados."
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1767,12 +1836,14 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate "
+"after it finishes to run."
 msgstr ""
 "Realmente quieres terminar la actual sesión de GRASS/n\n"
 "Esta acción cerrará todas las sesiones del tipo gis.m. \n"
 "\n"
-"Si estás ejecutando algún módulo de GRASS desde la línea de comandos, GRASS terminará después de que se termine de ejecutar."
+"Si estás ejecutando algún módulo de GRASS desde la línea de comandos, GRASS "
+"terminará después de que se termine de ejecutar."
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 msgid "Terminate current GRASS session"
@@ -1918,8 +1989,12 @@ msgid "Select label font"
 msgstr "Seleccionar fuente de etiqueta"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
-msgstr "Crear objeto de texto PostScript (sólo para salida PostScript eps, pdf e impresión)"
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+"Crear objeto de texto PostScript (sólo para salida PostScript eps, pdf e "
+"impresión)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -2078,7 +2153,9 @@ msgstr "Símbolo de punto vectorial"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:238
 msgid "Display vector maps thematically by graduate colors (all types)"
-msgstr "Mostrar mapas vectoriales temáticamente por colores graduados (todos lo tipos)"
+msgstr ""
+"Mostrar mapas vectoriales temáticamente por colores graduados (todos lo "
+"tipos)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:244
 msgid "  or by graduated sizes (points and lines)"
@@ -2382,7 +2459,9 @@ msgstr "Borrar capa"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr "Crear un nuevo entorno de trabajo (borrar la configuración de los entornos actuales antes)"
+msgstr ""
+"Crear un nuevo entorno de trabajo (borrar la configuración de los entornos "
+"actuales antes)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -2411,7 +2490,8 @@ msgstr "leyenda para %s"
 
 #: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "Display legend for raster map using cat values and labels"
-msgstr "Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
+msgstr ""
+"Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
 
 #: ../gui/tcltk/gis.m/legend.tcl:210
 msgid "Raster map: "
@@ -2425,7 +2505,9 @@ msgstr "Posición y tamaño de la leyenda como 0-100% of de la visualización"
 #: ../gui/tcltk/gis.m/legend.tcl:235
 #, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
-msgstr "    X,Y de la esquina inferior izquierda (en % f desde superior izquierda de la visualización)"
+msgstr ""
+"    X,Y de la esquina inferior izquierda (en % f desde superior izquierda de "
+"la visualización)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:246
 msgid "    legend height "
@@ -2814,7 +2896,8 @@ msgstr "Ayuda de rosa de los vientos"
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
-msgstr "Dividir visualización de mapa en marcos para visualizar múltiples mapas"
+msgstr ""
+"Dividir visualización de mapa en marcos para visualizar múltiples mapas"
 
 #: ../gui/tcltk/gis.m/frames.tcl:112 ../gui/tcltk/d.m/frames.tcl:60
 msgid "create and select frame"
@@ -2835,7 +2918,9 @@ msgstr "Nombre del marco (opcional): "
 #: ../gui/tcltk/gis.m/frames.tcl:135
 #, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
-msgstr "Establecer bordes de marco a 0-100% f de la esquina inferior izquierda de la visualización "
+msgstr ""
+"Establecer bordes de marco a 0-100% f de la esquina inferior izquierda de la "
+"visualización "
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
@@ -4355,8 +4440,11 @@ msgid "chart for %s"
 msgstr "gráfico para %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid "Display pie and bar charts of attribute values at vector object locations"
-msgstr "Mostrar gráficos de tarta o de barras de los valores de atributos en las localizaciones de los objetos vectoriales"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
+msgstr ""
+"Mostrar gráficos de tarta o de barras de los valores de atributos en las "
+"localizaciones de los objetos vectoriales"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
 msgid "Vector map to chart:"
@@ -4752,7 +4840,8 @@ msgstr "Mapas para animación"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr "Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
+msgstr ""
+"Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -4788,7 +4877,9 @@ msgstr "Archivo de etiquetas"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:163
 msgid "Create postscript labels for vector objects from v.labels file"
-msgstr "Crear etiquetas PostScript para objetos vectoriales a partir de archivo v.labels"
+msgstr ""
+"Crear etiquetas PostScript para objetos vectoriales a partir de archivo v."
+"labels"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:170
 msgid "  (for postscript eps, pdf, and print output only)"
@@ -4897,11 +4988,14 @@ msgstr "Mapa de pendiente/intensidad"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:139
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr "Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
+msgstr ""
+"Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:145
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr "  (opcionalmente, la longitud de las flechas está basada en mapa de pendiente o intensidad)"
+msgstr ""
+"  (opcionalmente, la longitud de las flechas está basada en mapa de "
+"pendiente o intensidad)"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:162
 msgid "Aspect map: "
@@ -4969,8 +5063,11 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Mapa ráster para el canal azul o de saturación"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr "Mostrar 3 mapas ráster como canales Rojo/Verde/Azul o de Tonalidad/Intensidad/Saturación"
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr ""
+"Mostrar 3 mapas ráster como canales Rojo/Verde/Azul o de Tonalidad/"
+"Intensidad/Saturación"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
@@ -5646,7 +5743,9 @@ msgstr "Puntos de referencia Garmin GPS/Rutas/Caminos"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
 msgid "GPS Waypoints/Routes/Tracks  from many formats using GPSBabel"
-msgstr "Puntos de referencia GPS/Rutas/Caminos a partir de distintos formatos utilizando GPSBabel"
+msgstr ""
+"Puntos de referencia GPS/Rutas/Caminos a partir de distintos formatos "
+"utilizando GPSBabel"
 
 #: ../gui/tcltk/d.m/menu.tcl:104
 msgid "GEOnet Name server country files (US-NGA GNS)"
@@ -5731,7 +5830,8 @@ msgstr "Archivo DXF (ASCII)"
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr "vector ASCII o archivo de puntos/archivo vectorial ASCII antiguo de GRASS"
+msgstr ""
+"vector ASCII o archivo de puntos/archivo vectorial ASCII antiguo de GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
@@ -5827,7 +5927,9 @@ msgstr "Guardar visualización a archivo de imagen"
 
 #: ../gui/tcltk/d.m/menu.tcl:180
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr "XWD (Guardar vista, seleccionada con el ratón, al mapa .xwd del directorio local )"
+msgstr ""
+"XWD (Guardar vista, seleccionada con el ratón, al mapa .xwd del directorio "
+"local )"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
 msgid "Save displays to multiple graphic file formats"
@@ -5863,7 +5965,9 @@ msgstr "Acceder a otros directorios de mapas en la localización actual"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr "Cambiar la sesión de trabajo actual a un nuevo directorio de mapas, ubicación o BASEDEDATOSGIS"
+msgstr ""
+"Cambiar la sesión de trabajo actual a un nuevo directorio de mapas, "
+"ubicación o BASEDEDATOSGIS"
 
 #: ../gui/tcltk/d.m/menu.tcl:197
 msgid "Modify access by other users to current mapset"
@@ -5883,7 +5987,8 @@ msgstr "Crear/editar información de proyección para la localización actual"
 
 #: ../gui/tcltk/d.m/menu.tcl:205
 msgid "Show projection information and create projection files"
-msgstr "Mostrar información de proyección y crear archivos de georeferenciación"
+msgstr ""
+"Mostrar información de proyección y crear archivos de georeferenciación"
 
 #: ../gui/tcltk/d.m/menu.tcl:207
 msgid "Convert coordinates from one projection to another"
@@ -5994,8 +6099,12 @@ msgid "Create color image from RGB files"
 msgstr "Crear imagen de color a partir de archivos RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
-msgstr "Crear mapas 3 RGB (rojo, verde, azul) a partir de mapas 3 HIS (tono, intensidad, saturación)"
+msgid ""
+"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
+"maps"
+msgstr ""
+"Crear mapas 3 RGB (rojo, verde, azul) a partir de mapas 3 HIS (tono, "
+"intensidad, saturación)"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
 msgid "Create raster buffers"
@@ -6063,7 +6172,8 @@ msgstr "Reducir elementos lineales"
 
 #: ../gui/tcltk/d.m/menu.tcl:293
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr "Trazar los cauces en el mapa de elevaciones utilizando el mapa de corrientes"
+msgstr ""
+"Trazar los cauces en el mapa de elevaciones utilizando el mapa de corrientes"
 
 #: ../gui/tcltk/d.m/menu.tcl:294
 msgid "Depressionless elevation map and flowline map"
@@ -6112,7 +6222,9 @@ msgstr "Simular fenómeno de propagación anisotrópica"
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr "Editar valores de categoría de las celdas individuales para el mapa raster mostrado"
+msgstr ""
+"Editar valores de categoría de las celdas individuales para el mapa raster "
+"mostrado"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Reclassify categories for areas of specified sizes"
@@ -6132,7 +6244,8 @@ msgstr "Recodificar categorías utilizando normas (crear un mapa nuevo)"
 
 #: ../gui/tcltk/d.m/menu.tcl:328
 msgid "Recode categories using rules file (create new map)"
-msgstr "Volver a codificar categorías usando archivo de reglas (crear mapa nuevo)"
+msgstr ""
+"Volver a codificar categorías usando archivo de reglas (crear mapa nuevo)"
 
 #: ../gui/tcltk/d.m/menu.tcl:330
 msgid "Rescale categories (create new map)"
@@ -6196,15 +6309,21 @@ msgstr "Interpolación a partir de los contornos raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:353
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr "Interpolación de distancia inversa ponderada a partir de los puntos vectoriales"
+msgstr ""
+"Interpolación de distancia inversa ponderada a partir de los puntos "
+"vectoriales"
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr "Interpolación con spline regularizada con tensión a partir de puntos vectoriales o contornos"
+msgstr ""
+"Interpolación con spline regularizada con tensión a partir de puntos "
+"vectoriales o contornos"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr "Llenar celdas NULAS por interpolación utilizando tensión de spline regularizada"
+msgstr ""
+"Llenar celdas NULAS por interpolación utilizando tensión de spline "
+"regularizada"
 
 #: ../gui/tcltk/d.m/menu.tcl:361
 msgid "Manage category labels and values"
@@ -6324,15 +6443,25 @@ msgstr "Crear sistema de referencia lineal"
 
 #: ../gui/tcltk/d.m/menu.tcl:415
 msgid "Create stationing from imput lines, and linear reference system"
-msgstr "Crear estacionamiento a partir de las líneas de entrada, y el sistema de referencia lineal"
+msgstr ""
+"Crear estacionamiento a partir de las líneas de entrada, y el sistema de "
+"referencia lineal"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
-msgstr "Crear puntos / segmentos de líneas de entrada, sistema de referencia lineal y posiciones leídas desde stdin"
+msgid ""
+"Create points/segments from input lines, linear reference system and "
+"positions read from stdin"
+msgstr ""
+"Crear puntos / segmentos de líneas de entrada, sistema de referencia lineal "
+"y posiciones leídas desde stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid "Find line id and real km+offset for given points in vector map using linear reference system"
-msgstr "Encontrar id de la línea, y km+offset real para los puntos dados en el mapa vectorial utilizando el sistema de referencia lilneal"
+msgid ""
+"Find line id and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr ""
+"Encontrar id de la línea, y km+offset real para los puntos dados en el mapa "
+"vectorial utilizando el sistema de referencia lilneal"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6400,7 +6529,8 @@ msgstr "Generar triángulos Delaunay para conjunto de puntos"
 
 #: ../gui/tcltk/d.m/menu.tcl:454
 msgid "Generate Voronoi diagram/Thiessen polygons for point set"
-msgstr "Generar diagrama de Voronoi/polígonos de Thiessen para conjunto de datos"
+msgstr ""
+"Generar diagrama de Voronoi/polígonos de Thiessen para conjunto de datos"
 
 #: ../gui/tcltk/d.m/menu.tcl:456
 msgid "Sample raster maps"
@@ -6416,7 +6546,9 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Transfer attribute data from queried vector map to points"
-msgstr "Transferir los datos de atributo desde el mapa vectorial consultado a los puntos"
+msgstr ""
+"Transferir los datos de atributo desde el mapa vectorial consultado a los "
+"puntos"
 
 #: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Load vector attributes to database or create reports"
@@ -6432,7 +6564,9 @@ msgstr "Test de normalidad de la distribución de puntos"
 
 #: ../gui/tcltk/d.m/menu.tcl:472
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr "Calcular estadísticas para el mapa raster subyacente a los objetos vectoriales"
+msgstr ""
+"Calcular estadísticas para el mapa raster subyacente a los objetos "
+"vectoriales"
 
 #: ../gui/tcltk/d.m/menu.tcl:473
 msgid "Indices of point counts in quadrats"
@@ -6451,16 +6585,25 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Hacer mosaico de 4 imágenes adyacentes"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr "Balance de color y mejorar las tablas de colores de las imágenes multibanda para la visualización RGB"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr ""
+"Balance de color y mejorar las tablas de colores de las imágenes multibanda "
+"para la visualización RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr "Transformar el color de imagen HIS (Tonalidad/Intensidad/Saturación) a RGB (Rojo, Verde/Azul)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr ""
+"Transformar el color de imagen HIS (Tonalidad/Intensidad/Saturación) a RGB "
+"(Rojo, Verde/Azul)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr "Transformar color de imagen RGB (Rojo/Verde/Azul) a HIS (Tono/Intensidad/Saturación)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr ""
+"Transformar color de imagen RGB (Rojo/Verde/Azul) a HIS (Tono/Intensidad/"
+"Saturación)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6468,11 +6611,15 @@ msgstr "Rectificar y georeferencias grupo de imagen"
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr "Establecer puntos de control del uselo (GCP's) a partir de mapa raster o entrada del teclado"
+msgstr ""
+"Establecer puntos de control del uselo (GCP's) a partir de mapa raster o "
+"entrada del teclado"
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr "Establecer puntos de control del suelo (GCP's) desde el mapa vectorial o a desde la entrada del teclado"
+msgstr ""
+"Establecer puntos de control del suelo (GCP's) desde el mapa vectorial o a "
+"desde la entrada del teclado"
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6541,7 +6688,8 @@ msgstr "Crear máscara 3D para operaciones de la cuadrícula3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:536
 msgid "Create 2D raster cross section from grid3d volume"
-msgstr "Crear sección transversal raster 2D a partir de cuadrícula 3D de volumen"
+msgstr ""
+"Crear sección transversal raster 2D a partir de cuadrícula 3D de volumen"
 
 #: ../gui/tcltk/d.m/menu.tcl:537
 msgid "Map calculator for grid3D operations"
@@ -6573,7 +6721,8 @@ msgstr "Ejecutar sentencia SQL"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr "     (dejar en blanco para situar el ratón; la ubicación no se guardará)"
+msgstr ""
+"     (dejar en blanco para situar el ratón; la ubicación no se guardará)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -6585,8 +6734,12 @@ msgstr "  alinear texto con punto de coordenada"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, fuzzy, tcl-format
-msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
-msgstr "     (para coordenadas, % es desde la parte inferior izquierda de la vista, para los píxeles es desde la parte superior izquierda)"
+msgid ""
+"     (for coordinates, % is from bottom left of display, pixels from top "
+"left)"
+msgstr ""
+"     (para coordenadas, % es desde la parte inferior izquierda de la vista, "
+"para los píxeles es desde la parte superior izquierda)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6640,4 +6793,6 @@ msgstr "azul (RGB) o saturación (HIS): "
 
 #, fuzzy
 #~ msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
-#~ msgstr "transformación polinomial  (sólo rásters). Requiere 6 o más puntos de control."
+#~ msgstr ""
+#~ "transformación polinomial  (sólo rásters). Requiere 6 o más puntos de "
+#~ "control."

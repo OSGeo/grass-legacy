@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:20+0200\n"
+"POT-Creation-Date: 2011-09-04 18:52+0200\n"
 "PO-Revision-Date: 2011-04-15 14:03+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -1240,55 +1240,55 @@ msgstr "No se puede reasignar la memoria intermedia."
 msgid "CreateProcess() failed: error = %d"
 msgstr "Falló CrearProceso(): error = %d"
 
-#: ../lib/gis/spawn.c:411
+#: ../lib/gis/spawn.c:416
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: No es posible desviar el descriptor %d "
 
-#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: No es posible abrir el archivo %s."
 
-#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
 msgid "Unable to execute command"
 msgstr "No se puede ejecutar el comando."
 
-#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: No es posible restaurar la señal %d."
 
-#: ../lib/gis/spawn.c:552
+#: ../lib/gis/spawn.c:557
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: No es posible reinicializar la señal %d."
 
-#: ../lib/gis/spawn.c:561
+#: ../lib/gis/spawn.c:566
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: No es posible ignorar la señal %d."
 
-#: ../lib/gis/spawn.c:572
+#: ../lib/gis/spawn.c:577
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: No es posible bloquear la señal %d."
 
-#: ../lib/gis/spawn.c:580
+#: ../lib/gis/spawn.c:585
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: No es posible desbloquear la señal %d."
 
-#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: No es posible duplicar el descriptor de %d a %d."
 
-#: ../lib/gis/spawn.c:651
+#: ../lib/gis/spawn.c:656
 msgid "Unable to create a new process"
 msgstr "No se puede crear un nuevo proceso."
 
-#: ../lib/gis/spawn.c:666
+#: ../lib/gis/spawn.c:671
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "No se puede cambiar el directorio a %s."
@@ -1548,7 +1548,7 @@ msgid "Output raster map name <%s> is not valid map name"
 msgstr "El nómbre del raster de salida <%s> no es un nombre de mapa válido."
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
-#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
+#: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:56
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
@@ -2643,7 +2643,7 @@ msgstr "No se ha definido la conexión a la base de datos para la capa %d."
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/neta/timetables.c:133
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/db/dbmi_client/copy_tab.c:105
 #: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
-#: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
+#: ../lib/sites/sites.c:372
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr ""
@@ -3703,65 +3703,71 @@ msgstr "Error al cargar el mapa raster 3D <%s>."
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): Tipo de datos no soportado."
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "No ha sido posible abrir el mapa raster <%s>."
 
-#: ../lib/gpde/N_arrays_io.c:96
+#: ../lib/gpde/N_arrays_io.c:97
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "Leyendo el mapa raster <%s> en la memoria."
 
-#: ../lib/gpde/N_arrays_io.c:103
+#: ../lib/gpde/N_arrays_io.c:104
 msgid "Could not get raster row"
 msgstr "No se pudo obtener la fila del raster."
 
-#: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
 msgid "Unable to close input map"
 msgstr "No es posible cerrar el mapa de entrada."
 
-#: ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:191
 msgid "N_array_2d * array is empty"
 msgstr "La matriz N_array_2d * se encuentra vacía."
 
-#: ../lib/gpde/N_arrays_io.c:202
+#: ../lib/gpde/N_arrays_io.c:203
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "No ha sido posible crear el mapa raster <%s>."
 
-#: ../lib/gpde/N_arrays_io.c:211
+#: ../lib/gpde/N_arrays_io.c:212
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Escribir matriz 2d al mapa raster <%s>."
 
-#: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
-#: ../lib/gpde/N_arrays_io.c:237
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
 #, c-format
 msgid "Unable to write raster row %i"
 msgstr "No se puede escribir la fila %i del raster."
 
-#: ../lib/gpde/N_arrays_io.c:295
+#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
+#: ../lib/ogsf/Gvl3.c:39
 #, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr "No ha sido posible encontrar el mapa g3d solicitado <%s>."
+msgid "3D raster map <%s> not found"
+msgstr "No se ha encontrado el mapa raster 3D <%s>."
 
-#: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
+#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
 #, c-format
-msgid "Error opening g3d map <%s>"
-msgstr "Error al abrir el mapa g3D <%s>."
+msgid "Unable to open 3D raster map <%s>"
+msgstr "No ha sido posible abrir el mapa raster 3D <%s>."
 
-#: ../lib/gpde/N_arrays_io.c:331
+#: ../lib/gpde/N_arrays_io.c:332
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Leer el mapa g3D <%s> en memoria."
 
-#: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
 msgid "Error closing g3d file"
 msgstr "Error al cerrar el archivo g3D."
 
-#: ../lib/gpde/N_arrays_io.c:447
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr "Error al abrir el mapa g3D <%s>."
+
+#: ../lib/gpde/N_arrays_io.c:448
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Escribir matriz 3D en el mapa g3D <%s>."
@@ -4467,16 +4473,6 @@ msgstr ""
 msgid "Maximum number of datafiles exceeded"
 msgstr "Se ha excedido el número máximo de archivos de datos."
 
-#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
-#, c-format
-msgid "3D raster map <%s> not found"
-msgstr "No se ha encontrado el mapa raster 3D <%s>."
-
-#: ../lib/ogsf/gvl_file.c:437
-#, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr "No ha sido posible abrir el mapa raster 3D <%s>."
-
 #: ../lib/ogsf/gvl_file.c:443
 #, c-format
 msgid "Unable to read range of 3D raster map <%s>"
@@ -4703,7 +4699,7 @@ msgstr "Archivo de registros corrupto"
 msgid "Programmer error"
 msgstr "Error del programador"
 
-#: ../lib/db/dbmi_client/table.c:46
+#: ../lib/db/dbmi_client/table.c:46 ../lib/db/dbmi_client/delete_tab.c:40
 #, c-format
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "No es posible abrir la base de datos <%s> con el controlador <%s>."
@@ -4765,12 +4761,7 @@ msgstr "Falta la clave de column name"
 msgid "Unable select records from table <%s>"
 msgstr "No se pueden seleccionar los registros de la tabla <%s>."
 
-#: ../lib/db/dbmi_client/delete_tab.c:44
-#, c-format
-msgid "Unable to open driver <%s>"
-msgstr "No se puede abrir el manejador <%s>."
-
-#: ../lib/db/dbmi_client/delete_tab.c:62
+#: ../lib/db/dbmi_client/delete_tab.c:53
 #, c-format
 msgid "Unable to drop table: '%s'"
 msgstr "No es posible eliminar la tabla: '%s'."
@@ -5353,6 +5344,12 @@ msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 "El subgrupo <%s> perteneciente al grupo <%s> hace referencia a los "
 "siguientes mapas raster:\n"
+
+#~ msgid "Requested g3d map <%s> not found"
+#~ msgstr "No ha sido posible encontrar el mapa g3d solicitado <%s>."
+
+#~ msgid "Unable to open driver <%s>"
+#~ msgstr "No se puede abrir el manejador <%s>."
 
 #~ msgid ""
 #~ "taking too long to find points for interpolation--please change the "

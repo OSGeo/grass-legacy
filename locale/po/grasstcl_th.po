@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 20:20+0200\n"
+"POT-Creation-Date: 2011-09-04 18:52+0200\n"
 "PO-Revision-Date: 2008-01-05 15:05+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -192,8 +192,8 @@ msgstr "ตารางได้สร้างสำเร็จแล้ว"
 msgid "Settings already opened"
 msgstr "การตั้งค่าได้เปิดไว้แล้ว"
 
-#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
-#: ../lib/init/file_option.tcl:264 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:309
+#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/rules.tcl:170
 #: ../gui/tcltk/gis.m/gm.tcl:465 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../gui/tcltk/gis.m/animate.tcl:536
 msgid "OK"
@@ -283,9 +283,9 @@ msgstr "เลือก"
 msgid "Ok"
 msgstr "ตกลง"
 
-#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
-#: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:115
-#: ../lib/init/file_option.tcl:267 ../gui/tcltk/gis.m/rules.tcl:172
+#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:165
+#: ../lib/init/epsg_option.tcl:312 ../lib/init/file_option.tcl:114
+#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/rules.tcl:172
 #: ../gui/tcltk/gis.m/georect.tcl:703 ../gui/tcltk/gis.m/gm.tcl:468
 #: ../gui/tcltk/gis.m/gm.tcl:543 ../gui/tcltk/gis.m/dnviz.tcl:230
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/mapcanvas.tcl:921
@@ -373,8 +373,8 @@ msgstr "ช่วยเหลือ"
 msgid "Clear"
 msgstr "ล้าง"
 
-#: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:394
-#: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
+#: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:392
+#: ../lib/init/epsg_option.tcl:436 ../gui/tcltk/gis.m/runandoutput.tcl:48
 #: ../gui/tcltk/gis.m/mapprint.tcl:372 ../gui/tcltk/gis.m/gmmenu.tcl:90
 #: ../gui/tcltk/d.m/print.tcl:281 ../gui/tcltk/d.m/menu.tcl:176
 msgid "Close"
@@ -392,11 +392,11 @@ msgstr "ทางเลือก"
 msgid "multiple"
 msgstr "หลายอย่าง"
 
-#: ../lib/init/epsg_option.tcl:93
+#: ../lib/init/epsg_option.tcl:91
 msgid "WARNING: cant get enviromental variable"
 msgstr "คำเตือน: ไม่สามารถอ่านตัวแปรสภาวะแวดล้อม"
 
-#: ../lib/init/epsg_option.tcl:94
+#: ../lib/init/epsg_option.tcl:92
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
@@ -407,80 +407,80 @@ msgstr ""
 "แสดงว่าการติดตั้ง GRASS ผิดพลาด. \n"
 "กำหนด ตัวแปรสภาวะแวดล้อม GRASS_PROJSHARE ชี้ไปที่ directory ที่มี Proj4 EPSG ไฟล์. "
 
-#: ../lib/init/epsg_option.tcl:103
+#: ../lib/init/epsg_option.tcl:101
 msgid "Define location using EPSG projection codes"
 msgstr "กำหนดตำแหน่งโดยใช้  รหัส EPSG projection"
 
-#: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:93
+#: ../lib/init/epsg_option.tcl:120 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
 msgstr "ชื่อ location ใหม่"
 
-#: ../lib/init/epsg_option.tcl:125
+#: ../lib/init/epsg_option.tcl:123
 msgid "Enter name for location to be created"
 msgstr "ระบุชื่อสำหรับ location เพื่อทำการสร้าง"
 
-#: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
+#: ../lib/init/epsg_option.tcl:127 ../lib/init/epsg_option.tcl:130
 msgid "Path to the EPSG-codes file"
 msgstr "ที่อยู่ของแฟ้ม EPSG-codes"
 
-#: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
-#: ../lib/init/gis_set.tcl:267 ../lib/init/file_option.tcl:106
+#: ../lib/init/epsg_option.tcl:133 ../lib/init/epsg_option.tcl:146
+#: ../lib/init/gis_set.tcl:267 ../lib/init/file_option.tcl:105
 msgid "Browse..."
 msgstr "เรียกดู..."
 
-#: ../lib/init/epsg_option.tcl:136
+#: ../lib/init/epsg_option.tcl:134
 msgid "Browse to locate EPSG file"
 msgstr "เรียกดูเพื่อค้นหาแฟ้ม EPSG-codes"
 
-#: ../lib/init/epsg_option.tcl:143
+#: ../lib/init/epsg_option.tcl:141
 msgid "EPSG code number of projection"
 msgstr "รหัส EPSG ของ projection"
 
-#: ../lib/init/epsg_option.tcl:146
+#: ../lib/init/epsg_option.tcl:144
 msgid "Enter EPSG code for selected projection"
 msgstr "ระบุรหัส EPSG และ projection"
 
-#: ../lib/init/epsg_option.tcl:149
+#: ../lib/init/epsg_option.tcl:147
 msgid "View EPSG codes and projection information."
 msgstr "ดูรหัส EPSG และข้อมูล projection"
 
-#: ../lib/init/epsg_option.tcl:155
+#: ../lib/init/epsg_option.tcl:153
 msgid "WARNING: epsg-codes file not found"
 msgstr "คำเตือน: ไม่พบแฟ้ม epsg-codes"
 
-#: ../lib/init/epsg_option.tcl:156
+#: ../lib/init/epsg_option.tcl:154
 msgid "WARNING: The epsg-codes file was not found!"
 msgstr "คำเตือน: ไม่พบแฟ้ม epsg-codes"
 
-#: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:112
+#: ../lib/init/epsg_option.tcl:162 ../lib/init/file_option.tcl:111
 msgid "Define location"
 msgstr "กำหนดตำแหน่ง"
 
-#: ../lib/init/epsg_option.tcl:187
+#: ../lib/init/epsg_option.tcl:185
 msgid "Invalid EPSG Code!"
 msgstr "รหัสEPSG ไม่ถูกต้อง"
 
-#: ../lib/init/epsg_option.tcl:188
+#: ../lib/init/epsg_option.tcl:186
 #, tcl-format
 msgid "ERROR: Invalid EPSG code %s: should be an integer."
 msgstr "ผิดพลาด รหัส EPSG ผิดพลาด %s:  ต้องเป็นตัวเลขจำนวนเต็ม"
 
-#: ../lib/init/epsg_option.tcl:198
+#: ../lib/init/epsg_option.tcl:196
 msgid "Location Exists!"
 msgstr "พบ Location อยู่แล้ว!"
 
-#: ../lib/init/epsg_option.tcl:199
+#: ../lib/init/epsg_option.tcl:197
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
 msgstr "คำเตือน: พบ Location '%s' อยู่แล้ว: โปรดใช้ชื่ออื่น"
 
-#: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
-#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
+#: ../lib/init/epsg_option.tcl:234 ../lib/init/epsg_option.tcl:261
+#: ../lib/init/file_option.tcl:185 ../lib/init/file_option.tcl:212
 msgid "Error creating location!"
 msgstr "เกิดการผิดพลาด ในการสร้าง location !"
 
-#: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
-#: ../lib/init/file_option.tcl:187 ../lib/init/file_option.tcl:214
+#: ../lib/init/epsg_option.tcl:235 ../lib/init/epsg_option.tcl:262
+#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
 #, tcl-format
 msgid ""
 "g.proj returned the following message:\n"
@@ -489,13 +489,13 @@ msgstr ""
 "g.proj แสดงข้อความข้างล่าง:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
-#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
+#: ../lib/init/epsg_option.tcl:242 ../lib/init/epsg_option.tcl:266
+#: ../lib/init/file_option.tcl:193 ../lib/init/file_option.tcl:217
 msgid "Informational output from g.proj"
 msgstr "ข้อมูลจาก g.proj"
 
-#: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
-#: ../lib/init/file_option.tcl:195 ../lib/init/file_option.tcl:219
+#: ../lib/init/epsg_option.tcl:243 ../lib/init/epsg_option.tcl:267
+#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
 #, tcl-format
 msgid ""
 "g.proj returned the following informational message:\n"
@@ -504,11 +504,11 @@ msgstr ""
 "g.proj แสดงข้อความข้างล่าง:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:288 ../lib/init/file_option.tcl:241
+#: ../lib/init/epsg_option.tcl:286 ../lib/init/file_option.tcl:240
 msgid "Select datum transformation parameters:"
 msgstr "เลือกตัวแปร Datum Transformation:"
 
-#: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
+#: ../lib/init/epsg_option.tcl:290 ../lib/init/file_option.tcl:244
 msgid ""
 "Continue without specifying parameters - if used when creating a location, "
 "other GRASS modules will use the \"default\" (likely non-optimum) parameters "
@@ -517,36 +517,36 @@ msgstr ""
 "ทำต่อโดยไม่ต้องระบุตัวแปร - ถ้าใช้เมื่อสร้างตำแหน่ง, คำสั่ง GRASS อื่นจะถูกใช้  \"default"
 "\" (เหมือนกับ non-optimum) ตัวแปรสำหรับ Datum นี้ ถ้าจำเป็นในอนาคต."
 
-#: ../lib/init/epsg_option.tcl:344
+#: ../lib/init/epsg_option.tcl:342
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
 msgstr "คุณสามารถเลือกรหัส EPSG (ใน <braces>) และคัดลอกมันเพื่อใช้ครั้งต่อไป"
 
-#: ../lib/init/epsg_option.tcl:381
+#: ../lib/init/epsg_option.tcl:379
 msgid "GUESS THAT IS NOT THE EPSG FILE"
 msgstr "คาดว่านี้ไม่ใช่แฟ้ม EPSG"
 
-#: ../lib/init/epsg_option.tcl:387 ../lib/init/epsg_option.tcl:416
-#: ../lib/init/epsg_option.tcl:435
+#: ../lib/init/epsg_option.tcl:385 ../lib/init/epsg_option.tcl:414
+#: ../lib/init/epsg_option.tcl:433
 msgid "Search"
 msgstr "ค้นหา"
 
-#: ../lib/init/epsg_option.tcl:389
+#: ../lib/init/epsg_option.tcl:387
 msgid "Grab code"
 msgstr "รหัส Grab"
 
-#: ../lib/init/epsg_option.tcl:422
+#: ../lib/init/epsg_option.tcl:420
 msgid "Search text: "
 msgstr "ค้นหาข้อความ"
 
-#: ../lib/init/epsg_option.tcl:423
+#: ../lib/init/epsg_option.tcl:421
 msgid "Search for entered text in EPSG file"
 msgstr "ค้นหา ตัวอักษรที่กำหนดใน EPSG ไฟล์"
 
-#: ../lib/init/epsg_option.tcl:428
+#: ../lib/init/epsg_option.tcl:426
 msgid "forward search"
 msgstr "เดินหน้าการค้นหา"
 
-#: ../lib/init/epsg_option.tcl:429
+#: ../lib/init/epsg_option.tcl:427
 msgid "backward search"
 msgstr "ย้อนหลังการค้นหา"
 
@@ -782,31 +782,31 @@ msgid ""
 "It's a fatal error. GRASS will not start till issue with GISRC file is fixed."
 msgstr ""
 
-#: ../lib/init/file_option.tcl:73
+#: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
 msgstr "กำหนดตำแหน่งโดยใช้ ข้อมูล Projection ใน Georeferenced ไฟล์"
 
-#: ../lib/init/file_option.tcl:96
+#: ../lib/init/file_option.tcl:95
 msgid "Enter name of location to be created"
 msgstr "ระบุชื่อ location เพื่อทำการสร้าง"
 
-#: ../lib/init/file_option.tcl:100
+#: ../lib/init/file_option.tcl:99
 msgid "Path to georeferenced file"
 msgstr "Path ถึง Georeferenced ไฟล์"
 
-#: ../lib/init/file_option.tcl:103
+#: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
 msgstr "Path ถึง Georeferenced ไฟล์(รูปแบบจะต้องอ่านได้ด้วย GDAL/OGR)"
 
-#: ../lib/init/file_option.tcl:107
+#: ../lib/init/file_option.tcl:106
 msgid "Browse to locate georeferenced file"
 msgstr "แสดงตำแหน่งของ  Georeferenced ไฟล์"
 
-#: ../lib/init/file_option.tcl:132 ../lib/init/file_option.tcl:135
+#: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
 msgid "Choose georeferenced file"
 msgstr "เลือก Georeferenced ไฟล์"
 
-#: ../lib/init/file_option.tcl:153
+#: ../lib/init/file_option.tcl:152
 msgid ""
 "WARNING: Please supply a\n"
 "valid georeferenced file"
