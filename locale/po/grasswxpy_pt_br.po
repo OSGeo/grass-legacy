@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-09 20:10+0200\n"
-"PO-Revision-Date: 2011-08-03 03:11-0300\n"
+"PO-Revision-Date: 2011-08-12 16:32-0300\n"
 "Last-Translator: \n"
 "Language-Team: Português do Brasil <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -734,9 +734,8 @@ msgid "Draw/re-draw profile"
 msgstr "Desenhar/redesenhar perfil"
 
 #: ../gui/wxpython/icons/icon.py:340
-#, fuzzy
 msgid "Draw transect in map display window to profile"
-msgstr "Desenha o transect da janela de visualização de mapa no profile"
+msgstr "Desenha o transect da janela de visualização de mapa no perfil"
 
 #: ../gui/wxpython/icons/icon.py:342
 msgid "Profile options"
@@ -1096,7 +1095,6 @@ msgid "Ready."
 msgstr "Pronto."
 
 #: ../gui/wxpython/scripts/vkrige.py:295
-#, fuzzy
 msgid "Variogram fitting"
 msgstr "Ajuste do variograma"
 
@@ -1430,108 +1428,88 @@ msgid "Import 3D raster data"
 msgstr "Importa dados raster 3D"
 
 #: ../gui/wxpython/menustrings.py:82
-#, fuzzy
 msgid "ASCII 3D import"
 msgstr "Importação de 3D ASCII"
 
 #: ../gui/wxpython/menustrings.py:83
-#, fuzzy
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
-msgstr "Convertir un archivo de texto ráster ASCII 3D en una capa de mapa ráster 3D (binaria)"
+msgstr "Converte um arquivo de texto ráster ASCII 3D em uma camada de mapa ráster 3D (binária)"
 
 #: ../gui/wxpython/menustrings.py:84
-#, fuzzy
 msgid "Vis5D import"
 msgstr "Importação de Vis5D"
 
 #: ../gui/wxpython/menustrings.py:85
-#, fuzzy
 msgid "import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)"
-msgstr "Importación de archivos tridimensionales Vis5D (esto es, el archivo v5d con 1 variable y 1 paso de tiempo)"
+msgstr "Importação de arquivos tridimensionais Vis5D (isto é, o arquivo v5d com 1 variável e 1 passo de tempo y 1 paso de tiempo)"
 
 #: ../gui/wxpython/menustrings.py:86
-#, fuzzy
 msgid "Import database table"
-msgstr "Importar tabela de base de dados"
+msgstr "Importar tabela de banco de dados"
 
 #: ../gui/wxpython/menustrings.py:87
-#, fuzzy
 msgid "Multiple import formats using OGR"
-msgstr "Múltiples formatos de importación usando OGR"
+msgstr "Formatos de importação múltipla usando OGR"
 
 #: ../gui/wxpython/menustrings.py:88
-#, fuzzy
 msgid "Imports attribute tables in various formats."
-msgstr "Importa tablas de atributos en varios formatos."
+msgstr "Importa tabelas de atributos em vários formatos."
 
 #: ../gui/wxpython/menustrings.py:89
-#, fuzzy
 msgid "Export raster map"
 msgstr "Exportar mapa raster"
 
 #: ../gui/wxpython/menustrings.py:90 ../gui/wxpython/menustrings.py:121
-#, fuzzy
 msgid "Common export formats"
-msgstr "Converter coordenadas"
+msgstr "Formatos de exportação comuns"
 
 #: ../gui/wxpython/menustrings.py:91
-#, fuzzy
 msgid "Exports GRASS raster maps into GDAL supported formats."
-msgstr "Exportar um mapa raster GRASS num formato suportado pelo GDAL."
+msgstr "Exporta um mapa raster GRASS em formatos suportados pelo GDAL."
 
 #: ../gui/wxpython/menustrings.py:92
-#, fuzzy
 msgid "ASCII grid export"
 msgstr "Exportar grelha ASCII"
 
 #: ../gui/wxpython/menustrings.py:93
-#, fuzzy
 msgid "Converts a raster map layer into an ASCII text file."
-msgstr "Converte um raster num arquivo de texto ASCII."
+msgstr "Converte um ráster num arquivo de texto ASCII."
 
 #: ../gui/wxpython/menustrings.py:94
-#, fuzzy
 msgid "ASCII x,y,z points export"
-msgstr "Exportar X,Y,Z ASCII"
+msgstr "Exportar pontos x,y,z ASCII"
 
 #: ../gui/wxpython/menustrings.py:95
-#, fuzzy
 msgid "Export a raster map to a text file as x,y,z values based on cell centers."
-msgstr "Exportar un mapa ráster a un archivo de texto como valores X, Y, Z basados en los centros de las celdas."
+msgstr "Exporta um mapa ráster para um arquivo texto como valores x,y,z basados nos centros decélulas."
 
 #: ../gui/wxpython/menustrings.py:96
-#, fuzzy
 msgid "ESRI ASCII grid export"
-msgstr "Exportar ESRI ASCII"
+msgstr "Exportar grelha ESRI ASCII"
 
 #: ../gui/wxpython/menustrings.py:97
-#, fuzzy
 msgid "Converts a raster map layer into an ESRI ARCGRID file."
-msgstr "Converte um mapa raster num arquivo ESRI ARCGRID."
+msgstr "Converte um mapa ráster num arquivo ESRI ARCGRID."
 
 #: ../gui/wxpython/menustrings.py:98
-#, fuzzy
 msgid "GRIDATB.FOR export"
 msgstr "Exportar GRIDATB.FOR"
 
 #: ../gui/wxpython/menustrings.py:99
-#, fuzzy
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
-msgstr "Exporta mapa raster de GRASS para um arquivo de mapa GRIDATB.FOR (TOPMODEL)"
+msgstr "Exporta mapa raster do GRASS para um arquivo de mapa GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/wxpython/menustrings.py:100
 msgid "Matlab 2D array export"
 msgstr "Exportar array 2D do Matlab"
 
 #: ../gui/wxpython/menustrings.py:101
-#, fuzzy
 msgid "Exports a GRASS raster to a binary MAT-File."
-msgstr "Exportar um GRASS raster para um binário MAT."
+msgstr "Exportar um GRASS ráster para um binário MAT."
 
 #: ../gui/wxpython/menustrings.py:102
-#, fuzzy
 msgid "Raw binary array export"
-msgstr "Exportar binário"
+msgstr "Exporta array de binários raw"
 
 #: ../gui/wxpython/menustrings.py:103
 #, fuzzy
