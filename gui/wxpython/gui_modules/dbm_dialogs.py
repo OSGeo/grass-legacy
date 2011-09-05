@@ -561,6 +561,7 @@ class ModifyTableRecord(wx.Dialog):
         cId = 0
         self.usebox = False
         self.cat = None
+        winFocus = False
         for column, value in data:
             if self.keyId == cId:
                 self.cat = int(value)
@@ -577,6 +578,9 @@ class ModifyTableRecord(wx.Dialog):
             else:
                 valueWin = wx.TextCtrl(parent = self.dataPanel, id = wx.ID_ANY,
                                        value = value, size = (250, -1))
+                if not winFocus:
+                    wx.CallAfter(valueWin.SetFocus)
+                    winFocus = True
             
             label = wx.StaticText(parent = self.dataPanel, id = wx.ID_ANY,
                                   label = column + ":")
