@@ -31,7 +31,11 @@ int db__driver_close_cursor(dbCursor * dbc)
 	return DB_FAILED;
 
     ret = sqlite3_finalize(c->statement);
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 

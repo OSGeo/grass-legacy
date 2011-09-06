@@ -113,7 +113,11 @@ int db__driver_create_table(dbTable * table)
     G_debug(3, " SQL: %s", db_get_string(&sql));
 
     ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 
