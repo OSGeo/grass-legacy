@@ -64,7 +64,11 @@ int db__driver_fetch(dbCursor * cn, int position, int *more)
 	    c->row = -1;
 
 	ret = sqlite3_step(c->statement);
+#if (SQLITE_VERSION_NUMBER > 3003008)
 	while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+	while (ret == SQLITE_BUSY) {
+#endif
 	    ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
 	}
 	if (ret != SQLITE_ROW) {
@@ -269,7 +273,11 @@ int db__driver_get_num_rows(dbCursor * cn)
     }
 
     ret = sqlite3_reset(c->statement);
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 

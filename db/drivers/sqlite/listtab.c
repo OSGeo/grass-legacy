@@ -45,7 +45,11 @@ int db__driver_list_tables(dbString ** tlist, int *tcount, int system)
 			  "select name from sqlite_master where type = 'table' or type = 'view'",
 			  -1, &statement, &rest);
 
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 
