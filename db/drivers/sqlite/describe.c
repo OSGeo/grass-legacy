@@ -50,7 +50,11 @@ int db__driver_describe_table(dbString * table_name, dbTable ** table)
     db_append_string(&sql, " where oid < 0");
 
     ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 
@@ -103,7 +107,11 @@ int describe_table(sqlite3_stmt * statement, dbTable ** table, cursor * c)
 
     /* Try to get first row */
     ret = sqlite3_step(statement);
+#if (SQLITE_VERSION_NUMBER > 3003008)
     while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
+#else
+    while (ret == SQLITE_BUSY) {
+#endif
 	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
     }
 
