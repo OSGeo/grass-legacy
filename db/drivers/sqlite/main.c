@@ -32,10 +32,10 @@ int sqlite_busy_callback(void *arg, int n_calls)
     static time_t start_time = 0;
     time_t curr_time;
     int min;
-    static int last_min = 0;
+    static int last_min = -1;
 
     /* do something here while waiting? */
-    if (n_calls > 0) {
+    if (n_calls > 0 && last_min > -1) {
 	time(&curr_time);
 	min = (curr_time - start_time) / 60;
 	if (min > 1 && min > last_min) {

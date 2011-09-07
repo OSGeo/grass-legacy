@@ -50,13 +50,6 @@ int db__driver_describe_table(dbString * table_name, dbTable ** table)
     db_append_string(&sql, " where oid < 0");
 
     ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
-#if (SQLITE_VERSION_NUMBER > 3003008)
-    while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
-#else
-    while (ret == SQLITE_BUSY) {
-#endif
-	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
-    }
 
     if (ret != SQLITE_OK) {
 	append_error("Error in sqlite3_prepare():");
@@ -98,7 +91,7 @@ int db__driver_describe_table(dbString * table_name, dbTable ** table)
 
 int describe_table(sqlite3_stmt * statement, dbTable ** table, cursor * c)
 {
-    int i, ncols, nkcols, ret;
+    int i, ncols, nkcols;
 
     G_debug(3, "describe_table()");
 
@@ -106,14 +99,7 @@ int describe_table(sqlite3_stmt * statement, dbTable ** table, cursor * c)
     G_debug(3, "ncols = %d", ncols);
 
     /* Try to get first row */
-    ret = sqlite3_step(statement);
-#if (SQLITE_VERSION_NUMBER > 3003008)
-    while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
-#else
-    while (ret == SQLITE_BUSY) {
-#endif
-	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
-    }
+    sqlite3_step(statement);
 
     /* Count columns of known type */
     nkcols = 0;

@@ -54,13 +54,6 @@ int db__driver_open_select_cursor(dbString * sel, dbCursor * dbc, int mode)
     G_debug(3, "Escaped SQL: %s", str);
 
     ret = sqlite3_prepare(sqlite, str, -1, &(c->statement), &rest);
-#if (SQLITE_VERSION_NUMBER > 3003008)
-    while (ret == SQLITE_BUSY || ret == SQLITE_IOERR_BLOCKED) {
-#else
-    while (ret == SQLITE_BUSY) {
-#endif
-	ret = sqlite3_busy_handler(sqlite, sqlite_busy_callback, NULL);
-    }
 
     if (str)
 	G_free(str);
