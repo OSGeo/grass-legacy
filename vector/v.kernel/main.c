@@ -159,7 +159,7 @@ int main(int argc, char **argv)
     node_opt = G_define_option();
     node_opt->key = "node";
     node_opt->type = TYPE_STRING;
-    node_opt->required = YES;
+    node_opt->required = NO;
     node_opt->description = _("Node method");
     node_opt->options = "none,split";
     node_opt->answer = "none";
@@ -170,7 +170,7 @@ int main(int argc, char **argv)
     kernel_opt = G_define_option();
     kernel_opt->key = "kernel";
     kernel_opt->type = TYPE_STRING;
-    kernel_opt->required = YES;
+    kernel_opt->required = NO;
     kernel_opt->description = _("Kernel function");
     kernel_opt->options =
 	"uniform,triangular,epanechnikov,quartic,triweight,gaussian,cosine";
