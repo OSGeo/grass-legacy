@@ -961,6 +961,7 @@ int G_parser(int argc, char **argv)
 	    /* If we see the first option with no equal sign */
 	    else if (need_first_opt && n_opts) {
 		first_option.answer = G_store(ptr);
+		first_option.count++;
 		need_first_opt = 0;
 	    }
 
@@ -2203,6 +2204,10 @@ static int set_option(char *string)
 
     /* Allocate memory where answer is stored */
     if (opt->count++) {
+	if (!opt->multiple) {
+	   fprintf(stderr, _("Option <%s> does not accept multiple answers\n"), the_key);
+	   return (1);
+	}
 	opt->answer = (char *)G_realloc(opt->answer,
 					strlen(opt->answer) + strlen(string) +
 					2);
