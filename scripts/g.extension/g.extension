@@ -281,11 +281,20 @@ fi
 cd "$TMPDIR/$MODULE"
 g.message message="Compiling <$MODULE>..."
 
+
+# $INST_NOW helps compile and install modules directly into $(INST_DIR)
+# without having to install whole distribution even after modifying only
+# one module. It will update both $(GRASS_HOME)/dist.$(ARCH) and $(INST_DIR).
+#   see $GISBASE/include/Make/Grass.make
+INST_NOW=true
+export INST_NOW
+
 make MODULE_TOPDIR="$GISBASE" \
    ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" \
    ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" \
    ARCH_LIBDIR="$GISBASE/lib" \
-   ARCH_DISTDIR="$TMPDIR/dist"
+   ARCH_DISTDIR="$TMPDIR/dist" \
+   UNIX_BIN="$TMPDIR/bin"
 
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
