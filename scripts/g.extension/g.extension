@@ -6,7 +6,7 @@
 # AUTHOR(S):   	Markus Neteler
 # PURPOSE:      Tool to download and install extensions from GRASS Addons SVN into
 #               local GRASS installation
-# COPYRIGHT:    (C) 2009-2010 by the Markus Neteler, GRASS Development Team
+# COPYRIGHT:    (C) 2009-2011 by Markus Neteler, and the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -14,13 +14,11 @@
 #
 #############################################################################
 
-
 #%Module
 #% label: Tool to maintain GRASS extensions in local GRASS installation.
 #% description: Downloads, installs extensions from GRASS Addons SVN repository into local GRASS installation or removes installed extensions.
 #% keywords: general, extensions
 #%End
-
 #%option
 #% key: extension
 #% type: string
@@ -282,7 +280,13 @@ fi
 
 cd "$TMPDIR/$MODULE"
 g.message message="Compiling <$MODULE>..."
-make MODULE_TOPDIR="$GISBASE" ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" ARCH_LIBDIR="$GISBASE/lib" ARCH_DISTDIR="$TMPDIR/dist"
+
+make MODULE_TOPDIR="$GISBASE" \
+   ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" \
+   ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" \
+   ARCH_LIBDIR="$GISBASE/lib" \
+   ARCH_DISTDIR="$TMPDIR/dist"
+
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
    cleanup
@@ -322,16 +326,23 @@ else
       fi
       if [ $GIS_FLAG_U -eq 1 ] ; then
          g.message "You may need to enter your password to install $MODULE:"
-         sudo make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install
+
+         sudo make MODULE_TOPDIR="$GISBASE" \
+	     ARCH_DISTDIR="$TMPDIR/dist" \
+	     INST_DIR="$MYINST_DIR" install
       else
          g.message "You need to enter the root password to install $MODULE:"
+
          su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/dist\" INST_DIR=\"$MYINST_DIR\" install"
       fi
    else
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
          rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
       fi
-      make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install
+
+      make MODULE_TOPDIR="$GISBASE" \
+           ARCH_DISTDIR="$TMPDIR/dist" \
+	   INST_DIR="$MYINST_DIR" install
    fi
 
    if [ $? -ne 0 ] ; then
