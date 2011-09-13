@@ -410,11 +410,11 @@ class GMConsole(wx.SplitterWindow):
         
         self.cmd_output.EnsureCaretVisible()
         
-    def WriteCmdLog(self, line, pid=None):
+    def WriteCmdLog(self, line, pid = None, switchPage = True):
         """!Write message in selected style"""
         if pid:
             line = '(' + str(pid) + ') ' + line
-        self.WriteLog(line, style=self.cmd_output.StyleCommand, switchPage = True)
+        self.WriteLog(line, style=self.cmd_output.StyleCommand, switchPage = switchPage)
 
     def WriteWarning(self, line):
         """!Write message in warning style"""
