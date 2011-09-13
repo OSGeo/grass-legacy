@@ -196,7 +196,7 @@ class IVDigit:
         """
         name   = create_string_buffer(GNAME_MAX)
         mapset = create_string_buffer(GMAPSET_MAX)
-        if not G_name_is_fully_qualified(bgmap, name, mapset):
+        if not G__name_is_fully_qualified(bgmap, name, mapset):
             name   = str(bgmap)
             mapset = str(G_find_vector2(bgmap, ''))
         else:
@@ -1722,15 +1722,12 @@ class IVDigit:
         
         @return list of selected feature ids
         """
-        ret = list()
+        # try select features by box first
+        if self._display.SelectLinesByBox(bbox, poMapInfo = self.poBgMapInfo) < 1:
+            self._display.SelectLineByPoint(bbox[0], poMapInfo = self.poBgMapInfo)['line']
+            
+        return self._display.selected['ids']
         
-        # try select features by Box
-        ids = self._display.SelectLinesByBox(bbox, poMapInfo = self.poBgMapInfo)
-        if not ids:
-            ids = [self._display.SelectLineByPoint(bbox[0], poMapInfo = self.poBgMapInfo)['line'], ]
-        
-        return ids
-
     def GetUndoLevel(self):
         """!Get undo level (number of active changesets)
         
