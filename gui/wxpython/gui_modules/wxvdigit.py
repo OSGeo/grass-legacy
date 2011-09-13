@@ -196,7 +196,7 @@ class IVDigit:
         """
         name   = create_string_buffer(GNAME_MAX)
         mapset = create_string_buffer(GMAPSET_MAX)
-        if not G_name_is_fully_qualified(bgmap, name, mapset):
+        if not G__name_is_fully_qualified(bgmap, name, mapset):
             name   = str(bgmap)
             mapset = str(G_find_vector2(bgmap, ''))
         else:
