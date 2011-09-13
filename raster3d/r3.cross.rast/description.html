@@ -23,19 +23,19 @@ the 2D resolution will be adjust to the 3D resolution.
 
 To create a cut plane elevation map use <em>r.mapcalc</em>. Some examples:
 <ul>
- <li>To create a cut plane elevation map in x direction type
+<li>To create a cut plane elevation map in x direction type
  <br><i>r.mapcalc "cutplane = col()*x"</i>,<br> x be the value for
  the elevation. If the range of col() is 1 ... 10, the elevation map
  has the range 1 ... 10 if x == 1 and if x == 10 the range 10
  ... 100</li>
 
- <li>To create a cut plane elevation map in y direction type
+<li>To create a cut plane elevation map in y direction type
  <br><i>r.mapcalc "cutplane = row()*x"</i>,<br> x be the value for
  the elevation. If the range of col() is 1 ... 10, the elevation map
  has the range 1 ... 10 if x == 1 and if x == 10 the range 10
  ... 100</li>
 
- <li>The user can also make a cut in y and x direction with <em>r.mapcalc</em> by
+<li>The user can also make a cut in y and x direction with <em>r.mapcalc</em> by
      using <br><i>r.mapcalc "cutplane = (row()+col())*x"</i></li>
 </ul>
 
@@ -48,7 +48,7 @@ g.region -d
 g.region res=150 res3=150 t=1000 b=0 tbres=100
 
 # synthetic data, could be geological structures:
-r3.mapcalc "map3d=sin(row())+sin(col())+sin(depth()*depth())"
+r3.mapcalc "map3d = sin(row())+sin(col())+sin(depth()*depth())"
 
 #create a cutplane map
 r.mapcalc "cutplane = col()*10"
@@ -59,12 +59,14 @@ r3.cross.rast input=map3d elevation=cutplane output=crosssection
 
 <h2>SEE ALSO</h2>
 
-<em><a href="g.region.html">g.region</a></em><br>
-<em><a href="r.mapcalc.html">r.mapcalc</a></em><br>
-<em><a href="r3.mapcalc.html">r3.mapcalc</a></em><br>
-<em><a href="r3.to.rast.html">r3.to.rast</a></em><br>
+<em>
+<a href="g.region.html">g.region</a>,
+<a href="r.mapcalc.html">r.mapcalc</a>,
+<a href="r3.mapcalc.html">r3.mapcalc</a>,
+<a href="r3.to.rast.html">r3.to.rast</a>
+</em>
 
 <h2>AUTHOR</h2>
-Soeren Gebbert
+S&ouml;ren Gebbert
 
 <p><i>Last changed: $Date$</i>
