@@ -8,6 +8,7 @@ specified then standard output (stdout) is used. The module is sensitive
 to region settings (set with <em>g.region</em>).
 
 <h2>NOTES</h2>
+
 This module generates <i>structured points</i> with <i>celldata</i> 
 (default) or <i>pointdata</i>. If top and bottom surfaces are requested
 an <i>unstructured grid</i> with <i>celldata</i> or a <i>structured grid</i>
@@ -34,24 +35,23 @@ The <em>input</em>, <em>rgbmaps</em> and <em>vectormaps</em> parameters are
 optional, so only the geometry can be exported.
 
 <p>
-If you use <i>top</i> and <i>bottom</i> and the 2D and 3D region values are
-different, the 2D resolution will be adjust to the 3D resolution. The elevation
-maps are expected in meters. If LL coordinates are used, the elevation will
-automatically converted into degree.
+If the user defines <em>top</em> and <em>bottom</em> and the 2D and 3D region
+values differ, the 2D resolution will be adjusted to the 3D resolution. The
+elevation maps are expected in meters. If Lat/Long coordinates are used, the
+elevation will automatically converted into degree.
 If the surface and bottom maps are in a different unit than meters, use the
 scale parameter to convert them into meters.
 
 <p>
 The RGB voxel data can be created from 2D raster maps (Landsat TM images) 
-with <em><A HREF="r.to.rast3.html">r.to.rast3</a></em>. The values of the RGB
-maps must be within 0 and 255. If not, the values are automatically set
+with <em><a href="r.to.rast3.html">r.to.rast3</a></em>. The values of the RGB maps
+must be within 0 and 255. If not, the values are automatically set
 to 0 and warnings will be printed to stderr.
 
 <p>
-The vector data is created from three 3D raster maps. Each map represents a
-vector component.
-So x, y and z components are required in this order. This data can be visualized
-with Glyph3d or StreamTracer filters within Paraview.
+The vector data is created from three 3D raster maps. Each map represents a vector component.
+So x, y and z components are required in this order. This data can be visualized with Glyph3d or 
+StreamTracer filters within Paraview.
 
 <p>
 If the <em>-c</em> flag is used and the data should be visualised together with
@@ -64,12 +64,12 @@ center point of the default region).
 
 <em>r3.out.vtk</em> can export 3D raster maps with different representations.
 <ul>
-<li> <I>pointdata</I> -- the cells/values are represented by the center of the
+<li> <em>pointdata</em> -- the cells/values are represented by the center of the
 cell. Instead of cells, points are created. Each point can hold different
-values, but the user can only visualize one value at a time. </li>
-<li> <I>celldata</I> The cells are created with the same hight, width and depth
+values, but the user can only visualize one value at a time.</li>
+<li> <em>celldata</em> The cells are created with the same hight, width and depth
 as in GRASS. Each cell can hold different values, but the user can only
-visualize one value at a time. </li>
+visualize one value at a time.</li>
 </ul>
 
 <h2>EXAMPLE</h2>
@@ -79,10 +79,10 @@ visualize one value at a time. </li>
 <div class="code"><pre>
 g.region -d
 g.region res=150 res3=150 t=80 b=0 tbres=10
-r.mapcalc "bottom=1800. - elevation.10m"
+r.mapcalc "bottom = 1800. - elevation.10m"
 
 # synthetic data, could be geological structures:
-r3.mapcalc "map3d=row()+col()+depth()"
+r3.mapcalc "map3d = row()+col()+depth()"
 
 #export of volume to VTK:
 r3.out.vtk -s input=map3d top=elevation.10m bottom=bottom output=/tmp/out.vtk
@@ -99,10 +99,10 @@ g.region -d
 g.region n=4926970 s=4914857 w=591583 e=607793 res=50 res3=50 t=80 b=0 tbres=10
 
 #create a bottom surface
-r.mapcalc "bottom=1800. - elevation.10m"
+r.mapcalc "bottom = 1800. - elevation.10m"
 
 # synthetic data, could be geological structures:
-r3.mapcalc "map3d=row()+col()+depth()"
+r3.mapcalc "map3d = row()+col()+depth()"
 
 #get some satellite images with r.in.onearth
 r.in.onearth -l output=Sat tmband=Red
@@ -130,15 +130,15 @@ g.region -d
 g.region n=4926970 s=4914857 w=591583 e=607793 res=50 res3=50 t=80 b=0 tbres=10
 
 # create a bottom surface
-r.mapcalc "bottom=1800. - elevation.10m"
+r.mapcalc "bottom = 1800. - elevation.10m"
 
 # synthetic data, could be geological structures:
-r3.mapcalc "map3d=row()+col()+depth()"
+r3.mapcalc "map3d = row()+col()+depth()"
 
 # synthetic vector data, could be groundwater stream vectors
-r3.mapcalc "x_part =sin(row())"
-r3.mapcalc "y_part =cos(col())"
-r3.mapcalc "z_part =sin(depth())"
+r3.mapcalc "x_part = sin(row())"
+r3.mapcalc "y_part = cos(col())"
+r3.mapcalc "z_part = sin(depth())"
 
 
 # export the stuff data to VTK:
@@ -156,7 +156,7 @@ paraview --data=/tmp/out.vtk
 <div class="code"><pre>
 #reduce resolution:
 g.region -dp3 res=1000 res3=1000
-r.mapcalc "bottom=100"
+r.mapcalc "bottom = 100"
 
 #export of volume to VTK:
 r3.out.vtk -s in=precip3d.500z50 top=dem500 bottom=bottom
@@ -170,11 +170,13 @@ paraview --data=/tmp/slovakia3d.vtk
 
 <h2>SEE ALSO</h2>
 
-<em><A HREF="r.out.vtk.html">r.out.vtk</a></em>,
-<em><A HREF="r3.out.ascii.html">r3.out.ascii</a></em>,
-<em><A HREF="g.region.html">g.region</a></em>
+<em>
+<a href="r.out.vtk.html">r.out.vtk</a>,
+<a href="r3.out.ascii.html">r3.out.ascii</a>,
+<a href="g.region.html">g.region</a>
+</em>
 
 <h2>AUTHOR</h2>
-Soeren Gebbert
+S&ouml;ren Gebbert
 
 <p><i>Last changed: $Date$</i>
