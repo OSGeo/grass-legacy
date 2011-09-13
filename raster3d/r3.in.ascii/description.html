@@ -3,29 +3,6 @@
 <em>r3.in.ascii</em> allows a user to create a (binary) GRASS 3D raster map
 layer from a 3D ASCII raster input file with (optional) TITLE.
 
-<h2>NOTES</h2>
-The format of the 3D ASCII file:
-<pre>
-north: <em>floating point</em>
-south: <em>floating point</em>
-east: <em>floating point</em>
-west: <em>floating point</em>
-top: <em>floating point</em>
-bottom: <em>floating point</em>
-rows: <em>integer</em>
-cols: <em>integer</em>
-levels: <em>integer</em>
-</pre>
-This header is followed by the cell values in <em>floating point</em> format 
-organized in rows with constant <em>col</em> and <em>level</em> coordinate.
-The rows are organized by constant <em>level</em> coordinate. Individual cell
-values are separated by <em>space</em> or <em>CR</em>.
-<p>
-NOTE: Currently, after the file has been imported, the stored values are 
-compared with the original data. This feature is used to find bugs in the
-library at an early stage and will be turned off as soon as confidence has
-built up.
-
 <p>
 Note that for compression the <em>none</em> option only specifies 
 that neither LZW nor RLE is used for compression. It 
@@ -40,6 +17,30 @@ used in the output file. The format is: XxYxZ
 The <em>nv</em> parameter specifies which value to convert to NULL-value.
 If the specified value is <em>none</em>, no conversion is performed.
 Default is <em>none</em>.
+
+<h2>NOTES</h2>
+
+The format of the 3D ASCII file:
+<div class="code"><pre>
+north: <em>floating point</em>
+south: <em>floating point</em>
+east: <em>floating point</em>
+west: <em>floating point</em>
+top: <em>floating point</em>
+bottom: <em>floating point</em>
+rows: <em>integer</em>
+cols: <em>integer</em>
+levels: <em>integer</em>
+</pre></div>
+This header is followed by the cell values in <em>floating point</em> format 
+organized in rows with constant <em>col</em> and <em>level</em> coordinate.
+The rows are organized by constant <em>level</em> coordinate. Individual cell
+values are separated by <em>space</em> or <em>CR</em>.
+<p>
+NOTE: Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
 
 <h2>EXAMPLES</h2>
 
@@ -92,6 +93,7 @@ Roman Waupotitsch, Michael Shapiro,
 Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
 
 <h2>SEE ALSO</h2>
+
 <em>
 <a href="r.in.ascii.html">r.in.ascii</a>,
 <a href="r3.out.ascii.html">r3.out.ascii</a>,

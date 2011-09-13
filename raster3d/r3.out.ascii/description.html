@@ -5,9 +5,9 @@ a valid 3D raster map in the current mapset search path. The <em>output</em>
 parameter is the name of an ASCII file which will be written in the 
 current working directory.
 <p>
-If <em>output</em> is not specified then standard output (stdout) is used. The
-<em>-h</em> flag may be used to suppress header information. The module is
-sensitive to region settings (set with <em>g.region</em>).
+If <em>output</em> is not specified then standard output (stdout) is used.
+The <em>-h</em> flag may be used to suppress header information. The
+module is sensitive to region settings (set with <em>g.region</em>).
 
 <h2>NOTES</h2>
 The default format for the ASCII file is equivalent to that required
@@ -16,8 +16,8 @@ by <em>r3.in.ascii</em>. In particular, files output by
 3D raster maps with <em>r3.in.ascii</em>.
 
 <p>
-The format for the ASCII file is:
-<pre>
+The format of the ASCII file is:
+<div class="code"><pre>
 north:   <i>floating point</i>
 south:   <i>floating point</i>
 east:    <i>floating point</i>
@@ -27,26 +27,29 @@ bottom:  <i>floating point</i>
 rows:    <i>integer</i>
 cols:    <i>integer</i>
 levels:  <i>integer</i>
-</pre>
+</pre></div>
 
 The header is followed by cell values in <em>floating point</em> format.
 Cell values are output as a series of horizontal slices in row-major
 order.  That is, 
 
-<pre>
+<div class="code"><pre>
   (x, y, z)       (x + 1, y, z)     ...     (x + cols, y, z)
 (x, y + 1, z)   (x + 1, y + 1, z)   ...   (x + cols, y + 1, z)
 
 and so on.
-</pre>
+</pre></div>
 
 <p>
-One level maps can be imported with <em>r.in.ascii</em> (Raster 2D) after removing
+One level maps can be imported with <em>r.in.ascii</em> (2D raster) after removing
 the header lines "top", "bottom" and "levels".
 
 <h2>SEE ALSO</h2>
-<em><a href="r3.in.ascii.html">r3.in.ascii</a></em><br>
-<em><a href="g.region.html">g.region</a></em><br>
+
+<em>
+<a href="r3.in.ascii.html">r3.in.ascii</a>,
+<a href="g.region.html">g.region</a>
+</em>
 
 <h2>AUTHORS</h2>
 Roman Waupotitsch, Michael Shapiro, 

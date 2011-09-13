@@ -1,4 +1,5 @@
 <h2>DESCRIPTION</h2>
+
 This numerical module calculates transient, confined groundwater flow 
 in three dimensions based on volume maps and the current 3D region resolution.
 All initial- and boundary-conditions must be provided as 
@@ -12,14 +13,14 @@ with <em>r3.out.vtk</em>.
 
 <p>
 The groundwater flow will always be calculated transient. 
-If you want to calculate steady state, set the timestep 
-to a large number (billions of seconds) or set the 
-specific yield raster maps to zero.
+For steady state computation the user should set the timestep
+to a large number (billions of seconds) or set the
+specific yield raster map to zero.
 
 <h2>NOTES</h2>
 
 The groundwater flow calculation is based on Darcy's law and a 
-finite volume discretization. The groundwater flow partial 
+finite volume discretization. The groundwater flow partial
 differential equation is of the following form:
 
 <p>
@@ -41,39 +42,39 @@ Two different boundary conditions are implemented,
 the Dirichlet and Neumann conditions. By default the calculation 
 area is surrounded by homogeneous Neumann boundary conditions.
 The calculation and boundary status of single cells can be set with 
-the status map, the following cell states are supportet:
+the status map, the following cell states are supported:
 
 <ul>
-<li>0 == inactive - the cell with status 0 will not be calulated, 
-active cells will have a no flow boundary to an inactive cell</li>
-<li>1 == active - this cell is used for groundwater calculation, 
-inner sources can be defined for those cells</li>
-<li>2 == Dirichlet - cells of this type will have a fixed piezometric 
-head value which do not change over time </li>
+<li>0 == inactive - the cell with status 0 will not be calulated,
+ active cells will have a no flow boundary to an inactive cell</li>
+<li>1 == active - this cell is used for groundwater calculation,
+ inner sources can be defined for those cells</li>
+<li>2 == Dirichlet - cells of this type will have a fixed piezometric
+ head value which do not change over time </li>
 </ul>
 
 <p>
 The groundwater flow equation can be solved with several numerical solvers.
 
-Aditionally a direct Gauss solver and LU solver are available. Those direct solvers
+Additionally a direct Gauss solver and a LU solver are available. Those direct solvers
 only work with quadratic matrices, so be careful using them with large maps 
-(maps of size 10.000 cells will need more than one gigabyte of RAM).
+(maps of size 10.000 cells will need more than one Gigabyte of RAM).
 
 <h2>EXAMPLE</h2>
-Use this small script to create a working
-groundwater flow area and data. Make sure you are not in a lat/lon projection.
+This small script creates a working groundwater flow area and
+data. It cannot be run in a lat/lon location.
 
 <div class="code"><pre>
 # set the region accordingly
 g.region res=25 res3=25 t=100 b=0 n=1000 s=0 w=0 e=1000 -p
 
 #now create the input raster maps for a confined aquifer
-r3.mapcalc "phead=if(row() == 1 && depth() == 4, 50, 40)"
-r3.mapcalc "status=if(row() == 1 && depth() == 4, 2, 1)"
-r3.mapcalc "well=if(row() == 20 && col() == 20 , -0.00025, 0)"
-r3.mapcalc "hydcond=0.00025"
-r3.mapcalc "syield=0.0001"
-r.mapcalc  "recharge=0.0"
+r3.mapcalc "phead = if(row() == 1 && depth() == 4, 50, 40)"
+r3.mapcalc "status = if(row() == 1 && depth() == 4, 2, 1)"
+r3.mapcalc "well = if(row() == 20 && col() == 20 , -0.00025, 0)"
+r3.mapcalc "hydcond = 0.00025"
+r3.mapcalc "syield = 0.0001"
+r.mapcalc  "recharge = 0.0"
 
 r3.gwflow -s solver=cg phead=phead status=status hc_x=hydcond hc_y=hydcond  \
 hc_z=hydcond q=well s=syield r=recharge output=gwresult dt=8640000 velocity=gwresult_velocity
@@ -82,14 +83,21 @@ hc_z=hydcond q=well s=syield r=recharge output=gwresult dt=8640000 velocity=gwre
 r3.out.vtk -p in=gwresult,status vector=gwresult_velocity_x,gwresult_velocity_y,gwresult_velocity_z out=/tmp/gwdata3d.vtk
 
 #now load the data into ParaView
+paraview --data=/tmp/gwdata3d.vtk
 </pre></div>
 
 <h2>SEE ALSO</h2>
 
-<em><a href="r.gwflow.html">r.gwflow</a></em><br>
-<em><a href="r3.out.vtk.html">r3.out.vtk</a></em><br>
+<em>
+<a href="r.gwflow.html">r.gwflow</a>,
+<a href="r3.out.vtk.html">r3.out.vtk</a>
+</em>
 
 <h2>AUTHOR</h2>
-Soeren Gebbert
+S&ouml;ren Gebbert
+<p>
+This work is based on the Diploma Thesis of S&ouml;ren Gebbert available
+<a href="http://www.hydrogeologie.tu-berlin.de/fileadmin/fg66/_hydro/Diplomarbeiten/2007_Diplomarbeit_S&ouml;ren_Gebbert.pdf">here</a>
+at Technical University Berlin, Germany.
 
 <p><i>Last changed: $Date$</i>
