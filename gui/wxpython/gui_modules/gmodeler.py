@@ -317,15 +317,18 @@ class Model(object):
             for rel in data['rels']:
                 actionItem = self.FindAction(rel['id'])
                 if rel['dir'] == 'from':
-                    relation = ModelRelation(dataItem, actionItem, rel['name'])
+                    relation = ModelRelation(parent = self, fromShape = dataItem,
+                                             toShape = actionItem, param = rel['name'])
                 else:
-                    relation = ModelRelation(actionItem, dataItem, rel['name'])
+                    relation = ModelRelation(parent = self, fromShape = actionItem,
+                                             toShape = dataItem, param = rel['name'])
                 relation.SetControlPoints(rel['points'])
                 actionItem.AddRelation(relation)
                 dataItem.AddRelation(relation)
-            
-            dataItem.Update()
-                   
+
+            if self.canvas:
+                dataItem.Update()
+           
         # load loops
         for loop in gxmXml.loops:
             loopItem = ModelLoop(parent = self, 
@@ -407,7 +410,7 @@ class Model(object):
 
     def Run(self, log, onDone):
         """!Run model"""
-        for action in self.actions:
+        for action in self.GetItems(objType = ModelAction):
             if not action.IsEnabled():
                 continue
             log.RunCmd(command = action.GetLog(string = False),
@@ -1309,9 +1312,11 @@ class ModelFrame(wx.Frame):
                                                p.get('prompt', ''))
                     if data:
                         if p.get('age', 'old') == 'old':
-                            rel = ModelRelation(data, layer, p.get('name', ''))
+                            rel = ModelRelation(parent = self, fromShape = data,
+                                                toShape = layer, param = p.get('name', ''))
                         else:
-                            rel = ModelRelation(layer, data, p.get('name', ''))
+                            rel = ModelRelation(parent = self, fromShape = layer,
+                                                toShape = data, param = p.get('name', ''))
                         layer.AddRelation(rel)
                         data.AddRelation(rel)
                         self.AddLine(rel)
@@ -1326,9 +1331,11 @@ class ModelFrame(wx.Frame):
                     data.Show(True)
                                                             
                     if p.get('age', 'old') == 'old':
-                        rel = ModelRelation(data, layer, p.get('name', ''))
+                        rel = ModelRelation(parent = self, fromShape = data,
+                                            toShape = layer, param = p.get('name', ''))
                     else:
-                        rel = ModelRelation(layer, data, p.get('name', ''))
+                        rel = ModelRelation(parent = self, fromShape = layer,
+                                            toShape = data, param = p.get('name', ''))
                     layer.AddRelation(rel)
                     data.AddRelation(rel)
                     self.AddLine(rel)
@@ -1491,7 +1498,7 @@ class ModelFrame(wx.Frame):
         loop.Clear()
         
         for item in items:
-            rel = ModelRelation(parent, item)
+            rel = ModelRelation(parent = self, fromShape = parent, toShape = item)
             dx = item.GetX() - parent.GetX()
             dy = item.GetY() - parent.GetY()
             loop.AddRelation(rel)
@@ -1503,7 +1510,7 @@ class ModelFrame(wx.Frame):
         
         # close loop
         item = loop.GetItems()[-1]
-        rel = ModelRelation(item, loop)
+        rel = ModelRelation(parent = self, fromShape = item, toShape = loop)
         loop.AddRelation(rel)
         self.AddLine(rel)
         dx = (item.GetX() - loop.GetX()) + loop.GetWidth() / 2 + 50
@@ -1538,7 +1545,8 @@ class ModelFrame(wx.Frame):
         dy     = condition.GetY()
         for branch in items.keys():
             for item in items[branch]:
-                rel = ModelRelation(parent, item)
+                rel = ModelRelation(parent = self, fromShape = parent,
+                                    toShape = item)
                 condition.AddRelation(rel)
                 self.AddLine(rel)
                 rel.MakeLineControlPoints(0)
@@ -1855,8 +1863,9 @@ class ModelAction(ModelObject, ogl.RectangleShape):
     def SetParameterized(self, isparameterized):
         """!Set action parameterized"""
         self.isParameterized = isparameterized
-        self._setPen()
-
+        if self.parent.GetCanvas():                
+            self._setPen()
+        
     def IsParameterized(self):
         """!Check if action is parameterized"""
         return self.isParameterized
@@ -2148,7 +2157,8 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
                 drel['from'] = shape
             elif drel['to'] is None:
                 drel['to'] = shape
-                rel = ModelRelation(drel['from'], drel['to'])
+                rel = ModelRelation(parent = self.frame, fromShape = drel['from'],
+                                    toShape = drel['to'])
                 dlg = ModelRelationDialog(parent = self.frame,
                                           shape = rel)
                 if dlg.IsValid():
@@ -2514,14 +2524,16 @@ class ModelSearchDialog(wx.Dialog):
 
 class ModelRelation(ogl.LineShape):
     """!Data - action relation"""
-    def __init__(self, fromShape, toShape, param = ''):
+    def __init__(self, parent, fromShape, toShape, param = ''):
         self.fromShape = fromShape
         self.toShape   = toShape
         self.param     = param
+        self.parent    = parent
         
         self._points    = None
         
-        ogl.LineShape.__init__(self)
+        if self.parent.GetCanvas():        
+            ogl.LineShape.__init__(self)
     
     def __del__(self):
         self.fromShape.rels.remove(self)
