@@ -89,7 +89,7 @@ class UnitConversion:
         self._unitsPage = { 'inch'          : {'val': 1.0, 'tr' : _("inch")},
                             'point'         : {'val': 72.0, 'tr' : _("point")},
                             'centimeter'    : {'val': 2.54, 'tr' : _("centimeter")},
-                            'milimeter'     : {'val': 25.4, 'tr' : _("milimeter")}}
+                            'millimeter'    : {'val': 25.4, 'tr' : _("millimeter")}}
         self._unitsMap = {  'meters'        : {'val': 0.0254, 'tr' : _("meters")},
                             'kilometers'    : {'val': 2.54e-5, 'tr' : _("kilometers")},
                             'feet'          : {'val': 1./12, 'tr' : _("feet")},
