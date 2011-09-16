@@ -281,6 +281,13 @@ fi
 cd "$TMPDIR/$MODULE"
 g.message message="Compiling <$MODULE>..."
 
+if [ -n "$MACHTYPE" ] ; then
+   DIST_DIR="dist.$MACHTYPE"
+elif [ -x "`which arch`" ] ; then
+   DIST_DIR="dist.`arch`"
+else 
+   DIST_DIR="dist.unknown"
+fi
 
 # $INST_NOW helps compile and install modules directly into $(INST_DIR)
 # without having to install whole distribution even after modifying only
@@ -290,10 +297,10 @@ INST_NOW=true
 export INST_NOW
 
 make MODULE_TOPDIR="$GISBASE" \
-   ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" \
-   ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" \
+   ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/$DIST_DIR/include" \
+   ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/$DIST_DIR/lib" \
    ARCH_LIBDIR="$GISBASE/lib" \
-   ARCH_DISTDIR="$TMPDIR/dist" \
+   ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
    UNIX_BIN="$TMPDIR/bin"
 
 if [ $? -ne 0 ] ; then
@@ -337,12 +344,12 @@ else
          g.message "You may need to enter your password to install $MODULE:"
 
          sudo make MODULE_TOPDIR="$GISBASE" \
-	     ARCH_DISTDIR="$TMPDIR/dist" \
+	     ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
 	     INST_DIR="$MYINST_DIR" install
       else
          g.message "You need to enter the root password to install $MODULE:"
 
-         su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/dist\" INST_DIR=\"$MYINST_DIR\" install"
+         su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/$DIST_DIR\" INST_DIR=\"$MYINST_DIR\" install"
       fi
    else
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
@@ -350,7 +357,7 @@ else
       fi
 
       make MODULE_TOPDIR="$GISBASE" \
-           ARCH_DISTDIR="$TMPDIR/dist" \
+           ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
 	   INST_DIR="$MYINST_DIR" install
    fi
 
