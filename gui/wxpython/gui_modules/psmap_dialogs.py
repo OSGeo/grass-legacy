@@ -94,11 +94,11 @@ class UnitConversion:
                             'kilometers'    : {'val': 2.54e-5, 'tr' : _("kilometers")},
                             'feet'          : {'val': 1./12, 'tr' : _("feet")},
                             'miles'         : {'val': 1./63360, 'tr' : _("miles")},
-                            'nautical miles': {'val': 1/72913.44, 'tr' : _("nautical miles")}}
+                            'nautical miles': {'val': 1/72913.386, 'tr' : _("nautical miles")}}
 
         self._units = { 'pixel'     : {'val': ppi[0], 'tr' : _("pixel")},
                         'meter'     : {'val': 0.0254, 'tr' : _("meter")},
-                        'nautmiles' : {'val': 1/72913.44, 'tr' :_("nautical miles")},
+                        'nautmiles' : {'val': 1/72913.386, 'tr' :_("nautical miles")},
                         'degrees'   : {'val': 0.0254 , 'tr' : _("degree")} #like 1 meter, incorrect
                         }
         self._units.update(self._unitsPage)
