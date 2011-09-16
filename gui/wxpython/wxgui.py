@@ -318,7 +318,7 @@ class GMFrame(wx.Frame):
         win.Show()
         
     def OnPsMap(self, event):
-        """!Launch Hardcopy Map Output Utility
+        """!Launch Cartographic Composer
         """
         try:
             from gui_modules import psmap
