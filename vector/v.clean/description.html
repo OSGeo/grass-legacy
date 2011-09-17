@@ -97,12 +97,12 @@ The <em>snap</em> tool snaps vertices to another vertex not farther away
 than <em>thresh</em>. If there is no other vertex within <em>thresh</em>, 
 no snapping will be done. The <em>type</em> option can have a strong 
 influence on the result. A too large threshold and <em>type=boundary</em>
-can severely damage area topology.
+can severely damage area topology, beyond repair.
 <p>
-Snapped boundaries may need to be cleaned with <em>rmdangle,break,rmdupl</em>.
+Snapped boundaries may need to be cleaned with <em>break,rmdupl,rmsa</em>.
 
 <h3>Remove duplicate area centroids</h3>
-<em>tool=rmdupl</em>
+<em>tool=rmdac</em>
 <p>
 Threshold does not apply, use dummy value if <em>v.clean</em> is 
 run with several tools.
@@ -174,7 +174,9 @@ the tool does.
 </td></tr>
 </table>
 <p>
-The <em>rmsa</em> tool should be followed by <em>break,rmdupl</em>.
+The <em>rmsa</em> tool should be followed by <em>break,rmdupl</em>. The 
+<em>rmsa</em> tool followed by <em>break,rmdupl</em> may need to be run 
+more than once to remove all small angles.
 
 <h2>NOTES</h2>
 
