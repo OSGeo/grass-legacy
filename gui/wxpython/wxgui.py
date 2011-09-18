@@ -211,9 +211,7 @@ class GMFrame(wx.Frame):
         
         # redirect stderr to log area    
         self.goutput.Redirect()
-        # fix goutput's pane size
-        self.goutput.SetSashPosition(int(self.GetSize()[1] * .45))
-
+        
         self.workspaceChanged = False
         
         # start with layer manager on top
@@ -412,7 +410,7 @@ class GMFrame(wx.Frame):
         if page == self.notebook.GetPageIndexByName('output'):
             # remove '(...)'
             self.notebook.SetPageText(page, _("Command console"))
-            wx.CallAfter(self.goutput.cmd_prompt.SetFocus)
+            wx.CallAfter(self.goutput.ResetFocus)
         self.SetStatusText('', 0)
         
         event.Skip()
