@@ -5,6 +5,9 @@ user-specified raster map layer. The module calculates textural features
 based on spatial dependence matrices at 0, 45, 90, and 135 
 degrees for a <em>distance</em> (default = 1).
 <p>
+<em>r.texture</em> assumes grey levels ranging from 0 to 255 as input. 
+The input has to be rescaled to 0 to 255 before if needed.
+<p>
 In general, several variables constitute texture: differences in grey level values,
 coarseness as scale of grey level differences, presence or lack of directionality
 and regular patterns.
@@ -80,18 +83,6 @@ The following are brief explanations of texture measures:
 Importantly, the input raster map cannot have more than 255 categories. If needed,
 a map with more categories can be rescaled using <em>r.rescale</em>.
 
-<p>
-The algorithm was implemented after:<br>
-
-Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features for
-    image classification. <em>IEEE Transactions on Systems, Man, and
-    Cybernetics</em>, SMC-3(6):610-621.
-
-<p>The code was taken by permission from <em>pgmtexture</em>, part of
-    PBMPLUS (Copyright 1991, Jef Poskanser and Texas Agricultural Experiment
-    Station, employer for hire of James Darrell McCauley). <br>
-    Man page of <a href="http://netpbm.sourceforge.net/doc/pgmtexture.html">pgmtexture</a></p>
-
 <h2>EXAMPLE</h2>
 
 Calculation of Angular Second Moment of B/W orthophoto (North Carolina data set):
@@ -108,7 +99,6 @@ d.shadedmap drape=ortho_texture_ASM_0 rel=ortho_2001_t792_1m
 This calculates four maps (requested texture at four orientations):
 ortho_texture_ASM_0, ortho_texture_ASM_45, ortho_texture_ASM_90, ortho_texture_ASM_135.
 
-
 <h2>BUGS</h2>
 - The program can run incredibly slow for large raster maps.
 <p>
@@ -117,34 +107,28 @@ ortho_texture_ASM_0, ortho_texture_ASM_45, ortho_texture_ASM_90, ortho_texture_A
     always converge. This is a known issue with this measure in general.
 
 
-<h2>EXAMPLE</h2>
-
-From the orthophoto in the North Carolina sample dataset, calculate
-Angular Second Moment and Sum Entropy texture measures:
-
-<div class="code"><pre>
-g.region rast=ortho_2001_t792_1m -p
-r.texture -ax ortho_2001_t792_1m prefix=ortho_texture
-r.info -r ortho_texture_ASM_135
-r.info -r ortho_texture_SV_90
-</pre></div>
-
-
 <h2>REFERENCES</h2>
-<b>Haralick, R.M., K. Shanmugam, and I. Dinstein</b> (1973). Textural features for
+
+The algorithm was implemented after Haralick et al., 1973.
+
+<p>
+The code was taken by permission from <em>pgmtexture</em>, part of
+PBMPLUS (Copyright 1991, Jef Poskanser and Texas Agricultural Experiment
+Station, employer for hire of James Darrell McCauley). <br>
+Manual page of <a href="http://netpbm.sourceforge.net/doc/pgmtexture.html">pgmtexture</a></p>
+
+<ul> 
+<li>Haralick, R.M., K. Shanmugam, and I. Dinstein (1973). Textural features for
     image classification. <em>IEEE Transactions on Systems, Man, and
-    Cybernetics</em>, SMC-3(6):610-621.
-<p>
-<b>Bouman, C. A., Shapiro, M.</b>,(March
-    1994).A Multiscale Random Field Model for Bayesian Image
-    Segmentation, IEEE Trans. on Image Processing, vol. 3, no.2.
-<p>
-<b>Haralick, R.</b>, (May 1979). <i>Statistical and structural approaches to texture</i>,
-   Proceedings of the IEEE, vol. 67, No.5, pp. 786-804</p>
-<p>
-<b>Hall-Beyer, M.</b> (2007). <a href="http://www.fp.ucalgary.ca/mhallbey/tutorial.htm">The GLCM Tutorial Home Page</a>
+    Cybernetics</em>, SMC-3(6):610-621.</li>
+<li>Bouman, C. A., Shapiro, M. (1994). A Multiscale Random Field Model for
+ Bayesian Image Segmentation, IEEE Trans. on Image Processing, vol. 3, no. 2.</li>
+<li>Haralick, R. (May 1979). <i>Statistical and structural approaches to texture</i>,
+   Proceedings of the IEEE, vol. 67, No.5, pp. 786-804</li>
+<li>Hall-Beyer, M. (2007). <a href="http://www.fp.ucalgary.ca/mhallbey/tutorial.htm">The GLCM Tutorial Home Page</a>
   (Grey-Level Co-occurrence Matrix texture measurements). University of Calgary, Canada
-     
+</ul>
+
 <h2>SEE ALSO</h2>
 
 <em>
@@ -154,7 +138,7 @@ r.info -r ortho_texture_SV_90
 <a href="r.rescale.html">r.rescale</a>
 </em>
 
-<h2>AUTHOR</h2>
+<h2>AUTHORS</h2>
 <a href="mailto:antoniol@ieee.org">G. Antoniol</a> - RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento)<br>
 C. Basco -  RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento)<br>
 M. Ceccarelli - Facolta di Scienze, Universita del Sannio, Benevento
