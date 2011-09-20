@@ -317,15 +317,18 @@ class Model(object):
             for rel in data['rels']:
                 actionItem = self.FindAction(rel['id'])
                 if rel['dir'] == 'from':
-                    relation = ModelRelation(dataItem, actionItem, rel['name'])
+                    relation = ModelRelation(parent = self, fromShape = dataItem,
+                                             toShape = actionItem, param = rel['name'])
                 else:
-                    relation = ModelRelation(actionItem, dataItem, rel['name'])
+                    relation = ModelRelation(parent = self, fromShape = actionItem,
+                                             toShape = dataItem, param = rel['name'])
                 relation.SetControlPoints(rel['points'])
                 actionItem.AddRelation(relation)
                 dataItem.AddRelation(relation)
-            
-            dataItem.Update()
-                   
+
+            if self.canvas:
+                dataItem.Update()
+           
         # load loops
         for loop in gxmXml.loops:
             loopItem = ModelLoop(parent = self, 
@@ -405,13 +408,108 @@ class Model(object):
         
         return errList
 
-    def Run(self, log, onDone):
-        """!Run model"""
-        for action in self.actions:
-            if not action.IsEnabled():
+    def RunAction(self, item, params, log, onDone, statusbar = None):
+        """!Run given action
+
+        @param item action item
+        @param params parameters dict
+        @param log logging window
+        @param onDone on-done method
+        @param statusbar wx.StatusBar instance or None
+        """
+        name = item.GetName()
+        if name in params:
+            paramsOrig = item.GetParams(dcopy = True)
+            item.MergeParams(params[name])
+        
+        if statusbar:
+            statusbar.SetStatusText(_('Running model...'), 0)
+        log.RunCmd(command = item.GetLog(string = False),
+                   onDone = onDone)
+        
+        if name in params:
+            item.SetParams(paramsOrig)
+        
+    def Run(self, log, onDone, parent = None):
+        """!Run model
+
+        @param log logging window (see goutput.GMConsole)
+        @param onDone on-done method
+        @param parent window for messages or None
+        """
+        if self.GetNumItems() < 1:
+            GMessage(parent = parent,
+                     message = _('Model is empty. Nothing to run.'))
+            return
+        
+        statusbar = None
+        if isinstance(parent, wx.Frame):
+            statusbar = parent.GetStatusBar()
+        
+        # validation
+        if statusbar:
+            statusbar.SetStatusText(_('Validating model...'), 0)
+        errList = self.Validate()
+        if statusbar:
+            statusbar.SetStatusText('', 0)
+        if errList:
+            dlg = wx.MessageDialog(parent = parent,
+                                   message = _('Model is not valid. Do you want to '
+                                               'run the model anyway?\n\n%s') % '\n'.join(errList),
+                                   caption = _("Run model?"),
+                                   style = wx.YES_NO | wx.NO_DEFAULT |
+                                   wx.ICON_QUESTION | wx.CENTRE)
+            ret = dlg.ShowModal()
+            if ret != wx.ID_YES:
+                return
+        
+        # parametrization
+        params = self.Parameterize()
+        if params:
+            dlg = ModelParamDialog(parent = parent,
+                                   params = params)
+            dlg.CenterOnParent()
+            
+            ret = dlg.ShowModal()
+            if ret != wx.ID_OK:
+                dlg.Destroy()
+                return
+            
+            err = dlg.GetErrors()
+            if err:
+                GError(parent = self, message = unicode('\n'.join(err)))
+                return
+        
+        log.cmdThread.SetId(-1)
+        for item in self.GetItems():
+            if not item.IsEnabled():
                 continue
-            log.RunCmd(command = action.GetLog(string = False),
-                       onDone = onDone)
+            if isinstance(item, ModelAction):
+                if item.GetBlockId():
+                    continue
+                self.RunAction(item, params, log, onDone)
+            elif isinstance(item, ModelLoop):
+                cond = item.GetText()
+                # substitute variables in condition
+                variables = self.GetVariables()
+                for variable in variables:
+                    pattern = re.compile('%' + variable)
+                    if pattern.search(cond):
+                        value = variables[variable].get('value', '')
+                        vtype = variables[variable].get('type', 'string')
+                        if vtype == 'string':
+                            value = '"' + value + '"'
+                        cond = pattern.sub(value, cond)
+                # split condition
+                condVar, condText = re.split('\s*in\s*', cond)
+                
+                for action in item.GetItems():
+                    for vars()[condVar] in eval(condText):
+                        if isinstance(action, ModelAction):
+                            self.RunAction(action, params, log, onDone)
+        
+        if params:
+            dlg.Destroy()
         
     def DeleteIntermediateData(self, log):
         """!Detele intermediate data"""
@@ -925,86 +1023,7 @@ class ModelFrame(wx.Frame):
         
     def OnRunModel(self, event):
         """!Run entire model"""
-        if self.model.GetNumItems() < 1:
-            GMessage(parent = self, 
-                     message = _('Model is empty. Nothing to run.'))
-            return
-        
-        # validation
-        errList = self._validateModel()
-        if errList:
-            dlg = wx.MessageDialog(parent = self,
-                                   message = _('Model is not valid. Do you want to '
-                                               'run the model anyway?\n\n%s') % '\n'.join(errList),
-                                   caption=_("Run model?"),
-                                   style = wx.YES_NO | wx.NO_DEFAULT |
-                                   wx.ICON_QUESTION | wx.CENTRE)
-            ret = dlg.ShowModal()
-            if ret != wx.ID_YES:
-                return
-        
-        # parametrization
-        params = self.model.Parameterize()
-        if params:
-            dlg = ModelParamDialog(parent = self,
-                                   params = params)
-            dlg.CenterOnParent()
-            
-            ret = dlg.ShowModal()
-            if ret != wx.ID_OK:
-                dlg.Destroy()
-                return
-        
-            err = dlg.GetErrors()
-            if err:
-                GError(parent = self,
-                       message = unicode('\n'.join(err)))
-                return
-        
-        self.goutput.cmdThread.SetId(-1)
-        for item in self.model.GetItems():
-            if not item.IsEnabled():
-                continue
-            if isinstance(item, ModelAction):
-                if item.GetBlockId():
-                    continue
-                self._runAction(item, params)
-            elif isinstance(item, ModelLoop):
-                cond = item.GetText()
-                # substitute variables in condition
-                variables = self.model.GetVariables()
-                for variable in variables:
-                    pattern = re.compile('%' + variable)
-                    if pattern.search(cond):
-                        value = variables[variable].get('value', '')
-                        vtype = variables[variable].get('type', 'string')
-                        if vtype == 'string':
-                            value = '"' + value + '"'
-                        cond = pattern.sub(value, cond)
-                # split condition
-                condVar, condText = re.split('\s*in\s*', cond)
-                
-                for action in item.GetItems():
-                    for vars()[condVar] in eval(condText):
-                        if isinstance(action, ModelAction):
-                            self._runAction(action, params)
-        
-        if params:
-            dlg.Destroy()
-        
-    def _runAction(self, item, params):
-        """!Run given action"""
-        name = item.GetName()
-        if name in params:
-            paramsOrig = item.GetParams(dcopy = True)
-            item.MergeParams(params[name])
-            
-        self.SetStatusText(_('Running model...'), 0)
-        self.goutput.RunCmd(command = item.GetLog(string = False),
-                            onDone = self.OnDone)
-            
-        if name in params:
-            item.SetParams(paramsOrig)
+        self.model.Run(self.goutput, self.OnDone, parent = self)
         
     def OnDone(self, cmd, returncode):
         """!Computation finished"""
@@ -1017,7 +1036,10 @@ class ModelFrame(wx.Frame):
                      message = _('Model is empty. Nothing to validate.'))
             return
         
-        errList = self._validateModel()
+        
+        self.SetStatusText(_('Validating model...'), 0)
+        errList = self.model.Validate()
+        self.SetStatusText('', 0)
         
         if errList:
             GWarning(parent = self,
@@ -1130,16 +1152,6 @@ class ModelFrame(wx.Frame):
         
         self.SetStatusText(_("Model exported to <%s>") % filename)
 
-    def _validateModel(self):
-        """!Validate model"""
-        self.SetStatusText(_('Validating model...'), 0)
-        
-        errList = self.model.Validate()
-        
-        self.SetStatusText('', 0)
-        
-        return errList
-    
     def OnDefineRelation(self, event):
         """!Define relation between data and action items"""
         self.canvas.SetCursor(self.cursors["cross"])
@@ -1310,9 +1322,11 @@ class ModelFrame(wx.Frame):
                                                p.get('prompt', ''))
                     if data:
                         if p.get('age', 'old') == 'old':
-                            rel = ModelRelation(data, layer, p.get('name', ''))
+                            rel = ModelRelation(parent = self, fromShape = data,
+                                                toShape = layer, param = p.get('name', ''))
                         else:
-                            rel = ModelRelation(layer, data, p.get('name', ''))
+                            rel = ModelRelation(parent = self, fromShape = layer,
+                                                toShape = data, param = p.get('name', ''))
                         layer.AddRelation(rel)
                         data.AddRelation(rel)
                         self.AddLine(rel)
@@ -1327,9 +1341,11 @@ class ModelFrame(wx.Frame):
                     data.Show(True)
                                                             
                     if p.get('age', 'old') == 'old':
-                        rel = ModelRelation(data, layer, p.get('name', ''))
+                        rel = ModelRelation(parent = self, fromShape = data,
+                                            toShape = layer, param = p.get('name', ''))
                     else:
-                        rel = ModelRelation(layer, data, p.get('name', ''))
+                        rel = ModelRelation(parent = self, fromShape = layer,
+                                            toShape = data, param = p.get('name', ''))
                     layer.AddRelation(rel)
                     data.AddRelation(rel)
                     self.AddLine(rel)
@@ -1492,7 +1508,7 @@ class ModelFrame(wx.Frame):
         loop.Clear()
         
         for item in items:
-            rel = ModelRelation(parent, item)
+            rel = ModelRelation(parent = self, fromShape = parent, toShape = item)
             dx = item.GetX() - parent.GetX()
             dy = item.GetY() - parent.GetY()
             loop.AddRelation(rel)
@@ -1504,7 +1520,7 @@ class ModelFrame(wx.Frame):
         
         # close loop
         item = loop.GetItems()[-1]
-        rel = ModelRelation(item, loop)
+        rel = ModelRelation(parent = self, fromShape = item, toShape = loop)
         loop.AddRelation(rel)
         self.AddLine(rel)
         dx = (item.GetX() - loop.GetX()) + loop.GetWidth() / 2 + 50
@@ -1539,7 +1555,8 @@ class ModelFrame(wx.Frame):
         dy     = condition.GetY()
         for branch in items.keys():
             for item in items[branch]:
-                rel = ModelRelation(parent, item)
+                rel = ModelRelation(parent = self, fromShape = parent,
+                                    toShape = item)
                 condition.AddRelation(rel)
                 self.AddLine(rel)
                 rel.MakeLineControlPoints(0)
@@ -1856,8 +1873,9 @@ class ModelAction(ModelObject, ogl.RectangleShape):
     def SetParameterized(self, isparameterized):
         """!Set action parameterized"""
         self.isParameterized = isparameterized
-        self._setPen()
-
+        if self.parent.GetCanvas():                
+            self._setPen()
+        
     def IsParameterized(self):
         """!Check if action is parameterized"""
         return self.isParameterized
@@ -2149,7 +2167,8 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
                 drel['from'] = shape
             elif drel['to'] is None:
                 drel['to'] = shape
-                rel = ModelRelation(drel['from'], drel['to'])
+                rel = ModelRelation(parent = self.frame, fromShape = drel['from'],
+                                    toShape = drel['to'])
                 dlg = ModelRelationDialog(parent = self.frame,
                                           shape = rel)
                 if dlg.IsValid():
@@ -2515,14 +2534,16 @@ class ModelSearchDialog(wx.Dialog):
 
 class ModelRelation(ogl.LineShape):
     """!Data - action relation"""
-    def __init__(self, fromShape, toShape, param = ''):
+    def __init__(self, parent, fromShape, toShape, param = ''):
         self.fromShape = fromShape
         self.toShape   = toShape
         self.param     = param
+        self.parent    = parent
         
         self._points    = None
         
-        ogl.LineShape.__init__(self)
+        if self.parent.GetCanvas():        
+            ogl.LineShape.__init__(self)
     
     def __del__(self):
         self.fromShape.rels.remove(self)
