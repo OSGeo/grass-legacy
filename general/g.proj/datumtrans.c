@@ -61,19 +61,25 @@ int set_datumtrans(int datumtrans, int force, int interactive)
 		GPJ_get_default_datum_params_by_name(dstruct.name,
 						     &defparams);
 
+	    G_debug(3, "set_datumtrans(): datum transform terms found "
+		    "with %d options", paramsets);
+
 	    if (status == 1 && paramsets > 1)
 		/* Parameters are missing and there is a choice to be made */
 		force = 1;
 
 	}
-	else
+	else {
 	    /* Datum name not found in table; can't do anything. */
+	    G_debug(3, "set_datumtrans(): Datum name not found in table.");
 	    force = 0;
-
+	}
     }
-    else
+    else {
 	/* No datum name; can't do anything. */
+	G_debug(3, "set_datumtrans(): Datum name either invalid or not supplied.");
 	force = 0;
+    }
 
     if (force) {
 	char *chosenparams = NULL;
@@ -96,6 +102,9 @@ int set_datumtrans(int datumtrans, int force, int interactive)
 		G_fatal_error
 		    ("Invalid transformation number %d; valid range is 1 to %d",
 		     datumtrans, paramsets);
+
+	    G_debug(3, "set_datumtrans(): looking up available datum "
+		    "transforms for <%s>", datum);
 
 	    list = GPJ_get_datum_transform_by_name(datum);
 
