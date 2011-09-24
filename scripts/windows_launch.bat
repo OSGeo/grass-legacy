@@ -1,1 +1,1 @@
-@"%GRASS_SH%" -c '"%GISBASE%/scripts/SCRIPT_NAME" %*'
+@"%GRASS_SH%" "%GISBASE%/scripts/SCRIPT_NAME" %*
