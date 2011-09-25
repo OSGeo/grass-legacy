@@ -231,7 +231,7 @@ class GMConsole(wx.SplitterWindow):
         
         # stream redirection
         self.cmdStdOut = GMStdout(self)
-        self.cmdStrErr = GMStderr(self)
+        self.cmdStdErr = GMStderr(self)
         
         # thread
         self.cmdThread = CmdThread(self, self.requestQ, self.resultQ)
@@ -361,7 +361,7 @@ class GMConsole(wx.SplitterWindow):
         if Debug.GetLevel() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
             # don't redirect when debugging is enabled
             sys.stdout = self.cmdStdOut
-            sys.stderr = self.cmdStrErr
+            sys.stderr = self.cmdStdErr
         else:
             enc = locale.getdefaultlocale()[1]
             if enc:
@@ -539,7 +539,7 @@ class GMConsole(wx.SplitterWindow):
                     menuform.GUI(parent = self).ParseCommand(command)
                 else:
                     # process GRASS command with argument
-                    self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStrErr,
+                    self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
                                           onDone = onDone)
                     self.cmdOutputTimer.Start(50)
                     
@@ -564,7 +564,7 @@ class GMConsole(wx.SplitterWindow):
                 # process GRASS command without argument
                 menuform.GUI(parent = self).ParseCommand(command)
             else:
-                self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStrErr,
+                self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
                                       onDone = onDone)
             self.cmdOutputTimer.Start(50)
         
@@ -587,7 +587,7 @@ class GMConsole(wx.SplitterWindow):
         @param err True to get stderr widget
         """
         if err:
-            return self.cmdStrErr
+            return self.cmdStdErr
         
         return self.cmdStdOut
     
