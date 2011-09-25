@@ -38,8 +38,10 @@ int update_rast_history(struct parms *parm)
     G_short_history(parm->outrast->answer, "raster", &hist);
     sprintf(hist.edhist[0], "%s version %.2f", G_program_name(), APP_VERSION);
     sprintf(hist.edhist[1], "stream width: %.2f", parm->swidth * 2);
-    sprintf(hist.datsrc_1, "raster elevation file: %s", parm->inrast->answer);
-    sprintf(hist.datsrc_2, "vector stream file: %s", parm->invect->answer);
+    G_snprintf(hist.datsrc_1, RECORD_LEN, "raster elevation map: %s",
+		parm->inrast->answer);
+    G_snprintf(hist.datsrc_2, RECORD_LEN, "vector stream map: %s",
+		parm->invect->answer);
     hist.edlinecnt = 2;
     G_command_history(&hist);
 
