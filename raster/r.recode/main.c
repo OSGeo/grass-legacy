@@ -107,8 +107,11 @@ int main(int argc, char *argv[])
 
     do_recode();
 
+    if(title)
+	G_put_cell_title(result, title);
+
     G_done_msg(_("Raster map <%s> created."),
 	       result);
-    
+
     exit(EXIT_SUCCESS);
 }

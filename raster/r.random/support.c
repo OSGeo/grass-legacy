@@ -39,15 +39,17 @@ int make_support(struct rr_state *theState, int percent, double percentage)
     /* write history for output raster */
     if (G_read_history(theState->outraster, G_mapset(), &hist) >= 0) {
 	G_short_history(theState->outraster, "raster", &hist);
-	sprintf(hist.datsrc_1, "Based on map <%s@%s>", inraster, mapset);
+	G_snprintf(hist.datsrc_1, RECORD_LEN, "Based on map <%s@%s>", inraster, mapset);
 	if (percent)
-	    sprintf(hist.datsrc_2,
+	    G_snprintf(hist.datsrc_2, RECORD_LEN,
 		    "Random points over %.2f percent of the base map <%s>",
 		    percentage, inraster);
 	else
-	    sprintf(hist.datsrc_2,
+	    G_snprintf(hist.datsrc_2, RECORD_LEN,
 		    "%ld random points on the base map <%s@%s>",
 		    theState->nRand, theState->inraster, theState->mapset);
+
+	G_command_history(&hist);
 	G_write_history(theState->outraster, &hist);
 
     }

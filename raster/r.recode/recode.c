@@ -75,6 +75,8 @@ int do_recode(void)
     else
 	hist.edlinecnt = nrules + 1;
     sprintf(hist.datsrc_1, "raster map %s", name);
+
+    G_command_history(&hist);
     G_write_history(result, &hist);
 
     return 0;
