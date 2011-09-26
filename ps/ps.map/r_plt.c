@@ -241,7 +241,7 @@ int read_line(double e1, double n1, double e2, double n2)
 		error(key, data, "illegal width request");
 	    }
 	    if (ch == 'i')
-		width = width / 72.;
+		width = width * 72.;
 	    continue;
 	}
 
@@ -328,7 +328,7 @@ int read_rectangle(double e1, double n1, double e2, double n2)
 		error(key, data, "illegal width request");
 	    }
 	    if (ch == 'i')
-		width = width / 72.;
+		width = width * 72.;
 	    continue;
 	}
 
