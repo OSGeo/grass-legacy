@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     struct Option *angle_thresh_opt, *degree_thresh_opt,
 	*closeness_thresh_opt;
     struct Option *betweeness_thresh_opt;
-    struct Flag *ca_flag;
+    struct Flag *ca_flag, *rs_flag;
     int with_z;
     int total_input, total_output;	/* Number of points in the input/output map respectively */
     double thresh, alpha, beta, reduction, slide, angle_thresh;
@@ -201,6 +201,12 @@ int main(int argc, char *argv[])
     ca_flag = G_define_flag();
     ca_flag->key = 'c';
     ca_flag->description = _("Copy attributes");
+
+    rs_flag = G_define_flag();
+    rs_flag->key = 'r';
+    rs_flag->description =
+	_("This does nothing. It is retained for backwards compatibility");
+    rs_flag->guisection = _("Unused");
 
     /* options and flags parser */
     if (G_parser(argc, argv))
