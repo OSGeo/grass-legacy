@@ -39,7 +39,6 @@ struct menu
     {c_stddev, 0, "stddev",     "standard deviation"},
     {c_range,  0, "range",      "range of values"},
     {c_sum,    0, "sum",        "sum of values"},
-    {c_thresh, 1, "threshold",  "threshold value"},
     {c_var,    0, "variance",   "statistical variance"},
     {c_divr,   1, "diversity",  "number of different values"},
     {c_reg_m,  0, "slope",      "linear regression slope"},
@@ -68,7 +67,6 @@ struct output
     DCELL *buf;
     stat_func *method_fn;
     double quantile;
-    double threshold;
 };
 
 static char *build_method_list(void)
@@ -108,7 +106,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct
     {
-	struct Option *input, *output, *method, *quantile, *threshold, *range;
+	struct Option *input, *output, *method, *quantile, *range;
     } parm;
     struct
     {
@@ -156,13 +154,6 @@ int main(int argc, char *argv[])
     parm.quantile->description = _("Quantile to calculate for method=quantile");
     parm.quantile->options = "0.0-1.0";
     parm.quantile->multiple = YES;
-
-    parm.threshold = G_define_option();
-    parm.threshold->key = "threshold";
-    parm.threshold->type = TYPE_DOUBLE;
-    parm.threshold->required = NO;
-    parm.threshold->description = _("Threshold to calculate for method=threshold");
-    parm.threshold->multiple = YES;
 
     /* please, remove before GRASS 7 released */
     flag.quiet = G_define_flag();
@@ -240,9 +231,6 @@ int main(int argc, char *argv[])
 	out->quantile = (parm.quantile->answer && parm.quantile->answers[i])
 	    ? atof(parm.quantile->answers[i])
 	    : 0;
-	out->threshold = (parm.threshold->answer && parm.threshold->answers[i])
-	    ? atof(parm.threshold->answers[i])
-	    : 0;
 	out->buf = G_allocate_d_raster_buf();
 	out->fd = G_open_raster_new(
 	    output_name, menu[method].is_int ? CELL_TYPE : DCELL_TYPE);
@@ -289,7 +277,7 @@ int main(int argc, char *argv[])
 		    G_set_d_null_value(&out->buf[col], 1);
 		else {
 		    memcpy(values_tmp, values, num_inputs * sizeof(DCELL));
-		    (*out->method_fn)(&out->buf[col], values_tmp, num_inputs, &out->threshold);
+		    (*out->method_fn)(&out->buf[col], values_tmp, num_inputs, &out->quantile);
 		}
 	    }
 	}
