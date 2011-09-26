@@ -12,7 +12,7 @@ default: script
 #$(BIN)/v.kridge.bat:
 #does the shell version of the file actually already exist??
 #	rm -f $(BIN)/$(PGM).bat
-#	echo '@"%GRASS_PYTHON%" "%GISBASE%\scripts\v.krige.py" %*' > >@
+#	echo '@"%GRASS_PYTHON%" "%GISBASE%\scripts\v.krige.py" %*' > $@
 #else
 #	ln -s $(SCRIPTDIR)/$(PGM) $(SCRIPTDIR)/v.krige
 #endif
