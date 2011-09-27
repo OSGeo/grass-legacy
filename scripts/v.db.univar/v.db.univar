@@ -25,7 +25,7 @@
 #%option
 #% key: table
 #% type: string
-#% gisprompt: old,vector,vector
+#% gisprompt: old_dbtable,dbtable,dbtable
 #% description: Name of data table
 #% required : yes
 #%End
