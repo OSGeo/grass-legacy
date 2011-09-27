@@ -16,6 +16,7 @@ static char *help[] = {
     "cross	cross_size",
     "color      color",
     "numbers    # [color]",
+    "width      #",
     ""
 };
 
@@ -108,7 +109,7 @@ int getgrid(void)
 		error(key, data, "illegal grid width request");
 	    }
 	    if (ch == 'i')
-		PS.grid_width = PS.grid_width / 72.0;
+		PS.grid_width = PS.grid_width * 72.0;
 	    continue;
 	}
 	error(key, data, "illegal request (getgrid)");
@@ -200,7 +201,7 @@ int getgeogrid(void)
 		error(key, data, "illegal grid width request");
 	    }
 	    if (ch == 'i')
-		PS.geogrid_width = PS.geogrid_width / 72.0;
+		PS.geogrid_width = PS.geogrid_width * 72.0;
 	    continue;
 	}
 	error(key, data, "illegal request (getgrid)");
