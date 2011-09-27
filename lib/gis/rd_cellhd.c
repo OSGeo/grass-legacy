@@ -1,11 +1,20 @@
-/* read cell header, or window.
-   returns NULL if ok, error message otherwise
-   note:  the error message can be freed using G_free ().
- */
+/*!
+  \file lib/gis/rd_cellhd.c
+  
+  \brief GIS Library - Read cell header or window
+  
+  (C) 1999-2011 by the GRASS Development Team
+  
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+  
+  \author USACERL and others
+*/
+
+#include <string.h>
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include <string.h>
 
 #define ERROR(x,line) return error(x,line)
 static int scan_item(const char *, char *, char *);
@@ -55,7 +64,7 @@ char *G__read_Cell_head(FILE * fd, struct Cell_head *cellhd, int is_cellhd)
     while (G_getl(buf, sizeof(buf), fd))
 	count++;
 
-    array = (char **)G_calloc(count + 1, sizeof(char **));
+    array = (char **)G_calloc(count + 1, sizeof(char *));
 
     count = 0;
     fseek(fd, 0L, 0);
