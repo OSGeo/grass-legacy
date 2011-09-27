@@ -90,7 +90,7 @@ int read_outline(void)
 		error(key, data, "illegal width request");
 	    }
 	    if (ch == 'i')
-		PS.outline_width = PS.outline_width / 72.;
+		PS.outline_width = PS.outline_width * 72.;
 	    continue;
 	}
 	error(key, data, "illegal outline sub-request");
