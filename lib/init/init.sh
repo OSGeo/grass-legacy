@@ -119,37 +119,37 @@ for i in "$@" ; do
 	    ;;
 
 	# Check if the -text flag was given
-	-text)
+	-text | --text)
 	    GRASS_GUI="text"
 	    shift
 	    ;;
 
 	# Check if the -gui flag was given
-	-gui)
+	-gui | --gui)
 	    GRASS_GUI="$DEFAULT_GUI"
 	    shift
 	    ;;
 
 	# Check if the -tcltk flag was given
-	-tcltk)
+	-tcltk | --tcltk)
 	    GRASS_GUI="tcltk"
 	    shift
 	    ;;
 
 	# Check if the -oldtcltk flag was given
-	-oldtcltk)
+	-oldtcltk | --oldtcltk)
 	    GRASS_GUI="oldtcltk"
 	    shift
 	    ;;
 
 	# Check if the -wxpython flag was given
-	-wxpython | -wx)
+	-wxpython | -wx | --wxpython | --wx)
 	    GRASS_GUI="wxpython"
 	    shift
 	    ;;
 
     	# Check if the user wants to create a new mapset
-	-c)
+	-c | --c)
 	    CREATE_NEW=1
 	    shift
 	    ;;
