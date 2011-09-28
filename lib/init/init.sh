@@ -149,7 +149,7 @@ for i in "$@" ; do
 	    ;;
 
     	# Check if the user wants to create a new mapset
-	-c | --c)
+	-c | --create)
 	    CREATE_NEW=1
 	    shift
 	    ;;
