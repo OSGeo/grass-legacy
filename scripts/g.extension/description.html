@@ -5,6 +5,10 @@ GRASS Addons SVN repository into the local GRASS installation.
 <p>
 Re-running the script on an installed GRASS Addon re-installs
 the requested extension which may include updates.
+<P>
+If your GRASS_ADDON_PATH contains more than one path, the default
+action is to use the first directory in the list.
+
 
 <h2>EXAMPLES</h2>
 
@@ -13,8 +17,17 @@ Download and install <em>i.landsat.toar</em> into current GRASS installation:
 g.extension extension=i.landsat.toar
 </pre></div>
 
+
+<h2>BUGS</h2>
+This is a new module and obtaining successful behavior on all platforms
+is rather tricky.  Please report any problems to the GRASS bug tracker.
+If this automatic build fails, instructions for compiling both the GRASS
+source code and GRASS addons by hand can be found in the GRASS wiki.
+
+
 <h2>AUTHOR</h2>
 
 Markus Neteler
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>

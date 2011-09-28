@@ -6,7 +6,7 @@
 # AUTHOR(S):   	Markus Neteler
 # PURPOSE:      Tool to download and install extensions from GRASS Addons SVN into
 #               local GRASS installation
-# COPYRIGHT:    (C) 2009-2010 by the Markus Neteler, GRASS Development Team
+# COPYRIGHT:    (C) 2009-2011 by Markus Neteler, and the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -14,13 +14,11 @@
 #
 #############################################################################
 
-
 #%Module
 #% label: Tool to maintain GRASS extensions in local GRASS installation.
 #% description: Downloads, installs extensions from GRASS Addons SVN repository into local GRASS installation or removes installed extensions.
 #% keywords: general, extensions
 #%End
-
 #%option
 #% key: extension
 #% type: string
@@ -61,6 +59,10 @@
 #%flag
 #% key: s
 #% description: Install system-wide (may need system administrator rights)
+#%end
+#%flag
+#% key: u
+#% description: Install system-wide using sudo
 #%end
 
 
@@ -218,9 +220,14 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
 	GRASS_ADDON_PATH1=`echo "$GRASS_ADDON_PATH" | cut -f1 -d:`
     fi
     PREFIX="$GRASS_ADDON_PATH1"
-elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] ; then
+elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] || [ $GIS_FLAG_U -eq 1 ] ; then
    SYSADMIN=1
    PREFIX="$GISBASE"
+
+   # just to make later tests happy
+   if [ $GIS_FLAG_S -eq 0 ] && [ $GIS_FLAG_U -eq 1 ] ; then
+      GIS_FLAG_S=1
+   fi
 fi
 
 
@@ -273,7 +280,29 @@ fi
 
 cd "$TMPDIR/$MODULE"
 g.message message="Compiling <$MODULE>..."
-make MODULE_TOPDIR="$GISBASE" ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" ARCH_LIBDIR="$GISBASE/lib" ARCH_DISTDIR="$TMPDIR/dist"
+
+if [ -n "$MACHTYPE" ] ; then
+   DIST_DIR="dist.$MACHTYPE"
+elif [ -x "`which arch`" ] ; then
+   DIST_DIR="dist.`arch`"
+else 
+   DIST_DIR="dist.unknown"
+fi
+
+# $INST_NOW helps compile and install modules directly into $(INST_DIR)
+# without having to install whole distribution even after modifying only
+# one module. It will update both $(GRASS_HOME)/dist.$(ARCH) and $(INST_DIR).
+#   see $GISBASE/include/Make/Grass.make
+INST_NOW=true
+export INST_NOW
+
+make MODULE_TOPDIR="$GISBASE" \
+   ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/$DIST_DIR/include" \
+   ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/$DIST_DIR/lib" \
+   ARCH_LIBDIR="$GISBASE/lib" \
+   ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
+   ARCH_BINDIR="$TMPDIR/$DIST_DIR/bin"
+
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
    cleanup
@@ -288,31 +317,48 @@ else
       PROGTYPE=bin
    fi
    # can we write? Install dir present?
-   if test ! -d "${MYINST_DIR}" ; then
-      mkdir -p "${MYINST_DIR}"
+   if test ! -d "$MYINST_DIR" ; then
+      mkdir -p "$MYINST_DIR"
    fi
-   if test ! -d "${MYINST_DIR}/$PROGTYPE" ; then
-      mkdir -p "${MYINST_DIR}/$PROGTYPE"
+   if test ! -d "$MYINST_DIR/$PROGTYPE" ; then
+      mkdir -p "$MYINST_DIR/$PROGTYPE"
    fi
-   if test ! -d "${MYINST_DIR}/docs/html" ; then
-      mkdir -p "${MYINST_DIR}/docs/html"
+   if test ! -d "$MYINST_DIR/docs/html" ; then
+      mkdir -p "$MYINST_DIR/docs/html"
    fi
-   if test ! -d "${MYINST_DIR}/man/man1" ; then
-      mkdir -p "${MYINST_DIR}/man/man1"
+   if test ! -d "$MYINST_DIR/man/man1" ; then
+      mkdir -p "$MYINST_DIR/man/man1"
    fi
 
    if [ $SYSADMIN -eq 1 ] ; then
-      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
-         g.message "You need to enter the root password to remove the previous version of ${MODULE}:"
-         su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
+      if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
+         if [ $GIS_FLAG_U -eq 1 ] ; then
+            g.message "You may need to enter your password to remove an earlier copy of $MODULE:"
+            sudo rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
+         else
+            g.message "You need to enter the root password to remove an earlier copy of $MODULE:"
+            su -c "rm -f \"$MYINST_DIR/$PROGTYPE/$MODULE\""
+         fi
       fi
-      g.message "You need to enter the root password next to install ${MODULE}:"
-      su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/dist\" INST_DIR=\"$MYINST_DIR\" install"
+      if [ $GIS_FLAG_U -eq 1 ] ; then
+         g.message "You may need to enter your password to install $MODULE:"
+
+         sudo make MODULE_TOPDIR="$GISBASE" \
+	     ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
+	     INST_DIR="$MYINST_DIR" install
+      else
+         g.message "You need to enter the root password to install $MODULE:"
+
+         su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/$DIST_DIR\" INST_DIR=\"$MYINST_DIR\" install"
+      fi
    else
-      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
-         rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
+      if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
+         rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
       fi
-      make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install
+
+      make MODULE_TOPDIR="$GISBASE" \
+           ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
+	   INST_DIR="$MYINST_DIR" install
    fi
 
    if [ $? -ne 0 ] ; then
@@ -321,7 +367,7 @@ else
       exit 1
    fi
 
-   if [ ! -x "${MYINST_DIR}/$PROGTYPE/${MODULE}" ] ; then
+   if [ ! -x "$MYINST_DIR/$PROGTYPE/$MODULE" ] ; then
      g.message -e "Module did not install properly"
      cleanup
      exit 1
@@ -336,9 +382,10 @@ fi
 cleanup
 
 g.message message=""
-g.message message="Installation of <$MODULE> in <$MYINST_DIR> successfully finished."
+g.message message="Installation of <$MODULE> in <$MYINST_DIR> complete."
 
 if [ -n "$ADDON_PATH_EMPTY" ] && [ "$GIS_FLAG_S" -eq 0 ] ; then
+   g.message message=""
    g.message -w message='This add-on module will not function until you set the GRASS_ADDON_PATH environment variable (see "g.manual variables")'
 fi
 
