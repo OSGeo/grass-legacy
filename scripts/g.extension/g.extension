@@ -301,7 +301,7 @@ make MODULE_TOPDIR="$GISBASE" \
    ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/$DIST_DIR/lib" \
    ARCH_LIBDIR="$GISBASE/lib" \
    ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
-   UNIX_BIN="$TMPDIR/bin"
+   ARCH_BINDIR="$TMPDIR/$DIST_DIR/bin"
 
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
