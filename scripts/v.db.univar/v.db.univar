@@ -114,12 +114,12 @@ else
     drv="driver=$GIS_OPT_DRIVER"
 fi
 
-# strip off mapset
-GIS_OPT_TABLE=`echo $GIS_OPT_TABLE | cut -d'@' -f1`
+# strip off mapset for SQL
+MYGIS_OPT_TABLE=`echo $GIS_OPT_TABLE | cut -d'@' -f1`
 if [ -z "$GIS_OPT_WHERE" ] ; then
-   db.select table="$GIS_OPT_TABLE" ${db} ${drv} sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TEMPFILE"
+   db.select table="$GIS_OPT_TABLE" ${db} ${drv} sql="select $GIS_OPT_COLUMN from $MYGIS_OPT_TABLE" -c > "$TEMPFILE"
 else
-   db.select table="$GIS_OPT_TABLE" ${db} ${drv} sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TEMPFILE"
+   db.select table="$GIS_OPT_TABLE" ${db} ${drv} sql="select $GIS_OPT_COLUMN from $MYGIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TEMPFILE"
 fi
 
 
