@@ -382,9 +382,10 @@ fi
 cleanup
 
 g.message message=""
-g.message message="Installation of <$MODULE> in <$MYINST_DIR> successfully finished."
+g.message message="Installation of <$MODULE> in <$MYINST_DIR> complete."
 
 if [ -n "$ADDON_PATH_EMPTY" ] && [ "$GIS_FLAG_S" -eq 0 ] ; then
+   g.message message=""
    g.message -w message='This add-on module will not function until you set the GRASS_ADDON_PATH environment variable (see "g.manual variables")'
 fi
 
