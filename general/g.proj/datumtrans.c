@@ -50,6 +50,8 @@ int set_datumtrans(int datumtrans, int force, int interactive)
 	return 0;
 
     status = GPJ__get_datum_params(projinfo, &datum, &params);
+    G_debug(3, "set_datumtrans(): GPJ__get_datum_params() status=%d", status);
+
     if (datum) {
 	/* A datum name is specified; need to determine if
 	 * there are parameters to choose from for this datum */
