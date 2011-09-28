@@ -218,7 +218,7 @@ class GMFrame(wx.Frame):
         # redirect stderr to log area    
         self.goutput.Redirect()
         # fix goutput's pane size
-        self.goutput.SetSashPosition(int(self.GetSize()[1] * .45))
+        self.goutput.SetSashPosition(int(self.GetSize()[1] * .60))
 
         self.workspaceChanged = False
         
