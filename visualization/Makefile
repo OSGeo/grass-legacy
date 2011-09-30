@@ -11,11 +11,6 @@ ifneq ($(strip $(TCLTKLIBS)),)
 endif
 endif
 
-#compile if OpenGL present
-ifneq ($(strip $(OPENGLLIB)),)
-    SUBDIRS += nviz2
-endif
-
 #compile if Motif present:
 ifneq ($(strip $(XMLIB)),)
     SUBDIRS += xganim
