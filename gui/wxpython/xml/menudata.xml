@@ -278,14 +278,14 @@
 	  <items>
 	    <menuitem>
 	      <label>ASCII 3D import</label>
-	      <help>Convert a 3D ASCII raster text file into a (binary) 3D raster map layer</help>
+	      <help>Converts a 3D ASCII raster text file into a (binary) 3D raster map layer.</help>
 	      <keywords>raster3d,voxel,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.in.ascii</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Vis5D import</label>
-	      <help>import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)</help>
+	      <help>Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step).</help>
 	      <keywords>raster3d,voxel,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.in.v5d</command>
@@ -479,21 +479,21 @@
 	  <items>
 	    <menuitem>
 	      <label>ASCII 3D export</label>
-	      <help>Converts a 3D raster map layer into an ASCII text file</help>
+	      <help>Converts a 3D raster map layer into an ASCII text file.</help>
 	      <keywords>raster3d,voxel,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.out.ascii</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Vis5D export</label>
-	      <help>Export of GRASS 3D raster map to 3-dimensional Vis5D file.</help>
+	      <help>Exports GRASS 3D raster map to 3-dimensional Vis5D file.</help>
 	      <keywords>raster3d,voxel,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.out.v5d</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>VTK export</label>
-	      <help>Converts 3D raster maps (G3D) into the VTK-Ascii format</help>
+	      <help>Converts 3D raster maps into the VTK-ASCII format.</help>
 	      <keywords>raster3d,voxel,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.out.vtk</command>
@@ -673,7 +673,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>3D image rendering</label>
-	  <help>Allows rendering GIS data is a 3D space.</help>
+	  <help>Creates a 3D rendering of GIS data.</help>
 	  <keywords>visualization,raster,vector,raster3d</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>m.nviz.image</command>
@@ -2738,14 +2738,14 @@
 	</menuitem>
 	<menuitem>
 	  <label>Cross section</label>
-	  <help>Creates cross section 2D raster map from 3d raster map based on 2D elevation map</help>
+	  <help>Creates cross section 2D raster map from 3D raster map based on 2D elevation map.</help>
 	  <keywords>raster3d,voxel</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>r3.cross.rast</command>
 	</menuitem>
     <menuitem>
       <label>Groundwater modeling</label>
-      <help>Numerical calculation program for transient, confined groundwater flow in three dimensions</help>
+      <help>Calculates numerically transient, confined groundwater flow in three dimensions.</help>
       <keywords>raster3d,voxel</keywords>
       <handler>OnMenuCmd</handler>
       <command>r3.gwflow</command>
@@ -2770,7 +2770,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Voxel statistics</label>
-	      <help>Generates volume statistics for raster3d maps.</help>
+	      <help>Generates volume statistics for 3D raster maps.</help>
 	      <keywords>raster3d,voxel,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.stats</command>
