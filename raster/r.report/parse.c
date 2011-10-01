@@ -46,6 +46,7 @@ int parse_command_line(int argc, char *argv[])
 	_("mi;miles;me;meters;k;kilometers;a;acres;"
 	  "h;hectares;c;cell counts;p;percent cover");
     parms.units->options = "mi,me,k,a,h,c,p";
+    parms.units->guisection = _("Output settings");
 
     parms.nv = G_define_option();
     parms.nv->key = "null";
@@ -74,12 +75,14 @@ int parse_command_line(int argc, char *argv[])
     parms.pw->description = pw_desc;
     parms.pw->guisection = _("Formatting");
 
-    parms.outfile = G_define_option();
+    parms.outfile = G_define_standard_option(G_OPT_F_OUTPUT);
     parms.outfile->key = "output";
-    parms.outfile->type = TYPE_STRING;
     parms.outfile->required = NO;
+    parms.outfile->label =
+	_("Name for output file to hold the report");
     parms.outfile->description =
-	_("Name of an output file to hold the report");
+	_("If no output given report is printed to standard output");
+    parms.outfile->guisection = _("Output settings");
 
     parms.nsteps = G_define_option();
     parms.nsteps->key = "nsteps";
@@ -89,6 +92,7 @@ int parse_command_line(int argc, char *argv[])
     parms.nsteps->answer = "255";
     parms.nsteps->description =
 	_("Number of fp subranges to collect stats from");
+    parms.nsteps->guisection = _("FP maps");
 
     flags.q = G_define_flag();
     flags.q->key = 'q';
@@ -120,11 +124,13 @@ int parse_command_line(int argc, char *argv[])
     flags.C = G_define_flag();
     flags.C->key = 'C';
     flags.C->description = _("Report for cats fp ranges (fp maps only)");
+    flags.C->guisection = _("FP maps");
 
     flags.i = G_define_flag();
     flags.i->key = 'i';
     flags.i->description =
 	_("Read fp map as integer (use map's quant rules)");
+    flags.i->guisection = _("FP maps");
 
     /* hidden feature.
      * if first arg is >file just run r.stats into this file and quit

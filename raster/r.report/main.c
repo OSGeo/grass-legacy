@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster, statistics");
-    module->description = _("Reports statistics for raster map layers.");
+    module->description = _("Reports statistics for raster maps.");
 
     parse_command_line(argc, argv);
 
