@@ -1757,11 +1757,15 @@ class GUI:
                     try:
                         key, value = option.split('=', 1)
                     except:
-                        if i == 0: # add key name of first parameter if not given
-                            key = self.grass_task.get_options()['params'][0]['name']
-                            value = option
+                        params = self.grass_task.get_options()['params']
+                        if params:
+                            if i == 0: # add key name of first parameter if not given
+                                key = params[0]['name']
+                                value = option
+                            else:
+                                raise gcmd.GException, _("Unable to parse command '%s'") % ' '.join(cmd)
                         else:
-                            raise gcmd.GException, _("Unable to parse command '%s'") % ' '.join(cmd)
+                            continue
                     
                     element = self.grass_task.get_param(key, raiseError = False)
                     if not element:
