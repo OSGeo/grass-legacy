@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2008-07-19 22:40+0100\n"
 "Last-Translator: Pascal Obstétar <pascal.obstetar@wanadoo.fr>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -94,7 +94,7 @@ msgstr "Certainement une erreur avec le serveur."
 msgid "Connection failed."
 msgstr "Echec de la connexion."
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Impossible d'ouvrir le fichier %s"
@@ -850,12 +850,12 @@ msgstr ""
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Désolé, <%s> n'est pas une option valide\n"
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, c-format
 msgid ""
 "\n"
@@ -864,7 +864,7 @@ msgstr ""
 "\n"
 "Description :\n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
@@ -873,7 +873,7 @@ msgstr ""
 "\n"
 "Mots-clés :\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -884,7 +884,7 @@ msgstr ""
 "Utilisation :\n"
 " "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, c-format
 msgid ""
 "\n"
@@ -893,20 +893,20 @@ msgstr ""
 "\n"
 "Drapeaux :\n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr "Autoriser les fichiers de sortie à écraser les fichiers existants"
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr "Module de sortie en mode bavard"
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr "Moduel de sortie en mode silence"
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, c-format
 msgid ""
 "\n"
@@ -915,82 +915,87 @@ msgstr ""
 "\n"
 "Paramètres :\n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   par défaut : %s\n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr "NOM"
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr "MOTS CLES"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr "SYNOPSIS"
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 msgid "Flags"
 msgstr "Drapeaux"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 msgid "Options"
 msgstr "Options"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 msgid "Default"
 msgstr "Défaut"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr "Autoriser d'écraser"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr "Exécuter avec un minimum des messages en sortie"
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr "Exécuter en silence"
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 #, fuzzy
 msgid "Unable to spawn the 'wish' program"
 msgstr "Impossible d'ouvrir %s"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 #, fuzzy
 msgid "Unable to determine program name"
 msgstr "impossible d'obtenir le répertoire de l'utilisateur"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   options : "
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Désolé, <%c> n'est pas un drapeau valide\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Désolé, <%s=> est ambigu\n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Désolé, <%s> n'est pas un paramètre valide\n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -999,12 +1004,12 @@ msgstr ""
 "\n"
 "ERREUR : syntaxe de l'intervalle illégale pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Présenté comme : %s\n"
 
-#: ../lib/gis/parser.c:2286
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -1013,12 +1018,12 @@ msgstr ""
 "\n"
 "ERREUR : valeur <%s> en dehors de l'intervalle pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2293
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalle : %s\n"
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2296
 #, c-format
 msgid ""
 "\n"
@@ -1027,7 +1032,7 @@ msgstr ""
 "\n"
 "ERREUR : Valeur manquante pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1037,7 +1042,7 @@ msgstr ""
 "ERREUR : Le paramètre obligatoire <%s> n'a pas de valeur :\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, c-format
 msgid ""
 "\n"
@@ -1046,17 +1051,17 @@ msgstr ""
 "\n"
 "ERREUR : l'option <%s> doit être un multiple de %d\n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Vous avez fourni %d éléments :\n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERREUR : option <%s> : <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid ""
 "\n"
@@ -1065,7 +1070,7 @@ msgstr ""
 "\n"
 "DRAPEAU : Avez-vous placé ce drapeau?\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -1074,51 +1079,51 @@ msgstr ""
 "\n"
 "OPTION :   %s\n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clé : %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format : %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " default: %s\n"
 msgstr " par défaut : %s\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "required: %s\n"
 msgstr "obligatoire : %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiple : %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid " options: %s\n"
 msgstr " options : %s\n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "entrez une option > "
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 msgid "   Try again? "
 msgstr "   Essayer à nouveau? "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Désolé, %s n'est pas acceptée.\n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, c-format
 msgid ""
 "\n"
@@ -1129,11 +1134,11 @@ msgstr ""
 "Vous avez choisi :\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 msgid "Is this correct? "
 msgstr "Est-ce correct? "
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr "pour accepter le choix par défaut"
 
@@ -1945,135 +1950,135 @@ msgstr "Aucune information sur l'ellipsoïde dans le fichier %s de %s"
 msgid "Unknown projection"
 msgstr "Projection inconnue"
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 msgid "duplicate projection field"
 msgstr "multiples occurences du champ de projection"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 msgid "duplicate zone field"
 msgstr "multiples occurences du champ de zone"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 msgid "projection field missing"
 msgstr "le champ de projection est manquant"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 msgid "zone field missing"
 msgstr "le champ de zone est manquant"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 msgid "duplicate north field"
 msgstr "multiples occurrences du champ Nord"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 msgid "duplicate south field"
 msgstr "multiples occurrences du champ Sud"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 msgid "duplicate east field"
 msgstr "multiples occurrences du champ Est"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 msgid "duplicate west field"
 msgstr "multiples occurrences du champ Ouest"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 msgid "duplicate top field"
 msgstr "multiples occurrences du champ Haut"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 msgid "duplicate bottom field"
 msgstr "multiples occurrences du champ Bas"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr "multiples occurrences du champ résolution e-o"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 msgid "duplicate 3D e-w resolution field"
 msgstr "multiples occurrences du champ résolution e-o 3D"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 msgid "duplicate n-s resolution field"
 msgstr "multiples occurrences du champ résolution n-s"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 msgid "duplicate 3D n-s resolution field"
 msgstr "multiples occurrences du champ résolution n-s 3D"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 msgid "duplicate t-b resolution field"
 msgstr "multiples occurrences du champ résolution h-b"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 msgid "duplicate rows field"
 msgstr "multiples occurrences pour le champ rows"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 msgid "duplicate 3D rows field"
 msgstr "multiples occurrences pour le champ rows 3D"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 msgid "duplicate cols field"
 msgstr "multiples occurrences pour le champ cols"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 msgid "duplicate 3D cols field"
 msgstr "multiples occurrences pour le champ cols 3D"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 msgid "duplicate depths field"
 msgstr "multiples occurrences du champ profondeur"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 msgid "duplicate format field"
 msgstr "multiples occurrences du champ de format"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 msgid "duplicate compressed field"
 msgstr "multiples occurrences pour le champ compressed"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 msgid "north field missing"
 msgstr "champ Nord manquant"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 msgid "south field missing"
 msgstr "champ Sud manquant"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 msgid "west field missing"
 msgstr "champ Ouest manquant"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 msgid "east field missing"
 msgstr "champ Est manquant"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 msgid "cols field missing"
 msgstr "le champ colonne (cols) est manquant"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 msgid "rows field missing"
 msgstr "le champ ligne (rows) est manquant"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 msgid "ewres3 field missing"
 msgstr "champ résolution e-w 3D (ewres3) manquant"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 msgid "nsres3 field missing"
 msgstr "champ résolution n-s 3D (nsres3) manquant"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 msgid "cols3 field missing"
 msgstr "le champ colonne3D (cols3) est manquant"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 msgid "rows3 field missing"
 msgstr "le champ ligne3D (rows3) est manquant"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr "ligne %d : <%s>"

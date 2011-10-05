@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <grass-translations@lists.osgeo.org>\n"
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Connection failed."
 msgstr "Povezava ni uspela.\n"
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
@@ -847,12 +847,12 @@ msgstr ""
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Oprostite <%s> ni veljavna mo¾nost\n"
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, c-format
 msgid ""
 "\n"
@@ -861,14 +861,14 @@ msgstr ""
 "\n"
 "Opis:\n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -879,7 +879,7 @@ msgstr ""
 "Uporaba:\n"
 " "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, c-format
 msgid ""
 "\n"
@@ -888,20 +888,20 @@ msgstr ""
 "\n"
 "Izbire:\n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, c-format
 msgid ""
 "\n"
@@ -910,90 +910,95 @@ msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   privzet: %s\n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 #, fuzzy
 msgid "Flags"
 msgstr ""
 "\n"
 "Izbire:\n"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 #, fuzzy
 msgid "Parameters"
 msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 #, fuzzy
 msgid "Options"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 #, fuzzy
 msgid "Default"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 #, fuzzy
 msgid "Unable to spawn the 'wish' program"
 msgstr "Ne morem odpreti %s"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 #, fuzzy
 msgid "Unable to determine program name"
 msgstr "ne morem doloèiti uporabnikovega domaèega direktorija"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   mo¾nosti: "
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Oprostite <%c> ni veljavna izbira\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Oprostite <%s=> je dvoumno\n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Oprostite <%s> ni veljaven parameter\n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1002,12 +1007,12 @@ msgstr ""
 "\n"
 "Napaka: neveljaven razpon sintakse za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Predstavljen kot: %s\n"
 
-#: ../lib/gis/parser.c:2286
+#: ../lib/gis/parser.c:2291
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1016,12 +1021,12 @@ msgstr ""
 "\n"
 "Napaka: vrednost <%s> izven razpona za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2293
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Dovoljeni razpon: %s\n"
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2296
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1030,7 +1035,7 @@ msgstr ""
 "\n"
 "Napaka: Manjkajoèa vrednost za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1040,7 +1045,7 @@ msgstr ""
 "NAPAKA: Zahtevani parameter <%s> ni nastavljen:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1049,17 +1054,17 @@ msgstr ""
 "\n"
 "Napaka: mo¾nost <%s> mora biti podana v veèkratnikih %d\n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Podali ste %d postavk:\n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, fuzzy, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Napaka: mo¾nost <%s>: <%s> obstaja.\n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid ""
 "\n"
@@ -1068,7 +1073,7 @@ msgstr ""
 "\n"
 "IZBIRA: Doloèite naslednjo izbiro?\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -1077,51 +1082,51 @@ msgstr ""
 "\n"
 "MO®NOST:   %s\n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "     key: %s\n"
 msgstr "     kljuè: %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format: %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " default: %s\n"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "required: %s\n"
 msgstr "zahtevan: %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid "multiple: %s\n"
 msgstr "veèkraten: %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid " options: %s\n"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "vpi¹ite mo¾nost > "
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 msgid "   Try again? "
 msgstr "   Poskusite ¹e enkrat. "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Oprostite, %s ni sprejet.\n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, c-format
 msgid ""
 "\n"
@@ -1132,11 +1137,11 @@ msgstr ""
 "Izbrali ste:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 msgid "Is this correct? "
 msgstr "Ali je to pravilno? "
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr "za izbrati privzeto"
 
@@ -1923,135 +1928,135 @@ msgstr "V datoteki %s v %s ni podatka o elipsoidu"
 msgid "Unknown projection"
 msgstr "Neznana projekcija"
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 msgid "duplicate projection field"
 msgstr "obstajata dve polji za projekcijo"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 msgid "duplicate zone field"
 msgstr "obstajata dve polji za cono"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 msgid "projection field missing"
 msgstr "manjka polje s podatki o projekciji"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 msgid "zone field missing"
 msgstr "manjka polje s podatki o coni"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 msgid "duplicate north field"
 msgstr "obstajata dve polji za sever"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 msgid "duplicate south field"
 msgstr "obstajata dve polji za jug"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 msgid "duplicate east field"
 msgstr "obstajata dve polji za vzhod"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 msgid "duplicate west field"
 msgstr "obstajata dve polji za zahod"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 msgid "duplicate top field"
 msgstr "obstajata dve polji za zgoraj"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 msgid "duplicate bottom field"
 msgstr "obstajata dve polji za spodaj"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr "obstajata dve polji za e-w resolucijo"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 msgid "duplicate 3D e-w resolution field"
 msgstr "obstajata dve polji za 3D e-w resolucijo"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 msgid "duplicate n-s resolution field"
 msgstr "obstajata dve polji za n-s resolucijo"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 msgid "duplicate 3D n-s resolution field"
 msgstr "obstajata dve polji za 3D n-s resolucijo"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 msgid "duplicate t-b resolution field"
 msgstr "obstajata dve polji za t-b resolucijo"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 msgid "duplicate rows field"
 msgstr "obstajata dve polji za ¹tevilo vrstic"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 msgid "duplicate 3D rows field"
 msgstr "obstajata dve polji za 3D ¹tevilo vrstic"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 msgid "duplicate cols field"
 msgstr "obstajata dve polji za ¹tevilo kolon"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 msgid "duplicate 3D cols field"
 msgstr "obstajata polji za 3D ¹tevilo kolon"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 msgid "duplicate depths field"
 msgstr "obstajata dve polji za globine"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 msgid "duplicate format field"
 msgstr "obstajata dve polji za format"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 msgid "duplicate compressed field"
 msgstr "obstajata polji o podatku o stiskanju"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 msgid "north field missing"
 msgstr "podatek za sever manjka"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 msgid "south field missing"
 msgstr "podatek za jug manjka"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 msgid "west field missing"
 msgstr "podatek za zahod manjka"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 msgid "east field missing"
 msgstr "podatek za vzhod manjka"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 msgid "cols field missing"
 msgstr "podatek o ¹tevilu kolon manjka"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 msgid "rows field missing"
 msgstr "podatek o ¹tevilu vrstic manjka"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 msgid "ewres3 field missing"
 msgstr "podatek o ewres3 manjka"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 msgid "nsres3 field missing"
 msgstr "podatek o nsres3 manjka"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 msgid "cols3 field missing"
 msgstr "podatek o cols3 manjka"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 msgid "rows3 field missing"
 msgstr "podatek o rows3 manjka"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr "linija %d: <%s>"

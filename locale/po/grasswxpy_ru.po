@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2008-10-10 19:44-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -51,7 +51,7 @@ msgstr "Панель инструментов векторизации"
 msgid "Map layers"
 msgstr "Слои карты"
 
-#: ../gui/wxpython/wxgui.py:254 ../gui/wxpython/wxgui.py:406
+#: ../gui/wxpython/wxgui.py:254 ../gui/wxpython/wxgui.py:394
 #, fuzzy
 msgid "Command console"
 msgstr "Операция завершена"
@@ -80,82 +80,61 @@ msgstr ""
 msgid "Choose model to run"
 msgstr "Выберите проекцию"
 
-#: ../gui/wxpython/wxgui.py:348 ../gui/wxpython/gui_modules/gmodeler.py:810
-#: ../gui/wxpython/gui_modules/gmodeler.py:854
+#: ../gui/wxpython/wxgui.py:348 ../gui/wxpython/gui_modules/gmodeler.py:918
+#: ../gui/wxpython/gui_modules/gmodeler.py:962
 msgid "GRASS Model File (*.gxm)|*.gxm"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:357 ../gui/wxpython/gui_modules/gmodeler.py:1125
-#, fuzzy
-msgid "Validating model..."
-msgstr "Правильный диапазон"
-
-#: ../gui/wxpython/wxgui.py:361 ../gui/wxpython/gui_modules/gmodeler.py:927
-#, python-format
-msgid ""
-"Model is not valid. Do you want to run the model anyway?\n"
-"\n"
-"%s"
-msgstr ""
-
-#: ../gui/wxpython/wxgui.py:363 ../gui/wxpython/gui_modules/gmodeler.py:929
-msgid "Run model?"
-msgstr ""
-
-#: ../gui/wxpython/wxgui.py:370 ../gui/wxpython/gui_modules/gmodeler.py:992
-msgid "Running model..."
-msgstr ""
-
-#: ../gui/wxpython/wxgui.py:420 ../gui/wxpython/wxgui.py:1555
+#: ../gui/wxpython/wxgui.py:408 ../gui/wxpython/wxgui.py:1543
 #, fuzzy
 msgid "Do you want to save changes in the workspace?"
 msgstr "Сохранить изменения в векторном слое <%s>?"
 
-#: ../gui/wxpython/wxgui.py:422 ../gui/wxpython/wxgui.py:1557
+#: ../gui/wxpython/wxgui.py:410 ../gui/wxpython/wxgui.py:1545
 #, fuzzy
 msgid "Do you want to store current settings to workspace file?"
 msgstr "Проект не пуст. Сохранить текущие настройки в файл проекта?"
 
-#: ../gui/wxpython/wxgui.py:429
+#: ../gui/wxpython/wxgui.py:417
 #, fuzzy, python-format
 msgid "Close Map Display %d"
 msgstr "GRASS GIS дисплей слоя: "
 
-#: ../gui/wxpython/wxgui.py:528 ../gui/wxpython/wxgui.py:1210
+#: ../gui/wxpython/wxgui.py:516 ../gui/wxpython/wxgui.py:1198
 msgid "Selected map layer is not vector."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:533
+#: ../gui/wxpython/wxgui.py:521
 #, fuzzy
 msgid "Editing is allowed only for vector maps from the current mapset."
 msgstr "Создать топологию для векторного слоя GRASS"
 
-#: ../gui/wxpython/wxgui.py:548
+#: ../gui/wxpython/wxgui.py:536
 #, fuzzy
 msgid "Choose script file to run"
 msgstr "Выберите исходную папку"
 
-#: ../gui/wxpython/wxgui.py:550
+#: ../gui/wxpython/wxgui.py:538
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:561
+#: ../gui/wxpython/wxgui.py:549
 #, fuzzy, python-format
 msgid "Script file '%s' doesn't exist. Operation cancelled."
 msgstr ""
 "Необходимо как минимум %d точек привязки. Операция не может быть выполнена."
 
-#: ../gui/wxpython/wxgui.py:565
+#: ../gui/wxpython/wxgui.py:553
 #, python-format
 msgid "Launching script '%s'..."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:580
+#: ../gui/wxpython/wxgui.py:568
 #, fuzzy, python-format
 msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
 msgstr "Невозможно создать новую область. Область <%s> не создана."
 
-#: ../gui/wxpython/wxgui.py:582 ../gui/wxpython/wxgui.py:603
+#: ../gui/wxpython/wxgui.py:570 ../gui/wxpython/wxgui.py:591
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:1701
 #: ../gui/wxpython/gui_modules/location_wizard.py:561
 #: ../gui/wxpython/gui_modules/location_wizard.py:746
@@ -167,22 +146,20 @@ msgstr "Невозможно создать новую область. Обла�
 #: ../gui/wxpython/gui_modules/gcmd.py:64
 #: ../gui/wxpython/gui_modules/vdigit.py:1027
 #: ../gui/wxpython/gui_modules/vdigit.py:1219
-#: ../gui/wxpython/gui_modules/gmodeler.py:1459
+#: ../gui/wxpython/gui_modules/gmodeler.py:1477
 #: ../gui/wxpython/gui_modules/workspace.py:984
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5383
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
 #: ../gui/wxpython/gui_modules/dbm.py:165
 #: ../gui/wxpython/gui_modules/dbm.py:1408
 #: ../gui/wxpython/gui_modules/dbm.py:1517
 #: ../gui/wxpython/gui_modules/dbm.py:1603
 #: ../gui/wxpython/gui_modules/dbm.py:1615
 #: ../gui/wxpython/gui_modules/dbm.py:1630
-#: ../gui/wxpython/gui_modules/dbm.py:1750
-#: ../gui/wxpython/gui_modules/dbm.py:1772
-#: ../gui/wxpython/gui_modules/dbm.py:1942
-#: ../gui/wxpython/gui_modules/dbm.py:2759
-#: ../gui/wxpython/gui_modules/dbm.py:2857
+#: ../gui/wxpython/gui_modules/dbm.py:1947
+#: ../gui/wxpython/gui_modules/dbm.py:2766
 #: ../gui/wxpython/gui_modules/dbm.py:2864
-#: ../gui/wxpython/gui_modules/dbm.py:2903
+#: ../gui/wxpython/gui_modules/dbm.py:2871
+#: ../gui/wxpython/gui_modules/dbm.py:2910
 #: ../gui/wxpython/gui_modules/gdialogs.py:287
 #: ../gui/wxpython/gui_modules/profile.py:598
 #: ../gui/wxpython/gui_modules/layertree.py:490
@@ -198,49 +175,49 @@ msgstr "Невозможно создать новую область. Обла�
 msgid "Error"
 msgstr "Ошибка"
 
-#: ../gui/wxpython/wxgui.py:588
+#: ../gui/wxpython/wxgui.py:576
 #, python-format
 msgid ""
 "Current location is <%(loc)s>.\n"
 "Current mapset is <%(mapset)s>."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:591 ../gui/wxpython/wxgui.py:607
-#: ../gui/wxpython/gui_modules/ghelp.py:541
+#: ../gui/wxpython/wxgui.py:579 ../gui/wxpython/wxgui.py:595
+#: ../gui/wxpython/gui_modules/ghelp.py:543
 msgid "Info"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:602
+#: ../gui/wxpython/wxgui.py:590
 #, fuzzy, python-format
 msgid "Unable to switch to mapset <%s>."
 msgstr "Не могу создать новый векторный слой <%s>."
 
-#: ../gui/wxpython/wxgui.py:606
+#: ../gui/wxpython/wxgui.py:594
 #, fuzzy, python-format
 msgid "Current mapset is <%s>."
 msgstr "Изменить текущий набор."
 
-#: ../gui/wxpython/wxgui.py:672
+#: ../gui/wxpython/wxgui.py:660
 #, fuzzy
 msgid ""
 "Current workspace is not empty. Do you want to store current settings to "
 "workspace file?"
 msgstr "Проект не пуст. Сохранить текущие настройки в файл проекта?"
 
-#: ../gui/wxpython/wxgui.py:675
+#: ../gui/wxpython/wxgui.py:663
 #, fuzzy
 msgid "Create new workspace?"
 msgstr "Создать файл рабочей области"
 
-#: ../gui/wxpython/wxgui.py:701
+#: ../gui/wxpython/wxgui.py:689
 msgid "Choose workspace file"
 msgstr "Выберите файл проекта"
 
-#: ../gui/wxpython/wxgui.py:702 ../gui/wxpython/wxgui.py:881
+#: ../gui/wxpython/wxgui.py:690 ../gui/wxpython/wxgui.py:869
 msgid "GRASS Workspace File (*.gxw)|*.gxw"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:737
+#: ../gui/wxpython/wxgui.py:725
 #, fuzzy, python-format
 msgid ""
 "Reading workspace file <%s> failed.\n"
@@ -249,59 +226,59 @@ msgstr ""
 "Не удалось прочитать файл <%s>. Поврежденный файл, невозможно обработать "
 "документ XML."
 
-#: ../gui/wxpython/wxgui.py:741 ../gui/wxpython/wxgui.py:858
-#: ../gui/wxpython/wxgui.py:1296
+#: ../gui/wxpython/wxgui.py:729 ../gui/wxpython/wxgui.py:846
+#: ../gui/wxpython/wxgui.py:1284
 msgid "Please wait, loading workspace..."
 msgstr "Загрузка проекта, пожалуйста подождите ..."
 
-#: ../gui/wxpython/wxgui.py:842
+#: ../gui/wxpython/wxgui.py:830
 msgid "Choose GRC file to load"
 msgstr "Выберите загружаемый файл GRC"
 
-#: ../gui/wxpython/wxgui.py:843
+#: ../gui/wxpython/wxgui.py:831
 msgid "Old GRASS Workspace File (*.grc)|*.grc"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:880
+#: ../gui/wxpython/wxgui.py:868
 msgid "Choose file to save current workspace"
 msgstr "Выберите файл для сохранения текущего проекта"
 
-#: ../gui/wxpython/wxgui.py:895 ../gui/wxpython/wxgui.py:911
+#: ../gui/wxpython/wxgui.py:883 ../gui/wxpython/wxgui.py:899
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
 msgstr "Файл проекта <%s> уже существует. Перезаписать этот файл?"
 
-#: ../gui/wxpython/wxgui.py:897 ../gui/wxpython/wxgui.py:914
+#: ../gui/wxpython/wxgui.py:885 ../gui/wxpython/wxgui.py:902
 #: ../gui/wxpython/menustrings.py:9
 msgid "Save workspace"
 msgstr "Сохранить проект"
 
-#: ../gui/wxpython/wxgui.py:935
+#: ../gui/wxpython/wxgui.py:923
 #, fuzzy
 msgid "Writing current settings to workspace file failed."
 msgstr "Сохранение текущих настроек в файл проекта не удалось (%s)."
 
-#: ../gui/wxpython/wxgui.py:946 ../gui/wxpython/gui_modules/gmodeler.py:1458
+#: ../gui/wxpython/wxgui.py:934 ../gui/wxpython/gui_modules/gmodeler.py:1476
 #: ../gui/wxpython/gui_modules/profile.py:597
 #, fuzzy, python-format
 msgid "Unable to open file <%s> for writing."
 msgstr "Невозможно открыть файл <%s> для чтения."
 
-#: ../gui/wxpython/wxgui.py:1183
+#: ../gui/wxpython/wxgui.py:1171
 #, fuzzy
 msgid "Nothing to import. No WMS layer selected."
 msgstr "Слои для выборки не выбраны."
 
-#: ../gui/wxpython/wxgui.py:1219
+#: ../gui/wxpython/wxgui.py:1207
 msgid "Please wait, loading attribute data..."
 msgstr "Загрузка атрибутивных данных, пожалуйста подождите..."
 
-#: ../gui/wxpython/wxgui.py:1288
+#: ../gui/wxpython/wxgui.py:1276
 #, fuzzy
 msgid "Add selected map layers into layer tree"
 msgstr "Добавить импортированные слои в содержание"
 
-#: ../gui/wxpython/wxgui.py:1497
+#: ../gui/wxpython/wxgui.py:1485
 #, fuzzy, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
@@ -309,34 +286,34 @@ msgid ""
 "from layer tree?"
 msgstr "Удалить слой %s из дерева слоев?"
 
-#: ../gui/wxpython/wxgui.py:1500
+#: ../gui/wxpython/wxgui.py:1488
 #, fuzzy
 msgid "Do you want to remove selected map layer(s) from layer tree?"
 msgstr "Удалить выбранный слой из содержания?"
 
-#: ../gui/wxpython/wxgui.py:1504
+#: ../gui/wxpython/wxgui.py:1492
 msgid "Remove map layer"
 msgstr "Удалить слой"
 
-#: ../gui/wxpython/wxgui.py:1564
+#: ../gui/wxpython/wxgui.py:1552
 #, fuzzy
 msgid "Quit GRASS GUI"
 msgstr "О ГИС GRASS"
 
-#: ../gui/wxpython/wxgui.py:1593
+#: ../gui/wxpython/wxgui.py:1581
 msgid "No map layer selected. Operation cancelled."
 msgstr "Не выбран слой. Операция прервана."
 
-#: ../gui/wxpython/wxgui.py:1594 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
-#: ../gui/wxpython/gui_modules/ghelp.py:289
+#: ../gui/wxpython/wxgui.py:1582 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
+#: ../gui/wxpython/gui_modules/ghelp.py:291
 #: ../gui/wxpython/gui_modules/gcmd.py:98
-#: ../gui/wxpython/gui_modules/dbm.py:2057
-#: ../gui/wxpython/gui_modules/dbm.py:2086 ../gui/wxpython/gis_set.py:456
+#: ../gui/wxpython/gui_modules/dbm.py:2064
+#: ../gui/wxpython/gui_modules/dbm.py:2093 ../gui/wxpython/gis_set.py:456
 #: ../gui/wxpython/gis_set.py:491
 msgid "Message"
 msgstr "Сообщение"
 
-#: ../gui/wxpython/wxgui.py:1624
+#: ../gui/wxpython/wxgui.py:1612
 #, fuzzy
 msgid "Starting GRASS GUI..."
 msgstr "Запустить GRASS"
@@ -480,7 +457,8 @@ msgid "Add text layer"
 msgstr "Добавить текстовый слой"
 
 #: ../gui/wxpython/icons/icon.py:196
-msgid "Create histogram of image or raster file"
+#, fuzzy
+msgid "Create histogram of raster map"
 msgstr "Создать гистограмму изображения или растрового файла"
 
 #: ../gui/wxpython/icons/icon.py:200
@@ -660,9 +638,8 @@ msgid "Set options"
 msgstr "Установить настройки"
 
 #: ../gui/wxpython/icons/icon.py:273 ../gui/wxpython/menustrings.py:192
-#, fuzzy
-msgid "Hardcopy Map Output Utility"
-msgstr "Программа экспорта карты в PostScript."
+msgid "Cartographic Composer"
+msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:275
 #, fuzzy
@@ -839,7 +816,7 @@ msgstr "Выйти из модуля геометрической коррекц
 
 #: ../gui/wxpython/icons/icon.py:363
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1290
-#: ../gui/wxpython/gui_modules/gselect.py:1054
+#: ../gui/wxpython/gui_modules/gselect.py:1055
 msgid "Settings"
 msgstr "Установки"
 
@@ -982,7 +959,7 @@ msgid "Redraw model canvas"
 msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:422
-#: ../gui/wxpython/gui_modules/gmodeler.py:685
+#: ../gui/wxpython/gui_modules/gmodeler.py:793
 msgid "Quit Graphical Modeler"
 msgstr ""
 
@@ -1034,8 +1011,8 @@ msgid "Zoom to full extent"
 msgstr "Масштабировать до региона по умолчанию"
 
 #: ../gui/wxpython/icons/icon.py:448
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1955
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2010
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2070
 #, fuzzy
 msgid "Map frame"
 msgstr "Масштаб карты"
@@ -1046,7 +1023,7 @@ msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:451
 #: ../gui/wxpython/gui_modules/nviz_tools.py:321
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2480
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2540
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:665
 msgid "Raster map"
 msgstr "Растровый слой"
@@ -1058,7 +1035,7 @@ msgstr "Добавить 3D растровый слой"
 
 #: ../gui/wxpython/icons/icon.py:454
 #: ../gui/wxpython/gui_modules/nviz_tools.py:630
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3937
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3980
 #, fuzzy
 msgid "Vector map"
 msgstr "Новый векторный слой"
@@ -1079,9 +1056,8 @@ msgid "Show preview"
 msgstr "Показать сетку"
 
 #: ../gui/wxpython/icons/icon.py:461
-#, fuzzy
-msgid "Quit Hardcopy Map Utility"
-msgstr "Программа экспорта карты в PostScript."
+msgid "Quit Cartographic Composer"
+msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:463
 #, fuzzy
@@ -1125,8 +1101,8 @@ msgid "Kriging"
 msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:108
-#: ../gui/wxpython/gui_modules/gmodeler.py:583
-#: ../gui/wxpython/gui_modules/menuform.py:784
+#: ../gui/wxpython/gui_modules/gmodeler.py:691
+#: ../gui/wxpython/gui_modules/menuform.py:787
 msgid "Command output"
 msgstr "Результат команды"
 
@@ -1146,7 +1122,7 @@ msgstr "Экспорт растрового слоя"
 
 #: ../gui/wxpython/scripts/vkrige.py:139
 #: ../gui/wxpython/gui_modules/vclean.py:144
-#: ../gui/wxpython/gui_modules/gmodeler.py:3353
+#: ../gui/wxpython/gui_modules/gmodeler.py:3528
 #: ../gui/wxpython/gui_modules/gdialogs.py:1016
 #: ../gui/wxpython/gui_modules/preferences.py:1578
 msgid "Allow output files to overwrite existing files"
@@ -1154,10 +1130,10 @@ msgstr "Разрешить перезаписывать файлы поверх 
 
 #: ../gui/wxpython/scripts/vkrige.py:152
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:130
-#: ../gui/wxpython/gui_modules/ghelp.py:225
+#: ../gui/wxpython/gui_modules/ghelp.py:227
 #: ../gui/wxpython/gui_modules/vclean.py:165
-#: ../gui/wxpython/gui_modules/gmodeler.py:3470
-#: ../gui/wxpython/gui_modules/menuform.py:459
+#: ../gui/wxpython/gui_modules/gmodeler.py:3645
+#: ../gui/wxpython/gui_modules/menuform.py:462
 msgid "&Run"
 msgstr "&Выполнить"
 
@@ -1891,7 +1867,7 @@ msgstr ""
 "Переименовать файлы элементов базы данных из текущего набора пользователя."
 
 #: ../gui/wxpython/menustrings.py:159
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2644
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2704
 msgid "Delete"
 msgstr "Удалить"
 
@@ -2024,9 +2000,8 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:193
-#, fuzzy
-msgid "Launch Hardcopy Map Output Utility"
-msgstr "Программа экспорта карты в PostScript."
+msgid "Launch Cartographic Composer"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:194
 #, fuzzy
@@ -2464,7 +2439,7 @@ msgstr "Находит ближайшие точки между объектам
 #: ../gui/wxpython/gui_modules/nviz_tools.py:352
 #: ../gui/wxpython/gui_modules/nviz_tools.py:550
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1028
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3053
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3112
 msgid "Mask"
 msgstr "Маскировать"
 
@@ -4905,7 +4880,7 @@ msgid "GUI help"
 msgstr "Помощь ГИС GRASS"
 
 #: ../gui/wxpython/menustrings.py:806 ../gui/wxpython/menustrings.py:807
-#: ../gui/wxpython/gui_modules/ghelp.py:480
+#: ../gui/wxpython/gui_modules/ghelp.py:482
 msgid "About GRASS GIS"
 msgstr "О ГИС GRASS"
 
@@ -4920,7 +4895,7 @@ msgid "Load model from file"
 msgstr "Выберите файл проекта"
 
 #: ../gui/wxpython/menustrings.py:816
-#: ../gui/wxpython/gui_modules/gmodeler.py:836
+#: ../gui/wxpython/gui_modules/gmodeler.py:944
 #, fuzzy
 msgid "Save model"
 msgstr "Режим категорий"
@@ -4954,7 +4929,7 @@ msgid "Close modeler window"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:829
-#: ../gui/wxpython/gui_modules/gmodeler.py:3047
+#: ../gui/wxpython/gui_modules/gmodeler.py:3222
 #, fuzzy
 msgid "Modeler settings"
 msgstr "Общие настройки"
@@ -5006,7 +4981,7 @@ msgid "Remove action/data from model"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:843
-#: ../gui/wxpython/gui_modules/gmodeler.py:3332
+#: ../gui/wxpython/gui_modules/gmodeler.py:3507
 #, fuzzy
 msgid "Model properties"
 msgstr "Свойства слоя"
@@ -5115,7 +5090,7 @@ msgid "Preview"
 msgstr "Предпросмотр"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:394
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3880
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3923
 #, fuzzy
 msgid "range"
 msgstr "Управлять"
@@ -5159,7 +5134,7 @@ msgstr "Загрузка обновление данных, пожалуйста
 
 #: ../gui/wxpython/gui_modules/histogram.py:266
 #, fuzzy
-msgid "GRASS GIS Histogram of image or raster map"
+msgid "GRASS GIS Histogram of raster map"
 msgstr "Создать гистограмму изображения или растрового файла"
 
 #: ../gui/wxpython/gui_modules/histogram.py:332
@@ -5176,7 +5151,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/histogram.py:403
 #: ../gui/wxpython/gui_modules/mapdisp.py:1140
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:905
-#: ../gui/wxpython/gui_modules/gmodeler.py:1050
+#: ../gui/wxpython/gui_modules/gmodeler.py:1082
 msgid "Choose a file name to save the image (no need to add extension)"
 msgstr ""
 
@@ -5432,7 +5407,7 @@ msgid "Vector map <%s> added"
 msgstr "Создан новый векторный слой <%s>"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:67
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3002
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3061
 msgid "Database connection is not defined in DB file."
 msgstr "Соединение с базой данных не определено в файле DB."
 
@@ -5493,9 +5468,9 @@ msgstr "Неизвестно"
 #: ../gui/wxpython/gui_modules/vdigit.py:397
 #: ../gui/wxpython/gui_modules/vdigit.py:897
 #: ../gui/wxpython/gui_modules/vdigit.py:1341
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2395
-#: ../gui/wxpython/gui_modules/dbm.py:2644
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2402
+#: ../gui/wxpython/gui_modules/dbm.py:2651
 msgid "Layer"
 msgstr "Слой"
 
@@ -5525,15 +5500,15 @@ msgid "Map type to georectify"
 msgstr "Тип слоя для привязки"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:328
-#: ../gui/wxpython/gui_modules/gmodeler.py:3604
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2032
+#: ../gui/wxpython/gui_modules/gmodeler.py:3779
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2092
 #: ../gui/wxpython/gui_modules/layertree.py:754
 msgid "raster"
 msgstr "растр"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:328
-#: ../gui/wxpython/gui_modules/gmodeler.py:3605
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2033
+#: ../gui/wxpython/gui_modules/gmodeler.py:3780
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2093
 #: ../gui/wxpython/gui_modules/layertree.py:775
 msgid "vector"
 msgstr "вектор"
@@ -5872,7 +5847,7 @@ msgstr "Закрыть диалог"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2395
 #: ../gui/wxpython/gui_modules/vdigit.py:114
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3284
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3339
 msgid "Symbology"
 msgstr "Символизация"
 
@@ -5900,8 +5875,8 @@ msgstr "Настройки символа"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1308
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3239
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:327
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3102
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3207
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3162
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3265
 #: ../gui/wxpython/gui_modules/preferences.py:1728
 msgid "Color:"
 msgstr "Цвет:"
@@ -6022,20 +5997,20 @@ msgstr "Файл региона <%s> уже существует. Перезап
 #: ../gui/wxpython/gui_modules/gcmd.py:89
 #: ../gui/wxpython/gui_modules/workspace.py:1000
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:425
-#: ../gui/wxpython/gui_modules/dbm.py:2358
+#: ../gui/wxpython/gui_modules/dbm.py:2365
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:369
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:370
 msgid "Update categories"
 msgstr "Обновить категории"
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:492
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:850
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:493
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:849
 msgid "No vector map selected for editing."
 msgstr "Векторный слой не выбран для редактирования."
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:983
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:982
 msgid "Z bulk-labeling dialog"
 msgstr "диалог массовой подписи Z"
 
@@ -6378,7 +6353,7 @@ msgstr "ID объекта:"
 msgid "Not enough points for line"
 msgstr "Создать точки вдоль линий"
 
-#: ../gui/wxpython/gui_modules/wxvdriver.py:837
+#: ../gui/wxpython/gui_modules/wxvdriver.py:827
 #, python-format
 msgid ""
 "Topology for vector map <%s> is not available. Topology is required by "
@@ -6386,7 +6361,7 @@ msgid ""
 "vector map for editing?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxvdriver.py:841
+#: ../gui/wxpython/gui_modules/wxvdriver.py:831
 msgid "Topology missing"
 msgstr ""
 
@@ -6417,165 +6392,165 @@ msgstr ""
 msgid "%d modules found"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:216
+#: ../gui/wxpython/gui_modules/ghelp.py:218
 msgid "Menu tree (double-click to run command)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:226
+#: ../gui/wxpython/gui_modules/ghelp.py:228
 #, fuzzy
 msgid "Run selected command"
 msgstr "Исполнить команду"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:287
+#: ../gui/wxpython/gui_modules/ghelp.py:289
 #, fuzzy
 msgid "You must run this command from the menu or command line"
 msgstr "Невозможно запустить команду, выполняется другая команда..."
 
-#: ../gui/wxpython/gui_modules/ghelp.py:342
-#: ../gui/wxpython/gui_modules/goutput.py:641
+#: ../gui/wxpython/gui_modules/ghelp.py:344
+#: ../gui/wxpython/gui_modules/goutput.py:644
 #, python-format
 msgid "%d modules match"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:357
-#: ../gui/wxpython/gui_modules/ghelp.py:1035
+#: ../gui/wxpython/gui_modules/ghelp.py:359
+#: ../gui/wxpython/gui_modules/ghelp.py:1039
 #, fuzzy
 msgid "Menu tree"
 msgstr "Дерево Штейнера"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:512
+#: ../gui/wxpython/gui_modules/ghelp.py:514
 msgid "Official GRASS site:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:522
+#: ../gui/wxpython/gui_modules/ghelp.py:524
 msgid "GIS Library Revision:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:542
+#: ../gui/wxpython/gui_modules/ghelp.py:544
 #, fuzzy
 msgid "Copyright"
 msgstr "Копировать"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:543
+#: ../gui/wxpython/gui_modules/ghelp.py:545
 #, fuzzy
 msgid "License"
 msgstr "Линия"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:544
+#: ../gui/wxpython/gui_modules/ghelp.py:546
 msgid "Authors"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:545
+#: ../gui/wxpython/gui_modules/ghelp.py:547
 #, fuzzy
 msgid "Contributors"
 msgstr "Атрибуты"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:546
+#: ../gui/wxpython/gui_modules/ghelp.py:548
 #, fuzzy
 msgid "Extra contributors"
 msgstr "Атрибуты"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:547
+#: ../gui/wxpython/gui_modules/ghelp.py:549
 #, fuzzy
 msgid "Translators"
 msgstr "Прозрачный"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:579
-#: ../gui/wxpython/gui_modules/ghelp.py:604
-#: ../gui/wxpython/gui_modules/ghelp.py:628
-#: ../gui/wxpython/gui_modules/ghelp.py:685
-#: ../gui/wxpython/gui_modules/ghelp.py:745
+#: ../gui/wxpython/gui_modules/ghelp.py:581
+#: ../gui/wxpython/gui_modules/ghelp.py:606
+#: ../gui/wxpython/gui_modules/ghelp.py:630
+#: ../gui/wxpython/gui_modules/ghelp.py:687
+#: ../gui/wxpython/gui_modules/ghelp.py:747
 #, fuzzy, python-format
 msgid "%s file missing"
 msgstr "Отсутствует код EPSG."
 
-#: ../gui/wxpython/gui_modules/ghelp.py:671
-#: ../gui/wxpython/gui_modules/ghelp.py:731
+#: ../gui/wxpython/gui_modules/ghelp.py:673
+#: ../gui/wxpython/gui_modules/ghelp.py:733
 #, python-format
 msgid "Error when reading file '%s'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:672
-#: ../gui/wxpython/gui_modules/ghelp.py:732
+#: ../gui/wxpython/gui_modules/ghelp.py:674
+#: ../gui/wxpython/gui_modules/ghelp.py:734
 #, fuzzy
 msgid "Lines:"
 msgstr "Линия"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:690
 #: ../gui/wxpython/gui_modules/ghelp.py:692
-#: ../gui/wxpython/gui_modules/ghelp.py:753
-#: ../gui/wxpython/gui_modules/gmodeler.py:3592
-#: ../gui/wxpython/gui_modules/gmodeler.py:3632
-#: ../gui/wxpython/gui_modules/gmodeler.py:3900
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
-#: ../gui/wxpython/gui_modules/gmodeler.py:4330
+#: ../gui/wxpython/gui_modules/ghelp.py:694
+#: ../gui/wxpython/gui_modules/ghelp.py:755
+#: ../gui/wxpython/gui_modules/gmodeler.py:3767
+#: ../gui/wxpython/gui_modules/gmodeler.py:3807
+#: ../gui/wxpython/gui_modules/gmodeler.py:4075
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
+#: ../gui/wxpython/gui_modules/gmodeler.py:4505
 msgid "Name"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:690
 #: ../gui/wxpython/gui_modules/ghelp.py:692
-#: ../gui/wxpython/gui_modules/ghelp.py:755
+#: ../gui/wxpython/gui_modules/ghelp.py:694
+#: ../gui/wxpython/gui_modules/ghelp.py:757
 msgid "E-mail"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:692
+#: ../gui/wxpython/gui_modules/ghelp.py:694
 msgid "Country"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:692
+#: ../gui/wxpython/gui_modules/ghelp.py:694
 msgid "OSGeo_ID"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:757
+#: ../gui/wxpython/gui_modules/ghelp.py:759
 msgid "Language"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:782
+#: ../gui/wxpython/gui_modules/ghelp.py:784
 msgid "Fetch & install extension from GRASS Addons"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:791
+#: ../gui/wxpython/gui_modules/ghelp.py:793
 msgid "Repository"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:793
+#: ../gui/wxpython/gui_modules/ghelp.py:795
 #, fuzzy
 msgid "List of extensions"
 msgstr "Список категорий"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:797
+#: ../gui/wxpython/gui_modules/ghelp.py:799
 msgid "Fetch full info including description and keywords (takes time)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:806
+#: ../gui/wxpython/gui_modules/ghelp.py:808
 #: ../gui/wxpython/gui_modules/gdialogs.py:990
 #, fuzzy
 msgid "Options"
 msgstr "Опционный"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:827
+#: ../gui/wxpython/gui_modules/ghelp.py:829
 msgid "&Fetch"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:828
+#: ../gui/wxpython/gui_modules/ghelp.py:830
 msgid "Fetch list of available modules from GRASS Addons SVN repository"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:831
+#: ../gui/wxpython/gui_modules/ghelp.py:833
 msgid "&Install"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:832
+#: ../gui/wxpython/gui_modules/ghelp.py:834
 msgid "Install selected add-ons GRASS module"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:835
+#: ../gui/wxpython/gui_modules/ghelp.py:837
 #: ../gui/wxpython/gui_modules/gdialogs.py:1036
 #, fuzzy
 msgid "Command dialog"
 msgstr "Настройки диалога команды"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:836
+#: ../gui/wxpython/gui_modules/ghelp.py:838
 #: ../gui/wxpython/gui_modules/gdialogs.py:1194
 #: ../gui/wxpython/gui_modules/gdialogs.py:1196
 #: ../gui/wxpython/gui_modules/gdialogs.py:1201
@@ -6584,28 +6559,28 @@ msgstr "Настройки диалога команды"
 msgid "Open %s dialog"
 msgstr "Закрыть диалог"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:905
+#: ../gui/wxpython/gui_modules/ghelp.py:907
 msgid "Extension not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:919
+#: ../gui/wxpython/gui_modules/ghelp.py:921
 msgid "Fetch list of available extensions by clicking on 'Fetch' button"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:927
+#: ../gui/wxpython/gui_modules/ghelp.py:929
 #, python-format
 msgid "%d items match"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:939
+#: ../gui/wxpython/gui_modules/ghelp.py:942
 msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1194
+#: ../gui/wxpython/gui_modules/ghelp.py:1198
 msgid "&Next"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1197
+#: ../gui/wxpython/gui_modules/ghelp.py:1201
 #, fuzzy
 msgid "&Previous"
 msgstr "Предпросмотр"
@@ -6618,16 +6593,16 @@ msgstr "Укажите базу данных GRASS и название обла�
 #: ../gui/wxpython/gui_modules/location_wizard.py:1138
 #: ../gui/wxpython/gui_modules/location_wizard.py:1212
 #: ../gui/wxpython/gui_modules/location_wizard.py:1295
-#: ../gui/wxpython/gui_modules/gselect.py:852
-#: ../gui/wxpython/gui_modules/gselect.py:1112
-#: ../gui/wxpython/gui_modules/gselect.py:1121
-#: ../gui/wxpython/gui_modules/gselect.py:1130
-#: ../gui/wxpython/gui_modules/gselect.py:1350
-#: ../gui/wxpython/gui_modules/gselect.py:1496
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3299
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3484
+#: ../gui/wxpython/gui_modules/gselect.py:853
+#: ../gui/wxpython/gui_modules/gselect.py:1113
+#: ../gui/wxpython/gui_modules/gselect.py:1122
+#: ../gui/wxpython/gui_modules/gselect.py:1131
+#: ../gui/wxpython/gui_modules/gselect.py:1363
+#: ../gui/wxpython/gui_modules/gselect.py:1530
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3354
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3539
 #: ../gui/wxpython/gui_modules/gdialogs.py:1291
-#: ../gui/wxpython/gui_modules/menuform.py:1265
+#: ../gui/wxpython/gui_modules/menuform.py:1268
 msgid "Browse"
 msgstr "Просмотр"
 
@@ -6710,8 +6685,8 @@ msgstr "Код"
 #: ../gui/wxpython/gui_modules/location_wizard.py:874
 #: ../gui/wxpython/gui_modules/location_wizard.py:1037
 #: ../gui/wxpython/gui_modules/location_wizard.py:1302
-#: ../gui/wxpython/gui_modules/gmodeler.py:3593
-#: ../gui/wxpython/gui_modules/gmodeler.py:3652
+#: ../gui/wxpython/gui_modules/gmodeler.py:3768
+#: ../gui/wxpython/gui_modules/gmodeler.py:3827
 msgid "Description"
 msgstr "Описание"
 
@@ -6873,6 +6848,8 @@ msgid "PROJ.4 definition:"
 msgstr "Определение PROJ.4:"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1703
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1903
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1924
 #, fuzzy
 msgid "custom"
 msgstr "Заданный минимум"
@@ -6992,10 +6969,12 @@ msgid "3D Cells: %d"
 msgstr "3D ячейки: %d"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2287
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
 msgid "Top"
 msgstr "Верх"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
 msgid "Bottom"
 msgstr "Низ"
 
@@ -7131,12 +7110,13 @@ msgid "Select output vector map:"
 msgstr "Выберите векторный слой"
 
 #: ../gui/wxpython/gui_modules/vclean.py:168
-#: ../gui/wxpython/gui_modules/menuform.py:464
+#: ../gui/wxpython/gui_modules/menuform.py:467
 #, fuzzy
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
 msgstr "Копировать текущую командную строку в буфер обмена"
 
 #: ../gui/wxpython/gui_modules/vclean.py:204
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:90
 #, fuzzy
 msgid "point"
 msgstr "Точка"
@@ -7230,7 +7210,7 @@ msgid "View"
 msgstr "Вид"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:75
-#: ../gui/wxpython/gui_modules/gmodeler.py:3198
+#: ../gui/wxpython/gui_modules/gmodeler.py:3373
 #, fuzzy
 msgid "Data"
 msgstr "База данных"
@@ -7280,11 +7260,11 @@ msgstr "Виток:"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1168
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3035
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:124
-#: ../gui/wxpython/gui_modules/gmodeler.py:3172
-#: ../gui/wxpython/gui_modules/gmodeler.py:3291
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4055
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4198
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4847
+#: ../gui/wxpython/gui_modules/gmodeler.py:3347
+#: ../gui/wxpython/gui_modules/gmodeler.py:3466
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4096
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4234
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4839
 #: ../gui/wxpython/gui_modules/gdialogs.py:1687
 msgid "Height:"
 msgstr "Высота:"
@@ -7519,11 +7499,11 @@ msgid "by color"
 msgstr "по цвету"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:579
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4025
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4595
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4811
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5194
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5199
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4066
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4608
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4803
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5177
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5182
 msgid "Position"
 msgstr "Положение"
 
@@ -7746,9 +7726,9 @@ msgstr "Размер:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3210
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:298
-#: ../gui/wxpython/gui_modules/gmodeler.py:3154
-#: ../gui/wxpython/gui_modules/gmodeler.py:3273
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4043
+#: ../gui/wxpython/gui_modules/gmodeler.py:3329
+#: ../gui/wxpython/gui_modules/gmodeler.py:3448
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4084
 #: ../gui/wxpython/gui_modules/gdialogs.py:1683
 msgid "Width:"
 msgstr "Ширина:"
@@ -7835,7 +7815,7 @@ msgstr ""
 msgid "Warning: option <%(param)s> not found in '%(module)s'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/prompt.py:618
+#: ../gui/wxpython/gui_modules/prompt.py:619
 msgid "Type GRASS command and run by pressing ENTER"
 msgstr "Введите команду GRASS и запустите  ее, нажав ENTER"
 
@@ -7844,121 +7824,131 @@ msgstr "Введите команду GRASS и запустите  ее, наж�
 msgid "Not selectable element"
 msgstr "Удалить выбранное поле"
 
+#: ../gui/wxpython/gui_modules/gselect.py:339
+#: ../gui/wxpython/gui_modules/gdialogs.py:818
+msgid "Mapset:"
+msgstr "Набор:"
+
 #: ../gui/wxpython/gui_modules/gselect.py:363
 #, python-format
 msgid "GSelect: invalid item: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:851
+#: ../gui/wxpython/gui_modules/gselect.py:852
 #, fuzzy
 msgid "Choose GIS Data Directory"
 msgstr "Выберите каталог с ГИС-данными:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1057
+#: ../gui/wxpython/gui_modules/gselect.py:1058
 #, fuzzy
-msgid "Source name"
-msgstr "Имя поля"
+msgid "Source"
+msgstr "Поверхность"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1067
-#: ../gui/wxpython/gui_modules/menuform.py:1264
+#: ../gui/wxpython/gui_modules/gselect.py:1068
+#: ../gui/wxpython/gui_modules/menuform.py:1267
 msgid "File"
 msgstr "Файл"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1071
+#: ../gui/wxpython/gui_modules/gselect.py:1072
 #, fuzzy
 msgid "Directory"
 msgstr "Направление"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1075
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2406
-#: ../gui/wxpython/gui_modules/dbm.py:2658
+#: ../gui/wxpython/gui_modules/gselect.py:1076
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2413
+#: ../gui/wxpython/gui_modules/dbm.py:2665
 msgid "Database"
 msgstr "База данных"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1079
+#: ../gui/wxpython/gui_modules/gselect.py:1080
 msgid "Protocol"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1095
+#: ../gui/wxpython/gui_modules/gselect.py:1096
 msgid "Source type"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1104
-#: ../gui/wxpython/gui_modules/gselect.py:1107
-#: ../gui/wxpython/gui_modules/gselect.py:1343
-#: ../gui/wxpython/gui_modules/gselect.py:1345
-#: ../gui/wxpython/gui_modules/gselect.py:1489
-#: ../gui/wxpython/gui_modules/gselect.py:1491
+#: ../gui/wxpython/gui_modules/gselect.py:1105
+#: ../gui/wxpython/gui_modules/gselect.py:1108
+#: ../gui/wxpython/gui_modules/gselect.py:1356
+#: ../gui/wxpython/gui_modules/gselect.py:1358
+#: ../gui/wxpython/gui_modules/gselect.py:1523
+#: ../gui/wxpython/gui_modules/gselect.py:1525
 #, fuzzy
 msgid "All files"
 msgstr "Значения ячеек"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1111
-#: ../gui/wxpython/gui_modules/gselect.py:1349
+#: ../gui/wxpython/gui_modules/gselect.py:1112
+#: ../gui/wxpython/gui_modules/gselect.py:1362
 #, fuzzy
 msgid "Choose file to import"
 msgstr "Выберите импортируемый файл DXF"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1120
+#: ../gui/wxpython/gui_modules/gselect.py:1121
 msgid "Choose input directory"
 msgstr "Выберите исходную папку"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1129
-#: ../gui/wxpython/gui_modules/gselect.py:1495
+#: ../gui/wxpython/gui_modules/gselect.py:1130
+#: ../gui/wxpython/gui_modules/gselect.py:1529
 #, fuzzy
 msgid "Choose file"
 msgstr "Выбрать файл DXF:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1160
+#: ../gui/wxpython/gui_modules/gselect.py:1164
 #, fuzzy
 msgid "File:"
 msgstr "Файл"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1163
+#: ../gui/wxpython/gui_modules/gselect.py:1167
 #, fuzzy
 msgid "Directory:"
 msgstr "Направление"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1166
+#: ../gui/wxpython/gui_modules/gselect.py:1170
 #, fuzzy
 msgid "Database:"
 msgstr "База данных"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1169
+#: ../gui/wxpython/gui_modules/gselect.py:1173
 #, fuzzy
 msgid "Protocol:"
 msgstr "Код проекции:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1190
-msgid "Format:"
-msgstr ""
+#: ../gui/wxpython/gui_modules/gselect.py:1189
+#, fuzzy
+msgid "Extension:"
+msgstr "Выброс"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1200
+#: ../gui/wxpython/gui_modules/gselect.py:1206
 #, fuzzy
 msgid "Load settings:"
 msgstr "Показать настройки"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1259
+#: ../gui/wxpython/gui_modules/gselect.py:1230
+msgid "Format:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gselect.py:1272
 #, fuzzy, python-format
 msgid "Settings named '%s' not found"
 msgstr "Слой <%s> не найден."
 
-#: ../gui/wxpython/gui_modules/gselect.py:1269
-#: ../gui/wxpython/gui_modules/gmodeler.py:3375
+#: ../gui/wxpython/gui_modules/gselect.py:1282
+#: ../gui/wxpython/gui_modules/gmodeler.py:3550
 msgid "Name:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1270
+#: ../gui/wxpython/gui_modules/gselect.py:1283
 #, fuzzy
 msgid "Save settings"
 msgstr "Общие настройки"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1276
+#: ../gui/wxpython/gui_modules/gselect.py:1289
 msgid "Name not given, settings is not saved."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1288
+#: ../gui/wxpython/gui_modules/gselect.py:1301
 #, fuzzy
 msgid "Unable to save settings"
 msgstr "Невозможно обработать команду %s"
@@ -8001,8 +7991,8 @@ msgid "Close dialog and save changes to user settings file"
 msgstr "Закрыть диалог и сохранить изменения в файле настроек пользователя"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:92
-#: ../gui/wxpython/gui_modules/gmodeler.py:3363
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1707
+#: ../gui/wxpython/gui_modules/gmodeler.py:3538
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1751
 #: ../gui/wxpython/gui_modules/profile.py:1040
 #: ../gui/wxpython/gui_modules/profile.py:1393
 #: ../gui/wxpython/gui_modules/preferences.py:971
@@ -8274,7 +8264,7 @@ msgid "Add new category"
 msgstr "Добавить новую категорию"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:928
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1711
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1755
 msgid "Apply changes"
 msgstr "Применить изменения"
 
@@ -8299,20 +8289,20 @@ msgstr ""
 "Номер слоя должен быть больше нуля."
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1058
-#: ../gui/wxpython/gui_modules/gmodeler.py:3829
-#: ../gui/wxpython/gui_modules/gmodeler.py:4190
+#: ../gui/wxpython/gui_modules/gmodeler.py:4004
+#: ../gui/wxpython/gui_modules/gmodeler.py:4365
 msgid "Delete selected"
 msgstr "Удалить выбранное"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1062
-#: ../gui/wxpython/gui_modules/gmodeler.py:3830
-#: ../gui/wxpython/gui_modules/gmodeler.py:4191
+#: ../gui/wxpython/gui_modules/gmodeler.py:4005
+#: ../gui/wxpython/gui_modules/gmodeler.py:4366
 msgid "Delete all"
 msgstr "Удалить все"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1064
-#: ../gui/wxpython/gui_modules/gmodeler.py:3836
-#: ../gui/wxpython/gui_modules/gmodeler.py:4198
+#: ../gui/wxpython/gui_modules/gmodeler.py:4011
+#: ../gui/wxpython/gui_modules/gmodeler.py:4373
 #: ../gui/wxpython/gui_modules/dbm.py:1147
 #: ../gui/wxpython/gui_modules/dbm.py:1660
 msgid "Reload"
@@ -8353,8 +8343,8 @@ msgstr "Слой (Категории)"
 
 #: ../gui/wxpython/gui_modules/psmap.py:55
 #, fuzzy
-msgid "GRASS GIS Hardcopy Map Output Utility (experimental prototype)"
-msgstr "Программа экспорта карты в PostScript."
+msgid "GRASS GIS Cartographic Composer (experimental prototype)"
+msgstr "Менеджер слоев ГИС GRASS (Экспериментальный прототип)"
 
 #: ../gui/wxpython/gui_modules/psmap.py:176
 msgid ""
@@ -8412,40 +8402,39 @@ msgstr ""
 msgid "Save file as"
 msgstr "Сохранить файл как..."
 
-#: ../gui/wxpython/gui_modules/psmap.py:397
+#: ../gui/wxpython/gui_modules/psmap.py:396
 #, fuzzy, python-format
 msgid "Failed to read file %s."
 msgstr "Невозможно прочитать коды EPSG: %s"
 
-#: ../gui/wxpython/gui_modules/psmap.py:543
-#: ../gui/wxpython/gui_modules/psmap.py:566
+#: ../gui/wxpython/gui_modules/psmap.py:545
+#: ../gui/wxpython/gui_modules/psmap.py:568
 msgid "Please, create map frame first."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap.py:611
+#: ../gui/wxpython/gui_modules/psmap.py:613
 #, fuzzy
 msgid "Scalebar is not appropriate for this projection"
 msgstr "Ввести параметры для"
 
-#: ../gui/wxpython/gui_modules/psmap.py:865
-#, fuzzy
-msgid "wxGUI Hardcopy Map Utility"
-msgstr "Программа экспорта карты в PostScript."
+#: ../gui/wxpython/gui_modules/psmap.py:912
+msgid "wxGUI Cartographic Composer"
+msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap.py:867
+#: ../gui/wxpython/gui_modules/psmap.py:914
 msgid ""
 "(C) 2011 by the GRASS Development Team\n"
 "\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap.py:868
-#: ../gui/wxpython/gui_modules/gmodeler.py:1257
+#: ../gui/wxpython/gui_modules/psmap.py:915
+#: ../gui/wxpython/gui_modules/gmodeler.py:1288
 msgid ""
 "This program is free software under the GNU General Public License(>=v2). "
 "Read the file COPYING that comes with GRASS for details."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap.py:1099
+#: ../gui/wxpython/gui_modules/psmap.py:1146
 msgid "Click and drag to resize object"
 msgstr ""
 
@@ -8546,139 +8535,161 @@ msgstr "Установить расчетный регион равный дис
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:88
+#: ../gui/wxpython/gui_modules/gmodeler.py:89
 msgid "model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:89
+#: ../gui/wxpython/gui_modules/gmodeler.py:90
 msgid "Script generated by wxGUI Graphical Modeler."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:436
+#: ../gui/wxpython/gui_modules/gmodeler.py:426
+msgid "Running model..."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:442
+msgid "Model is empty. Nothing to run."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:451
+#: ../gui/wxpython/gui_modules/gmodeler.py:1040
+#, fuzzy
+msgid "Validating model..."
+msgstr "Правильный диапазон"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:457
+#, python-format
+msgid ""
+"Model is not valid. Do you want to run the model anyway?\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:459
+msgid "Run model?"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:544
 #, fuzzy
 msgid "Raster maps"
 msgstr "Растровый слой"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:439
+#: ../gui/wxpython/gui_modules/gmodeler.py:547
 #, fuzzy
 msgid "3D raster maps"
 msgstr "3d растровый слой"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:442
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2600
+#: ../gui/wxpython/gui_modules/gmodeler.py:550
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2660
 #, fuzzy
 msgid "Vector maps"
 msgstr "Векторные точки"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:465
-#: ../gui/wxpython/gui_modules/gmodeler.py:582
+#: ../gui/wxpython/gui_modules/gmodeler.py:573
+#: ../gui/wxpython/gui_modules/gmodeler.py:690
 #, fuzzy
 msgid "Variables"
 msgstr "Список таблиц"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:531
+#: ../gui/wxpython/gui_modules/gmodeler.py:639
 #, fuzzy
 msgid "GRASS GIS Graphical Modeler (experimental prototype)"
 msgstr "Менеджер слоев ГИС GRASS (Экспериментальный прототип)"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:580
+#: ../gui/wxpython/gui_modules/gmodeler.py:688
 #, fuzzy
 msgid "Model"
 msgstr "Режим"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:581
+#: ../gui/wxpython/gui_modules/gmodeler.py:689
 msgid "Items"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:650
+#: ../gui/wxpython/gui_modules/gmodeler.py:758
 msgid "Redrawing model..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:677
+#: ../gui/wxpython/gui_modules/gmodeler.py:785
 #, fuzzy
 msgid "Do you want to save changes in the model?"
 msgstr "Сохранить изменения в векторном слое <%s>?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:679
+#: ../gui/wxpython/gui_modules/gmodeler.py:787
 #, fuzzy
 msgid "Do you want to store current model settings to model file?"
 msgstr "Проект не пуст. Сохранить текущие настройки в файл проекта?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:746
-#: ../gui/wxpython/gui_modules/dbm.py:2085
+#: ../gui/wxpython/gui_modules/gmodeler.py:854
+#: ../gui/wxpython/gui_modules/dbm.py:2092
 #, fuzzy
 msgid "Nothing to delete."
 msgstr "Нечего не выбрано."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:750
+#: ../gui/wxpython/gui_modules/gmodeler.py:858
 #, fuzzy, python-format
 msgid "Do you want to permanently delete data?%s"
 msgstr "Сохранить изменения в векторном слое <%s>?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:751
+#: ../gui/wxpython/gui_modules/gmodeler.py:859
 #, fuzzy
 msgid "Delete intermediate data?"
 msgstr "Удалить результат фильтрации"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:765
+#: ../gui/wxpython/gui_modules/gmodeler.py:873
 #, fuzzy, python-format
 msgid "%d maps deleted from current mapset"
 msgstr "Удалить файлы элементов базы данных из текущего набора пользователя."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:780
-#: ../gui/wxpython/gui_modules/gmodeler.py:893
+#: ../gui/wxpython/gui_modules/gmodeler.py:888
+#: ../gui/wxpython/gui_modules/gmodeler.py:1001
 #, fuzzy
 msgid ""
 "Current model is not empty. Do you want to store current settings to model "
 "file?"
 msgstr "Проект не пуст. Сохранить текущие настройки в файл проекта?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:783
-#: ../gui/wxpython/gui_modules/gmodeler.py:896
+#: ../gui/wxpython/gui_modules/gmodeler.py:891
+#: ../gui/wxpython/gui_modules/gmodeler.py:1004
 #, fuzzy
 msgid "Create new model?"
 msgstr "Создать новый набор"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:808
+#: ../gui/wxpython/gui_modules/gmodeler.py:916
 #, fuzzy
 msgid "Choose model file"
 msgstr "Выбрать файл DXF:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:826
+#: ../gui/wxpython/gui_modules/gmodeler.py:934
 #, python-format
 msgid "%(items)d items (%(actions)d actions) loaded into model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:833
-#: ../gui/wxpython/gui_modules/gmodeler.py:870
+#: ../gui/wxpython/gui_modules/gmodeler.py:941
+#: ../gui/wxpython/gui_modules/gmodeler.py:978
 #, fuzzy, python-format
 msgid "Model file <%s> already exists. Do you want to overwrite this file?"
 msgstr "Файл проекта <%s> уже существует. Перезаписать этот файл?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:843
-#: ../gui/wxpython/gui_modules/gmodeler.py:883
+#: ../gui/wxpython/gui_modules/gmodeler.py:951
+#: ../gui/wxpython/gui_modules/gmodeler.py:991
 #, fuzzy, python-format
 msgid "File <%s> saved"
 msgstr "файл POINTS <%s> сохранен"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:852
+#: ../gui/wxpython/gui_modules/gmodeler.py:960
 #, fuzzy
 msgid "Choose file to save current model"
 msgstr "Выберите файл для сохранения текущего проекта"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:872
+#: ../gui/wxpython/gui_modules/gmodeler.py:980
 msgid "File already exists"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:920
-msgid "Model is empty. Nothing to run."
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gmodeler.py:1007
+#: ../gui/wxpython/gui_modules/gmodeler.py:1036
 msgid "Model is empty. Nothing to validate."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1014
+#: ../gui/wxpython/gui_modules/gmodeler.py:1046
 #, python-format
 msgid ""
 "Model is not valid.\n"
@@ -8686,51 +8697,52 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1017
+#: ../gui/wxpython/gui_modules/gmodeler.py:1049
 msgid "Model is valid."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1078
-#: ../gui/wxpython/gui_modules/gmodeler.py:1121
+#: ../gui/wxpython/gui_modules/gmodeler.py:1110
+#: ../gui/wxpython/gui_modules/gmodeler.py:1153
 #, python-format
 msgid "Model exported to <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1086
+#: ../gui/wxpython/gui_modules/gmodeler.py:1118
 #, fuzzy
 msgid "Choose file to save"
 msgstr "Выберите загружаемый файл GRC"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1088
+#: ../gui/wxpython/gui_modules/gmodeler.py:1120
 msgid "Python script (*.py)|*.py"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1102
+#: ../gui/wxpython/gui_modules/gmodeler.py:1134
 #, fuzzy, python-format
 msgid "File <%s> already exists. Do you want to overwrite this file?"
 msgstr "Файл проекта <%s> уже существует. Перезаписать этот файл?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1104
+#: ../gui/wxpython/gui_modules/gmodeler.py:1136
 #, fuzzy
 msgid "Save file"
 msgstr "Сохранить файл как..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1190
+#: ../gui/wxpython/gui_modules/gmodeler.py:1212
 msgid ""
 "Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1254
+#: ../gui/wxpython/gui_modules/gmodeler.py:1284
 msgid "wxGUI Graphical Modeler"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1256
+#: ../gui/wxpython/gui_modules/gmodeler.py:1287
+#, python-format
 msgid ""
-"(C) 2010 by the GRASS Development Team\n"
+"(C) 2010-%s by the GRASS Development Team\n"
 "\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1387
+#: ../gui/wxpython/gui_modules/gmodeler.py:1405
 #, fuzzy, python-format
 msgid ""
 "Reading model file <%s> failed.\n"
@@ -8739,102 +8751,102 @@ msgstr ""
 "Не удалось прочитать файл <%s>. Поврежденный файл, невозможно обработать "
 "документ XML."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1393
+#: ../gui/wxpython/gui_modules/gmodeler.py:1411
 #, fuzzy
 msgid "Please wait, loading model..."
 msgstr "Ждите, загружаются данные..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1448
+#: ../gui/wxpython/gui_modules/gmodeler.py:1466
 #, fuzzy
 msgid "Writing current settings to model file failed."
 msgstr "Сохранение текущих настроек в файл проекта не удалось (%s)."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1749
-#: ../gui/wxpython/gui_modules/gmodeler.py:1807
+#: ../gui/wxpython/gui_modules/gmodeler.py:1768
+#: ../gui/wxpython/gui_modules/gmodeler.py:1826
 msgid "unknown"
 msgstr "неизвестно"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2042
+#: ../gui/wxpython/gui_modules/gmodeler.py:2055
 msgid "<not defined>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2052
+#: ../gui/wxpython/gui_modules/gmodeler.py:2065
 #, fuzzy
 msgid "Data properties"
 msgstr "Свойства слоя"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2079
+#: ../gui/wxpython/gui_modules/gmodeler.py:2092
 #, fuzzy
 msgid "Name of raster map:"
 msgstr "Перекодированная растровый слой:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2081
+#: ../gui/wxpython/gui_modules/gmodeler.py:2094
 #, fuzzy
 msgid "Name of vector map:"
 msgstr "Имя для нового векторного слоя"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2084
+#: ../gui/wxpython/gui_modules/gmodeler.py:2097
 msgid "Name of element:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2268
+#: ../gui/wxpython/gui_modules/gmodeler.py:2304
 #: ../gui/wxpython/gui_modules/layertree.py:276
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2272
+#: ../gui/wxpython/gui_modules/gmodeler.py:2308
 #, fuzzy
 msgid "Disable"
 msgstr "Список таблиц"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2275
+#: ../gui/wxpython/gui_modules/gmodeler.py:2311
 #, fuzzy
 msgid "Enable"
 msgstr "Таблица"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2280
+#: ../gui/wxpython/gui_modules/gmodeler.py:2316
 #, fuzzy
 msgid "Add control point"
 msgstr "Точка привязки"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2282
+#: ../gui/wxpython/gui_modules/gmodeler.py:2318
 #, fuzzy
 msgid "Remove control point"
 msgstr "Установить точки привязки (GCPs)"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2289
+#: ../gui/wxpython/gui_modules/gmodeler.py:2325
 msgid "Intermediate"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2300
+#: ../gui/wxpython/gui_modules/gmodeler.py:2336
 #: ../gui/wxpython/gui_modules/layertree.py:290
 msgid "Properties"
 msgstr "Свойства"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2304
+#: ../gui/wxpython/gui_modules/gmodeler.py:2340
 #, fuzzy
 msgid "Change ID"
 msgstr "Изменить значения"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2360
+#: ../gui/wxpython/gui_modules/gmodeler.py:2396
 msgid "Add new GRASS module to the model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2378
-#: ../gui/wxpython/gui_modules/gmodeler.py:3901
-#: ../gui/wxpython/gui_modules/gmodeler.py:4331
+#: ../gui/wxpython/gui_modules/gmodeler.py:2414
+#: ../gui/wxpython/gui_modules/gmodeler.py:4076
+#: ../gui/wxpython/gui_modules/gmodeler.py:4506
 #: ../gui/wxpython/gui_modules/preferences.py:1563
 msgid "Command"
 msgstr "Команда"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2446
+#: ../gui/wxpython/gui_modules/gmodeler.py:2483
 msgid ""
 "Command not defined.\n"
 "\n"
 "Unable to add new action to the model."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2452
+#: ../gui/wxpython/gui_modules/gmodeler.py:2489
 #, python-format
 msgid ""
 "'%s' is not a GRASS module.\n"
@@ -8842,194 +8854,241 @@ msgid ""
 "Unable to add new action to the model."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3062
+#: ../gui/wxpython/gui_modules/gmodeler.py:2595
+#, fuzzy
+msgid "Relation properties"
+msgstr "Свойства слоя"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2612
+msgid "From"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2614
+#: ../gui/wxpython/gui_modules/dbm.py:940
+msgid "To"
+msgstr "В"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2656
+#, fuzzy, python-format
+msgid "Data: %s"
+msgstr "База данных"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2662
+#, fuzzy
+msgid "Command:"
+msgstr "Команда"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2668
+#, fuzzy
+msgid "Option:"
+msgstr "Опционный"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2683
+msgid ""
+"Relation doesn't start with data item.\n"
+"Unable to add relation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2690
+msgid ""
+"Relation doesn't point to GRASS command.\n"
+"Unable to add relation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2703
+msgid ""
+"No relevant option found.\n"
+"Unable to add relation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:3237
 #, fuzzy
 msgid "Action"
 msgstr "Направление"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3067
+#: ../gui/wxpython/gui_modules/gmodeler.py:3242
 msgid "Validity"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3075
+#: ../gui/wxpython/gui_modules/gmodeler.py:3250
 #, fuzzy
 msgid "Valid:"
 msgstr "Правильный диапазон"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3092
+#: ../gui/wxpython/gui_modules/gmodeler.py:3267
 #, fuzzy
 msgid "Invalid:"
 msgstr "Неправильное значение: %s "
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3109
+#: ../gui/wxpython/gui_modules/gmodeler.py:3284
 msgid "Running:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3126
+#: ../gui/wxpython/gui_modules/gmodeler.py:3301
 #, fuzzy
 msgid "Disabled:"
 msgstr "Список таблиц"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3146
-#: ../gui/wxpython/gui_modules/gmodeler.py:3265
+#: ../gui/wxpython/gui_modules/gmodeler.py:3321
+#: ../gui/wxpython/gui_modules/gmodeler.py:3440
 #, fuzzy
 msgid "Shape size"
 msgstr "Индекс формы"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3203
+#: ../gui/wxpython/gui_modules/gmodeler.py:3378
 #: ../gui/wxpython/gui_modules/profile.py:1252
 msgid "Type"
 msgstr "Тип"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3211
+#: ../gui/wxpython/gui_modules/gmodeler.py:3386
 #, fuzzy
 msgid "Raster:"
 msgstr "Растр"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3228
+#: ../gui/wxpython/gui_modules/gmodeler.py:3403
 #, fuzzy
 msgid "3D raster:"
 msgstr "3d растр"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3245
+#: ../gui/wxpython/gui_modules/gmodeler.py:3420
 #, fuzzy
 msgid "Vector:"
 msgstr "Вектор"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3339
+#: ../gui/wxpython/gui_modules/gmodeler.py:3514
 #: ../gui/wxpython/gui_modules/layertree.py:366
 #: ../gui/wxpython/gui_modules/layertree.py:399
 msgid "Metadata"
 msgstr "Метаданные"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3341
+#: ../gui/wxpython/gui_modules/gmodeler.py:3516
 #, fuzzy
 msgid "Commands"
 msgstr "Команда"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3361
+#: ../gui/wxpython/gui_modules/gmodeler.py:3536
 #, fuzzy
 msgid "Apply properties"
 msgstr "Свойства слоя"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3384
+#: ../gui/wxpython/gui_modules/gmodeler.py:3559
 #, fuzzy
 msgid "Description:"
 msgstr "Описание"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3393
+#: ../gui/wxpython/gui_modules/gmodeler.py:3568
 msgid "Author(s):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3442
+#: ../gui/wxpython/gui_modules/gmodeler.py:3617
 #, fuzzy
 msgid "Model parameters"
 msgstr "Параметры рельефа"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3589
+#: ../gui/wxpython/gui_modules/gmodeler.py:3764
 #, fuzzy
 msgid "List of variables - right-click to delete"
 msgstr "Список категорий - нажмите правую кнопку для удаления"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3592
-#: ../gui/wxpython/gui_modules/gmodeler.py:3639
+#: ../gui/wxpython/gui_modules/gmodeler.py:3767
+#: ../gui/wxpython/gui_modules/gmodeler.py:3814
 #: ../gui/wxpython/gui_modules/dbm.py:886
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Data type"
 msgstr "Тип данных"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3593
-#: ../gui/wxpython/gui_modules/gmodeler.py:3645
+#: ../gui/wxpython/gui_modules/gmodeler.py:3768
+#: ../gui/wxpython/gui_modules/gmodeler.py:3820
 #, fuzzy
 msgid "Default value"
 msgstr "Установить значение"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3597
+#: ../gui/wxpython/gui_modules/gmodeler.py:3772
 #, fuzzy
 msgid "Add new variable"
 msgstr "Добавить новый узел"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3601
+#: ../gui/wxpython/gui_modules/gmodeler.py:3776
 #, fuzzy
 msgid "integer"
 msgstr "Указатель"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3602
+#: ../gui/wxpython/gui_modules/gmodeler.py:3777
 msgid "float"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3603
+#: ../gui/wxpython/gui_modules/gmodeler.py:3778
 msgid "string"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3611
+#: ../gui/wxpython/gui_modules/gmodeler.py:3786
 msgid "Add new variable to the model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3759
+#: ../gui/wxpython/gui_modules/gmodeler.py:3934
 #, fuzzy, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
 msgstr "Невозможно создать новую таблицу. Таблица <%s> уже есть в базе данных."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3788
+#: ../gui/wxpython/gui_modules/gmodeler.py:3963
 #, fuzzy
 msgid "Do you want to delete all variables from the model?"
 msgstr "Удалить выбранный слой из содержания?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3790
+#: ../gui/wxpython/gui_modules/gmodeler.py:3965
 #, fuzzy
 msgid "Delete variables"
 msgstr "Удалить все"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3870
+#: ../gui/wxpython/gui_modules/gmodeler.py:4045
 #, fuzzy
 msgid "Condition: "
 msgstr "Опционный"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3872
+#: ../gui/wxpython/gui_modules/gmodeler.py:4047
 msgid "Condition: not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3894
+#: ../gui/wxpython/gui_modules/gmodeler.py:4069
 #, fuzzy
 msgid "Condition"
 msgstr "Опционный"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3900
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
-#: ../gui/wxpython/gui_modules/gmodeler.py:4330
+#: ../gui/wxpython/gui_modules/gmodeler.py:4075
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
+#: ../gui/wxpython/gui_modules/gmodeler.py:4505
 msgid "ID"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3942
+#: ../gui/wxpython/gui_modules/gmodeler.py:4117
 msgid "loop"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3950
+#: ../gui/wxpython/gui_modules/gmodeler.py:4125
 #, fuzzy
 msgid "Loop properties"
 msgstr "Свойства слоя"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3956
+#: ../gui/wxpython/gui_modules/gmodeler.py:4131
 #, fuzzy
 msgid "List of items in loop"
 msgstr "Список дубликатов"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4005
+#: ../gui/wxpython/gui_modules/gmodeler.py:4180
 #, fuzzy
 msgid "List of items - right-click to delete"
 msgstr "Список категорий - нажмите правую кнопку для удаления"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
 msgid "In block"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4009
+#: ../gui/wxpython/gui_modules/gmodeler.py:4184
 #, fuzzy
 msgid "Command / Condition"
 msgstr "Настройки диалога команды"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4140
+#: ../gui/wxpython/gui_modules/gmodeler.py:4315
 #: ../gui/wxpython/gui_modules/dbm.py:1179
 #, python-format
 msgid ""
@@ -9039,30 +9098,30 @@ msgstr ""
 "Выбранные записи (%d) будут навсегда удалены из таблицы. Вы хотите их "
 "удалить?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4143
+#: ../gui/wxpython/gui_modules/gmodeler.py:4318
 #: ../gui/wxpython/gui_modules/dbm.py:1182
 #: ../gui/wxpython/gui_modules/dbm.py:1228
 msgid "Delete records"
 msgstr "Удалить записи"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4197
+#: ../gui/wxpython/gui_modules/gmodeler.py:4372
 msgid "Normalize"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4295
+#: ../gui/wxpython/gui_modules/gmodeler.py:4470
 msgid "if-else"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4316
+#: ../gui/wxpython/gui_modules/gmodeler.py:4491
 #, fuzzy
 msgid "If-else properties"
 msgstr "Свойства слоя"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4322
+#: ../gui/wxpython/gui_modules/gmodeler.py:4497
 msgid "List of items in 'if' block"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4327
+#: ../gui/wxpython/gui_modules/gmodeler.py:4502
 msgid "List of items in 'else' block"
 msgstr ""
 
@@ -9089,682 +9148,794 @@ msgstr ""
 msgid " row %d:"
 msgstr " строка  %d:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:312
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:89
+msgid "inch"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:91
+#, fuzzy
+msgid "centimeter"
+msgstr "Параметры"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:92
+#, fuzzy
+msgid "millimeter"
+msgstr "Параметры"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:93
+#, fuzzy
+msgid "meters"
+msgstr "Параметры"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:94
+#, fuzzy
+msgid "kilometers"
+msgstr "Параметры"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:95
+#, fuzzy
+msgid "feet"
+msgstr "Сбросить"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:96
+#, fuzzy
+msgid "miles"
+msgstr "Файл"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:97
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:101
+msgid "nautical miles"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:99
+msgid "pixel"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:100
+#, fuzzy
+msgid "meter"
+msgstr "Параметры"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:102
+#, fuzzy
+msgid "degree"
+msgstr "dtree"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:328
 #, fuzzy, python-format
 msgid ""
 "Unable to open file\n"
 "%s"
 msgstr "Невозможно открыть файл <%s> для чтения."
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:591
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:615
 #, python-format
 msgid "Instruction file will be loaded with following region: %s\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:596
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:620
 #, fuzzy, python-format
 msgid ""
 "Region cannot be set\n"
 "%s"
 msgstr "Разрешение:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:727
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:876
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:971
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1042
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1148
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1273
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1324
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:751
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:901
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1192
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1317
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1368
 #, fuzzy, python-format
 msgid "Failed to read instruction %s"
 msgstr "Невозможно прочитать список: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:741
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:765
 #, python-format
 msgid ""
 "Scale has changed, old value: %(old)s\n"
 "new value: %(new)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:744
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:768
 #, python-format
 msgid ""
 "Failed to read instruction %s.\n"
 "Use 1:25000 notation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:752
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:776
 #, python-format
 msgid ""
 "Map frame position changed, old value: %(old1)s %(old2)s\n"
 "new value: %(new1)s %(new2)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:760
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:784
 #, python-format
 msgid ""
 "Map frame size changed, old value: %(old1)s %(old2)s\n"
 "new value: %(new1)s %(new2)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:807
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:831
 #, fuzzy, python-format
 msgid ""
 "Failed to read instruction %(file)s.\n"
 "Unknown format %(for)s"
 msgstr "Невозможно прочитать список: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:821
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:844
 #, fuzzy, python-format
 msgid "Failed to read instruction %s."
 msgstr "Невозможно прочитать список: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1608
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:939
+#, python-format
+msgid ""
+"Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
+"which is required by module ps.map."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:943
+msgid ""
+"Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is "
+"required by module ps.map."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1652
 msgid "Units:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1616
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1660
 msgid ""
 "Position of the top left corner\n"
 "from the top left edge of the paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1617
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1661
 msgid "X:"
 msgstr "X:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1618
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1662
 msgid "Y:"
 msgstr "Y:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1643
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1687
 #, fuzzy
 msgid "Font:"
 msgstr "Размер иконки:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1644
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4924
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1688
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4917
 #: ../gui/wxpython/gui_modules/preferences.py:2182
 #, fuzzy
 msgid "Font size:"
 msgstr "Размер иконки:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1657
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1701
 #, fuzzy
 msgid "Choose color:"
 msgstr "Выберите папку:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1705
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1749
 #, fuzzy
 msgid "Close dialog and apply changes"
 msgstr "Закрыть диалоговое окно и игнорировать изменения"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1776
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+msgid "Units"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+msgid "Format"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+#, fuzzy
+msgid "Orientation"
+msgstr "Поворот:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3463
+#, fuzzy
+msgid "Width"
+msgstr "Ширина:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+msgid "Height"
+msgstr "Высота"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
+msgid "Left"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
+#, fuzzy
+msgid "Right"
+msgstr "Высота"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1836
 msgid "Literal is not allowed!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1776
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2371
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2393
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2443
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5009
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1836
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2431
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2453
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2503
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4999
 #, fuzzy
 msgid "Invalid input"
 msgstr "Неправильный регион"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1893
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1845
+#, fuzzy
+msgid "Page size"
+msgstr "Размер иконки:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1847
+msgid "Margins"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1851
+#, fuzzy
+msgid "Portrait"
+msgstr "Точка"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1851
+#, fuzzy
+msgid "Landscape"
+msgstr "Провести анализ ландшафта"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1953
 #, fuzzy
 msgid "Map settings"
 msgstr "Общие настройки"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1899
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1959
 #, fuzzy
 msgid "Map frame settings"
 msgstr "Настройки растра"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2016
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2076
 #, fuzzy
 msgid "Map frame options:"
 msgstr "Управление проекциями"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2017
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2077
 #, fuzzy
 msgid "fit frame to match selected map"
 msgstr "Масштабировать до выбранного слоя"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2018
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2078
 #, fuzzy
 msgid "fit frame to match saved region"
 msgstr "Масштабировать до сохраненного региона"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2019
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2079
 msgid "fit frame to match current computational region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2020
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2080
 msgid "fixed scale and map center"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2028
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2196
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2088
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2256
 #, fuzzy
 msgid "Map selection"
 msgstr "Управление проекциями"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2036
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2613
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2096
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2673
 #, fuzzy
 msgid "Map:"
 msgstr "Набор:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2036
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2096
 #, fuzzy
 msgid "Region:"
 msgstr "Регион"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2055
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2115
 #, fuzzy
 msgid "Map scale and center"
 msgstr "Масштаб карты"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2060
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2120
 #, fuzzy
 msgid "Center:"
 msgstr "Отрисовать"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2061
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2121
 msgid "E:"
 msgstr "E:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2062
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2122
 msgid "N:"
 msgstr "N:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2065
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2125
 #, fuzzy
 msgid "Scale:"
 msgstr "Стиль:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2066
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2126
 msgid "1 :"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2146
 msgid "Map max resolution (dpi):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2099
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3973
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2159
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4015
 #, fuzzy
 msgid "Border"
 msgstr "1-ый уровень"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2103
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2163
 msgid "draw border around map frame"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2109
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2169
 #, fuzzy
 msgid "border color:"
 msgstr "Цвет каркаса:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2110
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2170
 #, fuzzy
 msgid "border width (pts):"
 msgstr "Ширина линии (в пикселях)"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2204
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2264
 msgid ""
 "Region is set to match this map,\n"
 "raster or vector map must be added later"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2211
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2271
 #, fuzzy
 msgid "Region selection"
 msgstr "Сечение"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2370
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2430
 #, fuzzy
 msgid "No map selected!"
 msgstr "Слои для выборки не выбраны."
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2392
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2452
 #, fuzzy
 msgid "No region selected!"
 msgstr "Слои для выборки не выбраны."
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2442
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2502
 msgid "Invalid scale or map center!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2502
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2562
 #, fuzzy
 msgid "Choose raster map"
 msgstr "Растровый слой"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2506
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2566
 #, fuzzy
 msgid "no raster map"
 msgstr "Растровый слой"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2507
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2567
 #, fuzzy
 msgid "raster:"
 msgstr "растр"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2609
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2669
 #, fuzzy
 msgid "Add map"
 msgstr "Добавить группу слоев"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3037
 #, fuzzy
 msgid "points"
 msgstr "Точка"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3039
 #, fuzzy
 msgid "lines"
 msgstr "линия румба"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
 #, fuzzy
 msgid "areas"
 msgstr "Сохранить изменения"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2618
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2678
 #, fuzzy
 msgid "Data Type"
 msgstr "Тип данных"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2620
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2680
 #: ../gui/wxpython/gui_modules/dbm.py:920
 msgid "Add"
 msgstr "Добавить"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2632
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2692
 #, fuzzy
 msgid "Manage vector maps"
 msgstr "Очистить векторный слой"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2640
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2700
 msgid "The topmost vector map overlaps the others"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2642
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3955
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2702
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3998
 msgid "Up"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2643
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3956
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2703
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3999
 msgid "Down"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2645
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2705
 #, fuzzy
 msgid "Properties..."
 msgstr "Свойства"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2844
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2904
 #, fuzzy
 msgid "Raster map settings"
 msgstr "Настройки растра"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2881
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2941
 #, fuzzy
 msgid "Vector maps settings"
 msgstr "Настройки вектора"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2916
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2976
 #, fuzzy
 msgid "properties"
 msgstr "Свойства"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2966
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3026
 #, fuzzy
 msgid "Data selection"
 msgstr "Сечение"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2973
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3033
 #, fuzzy
 msgid "Feature type"
 msgstr "ID объекта:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3037
 #, fuzzy
 msgid "centroids"
 msgstr "Добавить центроиды"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3039
 #, fuzzy
 msgid "boundaries"
 msgstr "Редактировать линию/границу"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2995
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3055
 #, fuzzy
 msgid "Layer selection"
 msgstr "Сечение"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3003
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3062
 #, fuzzy
 msgid "Select layer:"
 msgstr "&Удалить слой"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3026
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3085
 msgid "list of categories (e.g. 1,3,5-7)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3056
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3115
 #, fuzzy
 msgid "Use current mask"
 msgstr "Закрыть текущий файл проекта"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3073
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3177
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3132
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3231
 #, fuzzy
 msgid "Colors"
 msgstr "Цвет"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3078
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3182
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3137
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3236
 #, fuzzy
 msgid "Outline"
 msgstr "линия румба"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3083
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3187
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3141
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3245
 msgid "draw outline"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3086
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3191
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5129
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5134
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3144
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3249
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5112
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5117
 #, fuzzy
 msgid "Width (pts):"
 msgstr "Ширина:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3124
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3229
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3181
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3285
 #, fuzzy
 msgid "Fill"
 msgstr "Файл"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3128
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3185
 #, fuzzy
 msgid "fill color"
 msgstr "Цвет каркаса:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3132
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3236
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3188
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3291
 #, fuzzy
 msgid "choose color:"
 msgstr "Выберите папку:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3146
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3250
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3200
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3304
 msgid "color from map table column:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3189
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3247
 msgid "No effect for fill color from table column"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3233
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3289
 #, fuzzy
 msgid "Color of lines:"
 msgstr "Цветовые правила"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3279
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3403
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3472
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3334
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3458
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3527
 #, fuzzy
 msgid "Size and style"
 msgstr "Стиль линии"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3289
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3344
 #, fuzzy
 msgid "symbol:"
 msgstr "символ:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3350
 #, fuzzy
 msgid "eps file:"
 msgstr "WKT файл:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3299
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3484
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3354
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3539
 msgid "Type filename or click browse to choose file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3300
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3485
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3355
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3540
 #, fuzzy
 msgid "Choose a file"
 msgstr "Выбрать файл DXF:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3319
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4027
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4841
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3374
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4068
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4833
 #: ../gui/wxpython/gui_modules/profile.py:1228
 msgid "Size"
 msgstr "Размер"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3324
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3379
 #, fuzzy
 msgid "size:"
 msgstr "Размер:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3326
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3381
 #, fuzzy
 msgid "size from map table column:"
 msgstr "Удалить все поля"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3328
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3383
 #, fuzzy
 msgid "scale:"
 msgstr "Изменить масштаб"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3360
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3415
 #, fuzzy
 msgid "Rotation"
 msgstr "Поворот:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3366
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3421
 msgid "rotate symbols:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3367
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3422
 msgid "counterclockwise in degrees:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3369
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3424
 #, fuzzy
 msgid "from map table column:"
 msgstr "Удалить все поля"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3408
-#, fuzzy
-msgid "Width"
-msgstr "Ширина:"
-
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3412
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3467
 #, fuzzy
 msgid "Set width (pts):"
 msgstr "Ширина линии (в пикселях)"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3421
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3476
 #, fuzzy
 msgid "multiply width by category value"
 msgstr "Интерактивное редактирование значений категорий"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3438
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3493
 #: ../gui/wxpython/gui_modules/profile.py:1184
 msgid "Line style"
 msgstr "Стиль линии"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3442
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3497
 #, fuzzy
 msgid "Choose line style:"
 msgstr "Выбрать файл DXF:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3452
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3507
 #, fuzzy
 msgid "Choose linecap:"
 msgstr "Выбрать файл DXF:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3477
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3532
 #, fuzzy
 msgid "Pattern"
 msgstr "aster"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3482
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3537
 msgid "use pattern:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3483
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3538
 #, fuzzy
 msgid "Choose pattern file:"
 msgstr "Выберите исходную папку"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3487
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3542
 #, fuzzy
 msgid "pattern line width (pts):"
 msgstr "Ширина линии (в пикселях)"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3489
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3544
 msgid "pattern scale factor:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3798
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3843
 #, fuzzy
 msgid "Raster legend"
 msgstr "Серии растров"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3802
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3847
 #, fuzzy
 msgid "Show raster legend"
 msgstr "Показать легенду"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3809
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3853
 #, fuzzy
 msgid "Source raster"
 msgstr "Имя поля"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3814
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3858
 #, fuzzy
 msgid "current raster"
 msgstr "Вектор в растр"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3815
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3859
 #, fuzzy
 msgid "select raster"
 msgstr "Перекодированная растровый слой:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3822
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4533
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3866
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4552
 #, python-format
 msgid "%(rast)s: type %(type)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3841
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3885
 #, fuzzy
 msgid "Type of legend"
 msgstr "Показать легенду"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3845
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3889
 msgid "discrete legend (categorical maps)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3847
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3891
 msgid "continuous color gradient legend (floating point map)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3859
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3902
 #, fuzzy
 msgid "Advanced legend settings"
 msgstr "Расширенные настройки"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3863
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3906
 msgid "draw \"no data\" box"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3869
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3912
 msgid "draw ticks across color table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3917
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3960
 #, fuzzy
 msgid "Vector legend"
 msgstr "Векторные линии"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3921
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3964
 #, fuzzy
 msgid "Show vector legend"
 msgstr "Показать векторные линии"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3927
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3970
 #, fuzzy
 msgid "Source vector maps"
 msgstr "Наложить векторные слои"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3933
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3976
 msgid "Choose vector maps and their order in legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3938
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3981
 #, fuzzy
 msgid "Label"
 msgstr "Слой"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3957
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4271
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4000
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4306
 #, fuzzy
 msgid "Edit label"
 msgstr "Добавить подписи"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4019
 msgid "draw border around legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4056
 msgid "Size and position"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4049
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4090
 msgid "Leave the edit field empty, to use default values."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4071
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4112
 msgid ""
 "Width of the color symbol (for lines)\n"
 "in front of the legend text"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4077
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4187
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4118
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4223
 #, fuzzy
 msgid "Columns:"
 msgstr "Объемы"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4081
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4122
 #, fuzzy
 msgid "column span:"
 msgstr "Добавить поле"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4083
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4124
 msgid ""
 "Column separation distance between the left edges\n"
 "of two columns in a multicolumn legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4110
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4614
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5099
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4149
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4627
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5083
 #: ../gui/wxpython/gui_modules/profile.py:967
 #: ../gui/wxpython/gui_modules/preferences.py:1264
 #: ../gui/wxpython/gui_modules/preferences.py:1407
@@ -9772,173 +9943,178 @@ msgstr ""
 msgid "Font settings"
 msgstr "Настройки шрифта"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4271
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4306
 msgid "Edit legend label:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4312
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4347
 #, fuzzy
 msgid "No raster map selected!"
 msgstr "Слои для выборки не выбраны."
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4313
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4348
 #, fuzzy
 msgid "No raster"
 msgstr "растр"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4637
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4645
 #, fuzzy
 msgid "Color settings"
 msgstr "Общие настройки"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4643
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4651
 #, fuzzy
 msgid "use border color:"
 msgstr "использовать| координата X"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4644
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4652
 #, fuzzy
 msgid "use background color:"
 msgstr "Цвет фона:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4800
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4792
 msgid ""
 "Units of current projection are not supported,\n"
 " meters will be used!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4801
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4793
 #, fuzzy
 msgid "Unsupported units"
 msgstr "Тип слоя не поддерживается '%s'"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4846
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4838
 #, fuzzy
 msgid "Length:"
 msgstr "длина"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4850
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4842
 msgid "Scalebar length is given in map units"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4853
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4845
 msgid "Scalebar height is real height on paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4893
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4847
+#, fuzzy
+msgid "default"
+msgstr "По умолчанию"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4886
 #: ../gui/wxpython/gui_modules/profile.py:1237
 #: ../gui/wxpython/gui_modules/profile.py:1283
 msgid "Style"
 msgstr "Стиль"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4898
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4891
 #, fuzzy
 msgid "Type:"
 msgstr "Тип"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4914
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4907
 #, fuzzy
 msgid "Number of segments:"
 msgstr "Переименовать набор"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4918
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4911
 msgid "Label every "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4919
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4912
 #, fuzzy
 msgid "segments"
 msgstr "Легенда"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4928
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4921
 msgid "transparent text background"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5008
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4998
 msgid "Length of scale bar is not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5080
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5067
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5072
 #, fuzzy
 msgid "Text"
 msgstr "Тест"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5089
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5075
 #: ../gui/wxpython/gui_modules/gdialogs.py:632
 msgid "Enter text:"
 msgstr "Введите текст:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5118
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5101
 #, fuzzy
 msgid "Text effects"
 msgstr "Настройки текста"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5123
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5106
 msgid "text background"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5126
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5109
 #, fuzzy
 msgid "highlight"
 msgstr "Подсветка"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5131
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5114
 #, fuzzy
 msgid "text border"
 msgstr "1-ый уровень"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5205
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5188
 #, fuzzy
 msgid "Position is given:"
 msgstr "Положение:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5206
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5189
 msgid "relatively to paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5207
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5190
 #, fuzzy
 msgid "by map coordinates"
 msgstr "Конвертировать координаты"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5223
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5206
 msgid ""
 "Position from the top left\n"
 "edge of the paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5263
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5243
 msgid "Offset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5266
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5246
 msgid "horizontal (pts):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5267
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5247
 msgid "vertical (pts):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5280
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5260
 #, fuzzy
 msgid " Reference point"
 msgstr "Слева: новая точка"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5307
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5286
 #, fuzzy
 msgid "Text rotation"
 msgstr "Настройки текста"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5310
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5289
 msgid "rotate text (counterclockwise)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5383
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
 msgid "No text entered!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5721
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5685
 #, fuzzy
 msgid "Unable to run `ps.map -b`"
 msgstr "Невозможно выгрузить растровый слой"
@@ -10050,7 +10226,7 @@ msgstr "Оператор SQL"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:450
 #: ../gui/wxpython/gui_modules/dbm.py:732
-#: ../gui/wxpython/gui_modules/dbm.py:2021
+#: ../gui/wxpython/gui_modules/dbm.py:2028
 msgid "SQL Builder"
 msgstr "Конструктор SQL"
 
@@ -10088,18 +10264,18 @@ msgstr "Отменить команду"
 msgid "Abort the running command"
 msgstr "Отменить команду"
 
-#: ../gui/wxpython/gui_modules/goutput.py:496
+#: ../gui/wxpython/gui_modules/goutput.py:497
 #, python-format
 msgid ""
 "Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
 "layer instead."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/goutput.py:605
+#: ../gui/wxpython/gui_modules/goutput.py:608
 msgid "Save file as..."
 msgstr "Сохранить файл как..."
 
-#: ../gui/wxpython/gui_modules/goutput.py:733
+#: ../gui/wxpython/gui_modules/goutput.py:736
 #, fuzzy
 msgid ""
 "Please note that the data are left in inconsistent state and may be corrupted"
@@ -10107,11 +10283,11 @@ msgstr ""
 "Обратите внимание, что данные оставлены в неправильном состоянии и возможно "
 "повреждены"
 
-#: ../gui/wxpython/gui_modules/goutput.py:736
+#: ../gui/wxpython/gui_modules/goutput.py:739
 msgid "Command aborted"
 msgstr "Операция прервана"
 
-#: ../gui/wxpython/gui_modules/goutput.py:744
+#: ../gui/wxpython/gui_modules/goutput.py:747
 msgid "Command finished"
 msgstr "Операция завершена"
 
@@ -10365,9 +10541,9 @@ msgstr "Предел - 100000 записей."
 #: ../gui/wxpython/gui_modules/dbm.py:265
 #: ../gui/wxpython/gui_modules/dbm.py:816
 #: ../gui/wxpython/gui_modules/dbm.py:1153
-#: ../gui/wxpython/gui_modules/dbm.py:1810
-#: ../gui/wxpython/gui_modules/dbm.py:1832
-#: ../gui/wxpython/gui_modules/dbm.py:1966
+#: ../gui/wxpython/gui_modules/dbm.py:1809
+#: ../gui/wxpython/gui_modules/dbm.py:1831
+#: ../gui/wxpython/gui_modules/dbm.py:1973
 #, python-format
 msgid "Number of loaded records: %d"
 msgstr "Число загруженных записей: %d"
@@ -10442,7 +10618,7 @@ msgid "Line azimuth"
 msgstr "Ширина линии"
 
 #: ../gui/wxpython/gui_modules/dbm.py:556
-#: ../gui/wxpython/gui_modules/dbm.py:3075
+#: ../gui/wxpython/gui_modules/dbm.py:3082
 msgid "GRASS GIS Attribute Table Manager"
 msgstr "Менеджер атрибутивных таблиц GRASS GIS"
 
@@ -10488,9 +10664,9 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:704
 #: ../gui/wxpython/gui_modules/dbm.py:834
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2412
-#: ../gui/wxpython/gui_modules/dbm.py:2664
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2419
+#: ../gui/wxpython/gui_modules/dbm.py:2671
 msgid "Table"
 msgstr "Таблица"
 
@@ -10521,18 +10697,14 @@ msgid "Manage columns"
 msgstr "Управление столбцами"
 
 #: ../gui/wxpython/gui_modules/dbm.py:875
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Column name"
 msgstr "Имя поля"
 
 #: ../gui/wxpython/gui_modules/dbm.py:903
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Data length"
 msgstr "Объем данных"
-
-#: ../gui/wxpython/gui_modules/dbm.py:940
-msgid "To"
-msgstr "В"
 
 #: ../gui/wxpython/gui_modules/dbm.py:950
 msgid "&Rename"
@@ -10587,7 +10759,7 @@ msgid "Highlight selected features and zoom"
 msgstr "Выделить выбранное и масштабировать"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1138
-#: ../gui/wxpython/gui_modules/dbm.py:2061
+#: ../gui/wxpython/gui_modules/dbm.py:2068
 #, fuzzy
 msgid "Extract selected features"
 msgstr "Выбранный фрагмент"
@@ -10692,13 +10864,13 @@ msgstr ""
 msgid "Unable to add column to the table. No column name defined."
 msgstr "Невозможно добавить поле в таблицу. Не определено имя поля."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1770
+#: ../gui/wxpython/gui_modules/dbm.py:1769
 #, python-format
 msgid "Column <%(column)s> already exists in table <%(table)s>."
 msgstr "Поле <%(column)s> уже существует в таблице <%(table)s>."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1929
-#: ../gui/wxpython/gui_modules/dbm.py:1953
+#: ../gui/wxpython/gui_modules/dbm.py:1934
+#: ../gui/wxpython/gui_modules/dbm.py:1958
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -10709,7 +10881,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1940
+#: ../gui/wxpython/gui_modules/dbm.py:1945
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -10722,28 +10894,28 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2056
+#: ../gui/wxpython/gui_modules/dbm.py:2063
 msgid "Nothing to extract."
 msgstr "Нечего не выбрано."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2172
-#: ../gui/wxpython/gui_modules/dbm.py:2586
-#: ../gui/wxpython/gui_modules/dbm.py:3010
+#: ../gui/wxpython/gui_modules/dbm.py:2179
+#: ../gui/wxpython/gui_modules/dbm.py:2593
+#: ../gui/wxpython/gui_modules/dbm.py:3017
 #, python-format
 msgid "Drop also linked attribute table (%s)"
 msgstr "Удалить связанную атрибутивную таблицу (%s)"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2401
-#: ../gui/wxpython/gui_modules/dbm.py:2652
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2408
+#: ../gui/wxpython/gui_modules/dbm.py:2659
 msgid "Driver"
 msgstr "Драйвер"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2280
+#: ../gui/wxpython/gui_modules/dbm.py:2287
 msgid "Key"
 msgstr "Ключ"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2356
+#: ../gui/wxpython/gui_modules/dbm.py:2363
 #, fuzzy
 msgid ""
 "Unknown default DB connection. Please define DB connection using db.connect "
@@ -10752,90 +10924,90 @@ msgstr ""
 "Невозможно определить установки соединения с базой данных по умолчанию. "
 "Пожалуйста задайте установки используя модуль db.connect."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2377
+#: ../gui/wxpython/gui_modules/dbm.py:2384
 msgid "Add layer"
 msgstr "Добавить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2387
+#: ../gui/wxpython/gui_modules/dbm.py:2394
 msgid "Layer description"
 msgstr "Описание слоя"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2417
-#: ../gui/wxpython/gui_modules/dbm.py:2449
-#: ../gui/wxpython/gui_modules/dbm.py:2670
+#: ../gui/wxpython/gui_modules/dbm.py:2424
+#: ../gui/wxpython/gui_modules/dbm.py:2456
+#: ../gui/wxpython/gui_modules/dbm.py:2677
 msgid "Key column"
 msgstr "Ключевое поле"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2422
+#: ../gui/wxpython/gui_modules/dbm.py:2429
 msgid "Insert record for each category into table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:2437
+#: ../gui/wxpython/gui_modules/dbm.py:2444
 msgid "You need to add categories by v.category module."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:2444
+#: ../gui/wxpython/gui_modules/dbm.py:2451
 msgid "Table name"
 msgstr "Название таблицы"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2457
+#: ../gui/wxpython/gui_modules/dbm.py:2464
 msgid "&Create table"
 msgstr "&Создать таблицу"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2461
+#: ../gui/wxpython/gui_modules/dbm.py:2468
 msgid "&Add layer"
 msgstr "&Добавить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2465
+#: ../gui/wxpython/gui_modules/dbm.py:2472
 msgid "&Set default"
 msgstr "&Установить по умолчанию"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2529
+#: ../gui/wxpython/gui_modules/dbm.py:2536
 msgid "Table description"
 msgstr "Описание таблицы"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2569
+#: ../gui/wxpython/gui_modules/dbm.py:2576
 #, fuzzy
 msgid "Remove layer"
 msgstr "Удалить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2572
+#: ../gui/wxpython/gui_modules/dbm.py:2579
 #, fuzzy
 msgid "Layer to remove"
 msgstr "Слой для удаления"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2593
+#: ../gui/wxpython/gui_modules/dbm.py:2600
 #, fuzzy
 msgid "&Remove layer"
 msgstr "Удалить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2637
+#: ../gui/wxpython/gui_modules/dbm.py:2644
 #, fuzzy
 msgid "Modify layer"
 msgstr "&Изменить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2709
+#: ../gui/wxpython/gui_modules/dbm.py:2716
 msgid "&Modify layer"
 msgstr "&Изменить слой"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2757
+#: ../gui/wxpython/gui_modules/dbm.py:2764
 msgid ""
 "Unable to get list of tables.\n"
 "Please use db.connect to set database parameters."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:2855
+#: ../gui/wxpython/gui_modules/dbm.py:2862
 msgid "Unable to create new table. Table name or key column name is missing."
 msgstr ""
 "Невозможно создать новую таблицу. Пропущено название таблицы или название "
 "ключевого поля."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2862
+#: ../gui/wxpython/gui_modules/dbm.py:2869
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
 msgstr "Невозможно создать новую таблицу. Таблица <%s> уже есть в базе данных."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2900
+#: ../gui/wxpython/gui_modules/dbm.py:2907
 #, python-format
 msgid ""
 "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
@@ -10975,10 +11147,6 @@ msgstr "Тип слоя:"
 #, fuzzy
 msgid "Select toggle"
 msgstr "Выбрать висящие узлы"
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:818
-msgid "Mapset:"
-msgstr "Набор:"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:828
 msgid "Filter:"
@@ -11416,113 +11584,113 @@ msgid "Map <%s> not found."
 msgstr "Слой <%s> не найден."
 
 #: ../gui/wxpython/gui_modules/menuform.py:143
-#: ../gui/wxpython/gui_modules/menuform.py:1228
+#: ../gui/wxpython/gui_modules/menuform.py:1231
 msgid "Select Color"
 msgstr "Выбрать цвет"
 
-#: ../gui/wxpython/gui_modules/menuform.py:429
+#: ../gui/wxpython/gui_modules/menuform.py:432
 #, fuzzy
 msgid "Enter parameters for '"
 msgstr "Ввести параметры для"
 
-#: ../gui/wxpython/gui_modules/menuform.py:440
+#: ../gui/wxpython/gui_modules/menuform.py:443
 msgid "Close this window without executing the command (Ctrl+Q)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:460
+#: ../gui/wxpython/gui_modules/menuform.py:463
 #, fuzzy
 msgid "Run the command (Ctrl+R)"
 msgstr "Исполнить команду"
 
-#: ../gui/wxpython/gui_modules/menuform.py:463
+#: ../gui/wxpython/gui_modules/menuform.py:466
 #, fuzzy
 msgid "C&opy"
 msgstr "Копировать"
 
-#: ../gui/wxpython/gui_modules/menuform.py:478
+#: ../gui/wxpython/gui_modules/menuform.py:481
 #, fuzzy
 msgid "Show manual page of the command (Ctrl+H)"
 msgstr "Показать описание для команды"
 
-#: ../gui/wxpython/gui_modules/menuform.py:499
+#: ../gui/wxpython/gui_modules/menuform.py:502
 #, fuzzy
 msgid "Add created map(s) into layer tree"
 msgstr "Добавить созданный слой в содержание"
 
-#: ../gui/wxpython/gui_modules/menuform.py:514
+#: ../gui/wxpython/gui_modules/menuform.py:517
 msgid "Close dialog on finish"
 msgstr "Закрыть диалоговое окно после окончания операции"
 
-#: ../gui/wxpython/gui_modules/menuform.py:516
+#: ../gui/wxpython/gui_modules/menuform.py:519
 msgid ""
 "Close dialog when command is successfully finished. Change this settings in "
 "Preferences dialog ('Command' tab)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:683
+#: ../gui/wxpython/gui_modules/menuform.py:686
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr "'%s' скопировано в буфер обмена"
 
-#: ../gui/wxpython/gui_modules/menuform.py:746
-#: ../gui/wxpython/gui_modules/menuform.py:759
+#: ../gui/wxpython/gui_modules/menuform.py:749
+#: ../gui/wxpython/gui_modules/menuform.py:762
 msgid "Required"
 msgstr "Необходимо"
 
-#: ../gui/wxpython/gui_modules/menuform.py:749
-#: ../gui/wxpython/gui_modules/menuform.py:759
+#: ../gui/wxpython/gui_modules/menuform.py:752
+#: ../gui/wxpython/gui_modules/menuform.py:762
 msgid "Optional"
 msgstr "Опционный"
 
-#: ../gui/wxpython/gui_modules/menuform.py:792
+#: ../gui/wxpython/gui_modules/menuform.py:795
 msgid "Manual"
 msgstr "Вручную"
 
-#: ../gui/wxpython/gui_modules/menuform.py:832
-#: ../gui/wxpython/gui_modules/menuform.py:1300
+#: ../gui/wxpython/gui_modules/menuform.py:835
+#: ../gui/wxpython/gui_modules/menuform.py:1303
 #, fuzzy
 msgid "Parameterized in model"
 msgstr "Параметр не найден: %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:907
+#: ../gui/wxpython/gui_modules/menuform.py:910
 msgid "[multiple]"
 msgstr "[множественный]"
 
-#: ../gui/wxpython/gui_modules/menuform.py:954
+#: ../gui/wxpython/gui_modules/menuform.py:957
 #, fuzzy
 msgid "valid range"
 msgstr "Правильный диапазон"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1247
+#: ../gui/wxpython/gui_modules/menuform.py:1250
 msgid "Transparent"
 msgstr "Прозрачный"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1263
+#: ../gui/wxpython/gui_modules/menuform.py:1266
 #, python-format
 msgid "Choose %s"
 msgstr "Выбрать %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1291
+#: ../gui/wxpython/gui_modules/menuform.py:1294
 #, fuzzy
 msgid "or enter values interactively"
 msgstr "Интерактивная перекодировка"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1638
+#: ../gui/wxpython/gui_modules/menuform.py:1641
 #, python-format
 msgid "Error in %s"
 msgstr "Ошибка в %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1761
+#: ../gui/wxpython/gui_modules/menuform.py:1766
 #, fuzzy, python-format
 msgid "Unable to parse command '%s'"
 msgstr "Невозможно обработать команду %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1765
+#: ../gui/wxpython/gui_modules/menuform.py:1772
 #, python-format
 msgid "%(cmd)s: parameter '%(key)s' not available"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:1925
+#: ../gui/wxpython/gui_modules/menuform.py:1932
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "использование: %s <команда grass>"
@@ -12321,29 +12489,68 @@ msgstr "Создать новый набор"
 msgid "Unable to create new mapset: %s"
 msgstr "Невозможно создать новый набор: %s"
 
-#: ../gui/wxpython/gis_set.py:741
+#: ../gui/wxpython/gis_set.py:742
 #, python-format
 msgid ""
 "GRASS is already running in selected mapset <%(mapset)s>\n"
-"(File %(lock)s found).\n"
+"(file %(lock)s found).\n"
 "\n"
-"Concurrent use not allowed."
+"Concurrent use not allowed.\n"
+"\n"
+"Do you want to try to remove .gislock (note that you need permission for "
+"this operation) and continue?"
 msgstr ""
 
-#: ../gui/wxpython/gis_set.py:768
+#: ../gui/wxpython/gis_set.py:748
+msgid "Lock file found"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:757
+#, fuzzy, python-format
+msgid ""
+"Unable to remove '%(lock)s'.\n"
+"\n"
+"Details: %(reason)s"
+msgstr "Невозможно масштабировать векторный слой <%s>."
+
+#: ../gui/wxpython/gis_set.py:784
 msgid "GRASS Quickstart"
 msgstr "Быстрое введение в GRASS"
 
-#: ../gui/wxpython/gis_set.py:841
+#: ../gui/wxpython/gis_set.py:857
 msgid "Starting GRASS for the first time"
 msgstr ""
 
-#: ../gui/wxpython/gis_set.py:842
+#: ../gui/wxpython/gis_set.py:858
 msgid ""
 "GRASS needs a directory in which to store its data. Create one now if you "
 "have not already done so. A popular choice is \"grassdata\", located in your "
 "home directory."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Hardcopy Map Output Utility"
+#~ msgstr "Программа экспорта карты в PostScript."
+
+#, fuzzy
+#~ msgid "Quit Hardcopy Map Utility"
+#~ msgstr "Программа экспорта карты в PostScript."
+
+#, fuzzy
+#~ msgid "Launch Hardcopy Map Output Utility"
+#~ msgstr "Программа экспорта карты в PostScript."
+
+#, fuzzy
+#~ msgid "Source name"
+#~ msgstr "Имя поля"
+
+#, fuzzy
+#~ msgid "GRASS GIS Hardcopy Map Output Utility (experimental prototype)"
+#~ msgstr "Программа экспорта карты в PostScript."
+
+#, fuzzy
+#~ msgid "wxGUI Hardcopy Map Utility"
+#~ msgstr "Программа экспорта карты в PostScript."
 
 #, fuzzy
 #~ msgid "Close current"
@@ -12452,13 +12659,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Map toolbar"
 #~ msgstr "Панель инструментов карты"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to zoom to vector map <%s>.\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr "Невозможно масштабировать векторный слой <%s>."
 
 #~ msgid "Uknown settings file location."
 #~ msgstr "Невозможно найти файл настроек."
@@ -12854,9 +13054,6 @@ msgstr ""
 #~ msgid "Map calculator"
 #~ msgstr "Растровый калькулятор"
 
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
 #~ msgid "Restore default settings"
 #~ msgstr "Восстановить настройки по умолчанию"
 
@@ -12907,9 +13104,6 @@ msgstr ""
 #~ "wxPython! Возвращение к 2D режиму.\n"
 #~ "\n"
 #~ "Подробности: %s"
-
-#~ msgid "Height"
-#~ msgstr "Высота"
 
 #~ msgid "Twist"
 #~ msgstr "Виток"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmodes_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2010-09-19 00:34+0100\n"
 "Last-Translator: Maciej Sieczka <msieczka at msieczka dot org>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
@@ -270,7 +270,7 @@ msgstr ""
 #: ../raster/r.cross/main.c:145 ../raster/r.clump/main.c:98
 #: ../raster/r.in.xyz/main.c:498 ../raster/r.texture/main.c:309
 #: ../raster/r.surf.random/randsurf.c:28 ../raster/r.surf.random/randsurf.c:32
-#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:323
+#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:329
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.sunmask/main.c:450 ../raster/r.random.surface/save.c:23
 #: ../raster/r.thin/io.c:168 ../raster/r.carve/main.c:189
@@ -769,7 +769,7 @@ msgstr "Mapa rastrowa 3D, dla której mają być zmodyfikowane wartości NULL"
 msgid "List of cell values to be set to NULL"
 msgstr "Lista wartości do ustawienia jako NULL"
 
-#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:77
+#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:78
 msgid "The value to replace the null value by"
 msgstr "Wartość która ma zastąpić NULL"
 
@@ -887,7 +887,7 @@ msgstr "Mapa rastrowa 3D <%s> nie została znaleziona w %s"
 msgid "Adding rule: %lf - %lf"
 msgstr "Dodawanie reguły: %lf - %lf"
 
-#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
+#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:266
 #, c-format
 msgid "%s: illegal value spec"
 msgstr "%s: niewłaściwa wartość"
@@ -1216,7 +1216,7 @@ msgstr "Nadpisz plik wyjściowy"
 #: ../raster/r.out.tiff/r.out.tiff.c:166 ../raster/r.texture/main.c:228
 #: ../raster/r.out.arc/main.c:113 ../raster/r.colors/main.c:306
 #: ../raster/r.colors/main.c:387 ../raster/r.statistics/main.c:79
-#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:113
+#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:119
 #: ../raster/r.mapcalc/map.c:377 ../raster/r.thin/io.c:96
 #: ../raster/r.reclass/main.c:78 ../raster/r.to.vect/main.c:113
 #: ../raster/r.cats/main.c:125 ../raster/r.cats/main.c:146
@@ -1432,7 +1432,7 @@ msgstr "Uwzględniaj wartości NULL podczas wyświetlania"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:117
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:324
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -2596,7 +2596,7 @@ msgstr "Odczyt %s ..."
 #: ../raster/r.out.gdal/export_band.c:152
 #: ../raster/r.out.gdal/export_band.c:397
 #: ../raster/r.out.gdal/export_band.c:430
-#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:334
+#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:340
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -2930,12 +2930,14 @@ msgstr ""
 msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:502 ../vector/v.buffer2/main.c:217
+#: ../raster/r.sun2/main.c:502 ../vector/v.generalize/main.c:208
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:503 ../vector/v.buffer2/main.c:215
-#: ../vector/v.buffer2/main.c:227 ../vector/v.build.polylines/main.c:128
+#: ../raster/r.sun2/main.c:503 ../vector/v.generalize/main.c:209
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
+#: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr ""
 
@@ -3673,7 +3675,7 @@ msgstr "Zbyt wiele punktów startowych."
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.growing/main.c:129
 #: ../vector/lidar/v.lidar.correction/main.c:182
-#: ../vector/v.generalize/main.c:283 ../vector/v.extract/main.c:193
+#: ../vector/v.generalize/main.c:289 ../vector/v.extract/main.c:193
 #: ../vector/v.net.iso/main.c:181 ../vector/v.net.salesman/main.c:171
 #: ../vector/v.perturb/main.c:154 ../vector/v.distance/main.c:299
 #: ../vector/v.label.sa/labels.c:60 ../vector/v.type/main.c:202
@@ -3686,7 +3688,7 @@ msgstr "Zbyt wiele punktów startowych."
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
-#: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
+#: ../vector/v.voronoi/vo_main.c:158 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
 #: ../vector/v.class/main.c:95 ../vector/v.build.polylines/main.c:139
@@ -5162,7 +5164,7 @@ msgstr "Zapoczątkowanie wyjścia..."
 msgid "Failed to guess site file format\n"
 msgstr "Format pliku graficznego"
 
-#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:758
+#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "Nie można ulokować pamięci"
@@ -6072,7 +6074,7 @@ msgstr "Maksymalna odległość od punktu widokowego (metry): %f"
 #: ../raster/r.los/main.c:380 ../raster/r.buffer/write_map.c:78
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
-#: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
+#: ../raster/r.null/null.c:348 ../raster/r.proj.seg/main.c:513
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "Nie można zapisać wiersza <%s> mapy rastrowej %d"
@@ -8330,7 +8332,7 @@ msgid "Output Tiled TIFF"
 msgstr "Utwórz plik TIFF typu Tiled (kafelkowy)"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
-#: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
+#: ../raster/r.null/null.c:163 ../raster/r.topidx/file_io.c:20
 #: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
 #: ../imagery/i.rectify/main.c:300
 #, c-format
@@ -8647,7 +8649,7 @@ msgid ""
 "map"
 msgstr ""
 
-#: ../raster/r.texture/h_measure.c:927
+#: ../raster/r.texture/h_measure.c:937
 #, c-format
 msgid "Too many iterations to required to find %s - giving up"
 msgstr ""
@@ -9640,92 +9642,107 @@ msgstr "Nazwa wejściowej mapy rastrowej"
 
 #: ../raster/r.null/null.c:62
 #, fuzzy
-msgid "Raster map for which to edit null file"
+msgid "Name of raster map for which to edit null file"
 msgstr "Mapa rastrowa w której mają być wypełnione zera"
 
-#: ../raster/r.null/null.c:81
+#: ../raster/r.null/null.c:71 ../raster/r.null/null.c:79
+msgid "Modify"
+msgstr ""
+
+#: ../raster/r.null/null.c:83
 msgid "Only do the work if the map is floating-point"
 msgstr ""
 
-#: ../raster/r.null/null.c:85
+#: ../raster/r.null/null.c:84 ../raster/r.null/null.c:89
+#: ../raster/r.null/null.c:95
+msgid "Check"
+msgstr ""
+
+#: ../raster/r.null/null.c:88
 msgid "Only do the work if the map is integer"
 msgstr ""
 
-#: ../raster/r.null/null.c:90
+#: ../raster/r.null/null.c:94
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
 msgstr ""
 
-#: ../raster/r.null/null.c:95
+#: ../raster/r.null/null.c:100
 msgid "Create NULL-value bitmap file validating all data cells"
 msgstr ""
 
-#: ../raster/r.null/null.c:99
+#: ../raster/r.null/null.c:104
 msgid "Remove NULL-value bitmap file"
 msgstr ""
 
-#: ../raster/r.null/null.c:117
+#: ../raster/r.null/null.c:105
+#: ../locale/scriptstrings/r.mask_to_translate.c:11
+#, fuzzy
+msgid "Remove"
+msgstr "%5d usuniętych wierzchołków"
+
+#: ../raster/r.null/null.c:123
 #, c-format
 msgid ""
 "Raster map <%s> is a reclass of map <%s@%s>. Consider to generate a copy "
 "with r.mapcalc. Exiting."
 msgstr ""
 
-#: ../raster/r.null/null.c:123
+#: ../raster/r.null/null.c:129
 #, fuzzy, c-format
 msgid "Raster map <%s> is not in your mapset <%s>"
 msgstr "Mapy rastrowa <%s> nie została znaleziona"
 
-#: ../raster/r.null/null.c:130
+#: ../raster/r.null/null.c:136
 #, fuzzy, c-format
 msgid "%s is illegal entry for null"
 msgstr "Niedozwolona wartość dla współczynnika skalowego."
 
-#: ../raster/r.null/null.c:137
+#: ../raster/r.null/null.c:143
 #, fuzzy, c-format
 msgid "Raster map <%s> already has a null bitmap file"
 msgstr "Plik '%s' już istnieje i zostanie nadpisany."
 
-#: ../raster/r.null/null.c:141
+#: ../raster/r.null/null.c:147
 #, fuzzy, c-format
 msgid "<%s> is integer raster map (CELL)"
 msgstr "%s - nie można otworzyć mapy rastrowej"
 
-#: ../raster/r.null/null.c:145
+#: ../raster/r.null/null.c:151
 #, fuzzy, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
 msgstr "%s - nie można otworzyć mapy rastrowej"
 
-#: ../raster/r.null/null.c:151
+#: ../raster/r.null/null.c:157
 #, fuzzy, c-format
 msgid "<%s> is floating pointing raster map"
 msgstr "Mapa rastrowa punktów początkowych"
 
-#: ../raster/r.null/null.c:169
+#: ../raster/r.null/null.c:175
 #, fuzzy, c-format
 msgid "Writing new null file for raster map <%s>..."
 msgstr "Zapisywanie nowego pliku null dla [%s]... "
 
-#: ../raster/r.null/null.c:176
+#: ../raster/r.null/null.c:182
 #, c-format
 msgid "Error writing null row %d"
 msgstr "błąd podczas zapisu zerowego wiersza %d"
 
-#: ../raster/r.null/null.c:181 ../raster/r.null/null.c:194
+#: ../raster/r.null/null.c:187 ../raster/r.null/null.c:200
 #, fuzzy, c-format
 msgid "Raster map <%s> modified."
 msgstr "Mapy rastrowa <%s> nie została znaleziona"
 
-#: ../raster/r.null/null.c:188
+#: ../raster/r.null/null.c:194
 #, fuzzy, c-format
 msgid "Removing null file for raster map <%s>..."
 msgstr "Usuwanie pliku null dla [%s]...\n"
 
-#: ../raster/r.null/null.c:258
+#: ../raster/r.null/null.c:264
 #, fuzzy, c-format
 msgid "%s: %s: illegal value spec"
 msgstr "%s: %s - niewłaściwa nazwa"
 
-#: ../raster/r.null/null.c:327
+#: ../raster/r.null/null.c:333
 #, fuzzy, c-format
 msgid "Writing new data for raster map <%s>..."
 msgstr "Zapisywanie mapy rastrowej <%s>"
@@ -11216,7 +11233,7 @@ msgstr "Nie można otworzyć mapy rastrowej [%s]"
 msgid "Unable to open new basin map"
 msgstr "Wejściowa mapa rastrowa"
 
-#: ../raster/r.water.outlet/main.c:157
+#: ../raster/r.water.outlet/main.c:159
 #, fuzzy
 msgid "Unable to close new basin map layer"
 msgstr "nie można otworzyć nowej warstwy ekspozycji mapy."
@@ -12121,12 +12138,12 @@ msgstr ""
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/v.generalize/main.c:295 ../vector/v.net.distance/main.c:146
+#: ../vector/v.generalize/main.c:301 ../vector/v.net.distance/main.c:146
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
 #: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
-#: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/vo_main.c:165 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
 #: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
@@ -17082,7 +17099,7 @@ msgstr "Otwórz formę w trybie edycji"
 #: ../vector/lidar/v.lidar.growing/main.c:141
 #: ../vector/lidar/v.lidar.growing/main.c:145
 #: ../vector/lidar/v.lidar.correction/main.c:186
-#: ../vector/v.generalize/main.c:288 ../vector/v.net.distance/main.c:140
+#: ../vector/v.generalize/main.c:294 ../vector/v.net.distance/main.c:140
 #: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
@@ -19198,7 +19215,7 @@ msgid "Writing attributes..."
 msgstr "Zapisywanie atrybutów ..."
 
 #: ../vector/v.generalize/misc.c:157 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
+#: ../vector/v.voronoi/vo_main.c:339 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "Warstwa %d"
@@ -19305,60 +19322,60 @@ msgstr "Liczba punktów interpolacji"
 msgid "Copy attributes"
 msgstr "Kopiuj atrybuty"
 
-#: ../vector/v.generalize/main.c:256
+#: ../vector/v.generalize/main.c:262
 msgid "Unknown method"
 msgstr "Nieznana metoda"
 
-#: ../vector/v.generalize/main.c:316
+#: ../vector/v.generalize/main.c:322
 #, fuzzy
 msgid "Displacement..."
 msgstr "Rozmieszczanie danych..."
 
-#: ../vector/v.generalize/main.c:325
+#: ../vector/v.generalize/main.c:331
 #, fuzzy
 msgid "Network generalization..."
 msgstr "wektor, interpolacja"
 
-#: ../vector/v.generalize/main.c:340
+#: ../vector/v.generalize/main.c:346
 msgid "Attributes are needed for 'where' option, copying table"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:362
+#: ../vector/v.generalize/main.c:368
 #, c-format
 msgid "Generalization (%s)..."
 msgstr "Generalizacja (%s)..."
 
-#: ../vector/v.generalize/main.c:456
+#: ../vector/v.generalize/main.c:462
 #, c-format
 msgid "Method '%s' did not preserve first point"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:461
+#: ../vector/v.generalize/main.c:467
 #, c-format
 msgid "Method '%s' did not preserve last point"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:488
+#: ../vector/v.generalize/main.c:494
 #, c-format
 msgid ""
 "%d boundaries were not modified because modification would damage topology"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:491
+#: ../vector/v.generalize/main.c:497
 #, c-format
 msgid "%d lines/boundaries were not modified due to over-simplification"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:506
+#: ../vector/v.generalize/main.c:512
 #, c-format
 msgid "Number of vertices for selected lines %s from %d to %d (%d%%)."
 msgstr ""
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 msgid "reduced"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 msgid "changed"
 msgstr ""
 
@@ -19523,7 +19540,7 @@ msgid "Create 3D output"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:215 ../vector/v.select/args.c:80
-#: ../vector/v.voronoi/vo_main.c:138 ../vector/v.overlay/main.c:120
+#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:120
 #: ../vector/v.to.points/main.c:213
 msgid "Do not create attribute table"
 msgstr "Nie twórz tabeli atrubutów."
@@ -19995,7 +20012,7 @@ msgstr ""
 msgid "Extracting features..."
 msgstr "Zapiywanie %s ..."
 
-#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:339
+#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:344
 msgid "No table"
 msgstr "Brak tabeli."
 
@@ -23251,40 +23268,49 @@ msgstr ""
 msgid "Deleting boundaries..."
 msgstr "Usuwanie granic..."
 
-#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.voronoi/vo_main.c:120 ../vector/v.voronoi/dt_main.c:46
 #: ../vector/v.delaunay2/main.c:86
 #, fuzzy
 msgid "vector, geometry, triangulation"
 msgstr "wektor do usunięcia"
 
-#: ../vector/v.voronoi/vo_main.c:119
+#: ../vector/v.voronoi/vo_main.c:121
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
 msgstr ""
 
-#: ../vector/v.voronoi/vo_main.c:134
+#: ../vector/v.voronoi/vo_main.c:136
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr ""
 
-#: ../vector/v.voronoi/vo_main.c:175
+#: ../vector/v.voronoi/vo_main.c:179
 #, fuzzy
 msgid "Reading sites..."
 msgstr "Odczytywanie %s ..."
 
-#: ../vector/v.voronoi/vo_main.c:185
+#: ../vector/v.voronoi/vo_main.c:189
 #, fuzzy
 msgid "Voronoi triangulation..."
 msgstr "brak punktów do triangulacji"
 
-#: ../vector/v.voronoi/vo_main.c:270
+#: ../vector/v.voronoi/vo_main.c:271
 #, fuzzy
 msgid "Writing sites to output..."
 msgstr "Zapisuje mapę ..."
 
-#: ../vector/v.voronoi/vo_main.c:354
+#: ../vector/v.voronoi/vo_main.c:359
 msgid "Cannot copy table"
 msgstr "Kopiowanie tablicy nie powiodło się"
+
+#: ../vector/v.voronoi/vo_main.c:415
+msgid "Output needs topological cleaning"
+msgstr ""
+
+#: ../vector/v.voronoi/vo_main.c:447
+#, fuzzy
+msgid "Removing incorrect boundaries from output"
+msgstr "Usuwanie mapy rastrowej <%s> z grupy"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 #, fuzzy
@@ -28400,14 +28426,19 @@ msgstr ""
 "kolumna '%s', typu 'string': nieznana szerokość -> zachowana jako varchar "
 "(250)niektóre dane mogą być utracone"
 
-#: ../db/drivers/sqlite/describe.c:159
+#: ../db/drivers/sqlite/describe.c:160
 #, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
 msgstr "sterownik SQLite: kolumna '%s', typu %d SQLite nie jest obsługiwana"
 
-#: ../db/drivers/sqlite/db.c:84
+#: ../db/drivers/sqlite/db.c:85
 msgid "Unable to open database: "
 msgstr "Nie można otworzyć bazy: <%s>"
+
+#: ../db/drivers/sqlite/db.c:110
+#, fuzzy
+msgid "SQLite database connection is still busy"
+msgstr "Połączenie bazy danych nie zdefiniowane"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
 #: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
@@ -29233,6 +29264,10 @@ msgstr "Wyświetl dostępne warstwy i wyjdź"
 msgid "Install system-wide (may need system administrator rights)"
 msgstr ""
 
+#: ../locale/scriptstrings/g.extension_to_translate.c:11
+msgid "Install system-wide using sudo"
+msgstr ""
+
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
 msgid "Prints a graph of the correlation between data layers (in pairs)."
 msgstr ""
@@ -29618,11 +29653,6 @@ msgstr ""
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing MASK (overrides other options)"
 msgstr ""
-
-#: ../locale/scriptstrings/r.mask_to_translate.c:11
-#, fuzzy
-msgid "Remove"
-msgstr "%5d usuniętych wierzchołków"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
 msgid ""

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -267,7 +267,7 @@ msgstr ""
 #: ../raster/r.cross/main.c:145 ../raster/r.clump/main.c:98
 #: ../raster/r.in.xyz/main.c:498 ../raster/r.texture/main.c:309
 #: ../raster/r.surf.random/randsurf.c:28 ../raster/r.surf.random/randsurf.c:32
-#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:323
+#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:329
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.sunmask/main.c:450 ../raster/r.random.surface/save.c:23
 #: ../raster/r.thin/io.c:168 ../raster/r.carve/main.c:189
@@ -769,7 +769,7 @@ msgstr "3DラスターマップのNULL値修正"
 msgid "List of cell values to be set to NULL"
 msgstr "NULL値をセットするセルの一覧"
 
-#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:77
+#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:78
 msgid "The value to replace the null value by"
 msgstr "NULL値を置き換える値"
 
@@ -885,7 +885,7 @@ msgstr "Grid3 <%s> が見つかりません %s"
 msgid "Adding rule: %lf - %lf"
 msgstr "ルールの追加: %lf - %lf "
 
-#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
+#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:266
 #, c-format
 msgid "%s: illegal value spec"
 msgstr "%s: 不正な値の定義"
@@ -1213,7 +1213,7 @@ msgstr "マップファイルの上書き"
 #: ../raster/r.out.tiff/r.out.tiff.c:166 ../raster/r.texture/main.c:228
 #: ../raster/r.out.arc/main.c:113 ../raster/r.colors/main.c:306
 #: ../raster/r.colors/main.c:387 ../raster/r.statistics/main.c:79
-#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:113
+#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:119
 #: ../raster/r.mapcalc/map.c:377 ../raster/r.thin/io.c:96
 #: ../raster/r.reclass/main.c:78 ../raster/r.to.vect/main.c:113
 #: ../raster/r.cats/main.c:125 ../raster/r.cats/main.c:146
@@ -1425,7 +1425,7 @@ msgstr "表示時にNULL値を優先する"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:117
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:324
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -2583,7 +2583,7 @@ msgstr "読取中 %s ... "
 #: ../raster/r.out.gdal/export_band.c:152
 #: ../raster/r.out.gdal/export_band.c:397
 #: ../raster/r.out.gdal/export_band.c:430
-#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:334
+#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:340
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -2895,12 +2895,14 @@ msgstr "このチャンク数内の入力ファイルを読取ります"
 msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr "常用時刻帯の値。指定の無いときは地方太陽時が使われます"
 
-#: ../raster/r.sun2/main.c:502 ../vector/v.buffer2/main.c:217
+#: ../raster/r.sun2/main.c:502 ../vector/v.generalize/main.c:208
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr "何もしないで下位互換性を残します"
 
-#: ../raster/r.sun2/main.c:503 ../vector/v.buffer2/main.c:215
-#: ../vector/v.buffer2/main.c:227 ../vector/v.build.polylines/main.c:128
+#: ../raster/r.sun2/main.c:503 ../vector/v.generalize/main.c:209
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
+#: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr "不使用"
 
@@ -3634,7 +3636,7 @@ msgstr "多すぎる始点の数 "
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.growing/main.c:129
 #: ../vector/lidar/v.lidar.correction/main.c:182
-#: ../vector/v.generalize/main.c:283 ../vector/v.extract/main.c:193
+#: ../vector/v.generalize/main.c:289 ../vector/v.extract/main.c:193
 #: ../vector/v.net.iso/main.c:181 ../vector/v.net.salesman/main.c:171
 #: ../vector/v.perturb/main.c:154 ../vector/v.distance/main.c:299
 #: ../vector/v.label.sa/labels.c:60 ../vector/v.type/main.c:202
@@ -3647,7 +3649,7 @@ msgstr "多すぎる始点の数 "
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
-#: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
+#: ../vector/v.voronoi/vo_main.c:158 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
 #: ../vector/v.class/main.c:95 ../vector/v.build.polylines/main.c:139
@@ -5075,7 +5077,7 @@ msgstr "出力を初期化中"
 msgid "Failed to guess site file format\n"
 msgstr "サイトファイルのフォーマットが不明です\n"
 
-#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:758
+#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "メモリを割り当てられません"
@@ -5947,7 +5949,7 @@ msgstr "視点からの最大距離を使う（メートル）: %f"
 #: ../raster/r.los/main.c:380 ../raster/r.buffer/write_map.c:78
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
-#: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
+#: ../raster/r.null/null.c:348 ../raster/r.proj.seg/main.c:513
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "ラスターマップ <%s> 行 %d を書き込めません"
@@ -8192,7 +8194,7 @@ msgid "Output Tiled TIFF"
 msgstr "Tiled TIFFファイルを出力 "
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
-#: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
+#: ../raster/r.null/null.c:163 ../raster/r.topidx/file_io.c:20
 #: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
 #: ../imagery/i.rectify/main.c:300
 #, c-format
@@ -8509,7 +8511,7 @@ msgstr ""
 "カテゴリーが多すぎます (指定数：%i, 最大： %i)， マップの縮尺を変更するか再分"
 "類をしてみてください"
 
-#: ../raster/r.texture/h_measure.c:927
+#: ../raster/r.texture/h_measure.c:937
 #, c-format
 msgid "Too many iterations to required to find %s - giving up"
 msgstr "検索の繰り返し要求が多すぎます %s - できませんでした"
@@ -9523,30 +9525,46 @@ msgid "Manages NULL-values of given raster map."
 msgstr "ラスターマップのNULL値を管理する"
 
 #: ../raster/r.null/null.c:62
-msgid "Raster map for which to edit null file"
+#, fuzzy
+msgid "Name of raster map for which to edit null file"
 msgstr "NULLファイルを編集するためのラスターマップ"
 
-#: ../raster/r.null/null.c:81
+#: ../raster/r.null/null.c:71 ../raster/r.null/null.c:79
+msgid "Modify"
+msgstr ""
+
+#: ../raster/r.null/null.c:83
 msgid "Only do the work if the map is floating-point"
 msgstr "浮動小数点マップの時のみ実行"
 
-#: ../raster/r.null/null.c:85
+#: ../raster/r.null/null.c:84 ../raster/r.null/null.c:89
+#: ../raster/r.null/null.c:95
+msgid "Check"
+msgstr ""
+
+#: ../raster/r.null/null.c:88
 msgid "Only do the work if the map is integer"
 msgstr "整数マップの時のみ実行"
 
-#: ../raster/r.null/null.c:90
+#: ../raster/r.null/null.c:94
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
 msgstr "マップがNULL値ビットマップファイルを含まない時のみ実行"
 
-#: ../raster/r.null/null.c:95
+#: ../raster/r.null/null.c:100
 msgid "Create NULL-value bitmap file validating all data cells"
 msgstr "全てのデータセルを検査してNULL値ビットマップファイルを作成"
 
-#: ../raster/r.null/null.c:99
+#: ../raster/r.null/null.c:104
 msgid "Remove NULL-value bitmap file"
 msgstr "NULL値ビットマップファイルを削除"
 
-#: ../raster/r.null/null.c:117
+#: ../raster/r.null/null.c:105
+#: ../locale/scriptstrings/r.mask_to_translate.c:11
+#, fuzzy
+msgid "Remove"
+msgstr "ぶら下がりを削除"
+
+#: ../raster/r.null/null.c:123
 #, c-format
 msgid ""
 "Raster map <%s> is a reclass of map <%s@%s>. Consider to generate a copy "
@@ -9555,62 +9573,62 @@ msgstr ""
 "ラスターマップ <%s> は マップ <%s@%s> の再分類．r.mapcalc と共にコピーを作成"
 "することを考慮して下さい．終了しています"
 
-#: ../raster/r.null/null.c:123
+#: ../raster/r.null/null.c:129
 #, c-format
 msgid "Raster map <%s> is not in your mapset <%s>"
 msgstr "ラスターマップ <%s> はマップセット <%s> 中に存在しません"
 
-#: ../raster/r.null/null.c:130
+#: ../raster/r.null/null.c:136
 #, c-format
 msgid "%s is illegal entry for null"
 msgstr "%s はNULL値に対して不正な入力値です"
 
-#: ../raster/r.null/null.c:137
+#: ../raster/r.null/null.c:143
 #, c-format
 msgid "Raster map <%s> already has a null bitmap file"
 msgstr "ラスタマップ <%s> は既にNULL値ビットマップ ファイルを持っています"
 
-#: ../raster/r.null/null.c:141
+#: ../raster/r.null/null.c:147
 #, c-format
 msgid "<%s> is integer raster map (CELL)"
 msgstr "<%s> は整数値ラスターマップです (CELL)"
 
-#: ../raster/r.null/null.c:145
+#: ../raster/r.null/null.c:151
 #, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
 msgstr "<%s> は整数値ラスターマップです (CELL)  null=%d を使います"
 
-#: ../raster/r.null/null.c:151
+#: ../raster/r.null/null.c:157
 #, c-format
 msgid "<%s> is floating pointing raster map"
 msgstr "<%s> は浮動小数点値ラスターマップです"
 
-#: ../raster/r.null/null.c:169
+#: ../raster/r.null/null.c:175
 #, c-format
 msgid "Writing new null file for raster map <%s>..."
 msgstr "ラスターマップ <%s> 用にNULLファイルを作成しています..."
 
-#: ../raster/r.null/null.c:176
+#: ../raster/r.null/null.c:182
 #, c-format
 msgid "Error writing null row %d"
 msgstr "NULL行l row %d の書出し中にエラー"
 
-#: ../raster/r.null/null.c:181 ../raster/r.null/null.c:194
+#: ../raster/r.null/null.c:187 ../raster/r.null/null.c:200
 #, c-format
 msgid "Raster map <%s> modified."
 msgstr "ラスターマップ <%s> は変更されています"
 
-#: ../raster/r.null/null.c:188
+#: ../raster/r.null/null.c:194
 #, c-format
 msgid "Removing null file for raster map <%s>..."
 msgstr "ラスターマップ <%s> からNULLファイルを削除します .."
 
-#: ../raster/r.null/null.c:258
+#: ../raster/r.null/null.c:264
 #, c-format
 msgid "%s: %s: illegal value spec"
 msgstr "%s: %s: 不正な値"
 
-#: ../raster/r.null/null.c:327
+#: ../raster/r.null/null.c:333
 #, c-format
 msgid "Writing new data for raster map <%s>..."
 msgstr "ラスターマップ  <%s> に対して新規データを書き込みます"
@@ -11095,7 +11113,7 @@ msgstr "排水路ポインターマップを開けません"
 msgid "Unable to open new basin map"
 msgstr "新しい盆地マップを開けません"
 
-#: ../raster/r.water.outlet/main.c:157
+#: ../raster/r.water.outlet/main.c:159
 msgid "Unable to close new basin map layer"
 msgstr "新しい盆地マップレイヤーを閉じれません"
 
@@ -11989,12 +12007,12 @@ msgstr "セグメントファイル %s を開けません"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/v.generalize/main.c:295 ../vector/v.net.distance/main.c:146
+#: ../vector/v.generalize/main.c:301 ../vector/v.net.distance/main.c:146
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
 #: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
-#: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/vo_main.c:165 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
 #: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
@@ -16898,7 +16916,7 @@ msgstr "フォームを編集モードで開きます  "
 #: ../vector/lidar/v.lidar.growing/main.c:141
 #: ../vector/lidar/v.lidar.growing/main.c:145
 #: ../vector/lidar/v.lidar.correction/main.c:186
-#: ../vector/v.generalize/main.c:288 ../vector/v.net.distance/main.c:140
+#: ../vector/v.generalize/main.c:294 ../vector/v.net.distance/main.c:140
 #: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
@@ -18975,7 +18993,7 @@ msgid "Writing attributes..."
 msgstr "属性を書き込んでいます"
 
 #: ../vector/v.generalize/misc.c:157 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
+#: ../vector/v.voronoi/vo_main.c:339 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "レイヤー %d  "
@@ -19087,60 +19105,60 @@ msgstr "イテレーションの数"
 msgid "Copy attributes"
 msgstr "属性をコピーします"
 
-#: ../vector/v.generalize/main.c:256
+#: ../vector/v.generalize/main.c:262
 msgid "Unknown method"
 msgstr "未詳のメソッド"
 
-#: ../vector/v.generalize/main.c:316
+#: ../vector/v.generalize/main.c:322
 #, fuzzy
 msgid "Displacement..."
 msgstr "データを移動中... "
 
-#: ../vector/v.generalize/main.c:325
+#: ../vector/v.generalize/main.c:331
 #, fuzzy
 msgid "Network generalization..."
 msgstr "ベクトルに基づく一般化"
 
-#: ../vector/v.generalize/main.c:340
+#: ../vector/v.generalize/main.c:346
 msgid "Attributes are needed for 'where' option, copying table"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:362
+#: ../vector/v.generalize/main.c:368
 #, c-format
 msgid "Generalization (%s)..."
 msgstr "一般化 (%s)..."
 
-#: ../vector/v.generalize/main.c:456
+#: ../vector/v.generalize/main.c:462
 #, fuzzy, c-format
 msgid "Method '%s' did not preserve first point"
 msgstr "フォント '%s' はFreeType フォントではありません\n"
 
-#: ../vector/v.generalize/main.c:461
+#: ../vector/v.generalize/main.c:467
 #, c-format
 msgid "Method '%s' did not preserve last point"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:488
+#: ../vector/v.generalize/main.c:494
 #, fuzzy, c-format
 msgid ""
 "%d boundaries were not modified because modification would damage topology"
 msgstr "地形を破損する可能性があるため，%d の境界が切り詰められませんでした"
 
-#: ../vector/v.generalize/main.c:491
+#: ../vector/v.generalize/main.c:497
 #, c-format
 msgid "%d lines/boundaries were not modified due to over-simplification"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:506
+#: ../vector/v.generalize/main.c:512
 #, fuzzy, c-format
 msgid "Number of vertices for selected lines %s from %d to %d (%d%%)."
 msgstr "頂点の数は %d から %d [%d%%] に減少されました"
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 msgid "reduced"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 #, fuzzy
 msgid "changed"
 msgstr "行の変更"
@@ -19311,7 +19329,7 @@ msgid "Create 3D output"
 msgstr "3D出力を作成します"
 
 #: ../vector/v.in.ogr/main.c:215 ../vector/v.select/args.c:80
-#: ../vector/v.voronoi/vo_main.c:138 ../vector/v.overlay/main.c:120
+#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:120
 #: ../vector/v.to.points/main.c:213
 msgid "Do not create attribute table"
 msgstr "属性テーブルを作成しないで下さい"
@@ -19802,7 +19820,7 @@ msgstr ""
 msgid "Extracting features..."
 msgstr "フィーチャーを展開しています"
 
-#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:339
+#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:344
 msgid "No table"
 msgstr "表がありません"
 
@@ -23095,41 +23113,50 @@ msgstr "ノードの境界をクリーニング中、、、"
 msgid "Deleting boundaries..."
 msgstr "境界を切断しています、、、"
 
-#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.voronoi/vo_main.c:120 ../vector/v.voronoi/dt_main.c:46
 #: ../vector/v.delaunay2/main.c:86
 #, fuzzy
 msgid "vector, geometry, triangulation"
 msgstr "ベクトル，ジオメトリー，サンプリング"
 
-#: ../vector/v.voronoi/vo_main.c:119
+#: ../vector/v.voronoi/vo_main.c:121
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
 msgstr ""
 "指定したベクトルマップ（ポイントまたはセントロイドを含む）からVoronoi図を作成"
 
-#: ../vector/v.voronoi/vo_main.c:134
+#: ../vector/v.voronoi/vo_main.c:136
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr "エリアではなくグラフ （ライン） として三角形分割を出力"
 
-#: ../vector/v.voronoi/vo_main.c:175
+#: ../vector/v.voronoi/vo_main.c:179
 #, fuzzy
 msgid "Reading sites..."
 msgstr "読込中 ... "
 
-#: ../vector/v.voronoi/vo_main.c:185
+#: ../vector/v.voronoi/vo_main.c:189
 #, fuzzy
 msgid "Voronoi triangulation..."
 msgstr "Delaunay 三角測量...  "
 
-#: ../vector/v.voronoi/vo_main.c:270
+#: ../vector/v.voronoi/vo_main.c:271
 #, fuzzy
 msgid "Writing sites to output..."
 msgstr "出力中..."
 
-#: ../vector/v.voronoi/vo_main.c:354
+#: ../vector/v.voronoi/vo_main.c:359
 msgid "Cannot copy table"
 msgstr "表をコピーできません"
+
+#: ../vector/v.voronoi/vo_main.c:415
+msgid "Output needs topological cleaning"
+msgstr ""
+
+#: ../vector/v.voronoi/vo_main.c:447
+#, fuzzy
+msgid "Removing incorrect boundaries from output"
+msgstr "長さ0のラインと境界を削除"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 msgid ""
@@ -28232,14 +28259,19 @@ msgstr ""
 "列 '%s', タイプ 'string': 不明な幅 -> varchar(250)として保存されたいくつかの"
 "データは紛失しています  "
 
-#: ../db/drivers/sqlite/describe.c:159
+#: ../db/drivers/sqlite/describe.c:160
 #, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
 msgstr "SQLite ドライバー: 列 '%s', SQLite タイプ %d  はサポートされません"
 
-#: ../db/drivers/sqlite/db.c:84
+#: ../db/drivers/sqlite/db.c:85
 msgid "Unable to open database: "
 msgstr "データベースを開けません:"
+
+#: ../db/drivers/sqlite/db.c:110
+#, fuzzy
+msgid "SQLite database connection is still busy"
+msgstr "データベース接続は定義されていません"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
 #: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
@@ -29020,6 +29052,10 @@ msgstr "使用可能なルールの一覧表示"
 msgid "Install system-wide (may need system administrator rights)"
 msgstr ""
 
+#: ../locale/scriptstrings/g.extension_to_translate.c:11
+msgid "Install system-wide using sudo"
+msgstr ""
+
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
 msgid "Prints a graph of the correlation between data layers (in pairs)."
 msgstr "データレイヤーの相関関係のグラフを出力する（ペア）"
@@ -29380,11 +29416,6 @@ msgstr "既存のMASKに上書きする"
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing MASK (overrides other options)"
 msgstr "既存のMASKを削除する（他のオプションを無効にする）"
-
-#: ../locale/scriptstrings/r.mask_to_translate.c:11
-#, fuzzy
-msgid "Remove"
-msgstr "ぶら下がりを削除"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
 msgid ""
