@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -267,7 +267,7 @@ msgstr ""
 #: ../raster/r.cross/main.c:145 ../raster/r.clump/main.c:98
 #: ../raster/r.in.xyz/main.c:498 ../raster/r.texture/main.c:309
 #: ../raster/r.surf.random/randsurf.c:28 ../raster/r.surf.random/randsurf.c:32
-#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:323
+#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:329
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.sunmask/main.c:450 ../raster/r.random.surface/save.c:23
 #: ../raster/r.thin/io.c:168 ../raster/r.carve/main.c:189
@@ -769,7 +769,7 @@ msgstr "bản đồ raster 3d để thay đổi các giá trị rỗng"
 msgid "List of cell values to be set to NULL"
 msgstr "Danh sách các giá trị ô cần được thiết lập thành NULL"
 
-#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:77
+#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:78
 msgid "The value to replace the null value by"
 msgstr "Giá trị dùng để thay thế cho giá trị rỗng theo"
 
@@ -886,7 +886,7 @@ msgstr "Grid3 <%s> không thấy %s"
 msgid "Adding rule: %lf - %lf"
 msgstr "Đang thêm quy tắc: %lf - %lf"
 
-#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
+#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:266
 #, c-format
 msgid "%s: illegal value spec"
 msgstr "%s: giá trị chỉ định không hợp lệ"
@@ -1215,7 +1215,7 @@ msgstr "Ghi đè tập tin bản đồ đầu ra"
 #: ../raster/r.out.tiff/r.out.tiff.c:166 ../raster/r.texture/main.c:228
 #: ../raster/r.out.arc/main.c:113 ../raster/r.colors/main.c:306
 #: ../raster/r.colors/main.c:387 ../raster/r.statistics/main.c:79
-#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:113
+#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:119
 #: ../raster/r.mapcalc/map.c:377 ../raster/r.thin/io.c:96
 #: ../raster/r.reclass/main.c:78 ../raster/r.to.vect/main.c:113
 #: ../raster/r.cats/main.c:125 ../raster/r.cats/main.c:146
@@ -1432,7 +1432,7 @@ msgstr "Không can thiệp các giá trị NULL khi vẽ"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:117
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:324
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -2608,7 +2608,7 @@ msgstr "Đang đọc %s..."
 #: ../raster/r.out.gdal/export_band.c:152
 #: ../raster/r.out.gdal/export_band.c:397
 #: ../raster/r.out.gdal/export_band.c:430
-#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:334
+#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:340
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -2934,14 +2934,16 @@ msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr ""
 "Giá trị múi giờ dân sự, nếu không có, giờ sẽ là giờ mặt trời địa phương"
 
-#: ../raster/r.sun2/main.c:502 ../vector/v.buffer2/main.c:217
+#: ../raster/r.sun2/main.c:502 ../vector/v.generalize/main.c:208
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 "Lệnh này không làm gì hết. Nó được giữ lại chỉ nhằm mục đích tương thích "
 "ngược"
 
-#: ../raster/r.sun2/main.c:503 ../vector/v.buffer2/main.c:215
-#: ../vector/v.buffer2/main.c:227 ../vector/v.build.polylines/main.c:128
+#: ../raster/r.sun2/main.c:503 ../vector/v.generalize/main.c:209
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
+#: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr "Không dùng"
 
@@ -3688,7 +3690,7 @@ msgstr "Quá nhiều điểm bắt đầu"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.growing/main.c:129
 #: ../vector/lidar/v.lidar.correction/main.c:182
-#: ../vector/v.generalize/main.c:283 ../vector/v.extract/main.c:193
+#: ../vector/v.generalize/main.c:289 ../vector/v.extract/main.c:193
 #: ../vector/v.net.iso/main.c:181 ../vector/v.net.salesman/main.c:171
 #: ../vector/v.perturb/main.c:154 ../vector/v.distance/main.c:299
 #: ../vector/v.label.sa/labels.c:60 ../vector/v.type/main.c:202
@@ -3701,7 +3703,7 @@ msgstr "Quá nhiều điểm bắt đầu"
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
-#: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
+#: ../vector/v.voronoi/vo_main.c:158 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
 #: ../vector/v.class/main.c:95 ../vector/v.build.polylines/main.c:139
@@ -5151,7 +5153,7 @@ msgstr "Đang khởi tạo đầu ra..."
 msgid "Failed to guess site file format\n"
 msgstr "Thất bại trong việc đoán định dạng tập tin địa điểm\n"
 
-#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:758
+#: ../raster/r.cost/main.c:600 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "Không thể cấp phát bộ nhớ"
@@ -6041,7 +6043,7 @@ msgstr "Dùng khoảng cách tối đa từ điểm quan sát (mét): %f"
 #: ../raster/r.los/main.c:380 ../raster/r.buffer/write_map.c:78
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
-#: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
+#: ../raster/r.null/null.c:348 ../raster/r.proj.seg/main.c:513
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "Thất bại khi đang ghi bản đồ raster <%s> hàng %d"
@@ -8406,7 +8408,7 @@ msgid "Output Tiled TIFF"
 msgstr "Xuất ra TIFF dạng xếp kề (tiled)"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
-#: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
+#: ../raster/r.null/null.c:163 ../raster/r.topidx/file_io.c:20
 #: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
 #: ../imagery/i.rectify/main.c:300
 #, c-format
@@ -8733,7 +8735,7 @@ msgstr ""
 "Quá nhiều phạm trù (tìm thấy: %i, tối đa: %i). Thử lấy lại tỷ lệ hoặc phân "
 "loại lại bản đồ"
 
-#: ../raster/r.texture/h_measure.c:927
+#: ../raster/r.texture/h_measure.c:937
 #, c-format
 msgid "Too many iterations to required to find %s - giving up"
 msgstr "Cần quá nhiều lần lặp để tìm %s - bỏ cuộc"
@@ -9775,30 +9777,46 @@ msgid "Manages NULL-values of given raster map."
 msgstr "Quản lý các giá trị NULL của một bản đồ raster cho trước."
 
 #: ../raster/r.null/null.c:62
-msgid "Raster map for which to edit null file"
+#, fuzzy
+msgid "Name of raster map for which to edit null file"
 msgstr "Bản đồ raster cần biên tập các giá trị null"
 
-#: ../raster/r.null/null.c:81
+#: ../raster/r.null/null.c:71 ../raster/r.null/null.c:79
+msgid "Modify"
+msgstr ""
+
+#: ../raster/r.null/null.c:83
 msgid "Only do the work if the map is floating-point"
 msgstr "Chỉ thực hiện nếu bản đồ thuộc kiểu dấu chấm động"
 
-#: ../raster/r.null/null.c:85
+#: ../raster/r.null/null.c:84 ../raster/r.null/null.c:89
+#: ../raster/r.null/null.c:95
+msgid "Check"
+msgstr ""
+
+#: ../raster/r.null/null.c:88
 msgid "Only do the work if the map is integer"
 msgstr "Chỉ thực hiện nếu bản đồ thuộc kiểu số nguyên"
 
-#: ../raster/r.null/null.c:90
+#: ../raster/r.null/null.c:94
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
 msgstr "Chỉ thực hiện nếu bản đồ không có tập tin bitmap giá trị NULL"
 
-#: ../raster/r.null/null.c:95
+#: ../raster/r.null/null.c:100
 msgid "Create NULL-value bitmap file validating all data cells"
 msgstr "Tạo tập tin bitmap giá trị NULL xác thực tất cả các ô dữ liệu"
 
-#: ../raster/r.null/null.c:99
+#: ../raster/r.null/null.c:104
 msgid "Remove NULL-value bitmap file"
 msgstr "Loại bỏ tập tin bitmap giá trị NULL"
 
-#: ../raster/r.null/null.c:117
+#: ../raster/r.null/null.c:105
+#: ../locale/scriptstrings/r.mask_to_translate.c:11
+#, fuzzy
+msgid "Remove"
+msgstr "Loại bỏ các đoạn thừa"
+
+#: ../raster/r.null/null.c:123
 #, c-format
 msgid ""
 "Raster map <%s> is a reclass of map <%s@%s>. Consider to generate a copy "
@@ -9807,62 +9825,62 @@ msgstr ""
 "Bản đồ raster <%s> là phân loại lại của bản đồ <%s@%s>. Cân nhắc việc tạo "
 "một bản sao bằng r.mapcalc. Đang thoát."
 
-#: ../raster/r.null/null.c:123
+#: ../raster/r.null/null.c:129
 #, c-format
 msgid "Raster map <%s> is not in your mapset <%s>"
 msgstr "Bản đồ raster <%s> không ở trong bộ bản đồ <%s> của bạn"
 
-#: ../raster/r.null/null.c:130
+#: ../raster/r.null/null.c:136
 #, c-format
 msgid "%s is illegal entry for null"
 msgstr "%s là mục không hợp lệ dùng cho null"
 
-#: ../raster/r.null/null.c:137
+#: ../raster/r.null/null.c:143
 #, c-format
 msgid "Raster map <%s> already has a null bitmap file"
 msgstr "Bản đồ raster <%s> đã có một tập tin bitmap null"
 
-#: ../raster/r.null/null.c:141
+#: ../raster/r.null/null.c:147
 #, c-format
 msgid "<%s> is integer raster map (CELL)"
 msgstr "<%s> là bản đồ raster kiểu số nguyên (CELL)"
 
-#: ../raster/r.null/null.c:145
+#: ../raster/r.null/null.c:151
 #, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
 msgstr "<%s> là bản đồ raster kiểu số nguyên (CELL). Dùng null=%d."
 
-#: ../raster/r.null/null.c:151
+#: ../raster/r.null/null.c:157
 #, c-format
 msgid "<%s> is floating pointing raster map"
 msgstr "<%s> là bản đồ raster kiểu dấu chấm động"
 
-#: ../raster/r.null/null.c:169
+#: ../raster/r.null/null.c:175
 #, c-format
 msgid "Writing new null file for raster map <%s>..."
 msgstr "Ghi đang ghi tập tin null mới cho bản đồ raster <%s>... "
 
-#: ../raster/r.null/null.c:176
+#: ../raster/r.null/null.c:182
 #, c-format
 msgid "Error writing null row %d"
 msgstr "Lỗi khi đang ghi null hàng %d"
 
-#: ../raster/r.null/null.c:181 ../raster/r.null/null.c:194
+#: ../raster/r.null/null.c:187 ../raster/r.null/null.c:200
 #, c-format
 msgid "Raster map <%s> modified."
 msgstr "Bản đồ raster <%s> được thay đổi."
 
-#: ../raster/r.null/null.c:188
+#: ../raster/r.null/null.c:194
 #, c-format
 msgid "Removing null file for raster map <%s>..."
 msgstr "Đang loại bỏ tập tin null của bản đồ raster <%s>..."
 
-#: ../raster/r.null/null.c:258
+#: ../raster/r.null/null.c:264
 #, c-format
 msgid "%s: %s: illegal value spec"
 msgstr "%s: %s: giá trị chỉ định không hợp lệ"
 
-#: ../raster/r.null/null.c:327
+#: ../raster/r.null/null.c:333
 #, c-format
 msgid "Writing new data for raster map <%s>..."
 msgstr "Đang ghi dữ liệu mới cho bản đồ raster <%s>..."
@@ -11369,7 +11387,7 @@ msgstr "Không thể mở bản đồ con trỏ tháo nước"
 msgid "Unable to open new basin map"
 msgstr "Không thể mở bản đồ lưu vực mới"
 
-#: ../raster/r.water.outlet/main.c:157
+#: ../raster/r.water.outlet/main.c:159
 msgid "Unable to close new basin map layer"
 msgstr "Không thể đóng lớp bản đồ lưu vực mới"
 
@@ -12274,12 +12292,12 @@ msgstr "Không thể mở tập tin phân đoạn %s"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/v.generalize/main.c:295 ../vector/v.net.distance/main.c:146
+#: ../vector/v.generalize/main.c:301 ../vector/v.net.distance/main.c:146
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
 #: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
-#: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/vo_main.c:165 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
 #: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
@@ -17214,7 +17232,7 @@ msgstr "Mở biểu mẫu ở chế độ chỉnh sửa"
 #: ../vector/lidar/v.lidar.growing/main.c:141
 #: ../vector/lidar/v.lidar.growing/main.c:145
 #: ../vector/lidar/v.lidar.correction/main.c:186
-#: ../vector/v.generalize/main.c:288 ../vector/v.net.distance/main.c:140
+#: ../vector/v.generalize/main.c:294 ../vector/v.net.distance/main.c:140
 #: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
@@ -19316,7 +19334,7 @@ msgid "Writing attributes..."
 msgstr "Đang ghi các thuộc tính..."
 
 #: ../vector/v.generalize/misc.c:157 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
+#: ../vector/v.voronoi/vo_main.c:339 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "Lớp %d"
@@ -19431,60 +19449,60 @@ msgstr "Số lần chạy lặp"
 msgid "Copy attributes"
 msgstr "Sao chép thuộc tính"
 
-#: ../vector/v.generalize/main.c:256
+#: ../vector/v.generalize/main.c:262
 msgid "Unknown method"
 msgstr "Phương pháp không biết"
 
-#: ../vector/v.generalize/main.c:316
+#: ../vector/v.generalize/main.c:322
 #, fuzzy
 msgid "Displacement..."
 msgstr "Đang dời dữ liệu..."
 
-#: ../vector/v.generalize/main.c:325
+#: ../vector/v.generalize/main.c:331
 #, fuzzy
 msgid "Network generalization..."
 msgstr "Phép tổng quát hoá dựa trên vec-tơ."
 
-#: ../vector/v.generalize/main.c:340
+#: ../vector/v.generalize/main.c:346
 msgid "Attributes are needed for 'where' option, copying table"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:362
+#: ../vector/v.generalize/main.c:368
 #, c-format
 msgid "Generalization (%s)..."
 msgstr "Tổng quát hoá (%s) ..."
 
-#: ../vector/v.generalize/main.c:456
+#: ../vector/v.generalize/main.c:462
 #, fuzzy, c-format
 msgid "Method '%s' did not preserve first point"
 msgstr "Phông '%s' không phải là kiểu phông FreeType\n"
 
-#: ../vector/v.generalize/main.c:461
+#: ../vector/v.generalize/main.c:467
 #, c-format
 msgid "Method '%s' did not preserve last point"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:488
+#: ../vector/v.generalize/main.c:494
 #, fuzzy, c-format
 msgid ""
 "%d boundaries were not modified because modification would damage topology"
 msgstr "%d ranh giới không bị cắt bỏ vì việc này làm hỏng tôpô"
 
-#: ../vector/v.generalize/main.c:491
+#: ../vector/v.generalize/main.c:497
 #, c-format
 msgid "%d lines/boundaries were not modified due to over-simplification"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:506
+#: ../vector/v.generalize/main.c:512
 #, fuzzy, c-format
 msgid "Number of vertices for selected lines %s from %d to %d (%d%%)."
 msgstr "Số lượng đỉnh được giảm bớt từ %d xuống %d [%d%%]"
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 msgid "reduced"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 #, fuzzy
 msgid "changed"
 msgstr "Các hàng bị thay đổi"
@@ -19659,7 +19677,7 @@ msgid "Create 3D output"
 msgstr "Tạo đầu ra 3D"
 
 #: ../vector/v.in.ogr/main.c:215 ../vector/v.select/args.c:80
-#: ../vector/v.voronoi/vo_main.c:138 ../vector/v.overlay/main.c:120
+#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:120
 #: ../vector/v.to.points/main.c:213
 msgid "Do not create attribute table"
 msgstr "Không tạo bảng thuộc tính"
@@ -20149,7 +20167,7 @@ msgstr ""
 msgid "Extracting features..."
 msgstr "Đang trích ra các đối tượng..."
 
-#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:339
+#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:344
 msgid "No table"
 msgstr "Không có bảng"
 
@@ -23464,13 +23482,13 @@ msgstr "Đang tạo danh sách các ranh giới cần xoá..."
 msgid "Deleting boundaries..."
 msgstr "Đang xoá các ranh giới..."
 
-#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.voronoi/vo_main.c:120 ../vector/v.voronoi/dt_main.c:46
 #: ../vector/v.delaunay2/main.c:86
 #, fuzzy
 msgid "vector, geometry, triangulation"
 msgstr "vector, hình học, thu mẫu"
 
-#: ../vector/v.voronoi/vo_main.c:119
+#: ../vector/v.voronoi/vo_main.c:121
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
@@ -23478,28 +23496,37 @@ msgstr ""
 "Tạo một biểu đồ Voronoi từ một bản đồ vector đầu vào chứa các điểm hoặc các "
 "trọng tâm."
 
-#: ../vector/v.voronoi/vo_main.c:134
+#: ../vector/v.voronoi/vo_main.c:136
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr "Xuất ra lưới tổ ong ở dạng sơ đồ (đường), chứ không phải vùng"
 
-#: ../vector/v.voronoi/vo_main.c:175
+#: ../vector/v.voronoi/vo_main.c:179
 #, fuzzy
 msgid "Reading sites..."
 msgstr "Đang đọc các đầu vào..."
 
-#: ../vector/v.voronoi/vo_main.c:185
+#: ../vector/v.voronoi/vo_main.c:189
 #, fuzzy
 msgid "Voronoi triangulation..."
 msgstr "Phép tam giác Delaunay..."
 
-#: ../vector/v.voronoi/vo_main.c:270
+#: ../vector/v.voronoi/vo_main.c:271
 #, fuzzy
 msgid "Writing sites to output..."
 msgstr "Đang ghi đầu ra..."
 
-#: ../vector/v.voronoi/vo_main.c:354
+#: ../vector/v.voronoi/vo_main.c:359
 msgid "Cannot copy table"
 msgstr "Không thể sao chép bảng"
+
+#: ../vector/v.voronoi/vo_main.c:415
+msgid "Output needs topological cleaning"
+msgstr ""
+
+#: ../vector/v.voronoi/vo_main.c:447
+#, fuzzy
+msgid "Removing incorrect boundaries from output"
+msgstr "Loại bỏ các tập tin ra khỏi nhóm ảnh"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 msgid ""
@@ -28684,14 +28711,19 @@ msgstr ""
 "cột '%s', kiểu 'string': độ rộng không biết -> được lưu trữ dưới dạng varchar"
 "(250), một số dữ liệu có thể bị mất"
 
-#: ../db/drivers/sqlite/describe.c:159
+#: ../db/drivers/sqlite/describe.c:160
 #, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
 msgstr "Trình điều khiển SQLite: cột '%s', kiểu SQLite %d không được hỗ trợ"
 
-#: ../db/drivers/sqlite/db.c:84
+#: ../db/drivers/sqlite/db.c:85
 msgid "Unable to open database: "
 msgstr "Không thể mở csdl:"
+
+#: ../db/drivers/sqlite/db.c:110
+#, fuzzy
+msgid "SQLite database connection is still busy"
+msgstr "Kết nối CSDL không được định nghĩa"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
 #: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
@@ -29530,6 +29562,10 @@ msgstr "Liệt kê các quy tắc và thoát"
 msgid "Install system-wide (may need system administrator rights)"
 msgstr ""
 
+#: ../locale/scriptstrings/g.extension_to_translate.c:11
+msgid "Install system-wide using sudo"
+msgstr ""
+
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
 #, fuzzy
 msgid "Prints a graph of the correlation between data layers (in pairs)."
@@ -29937,11 +29973,6 @@ msgstr "Ghi đè  MẶT NẠ hiện có"
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing MASK (overrides other options)"
 msgstr "Loại bỏ MẶT NẠ hiện có (ghi đè các tùy chọn khác)"
-
-#: ../locale/scriptstrings/r.mask_to_translate.c:11
-#, fuzzy
-msgid "Remove"
-msgstr "Loại bỏ các đoạn thừa"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
 msgid ""
@@ -35421,9 +35452,6 @@ msgstr ""
 
 #~ msgid "       %s"
 #~ msgstr "       %s"
-
-#~ msgid "Removing files from group"
-#~ msgstr "Loại bỏ các tập tin ra khỏi nhóm ảnh"
 
 #, fuzzy
 #~ msgid "Adding files to group [%s]"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:33+0200\n"
+"POT-Creation-Date: 2011-10-05 23:14+0200\n"
 "PO-Revision-Date: 2011-08-03 16:27+0200\n"
 "Last-Translator: Jan Trochta <j.trochta@gmail.com>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -53,7 +53,7 @@ msgstr "Nástrojová li¹tavektorové digitalizace"
 msgid "Map layers"
 msgstr "Mapové vrstvy"
 
-#: ../gui/wxpython/wxgui.py:254 ../gui/wxpython/wxgui.py:406
+#: ../gui/wxpython/wxgui.py:254 ../gui/wxpython/wxgui.py:394
 msgid "Command console"
 msgstr "Pøíkazová konzole"
 
@@ -80,80 +80,57 @@ msgstr ""
 msgid "Choose model to run"
 msgstr "Vybrat model ke spu¹tìní"
 
-#: ../gui/wxpython/wxgui.py:348 ../gui/wxpython/gui_modules/gmodeler.py:810
-#: ../gui/wxpython/gui_modules/gmodeler.py:854
+#: ../gui/wxpython/wxgui.py:348 ../gui/wxpython/gui_modules/gmodeler.py:918
+#: ../gui/wxpython/gui_modules/gmodeler.py:962
 msgid "GRASS Model File (*.gxm)|*.gxm"
 msgstr "GRASS soubor modulu (*.gxm)|*.gxm"
 
-#: ../gui/wxpython/wxgui.py:357 ../gui/wxpython/gui_modules/gmodeler.py:1125
-msgid "Validating model..."
-msgstr "Vyhodnocuji model..."
-
-#: ../gui/wxpython/wxgui.py:361 ../gui/wxpython/gui_modules/gmodeler.py:927
-#, python-format
-msgid ""
-"Model is not valid. Do you want to run the model anyway?\n"
-"\n"
-"%s"
-msgstr ""
-"Modul je neplatný. Chcete jej pøesto spustit? \n"
-"\n"
-"%s"
-
-#: ../gui/wxpython/wxgui.py:363 ../gui/wxpython/gui_modules/gmodeler.py:929
-msgid "Run model?"
-msgstr "Spustit modul?"
-
-#: ../gui/wxpython/wxgui.py:370 ../gui/wxpython/gui_modules/gmodeler.py:992
-msgid "Running model..."
-msgstr "Spou¹tím modul"
-
-#: ../gui/wxpython/wxgui.py:420 ../gui/wxpython/wxgui.py:1555
+#: ../gui/wxpython/wxgui.py:408 ../gui/wxpython/wxgui.py:1543
 msgid "Do you want to save changes in the workspace?"
 msgstr "Chcete ulo¾it zmìny v pracovním prostøedí?"
 
-#: ../gui/wxpython/wxgui.py:422 ../gui/wxpython/wxgui.py:1557
+#: ../gui/wxpython/wxgui.py:410 ../gui/wxpython/wxgui.py:1545
 msgid "Do you want to store current settings to workspace file?"
 msgstr "Chcete ulo¾it souèasné nastavní do souboru pracovního prostøedí?"
 
-#: ../gui/wxpython/wxgui.py:429
+#: ../gui/wxpython/wxgui.py:417
 #, python-format
 msgid "Close Map Display %d"
 msgstr "Zavøít Mapový displej %d"
 
-#: ../gui/wxpython/wxgui.py:528 ../gui/wxpython/wxgui.py:1210
+#: ../gui/wxpython/wxgui.py:516 ../gui/wxpython/wxgui.py:1198
 msgid "Selected map layer is not vector."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:533
+#: ../gui/wxpython/wxgui.py:521
 #, fuzzy
 msgid "Editing is allowed only for vector maps from the current mapset."
 msgstr "Pøebuduje topologii v¹ech vektorových map v souèasném mapsetu."
 
-#: ../gui/wxpython/wxgui.py:548
+#: ../gui/wxpython/wxgui.py:536
 msgid "Choose script file to run"
 msgstr "Vybrat soubor se skritp"
 
-#: ../gui/wxpython/wxgui.py:550
+#: ../gui/wxpython/wxgui.py:538
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 msgstr "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 
-#: ../gui/wxpython/wxgui.py:561
+#: ../gui/wxpython/wxgui.py:549
 #, python-format
 msgid "Script file '%s' doesn't exist. Operation cancelled."
 msgstr "Soubor skriptu '%s' neexistuje. Operace zru¹ena."
 
-#: ../gui/wxpython/wxgui.py:565
+#: ../gui/wxpython/wxgui.py:553
 #, python-format
 msgid "Launching script '%s'..."
 msgstr "Spou¹tím script  '%s'..."
 
-#: ../gui/wxpython/wxgui.py:580
+#: ../gui/wxpython/wxgui.py:568
 #, python-format
 msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
 msgstr "Nelze se pøepnout do location <%(loc)s> mapset <%(mapset)s>."
 
-#: ../gui/wxpython/wxgui.py:582 ../gui/wxpython/wxgui.py:603
+#: ../gui/wxpython/wxgui.py:570 ../gui/wxpython/wxgui.py:591
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:1701
 #: ../gui/wxpython/gui_modules/location_wizard.py:561
 #: ../gui/wxpython/gui_modules/location_wizard.py:746
@@ -165,22 +142,20 @@ msgstr "Nelze se pøepnout do location <%(loc)s> mapset <%(mapset)s>."
 #: ../gui/wxpython/gui_modules/gcmd.py:64
 #: ../gui/wxpython/gui_modules/vdigit.py:1027
 #: ../gui/wxpython/gui_modules/vdigit.py:1219
-#: ../gui/wxpython/gui_modules/gmodeler.py:1459
+#: ../gui/wxpython/gui_modules/gmodeler.py:1477
 #: ../gui/wxpython/gui_modules/workspace.py:984
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5383
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
 #: ../gui/wxpython/gui_modules/dbm.py:165
 #: ../gui/wxpython/gui_modules/dbm.py:1408
 #: ../gui/wxpython/gui_modules/dbm.py:1517
 #: ../gui/wxpython/gui_modules/dbm.py:1603
 #: ../gui/wxpython/gui_modules/dbm.py:1615
 #: ../gui/wxpython/gui_modules/dbm.py:1630
-#: ../gui/wxpython/gui_modules/dbm.py:1750
-#: ../gui/wxpython/gui_modules/dbm.py:1772
-#: ../gui/wxpython/gui_modules/dbm.py:1942
-#: ../gui/wxpython/gui_modules/dbm.py:2759
-#: ../gui/wxpython/gui_modules/dbm.py:2857
+#: ../gui/wxpython/gui_modules/dbm.py:1947
+#: ../gui/wxpython/gui_modules/dbm.py:2766
 #: ../gui/wxpython/gui_modules/dbm.py:2864
-#: ../gui/wxpython/gui_modules/dbm.py:2903
+#: ../gui/wxpython/gui_modules/dbm.py:2871
+#: ../gui/wxpython/gui_modules/dbm.py:2910
 #: ../gui/wxpython/gui_modules/gdialogs.py:287
 #: ../gui/wxpython/gui_modules/profile.py:598
 #: ../gui/wxpython/gui_modules/layertree.py:490
@@ -196,7 +171,7 @@ msgstr "Nelze se pøepnout do location <%(loc)s> mapset <%(mapset)s>."
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gui/wxpython/wxgui.py:588
+#: ../gui/wxpython/wxgui.py:576
 #, python-format
 msgid ""
 "Current location is <%(loc)s>.\n"
@@ -205,22 +180,22 @@ msgstr ""
 "Souèasná location je <%(loc)s>.\n"
 "Souèasný mapset je <%(mapset)s>."
 
-#: ../gui/wxpython/wxgui.py:591 ../gui/wxpython/wxgui.py:607
-#: ../gui/wxpython/gui_modules/ghelp.py:541
+#: ../gui/wxpython/wxgui.py:579 ../gui/wxpython/wxgui.py:595
+#: ../gui/wxpython/gui_modules/ghelp.py:543
 msgid "Info"
 msgstr "Informace"
 
-#: ../gui/wxpython/wxgui.py:602
+#: ../gui/wxpython/wxgui.py:590
 #, python-format
 msgid "Unable to switch to mapset <%s>."
 msgstr "Nelze se pøepnout do mapsetu <%s>."
 
-#: ../gui/wxpython/wxgui.py:606
+#: ../gui/wxpython/wxgui.py:594
 #, python-format
 msgid "Current mapset is <%s>."
 msgstr "Souèasný mapset je <%s>."
 
-#: ../gui/wxpython/wxgui.py:672
+#: ../gui/wxpython/wxgui.py:660
 msgid ""
 "Current workspace is not empty. Do you want to store current settings to "
 "workspace file?"
@@ -228,19 +203,19 @@ msgstr ""
 "Pracovní plocha není prázdná. Pøejete si ulo¾it aktuální nastavení do "
 "souboru pracovního prostøedí?"
 
-#: ../gui/wxpython/wxgui.py:675
+#: ../gui/wxpython/wxgui.py:663
 msgid "Create new workspace?"
 msgstr "Vytvoøit nový soubor pracovní oblasti?"
 
-#: ../gui/wxpython/wxgui.py:701
+#: ../gui/wxpython/wxgui.py:689
 msgid "Choose workspace file"
 msgstr "Zvolit soubor workspace"
 
-#: ../gui/wxpython/wxgui.py:702 ../gui/wxpython/wxgui.py:881
+#: ../gui/wxpython/wxgui.py:690 ../gui/wxpython/wxgui.py:869
 msgid "GRASS Workspace File (*.gxw)|*.gxw"
 msgstr "GRASS soubor pracovního prostøedí (*.gxw)|*.gxw"
 
-#: ../gui/wxpython/wxgui.py:737
+#: ../gui/wxpython/wxgui.py:725
 #, python-format
 msgid ""
 "Reading workspace file <%s> failed.\n"
@@ -249,57 +224,57 @@ msgstr ""
 "Ètení souboru workspace <%s> selhalo. \n"
 "Neplatný soubor, nelze parsovat XML dokument."
 
-#: ../gui/wxpython/wxgui.py:741 ../gui/wxpython/wxgui.py:858
-#: ../gui/wxpython/wxgui.py:1296
+#: ../gui/wxpython/wxgui.py:729 ../gui/wxpython/wxgui.py:846
+#: ../gui/wxpython/wxgui.py:1284
 msgid "Please wait, loading workspace..."
 msgstr "Prosím èekejte, naèítám pracovní oblast..."
 
-#: ../gui/wxpython/wxgui.py:842
+#: ../gui/wxpython/wxgui.py:830
 msgid "Choose GRC file to load"
 msgstr "Vyberte soubor GRC k naètení"
 
-#: ../gui/wxpython/wxgui.py:843
+#: ../gui/wxpython/wxgui.py:831
 msgid "Old GRASS Workspace File (*.grc)|*.grc"
 msgstr "Starý soubor pracovního prostøedí  (*.grc)|*.grc"
 
-#: ../gui/wxpython/wxgui.py:880
+#: ../gui/wxpython/wxgui.py:868
 msgid "Choose file to save current workspace"
 msgstr "Vybrat soubor pro ulo¾ení aktuálního workspace"
 
-#: ../gui/wxpython/wxgui.py:895 ../gui/wxpython/wxgui.py:911
+#: ../gui/wxpython/wxgui.py:883 ../gui/wxpython/wxgui.py:899
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
 msgstr "Soubor workspace <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
 
-#: ../gui/wxpython/wxgui.py:897 ../gui/wxpython/wxgui.py:914
+#: ../gui/wxpython/wxgui.py:885 ../gui/wxpython/wxgui.py:902
 #: ../gui/wxpython/menustrings.py:9
 msgid "Save workspace"
 msgstr "Ulo¾it pracovní oblast"
 
-#: ../gui/wxpython/wxgui.py:935
+#: ../gui/wxpython/wxgui.py:923
 msgid "Writing current settings to workspace file failed."
 msgstr "Zápis aktuálního nastavení do souboru pracovní oblasti selhalo."
 
-#: ../gui/wxpython/wxgui.py:946 ../gui/wxpython/gui_modules/gmodeler.py:1458
+#: ../gui/wxpython/wxgui.py:934 ../gui/wxpython/gui_modules/gmodeler.py:1476
 #: ../gui/wxpython/gui_modules/profile.py:597
 #, python-format
 msgid "Unable to open file <%s> for writing."
 msgstr "Nelze otevøít soubor <%s> pro zápis."
 
-#: ../gui/wxpython/wxgui.py:1183
+#: ../gui/wxpython/wxgui.py:1171
 msgid "Nothing to import. No WMS layer selected."
 msgstr "Nic  neimportováno. Nebyla vybrána WMS vrstva."
 
-#: ../gui/wxpython/wxgui.py:1219
+#: ../gui/wxpython/wxgui.py:1207
 msgid "Please wait, loading attribute data..."
 msgstr "Prosím èekejte, naèítám atributové data..."
 
-#: ../gui/wxpython/wxgui.py:1288
+#: ../gui/wxpython/wxgui.py:1276
 #, fuzzy
 msgid "Add selected map layers into layer tree"
 msgstr "Pøidat pøipojené vrstvy do stromu vrstev"
 
-#: ../gui/wxpython/wxgui.py:1497
+#: ../gui/wxpython/wxgui.py:1485
 #, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
@@ -310,32 +285,32 @@ msgstr ""
 "%s\n"
 "ze seznamu vrstev?"
 
-#: ../gui/wxpython/wxgui.py:1500
+#: ../gui/wxpython/wxgui.py:1488
 msgid "Do you want to remove selected map layer(s) from layer tree?"
 msgstr "Pøejete si odstranit vybranou mapovou vrstvu ze stromu vrstev?"
 
-#: ../gui/wxpython/wxgui.py:1504
+#: ../gui/wxpython/wxgui.py:1492
 msgid "Remove map layer"
 msgstr "Odstranit mapovou vrstvu"
 
-#: ../gui/wxpython/wxgui.py:1564
+#: ../gui/wxpython/wxgui.py:1552
 msgid "Quit GRASS GUI"
 msgstr "Ukonèit GRASS GUI"
 
-#: ../gui/wxpython/wxgui.py:1593
+#: ../gui/wxpython/wxgui.py:1581
 msgid "No map layer selected. Operation cancelled."
 msgstr "Nebyla vybrána ¾ádná mapová vrstva. Operace ukonèena."
 
-#: ../gui/wxpython/wxgui.py:1594 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
-#: ../gui/wxpython/gui_modules/ghelp.py:289
+#: ../gui/wxpython/wxgui.py:1582 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
+#: ../gui/wxpython/gui_modules/ghelp.py:291
 #: ../gui/wxpython/gui_modules/gcmd.py:98
-#: ../gui/wxpython/gui_modules/dbm.py:2057
-#: ../gui/wxpython/gui_modules/dbm.py:2086 ../gui/wxpython/gis_set.py:456
+#: ../gui/wxpython/gui_modules/dbm.py:2064
+#: ../gui/wxpython/gui_modules/dbm.py:2093 ../gui/wxpython/gis_set.py:456
 #: ../gui/wxpython/gis_set.py:491
 msgid "Message"
 msgstr "Zpráva"
 
-#: ../gui/wxpython/wxgui.py:1624
+#: ../gui/wxpython/wxgui.py:1612
 #, fuzzy
 msgid "Starting GRASS GUI..."
 msgstr "Spustit &GRASS"
@@ -474,7 +449,8 @@ msgid "Add text layer"
 msgstr "Pøidat vrstvu s textem"
 
 #: ../gui/wxpython/icons/icon.py:196
-msgid "Create histogram of image or raster file"
+#, fuzzy
+msgid "Create histogram of raster map"
 msgstr "Vytvoøit histogram obrazu nebo rastrového souboru"
 
 #: ../gui/wxpython/icons/icon.py:200
@@ -644,9 +620,8 @@ msgid "Set options"
 msgstr "Nastavit volby"
 
 #: ../gui/wxpython/icons/icon.py:273 ../gui/wxpython/menustrings.py:192
-#, fuzzy
-msgid "Hardcopy Map Output Utility"
-msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+msgid "Cartographic Composer"
+msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:275
 #, fuzzy
@@ -820,7 +795,7 @@ msgstr "Ukonèit nástroj pro georektifikaci"
 
 #: ../gui/wxpython/icons/icon.py:363
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1290
-#: ../gui/wxpython/gui_modules/gselect.py:1054
+#: ../gui/wxpython/gui_modules/gselect.py:1055
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -950,7 +925,7 @@ msgid "Redraw model canvas"
 msgstr "Pøekreslit okno modelování"
 
 #: ../gui/wxpython/icons/icon.py:422
-#: ../gui/wxpython/gui_modules/gmodeler.py:685
+#: ../gui/wxpython/gui_modules/gmodeler.py:793
 msgid "Quit Graphical Modeler"
 msgstr "Ukonèit Grafické modelování"
 
@@ -1002,8 +977,8 @@ msgid "Zoom to full extent"
 msgstr "Zvìt¹it podle výchozího regionu"
 
 #: ../gui/wxpython/icons/icon.py:448
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1955
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2010
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2070
 #, fuzzy
 msgid "Map frame"
 msgstr "Mìøítko mapy"
@@ -1014,7 +989,7 @@ msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:451
 #: ../gui/wxpython/gui_modules/nviz_tools.py:321
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2480
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2540
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:665
 msgid "Raster map"
 msgstr "Rastrová mapa"
@@ -1026,7 +1001,7 @@ msgstr "Pøidat 3D rastrovou mapu"
 
 #: ../gui/wxpython/icons/icon.py:454
 #: ../gui/wxpython/gui_modules/nviz_tools.py:630
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3937
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3980
 msgid "Vector map"
 msgstr "Vektorová mapa"
 
@@ -1047,8 +1022,8 @@ msgstr "Zobrazit møí¾ku"
 
 #: ../gui/wxpython/icons/icon.py:461
 #, fuzzy
-msgid "Quit Hardcopy Map Utility"
-msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+msgid "Quit Cartographic Composer"
+msgstr "Ukonèit Grafické modelování"
 
 #: ../gui/wxpython/icons/icon.py:463
 #, fuzzy
@@ -1091,8 +1066,8 @@ msgid "Kriging"
 msgstr "Krigování"
 
 #: ../gui/wxpython/scripts/vkrige.py:108
-#: ../gui/wxpython/gui_modules/gmodeler.py:583
-#: ../gui/wxpython/gui_modules/menuform.py:784
+#: ../gui/wxpython/gui_modules/gmodeler.py:691
+#: ../gui/wxpython/gui_modules/menuform.py:787
 msgid "Command output"
 msgstr "Výstup pøíkazù"
 
@@ -1110,7 +1085,7 @@ msgstr "Exporovat také mapu rozdílu:"
 
 #: ../gui/wxpython/scripts/vkrige.py:139
 #: ../gui/wxpython/gui_modules/vclean.py:144
-#: ../gui/wxpython/gui_modules/gmodeler.py:3353
+#: ../gui/wxpython/gui_modules/gmodeler.py:3528
 #: ../gui/wxpython/gui_modules/gdialogs.py:1016
 #: ../gui/wxpython/gui_modules/preferences.py:1578
 msgid "Allow output files to overwrite existing files"
@@ -1118,10 +1093,10 @@ msgstr "Povolit pøepsání existujících souborù"
 
 #: ../gui/wxpython/scripts/vkrige.py:152
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:130
-#: ../gui/wxpython/gui_modules/ghelp.py:225
+#: ../gui/wxpython/gui_modules/ghelp.py:227
 #: ../gui/wxpython/gui_modules/vclean.py:165
-#: ../gui/wxpython/gui_modules/gmodeler.py:3470
-#: ../gui/wxpython/gui_modules/menuform.py:459
+#: ../gui/wxpython/gui_modules/gmodeler.py:3645
+#: ../gui/wxpython/gui_modules/menuform.py:462
 msgid "&Run"
 msgstr "&Spustit"
 
@@ -1826,7 +1801,7 @@ msgid "Renames data base element files in the user's current mapset."
 msgstr "Pøejmenuje data v aktuálním mapsetu"
 
 #: ../gui/wxpython/menustrings.py:159
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2644
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2704
 msgid "Delete"
 msgstr "Smazat"
 
@@ -1959,8 +1934,8 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:193
 #, fuzzy
-msgid "Launch Hardcopy Map Output Utility"
-msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+msgid "Launch Cartographic Composer"
+msgstr "Spustit grafické modelování"
 
 #: ../gui/wxpython/menustrings.py:194
 msgid "Launch script"
@@ -2377,7 +2352,7 @@ msgstr "Nalezne nejbli¾¹í body mezi objekty ze dvou rastrových map."
 #: ../gui/wxpython/gui_modules/nviz_tools.py:352
 #: ../gui/wxpython/gui_modules/nviz_tools.py:550
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1028
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3053
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3112
 msgid "Mask"
 msgstr "Maska"
 
@@ -4745,7 +4720,7 @@ msgid "GUI help"
 msgstr "Nápovìda wxGUI"
 
 #: ../gui/wxpython/menustrings.py:806 ../gui/wxpython/menustrings.py:807
-#: ../gui/wxpython/gui_modules/ghelp.py:480
+#: ../gui/wxpython/gui_modules/ghelp.py:482
 msgid "About GRASS GIS"
 msgstr "O GIS GRASS"
 
@@ -4758,7 +4733,7 @@ msgid "Load model from file"
 msgstr "Naèíst model ze souboru"
 
 #: ../gui/wxpython/menustrings.py:816
-#: ../gui/wxpython/gui_modules/gmodeler.py:836
+#: ../gui/wxpython/gui_modules/gmodeler.py:944
 msgid "Save model"
 msgstr "Ulo¾it model"
 
@@ -4787,7 +4762,7 @@ msgid "Close modeler window"
 msgstr "Zavøít okno modelování"
 
 #: ../gui/wxpython/menustrings.py:829
-#: ../gui/wxpython/gui_modules/gmodeler.py:3047
+#: ../gui/wxpython/gui_modules/gmodeler.py:3222
 msgid "Modeler settings"
 msgstr "Nastavení modelování"
 
@@ -4832,7 +4807,7 @@ msgid "Remove action/data from model"
 msgstr "Odstranit data/akce z modelu"
 
 #: ../gui/wxpython/menustrings.py:843
-#: ../gui/wxpython/gui_modules/gmodeler.py:3332
+#: ../gui/wxpython/gui_modules/gmodeler.py:3507
 msgid "Model properties"
 msgstr "Vlastnosti modelu"
 
@@ -4929,7 +4904,7 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:394
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3880
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3923
 msgid "range"
 msgstr "rozmezí"
 
@@ -4971,7 +4946,8 @@ msgid "Please wait, exporting image..."
 msgstr "Prosím èekejte, exportuji obrázek..."
 
 #: ../gui/wxpython/gui_modules/histogram.py:266
-msgid "GRASS GIS Histogram of image or raster map"
+#, fuzzy
+msgid "GRASS GIS Histogram of raster map"
 msgstr "GRASS GIS HIstogram obrazu nebo rastrové mapy"
 
 #: ../gui/wxpython/gui_modules/histogram.py:332
@@ -4988,7 +4964,7 @@ msgstr "vybrat font pro text histogramu"
 #: ../gui/wxpython/gui_modules/histogram.py:403
 #: ../gui/wxpython/gui_modules/mapdisp.py:1140
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:905
-#: ../gui/wxpython/gui_modules/gmodeler.py:1050
+#: ../gui/wxpython/gui_modules/gmodeler.py:1082
 msgid "Choose a file name to save the image (no need to add extension)"
 msgstr ""
 "vyberte jméno souboru pro ulo¾ení obrázku (není potøeba zadávat pøíponu "
@@ -5227,7 +5203,7 @@ msgid "Vector map <%s> added"
 msgstr "Nová vektorová mapa <%s> byla vytvoøena"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:67
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3002
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3061
 msgid "Database connection is not defined in DB file."
 msgstr "Databázové spojení není definováno v DB souboru."
 
@@ -5288,9 +5264,9 @@ msgstr "Neznámý"
 #: ../gui/wxpython/gui_modules/vdigit.py:397
 #: ../gui/wxpython/gui_modules/vdigit.py:897
 #: ../gui/wxpython/gui_modules/vdigit.py:1341
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2395
-#: ../gui/wxpython/gui_modules/dbm.py:2644
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2402
+#: ../gui/wxpython/gui_modules/dbm.py:2651
 msgid "Layer"
 msgstr "Vrstva"
 
@@ -5320,15 +5296,15 @@ msgid "Map type to georectify"
 msgstr "Typ mapy pro georektifikaci"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:328
-#: ../gui/wxpython/gui_modules/gmodeler.py:3604
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2032
+#: ../gui/wxpython/gui_modules/gmodeler.py:3779
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2092
 #: ../gui/wxpython/gui_modules/layertree.py:754
 msgid "raster"
 msgstr "rastrová data"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:328
-#: ../gui/wxpython/gui_modules/gmodeler.py:3605
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2033
+#: ../gui/wxpython/gui_modules/gmodeler.py:3780
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2093
 #: ../gui/wxpython/gui_modules/layertree.py:775
 msgid "vector"
 msgstr "vektorová mapa"
@@ -5654,7 +5630,7 @@ msgstr "Zavøít dialog "
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2395
 #: ../gui/wxpython/gui_modules/vdigit.py:114
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3284
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3339
 msgid "Symbology"
 msgstr "Symbolika"
 
@@ -5685,8 +5661,8 @@ msgstr "Nastavení symbolu"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1308
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3239
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:327
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3102
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3207
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3162
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3265
 #: ../gui/wxpython/gui_modules/preferences.py:1728
 msgid "Color:"
 msgstr "Barva:"
@@ -5802,20 +5778,20 @@ msgstr "Soubor regionu <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
 #: ../gui/wxpython/gui_modules/gcmd.py:89
 #: ../gui/wxpython/gui_modules/workspace.py:1000
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:425
-#: ../gui/wxpython/gui_modules/dbm.py:2358
+#: ../gui/wxpython/gui_modules/dbm.py:2365
 msgid "Warning"
 msgstr "Upozornìní"
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:369
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:370
 msgid "Update categories"
 msgstr "Aktualizovat kategorie"
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:492
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:850
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:493
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:849
 msgid "No vector map selected for editing."
 msgstr "Nebyla vybrána ¾ádná vektorová mapa pro editaci."
 
-#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:983
+#: ../gui/wxpython/gui_modules/mapdisp_vdigit.py:982
 msgid "Z bulk-labeling dialog"
 msgstr "Dialog pøiøazení Z souøadnice jako popisku"
 
@@ -6157,7 +6133,7 @@ msgstr "Typ prvku:"
 msgid "Not enough points for line"
 msgstr "Vytvoøit body podél linií"
 
-#: ../gui/wxpython/gui_modules/wxvdriver.py:837
+#: ../gui/wxpython/gui_modules/wxvdriver.py:827
 #, python-format
 msgid ""
 "Topology for vector map <%s> is not available. Topology is required by "
@@ -6165,7 +6141,7 @@ msgid ""
 "vector map for editing?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxvdriver.py:841
+#: ../gui/wxpython/gui_modules/wxvdriver.py:831
 msgid "Topology missing"
 msgstr ""
 
@@ -6194,159 +6170,159 @@ msgstr "Najít modul"
 msgid "%d modules found"
 msgstr " %d nalezených modulù"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:216
+#: ../gui/wxpython/gui_modules/ghelp.py:218
 msgid "Menu tree (double-click to run command)"
 msgstr "Nabídka (dvojklikem spustíte pøíkaz)"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:226
+#: ../gui/wxpython/gui_modules/ghelp.py:228
 msgid "Run selected command"
 msgstr "Spustit vybraný pøíkaz"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:287
+#: ../gui/wxpython/gui_modules/ghelp.py:289
 msgid "You must run this command from the menu or command line"
 msgstr "Musíte spustit tento pøíkaz z menu nebo z pøíkazové øádky"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:342
-#: ../gui/wxpython/gui_modules/goutput.py:641
+#: ../gui/wxpython/gui_modules/ghelp.py:344
+#: ../gui/wxpython/gui_modules/goutput.py:644
 #, python-format
 msgid "%d modules match"
 msgstr "%d modulù odpovídá"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:357
-#: ../gui/wxpython/gui_modules/ghelp.py:1035
+#: ../gui/wxpython/gui_modules/ghelp.py:359
+#: ../gui/wxpython/gui_modules/ghelp.py:1039
 #, fuzzy
 msgid "Menu tree"
 msgstr "Steinerùv strom"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:512
+#: ../gui/wxpython/gui_modules/ghelp.py:514
 msgid "Official GRASS site:"
 msgstr "Oficiální GRASS stránka:"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:522
+#: ../gui/wxpython/gui_modules/ghelp.py:524
 msgid "GIS Library Revision:"
 msgstr "Verze GIS knihovny:"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:542
+#: ../gui/wxpython/gui_modules/ghelp.py:544
 msgid "Copyright"
 msgstr "Autorská práva"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:543
+#: ../gui/wxpython/gui_modules/ghelp.py:545
 msgid "License"
 msgstr "Licence"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:544
+#: ../gui/wxpython/gui_modules/ghelp.py:546
 msgid "Authors"
 msgstr "Autoøi"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:545
+#: ../gui/wxpython/gui_modules/ghelp.py:547
 msgid "Contributors"
 msgstr "Tvùrci"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:546
+#: ../gui/wxpython/gui_modules/ghelp.py:548
 #, fuzzy
 msgid "Extra contributors"
 msgstr "Tvùrci"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:547
+#: ../gui/wxpython/gui_modules/ghelp.py:549
 msgid "Translators"
 msgstr "Pøekladatelé"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:579
-#: ../gui/wxpython/gui_modules/ghelp.py:604
-#: ../gui/wxpython/gui_modules/ghelp.py:628
-#: ../gui/wxpython/gui_modules/ghelp.py:685
-#: ../gui/wxpython/gui_modules/ghelp.py:745
+#: ../gui/wxpython/gui_modules/ghelp.py:581
+#: ../gui/wxpython/gui_modules/ghelp.py:606
+#: ../gui/wxpython/gui_modules/ghelp.py:630
+#: ../gui/wxpython/gui_modules/ghelp.py:687
+#: ../gui/wxpython/gui_modules/ghelp.py:747
 #, python-format
 msgid "%s file missing"
 msgstr "%s soubor chybí"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:671
-#: ../gui/wxpython/gui_modules/ghelp.py:731
+#: ../gui/wxpython/gui_modules/ghelp.py:673
+#: ../gui/wxpython/gui_modules/ghelp.py:733
 #, python-format
 msgid "Error when reading file '%s'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:672
-#: ../gui/wxpython/gui_modules/ghelp.py:732
+#: ../gui/wxpython/gui_modules/ghelp.py:674
+#: ../gui/wxpython/gui_modules/ghelp.py:734
 #, fuzzy
 msgid "Lines:"
 msgstr "Linie:"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:690
 #: ../gui/wxpython/gui_modules/ghelp.py:692
-#: ../gui/wxpython/gui_modules/ghelp.py:753
-#: ../gui/wxpython/gui_modules/gmodeler.py:3592
-#: ../gui/wxpython/gui_modules/gmodeler.py:3632
-#: ../gui/wxpython/gui_modules/gmodeler.py:3900
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
-#: ../gui/wxpython/gui_modules/gmodeler.py:4330
+#: ../gui/wxpython/gui_modules/ghelp.py:694
+#: ../gui/wxpython/gui_modules/ghelp.py:755
+#: ../gui/wxpython/gui_modules/gmodeler.py:3767
+#: ../gui/wxpython/gui_modules/gmodeler.py:3807
+#: ../gui/wxpython/gui_modules/gmodeler.py:4075
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
+#: ../gui/wxpython/gui_modules/gmodeler.py:4505
 msgid "Name"
 msgstr "Jméno"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:690
 #: ../gui/wxpython/gui_modules/ghelp.py:692
-#: ../gui/wxpython/gui_modules/ghelp.py:755
+#: ../gui/wxpython/gui_modules/ghelp.py:694
+#: ../gui/wxpython/gui_modules/ghelp.py:757
 msgid "E-mail"
 msgstr "E-mail"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:692
+#: ../gui/wxpython/gui_modules/ghelp.py:694
 msgid "Country"
 msgstr "Zemì"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:692
+#: ../gui/wxpython/gui_modules/ghelp.py:694
 msgid "OSGeo_ID"
 msgstr "OSGeo_ID"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:757
+#: ../gui/wxpython/gui_modules/ghelp.py:759
 msgid "Language"
 msgstr "Jazyk"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:782
+#: ../gui/wxpython/gui_modules/ghelp.py:784
 #, fuzzy
 msgid "Fetch & install extension from GRASS Addons"
 msgstr "Stáhnout & instalovat nové roz¹íøení z GRASS Addons"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:791
+#: ../gui/wxpython/gui_modules/ghelp.py:793
 msgid "Repository"
 msgstr "Repozitáø"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:793
+#: ../gui/wxpython/gui_modules/ghelp.py:795
 msgid "List of extensions"
 msgstr "Seznam roz¹íøení"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:797
+#: ../gui/wxpython/gui_modules/ghelp.py:799
 msgid "Fetch full info including description and keywords (takes time)"
 msgstr ""
 "Stáhnout v¹echny informace v¹etnì popisu a klíèových slov (èasovì nároèné)"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:806
+#: ../gui/wxpython/gui_modules/ghelp.py:808
 #: ../gui/wxpython/gui_modules/gdialogs.py:990
 #, fuzzy
 msgid "Options"
 msgstr "Volitelné"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:827
+#: ../gui/wxpython/gui_modules/ghelp.py:829
 msgid "&Fetch"
 msgstr "&Stáhnout"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:828
+#: ../gui/wxpython/gui_modules/ghelp.py:830
 msgid "Fetch list of available modules from GRASS Addons SVN repository"
 msgstr "Stáhnout seznam dostupných modulù z GRASS Addons SVN repozitáøe"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:831
+#: ../gui/wxpython/gui_modules/ghelp.py:833
 msgid "&Install"
 msgstr "&Instalovat"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:832
+#: ../gui/wxpython/gui_modules/ghelp.py:834
 msgid "Install selected add-ons GRASS module"
 msgstr "Instalovat vybrané GRASS moduly"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:835
+#: ../gui/wxpython/gui_modules/ghelp.py:837
 #: ../gui/wxpython/gui_modules/gdialogs.py:1036
 msgid "Command dialog"
 msgstr "Dialog pøíkazu"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:836
+#: ../gui/wxpython/gui_modules/ghelp.py:838
 #: ../gui/wxpython/gui_modules/gdialogs.py:1194
 #: ../gui/wxpython/gui_modules/gdialogs.py:1196
 #: ../gui/wxpython/gui_modules/gdialogs.py:1201
@@ -6355,29 +6331,29 @@ msgstr "Dialog pøíkazu"
 msgid "Open %s dialog"
 msgstr "Otevøít %s dialog "
 
-#: ../gui/wxpython/gui_modules/ghelp.py:905
+#: ../gui/wxpython/gui_modules/ghelp.py:907
 #, fuzzy
 msgid "Extension not defined"
 msgstr "Podmínka: nedefinována"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:919
+#: ../gui/wxpython/gui_modules/ghelp.py:921
 msgid "Fetch list of available extensions by clicking on 'Fetch' button"
 msgstr "Stáhne seznam dostupných roz¹íøení kliknutím na tlaèítko 'Stáhnout' "
 
-#: ../gui/wxpython/gui_modules/ghelp.py:927
+#: ../gui/wxpython/gui_modules/ghelp.py:929
 #, python-format
 msgid "%d items match"
 msgstr "%d prvkù odpovídá"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:939
+#: ../gui/wxpython/gui_modules/ghelp.py:942
 msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
 msgstr "Stahuji seznam modulù z GRASS Addons SVN (buïte trpìliví prosím).."
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1194
+#: ../gui/wxpython/gui_modules/ghelp.py:1198
 msgid "&Next"
 msgstr "&Dal¹í"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1197
+#: ../gui/wxpython/gui_modules/ghelp.py:1201
 msgid "&Previous"
 msgstr "&Pøedchozí"
 
@@ -6389,16 +6365,16 @@ msgstr "Definovat Databanku GRASSu a Název Location"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1138
 #: ../gui/wxpython/gui_modules/location_wizard.py:1212
 #: ../gui/wxpython/gui_modules/location_wizard.py:1295
-#: ../gui/wxpython/gui_modules/gselect.py:852
-#: ../gui/wxpython/gui_modules/gselect.py:1112
-#: ../gui/wxpython/gui_modules/gselect.py:1121
-#: ../gui/wxpython/gui_modules/gselect.py:1130
-#: ../gui/wxpython/gui_modules/gselect.py:1350
-#: ../gui/wxpython/gui_modules/gselect.py:1496
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3299
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3484
+#: ../gui/wxpython/gui_modules/gselect.py:853
+#: ../gui/wxpython/gui_modules/gselect.py:1113
+#: ../gui/wxpython/gui_modules/gselect.py:1122
+#: ../gui/wxpython/gui_modules/gselect.py:1131
+#: ../gui/wxpython/gui_modules/gselect.py:1363
+#: ../gui/wxpython/gui_modules/gselect.py:1530
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3354
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3539
 #: ../gui/wxpython/gui_modules/gdialogs.py:1291
-#: ../gui/wxpython/gui_modules/menuform.py:1265
+#: ../gui/wxpython/gui_modules/menuform.py:1268
 msgid "Browse"
 msgstr "Procházet"
 
@@ -6478,8 +6454,8 @@ msgstr "Kód"
 #: ../gui/wxpython/gui_modules/location_wizard.py:874
 #: ../gui/wxpython/gui_modules/location_wizard.py:1037
 #: ../gui/wxpython/gui_modules/location_wizard.py:1302
-#: ../gui/wxpython/gui_modules/gmodeler.py:3593
-#: ../gui/wxpython/gui_modules/gmodeler.py:3652
+#: ../gui/wxpython/gui_modules/gmodeler.py:3768
+#: ../gui/wxpython/gui_modules/gmodeler.py:3827
 msgid "Description"
 msgstr "Popis"
 
@@ -6636,6 +6612,8 @@ msgid "PROJ.4 definition:"
 msgstr "Definice PROJ.4:"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1703
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1903
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1924
 msgid "custom"
 msgstr "volitelné"
 
@@ -6758,10 +6736,12 @@ msgid "3D Cells: %d"
 msgstr "3D buòky: %d"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2287
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
 msgid "Top"
 msgstr "Horní"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
 msgid "Bottom"
 msgstr "Spodní"
 
@@ -6884,11 +6864,12 @@ msgid "Select output vector map:"
 msgstr "Vybrat výstupní vektorovou mapu:"
 
 #: ../gui/wxpython/gui_modules/vclean.py:168
-#: ../gui/wxpython/gui_modules/menuform.py:464
+#: ../gui/wxpython/gui_modules/menuform.py:467
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
 msgstr "Kopírovat pøíkaz do schránky (Ctrl+C)"
 
 #: ../gui/wxpython/gui_modules/vclean.py:204
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:90
 msgid "point"
 msgstr "bod"
 
@@ -6975,7 +6956,7 @@ msgid "View"
 msgstr "Pohled"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:75
-#: ../gui/wxpython/gui_modules/gmodeler.py:3198
+#: ../gui/wxpython/gui_modules/gmodeler.py:3373
 msgid "Data"
 msgstr "Data"
 
@@ -7024,11 +7005,11 @@ msgstr "Otoèení:"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1168
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3035
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:124
-#: ../gui/wxpython/gui_modules/gmodeler.py:3172
-#: ../gui/wxpython/gui_modules/gmodeler.py:3291
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4055
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4198
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4847
+#: ../gui/wxpython/gui_modules/gmodeler.py:3347
+#: ../gui/wxpython/gui_modules/gmodeler.py:3466
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4096
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4234
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4839
 #: ../gui/wxpython/gui_modules/gdialogs.py:1687
 msgid "Height:"
 msgstr "Vý¹ka:"
@@ -7255,11 +7236,11 @@ msgid "by color"
 msgstr "podle barvy"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:579
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4025
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4595
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4811
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5194
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5199
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4066
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4608
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4803
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5177
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5182
 msgid "Position"
 msgstr "Pozice"
 
@@ -7468,9 +7449,9 @@ msgstr "Velikost:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3210
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:298
-#: ../gui/wxpython/gui_modules/gmodeler.py:3154
-#: ../gui/wxpython/gui_modules/gmodeler.py:3273
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4043
+#: ../gui/wxpython/gui_modules/gmodeler.py:3329
+#: ../gui/wxpython/gui_modules/gmodeler.py:3448
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4084
 #: ../gui/wxpython/gui_modules/gdialogs.py:1683
 msgid "Width:"
 msgstr "©íøka:"
@@ -7551,7 +7532,7 @@ msgstr "Upozornìní: volba <%(flag)s> nebyla nalezena v '%(module)s'"
 msgid "Warning: option <%(param)s> not found in '%(module)s'"
 msgstr "Upozornìní: volba <%(param)s> nebyla nalezena v '%(module)s'"
 
-#: ../gui/wxpython/gui_modules/prompt.py:618
+#: ../gui/wxpython/gui_modules/prompt.py:619
 msgid "Type GRASS command and run by pressing ENTER"
 msgstr "Napi¹te pøíkaz GRASSu a spus»te stisknutím ENTER"
 
@@ -7559,113 +7540,124 @@ msgstr "Napi¹te pøíkaz GRASSu a spus»te stisknutím ENTER"
 msgid "Not selectable element"
 msgstr "Prvek nelze vybrat"
 
+#: ../gui/wxpython/gui_modules/gselect.py:339
+#: ../gui/wxpython/gui_modules/gdialogs.py:818
+msgid "Mapset:"
+msgstr "Mapset:"
+
 #: ../gui/wxpython/gui_modules/gselect.py:363
 #, python-format
 msgid "GSelect: invalid item: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:851
+#: ../gui/wxpython/gui_modules/gselect.py:852
 msgid "Choose GIS Data Directory"
 msgstr "Zvolit adresáø GRASS dat"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1057
-msgid "Source name"
-msgstr "Jméno zdroje"
+#: ../gui/wxpython/gui_modules/gselect.py:1058
+#, fuzzy
+msgid "Source"
+msgstr "zdroj"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1067
-#: ../gui/wxpython/gui_modules/menuform.py:1264
+#: ../gui/wxpython/gui_modules/gselect.py:1068
+#: ../gui/wxpython/gui_modules/menuform.py:1267
 msgid "File"
 msgstr "Soubor"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1071
+#: ../gui/wxpython/gui_modules/gselect.py:1072
 msgid "Directory"
 msgstr "Adresáø"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1075
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2406
-#: ../gui/wxpython/gui_modules/dbm.py:2658
+#: ../gui/wxpython/gui_modules/gselect.py:1076
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2413
+#: ../gui/wxpython/gui_modules/dbm.py:2665
 msgid "Database"
 msgstr "Databáze"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1079
+#: ../gui/wxpython/gui_modules/gselect.py:1080
 msgid "Protocol"
 msgstr "Protokol"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1095
+#: ../gui/wxpython/gui_modules/gselect.py:1096
 msgid "Source type"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1104
-#: ../gui/wxpython/gui_modules/gselect.py:1107
-#: ../gui/wxpython/gui_modules/gselect.py:1343
-#: ../gui/wxpython/gui_modules/gselect.py:1345
-#: ../gui/wxpython/gui_modules/gselect.py:1489
-#: ../gui/wxpython/gui_modules/gselect.py:1491
+#: ../gui/wxpython/gui_modules/gselect.py:1105
+#: ../gui/wxpython/gui_modules/gselect.py:1108
+#: ../gui/wxpython/gui_modules/gselect.py:1356
+#: ../gui/wxpython/gui_modules/gselect.py:1358
+#: ../gui/wxpython/gui_modules/gselect.py:1523
+#: ../gui/wxpython/gui_modules/gselect.py:1525
 #, fuzzy
 msgid "All files"
 msgstr "Hodnoty buòky"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1111
-#: ../gui/wxpython/gui_modules/gselect.py:1349
+#: ../gui/wxpython/gui_modules/gselect.py:1112
+#: ../gui/wxpython/gui_modules/gselect.py:1362
 #, fuzzy
 msgid "Choose file to import"
 msgstr "Vyberte soubor DXF pro import"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1120
+#: ../gui/wxpython/gui_modules/gselect.py:1121
 msgid "Choose input directory"
 msgstr "Vyberte vstupní adresáø"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1129
-#: ../gui/wxpython/gui_modules/gselect.py:1495
+#: ../gui/wxpython/gui_modules/gselect.py:1130
+#: ../gui/wxpython/gui_modules/gselect.py:1529
 msgid "Choose file"
 msgstr "Vyberte soubor"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1160
+#: ../gui/wxpython/gui_modules/gselect.py:1164
 msgid "File:"
 msgstr "Soubor:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1163
+#: ../gui/wxpython/gui_modules/gselect.py:1167
 msgid "Directory:"
 msgstr "Adresáø:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1166
+#: ../gui/wxpython/gui_modules/gselect.py:1170
 msgid "Database:"
 msgstr "Databáze:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1169
+#: ../gui/wxpython/gui_modules/gselect.py:1173
 msgid "Protocol:"
 msgstr "Protokol:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1190
-msgid "Format:"
-msgstr "Formát:"
+#: ../gui/wxpython/gui_modules/gselect.py:1189
+#, fuzzy
+msgid "Extension:"
+msgstr "výraz"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1200
+#: ../gui/wxpython/gui_modules/gselect.py:1206
 #, fuzzy
 msgid "Load settings:"
 msgstr "Ukázat nastavení"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1259
+#: ../gui/wxpython/gui_modules/gselect.py:1230
+msgid "Format:"
+msgstr "Formát:"
+
+#: ../gui/wxpython/gui_modules/gselect.py:1272
 #, fuzzy, python-format
 msgid "Settings named '%s' not found"
 msgstr "Vektorová mapa <%s> nebyla nalezena."
 
-#: ../gui/wxpython/gui_modules/gselect.py:1269
-#: ../gui/wxpython/gui_modules/gmodeler.py:3375
+#: ../gui/wxpython/gui_modules/gselect.py:1282
+#: ../gui/wxpython/gui_modules/gmodeler.py:3550
 msgid "Name:"
 msgstr "Jméno:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1270
+#: ../gui/wxpython/gui_modules/gselect.py:1283
 #, fuzzy
 msgid "Save settings"
 msgstr "Nastavení serveru"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1276
+#: ../gui/wxpython/gui_modules/gselect.py:1289
 msgid "Name not given, settings is not saved."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1288
+#: ../gui/wxpython/gui_modules/gselect.py:1301
 #, fuzzy
 msgid "Unable to save settings"
 msgstr "Nelze provést nastavení '%s'"
@@ -7708,8 +7700,8 @@ msgid "Close dialog and save changes to user settings file"
 msgstr "Zavøít dialog a ulo¾it u¾ivatelské nastavení"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:92
-#: ../gui/wxpython/gui_modules/gmodeler.py:3363
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1707
+#: ../gui/wxpython/gui_modules/gmodeler.py:3538
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1751
 #: ../gui/wxpython/gui_modules/profile.py:1040
 #: ../gui/wxpython/gui_modules/profile.py:1393
 #: ../gui/wxpython/gui_modules/preferences.py:971
@@ -7981,7 +7973,7 @@ msgid "Add new category"
 msgstr "Pøidat novou kategorii"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:928
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1711
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1755
 msgid "Apply changes"
 msgstr "Ulo¾it zmìny"
 
@@ -8006,20 +7998,20 @@ msgstr ""
 "Identifikátor vrstvy navíc vìt¹í ne¾ nula."
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1058
-#: ../gui/wxpython/gui_modules/gmodeler.py:3829
-#: ../gui/wxpython/gui_modules/gmodeler.py:4190
+#: ../gui/wxpython/gui_modules/gmodeler.py:4004
+#: ../gui/wxpython/gui_modules/gmodeler.py:4365
 msgid "Delete selected"
 msgstr "Odstranit vybrané"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1062
-#: ../gui/wxpython/gui_modules/gmodeler.py:3830
-#: ../gui/wxpython/gui_modules/gmodeler.py:4191
+#: ../gui/wxpython/gui_modules/gmodeler.py:4005
+#: ../gui/wxpython/gui_modules/gmodeler.py:4366
 msgid "Delete all"
 msgstr "Odstranit v¹e"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1064
-#: ../gui/wxpython/gui_modules/gmodeler.py:3836
-#: ../gui/wxpython/gui_modules/gmodeler.py:4198
+#: ../gui/wxpython/gui_modules/gmodeler.py:4011
+#: ../gui/wxpython/gui_modules/gmodeler.py:4373
 #: ../gui/wxpython/gui_modules/dbm.py:1147
 #: ../gui/wxpython/gui_modules/dbm.py:1660
 msgid "Reload"
@@ -8060,8 +8052,8 @@ msgstr "Vrstva (Kategorie)"
 
 #: ../gui/wxpython/gui_modules/psmap.py:55
 #, fuzzy
-msgid "GRASS GIS Hardcopy Map Output Utility (experimental prototype)"
-msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+msgid "GRASS GIS Cartographic Composer (experimental prototype)"
+msgstr "GRASS GIS grafické modelování"
 
 #: ../gui/wxpython/gui_modules/psmap.py:176
 msgid ""
@@ -8122,27 +8114,27 @@ msgstr ""
 msgid "Save file as"
 msgstr "Ulo¾it soubor jako..."
 
-#: ../gui/wxpython/gui_modules/psmap.py:397
+#: ../gui/wxpython/gui_modules/psmap.py:396
 #, fuzzy, python-format
 msgid "Failed to read file %s."
 msgstr "Nelze naèíst seznam EPSG kódù: %s"
 
-#: ../gui/wxpython/gui_modules/psmap.py:543
-#: ../gui/wxpython/gui_modules/psmap.py:566
+#: ../gui/wxpython/gui_modules/psmap.py:545
+#: ../gui/wxpython/gui_modules/psmap.py:568
 msgid "Please, create map frame first."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap.py:611
+#: ../gui/wxpython/gui_modules/psmap.py:613
 #, fuzzy
 msgid "Scalebar is not appropriate for this projection"
 msgstr "Definujte parametry pro %s projekci"
 
-#: ../gui/wxpython/gui_modules/psmap.py:865
+#: ../gui/wxpython/gui_modules/psmap.py:912
 #, fuzzy
-msgid "wxGUI Hardcopy Map Utility"
-msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+msgid "wxGUI Cartographic Composer"
+msgstr "wxGUI Grafické modelování"
 
-#: ../gui/wxpython/gui_modules/psmap.py:867
+#: ../gui/wxpython/gui_modules/psmap.py:914
 #, fuzzy
 msgid ""
 "(C) 2011 by the GRASS Development Team\n"
@@ -8151,8 +8143,8 @@ msgstr ""
 "(C) 2010 by the GRASS Development Team\n"
 "\n"
 
-#: ../gui/wxpython/gui_modules/psmap.py:868
-#: ../gui/wxpython/gui_modules/gmodeler.py:1257
+#: ../gui/wxpython/gui_modules/psmap.py:915
+#: ../gui/wxpython/gui_modules/gmodeler.py:1288
 msgid ""
 "This program is free software under the GNU General Public License(>=v2). "
 "Read the file COPYING that comes with GRASS for details."
@@ -8161,7 +8153,7 @@ msgstr ""
 "(>=v2). Pro více detailù si prosím pøe¹tìte soubor COPYING který je pøilo¾en "
 "k instalaci."
 
-#: ../gui/wxpython/gui_modules/psmap.py:1099
+#: ../gui/wxpython/gui_modules/psmap.py:1146
 msgid "Click and drag to resize object"
 msgstr ""
 
@@ -8255,78 +8247,106 @@ msgstr "Nastavit výpoèetní region podle aktuálního zobrazení"
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
 msgstr "Nelze pøekódovat hodnotu. Zmìòte kódování v nastavení GUI ('Atributy')"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:88
+#: ../gui/wxpython/gui_modules/gmodeler.py:89
 msgid "model"
 msgstr "model"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:89
+#: ../gui/wxpython/gui_modules/gmodeler.py:90
 msgid "Script generated by wxGUI Graphical Modeler."
 msgstr "Skript vytvoøen pomocí wxGUi grafického modelování."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:436
+#: ../gui/wxpython/gui_modules/gmodeler.py:426
+msgid "Running model..."
+msgstr "Spou¹tím modul"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:442
+msgid "Model is empty. Nothing to run."
+msgstr "Model je prázdný. Není co spustit."
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:451
+#: ../gui/wxpython/gui_modules/gmodeler.py:1040
+msgid "Validating model..."
+msgstr "Vyhodnocuji model..."
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:457
+#, python-format
+msgid ""
+"Model is not valid. Do you want to run the model anyway?\n"
+"\n"
+"%s"
+msgstr ""
+"Modul je neplatný. Chcete jej pøesto spustit? \n"
+"\n"
+"%s"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:459
+msgid "Run model?"
+msgstr "Spustit modul?"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:544
 msgid "Raster maps"
 msgstr "Rastrové mapy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:439
+#: ../gui/wxpython/gui_modules/gmodeler.py:547
 msgid "3D raster maps"
 msgstr "3D rastrové mapy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:442
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2600
+#: ../gui/wxpython/gui_modules/gmodeler.py:550
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2660
 msgid "Vector maps"
 msgstr "Vektorové mapy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:465
-#: ../gui/wxpython/gui_modules/gmodeler.py:582
+#: ../gui/wxpython/gui_modules/gmodeler.py:573
+#: ../gui/wxpython/gui_modules/gmodeler.py:690
 msgid "Variables"
 msgstr "Promìnné"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:531
+#: ../gui/wxpython/gui_modules/gmodeler.py:639
 #, fuzzy
 msgid "GRASS GIS Graphical Modeler (experimental prototype)"
 msgstr "GRASS GIS grafické modelování"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:580
+#: ../gui/wxpython/gui_modules/gmodeler.py:688
 msgid "Model"
 msgstr "Modelování"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:581
+#: ../gui/wxpython/gui_modules/gmodeler.py:689
 msgid "Items"
 msgstr "Prvky"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:650
+#: ../gui/wxpython/gui_modules/gmodeler.py:758
 msgid "Redrawing model..."
 msgstr "Pøekresluji model..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:677
+#: ../gui/wxpython/gui_modules/gmodeler.py:785
 msgid "Do you want to save changes in the model?"
 msgstr "Chcete ulo¾it zmìny v modelu?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:679
+#: ../gui/wxpython/gui_modules/gmodeler.py:787
 msgid "Do you want to store current model settings to model file?"
 msgstr "Chcete ulo¾it souèasné nastavní do souboru modelu?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:746
-#: ../gui/wxpython/gui_modules/dbm.py:2085
+#: ../gui/wxpython/gui_modules/gmodeler.py:854
+#: ../gui/wxpython/gui_modules/dbm.py:2092
 msgid "Nothing to delete."
 msgstr "Není co smazat"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:750
+#: ../gui/wxpython/gui_modules/gmodeler.py:858
 #, python-format
 msgid "Do you want to permanently delete data?%s"
 msgstr "Chcete trvale odstranit data? %s"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:751
+#: ../gui/wxpython/gui_modules/gmodeler.py:859
 msgid "Delete intermediate data?"
 msgstr "Smazat doèasná data"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:765
+#: ../gui/wxpython/gui_modules/gmodeler.py:873
 #, python-format
 msgid "%d maps deleted from current mapset"
 msgstr " %d map bylo smazáno ze souèasného mapsetu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:780
-#: ../gui/wxpython/gui_modules/gmodeler.py:893
+#: ../gui/wxpython/gui_modules/gmodeler.py:888
+#: ../gui/wxpython/gui_modules/gmodeler.py:1001
 msgid ""
 "Current model is not empty. Do you want to store current settings to model "
 "file?"
@@ -8334,49 +8354,45 @@ msgstr ""
 "Souèasný model není prázdný. Pøejete si ulo¾it aktuální nastavení do souboru "
 "modelu?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:783
-#: ../gui/wxpython/gui_modules/gmodeler.py:896
+#: ../gui/wxpython/gui_modules/gmodeler.py:891
+#: ../gui/wxpython/gui_modules/gmodeler.py:1004
 msgid "Create new model?"
 msgstr "Vytvoøit nový model?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:808
+#: ../gui/wxpython/gui_modules/gmodeler.py:916
 msgid "Choose model file"
 msgstr "Vyberte model ze souboru"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:826
+#: ../gui/wxpython/gui_modules/gmodeler.py:934
 #, python-format
 msgid "%(items)d items (%(actions)d actions) loaded into model"
 msgstr "%(items)d prvkù (%(actions)d akcí) naèteno do modelu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:833
-#: ../gui/wxpython/gui_modules/gmodeler.py:870
+#: ../gui/wxpython/gui_modules/gmodeler.py:941
+#: ../gui/wxpython/gui_modules/gmodeler.py:978
 #, python-format
 msgid "Model file <%s> already exists. Do you want to overwrite this file?"
 msgstr "Soubor s modelem <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:843
-#: ../gui/wxpython/gui_modules/gmodeler.py:883
+#: ../gui/wxpython/gui_modules/gmodeler.py:951
+#: ../gui/wxpython/gui_modules/gmodeler.py:991
 #, python-format
 msgid "File <%s> saved"
 msgstr "Soubor <%s> byl ulo¾en"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:852
+#: ../gui/wxpython/gui_modules/gmodeler.py:960
 msgid "Choose file to save current model"
 msgstr "Vybrat soubor pro ulo¾ení aktuálního modelu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:872
+#: ../gui/wxpython/gui_modules/gmodeler.py:980
 msgid "File already exists"
 msgstr "Soubor ji¾ existuje"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:920
-msgid "Model is empty. Nothing to run."
-msgstr "Model je prázdný. Není co spustit."
-
-#: ../gui/wxpython/gui_modules/gmodeler.py:1007
+#: ../gui/wxpython/gui_modules/gmodeler.py:1036
 msgid "Model is empty. Nothing to validate."
 msgstr "Model je prázdný. Není co vyhodnotit."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1014
+#: ../gui/wxpython/gui_modules/gmodeler.py:1046
 #, python-format
 msgid ""
 "Model is not valid.\n"
@@ -8387,53 +8403,54 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1017
+#: ../gui/wxpython/gui_modules/gmodeler.py:1049
 msgid "Model is valid."
 msgstr "Model je platný"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1078
-#: ../gui/wxpython/gui_modules/gmodeler.py:1121
+#: ../gui/wxpython/gui_modules/gmodeler.py:1110
+#: ../gui/wxpython/gui_modules/gmodeler.py:1153
 #, python-format
 msgid "Model exported to <%s>"
 msgstr "Model exportován do <%s>"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1086
+#: ../gui/wxpython/gui_modules/gmodeler.py:1118
 msgid "Choose file to save"
 msgstr "Vyberte soubor k ulo¾ení"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1088
+#: ../gui/wxpython/gui_modules/gmodeler.py:1120
 msgid "Python script (*.py)|*.py"
 msgstr "Python skript (*.py)|*.py"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1102
+#: ../gui/wxpython/gui_modules/gmodeler.py:1134
 #, python-format
 msgid "File <%s> already exists. Do you want to overwrite this file?"
 msgstr "Soubor <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1104
+#: ../gui/wxpython/gui_modules/gmodeler.py:1136
 msgid "Save file"
 msgstr "Ulo¾it soubor"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1190
+#: ../gui/wxpython/gui_modules/gmodeler.py:1212
 msgid ""
 "Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
 msgstr ""
 "Modul r.mapcalc nelze pou¾ít pro modelování. Místo nìj pou¾ijte r."
 "mapcalculator."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1254
+#: ../gui/wxpython/gui_modules/gmodeler.py:1284
 msgid "wxGUI Graphical Modeler"
 msgstr "wxGUI Grafické modelování"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1256
+#: ../gui/wxpython/gui_modules/gmodeler.py:1287
+#, fuzzy, python-format
 msgid ""
-"(C) 2010 by the GRASS Development Team\n"
+"(C) 2010-%s by the GRASS Development Team\n"
 "\n"
 msgstr ""
 "(C) 2010 by the GRASS Development Team\n"
 "\n"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1387
+#: ../gui/wxpython/gui_modules/gmodeler.py:1405
 #, python-format
 msgid ""
 "Reading model file <%s> failed.\n"
@@ -8442,85 +8459,85 @@ msgstr ""
 "Ètení souboru modelu <%s> selhalo. \n"
 "Neplatný soubor, nelze parsovat XML dokument."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1393
+#: ../gui/wxpython/gui_modules/gmodeler.py:1411
 msgid "Please wait, loading model..."
 msgstr "Prosím èekejte, naèítám model..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1448
+#: ../gui/wxpython/gui_modules/gmodeler.py:1466
 msgid "Writing current settings to model file failed."
 msgstr "Zápis aktuálního nastavení do souboru modelu selhalo."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1749
-#: ../gui/wxpython/gui_modules/gmodeler.py:1807
+#: ../gui/wxpython/gui_modules/gmodeler.py:1768
+#: ../gui/wxpython/gui_modules/gmodeler.py:1826
 msgid "unknown"
 msgstr "neznámý"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2042
+#: ../gui/wxpython/gui_modules/gmodeler.py:2055
 msgid "<not defined>"
 msgstr "<nedefinováno>"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2052
+#: ../gui/wxpython/gui_modules/gmodeler.py:2065
 msgid "Data properties"
 msgstr "Vlastnosti dat"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2079
+#: ../gui/wxpython/gui_modules/gmodeler.py:2092
 msgid "Name of raster map:"
 msgstr "Jméno rastrové mapy:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2081
+#: ../gui/wxpython/gui_modules/gmodeler.py:2094
 msgid "Name of vector map:"
 msgstr "Jméno vektorové mapy:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2084
+#: ../gui/wxpython/gui_modules/gmodeler.py:2097
 msgid "Name of element:"
 msgstr "Jméno prvku:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2268
+#: ../gui/wxpython/gui_modules/gmodeler.py:2304
 #: ../gui/wxpython/gui_modules/layertree.py:276
 msgid "Remove"
 msgstr "Odstranit"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2272
+#: ../gui/wxpython/gui_modules/gmodeler.py:2308
 msgid "Disable"
 msgstr "Zakázat"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2275
+#: ../gui/wxpython/gui_modules/gmodeler.py:2311
 msgid "Enable"
 msgstr "Povolit"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2280
+#: ../gui/wxpython/gui_modules/gmodeler.py:2316
 msgid "Add control point"
 msgstr "Pøidat vlicovací bod"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2282
+#: ../gui/wxpython/gui_modules/gmodeler.py:2318
 msgid "Remove control point"
 msgstr "Odstranit vlicovací bod"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2289
+#: ../gui/wxpython/gui_modules/gmodeler.py:2325
 msgid "Intermediate"
 msgstr "pøechodné"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2300
+#: ../gui/wxpython/gui_modules/gmodeler.py:2336
 #: ../gui/wxpython/gui_modules/layertree.py:290
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2304
+#: ../gui/wxpython/gui_modules/gmodeler.py:2340
 msgid "Change ID"
 msgstr "Zmìnit ID"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2360
+#: ../gui/wxpython/gui_modules/gmodeler.py:2396
 msgid "Add new GRASS module to the model"
 msgstr "Pøidat nový modul do modelu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2378
-#: ../gui/wxpython/gui_modules/gmodeler.py:3901
-#: ../gui/wxpython/gui_modules/gmodeler.py:4331
+#: ../gui/wxpython/gui_modules/gmodeler.py:2414
+#: ../gui/wxpython/gui_modules/gmodeler.py:4076
+#: ../gui/wxpython/gui_modules/gmodeler.py:4506
 #: ../gui/wxpython/gui_modules/preferences.py:1563
 msgid "Command"
 msgstr "Pøíkazy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2446
+#: ../gui/wxpython/gui_modules/gmodeler.py:2483
 msgid ""
 "Command not defined.\n"
 "\n"
@@ -8530,7 +8547,7 @@ msgstr ""
 "\n"
 "Nelze pøidat novou akci do modelu."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2452
+#: ../gui/wxpython/gui_modules/gmodeler.py:2489
 #, python-format
 msgid ""
 "'%s' is not a GRASS module.\n"
@@ -8541,172 +8558,223 @@ msgstr ""
 "\n"
 "Nelze pøidat novou akci do modelu."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3062
+#: ../gui/wxpython/gui_modules/gmodeler.py:2595
+#, fuzzy
+msgid "Relation properties"
+msgstr "Vlastnosti dat"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2612
+msgid "From"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2614
+#: ../gui/wxpython/gui_modules/dbm.py:940
+msgid "To"
+msgstr "Na"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2656
+#, fuzzy, python-format
+msgid "Data: %s"
+msgstr "Data"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2662
+#, fuzzy
+msgid "Command:"
+msgstr "Pøíkazy"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2668
+#, fuzzy
+msgid "Option:"
+msgstr "Volitelné"
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2683
+msgid ""
+"Relation doesn't start with data item.\n"
+"Unable to add relation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2690
+msgid ""
+"Relation doesn't point to GRASS command.\n"
+"Unable to add relation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:2703
+#, fuzzy
+msgid ""
+"No relevant option found.\n"
+"Unable to add relation."
+msgstr ""
+"Pøíkaz není definován. \n"
+"\n"
+"Nelze pøidat novou akci do modelu."
+
+#: ../gui/wxpython/gui_modules/gmodeler.py:3237
 msgid "Action"
 msgstr "Akce"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3067
+#: ../gui/wxpython/gui_modules/gmodeler.py:3242
 msgid "Validity"
 msgstr "Ovìøování"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3075
+#: ../gui/wxpython/gui_modules/gmodeler.py:3250
 msgid "Valid:"
 msgstr "Platné"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3092
+#: ../gui/wxpython/gui_modules/gmodeler.py:3267
 msgid "Invalid:"
 msgstr "Neplatné:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3109
+#: ../gui/wxpython/gui_modules/gmodeler.py:3284
 msgid "Running:"
 msgstr "Bì¾í:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3126
+#: ../gui/wxpython/gui_modules/gmodeler.py:3301
 msgid "Disabled:"
 msgstr "Zakázané:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3146
-#: ../gui/wxpython/gui_modules/gmodeler.py:3265
+#: ../gui/wxpython/gui_modules/gmodeler.py:3321
+#: ../gui/wxpython/gui_modules/gmodeler.py:3440
 #, fuzzy
 msgid "Shape size"
 msgstr "Index ostrosti"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3203
+#: ../gui/wxpython/gui_modules/gmodeler.py:3378
 #: ../gui/wxpython/gui_modules/profile.py:1252
 msgid "Type"
 msgstr "Typ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3211
+#: ../gui/wxpython/gui_modules/gmodeler.py:3386
 msgid "Raster:"
 msgstr "Rastr:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3228
+#: ../gui/wxpython/gui_modules/gmodeler.py:3403
 msgid "3D raster:"
 msgstr "3D rastr:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3245
+#: ../gui/wxpython/gui_modules/gmodeler.py:3420
 msgid "Vector:"
 msgstr "Vektor:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3339
+#: ../gui/wxpython/gui_modules/gmodeler.py:3514
 #: ../gui/wxpython/gui_modules/layertree.py:366
 #: ../gui/wxpython/gui_modules/layertree.py:399
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3341
+#: ../gui/wxpython/gui_modules/gmodeler.py:3516
 msgid "Commands"
 msgstr "Pøíkazy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3361
+#: ../gui/wxpython/gui_modules/gmodeler.py:3536
 msgid "Apply properties"
 msgstr "Pøijmout vlastnosti"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3384
+#: ../gui/wxpython/gui_modules/gmodeler.py:3559
 msgid "Description:"
 msgstr "Popis:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3393
+#: ../gui/wxpython/gui_modules/gmodeler.py:3568
 msgid "Author(s):"
 msgstr "Autoøi:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3442
+#: ../gui/wxpython/gui_modules/gmodeler.py:3617
 msgid "Model parameters"
 msgstr "Parametry modelu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3589
+#: ../gui/wxpython/gui_modules/gmodeler.py:3764
 msgid "List of variables - right-click to delete"
 msgstr "Seznam promìnných - kliknìte pravým tlaèítkem pro vymazání"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3592
-#: ../gui/wxpython/gui_modules/gmodeler.py:3639
+#: ../gui/wxpython/gui_modules/gmodeler.py:3767
+#: ../gui/wxpython/gui_modules/gmodeler.py:3814
 #: ../gui/wxpython/gui_modules/dbm.py:886
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Data type"
 msgstr "Datový typ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3593
-#: ../gui/wxpython/gui_modules/gmodeler.py:3645
+#: ../gui/wxpython/gui_modules/gmodeler.py:3768
+#: ../gui/wxpython/gui_modules/gmodeler.py:3820
 msgid "Default value"
 msgstr "výchozí hodnota"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3597
+#: ../gui/wxpython/gui_modules/gmodeler.py:3772
 msgid "Add new variable"
 msgstr "Pøidat novou promìnnou"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3601
+#: ../gui/wxpython/gui_modules/gmodeler.py:3776
 #, fuzzy
 msgid "integer"
 msgstr "Ukazatel"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3602
+#: ../gui/wxpython/gui_modules/gmodeler.py:3777
 msgid "float"
 msgstr "desetinné èíslo"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3603
+#: ../gui/wxpython/gui_modules/gmodeler.py:3778
 msgid "string"
 msgstr "øetìzec"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3611
+#: ../gui/wxpython/gui_modules/gmodeler.py:3786
 msgid "Add new variable to the model"
 msgstr "Pøidat novou promìnnou do modelu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3759
+#: ../gui/wxpython/gui_modules/gmodeler.py:3934
 #, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
 msgstr "Promìnná <%s> ji¾ v modelu existuje. pøidání promìnné selhalo."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3788
+#: ../gui/wxpython/gui_modules/gmodeler.py:3963
 msgid "Do you want to delete all variables from the model?"
 msgstr "Pøejete si odstranit v¹echny promìnné z modelu?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3790
+#: ../gui/wxpython/gui_modules/gmodeler.py:3965
 msgid "Delete variables"
 msgstr "Smazat promìnné"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3870
+#: ../gui/wxpython/gui_modules/gmodeler.py:4045
 msgid "Condition: "
 msgstr "Podmínka:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3872
+#: ../gui/wxpython/gui_modules/gmodeler.py:4047
 msgid "Condition: not defined"
 msgstr "Podmínka: nedefinována"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3894
+#: ../gui/wxpython/gui_modules/gmodeler.py:4069
 msgid "Condition"
 msgstr "Podmínka"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3900
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
-#: ../gui/wxpython/gui_modules/gmodeler.py:4330
+#: ../gui/wxpython/gui_modules/gmodeler.py:4075
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
+#: ../gui/wxpython/gui_modules/gmodeler.py:4505
 msgid "ID"
 msgstr "ID"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3942
+#: ../gui/wxpython/gui_modules/gmodeler.py:4117
 msgid "loop"
 msgstr "smyèka"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3950
+#: ../gui/wxpython/gui_modules/gmodeler.py:4125
 msgid "Loop properties"
 msgstr "Vlastnosti smyèky"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3956
+#: ../gui/wxpython/gui_modules/gmodeler.py:4131
 msgid "List of items in loop"
 msgstr "Seznam prvkù ve smyèce"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4005
+#: ../gui/wxpython/gui_modules/gmodeler.py:4180
 msgid "List of items - right-click to delete"
 msgstr "Sesznam prvkù - pryvým klikem sma¾ete"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4008
+#: ../gui/wxpython/gui_modules/gmodeler.py:4183
 msgid "In block"
 msgstr "V bloku"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4009
+#: ../gui/wxpython/gui_modules/gmodeler.py:4184
 msgid "Command / Condition"
 msgstr "Pøíkaz / Podmínka"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4140
+#: ../gui/wxpython/gui_modules/gmodeler.py:4315
 #: ../gui/wxpython/gui_modules/dbm.py:1179
 #, python-format
 msgid ""
@@ -8716,29 +8784,29 @@ msgstr ""
 "Vybrané záznamy dat (%d) budou natrvalo smazány z tabulky. Pøejete si je "
 "smazat?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4143
+#: ../gui/wxpython/gui_modules/gmodeler.py:4318
 #: ../gui/wxpython/gui_modules/dbm.py:1182
 #: ../gui/wxpython/gui_modules/dbm.py:1228
 msgid "Delete records"
 msgstr "Smazat záznamy"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4197
+#: ../gui/wxpython/gui_modules/gmodeler.py:4372
 msgid "Normalize"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4295
+#: ../gui/wxpython/gui_modules/gmodeler.py:4470
 msgid "if-else"
 msgstr "if-else"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4316
+#: ../gui/wxpython/gui_modules/gmodeler.py:4491
 msgid "If-else properties"
 msgstr "Vlastnosti If-else"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4322
+#: ../gui/wxpython/gui_modules/gmodeler.py:4497
 msgid "List of items in 'if' block"
 msgstr "Seznam prvkù v bloku 'if' "
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4327
+#: ../gui/wxpython/gui_modules/gmodeler.py:4502
 msgid "List of items in 'else' block"
 msgstr "Seznam prvkù v bloku 'else' "
 
@@ -8765,681 +8833,794 @@ msgstr ""
 msgid " row %d:"
 msgstr "øádek: %d"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:312
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:89
+msgid "inch"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:91
+#, fuzzy
+msgid "centimeter"
+msgstr "Obvod"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:92
+#, fuzzy
+msgid "millimeter"
+msgstr "Obvod"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:93
+#, fuzzy
+msgid "meters"
+msgstr "Parametry"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:94
+#, fuzzy
+msgid "kilometers"
+msgstr "Obvod"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:95
+#, fuzzy
+msgid "feet"
+msgstr "Reset"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:96
+#, fuzzy
+msgid "miles"
+msgstr "Soubor"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:97
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:101
+msgid "nautical miles"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:99
+msgid "pixel"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:100
+#, fuzzy
+msgid "meter"
+msgstr "Obvod"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:102
+#, fuzzy
+msgid "degree"
+msgstr "dtree"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:328
 #, fuzzy, python-format
 msgid ""
 "Unable to open file\n"
 "%s"
 msgstr "Nelze otevøít soubor <%s> pro zápis."
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:591
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:615
 #, python-format
 msgid "Instruction file will be loaded with following region: %s\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:596
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:620
 #, fuzzy, python-format
 msgid ""
 "Region cannot be set\n"
 "%s"
 msgstr "Rozli¹ení nemù¾e být 0"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:727
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:876
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:971
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1042
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1148
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1273
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1324
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:751
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:901
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1192
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1317
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1368
 #, fuzzy, python-format
 msgid "Failed to read instruction %s"
 msgstr "Nelze naèíst seznam: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:741
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:765
 #, python-format
 msgid ""
 "Scale has changed, old value: %(old)s\n"
 "new value: %(new)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:744
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:768
 #, python-format
 msgid ""
 "Failed to read instruction %s.\n"
 "Use 1:25000 notation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:752
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:776
 #, python-format
 msgid ""
 "Map frame position changed, old value: %(old1)s %(old2)s\n"
 "new value: %(new1)s %(new2)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:760
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:784
 #, python-format
 msgid ""
 "Map frame size changed, old value: %(old1)s %(old2)s\n"
 "new value: %(new1)s %(new2)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:807
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:831
 #, fuzzy, python-format
 msgid ""
 "Failed to read instruction %(file)s.\n"
 "Unknown format %(for)s"
 msgstr "Nelze naèíst seznam: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:821
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:844
 #, fuzzy, python-format
 msgid "Failed to read instruction %s."
 msgstr "Nelze naèíst seznam: %s"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1608
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:939
+#, python-format
+msgid ""
+"Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
+"which is required by module ps.map."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:943
+msgid ""
+"Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is "
+"required by module ps.map."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1652
 msgid "Units:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1616
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1660
 msgid ""
 "Position of the top left corner\n"
 "from the top left edge of the paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1617
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1661
 msgid "X:"
 msgstr "X:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1618
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1662
 msgid "Y:"
 msgstr "Y:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1643
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1687
 #, fuzzy
 msgid "Font:"
 msgstr "Formát:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1644
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4924
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1688
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4917
 #: ../gui/wxpython/gui_modules/preferences.py:2182
 msgid "Font size:"
 msgstr "Velikost fontu:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1657
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1701
 #, fuzzy
 msgid "Choose color:"
 msgstr "Vyberte adresáø:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1705
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1749
 #, fuzzy
 msgid "Close dialog and apply changes"
 msgstr "Zavøít dialog a ignorovat provedené zmìny"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1776
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+msgid "Units"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+#, fuzzy
+msgid "Format"
+msgstr "Formát:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+#, fuzzy
+msgid "Orientation"
+msgstr "Otoèení:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3463
+#, fuzzy
+msgid "Width"
+msgstr "©íøka:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1780
+msgid "Height"
+msgstr "Vý¹ka"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
+msgid "Left"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1781
+#, fuzzy
+msgid "Right"
+msgstr "Vý¹ka"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1836
 msgid "Literal is not allowed!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1776
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2371
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2393
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2443
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5009
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1836
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2431
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2453
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2503
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4999
 #, fuzzy
 msgid "Invalid input"
 msgstr "Neplatný region"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1893
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1845
+#, fuzzy
+msgid "Page size"
+msgstr "Velikost obrazu"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1847
+msgid "Margins"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1851
+#, fuzzy
+msgid "Portrait"
+msgstr "Bod"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1851
+#, fuzzy
+msgid "Landscape"
+msgstr "Analýza charakteristik krajiny"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1953
 #, fuzzy
 msgid "Map settings"
 msgstr "Nastavení serveru"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1899
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1959
 #, fuzzy
 msgid "Map frame settings"
 msgstr "Aktualizovat nastavení"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2016
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2076
 #, fuzzy
 msgid "Map frame options:"
 msgstr "Mapová projekce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2017
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2077
 #, fuzzy
 msgid "fit frame to match selected map"
 msgstr "Pøiblí¾it na vybranou mapu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2018
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2078
 #, fuzzy
 msgid "fit frame to match saved region"
 msgstr "Zvìt¹it podle ulo¾eného regionu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2019
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2079
 msgid "fit frame to match current computational region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2020
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2080
 msgid "fixed scale and map center"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2028
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2196
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2088
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2256
 #, fuzzy
 msgid "Map selection"
 msgstr "Mapová projekce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2036
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2613
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2096
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2673
 #, fuzzy
 msgid "Map:"
 msgstr "Mapset:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2036
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2096
 #, fuzzy
 msgid "Region:"
 msgstr "Region"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2055
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2115
 #, fuzzy
 msgid "Map scale and center"
 msgstr "Mìøítko mapy"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2060
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2120
 #, fuzzy
 msgid "Center:"
 msgstr "Vykreslit"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2061
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2121
 msgid "E:"
 msgstr "V:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2062
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2122
 msgid "N:"
 msgstr "S:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2065
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2125
 #, fuzzy
 msgid "Scale:"
 msgstr "Styl:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2066
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2126
 msgid "1 :"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2146
 msgid "Map max resolution (dpi):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2099
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3973
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2159
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4015
 #, fuzzy
 msgid "Border"
 msgstr "georektifikace 1. øádu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2103
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2163
 msgid "draw border around map frame"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2109
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2169
 #, fuzzy
 msgid "border color:"
 msgstr "barva sítì"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2110
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2170
 #, fuzzy
 msgid "border width (pts):"
 msgstr "©íøka linie (v pixelech):"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2204
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2264
 msgid ""
 "Region is set to match this map,\n"
 "raster or vector map must be added later"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2211
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2271
 #, fuzzy
 msgid "Region selection"
 msgstr "Obrátit výbìr"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2370
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2430
 #, fuzzy
 msgid "No map selected!"
 msgstr "Nebyla vybrána ¾ádná mapová vrstva"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2392
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2452
 #, fuzzy
 msgid "No region selected!"
 msgstr "Nebyla vybrána ¾ádná mapová vrstva"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2442
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2502
 msgid "Invalid scale or map center!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2502
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2562
 #, fuzzy
 msgid "Choose raster map"
 msgstr "rastrová mapa"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2506
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2566
 #, fuzzy
 msgid "no raster map"
 msgstr "rastrová mapa"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2507
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2567
 #, fuzzy
 msgid "raster:"
 msgstr "rastrová data"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2609
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2669
 #, fuzzy
 msgid "Add map"
 msgstr "Pøidata data"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3037
 #, fuzzy
 msgid "points"
 msgstr "bod"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3039
 #, fuzzy
 msgid "lines"
 msgstr "linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2617
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2677
 #, fuzzy
 msgid "areas"
 msgstr "plocha"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2618
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2678
 #, fuzzy
 msgid "Data Type"
 msgstr "Datový typ"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2620
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2680
 #: ../gui/wxpython/gui_modules/dbm.py:920
 msgid "Add"
 msgstr "Pøidat"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2632
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2692
 #, fuzzy
 msgid "Manage vector maps"
 msgstr "Vyèistit vektorovou mapu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2640
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2700
 msgid "The topmost vector map overlaps the others"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2642
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3955
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2702
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3998
 msgid "Up"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2643
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3956
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2703
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3999
 msgid "Down"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2645
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2705
 #, fuzzy
 msgid "Properties..."
 msgstr "Vlastnosti"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2844
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2904
 #, fuzzy
 msgid "Raster map settings"
 msgstr "Nastavení rastru"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2881
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2941
 #, fuzzy
 msgid "Vector maps settings"
 msgstr "Nastavení vektorù"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2916
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2976
 #, fuzzy
 msgid "properties"
 msgstr "Vlastnosti"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2966
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3026
 #, fuzzy
 msgid "Data selection"
 msgstr "Obrátit výbìr"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2973
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3033
 #, fuzzy
 msgid "Feature type"
 msgstr "Typ prvku:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3037
 #, fuzzy
 msgid "centroids"
 msgstr "centroid"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3039
 #, fuzzy
 msgid "boundaries"
 msgstr "hranice"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2995
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3055
 #, fuzzy
 msgid "Layer selection"
 msgstr "Obrátit výbìr"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3003
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3062
 #, fuzzy
 msgid "Select layer:"
 msgstr "Odstranit vrstvu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3026
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3085
 msgid "list of categories (e.g. 1,3,5-7)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3056
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3115
 #, fuzzy
 msgid "Use current mask"
 msgstr "Zabalit v¹echny kromì aktuální mapset"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3073
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3177
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3132
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3231
 #, fuzzy
 msgid "Colors"
 msgstr "Barva"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3078
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3182
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3137
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3236
 #, fuzzy
 msgid "Outline"
 msgstr "linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3083
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3187
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3141
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3245
 msgid "draw outline"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3086
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3191
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5129
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5134
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3144
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3249
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5112
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5117
 #, fuzzy
 msgid "Width (pts):"
 msgstr "©íøka:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3124
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3229
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3181
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3285
 #, fuzzy
 msgid "Fill"
 msgstr "Soubor"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3128
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3185
 #, fuzzy
 msgid "fill color"
 msgstr "barva sítì"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3132
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3236
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3188
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3291
 #, fuzzy
 msgid "choose color:"
 msgstr "Vyberte adresáø:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3146
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3250
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3200
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3304
 msgid "color from map table column:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3189
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3247
 msgid "No effect for fill color from table column"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3233
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3289
 #, fuzzy
 msgid "Color of lines:"
 msgstr "Pravidla pro barvy"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3279
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3403
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3472
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3334
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3458
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3527
 #, fuzzy
 msgid "Size and style"
 msgstr "styl linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3289
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3344
 #, fuzzy
 msgid "symbol:"
 msgstr "symbol"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3350
 #, fuzzy
 msgid "eps file:"
 msgstr "Soubor WTK:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3299
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3484
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3354
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3539
 msgid "Type filename or click browse to choose file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3300
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3485
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3355
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3540
 #, fuzzy
 msgid "Choose a file"
 msgstr "Vyberte soubor"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3319
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4027
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4841
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3374
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4068
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4833
 #: ../gui/wxpython/gui_modules/profile.py:1228
 msgid "Size"
 msgstr " Velikost"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3324
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3379
 #, fuzzy
 msgid "size:"
 msgstr "velikost"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3326
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3381
 #, fuzzy
 msgid "size from map table column:"
 msgstr "Odstranit v¹echny sloupce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3328
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3383
 #, fuzzy
 msgid "scale:"
 msgstr "Zmìnit mìøítko"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3360
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3415
 #, fuzzy
 msgid "Rotation"
 msgstr "Otoèení:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3366
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3421
 msgid "rotate symbols:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3367
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3422
 msgid "counterclockwise in degrees:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3369
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3424
 #, fuzzy
 msgid "from map table column:"
 msgstr "Odstranit v¹echny sloupce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3408
-#, fuzzy
-msgid "Width"
-msgstr "©íøka:"
-
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3412
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3467
 #, fuzzy
 msgid "Set width (pts):"
 msgstr "©íøka linie (v pixelech):"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3421
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3476
 #, fuzzy
 msgid "multiply width by category value"
 msgstr "Interaktivnì editovat hodnoty kategorií"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3438
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3493
 #: ../gui/wxpython/gui_modules/profile.py:1184
 msgid "Line style"
 msgstr "styl linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3442
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3497
 #, fuzzy
 msgid "Choose line style:"
 msgstr "hrubý styl:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3452
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3507
 #, fuzzy
 msgid "Choose linecap:"
 msgstr "Vyberte soubor"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3477
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3532
 #, fuzzy
 msgid "Pattern"
 msgstr "astra"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3482
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3537
 msgid "use pattern:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3483
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3538
 #, fuzzy
 msgid "Choose pattern file:"
 msgstr "Vyberte vstupní soubor"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3487
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3542
 #, fuzzy
 msgid "pattern line width (pts):"
 msgstr "©íøka linie (v pixelech):"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3489
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3544
 msgid "pattern scale factor:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3798
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3843
 #, fuzzy
 msgid "Raster legend"
 msgstr "Série rastrových map"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3802
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3847
 #, fuzzy
 msgid "Show raster legend"
 msgstr "Zobrazit legendu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3809
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3853
 #, fuzzy
 msgid "Source raster"
 msgstr "Jméno zdroje"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3814
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3858
 #, fuzzy
 msgid "current raster"
 msgstr "Rasterizace vektorové vrstvy"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3815
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3859
 #, fuzzy
 msgid "select raster"
 msgstr "Vybrat rastrovou mapu:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3822
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4533
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3866
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4552
 #, python-format
 msgid "%(rast)s: type %(type)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3841
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3885
 #, fuzzy
 msgid "Type of legend"
 msgstr "Zobrazit legendu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3845
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3889
 msgid "discrete legend (categorical maps)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3847
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3891
 msgid "continuous color gradient legend (floating point map)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3859
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3902
 #, fuzzy
 msgid "Advanced legend settings"
 msgstr "Roz¹íøené nastavení"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3863
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3906
 msgid "draw \"no data\" box"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3869
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3912
 msgid "draw ticks across color table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3917
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3960
 #, fuzzy
 msgid "Vector legend"
 msgstr "Vektorové linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3921
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3964
 #, fuzzy
 msgid "Show vector legend"
 msgstr "Ukázat vektorové linie"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3927
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3970
 #, fuzzy
 msgid "Source vector maps"
 msgstr "Dotaz na vektorovou mapu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3933
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3976
 msgid "Choose vector maps and their order in legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3938
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3981
 #, fuzzy
 msgid "Label"
 msgstr "Vrstva"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3957
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4271
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4000
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4306
 #, fuzzy
 msgid "Edit label"
 msgstr "Pøidat vrstvu s popisky"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3977
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4019
 msgid "draw border around legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4015
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4056
 msgid "Size and position"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4049
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4090
 msgid "Leave the edit field empty, to use default values."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4071
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4112
 msgid ""
 "Width of the color symbol (for lines)\n"
 "in front of the legend text"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4077
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4187
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4118
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4223
 #, fuzzy
 msgid "Columns:"
 msgstr "Sloupce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4081
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4122
 #, fuzzy
 msgid "column span:"
 msgstr "Sloupce"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4083
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4124
 msgid ""
 "Column separation distance between the left edges\n"
 "of two columns in a multicolumn legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4110
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4614
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5099
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4149
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4627
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5083
 #: ../gui/wxpython/gui_modules/profile.py:967
 #: ../gui/wxpython/gui_modules/preferences.py:1264
 #: ../gui/wxpython/gui_modules/preferences.py:1407
@@ -9447,173 +9628,178 @@ msgstr ""
 msgid "Font settings"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4271
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4306
 msgid "Edit legend label:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4312
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4347
 #, fuzzy
 msgid "No raster map selected!"
 msgstr "Nebyla vybrána ¾ádná mapová vrstva"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4313
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4348
 #, fuzzy
 msgid "No raster"
 msgstr "rastrová data"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4637
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4645
 #, fuzzy
 msgid "Color settings"
 msgstr "Nastavení modelování"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4643
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4651
 #, fuzzy
 msgid "use border color:"
 msgstr "pou¾ijte | X souøadnici"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4644
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4652
 #, fuzzy
 msgid "use background color:"
 msgstr "Barva pozadí:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4800
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4792
 msgid ""
 "Units of current projection are not supported,\n"
 " meters will be used!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4801
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4793
 #, fuzzy
 msgid "Unsupported units"
 msgstr "Nepodporovaný typ vrstvy '%s'"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4846
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4838
 #, fuzzy
 msgid "Length:"
 msgstr "délka"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4850
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4842
 msgid "Scalebar length is given in map units"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4853
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4845
 msgid "Scalebar height is real height on paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4893
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4847
+#, fuzzy
+msgid "default"
+msgstr "Výchozí"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4886
 #: ../gui/wxpython/gui_modules/profile.py:1237
 #: ../gui/wxpython/gui_modules/profile.py:1283
 msgid "Style"
 msgstr "Styl"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4898
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4891
 #, fuzzy
 msgid "Type:"
 msgstr "Typ"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4914
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4907
 #, fuzzy
 msgid "Number of segments:"
 msgstr "Jméno prvku:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4918
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4911
 msgid "Label every "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4919
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4912
 #, fuzzy
 msgid "segments"
 msgstr "Legenda"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4928
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4921
 msgid "transparent text background"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5008
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4998
 msgid "Length of scale bar is not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5080
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5086
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5067
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5072
 #, fuzzy
 msgid "Text"
 msgstr "Test"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5089
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5075
 #: ../gui/wxpython/gui_modules/gdialogs.py:632
 msgid "Enter text:"
 msgstr "Vlo¾te text:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5118
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5101
 #, fuzzy
 msgid "Text effects"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5123
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5106
 msgid "text background"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5126
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5109
 #, fuzzy
 msgid "highlight"
 msgstr "Zvýraznìní"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5131
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5114
 #, fuzzy
 msgid "text border"
 msgstr "georektifikace 1. øádu"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5205
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5188
 #, fuzzy
 msgid "Position is given:"
 msgstr "Pozice:"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5206
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5189
 msgid "relatively to paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5207
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5190
 #, fuzzy
 msgid "by map coordinates"
 msgstr "Nastavit souøadnice vlicovacím bodùm"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5223
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5206
 msgid ""
 "Position from the top left\n"
 "edge of the paper"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5263
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5243
 msgid "Offset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5266
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5246
 msgid "horizontal (pts):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5267
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5247
 msgid "vertical (pts):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5280
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5260
 #, fuzzy
 msgid " Reference point"
 msgstr "Levé: nový bod"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5307
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5286
 #, fuzzy
 msgid "Text rotation"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5310
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5289
 msgid "rotate text (counterclockwise)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5383
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
 msgid "No text entered!"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5721
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5685
 #, fuzzy
 msgid "Unable to run `ps.map -b`"
 msgstr "Nelze naèíst rastrovou mapu"
@@ -9712,7 +9898,7 @@ msgstr "SQL pøíkaz je platný"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:450
 #: ../gui/wxpython/gui_modules/dbm.py:732
-#: ../gui/wxpython/gui_modules/dbm.py:2021
+#: ../gui/wxpython/gui_modules/dbm.py:2028
 msgid "SQL Builder"
 msgstr "SQL Pomocník"
 
@@ -9747,7 +9933,7 @@ msgstr "&Pøeru¹it pøíkaz"
 msgid "Abort the running command"
 msgstr "Pøeru¹it bì¾ící pøíkaz"
 
-#: ../gui/wxpython/gui_modules/goutput.py:496
+#: ../gui/wxpython/gui_modules/goutput.py:497
 #, python-format
 msgid ""
 "Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
@@ -9756,20 +9942,20 @@ msgstr ""
 "Pøíkaz '%s' je¹tì nebyl implementován do WxGUI. Zkuste jej pøidat jako "
 "vrstvu pøíkazù."
 
-#: ../gui/wxpython/gui_modules/goutput.py:605
+#: ../gui/wxpython/gui_modules/goutput.py:608
 msgid "Save file as..."
 msgstr "Ulo¾it soubor jako..."
 
-#: ../gui/wxpython/gui_modules/goutput.py:733
+#: ../gui/wxpython/gui_modules/goutput.py:736
 msgid ""
 "Please note that the data are left in inconsistent state and may be corrupted"
 msgstr "Data jsou ponechána v nevhodném stavu a mohou být poru¹ena"
 
-#: ../gui/wxpython/gui_modules/goutput.py:736
+#: ../gui/wxpython/gui_modules/goutput.py:739
 msgid "Command aborted"
 msgstr "Pøíkaz pøeru¹en"
 
-#: ../gui/wxpython/gui_modules/goutput.py:744
+#: ../gui/wxpython/gui_modules/goutput.py:747
 msgid "Command finished"
 msgstr "Pøíkaz ukonèen"
 
@@ -10028,9 +10214,9 @@ msgstr "Limit 100000 záznamù pøekroèen."
 #: ../gui/wxpython/gui_modules/dbm.py:265
 #: ../gui/wxpython/gui_modules/dbm.py:816
 #: ../gui/wxpython/gui_modules/dbm.py:1153
-#: ../gui/wxpython/gui_modules/dbm.py:1810
-#: ../gui/wxpython/gui_modules/dbm.py:1832
-#: ../gui/wxpython/gui_modules/dbm.py:1966
+#: ../gui/wxpython/gui_modules/dbm.py:1809
+#: ../gui/wxpython/gui_modules/dbm.py:1831
+#: ../gui/wxpython/gui_modules/dbm.py:1973
 #, python-format
 msgid "Number of loaded records: %d"
 msgstr "Poèet nahraných záznamù: %d"
@@ -10102,7 +10288,7 @@ msgid "Line azimuth"
 msgstr "Azimut linie"
 
 #: ../gui/wxpython/gui_modules/dbm.py:556
-#: ../gui/wxpython/gui_modules/dbm.py:3075
+#: ../gui/wxpython/gui_modules/dbm.py:3082
 msgid "GRASS GIS Attribute Table Manager"
 msgstr "GRASS GIS správce atributových data"
 
@@ -10145,9 +10331,9 @@ msgstr "Atributová data - editace/správa záznamù pravé tlaèítko my¹i"
 
 #: ../gui/wxpython/gui_modules/dbm.py:704
 #: ../gui/wxpython/gui_modules/dbm.py:834
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2412
-#: ../gui/wxpython/gui_modules/dbm.py:2664
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2419
+#: ../gui/wxpython/gui_modules/dbm.py:2671
 msgid "Table"
 msgstr "Tabulka"
 
@@ -10177,18 +10363,14 @@ msgid "Manage columns"
 msgstr "Správa sloupcù"
 
 #: ../gui/wxpython/gui_modules/dbm.py:875
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Column name"
 msgstr "Název sloupce"
 
 #: ../gui/wxpython/gui_modules/dbm.py:903
-#: ../gui/wxpython/gui_modules/dbm.py:2227
+#: ../gui/wxpython/gui_modules/dbm.py:2234
 msgid "Data length"
 msgstr "Datová délka"
-
-#: ../gui/wxpython/gui_modules/dbm.py:940
-msgid "To"
-msgstr "Na"
 
 #: ../gui/wxpython/gui_modules/dbm.py:950
 msgid "&Rename"
@@ -10241,7 +10423,7 @@ msgid "Highlight selected features and zoom"
 msgstr "Zvýraznit vybrané prvky a pøiblí¾it"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1138
-#: ../gui/wxpython/gui_modules/dbm.py:2061
+#: ../gui/wxpython/gui_modules/dbm.py:2068
 msgid "Extract selected features"
 msgstr "Extrahovat vybrané prvky"
 
@@ -10346,13 +10528,13 @@ msgid "Unable to add column to the table. No column name defined."
 msgstr ""
 "Nelze pøidat sloupec do atributové tabulky. Nebyl zadáno jméno sloupce."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1770
+#: ../gui/wxpython/gui_modules/dbm.py:1769
 #, python-format
 msgid "Column <%(column)s> already exists in table <%(table)s>."
 msgstr "Sloupec <%(column)s> ji¾ v tabulce <%(table)s> existuje."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1929
-#: ../gui/wxpython/gui_modules/dbm.py:1953
+#: ../gui/wxpython/gui_modules/dbm.py:1934
+#: ../gui/wxpython/gui_modules/dbm.py:1958
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -10363,7 +10545,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1940
+#: ../gui/wxpython/gui_modules/dbm.py:1945
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -10376,28 +10558,28 @@ msgstr ""
 "\n"
 "'%s'"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2056
+#: ../gui/wxpython/gui_modules/dbm.py:2063
 msgid "Nothing to extract."
 msgstr "Nebylo zvoleno nic pro extrahování."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2172
-#: ../gui/wxpython/gui_modules/dbm.py:2586
-#: ../gui/wxpython/gui_modules/dbm.py:3010
+#: ../gui/wxpython/gui_modules/dbm.py:2179
+#: ../gui/wxpython/gui_modules/dbm.py:2593
+#: ../gui/wxpython/gui_modules/dbm.py:3017
 #, python-format
 msgid "Drop also linked attribute table (%s)"
 msgstr "Odstranit také pøipojenou atributovou tabulku (%s)"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2280
-#: ../gui/wxpython/gui_modules/dbm.py:2401
-#: ../gui/wxpython/gui_modules/dbm.py:2652
+#: ../gui/wxpython/gui_modules/dbm.py:2287
+#: ../gui/wxpython/gui_modules/dbm.py:2408
+#: ../gui/wxpython/gui_modules/dbm.py:2659
 msgid "Driver"
 msgstr "Ovladaè"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2280
+#: ../gui/wxpython/gui_modules/dbm.py:2287
 msgid "Key"
 msgstr "Klíè"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2356
+#: ../gui/wxpython/gui_modules/dbm.py:2363
 msgid ""
 "Unknown default DB connection. Please define DB connection using db.connect "
 "module."
@@ -10405,72 +10587,72 @@ msgstr ""
 "Neznámé výchozí spojení DB. Prosím definujte toto nastavení pomocí modulu db."
 "connect."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2377
+#: ../gui/wxpython/gui_modules/dbm.py:2384
 msgid "Add layer"
 msgstr "Pøidat vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2387
+#: ../gui/wxpython/gui_modules/dbm.py:2394
 msgid "Layer description"
 msgstr "Popis vrstvy"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2417
-#: ../gui/wxpython/gui_modules/dbm.py:2449
-#: ../gui/wxpython/gui_modules/dbm.py:2670
+#: ../gui/wxpython/gui_modules/dbm.py:2424
+#: ../gui/wxpython/gui_modules/dbm.py:2456
+#: ../gui/wxpython/gui_modules/dbm.py:2677
 msgid "Key column"
 msgstr "Sloupec s klíèem"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2422
+#: ../gui/wxpython/gui_modules/dbm.py:2429
 msgid "Insert record for each category into table"
 msgstr "Vlo¾it záznam pro ka¾dou kategorii v tabulce"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2437
+#: ../gui/wxpython/gui_modules/dbm.py:2444
 msgid "You need to add categories by v.category module."
 msgstr "Je potøeba pøidat kategoie pomocí modulu v.category."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2444
+#: ../gui/wxpython/gui_modules/dbm.py:2451
 msgid "Table name"
 msgstr "Název tabulky"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2457
+#: ../gui/wxpython/gui_modules/dbm.py:2464
 msgid "&Create table"
 msgstr "Vytvoøit &tabulku"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2461
+#: ../gui/wxpython/gui_modules/dbm.py:2468
 msgid "&Add layer"
 msgstr "Pøid&at vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2465
+#: ../gui/wxpython/gui_modules/dbm.py:2472
 msgid "&Set default"
 msgstr "Nastavit výc&hozí"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2529
+#: ../gui/wxpython/gui_modules/dbm.py:2536
 msgid "Table description"
 msgstr "Popis tabulky"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2569
+#: ../gui/wxpython/gui_modules/dbm.py:2576
 #, fuzzy
 msgid "Remove layer"
 msgstr "Odstranit mapovou vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2572
+#: ../gui/wxpython/gui_modules/dbm.py:2579
 #, fuzzy
 msgid "Layer to remove"
 msgstr "Vrstva k odstranìní"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2593
+#: ../gui/wxpython/gui_modules/dbm.py:2600
 #, fuzzy
 msgid "&Remove layer"
 msgstr "Odstranit mapovou vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2637
+#: ../gui/wxpython/gui_modules/dbm.py:2644
 msgid "Modify layer"
 msgstr "Upravit vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2709
+#: ../gui/wxpython/gui_modules/dbm.py:2716
 msgid "&Modify layer"
 msgstr "&Upravit vrstvu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2757
+#: ../gui/wxpython/gui_modules/dbm.py:2764
 msgid ""
 "Unable to get list of tables.\n"
 "Please use db.connect to set database parameters."
@@ -10478,20 +10660,20 @@ msgstr ""
 "Nelze získat seznam tabulek.\n"
 "Prosím pou¾ijte db.connect pro nastavení parametrù databáze."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2855
+#: ../gui/wxpython/gui_modules/dbm.py:2862
 msgid "Unable to create new table. Table name or key column name is missing."
 msgstr ""
 "Nelze vytvoøit novou atributovou tabulku. Nebyl zadán název tabulky nebo "
 "sloupec s klíèem."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2862
+#: ../gui/wxpython/gui_modules/dbm.py:2869
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
 msgstr ""
 "Nelze vytvoøit novou atributovou tabulku. Tabulka <%s> ji¾ existuje v "
 "databázi."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2900
+#: ../gui/wxpython/gui_modules/dbm.py:2907
 #, python-format
 msgid ""
 "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
@@ -10628,10 +10810,6 @@ msgstr "Typ mapové vrstvy:"
 #: ../gui/wxpython/gui_modules/gdialogs.py:811
 msgid "Select toggle"
 msgstr "Vybrat pøepínaè"
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:818
-msgid "Mapset:"
-msgstr "Mapset:"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:828
 msgid "Filter:"
@@ -11061,106 +11239,106 @@ msgid "Map <%s> not found."
 msgstr "Mapa <%s> nebyla nalezena."
 
 #: ../gui/wxpython/gui_modules/menuform.py:143
-#: ../gui/wxpython/gui_modules/menuform.py:1228
+#: ../gui/wxpython/gui_modules/menuform.py:1231
 msgid "Select Color"
 msgstr "Zvolit barvu"
 
-#: ../gui/wxpython/gui_modules/menuform.py:429
+#: ../gui/wxpython/gui_modules/menuform.py:432
 msgid "Enter parameters for '"
 msgstr "Definujte parametry pro '"
 
-#: ../gui/wxpython/gui_modules/menuform.py:440
+#: ../gui/wxpython/gui_modules/menuform.py:443
 msgid "Close this window without executing the command (Ctrl+Q)"
 msgstr "Zavøi toto okno bez spu¹tìní pøíkazu (Ctrl+Q)"
 
-#: ../gui/wxpython/gui_modules/menuform.py:460
+#: ../gui/wxpython/gui_modules/menuform.py:463
 msgid "Run the command (Ctrl+R)"
 msgstr "Spustit pøíkaz (Ctrl+R)"
 
-#: ../gui/wxpython/gui_modules/menuform.py:463
+#: ../gui/wxpython/gui_modules/menuform.py:466
 #, fuzzy
 msgid "C&opy"
 msgstr "Kopírovat"
 
-#: ../gui/wxpython/gui_modules/menuform.py:478
+#: ../gui/wxpython/gui_modules/menuform.py:481
 msgid "Show manual page of the command (Ctrl+H)"
 msgstr "Ukázat manuálovou stránku pøíkazu (Ctrl+H)"
 
-#: ../gui/wxpython/gui_modules/menuform.py:499
+#: ../gui/wxpython/gui_modules/menuform.py:502
 msgid "Add created map(s) into layer tree"
 msgstr "Pøidat vytvoøenou mapu do stromu vrstev"
 
-#: ../gui/wxpython/gui_modules/menuform.py:514
+#: ../gui/wxpython/gui_modules/menuform.py:517
 msgid "Close dialog on finish"
 msgstr "Zavøít dialog pøi ukonèení"
 
-#: ../gui/wxpython/gui_modules/menuform.py:516
+#: ../gui/wxpython/gui_modules/menuform.py:519
 msgid ""
 "Close dialog when command is successfully finished. Change this settings in "
 "Preferences dialog ('Command' tab)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:683
+#: ../gui/wxpython/gui_modules/menuform.py:686
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr "'%s' zkopírováno do schránky"
 
-#: ../gui/wxpython/gui_modules/menuform.py:746
-#: ../gui/wxpython/gui_modules/menuform.py:759
+#: ../gui/wxpython/gui_modules/menuform.py:749
+#: ../gui/wxpython/gui_modules/menuform.py:762
 msgid "Required"
 msgstr "Po¾adováno"
 
-#: ../gui/wxpython/gui_modules/menuform.py:749
-#: ../gui/wxpython/gui_modules/menuform.py:759
+#: ../gui/wxpython/gui_modules/menuform.py:752
+#: ../gui/wxpython/gui_modules/menuform.py:762
 msgid "Optional"
 msgstr "Volitelné"
 
-#: ../gui/wxpython/gui_modules/menuform.py:792
+#: ../gui/wxpython/gui_modules/menuform.py:795
 msgid "Manual"
 msgstr "Manuálová stránka"
 
-#: ../gui/wxpython/gui_modules/menuform.py:832
-#: ../gui/wxpython/gui_modules/menuform.py:1300
+#: ../gui/wxpython/gui_modules/menuform.py:835
+#: ../gui/wxpython/gui_modules/menuform.py:1303
 msgid "Parameterized in model"
 msgstr "Parametrizace v modelu"
 
-#: ../gui/wxpython/gui_modules/menuform.py:907
+#: ../gui/wxpython/gui_modules/menuform.py:910
 msgid "[multiple]"
 msgstr "[mnohonásobné]"
 
-#: ../gui/wxpython/gui_modules/menuform.py:954
+#: ../gui/wxpython/gui_modules/menuform.py:957
 msgid "valid range"
 msgstr "platný rozsah"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1247
+#: ../gui/wxpython/gui_modules/menuform.py:1250
 msgid "Transparent"
 msgstr "Prùhledný"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1263
+#: ../gui/wxpython/gui_modules/menuform.py:1266
 #, python-format
 msgid "Choose %s"
 msgstr "Vybrat %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1291
+#: ../gui/wxpython/gui_modules/menuform.py:1294
 msgid "or enter values interactively"
 msgstr "nebo vlo¾te hodnoty interaktivnì"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1638
+#: ../gui/wxpython/gui_modules/menuform.py:1641
 #, python-format
 msgid "Error in %s"
 msgstr "Chyba v %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1761
+#: ../gui/wxpython/gui_modules/menuform.py:1766
 #, fuzzy, python-format
 msgid "Unable to parse command '%s'"
 msgstr "Nelze spustit pøíkaz %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1765
+#: ../gui/wxpython/gui_modules/menuform.py:1772
 #, python-format
 msgid "%(cmd)s: parameter '%(key)s' not available"
 msgstr "%(cmd)s: parametr '%(key)s' není dostupný"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1925
+#: ../gui/wxpython/gui_modules/menuform.py:1932
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "pou¾ití: %s <grass pøíkaz>"
@@ -11951,24 +12129,39 @@ msgstr "Vytvoøit nový mapset"
 msgid "Unable to create new mapset: %s"
 msgstr "Nelze vytvoøit nový mapset: %s"
 
-#: ../gui/wxpython/gis_set.py:741
+#: ../gui/wxpython/gis_set.py:742
 #, python-format
 msgid ""
 "GRASS is already running in selected mapset <%(mapset)s>\n"
-"(File %(lock)s found).\n"
+"(file %(lock)s found).\n"
 "\n"
-"Concurrent use not allowed."
+"Concurrent use not allowed.\n"
+"\n"
+"Do you want to try to remove .gislock (note that you need permission for "
+"this operation) and continue?"
 msgstr ""
 
-#: ../gui/wxpython/gis_set.py:768
+#: ../gui/wxpython/gis_set.py:748
+msgid "Lock file found"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:757
+#, fuzzy, python-format
+msgid ""
+"Unable to remove '%(lock)s'.\n"
+"\n"
+"Details: %(reason)s"
+msgstr "Nelze nastavit zoom podle vektorové mapy <%s>."
+
+#: ../gui/wxpython/gis_set.py:784
 msgid "GRASS Quickstart"
 msgstr "GRASS Rychlý start"
 
-#: ../gui/wxpython/gis_set.py:841
+#: ../gui/wxpython/gis_set.py:857
 msgid "Starting GRASS for the first time"
 msgstr "Spu¹tìní GIS GRASS poprvé"
 
-#: ../gui/wxpython/gis_set.py:842
+#: ../gui/wxpython/gis_set.py:858
 msgid ""
 "GRASS needs a directory in which to store its data. Create one now if you "
 "have not already done so. A popular choice is \"grassdata\", located in your "
@@ -11977,6 +12170,29 @@ msgstr ""
 "GIS GRASS potøebuje adresáø, ve kterém budou ulo¾eny jeho data (GRASS "
 "databanka). Vytvoøte takový adresáø, jestli¾e ji¾ takový nemáte vytvoøen. "
 "OBlíbený název je \"grassdata\", umístìn ve va¹m domovském adresáøi."
+
+#, fuzzy
+#~ msgid "Hardcopy Map Output Utility"
+#~ msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+
+#, fuzzy
+#~ msgid "Quit Hardcopy Map Utility"
+#~ msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+
+#, fuzzy
+#~ msgid "Launch Hardcopy Map Output Utility"
+#~ msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+
+#~ msgid "Source name"
+#~ msgstr "Jméno zdroje"
+
+#, fuzzy
+#~ msgid "GRASS GIS Hardcopy Map Output Utility (experimental prototype)"
+#~ msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
+
+#, fuzzy
+#~ msgid "wxGUI Hardcopy Map Utility"
+#~ msgstr "Nástroj pro tvorbu mapových výstupù ve formátu PostScript."
 
 #, fuzzy
 #~ msgid "Close current"
@@ -12093,13 +12309,6 @@ msgstr ""
 
 #~ msgid "Map toolbar"
 #~ msgstr "Nástrojová li¹ta pro správu map"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to zoom to vector map <%s>.\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr "Nelze nastavit zoom podle vektorové mapy <%s>."
 
 #~ msgid "Uknown settings file location."
 #~ msgstr "Neznámé umístìní souboru s nastavením."
@@ -12507,9 +12716,6 @@ msgstr ""
 #~ msgid "Map calculator"
 #~ msgstr "Mapový kalkulátor"
 
-#~ msgid "Default"
-#~ msgstr "Výchozí"
-
 #~ msgid "Restore default settings"
 #~ msgstr "Obnovit výchozí nastavení"
 
@@ -12560,9 +12766,6 @@ msgstr ""
 #~ " Pøepínám zpìt do 2D zobrazení.\n"
 #~ "\n"
 #~ "Detaily: %s"
-
-#~ msgid "Height"
-#~ msgstr "Vý¹ka"
 
 #~ msgid "Twist"
 #~ msgstr "Otoèení"
