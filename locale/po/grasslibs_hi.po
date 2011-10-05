@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:52+0200\n"
+"POT-Creation-Date: 2011-10-05 23:24+0200\n"
 "PO-Revision-Date: 2005-12-22 14:34+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Hindi <grass-translations@lists.osgeo.org>\n"
@@ -100,7 +100,7 @@ msgstr "त्रुटि n"
 msgid "Connection failed."
 msgstr "n"
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "का"
@@ -819,31 +819,31 @@ msgstr ""
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, fuzzy, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:996
+#: ../lib/gis/parser.c:997
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Description:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -851,144 +851,149 @@ msgid ""
 " "
 msgstr "n "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Flags:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Parameters:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 #, fuzzy
 msgid "Flags"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 #, fuzzy
 msgid "Parameters"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 #, fuzzy
 msgid "Options"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 #, fuzzy
 msgid "Default"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 #, fuzzy
 msgid "Unable to spawn the 'wish' program"
 msgstr "का"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 #, fuzzy
 msgid "Unable to determine program name"
 msgstr "a"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr ""
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, fuzzy, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, fuzzy, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "खेद है है n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, fuzzy, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr "के लिए n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, fuzzy, c-format
 msgid "       Presented as: %s\n"
-msgstr "n"
-
-#: ../lib/gis/parser.c:2286
-#, fuzzy, c-format
-msgid ""
-"\n"
-"ERROR: value <%s> out of range for parameter <%s>\n"
-msgstr "का के लिए n"
-
-#: ../lib/gis/parser.c:2288
-#, fuzzy, c-format
-msgid "       Legal range: %s\n"
 msgstr "n"
 
 #: ../lib/gis/parser.c:2291
 #, fuzzy, c-format
 msgid ""
 "\n"
+"ERROR: value <%s> out of range for parameter <%s>\n"
+msgstr "का के लिए n"
+
+#: ../lib/gis/parser.c:2293
+#, fuzzy, c-format
+msgid "       Legal range: %s\n"
+msgstr "n"
+
+#: ../lib/gis/parser.c:2296
+#, fuzzy, c-format
+msgid ""
+"\n"
 "ERROR: Missing value for parameter <%s>\n"
 msgstr "गुमा के लिए n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -997,83 +1002,83 @@ msgstr ""
 "नहीं सेट\n"
 " n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr "का n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, fuzzy, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "त्रुटि n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, fuzzy, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr "सेट n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, fuzzy, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, fuzzy, c-format
 msgid "     key: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, fuzzy, c-format
 msgid "  format: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, fuzzy, c-format
 msgid " default: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, fuzzy, c-format
 msgid "required: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, fuzzy, c-format
 msgid "multiple: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, fuzzy, c-format
 msgid " options: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 #, fuzzy
 msgid "   Try again? "
 msgstr "कोशिश करें "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, fuzzy, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "खेद है है नहीं n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1083,12 +1088,12 @@ msgstr ""
 "\n"
 " n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 #, fuzzy
 msgid "Is this correct? "
 msgstr "है "
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr ""
 
@@ -1851,167 +1856,167 @@ msgstr "नहीं"
 msgid "Unknown projection"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 #, fuzzy
 msgid "duplicate projection field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 #, fuzzy
 msgid "duplicate zone field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 #, fuzzy
 msgid "projection field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 #, fuzzy
 msgid "zone field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 #, fuzzy
 msgid "duplicate north field"
 msgstr "अनुकृति उत्तर फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 #, fuzzy
 msgid "duplicate south field"
 msgstr "अनुकृति दक्षिण फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 #, fuzzy
 msgid "duplicate east field"
 msgstr "अनुकृति पूर्व फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 #, fuzzy
 msgid "duplicate west field"
 msgstr "अनुकृति पश्चिम फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 #, fuzzy
 msgid "duplicate top field"
 msgstr "अनुकृति शीर्ष फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 #, fuzzy
 msgid "duplicate bottom field"
 msgstr "अनुकृति तल फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 #, fuzzy
 msgid "duplicate e-w resolution field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 #, fuzzy
 msgid "duplicate 3D e-w resolution field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 #, fuzzy
 msgid "duplicate n-s resolution field"
 msgstr "अनुकृति n फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 #, fuzzy
 msgid "duplicate 3D n-s resolution field"
 msgstr "अनुकृति n फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 #, fuzzy
 msgid "duplicate t-b resolution field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 #, fuzzy
 msgid "duplicate rows field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 #, fuzzy
 msgid "duplicate 3D rows field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 #, fuzzy
 msgid "duplicate cols field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 #, fuzzy
 msgid "duplicate 3D cols field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 #, fuzzy
 msgid "duplicate depths field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 #, fuzzy
 msgid "duplicate format field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 #, fuzzy
 msgid "duplicate compressed field"
 msgstr "अनुकृति फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 #, fuzzy
 msgid "north field missing"
 msgstr "उत्तर फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 #, fuzzy
 msgid "south field missing"
 msgstr "दक्षिण फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 #, fuzzy
 msgid "west field missing"
 msgstr "पश्चिम फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 #, fuzzy
 msgid "east field missing"
 msgstr "पूर्व फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 #, fuzzy
 msgid "cols field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 #, fuzzy
 msgid "rows field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 #, fuzzy
 msgid "ewres3 field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 #, fuzzy
 msgid "nsres3 field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 #, fuzzy
 msgid "cols3 field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 #, fuzzy
 msgid "rows3 field missing"
 msgstr "फील्ड"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr ""

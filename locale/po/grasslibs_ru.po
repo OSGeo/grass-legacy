@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:52+0200\n"
+"POT-Creation-Date: 2011-10-05 23:24+0200\n"
 "PO-Revision-Date: 2009-01-27 22:58-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -92,7 +92,7 @@ msgstr "Вероятно ошибка сервера."
 msgid "Connection failed."
 msgstr "Ошибка соединения."
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Невозможно открыть файл %s"
@@ -806,17 +806,17 @@ msgstr ""
 "Используйте либо флаг --quiet либо --verbose, но не оба вместе. "
 "Предполагается --quiet."
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Извините, опция <%s> неверна\n"
 
-#: ../lib/gis/parser.c:996
+#: ../lib/gis/parser.c:997
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, c-format
 msgid ""
 "\n"
@@ -825,7 +825,7 @@ msgstr ""
 "\n"
 "Описание:\n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
@@ -834,7 +834,7 @@ msgstr ""
 "\n"
 "Ключевые слова:\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -845,7 +845,7 @@ msgstr ""
 "Использование:\n"
 " "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, c-format
 msgid ""
 "\n"
@@ -854,20 +854,20 @@ msgstr ""
 "\n"
 "Флаги:\n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr "Разрешить выходным файлам перезаписывать существующие файлы"
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr "Многословное описание работы модуля"
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr "Краткое описание работы модуля"
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, c-format
 msgid ""
 "\n"
@@ -876,80 +876,85 @@ msgstr ""
 "\n"
 "Параметры:\n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   по умолчанию: %s\n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr "ИМЯ"
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr "КЛЮЧИ"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr "Синопсис"
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 msgid "Flags"
 msgstr "Флаги"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 msgid "Parameters"
 msgstr "Параметры"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 msgid "Options"
 msgstr "Опции"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr "Разрешить перезапись"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr "Выполнять с минимальным количеством сообщений"
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr "Запускать без сообщений"
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 msgid "Unable to spawn the 'wish' program"
 msgstr "Неудается запустить программу 'wish'"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 msgid "Unable to determine program name"
 msgstr "Невозможно определить имя программы"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   опции: "
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Извините, флаг <%c> неверен\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Извините, параметр <%s=> неоднозначен\n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Извините, параметр <%s> неверен\n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -958,12 +963,12 @@ msgstr ""
 "\n"
 "Ошибка: неверный синтаксис диапазона для параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Представленного как: %s\n"
 
-#: ../lib/gis/parser.c:2286
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -972,12 +977,12 @@ msgstr ""
 "\n"
 "Ошибка: значение <%s> выходит за диапазон параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2293
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Возможный диапазон: %s\n"
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2296
 #, c-format
 msgid ""
 "\n"
@@ -986,7 +991,7 @@ msgstr ""
 "\n"
 "Ошибка: Отсутвует значение для параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -996,7 +1001,7 @@ msgstr ""
 "Ошибка: Требуемый параметр <%s> не установлен:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, c-format
 msgid ""
 "\n"
@@ -1005,17 +1010,17 @@ msgstr ""
 "\n"
 "Ошибка: опция <%s> должна задаваться в множественных значениях %d\n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Вы задали %d раз:\n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Ошибка: опция <%s>: <%s> существует.\n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid ""
 "\n"
@@ -1024,7 +1029,7 @@ msgstr ""
 "\n"
 "Флаг: Задать следующий флаг?\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -1033,51 +1038,51 @@ msgstr ""
 "\n"
 "Опция:   %s\n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "     key: %s\n"
 msgstr "     ключ: %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "  format: %s\n"
 msgstr "  формат: %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " default: %s\n"
 msgstr " по умолчанию: %s\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "required: %s\n"
 msgstr "необходимо: %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid "multiple: %s\n"
 msgstr "множ.: %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid " options: %s\n"
 msgstr " опции: %s\n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "введите опцию > "
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 msgid "   Try again? "
 msgstr "   Попробовать снова? "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Извините, %s недопустимо.\n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, c-format
 msgid ""
 "\n"
@@ -1088,11 +1093,11 @@ msgstr ""
 "Вы выбрали:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 msgid "Is this correct? "
 msgstr "Правильно?"
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr "чтобы установить по умолчанию"
 
@@ -1876,135 +1881,135 @@ msgstr "Нет информации об эллипсоиде в файле %s �
 msgid "Unknown projection"
 msgstr "Неизвестная проекция"
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 msgid "duplicate projection field"
 msgstr "дважды задано поле проекции"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 msgid "duplicate zone field"
 msgstr "дважды задано поле зоны"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 msgid "projection field missing"
 msgstr "отсутствует поле проекции"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 msgid "zone field missing"
 msgstr "отсутствует поле зоны"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 msgid "duplicate north field"
 msgstr "дважды задано поле север"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 msgid "duplicate south field"
 msgstr "дважды задано поле юг"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 msgid "duplicate east field"
 msgstr "дважды задано поле восток"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 msgid "duplicate west field"
 msgstr "дважды задано поле запад"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 msgid "duplicate top field"
 msgstr "дублирующееся верхнее поле"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 msgid "duplicate bottom field"
 msgstr "дублирующееся нижнее поле"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr "дважды задано поле разрешения восток-запад"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 msgid "duplicate 3D e-w resolution field"
 msgstr "дублирующееся поле разрешения 3D восток-запад"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 msgid "duplicate n-s resolution field"
 msgstr "дублирующееся поле разрешения север-юг"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 msgid "duplicate 3D n-s resolution field"
 msgstr "дублирующееся поле разрешения 3D север-юг"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 msgid "duplicate t-b resolution field"
 msgstr "дублирующееся поле разрешения верх-низ"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 msgid "duplicate rows field"
 msgstr "дважды задано поле строк"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 msgid "duplicate 3D rows field"
 msgstr "дублирующее поле 3D строк"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 msgid "duplicate cols field"
 msgstr "дважды задано поле столбцов"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 msgid "duplicate 3D cols field"
 msgstr "дублирующее поле 3D столбцов"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 msgid "duplicate depths field"
 msgstr "дублирующееся поле глубин"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 msgid "duplicate format field"
 msgstr "дважды задано поле формата"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 msgid "duplicate compressed field"
 msgstr "дважды задано поле сжатия"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 msgid "north field missing"
 msgstr "отсутствует поле north"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 msgid "south field missing"
 msgstr "отсутствует поле south"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 msgid "west field missing"
 msgstr "отсутствует поле west"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 msgid "east field missing"
 msgstr "отсутствует поле east"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 msgid "cols field missing"
 msgstr "отсутствует поле cols"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 msgid "rows field missing"
 msgstr "отсутствует поле rows"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 msgid "ewres3 field missing"
 msgstr "отсутствует поле ewres3"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 msgid "nsres3 field missing"
 msgstr "отсутствует поле nsres3"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 msgid "cols3 field missing"
 msgstr "отсутствует поле cols3"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 msgid "rows3 field missing"
 msgstr "отсутствует поле rows3"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr "строка %d: <%s>"

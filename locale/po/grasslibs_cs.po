@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:52+0200\n"
+"POT-Creation-Date: 2011-10-05 23:24+0200\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -100,7 +100,7 @@ msgstr "Pravdìpodobnì je chyba na stranì serveru."
 msgid "Connection failed."
 msgstr "Pøipojení selhalo."
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nelze otevøít soubor %s"
@@ -818,17 +818,17 @@ msgstr ""
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr "Pou¾ijte buï --quiet nebo --verbose indikátor ne oba. Pou¾iji --quiet."
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Promiòte, ale <%s> není platná volba\n"
 
-#: ../lib/gis/parser.c:996
+#: ../lib/gis/parser.c:997
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, c-format
 msgid ""
 "\n"
@@ -837,7 +837,7 @@ msgstr ""
 "\n"
 "Popis:\n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
@@ -846,7 +846,7 @@ msgstr ""
 "\n"
 "Klíèová slova:\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -857,7 +857,7 @@ msgstr ""
 "Pou¾ití:\n"
 " "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, c-format
 msgid ""
 "\n"
@@ -866,20 +866,20 @@ msgstr ""
 "\n"
 "Pøepínaèe:\n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr "Povolit výstupním souborùm pøepsat existující soubory"
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr "Roz¹íøený výpis"
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr "Redukovaný výpis"
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, c-format
 msgid ""
 "\n"
@@ -888,80 +888,85 @@ msgstr ""
 "\n"
 "Parametry:\n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   výchozí: %s\n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr "Název"
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr "Klíèová slova"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr "Synopse"
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 msgid "Flags"
 msgstr "Pøepínaèe"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 msgid "Parameters"
 msgstr "Parametry"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 msgid "Options"
 msgstr "Volby"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 msgid "Default"
 msgstr "Výchozí"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr "Povolit pøepsání"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr "Spustit s minimálním mno¾ství výstupních správ"
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr "Spustit v tichém módu"
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 msgid "Unable to spawn the 'wish' program"
 msgstr "Nelze vytvoøit ¾ádaný program"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 msgid "Unable to determine program name"
 msgstr "nelze urèit jméno programu"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   volby:"
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Promiòte, ale <%c> není platný pøepínaè\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Promiòte, ale <%s=> je dvojznaèný\n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Promiòte, ale <%s> není platný parametr\n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -970,12 +975,12 @@ msgstr ""
 "\n"
 "CHYBA: neplatná syntaxe rozsahu pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Zadáno: %s\n"
 
-#: ../lib/gis/parser.c:2286
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -984,12 +989,12 @@ msgstr ""
 "\n"
 "CHYBA: hodnota <%s> mimo rozsah parametru <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2293
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Povolený rozsah: %s\n"
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2296
 #, c-format
 msgid ""
 "\n"
@@ -998,7 +1003,7 @@ msgstr ""
 "\n"
 "CHYBA: Chybí hodnota pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1008,7 +1013,7 @@ msgstr ""
 "CHYBA: Povinný parametr <%s> nebyl zadán:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, c-format
 msgid ""
 "\n"
@@ -1017,17 +1022,17 @@ msgstr ""
 "\n"
 "CHYBA: volba <%s> musí být zadána jako násobek %d\n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Bylo zadáno %d polo¾ek:\n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "CHYBA: volba <%s>: <%s> existuje.\n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid ""
 "\n"
@@ -1036,7 +1041,7 @@ msgstr ""
 "\n"
 "PØEPÍNAÈ: Nastavit následující pøepínaè?\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -1045,51 +1050,51 @@ msgstr ""
 "\n"
 "VOLBY:   %s\n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "     key: %s\n"
 msgstr "     klíè: %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formát: %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " default: %s\n"
 msgstr " výchozí: %s\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "required: %s\n"
 msgstr "povinný: %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid "multiple: %s\n"
 msgstr "vícenásobný: %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid " options: %s\n"
 msgstr " volby: %s\n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "zadejte volbu > "
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 msgid "   Try again? "
 msgstr "   Zkusit znovu? "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Promiòte, ale %s není akceptován.\n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, c-format
 msgid ""
 "\n"
@@ -1100,11 +1105,11 @@ msgstr ""
 "Bylo vybráno:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 msgid "Is this correct? "
 msgstr "Je to správnì? "
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr "pou¾ít výchozí"
 
@@ -1892,135 +1897,135 @@ msgstr "V souboru %s v <%s> chybí informace o ref. elipsoidu"
 msgid "Unknown projection"
 msgstr "Neznámá mapová projekce"
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 msgid "duplicate projection field"
 msgstr "duplicitní polo¾ka mapové projekce"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 msgid "duplicate zone field"
 msgstr "duplicitní polo¾ka zóny"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 msgid "projection field missing"
 msgstr "chybìjící polo¾ka mapové projekce"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 msgid "zone field missing"
 msgstr "chybìjící polo¾ka zóny"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 msgid "duplicate north field"
 msgstr "duplicitní polo¾ka pro sever"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 msgid "duplicate south field"
 msgstr "duplicitní polo¾ka pro jih"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 msgid "duplicate east field"
 msgstr "duplicitní polo¾ka pro východ"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 msgid "duplicate west field"
 msgstr "duplicitní polo¾ka pro západ"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 msgid "duplicate top field"
 msgstr "duplicitní polo¾ka pro horní èást"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 msgid "duplicate bottom field"
 msgstr "duplicitní polo¾ka pro spodní èást"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr "duplicitní polo¾ka pro rozli¹ené e-w"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 msgid "duplicate 3D e-w resolution field"
 msgstr "duplicitní polo¾ka pro 3D rozli¹ení e-w"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 msgid "duplicate n-s resolution field"
 msgstr "duplicitní polo¾ka pro rozli¹ení n-s"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 msgid "duplicate 3D n-s resolution field"
 msgstr "duplicitní polo¾ka pro 3D rozli¹ení n-s rozli¹ení"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 msgid "duplicate t-b resolution field"
 msgstr "duplicitní polo¾ka pro t-b rozli¹ení"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 msgid "duplicate rows field"
 msgstr "duplicitní polo¾ka pro øádky"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 msgid "duplicate 3D rows field"
 msgstr "duplicitní polo¾ka pro 3D øádky"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 msgid "duplicate cols field"
 msgstr "duplicitní polo¾ka pro sloupce"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 msgid "duplicate 3D cols field"
 msgstr "duplicitní polo¾ka pro 3D sloupce"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 msgid "duplicate depths field"
 msgstr "duplicitní polo¾ka pro hloubky"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 msgid "duplicate format field"
 msgstr "duplicitní polo¾ka pro formát"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 msgid "duplicate compressed field"
 msgstr "duplicitní komprimovaná polo¾ka"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 msgid "north field missing"
 msgstr "chybí polo¾ka pro sever"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 msgid "south field missing"
 msgstr "chybí polo¾ka pro jih"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 msgid "west field missing"
 msgstr "chybí polo¾ka pro západ"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 msgid "east field missing"
 msgstr "chybí polo¾ka pro východ"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 msgid "cols field missing"
 msgstr "chybí polo¾ka pro sloupce"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 msgid "rows field missing"
 msgstr "chybí polo¾ka pro øádky"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 msgid "ewres3 field missing"
 msgstr "chybí polo¾ka pro ewres3"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 msgid "nsres3 field missing"
 msgstr "chybí polo¾ka pro nsres3"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 msgid "cols3 field missing"
 msgstr "chybí polo¾ka pro cols3"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 msgid "rows3 field missing"
 msgstr "chybí polo¾ka pro rows3"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr "øádek %d: <%s>"

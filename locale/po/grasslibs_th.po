@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:52+0200\n"
+"POT-Creation-Date: 2011-10-05 23:24+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -95,7 +95,7 @@ msgstr "อาจจะเกิดจากข้อผิดพลาดขอ
 msgid "Connection failed."
 msgstr "การเชื่อมต่อล้มเหลว"
 
-#: ../lib/vask/V_support.c:58
+#: ../lib/vask/V_support.c:60
 #, c-format
 msgid "Unable to open file %s"
 msgstr "ไม่สามารถเปิดไฟล์ %s ได้"
@@ -809,17 +809,17 @@ msgstr ""
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 
-#: ../lib/gis/parser.c:969
+#: ../lib/gis/parser.c:970
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "เสียใจ <%s> ไม่มีอยู่ในเงื่อนไข\n"
 
-#: ../lib/gis/parser.c:996
+#: ../lib/gis/parser.c:997
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1073
+#: ../lib/gis/parser.c:1074
 #, c-format
 msgid ""
 "\n"
@@ -828,7 +828,7 @@ msgstr ""
 "\n"
 "คำอธิบาย:\n"
 
-#: ../lib/gis/parser.c:1080
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
@@ -837,7 +837,7 @@ msgstr ""
 "\n"
 "คำเฉพาะ:\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -848,7 +848,7 @@ msgstr ""
 "วิธีใช้:\n"
 " "
 
-#: ../lib/gis/parser.c:1152
+#: ../lib/gis/parser.c:1153
 #, c-format
 msgid ""
 "\n"
@@ -857,20 +857,20 @@ msgstr ""
 "\n"
 "ธง:\n"
 
-#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
-#: ../lib/gis/parser.c:1947
+#: ../lib/gis/parser.c:1176 ../lib/gis/parser.c:1500 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1948
 msgid "Allow output files to overwrite existing files"
 msgstr "ยอมให้เขียนทับไฟล์ที่มีอยู่แล้ว"
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1664
 msgid "Verbose module output"
 msgstr "แสดงผลแบบละเอียด"
 
-#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
+#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1515 ../lib/gis/parser.c:1667
 msgid "Quiet module output"
 msgstr "แสดงผลแบบเงียบ"
 
-#: ../lib/gis/parser.c:1183
+#: ../lib/gis/parser.c:1184
 #, c-format
 msgid ""
 "\n"
@@ -879,82 +879,87 @@ msgstr ""
 "\n"
 "ตัวแปร:\n"
 
-#: ../lib/gis/parser.c:1206
+#: ../lib/gis/parser.c:1207
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s  ค่าต้งต้น: %s\n"
 
-#: ../lib/gis/parser.c:1550
+#: ../lib/gis/parser.c:1551
 msgid "NAME"
 msgstr "ชื่อ"
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1564
 msgid "KEYWORDS"
 msgstr "คำเฉพาะ"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1569
 msgid "SYNOPSIS"
 msgstr "สาระสำคัญ"
 
-#: ../lib/gis/parser.c:1636
+#: ../lib/gis/parser.c:1637
 msgid "Flags"
 msgstr "ธง"
 
-#: ../lib/gis/parser.c:1674
+#: ../lib/gis/parser.c:1675
 msgid "Parameters"
 msgstr "ตัวแปร"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1715
 msgid "Options"
 msgstr "เงื่อนไข"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1721
 msgid "Default"
 msgstr "ค่าตั้งต้น"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1950
 msgid "Allow overwrite"
 msgstr "ยอมให้เขียนทับ"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1958
 msgid "Run with minimal output messages"
 msgstr "ทำงาน แบบแจ้งผลน้อย"
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1960
 msgid "Run quietly"
 msgstr "ทำงานเงียบ"
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:1993
 #, fuzzy
 msgid "Unable to spawn the 'wish' program"
 msgstr "ไม่สามารถเปิดได้ %s"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2012
 #, fuzzy
 msgid "Unable to determine program name"
 msgstr "ไม่สามารถหา  home directory ของผู้ใช้"
 
-#: ../lib/gis/parser.c:2068
+#: ../lib/gis/parser.c:2069
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   เงื่อนไข: "
 
-#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2114 ../lib/gis/parser.c:2129
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "เสียใจ, <%c> ไม่มีธง\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2195
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "เสียใจ, <%s=> ไม่ชัดเจน\n"
 
-#: ../lib/gis/parser.c:2200
+#: ../lib/gis/parser.c:2201
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "เสียใจ, <%s> ค่าตัวแปรไม่ถูกต้อง\n"
 
-#: ../lib/gis/parser.c:2281
+#: ../lib/gis/parser.c:2208
+#, c-format
+msgid "Option <%s> does not accept multiple answers\n"
+msgstr ""
+
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -963,12 +968,12 @@ msgstr ""
 "\n"
 "ข้อผิดพลาด: ใส่ค่าตัวแปรผิด <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2287
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       แสดงเป็น: %s\n"
 
-#: ../lib/gis/parser.c:2286
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -977,12 +982,12 @@ msgstr ""
 "\n"
 "ข้อผิดพลาด: ค่า <%s> อยู่นอกช่วงค่าตัวแปร <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2293
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "      ช่วงที่ถูกต้อง: %s\n"
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2296
 #, c-format
 msgid ""
 "\n"
@@ -991,7 +996,7 @@ msgstr ""
 "\n"
 "ข้อผิดพลาด:ขาดค่าตัวแปร <%s>\n"
 
-#: ../lib/gis/parser.c:2439
+#: ../lib/gis/parser.c:2444
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1001,7 +1006,7 @@ msgstr ""
 "ข้อผิดพลาด: ต้องการค่าตัวแปร <%s> ไม่ได้กำหนด:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2534
+#: ../lib/gis/parser.c:2539
 #, c-format
 msgid ""
 "\n"
@@ -1010,17 +1015,17 @@ msgstr ""
 "\n"
 "ข้อผิดพลาด: เงื่อนไข <%s> จะต้องมีหลายค่าของ %d\n"
 
-#: ../lib/gis/parser.c:2536
+#: ../lib/gis/parser.c:2541
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       คุณต้องใส่ %d หลายหัวข้อ:\n"
 
-#: ../lib/gis/parser.c:2592
+#: ../lib/gis/parser.c:2597
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ข้อผิดพลาด: เงื่อนไข <%s>: <%s> มีอยู่\n"
 
-#: ../lib/gis/parser.c:2647
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid ""
 "\n"
@@ -1029,7 +1034,7 @@ msgstr ""
 "\n"
 "ธง: กำหนดค่าธง?\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -1038,51 +1043,51 @@ msgstr ""
 "\n"
 "เงื่อนไข:   %s\n"
 
-#: ../lib/gis/parser.c:2662
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "     key: %s\n"
 msgstr "     เฉพาะ: %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "  format: %s\n"
 msgstr "  รูปแบบ: %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " default: %s\n"
 msgstr " ค่าตั้งต้น: %s\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "required: %s\n"
 msgstr "ต้องการ: %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid "multiple: %s\n"
 msgstr "หลาย: %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid " options: %s\n"
 msgstr "เงื่อนไข: %s\n"
 
-#: ../lib/gis/parser.c:2684
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "ใส่เงื่อนไข > "
 
-#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2706 ../lib/gis/parser.c:2716
 msgid "   Try again? "
 msgstr "   ลองใหม่? "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2714
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "เสียใจ, %s ไม่ถูกต้อง.\n"
 
-#: ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2724
 #, c-format
 msgid ""
 "\n"
@@ -1093,11 +1098,11 @@ msgstr ""
 "คุณได้เลือก:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2720
+#: ../lib/gis/parser.c:2725
 msgid "Is this correct? "
 msgstr "อย่างนี้ถูกต้องหรือไม่? "
 
-#: ../lib/gis/parser.c:2785
+#: ../lib/gis/parser.c:2790
 msgid "to accept the default"
 msgstr "ใช้ค่าตั้งต้น"
 
@@ -1876,135 +1881,135 @@ msgstr "ไม่มีข้อมูลรูปทรงรีในไฟล
 msgid "Unknown projection"
 msgstr "ไม่รู้จกแบบการฉายนี้"
 
-#: ../lib/gis/rd_cellhd.c:134
+#: ../lib/gis/rd_cellhd.c:143
 msgid "duplicate projection field"
 msgstr "Field การฉายซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:144
+#: ../lib/gis/rd_cellhd.c:153
 msgid "duplicate zone field"
 msgstr "Field โซนซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:154
+#: ../lib/gis/rd_cellhd.c:163
 msgid "projection field missing"
 msgstr "Field การฉายหายไป"
 
-#: ../lib/gis/rd_cellhd.c:156
+#: ../lib/gis/rd_cellhd.c:165
 msgid "zone field missing"
 msgstr "Field โซนหายไป"
 
-#: ../lib/gis/rd_cellhd.c:178
+#: ../lib/gis/rd_cellhd.c:187
 msgid "duplicate north field"
 msgstr "Field ค่าเหนือซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:186
+#: ../lib/gis/rd_cellhd.c:195
 msgid "duplicate south field"
 msgstr "Field ค่าใต้ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:194
+#: ../lib/gis/rd_cellhd.c:203
 msgid "duplicate east field"
 msgstr "Field ค่าตะวันออกซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:211
 msgid "duplicate west field"
 msgstr "Field ค่าตะวันตกซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:210
+#: ../lib/gis/rd_cellhd.c:219
 msgid "duplicate top field"
 msgstr "Field ค่าบนซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:218
+#: ../lib/gis/rd_cellhd.c:227
 msgid "duplicate bottom field"
 msgstr "Field ค่าล่างซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:226
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr "Field ค่าความละเอียด ออก-ตก ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:236
+#: ../lib/gis/rd_cellhd.c:245
 msgid "duplicate 3D e-w resolution field"
 msgstr "Field ค่าความละเอียด  3D  ออก-ตก ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:255
 msgid "duplicate n-s resolution field"
 msgstr "Field ค่าความละเอียด เหนือ-ใต้ ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:256
+#: ../lib/gis/rd_cellhd.c:265
 msgid "duplicate 3D n-s resolution field"
 msgstr "Field ค่าความละเอียด 3D  เหนือ-ใต้ ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:266
+#: ../lib/gis/rd_cellhd.c:275
 msgid "duplicate t-b resolution field"
 msgstr "Field ค่าความละเอียด บน-ล่าง ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:276
+#: ../lib/gis/rd_cellhd.c:285
 msgid "duplicate rows field"
 msgstr "Field ค่าแถว ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:286
+#: ../lib/gis/rd_cellhd.c:295
 msgid "duplicate 3D rows field"
 msgstr "Field ค่าแถว 3D  ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:296
+#: ../lib/gis/rd_cellhd.c:305
 msgid "duplicate cols field"
 msgstr "Field ค่าช่อง ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:306
+#: ../lib/gis/rd_cellhd.c:315
 msgid "duplicate 3D cols field"
 msgstr "Field ค่าช่อง  3D ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:316
+#: ../lib/gis/rd_cellhd.c:325
 msgid "duplicate depths field"
 msgstr "Field ค่าความลึก  ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:326
+#: ../lib/gis/rd_cellhd.c:335
 msgid "duplicate format field"
 msgstr "Field รูปแบบ ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:334
+#: ../lib/gis/rd_cellhd.c:343
 msgid "duplicate compressed field"
 msgstr "Field การบีบอัด ซ้ำ"
 
-#: ../lib/gis/rd_cellhd.c:345
+#: ../lib/gis/rd_cellhd.c:354
 msgid "north field missing"
 msgstr "field ค่าเหนือ หายไป"
 
-#: ../lib/gis/rd_cellhd.c:347
+#: ../lib/gis/rd_cellhd.c:356
 msgid "south field missing"
 msgstr "field ค่าใต้ หายไป"
 
-#: ../lib/gis/rd_cellhd.c:349
+#: ../lib/gis/rd_cellhd.c:358
 msgid "west field missing"
 msgstr "field ค่าตะวันตก หายไป"
 
-#: ../lib/gis/rd_cellhd.c:351
+#: ../lib/gis/rd_cellhd.c:360
 msgid "east field missing"
 msgstr "field ค่าตะวันออก หายไป"
 
-#: ../lib/gis/rd_cellhd.c:353
+#: ../lib/gis/rd_cellhd.c:362
 msgid "cols field missing"
 msgstr "field ค่าช่อง หายไป"
 
-#: ../lib/gis/rd_cellhd.c:355
+#: ../lib/gis/rd_cellhd.c:364
 msgid "rows field missing"
 msgstr "field ค่าแถว หายไป"
 
-#: ../lib/gis/rd_cellhd.c:366
+#: ../lib/gis/rd_cellhd.c:375
 msgid "ewres3 field missing"
 msgstr "field ค่าewres3 หายไป"
 
-#: ../lib/gis/rd_cellhd.c:368
+#: ../lib/gis/rd_cellhd.c:377
 msgid "nsres3 field missing"
 msgstr "field ค่า nsres3 หายไป"
 
-#: ../lib/gis/rd_cellhd.c:370
+#: ../lib/gis/rd_cellhd.c:379
 msgid "cols3 field missing"
 msgstr "field ค่าcols3 หายไป"
 
-#: ../lib/gis/rd_cellhd.c:372
+#: ../lib/gis/rd_cellhd.c:381
 msgid "rows3 field missing"
 msgstr "field ค่าrows3 หายไป"
 
-#: ../lib/gis/rd_cellhd.c:429
+#: ../lib/gis/rd_cellhd.c:438
 #, c-format
 msgid "line %d: <%s>"
 msgstr "บรรทัด %d: <%s>"

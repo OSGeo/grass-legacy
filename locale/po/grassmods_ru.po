@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 18:52+0200\n"
+"POT-Creation-Date: 2011-10-05 23:24+0200\n"
 "PO-Revision-Date: 2009-05-15 00:23-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -258,13 +258,13 @@ msgstr ""
 #: ../raster/r.circle/dist.c:127 ../raster/r.slope.aspect/opennew.c:19
 #: ../raster/r.bilinear/main.c:104 ../raster/r.patch/main.c:144
 #: ../raster/r.random/random.c:55 ../raster/r.los/main.c:203
-#: ../raster/r.buffer/write_map.c:40 ../raster/r.series/main.c:250
+#: ../raster/r.buffer/write_map.c:40 ../raster/r.series/main.c:238
 #: ../raster/r.surf.idw2/main.c:111 ../raster/r.surf.fractal/write_rast.c:58
 #: ../raster/r.grow2/main.c:209 ../raster/r.resamp.interp/main.c:148
 #: ../raster/r.cross/main.c:145 ../raster/r.clump/main.c:98
 #: ../raster/r.in.xyz/main.c:498 ../raster/r.texture/main.c:309
 #: ../raster/r.surf.random/randsurf.c:28 ../raster/r.surf.random/randsurf.c:32
-#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:323
+#: ../raster/r.li/r.li.daemon/daemon.c:128 ../raster/r.null/null.c:329
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.sunmask/main.c:450 ../raster/r.random.surface/save.c:23
 #: ../raster/r.thin/io.c:168 ../raster/r.horizon/main.c:611
@@ -768,7 +768,7 @@ msgstr "3d растровый слой для которого корректи�
 msgid "List of cell values to be set to NULL"
 msgstr "Список значений ячеек, которые будут установлены в NULL"
 
-#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:77
+#: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:78
 msgid "The value to replace the null value by"
 msgstr "Значение, которое заменит нулевое значение"
 
@@ -887,7 +887,7 @@ msgstr "   Grid3 <%s> не найден %s"
 msgid "Adding rule: %lf - %lf"
 msgstr "Добавить правило: %lf - %lf"
 
-#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
+#: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:266
 #, c-format
 msgid "%s: illegal value spec"
 msgstr "%s: значение не соотвествует спецификации"
@@ -1181,7 +1181,7 @@ msgstr "Переписать выходной файл слоя"
 #: ../raster/r.lake/main.c:253 ../raster/r.surf.idw/main.c:108
 #: ../raster/r.colors.out/main.c:88 ../raster/r.stats/main.c:270
 #: ../raster/r.out.vtk/main.c:47 ../raster/r.out.vtk/main.c:60
-#: ../raster/r.slope.aspect/main.c:358 ../raster/r.cost/main.c:340
+#: ../raster/r.slope.aspect/main.c:360 ../raster/r.cost/main.c:340
 #: ../raster/r.bilinear/main.c:81 ../raster/r.mfilter/main.c:121
 #: ../raster/r.resample/main.c:97 ../raster/r.patch/main.c:113
 #: ../raster/simwe/simlib/input.c:178 ../raster/simwe/simlib/input.c:184
@@ -1189,7 +1189,12 @@ msgstr "Переписать выходной файл слоя"
 #: ../raster/simwe/simlib/input.c:206 ../raster/simwe/simlib/input.c:212
 #: ../raster/simwe/simlib/input.c:218 ../raster/simwe/simlib/input.c:225
 #: ../raster/simwe/simlib/input.c:232 ../raster/simwe/simlib/input.c:239
-#: ../raster/simwe/simlib/input.c:246 ../raster/r.to.rast3elev/main.c:114
+#: ../raster/simwe/simlib/input.c:246 ../raster/simwe/simlib/output.c:356
+#: ../raster/simwe/simlib/output.c:365 ../raster/simwe/simlib/output.c:396
+#: ../raster/simwe/simlib/output.c:405 ../raster/simwe/simlib/output.c:452
+#: ../raster/simwe/simlib/output.c:470 ../raster/simwe/simlib/output.c:494
+#: ../raster/simwe/simlib/output.c:536 ../raster/simwe/simlib/output.c:574
+#: ../raster/simwe/simlib/output.c:755 ../raster/r.to.rast3elev/main.c:114
 #: ../raster/r.to.rast3elev/main.c:129 ../raster/r.out.ppm/main.c:116
 #: ../raster/r.out.ppm3/main.c:120 ../raster/r.transect/main.c:119
 #: ../raster/r.random/main.c:119 ../raster/r.random/main.c:124
@@ -1206,7 +1211,7 @@ msgstr "Переписать выходной файл слоя"
 #: ../raster/wildfire/r.ros/main.c:368 ../raster/wildfire/r.ros/main.c:372
 #: ../raster/wildfire/r.ros/main.c:391 ../raster/wildfire/r.ros/main.c:395
 #: ../raster/wildfire/r.ros/main.c:408 ../raster/r.profile/main.c:142
-#: ../raster/r.buffer/main.c:127 ../raster/r.series/main.c:212
+#: ../raster/r.buffer/main.c:127 ../raster/r.series/main.c:203
 #: ../raster/r.average/main.c:72 ../raster/r.average/main.c:75
 #: ../raster/r.surf.idw2/read_cell.c:19 ../raster/r.info/main.c:118
 #: ../raster/r.surf.area/main.c:118 ../raster/r.covar/main.c:95
@@ -1217,7 +1222,7 @@ msgstr "Переписать выходной файл слоя"
 #: ../raster/r.out.tiff/r.out.tiff.c:166 ../raster/r.texture/main.c:228
 #: ../raster/r.out.arc/main.c:113 ../raster/r.colors/main.c:305
 #: ../raster/r.colors/main.c:388 ../raster/r.statistics/main.c:79
-#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:113
+#: ../raster/r.statistics/main.c:85 ../raster/r.null/null.c:119
 #: ../raster/r.mapcalc/map.c:377 ../raster/r.thin/io.c:96
 #: ../raster/r.reclass/main.c:78 ../raster/r.to.vect/main.c:113
 #: ../raster/r.cats/main.c:125 ../raster/r.cats/main.c:146
@@ -1227,7 +1232,7 @@ msgstr "Переписать выходной файл слоя"
 #: ../raster/r.coin/main.c:130 ../raster/r.water.outlet/legal.c:23
 #: ../raster/r.horizon/main.c:543 ../raster/r.recode/main.c:82
 #: ../raster/r.distance/parse.c:79 ../raster/r.distance/parse.c:86
-#: ../raster/r.carve/main.c:179 ../raster/r.report/parse.c:243
+#: ../raster/r.carve/main.c:179 ../raster/r.report/parse.c:249
 #: ../raster/r.composite/main.c:155 ../raster/r.flow/io.c:65
 #: ../raster/r.sum/main.c:62 ../raster/r.topidx/check_ready.c:11
 #: ../raster/r.univar2/r.univar_main.c:216
@@ -1250,8 +1255,8 @@ msgstr "Переписать выходной файл слоя"
 #: ../display/d.zoom/main.c:208 ../vector/v.sample/main.c:158
 #: ../vector/v.vol.rst/main.c:606 ../vector/v.extrude/main.c:179
 #: ../vector/v.drape/main.c:245 ../vector/v.what.rast/main.c:138
-#: ../visualization/xganim/main.c:366 ../visualization/nviz2/cmd/surface.c:54
-#: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
+#: ../misc/m.nviz.image/surface.c:54 ../misc/m.nviz.image/surface.c:104
+#: ../visualization/xganim/main.c:366 ../doc/raster/r.example/main.c:111
 #: ../ps/ps.map/outl_io.c:67 ../imagery/i.pca/main.c:127
 #: ../imagery/i.modis.qc/main.c:215 ../imagery/i.zc/main.c:111
 #: ../imagery/i.landsat.toar/main.c:343 ../imagery/i.landsat.toar/main.c:477
@@ -1263,7 +1268,7 @@ msgstr "Переписать выходной файл слоя"
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:197
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
-#: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
+#: ../imagery/i.group/main.c:203 ../imagery/i.group/main.c:242
 #: ../imagery/i.topo.corr/main.c:34 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
@@ -1436,7 +1441,7 @@ msgstr "Учитывать значения NULL при отрисовке"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:117
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:50
-#: ../raster/r.out.gdal/export_band.c:248 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:248 ../raster/r.null/null.c:324
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -1511,7 +1516,7 @@ msgstr "Режим расширенной информации"
 #: ../raster/r.out.mat/main.c:90 ../raster/r.cost/main.c:238
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
 #: ../raster/r.out.tiff/r.out.tiff.c:144 ../raster/r.in.mat/main.c:125
-#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:411
+#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:367
 #: ../visualization/nviz/src/nviz_init.c:34
 msgid ""
 "The '-v' flag is superseded and will be removed in future. Please use '--"
@@ -1691,7 +1696,7 @@ msgstr "Минимальное количество точек в изолини
 #: ../raster/r.contour/main.c:135 ../raster/r.describe/main.c:107
 #: ../raster/r.out.png/r.out.png.c:136 ../raster/r.compress/main.c:82
 #: ../raster/r.out.ppm/main.c:69 ../raster/r.out.ppm3/main.c:90
-#: ../raster/r.buffer/main.c:101 ../raster/r.series/main.c:170
+#: ../raster/r.buffer/main.c:101 ../raster/r.series/main.c:161
 #: ../raster/r.covar/main.c:67 ../raster/r.cross/main.c:100
 #: ../raster/r.clump/main.c:68 ../raster/r.colors/main.c:249
 #: ../raster/r.distance/parse.c:64 ../raster/r.carve/main.c:117
@@ -1972,9 +1977,9 @@ msgstr "Прочесть слой fp как целочисленный"
 
 #: ../raster/r.describe/main.c:115 ../raster/r.out.png/r.out.png.c:159
 #: ../raster/r.rescale.eq/main.c:107 ../raster/r.compress/main.c:90
-#: ../raster/r.slope.aspect/main.c:299 ../raster/r.resample/main.c:90
+#: ../raster/r.slope.aspect/main.c:301 ../raster/r.resample/main.c:90
 #: ../raster/r.patch/main.c:87 ../raster/r.out.ppm3/main.c:102
-#: ../raster/r.buffer/main.c:110 ../raster/r.series/main.c:188
+#: ../raster/r.buffer/main.c:110 ../raster/r.series/main.c:179
 #: ../raster/r.covar/main.c:75 ../raster/r.rescale/main.c:103
 #: ../raster/r.cross/main.c:107 ../raster/r.clump/main.c:77
 #: ../raster/r.texture/main.c:221 ../raster/r.colors/main.c:257
@@ -2077,10 +2082,10 @@ msgid "Output raster map title"
 msgstr "Название выходного растра"
 
 #: ../raster/r.mfilter.fp/main.c:91 ../raster/r.rescale.eq/main.c:98
-#: ../raster/r.slope.aspect/main.c:261 ../raster/r.mfilter/main.c:85
+#: ../raster/r.slope.aspect/main.c:263 ../raster/r.mfilter/main.c:85
 #: ../raster/r.resample/main.c:79 ../raster/r.patch/main.c:72
 #: ../raster/r.grow2/main.c:167 ../raster/r.texture/main.c:111
-#: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
+#: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:99
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
 #: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
@@ -2176,6 +2181,10 @@ msgid "Unable to create temporary file"
 msgstr "Невозможно создать временный файл"
 
 #: ../raster/r.mfilter.fp/perform.c:84 ../raster/r.mfilter/perform.c:84
+#: ../raster/simwe/simlib/output.c:104 ../raster/simwe/simlib/output.c:117
+#: ../raster/simwe/simlib/output.c:131 ../raster/simwe/simlib/output.c:146
+#: ../raster/simwe/simlib/output.c:160 ../raster/simwe/simlib/output.c:174
+#: ../raster/simwe/simlib/output.c:641 ../raster/simwe/simlib/output.c:655
 #: ../raster/r.reclass/reclass.c:235 ../raster/r.topidx/file_io.c:88
 #: ../raster/r.param.scale/open_files.c:32
 #: ../raster/r.param.scale/open_files.c:36 ../imagery/i.cca/main.c:224
@@ -2616,7 +2625,7 @@ msgstr "Чтение %s ..."
 #: ../raster/r.out.gdal/export_band.c:154
 #: ../raster/r.out.gdal/export_band.c:399
 #: ../raster/r.out.gdal/export_band.c:432
-#: ../raster/r.out.gdal/export_band.c:465 ../raster/r.null/null.c:334
+#: ../raster/r.out.gdal/export_band.c:465 ../raster/r.null/null.c:340
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -2959,12 +2968,14 @@ msgstr ""
 "Значение временной зоны, если не указано, используется локальное солнечное "
 "время"
 
-#: ../raster/r.sun2/main.c:502 ../vector/v.buffer2/main.c:217
+#: ../raster/r.sun2/main.c:502 ../vector/v.generalize/main.c:208
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:503 ../vector/v.buffer2/main.c:215
-#: ../vector/v.buffer2/main.c:227 ../vector/v.build.polylines/main.c:134
+#: ../raster/r.sun2/main.c:503 ../vector/v.generalize/main.c:209
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
+#: ../vector/v.build.polylines/main.c:134
 msgid "Unused"
 msgstr "Не используется"
 
@@ -3176,7 +3187,7 @@ msgstr "Перечислить поддерживаемые форматы и в
 #: ../vector/v.db.connect/main.c:86 ../vector/v.db.connect/main.c:94
 #: ../vector/v.db.connect/main.c:110 ../db/base/connect.c:52
 #: ../locale/scriptstrings/g.extension_to_translate.c:9
-#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
+#: ../imagery/i.group/main.c:79 ../imagery/i.group/main.c:85
 msgid "Print"
 msgstr "Вывод"
 
@@ -3400,7 +3411,7 @@ msgstr ""
 "Установка цветовой таблицы серого для <%s> (16-бит, диапазон изображения)"
 
 #: ../raster/r.in.gdal/main.c:958 ../raster/r.circle/dist.c:155
-#: ../raster/r.surf.fractal/main.c:39 ../raster/r.recode/main.c:110
+#: ../raster/r.surf.fractal/main.c:39 ../raster/r.recode/main.c:113
 #: ../raster/r.composite/main.c:273
 #, c-format
 msgid "Raster map <%s> created."
@@ -3435,9 +3446,9 @@ msgstr ""
 
 #: ../raster/r.in.bin/main.c:251 ../raster/r.in.bin/main.c:256
 #: ../raster/r.in.bin/main.c:285 ../raster/r.in.bin/main.c:346
-#: ../raster/r.slope.aspect/main.c:179 ../raster/r.slope.aspect/main.c:189
-#: ../raster/r.slope.aspect/main.c:247 ../raster/r.slope.aspect/main.c:256
-#: ../raster/r.slope.aspect/main.c:267 ../raster/r.resamp.rst/main.c:231
+#: ../raster/r.slope.aspect/main.c:181 ../raster/r.slope.aspect/main.c:191
+#: ../raster/r.slope.aspect/main.c:249 ../raster/r.slope.aspect/main.c:258
+#: ../raster/r.slope.aspect/main.c:269 ../raster/r.resamp.rst/main.c:231
 #: ../raster/r.resamp.rst/main.c:239 ../raster/r.resamp.rst/main.c:247
 #: ../raster/r.resamp.rst/main.c:255 ../raster/r.resamp.rst/main.c:263
 #: ../general/g.mapset/main.c:58 ../general/g.mapset/main.c:66
@@ -3736,12 +3747,12 @@ msgstr "Выходной векторный слой линий потоков"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/v.generalize/main.c:295 ../vector/v.net.distance/main.c:146
+#: ../vector/v.generalize/main.c:301 ../vector/v.net.distance/main.c:146
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
 #: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
-#: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/vo_main.c:165 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
 #: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
@@ -3776,7 +3787,7 @@ msgstr "Слишком много начальных точек"
 #: ../display/d.path/main.c:193 ../display/d.extend/main.c:97
 #: ../display/d.vect.chart/main.c:246 ../display/d.thematic.area/main.c:212
 #: ../display/d.extract/main.c:98 ../display/d.what.vect/main.c:148
-#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:495
+#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:451
 #: ../vector/v.sample/main.c:152 ../vector/v.db.select/main.c:132
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.net/main.c:143
 #: ../vector/v.net/main.c:158 ../vector/v.out.svg/main.c:127
@@ -3786,7 +3797,7 @@ msgstr "Слишком много начальных точек"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.growing/main.c:129
 #: ../vector/lidar/v.lidar.correction/main.c:182
-#: ../vector/v.generalize/main.c:283 ../vector/v.extract/main.c:193
+#: ../vector/v.generalize/main.c:289 ../vector/v.extract/main.c:193
 #: ../vector/v.net.iso/main.c:181 ../vector/v.net.salesman/main.c:193
 #: ../vector/v.perturb/main.c:154 ../vector/v.distance/main.c:299
 #: ../vector/v.label.sa/labels.c:61 ../vector/v.type/main.c:202
@@ -3799,7 +3810,7 @@ msgstr "Слишком много начальных точек"
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
-#: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
+#: ../vector/v.voronoi/vo_main.c:158 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:248 ../vector/v.overlay/main.c:204
 #: ../vector/v.class/main.c:95 ../vector/v.build.polylines/main.c:145
@@ -3814,7 +3825,7 @@ msgstr "Слишком много начальных точек"
 #: ../vector/v.surf.rst/main.c:565 ../vector/v.db.connect/main.c:140
 #: ../vector/v.out.pov/main.c:96 ../vector/v.drape/main.c:261
 #: ../vector/v.what.rast/main.c:119 ../vector/v.out.dxf/main.c:69
-#: ../visualization/nviz2/cmd/vector.c:81 ../doc/vector/v.example/main.c:73
+#: ../misc/m.nviz.image/vector.c:81 ../doc/vector/v.example/main.c:73
 #, c-format
 msgid "Vector map <%s> not found"
 msgstr "Векторный слой <%s> не найден"
@@ -3929,7 +3940,7 @@ msgstr "Не хватает места в файле истории"
 #: ../raster/r.support/front/front.c:230 ../raster/r.statistics/main.c:91
 #: ../raster/r.mapcalc/map3.c:186 ../raster/r.mapcalc/map.c:92
 #: ../raster/r.cats/main.c:155 ../raster/r.cats/main.c:213
-#: ../raster/r.report/parse.c:264 ../display/d.title/main.c:112
+#: ../raster/r.report/parse.c:270 ../display/d.title/main.c:112
 #, c-format
 msgid "Unable to read category file of raster map <%s@%s>"
 msgstr "Невозможно прочитать файл категорий растрового слоя <%s@%s>"
@@ -4370,7 +4381,7 @@ msgid "Cannot read row"
 msgstr "Невозможно прочесть строку"
 
 #: ../raster/r.surf.idw/main.c:685 ../raster/r.cost/main.c:435
-#: ../raster/r.cost/main.c:669 ../raster/r.series/main.c:214
+#: ../raster/r.cost/main.c:669 ../raster/r.series/main.c:205
 #: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.colors/stats.c:41
 #: ../raster/r.colors/stats.c:107 ../ps/ps.map/ps_raster.c:101
 #, c-format
@@ -4424,7 +4435,7 @@ msgstr "Имя выходного файла (если не указано ил�
 msgid "Output field separator"
 msgstr "Выходной разделитель полей"
 
-#: ../raster/r.stats/main.c:136 ../raster/r.report/parse.c:91
+#: ../raster/r.stats/main.c:136 ../raster/r.report/parse.c:94
 msgid "Number of fp subranges to collect stats from"
 msgstr "Число поддиапазонов fp для сбора статистики из"
 
@@ -4470,11 +4481,11 @@ msgstr "Вывести индексы диапазонов fp (только дл
 msgid "Suppress reporting of NULLs when all values are NULL"
 msgstr "Не выводить информацию о NULL когда все значения NULL"
 
-#: ../raster/r.stats/main.c:196 ../raster/r.report/parse.c:122
+#: ../raster/r.stats/main.c:196 ../raster/r.report/parse.c:126
 msgid "Report for cats fp ranges (fp maps only)"
 msgstr "Отчёт по диапазону категорий fp (только для слоев fp)"
 
-#: ../raster/r.stats/main.c:200 ../raster/r.report/parse.c:127
+#: ../raster/r.stats/main.c:200 ../raster/r.report/parse.c:132
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr "Читать слой fp как целое (использовать правила квантования слоя)"
 
@@ -4491,7 +4502,7 @@ msgstr "Невозможно открыть файл <%s> для записи "
 msgid "'%s' must be greater than zero; using %s=255"
 msgstr "'%s' должно быть больше 0; используется %s=255"
 
-#: ../raster/r.stats/main.c:261 ../raster/r.series/main.c:202
+#: ../raster/r.stats/main.c:261 ../raster/r.series/main.c:193
 msgid "Raster map not found"
 msgstr "Растровый слой <%s> не найден"
 
@@ -4998,12 +5009,12 @@ msgstr "Целочисленный диапазон для старых данн
 msgid "Old integer data range is %d to %d"
 msgstr "Целочисленный диапазон для старых данных %d до %d"
 
-#: ../raster/r.slope.aspect/main.c:153
+#: ../raster/r.slope.aspect/main.c:155
 #, fuzzy
 msgid "raster, terrain"
 msgstr "растр, интерполяция"
 
-#: ../raster/r.slope.aspect/main.c:154
+#: ../raster/r.slope.aspect/main.c:156
 #, fuzzy
 msgid ""
 "Generates raster maps of slope, aspect, curvatures and partial derivatives "
@@ -5013,20 +5024,20 @@ msgstr ""
 "производных склона ипользуя растровый слой высот. Экспозиция вычисляется "
 "простив часовой стрелки начиная с востока."
 
-#: ../raster/r.slope.aspect/main.c:156
+#: ../raster/r.slope.aspect/main.c:158
 #, fuzzy
 msgid "Aspect is calculated counterclockwise from east."
 msgstr "Угол анизотропности (в градусах против часовой стрелки с востока)"
 
-#: ../raster/r.slope.aspect/main.c:163
+#: ../raster/r.slope.aspect/main.c:165
 msgid "Name for output slope raster map"
 msgstr "Имя выходного растрового слоя крутизны склонов"
 
-#: ../raster/r.slope.aspect/main.c:164 ../raster/r.slope.aspect/main.c:170
-#: ../raster/r.slope.aspect/main.c:196 ../raster/r.slope.aspect/main.c:203
-#: ../raster/r.slope.aspect/main.c:210 ../raster/r.slope.aspect/main.c:217
-#: ../raster/r.slope.aspect/main.c:224 ../raster/r.slope.aspect/main.c:231
-#: ../raster/r.slope.aspect/main.c:238 ../vector/v.surf.rst/main.c:210
+#: ../raster/r.slope.aspect/main.c:166 ../raster/r.slope.aspect/main.c:172
+#: ../raster/r.slope.aspect/main.c:198 ../raster/r.slope.aspect/main.c:205
+#: ../raster/r.slope.aspect/main.c:212 ../raster/r.slope.aspect/main.c:219
+#: ../raster/r.slope.aspect/main.c:226 ../raster/r.slope.aspect/main.c:233
+#: ../raster/r.slope.aspect/main.c:240 ../vector/v.surf.rst/main.c:210
 #: ../vector/v.surf.rst/main.c:228 ../vector/v.surf.rst/main.c:234
 #: ../vector/v.surf.rst/main.c:240 ../vector/v.surf.rst/main.c:246
 #: ../vector/v.surf.rst/main.c:252 ../vector/v.surf.rst/main.c:258
@@ -5036,80 +5047,80 @@ msgstr "Имя выходного растрового слоя крутизны
 msgid "Outputs"
 msgstr " "
 
-#: ../raster/r.slope.aspect/main.c:169
+#: ../raster/r.slope.aspect/main.c:171
 msgid "Name for output aspect raster map"
 msgstr "Имя выходного растрового слоя экспозиции склонов"
 
-#: ../raster/r.slope.aspect/main.c:178
+#: ../raster/r.slope.aspect/main.c:180
 msgid "Format for reporting the slope"
 msgstr "Формат для значения крутизны"
 
-#: ../raster/r.slope.aspect/main.c:188
+#: ../raster/r.slope.aspect/main.c:190
 msgid "Type of output aspect and slope maps"
 msgstr "Тип выходных слоев экспозиции и крутизны склонов"
 
-#: ../raster/r.slope.aspect/main.c:195
+#: ../raster/r.slope.aspect/main.c:197
 msgid "Name for output profile curvature raster map"
 msgstr "Имя выходного растрового слоя кривизны профиля"
 
-#: ../raster/r.slope.aspect/main.c:202
+#: ../raster/r.slope.aspect/main.c:204
 msgid "Name for output tangential curvature raster map"
 msgstr "Имя выходного растрового слоя тангенциальной кривизны"
 
-#: ../raster/r.slope.aspect/main.c:209
+#: ../raster/r.slope.aspect/main.c:211
 msgid ""
 "Name for output first order partial derivative dx (E-W slope) raster map"
 msgstr ""
 "Имя выходного растрового слоя частичной производной первого порядка dx "
 "(крутизна E-W)"
 
-#: ../raster/r.slope.aspect/main.c:216
+#: ../raster/r.slope.aspect/main.c:218
 msgid ""
 "Name for output first order partial derivative dy (N-S slope) raster map"
 msgstr ""
 "Имя выходного растрового слоя частичной производной первого порядка dx "
 "(крутизна N-S)"
 
-#: ../raster/r.slope.aspect/main.c:223
+#: ../raster/r.slope.aspect/main.c:225
 msgid "Name for output second order partial derivative dxx raster map"
 msgstr ""
 "Имя выходного растрового слоя частичной производной второго порядка dxx"
 
-#: ../raster/r.slope.aspect/main.c:230
+#: ../raster/r.slope.aspect/main.c:232
 msgid "Name for output second order partial derivative dyy raster map"
 msgstr ""
 "Имя выходного растрового слоя частичной производной второго порядка dyy"
 
-#: ../raster/r.slope.aspect/main.c:237
+#: ../raster/r.slope.aspect/main.c:239
 msgid "Name for output second order partial derivative dxy raster map"
 msgstr ""
 "Имя выходного растрового слоя частичной производной второго порядка dxy"
 
-#: ../raster/r.slope.aspect/main.c:243
+#: ../raster/r.slope.aspect/main.c:245
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "Коэффициент умножения для перевода единиц измерения высоты в метры"
 
-#: ../raster/r.slope.aspect/main.c:252
+#: ../raster/r.slope.aspect/main.c:254
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 "Минимальное значение крутизны склона (в процентах) для которой вычисляется "
 "экспозиция"
 
-#: ../raster/r.slope.aspect/main.c:266
+#: ../raster/r.slope.aspect/main.c:268
 msgid "Do not align the current region to the elevation layer"
 msgstr "Не совмещать текущий регион со слоем высот"
 
-#: ../raster/r.slope.aspect/main.c:327
+#: ../raster/r.slope.aspect/main.c:329
 #, c-format
 msgid "%s=%s - must be a positive number"
 msgstr "%s=%s - должно быть положительное число"
 
-#: ../raster/r.slope.aspect/main.c:333
+#: ../raster/r.slope.aspect/main.c:335
 #, c-format
 msgid "%s=%s - must be a non-negative number"
 msgstr "%s=%s - должно быть не отрицательное число"
 
-#: ../raster/r.slope.aspect/main.c:348
+#: ../raster/r.slope.aspect/main.c:350
 #, c-format
 msgid ""
 "You must specify at least one of the parameters: <%s>, <%s>, <%s>, <%s>, <%"
@@ -5118,80 +5129,80 @@ msgstr ""
 "Необходимо указать по крайней мере один из параметров: <%s>, <%s>, <%s>, <%"
 "s>, <%s>, <%s>, <%s>, <%s> or <%s>"
 
-#: ../raster/r.slope.aspect/main.c:378
+#: ../raster/r.slope.aspect/main.c:380
 #, c-format
 msgid "Wrong raster type: %s"
 msgstr "Неправильный тип растра: %s"
 
-#: ../raster/r.slope.aspect/main.c:408
+#: ../raster/r.slope.aspect/main.c:410
 #: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:67
 #, c-format
 msgid "Converting units to meters, factor=%.6f"
 msgstr "Перевод единиц в метры, коэффициент=%.6f"
 
-#: ../raster/r.slope.aspect/main.c:566 ../raster/r.patch/main.c:152
-#: ../raster/r.series/main.c:261
+#: ../raster/r.slope.aspect/main.c:568 ../raster/r.patch/main.c:152
+#: ../raster/r.series/main.c:249
 msgid "Percent complete..."
 msgstr "Процентов завершено..."
 
-#: ../raster/r.slope.aspect/main.c:990
+#: ../raster/r.slope.aspect/main.c:992
 #, c-format
 msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "Слои на основе данных о высотах для набора  <%s> в <%s>"
 
-#: ../raster/r.slope.aspect/main.c:1009
+#: ../raster/r.slope.aspect/main.c:1011
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
 "Минимальная расчетная экспозиция %.4f, максимальная расчетная экспозиция %.4f"
 
-#: ../raster/r.slope.aspect/main.c:1071
+#: ../raster/r.slope.aspect/main.c:1077
 #, c-format
 msgid "Aspect raster map <%s> complete"
 msgstr "Растровый слой экспозиции <%s> завершено"
 
-#: ../raster/r.slope.aspect/main.c:1113
+#: ../raster/r.slope.aspect/main.c:1119
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
 "Минимальная расчетная крутизна %.4f, максимальная расчетная крутизна %.4f"
 
-#: ../raster/r.slope.aspect/main.c:1164
+#: ../raster/r.slope.aspect/main.c:1174
 #, c-format
 msgid "Slope raster map <%s> complete"
 msgstr "Растровый слой крутизны <%s> завершено"
 
-#: ../raster/r.slope.aspect/main.c:1235
+#: ../raster/r.slope.aspect/main.c:1249
 #, c-format
 msgid "Profile curve raster map <%s> complete"
 msgstr "Растровый слой профильной кривизны <%s> завершено"
 
-#: ../raster/r.slope.aspect/main.c:1261
+#: ../raster/r.slope.aspect/main.c:1279
 #, c-format
 msgid "Tangential curve raster map <%s> complete"
 msgstr "Растровый слой тангенциальной кривизны <%s> завершено"
 
-#: ../raster/r.slope.aspect/main.c:1285
+#: ../raster/r.slope.aspect/main.c:1307
 #, c-format
 msgid "E-W slope raster map <%s> complete"
 msgstr "E-W растровый слой крутизны склона <%s> создан"
 
-#: ../raster/r.slope.aspect/main.c:1309
+#: ../raster/r.slope.aspect/main.c:1335
 #, c-format
 msgid "N-S slope raster map <%s> complete"
 msgstr "N-S растровый слой крутизны склона <%s> создан"
 
-#: ../raster/r.slope.aspect/main.c:1333
+#: ../raster/r.slope.aspect/main.c:1363
 #, c-format
 msgid "Dxx raster map <%s> complete"
 msgstr "Dxx растровый слой <%s> создан"
 
-#: ../raster/r.slope.aspect/main.c:1357
+#: ../raster/r.slope.aspect/main.c:1391
 #, c-format
 msgid "Dyy raster map <%s> complete"
 msgstr "Dyy растровый слой <%s> создан"
 
-#: ../raster/r.slope.aspect/main.c:1381
+#: ../raster/r.slope.aspect/main.c:1419
 #, c-format
 msgid "Dxy raster map <%s> complete"
 msgstr "Dxy растровый слой <%s> создан"
@@ -5244,7 +5255,7 @@ msgid "Keep null values in output raster map"
 msgstr "Сохранять null-значения в выходном растровом слое"
 
 #: ../raster/r.cost/main.c:229 ../raster/wildfire/r.spreadpath/main.c:110
-#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:358
+#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:314
 msgid "Run verbosely"
 msgstr "Запустить с детальным отчетом"
 
@@ -5270,7 +5281,7 @@ msgstr "Инициализация результата..."
 msgid "Failed to guess site file format\n"
 msgstr "Не удалось определить формат файла точек\n"
 
-#: ../raster/r.cost/main.c:667 ../raster/r.texture/h_measure.c:758
+#: ../raster/r.cost/main.c:667 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "Ошибка выделения памяти"
@@ -5798,6 +5809,11 @@ msgstr "nwalk > maxw!"
 msgid "Unable to write raster maps"
 msgstr "Невозможно записать растровые слои"
 
+#: ../raster/simwe/simlib/output.c:313 ../raster/simwe/simlib/output.c:321
+#, fuzzy, c-format
+msgid "FP raster map <%s> not found"
+msgstr " "
+
 #: ../raster/r.to.rast3elev/main.c:138
 msgid "The number of input and elevation maps is not equal"
 msgstr "Число исходных слоев и слоев высот не равно"
@@ -6171,7 +6187,7 @@ msgstr ""
 #: ../raster/r.los/main.c:380 ../raster/r.buffer/write_map.c:78
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
-#: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:515
+#: ../raster/r.null/null.c:348 ../raster/r.proj.seg/main.c:515
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "Ошибка записи растрового слоя <%s> строка %d"
@@ -6729,16 +6745,16 @@ msgstr "Запись выходного растрового слоя <%s>..."
 msgid "%s: %s - illegal distance specification"
 msgstr "%s: %s - неправильное обозначение расстояния"
 
-#: ../raster/r.series/main.c:101 ../raster/r.resamp.stats/main.c:290
+#: ../raster/r.series/main.c:99 ../raster/r.resamp.stats/main.c:290
 #, c-format
 msgid "Unknown method <%s>"
 msgstr "Неизвестный метод <%s>"
 
-#: ../raster/r.series/main.c:133
+#: ../raster/r.series/main.c:131
 msgid "raster, series"
 msgstr "растр, серии"
 
-#: ../raster/r.series/main.c:135
+#: ../raster/r.series/main.c:133
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
@@ -6746,34 +6762,30 @@ msgstr ""
 "Значение ячеек выходного слоя функция значений назначенных соответствующим "
 "исходным растровым слоям."
 
-#: ../raster/r.series/main.c:149
+#: ../raster/r.series/main.c:147
 msgid "Aggregate operation"
 msgstr "Операция агрегации"
 
-#: ../raster/r.series/main.c:156
+#: ../raster/r.series/main.c:154
 #, fuzzy
 msgid "Quantile to calculate for method=quantile"
 msgstr "Невозможно рассчитать центроиды полигонов"
 
-#: ../raster/r.series/main.c:164
-msgid "Threshold to calculate for method=threshold"
-msgstr ""
-
-#: ../raster/r.series/main.c:176
+#: ../raster/r.series/main.c:167
 msgid "Ignore values outside this range"
 msgstr "Игнорировать значения за этим диапазоном"
 
-#: ../raster/r.series/main.c:180 ../raster/r.resamp.stats/main.c:277
+#: ../raster/r.series/main.c:171 ../raster/r.resamp.stats/main.c:277
 msgid "Propagate NULLs"
 msgstr "Заполнить символами NULL"
 
-#: ../raster/r.series/main.c:217 ../raster/r.neighbors/main.c:216
+#: ../raster/r.series/main.c:208 ../raster/r.neighbors/main.c:216
 #: ../ps/ps.map/outl_io.c:71
 #, c-format
 msgid "Unable to open raster map <%s> in mapset <%s>"
 msgstr "Невозможно открыть растровый слой <%s> в наборе <%s>"
 
-#: ../raster/r.series/main.c:228
+#: ../raster/r.series/main.c:219
 msgid "output= and method= must have the same number of values"
 msgstr "output= и  method= должны иметь одинаковое количество значений"
 
@@ -8642,7 +8654,7 @@ msgid "Output Tiled TIFF"
 msgstr "Выходной плиточный TIFF"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
-#: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
+#: ../raster/r.null/null.c:163 ../raster/r.topidx/file_io.c:20
 #: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
 #: ../imagery/i.rectify/main.c:300 ../imagery/i.landsat.toar/main.c:349
 #: ../imagery/i.landsat.toar/main.c:485
@@ -8965,7 +8977,7 @@ msgstr ""
 "Слишком много категорий (найдено: %i, максимум: %i). Попробуйте изменить "
 "масштаб или переклассифицировать слой"
 
-#: ../raster/r.texture/h_measure.c:927
+#: ../raster/r.texture/h_measure.c:937
 #, c-format
 msgid "Too many iterations to required to find %s - giving up"
 msgstr ""
@@ -9082,7 +9094,7 @@ msgstr "Путь к файлу правил (\"-\" для чтения прав�
 msgid "Remove existing color table"
 msgstr "Удалить существующую цветовую таблицу"
 
-#: ../raster/r.colors/main.c:211
+#: ../raster/r.colors/main.c:211 ../raster/r.null/null.c:105
 #: ../locale/scriptstrings/r.mask_to_translate.c:11
 #, fuzzy
 msgid "Remove"
@@ -9984,92 +9996,102 @@ msgid "Manages NULL-values of given raster map."
 msgstr "Управление NULL-значениями заданного растрового слоя."
 
 #: ../raster/r.null/null.c:62
-msgid "Raster map for which to edit null file"
+#, fuzzy
+msgid "Name of raster map for which to edit null file"
 msgstr "Растровый слой для которого редактируется null-файл"
 
-#: ../raster/r.null/null.c:81
+#: ../raster/r.null/null.c:71 ../raster/r.null/null.c:79
+msgid "Modify"
+msgstr ""
+
+#: ../raster/r.null/null.c:83
 msgid "Only do the work if the map is floating-point"
 msgstr "Выполнить только если формат слоя с плавающей запятой"
 
-#: ../raster/r.null/null.c:85
+#: ../raster/r.null/null.c:84 ../raster/r.null/null.c:89
+#: ../raster/r.null/null.c:95
+msgid "Check"
+msgstr ""
+
+#: ../raster/r.null/null.c:88
 msgid "Only do the work if the map is integer"
 msgstr "Выполнить только если слой целочисленный"
 
-#: ../raster/r.null/null.c:90
+#: ../raster/r.null/null.c:94
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
 msgstr "Выполнить только если слой не имеет битмэп файла с NULL-значениями"
 
-#: ../raster/r.null/null.c:95
+#: ../raster/r.null/null.c:100
 msgid "Create NULL-value bitmap file validating all data cells"
 msgstr "Создание битмэп файла с NULL-значениями проверив всех ячейки данных"
 
-#: ../raster/r.null/null.c:99
+#: ../raster/r.null/null.c:104
 msgid "Remove NULL-value bitmap file"
 msgstr "Удалить растрового файла битмэп с NULL-значениями"
 
-#: ../raster/r.null/null.c:117
+#: ../raster/r.null/null.c:123
 #, c-format
 msgid ""
 "Raster map <%s> is a reclass of map <%s@%s>. Consider to generate a copy "
 "with r.mapcalc. Exiting."
 msgstr ""
 
-#: ../raster/r.null/null.c:123
+#: ../raster/r.null/null.c:129
 #, c-format
 msgid "Raster map <%s> is not in your mapset <%s>"
 msgstr "Растровый слой <%s> не найден в текущем наборе <%s>"
 
-#: ../raster/r.null/null.c:130
+#: ../raster/r.null/null.c:136
 #, c-format
 msgid "%s is illegal entry for null"
 msgstr "%s - недопустимое значение для null"
 
-#: ../raster/r.null/null.c:137
+#: ../raster/r.null/null.c:143
 #, c-format
 msgid "Raster map <%s> already has a null bitmap file"
 msgstr "Растровый слой <%s> уже имеет битмэп"
 
-#: ../raster/r.null/null.c:141
+#: ../raster/r.null/null.c:147
 #, c-format
 msgid "<%s> is integer raster map (CELL)"
 msgstr "<%s> целочисленное значение растра (CELL)"
 
-#: ../raster/r.null/null.c:145
+#: ../raster/r.null/null.c:151
 #, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
 msgstr "<%s> целочисленное значение растра (CELL). Используется null=%d."
 
-#: ../raster/r.null/null.c:151
+#: ../raster/r.null/null.c:157
 #, c-format
 msgid "<%s> is floating pointing raster map"
 msgstr "<%s> растровый слой с плавающей запятой"
 
-#: ../raster/r.null/null.c:169
+#: ../raster/r.null/null.c:175
 #, c-format
 msgid "Writing new null file for raster map <%s>..."
 msgstr "Запись нулевого файла для растрового слоя <%s>... "
 
-#: ../raster/r.null/null.c:176
+#: ../raster/r.null/null.c:182
 #, c-format
 msgid "Error writing null row %d"
 msgstr "Ошибка записи нулевой строки %d"
 
-#: ../raster/r.null/null.c:181 ../raster/r.null/null.c:194
+#: ../raster/r.null/null.c:187 ../raster/r.null/null.c:200
 #, c-format
 msgid "Raster map <%s> modified."
 msgstr "Растровый слой <%s> изменен."
 
-#: ../raster/r.null/null.c:188
+#: ../raster/r.null/null.c:194
 #, c-format
 msgid "Removing null file for raster map <%s>..."
 msgstr "Удаляется нулевой файл для растрового слоя <%s>..."
 
-#: ../raster/r.null/null.c:258
+#: ../raster/r.null/null.c:264
 #, c-format
 msgid "%s: %s: illegal value spec"
 msgstr "%s: %s: значение не соотвествует спецификации"
 
-#: ../raster/r.null/null.c:327
+#: ../raster/r.null/null.c:333
 #, c-format
 msgid "Writing new data for raster map <%s>..."
 msgstr "Запись новых данных для растрового слоя <%s>..."
@@ -10091,7 +10113,7 @@ msgstr "Имя слоя высот"
 msgid "Name of color file"
 msgstr "Имя цветового файла"
 
-#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:486
+#: ../raster/r.out.vrml/main.c:70 ../misc/m.nviz.image/args.c:486
 msgid "Vertical exaggeration"
 msgstr "Вертикальный масштаб"
 
@@ -11615,7 +11637,7 @@ msgstr "Невозможно открыть слой указателей дре
 msgid "Unable to open new basin map"
 msgstr "Невозможно открыть новый слой бассейнов"
 
-#: ../raster/r.water.outlet/main.c:149
+#: ../raster/r.water.outlet/main.c:151
 msgid "Unable to close new basin map layer"
 msgstr "Невозможно закрыть новый слой бассейнов"
 
@@ -12254,7 +12276,8 @@ msgid "reading r.stats output"
 msgstr "чтение вывода r.stats"
 
 #: ../raster/r.report/main.c:65
-msgid "Reports statistics for raster map layers."
+#, fuzzy
+msgid "Reports statistics for raster maps."
 msgstr "Показать статистику для растровых слоев."
 
 #: ../raster/r.report/parse.c:37
@@ -12273,68 +12296,86 @@ msgstr ""
 "mi;мили;me;метры;k;километры;a;акры;h;гектары;c;количество ячеек;p;процент "
 "покрова"
 
-#: ../raster/r.report/parse.c:56
+#: ../raster/r.report/parse.c:49 ../raster/r.report/parse.c:85
+#: ../ps/ps.map/main.c:83 ../ps/ps.map/main.c:95 ../ps/ps.map/main.c:120
+#: ../ps/ps.map/main.c:128
+#, fuzzy
+msgid "Output settings"
+msgstr "Output_options"
+
+#: ../raster/r.report/parse.c:57
 msgid "Character representing no data cell value"
 msgstr "Символ, отображающий значение ячейки без данных"
 
-#: ../raster/r.report/parse.c:57 ../raster/r.report/parse.c:66
-#: ../raster/r.report/parse.c:75 ../raster/r.report/parse.c:100
-#: ../raster/r.report/parse.c:105 ../raster/r.report/parse.c:110
+#: ../raster/r.report/parse.c:58 ../raster/r.report/parse.c:67
+#: ../raster/r.report/parse.c:76 ../raster/r.report/parse.c:104
+#: ../raster/r.report/parse.c:109 ../raster/r.report/parse.c:114
 msgid "Formatting"
 msgstr "Форматирование"
 
-#: ../raster/r.report/parse.c:63
+#: ../raster/r.report/parse.c:64
 #, c-format
 msgid "Page length (default: %d lines)"
 msgstr "Длина страницы (по умолчанию: %d линий)"
 
-#: ../raster/r.report/parse.c:72
+#: ../raster/r.report/parse.c:73
 #, c-format
 msgid "Page width (default: %d characters)"
 msgstr "Ширина страницы (по умолчанию: %d символов)"
 
 #: ../raster/r.report/parse.c:82
-msgid "Name of an output file to hold the report"
+#, fuzzy
+msgid "Name for output file to hold the report"
 msgstr "Имя выходного файла для отчёта"
 
-#: ../raster/r.report/parse.c:99
+#: ../raster/r.report/parse.c:84
+#, fuzzy
+msgid "If no output given report is printed to standard output"
+msgstr "Если не задано, то чтение производится со стандартного входа"
+
+#: ../raster/r.report/parse.c:95 ../raster/r.report/parse.c:127
+#: ../raster/r.report/parse.c:133
+msgid "FP maps"
+msgstr ""
+
+#: ../raster/r.report/parse.c:103
 msgid "Suppress page headers"
 msgstr "Подавлять заголовки страниц"
 
-#: ../raster/r.report/parse.c:104
+#: ../raster/r.report/parse.c:108
 msgid "Use formfeeds between pages"
 msgstr "Использовать прогон страниц между страницами"
 
-#: ../raster/r.report/parse.c:109
+#: ../raster/r.report/parse.c:113
 msgid "Scientific format"
 msgstr "Научный формат"
 
-#: ../raster/r.report/parse.c:114
+#: ../raster/r.report/parse.c:118
 msgid "Filter out all no data cells"
 msgstr "Отфильтровать все ячейки без данных"
 
-#: ../raster/r.report/parse.c:118
+#: ../raster/r.report/parse.c:122
 msgid "Filter out cells where all maps have no data"
 msgstr "Отфильтровать ячейки, в которых нет данных на всех слоях"
 
-#: ../raster/r.report/parse.c:170
+#: ../raster/r.report/parse.c:176
 msgid "nsteps has to be > 0; using nsteps=255"
 msgstr "nsteps должно быть больше чем 0; используется nsteps=255"
 
-#: ../raster/r.report/parse.c:177
+#: ../raster/r.report/parse.c:183
 msgid "Illegal page length"
 msgstr "Недопустимая длина страницы"
 
-#: ../raster/r.report/parse.c:184
+#: ../raster/r.report/parse.c:190
 msgid "Illegal page width"
 msgstr "Недопустимая ширина страницы"
 
-#: ../raster/r.report/parse.c:223
+#: ../raster/r.report/parse.c:229
 #, c-format
 msgid "Only %d unit%s allowed"
 msgstr "Только %d единицы %s разрешены"
 
-#: ../raster/r.report/parse.c:256
+#: ../raster/r.report/parse.c:262
 #, c-format
 msgid "Unable to read fp range for raster map <%s>"
 msgstr "Невозможно прочитать fp диапазон для растрового слоя <%s>"
@@ -15108,7 +15149,7 @@ msgstr ""
 #: ../display/d.text/main.c:132 ../display/d.rast/main.c:114
 #: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:250
 #: ../display/d.zoom/main.c:158 ../display/d.zoom/main.c:293
-#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:421
+#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:377
 #: ../vector/v.label/main.c:234 ../imagery/i.points/main.c:123
 #: ../imagery/i.ortho.photo/i.photo.2image/main.c:81
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:97
@@ -15402,7 +15443,7 @@ msgid "Line spacing"
 msgstr "Межстрочный интервал"
 
 #: ../display/d.text.new/main.c:221 ../display/d.text.freetype/main.c:168
-#: ../display/d.vect/main.c:306 ../vector/v.label/main.c:123
+#: ../display/d.vect/main.c:262 ../vector/v.label/main.c:123
 msgid "Font name"
 msgstr "Имя шрифта"
 
@@ -16695,9 +16736,9 @@ msgstr "Номер слоя. Если -1, показываются все сло
 
 #: ../display/d.thematic.area/main.c:131 ../display/d.thematic.area/main.c:134
 #: ../display/d.rast/main.c:66 ../display/d.rast/main.c:75
-#: ../display/d.rast/main.c:94 ../display/d.vect/main.c:147
-#: ../display/d.vect/main.c:153 ../display/d.vect/main.c:156
-#: ../display/d.vect/main.c:159 ../display/d.vect/main.c:377
+#: ../display/d.rast/main.c:94 ../display/d.vect/main.c:103
+#: ../display/d.vect/main.c:109 ../display/d.vect/main.c:112
+#: ../display/d.vect/main.c:115 ../display/d.vect/main.c:333
 #: ../vector/v.in.ogr/main.c:132 ../vector/v.in.ogr/main.c:146
 #: ../vector/v.in.ogr/main.c:168 ../vector/v.extract/main.c:107
 #: ../vector/v.extract/main.c:117 ../vector/v.extract/main.c:123
@@ -16735,7 +16776,7 @@ msgstr "Ширина границы"
 msgid "Boundary color"
 msgstr "Цвет границы"
 
-#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:347
+#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:303
 msgid "Rendering method for filled polygons"
 msgstr "Метод отрисовки для залитых полигонов"
 
@@ -16782,12 +16823,12 @@ msgid "'layer' must be > 0"
 msgstr "'layer' должен быть > 0"
 
 #: ../display/d.thematic.area/main.c:227 ../display/d.what.vect/what.c:446
-#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:175
+#: ../display/d.vect/main.c:466 ../vector/v.db.connect/main.c:175
 #, c-format
 msgid "Database connection not defined"
 msgstr "Не определено соединение с базой данных"
 
-#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
+#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:470
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
 #: ../vector/v.out.ascii/b2a.c:45 ../vector/v.out.ogr/main.c:629
@@ -16801,7 +16842,7 @@ msgstr "Не определено соединение с базой данны�
 msgid "Unable to start driver <%s>"
 msgstr "Невозможен запуск драйвера <%s>"
 
-#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:519
+#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:475
 #: ../vector/v.convert/att.c:73 ../db/base/describe.c:57
 #: ../db/base/execute.c:68 ../db/base/tables.c:51 ../db/base/select.c:73
 #, c-format
@@ -16823,7 +16864,7 @@ msgstr "Данные (%s) не числовые. Столбец должен б�
 msgid "Cannot select data (%s) from table"
 msgstr "Невозможно выбрать данные (%s) из таблицы"
 
-#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:471
+#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:427
 #, c-format
 msgid "Unknown color: [%s]"
 msgstr "Неизвестный цвет: [%s]"
@@ -16854,11 +16895,11 @@ msgstr ""
 msgid "Error interpreting color %s"
 msgstr "Ошибка интерпретации цвета %s"
 
-#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:652
+#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:608
 msgid "Plotting ..."
 msgstr "Отрисовка ..."
 
-#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:660
+#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:616
 msgid ""
 "The bounding box of the map is outside the current region, nothing drawn."
 msgstr "Охват слоя вне текущего региона, ничего не показывается."
@@ -17054,7 +17095,7 @@ msgid "Data range is empty"
 msgstr "Диапазон данных пуст"
 
 #: ../display/d.extract/main.c:50 ../display/d.what.vect/main.c:54
-#: ../display/d.vect/main.c:122
+#: ../display/d.vect/main.c:78
 msgid "display, vector"
 msgstr "визуализация, вектор"
 
@@ -17443,11 +17484,11 @@ msgstr "Максимальный размер области (по диагон�
 msgid "Label file <%s> not found"
 msgstr "Файл меток <%s> не найден"
 
-#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:431
+#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:387
 msgid "Region size is lower than minreg, nothing displayed."
 msgstr "Размер региона меньше чем minreg, ничего не показано."
 
-#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:440
+#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:396
 msgid "Region size is greater than maxreg, nothing displayed."
 msgstr "Размер региона больше чем minreg, ничего не показано."
 
@@ -17495,7 +17536,7 @@ msgstr "Открыть форму в режиме редактирования"
 #: ../vector/lidar/v.lidar.growing/main.c:141
 #: ../vector/lidar/v.lidar.growing/main.c:145
 #: ../vector/lidar/v.lidar.correction/main.c:186
-#: ../vector/v.generalize/main.c:288 ../vector/v.net.distance/main.c:140
+#: ../vector/v.generalize/main.c:294 ../vector/v.net.distance/main.c:140
 #: ../vector/v.out.ascii/out.c:151 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
@@ -17986,18 +18027,18 @@ msgstr "Правая: Выйти\n"
 msgid "Can't read vector map"
 msgstr "Невозможно прочитать векторный слой"
 
-#: ../display/d.vect/main.c:123
+#: ../display/d.vect/main.c:79
 #, fuzzy
 msgid "Displays user-specified vector map in the active graphics frame."
 msgstr ""
 "Показать три растра заданных пользователем как красный, зеленый и синий слои "
 "в активном фрейме дисплея."
 
-#: ../display/d.vect/main.c:135
+#: ../display/d.vect/main.c:91
 msgid "Display"
 msgstr "Показать"
 
-#: ../display/d.vect/main.c:136
+#: ../display/d.vect/main.c:92
 msgid ""
 "shape;Display geometry of features;cat;Display category numbers of features;"
 "topo;Display topology information (nodes, edges);dir;Display direction of "
@@ -18005,19 +18046,19 @@ msgid ""
 "Display z-coordinate of features (only for 3D vector maps)"
 msgstr ""
 
-#: ../display/d.vect/main.c:151
+#: ../display/d.vect/main.c:107
 msgid "Layer number (if -1, all layers are displayed)"
 msgstr "Номер слоя (Если -1, показываются все слои)"
 
-#: ../display/d.vect/main.c:166
+#: ../display/d.vect/main.c:122
 #, fuzzy
 msgid "Feature color"
 msgstr "Цвет линии"
 
-#: ../display/d.vect/main.c:167 ../display/d.vect/main.c:177
-#: ../display/d.vect/main.c:184 ../display/d.vect/main.c:195
-#: ../display/d.vect/main.c:363 ../display/d.vect/main.c:369
-#: ../display/d.vect/main.c:389 ../vector/v.label.sa/main.c:149
+#: ../display/d.vect/main.c:123 ../display/d.vect/main.c:133
+#: ../display/d.vect/main.c:140 ../display/d.vect/main.c:151
+#: ../display/d.vect/main.c:319 ../display/d.vect/main.c:325
+#: ../display/d.vect/main.c:345 ../vector/v.label.sa/main.c:149
 #: ../vector/v.label.sa/main.c:159 ../vector/v.label.sa/main.c:166
 #: ../vector/v.label.sa/main.c:176 ../vector/v.label.sa/main.c:186
 #: ../vector/v.label.sa/main.c:196 ../vector/v.label.sa/main.c:203
@@ -18032,129 +18073,129 @@ msgstr "Цвет линии"
 msgid "Colors"
 msgstr "Цвета"
 
-#: ../display/d.vect/main.c:170 ../display/d.vect/main.c:180
-#: ../display/d.vect/main.c:283 ../display/d.vect/main.c:293
+#: ../display/d.vect/main.c:126 ../display/d.vect/main.c:136
+#: ../display/d.vect/main.c:239 ../display/d.vect/main.c:249
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Либо стандартный цвет GRASS, либо триплет R:G:B, либо 'none'"
 
-#: ../display/d.vect/main.c:176
+#: ../display/d.vect/main.c:132
 msgid "Area fill color"
 msgstr "Цвет заливки полигонов"
 
-#: ../display/d.vect/main.c:185
+#: ../display/d.vect/main.c:141
 msgid "Name of color definition column (for use with -a flag)"
 msgstr "Имя столбца определителя цвета (для использования с флагом -a)"
 
-#: ../display/d.vect/main.c:193
+#: ../display/d.vect/main.c:149
 msgid "Type of color table (for use with -z flag)"
 msgstr "Тип цветовой таблицы (для использования с параметром -z)"
 
-#: ../display/d.vect/main.c:202 ../display/d.vect/main.c:207
-#: ../display/d.vect/main.c:215
+#: ../display/d.vect/main.c:158 ../display/d.vect/main.c:163
+#: ../display/d.vect/main.c:171
 msgid "Lines"
 msgstr "Линии"
 
-#: ../display/d.vect/main.c:203
+#: ../display/d.vect/main.c:159
 msgid "Line width"
 msgstr "Ширина линии"
 
-#: ../display/d.vect/main.c:209
+#: ../display/d.vect/main.c:165
 msgid "Name of column for line widths (these values will be scaled by wscale)"
 msgstr ""
 "Имя столбца с шириной линий (эти значения будут масштабироваться wscale)"
 
-#: ../display/d.vect/main.c:216
+#: ../display/d.vect/main.c:172
 msgid "Scale factor for wcolumn"
 msgstr "Фактор масштабирования для wcolumn"
 
-#: ../display/d.vect/main.c:224 ../display/d.vect/main.c:234
-#: ../display/d.vect/main.c:241 ../display/d.vect/main.c:247
+#: ../display/d.vect/main.c:180 ../display/d.vect/main.c:190
+#: ../display/d.vect/main.c:197 ../display/d.vect/main.c:203
 msgid "Symbols"
 msgstr "Символы"
 
-#: ../display/d.vect/main.c:228
+#: ../display/d.vect/main.c:184
 msgid "Point and centroid symbol"
 msgstr "Символ точки и центроида"
 
-#: ../display/d.vect/main.c:235
+#: ../display/d.vect/main.c:191
 msgid "Symbol size"
 msgstr "Размер символа"
 
-#: ../display/d.vect/main.c:237
+#: ../display/d.vect/main.c:193
 msgid "When used with the size_column option this becomes the scale factor"
 msgstr ""
 
-#: ../display/d.vect/main.c:243
+#: ../display/d.vect/main.c:199
 #, fuzzy
 msgid "Name of numeric column containing symbol size"
 msgstr "Имя столбца, содержащего координату y"
 
-#: ../display/d.vect/main.c:249
+#: ../display/d.vect/main.c:205
 #, fuzzy
 msgid "Name of numeric column containing symbol rotation angle"
 msgstr "Имя столбца, содержащего координату y"
 
-#: ../display/d.vect/main.c:251
+#: ../display/d.vect/main.c:207
 msgid "Measured in degrees CCW from east"
 msgstr ""
 
-#: ../display/d.vect/main.c:256 ../display/d.vect/main.c:263
-#: ../display/d.vect/main.c:271 ../display/d.vect/main.c:279
-#: ../display/d.vect/main.c:289 ../display/d.vect/main.c:299
-#: ../display/d.vect/main.c:305 ../display/d.vect/main.c:311
-#: ../display/d.vect/main.c:319
+#: ../display/d.vect/main.c:212 ../display/d.vect/main.c:219
+#: ../display/d.vect/main.c:227 ../display/d.vect/main.c:235
+#: ../display/d.vect/main.c:245 ../display/d.vect/main.c:255
+#: ../display/d.vect/main.c:261 ../display/d.vect/main.c:267
+#: ../display/d.vect/main.c:275
 msgid "Labels"
 msgstr "Подписи"
 
-#: ../display/d.vect/main.c:258
+#: ../display/d.vect/main.c:214
 msgid "Layer number for labels (default: the given layer number)"
 msgstr "Номер слоя для подписей (по умолчанию: заданный номер слоя)"
 
-#: ../display/d.vect/main.c:264
+#: ../display/d.vect/main.c:220
 msgid "Name of column to be displayed"
 msgstr "Имя показываемого поля"
 
-#: ../display/d.vect/main.c:270
+#: ../display/d.vect/main.c:226
 msgid "Label color"
 msgstr "Цвет подписи"
 
-#: ../display/d.vect/main.c:273
+#: ../display/d.vect/main.c:229
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Либо стандратное название цвета, либо триплет R:G:B"
 
-#: ../display/d.vect/main.c:280
+#: ../display/d.vect/main.c:236
 msgid "Label background color"
 msgstr "Цвет фона подписи"
 
-#: ../display/d.vect/main.c:290
+#: ../display/d.vect/main.c:246
 msgid "Label border color"
 msgstr "Цвет границы подписи"
 
-#: ../display/d.vect/main.c:300
+#: ../display/d.vect/main.c:256
 msgid "Label size (pixels)"
 msgstr "Размер подписи (пиксели)"
 
-#: ../display/d.vect/main.c:314
+#: ../display/d.vect/main.c:270
 msgid "Label horizontal justification"
 msgstr "Выравнивание подписи по горизонтали"
 
-#: ../display/d.vect/main.c:322
+#: ../display/d.vect/main.c:278
 msgid "Label vertical justification"
 msgstr "Выравнивание подписи по вертикали"
 
-#: ../display/d.vect/main.c:329
+#: ../display/d.vect/main.c:285
 msgid ""
 "Minimum region size (average from height and width) when map is displayed"
 msgstr ""
 "Минимальный размер региона (среднее от высоты и ширины) при показе слоя "
 
-#: ../display/d.vect/main.c:337
+#: ../display/d.vect/main.c:293
 msgid ""
 "Maximum region size (average from height and width) when map is displayed"
 msgstr ""
 "Максимальный размер региона (среднее от высоты и ширины) при показе слоя "
 
-#: ../display/d.vect/main.c:349
+#: ../display/d.vect/main.c:305
 msgid ""
 "g;use the libgis render functions (features: clipping);r;use the raster "
 "graphics library functions (features: polylines);d;use the display library "
@@ -18168,22 +18209,22 @@ msgstr ""
 "обрезки библиотеки дисплея (объекты: обрезка);l;использовать функции "
 "удаления библиотеки дисплея (объекты: удаление, полилинии)"
 
-#: ../display/d.vect/main.c:365
+#: ../display/d.vect/main.c:321
 msgid "Get colors from map table column (of form RRR:GGG:BBB)"
 msgstr "Получить цвета из столбца таблицы слоя (в форме RRR:GGG:BBB)"
 
-#: ../display/d.vect/main.c:371
+#: ../display/d.vect/main.c:327
 msgid ""
 "Random colors according to category number (or layer number if 'layer=-1' is "
 "given)"
 msgstr ""
 "Случайные цвета для номеров категории (или номер слоя, если задан 'layer=-1')"
 
-#: ../display/d.vect/main.c:378
+#: ../display/d.vect/main.c:334
 msgid "Use values from 'cats' option as feature id"
 msgstr "Использовать значения из опции 'cats' как id объекта"
 
-#: ../display/d.vect/main.c:383
+#: ../display/d.vect/main.c:339
 msgid ""
 "Don't add to list of vectors and commands in monitor (it won't be drawn if "
 "the monitor is refreshed)"
@@ -18191,11 +18232,11 @@ msgstr ""
 "Не добавлять к списку векторов и команд на монитор (не будет отрисован, если "
 "монитор обновлен) "
 
-#: ../display/d.vect/main.c:388
+#: ../display/d.vect/main.c:344
 msgid "Colorize polygons according to z height"
 msgstr "Задать цвет полигонам согласно высоте z"
 
-#: ../display/d.vect/main.c:455
+#: ../display/d.vect/main.c:411
 msgid ""
 "The '-c' and '-a' flags cannot be used together, the '-c' flag will be "
 "ignored!"
@@ -18203,34 +18244,34 @@ msgstr ""
 "Параметры '-c' и '-a' не могут быть использованы вместе, параметр '-c' будет "
 "игнорирован!"
 
-#: ../display/d.vect/main.c:486
+#: ../display/d.vect/main.c:442
 #, c-format
 msgid "Unknown color: '%s'"
 msgstr "Неизвестный цвет: '%s'"
 
-#: ../display/d.vect/main.c:507 ../vector/v.extract/main.c:274
+#: ../display/d.vect/main.c:463 ../vector/v.extract/main.c:274
 #: ../vector/v.univar/main.c:172 ../vector/v.surf.rst/main.c:450
 msgid "'layer' must be > 0 for 'where'."
 msgstr "'layer' должен быть > 0 для 'where'."
 
-#: ../display/d.vect/main.c:534
+#: ../display/d.vect/main.c:490
 msgid "'layer' must be > 0 for 'cats'."
 msgstr "'layer' должен быть > 0 для 'cats'."
 
-#: ../display/d.vect/main.c:538
+#: ../display/d.vect/main.c:494
 #, c-format
 msgid "%d errors in cat option"
 msgstr "%d ошибок в опции cat"
 
-#: ../display/d.vect/main.c:694
+#: ../display/d.vect/main.c:650
 msgid "Unable to display areas, topology not available"
 msgstr "Невозможно показать полигоны, недоступна топология"
 
-#: ../display/d.vect/main.c:699
+#: ../display/d.vect/main.c:655
 msgid "Unable to display lines by id, topology not available"
 msgstr "Невозможно показать линии по id, недоступна топология"
 
-#: ../display/d.vect/main.c:742
+#: ../display/d.vect/main.c:698
 msgid "Unable to display topology, not available"
 msgstr "Невозможно показать топологию, не доступна"
 
@@ -19637,7 +19678,7 @@ msgid "Writing attributes..."
 msgstr "Чтение атрибутов..."
 
 #: ../vector/v.generalize/misc.c:157 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
+#: ../vector/v.voronoi/vo_main.c:339 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "Слой %d"
@@ -19753,60 +19794,60 @@ msgstr "Количество итераций"
 msgid "Copy attributes"
 msgstr "Копировать атрибуты"
 
-#: ../vector/v.generalize/main.c:256
+#: ../vector/v.generalize/main.c:262
 msgid "Unknown method"
 msgstr "Неизвестный метод"
 
-#: ../vector/v.generalize/main.c:316
+#: ../vector/v.generalize/main.c:322
 #, fuzzy
 msgid "Displacement..."
 msgstr "Смещение данных..."
 
-#: ../vector/v.generalize/main.c:325
+#: ../vector/v.generalize/main.c:331
 #, fuzzy
 msgid "Network generalization..."
 msgstr "Векторная генерализация."
 
-#: ../vector/v.generalize/main.c:340
+#: ../vector/v.generalize/main.c:346
 msgid "Attributes are needed for 'where' option, copying table"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:362
+#: ../vector/v.generalize/main.c:368
 #, c-format
 msgid "Generalization (%s)..."
 msgstr "Генерализация (%s)..."
 
-#: ../vector/v.generalize/main.c:456
+#: ../vector/v.generalize/main.c:462
 #, fuzzy, c-format
 msgid "Method '%s' did not preserve first point"
 msgstr "Шрифт '%s' не является шрифтом FreeType\n"
 
-#: ../vector/v.generalize/main.c:461
+#: ../vector/v.generalize/main.c:467
 #, c-format
 msgid "Method '%s' did not preserve last point"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:488
+#: ../vector/v.generalize/main.c:494
 #, fuzzy, c-format
 msgid ""
 "%d boundaries were not modified because modification would damage topology"
 msgstr "%d границ не обрезано, так как это повредит топологию"
 
-#: ../vector/v.generalize/main.c:491
+#: ../vector/v.generalize/main.c:497
 #, c-format
 msgid "%d lines/boundaries were not modified due to over-simplification"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:506
+#: ../vector/v.generalize/main.c:512
 #, fuzzy, c-format
 msgid "Number of vertices for selected lines %s from %d to %d (%d%%)."
 msgstr "Количество узлов было уменьшено с %d до %d [%d%%]"
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 msgid "reduced"
 msgstr ""
 
-#: ../vector/v.generalize/main.c:507
+#: ../vector/v.generalize/main.c:513
 #, fuzzy
 msgid "changed"
 msgstr "Измененные строки"
@@ -19981,7 +20022,7 @@ msgid "Create 3D output"
 msgstr "Создать выходной 3D слой"
 
 #: ../vector/v.in.ogr/main.c:215 ../vector/v.select/args.c:80
-#: ../vector/v.voronoi/vo_main.c:138 ../vector/v.overlay/main.c:120
+#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:120
 #: ../vector/v.to.points/main.c:213
 msgid "Do not create attribute table"
 msgstr "Не создавать атрибутивную таблицу"
@@ -20478,7 +20519,7 @@ msgstr ""
 msgid "Extracting features..."
 msgstr "Экстракция объектов..."
 
-#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:339
+#: ../vector/v.extract/main.c:466 ../vector/v.voronoi/vo_main.c:344
 msgid "No table"
 msgstr "Нет таблицы"
 
@@ -23802,13 +23843,13 @@ msgstr "Очистка границ в узлах..."
 msgid "Deleting boundaries..."
 msgstr "Разрыв границ..."
 
-#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.voronoi/vo_main.c:120 ../vector/v.voronoi/dt_main.c:46
 #: ../vector/v.delaunay2/main.c:86
 #, fuzzy
 msgid "vector, geometry, triangulation"
 msgstr "вектор, геометрия, получение данных"
 
-#: ../vector/v.voronoi/vo_main.c:119
+#: ../vector/v.voronoi/vo_main.c:121
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
@@ -23816,28 +23857,37 @@ msgstr ""
 "Построить диаграмму Вороного на основе исходного векторного слоя, "
 "содержащего точки или центроиды."
 
-#: ../vector/v.voronoi/vo_main.c:134
+#: ../vector/v.voronoi/vo_main.c:136
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr "Выходная тесселяция как граф (линии), а не области"
 
-#: ../vector/v.voronoi/vo_main.c:175
+#: ../vector/v.voronoi/vo_main.c:179
 #, fuzzy
 msgid "Reading sites..."
 msgstr "Чтение ввода..."
 
-#: ../vector/v.voronoi/vo_main.c:185
+#: ../vector/v.voronoi/vo_main.c:189
 #, fuzzy
 msgid "Voronoi triangulation..."
 msgstr "Предварительные расчеты поверхности..."
 
-#: ../vector/v.voronoi/vo_main.c:270
+#: ../vector/v.voronoi/vo_main.c:271
 #, fuzzy
 msgid "Writing sites to output..."
 msgstr "Запись слоя..."
 
-#: ../vector/v.voronoi/vo_main.c:354
+#: ../vector/v.voronoi/vo_main.c:359
 msgid "Cannot copy table"
 msgstr "Невозможно скопировать таблицу"
+
+#: ../vector/v.voronoi/vo_main.c:415
+msgid "Output needs topological cleaning"
+msgstr ""
+
+#: ../vector/v.voronoi/vo_main.c:447
+#, fuzzy
+msgid "Removing incorrect boundaries from output"
+msgstr "Удалить все линии или границы нулевой длины"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 msgid ""
@@ -27906,6 +27956,398 @@ msgstr ""
 msgid "Name of Arc cost column"
 msgstr "Имя столбца"
 
+#: ../misc/m.nviz.image/main.c:48 ../visualization/nviz/src/nvizMain.c:71
+msgid "visualization, raster, vector, raster3d"
+msgstr "визуализация, растр, вектор, 3D растр"
+
+#: ../misc/m.nviz.image/main.c:49
+#, fuzzy
+msgid "Creates a 3D rendering of GIS data."
+msgstr "Создать векторный 3D точечный слой из 3 столбцов данных Matlab"
+
+#: ../misc/m.nviz.image/main.c:50
+msgid ""
+"Renders surfaces (raster data), 2D/3D vector data, and volumes (3D raster "
+"data) in 3D."
+msgstr ""
+
+#: ../misc/m.nviz.image/main.c:128
+#, c-format
+msgid "Vertical exaggeration not given, using calculated value %.0f"
+msgstr ""
+"Не задан вертикальный коэффициент масштабирования, используется расчетное "
+"значение %.0f"
+
+#: ../misc/m.nviz.image/main.c:140
+#, c-format
+msgid "Viewpoint height not given, using calculated value %.0f"
+msgstr "Высота точки обзора не задана, используется расчетного значение %.0f"
+
+#: ../misc/m.nviz.image/main.c:201
+msgid "Unsupported output format"
+msgstr "Неподдерживаемый выходной формат"
+
+#: ../misc/m.nviz.image/main.c:203 ../imagery/i.cluster/main.c:346
+#, c-format
+msgid "File <%s> created."
+msgstr "Файл <%s> создан."
+
+#: ../misc/m.nviz.image/args.c:49
+msgid "Use draw mode for all loaded surfaces"
+msgstr "Использовать режим отрисовки для всех загруженных поверхностей"
+
+#: ../misc/m.nviz.image/args.c:50 ../misc/m.nviz.image/args.c:122
+#: ../misc/m.nviz.image/args.c:131 ../misc/m.nviz.image/args.c:138
+#: ../misc/m.nviz.image/args.c:144 ../misc/m.nviz.image/args.c:152
+#: ../misc/m.nviz.image/args.c:161 ../misc/m.nviz.image/args.c:171
+#: ../misc/m.nviz.image/args.c:179 ../misc/m.nviz.image/args.c:189
+#: ../misc/m.nviz.image/args.c:197 ../misc/m.nviz.image/args.c:207
+#, fuzzy
+msgid "Surfaces"
+msgstr "Поверхность"
+
+#: ../misc/m.nviz.image/args.c:81
+#, fuzzy
+msgid "Name for output image file (without extension)"
+msgstr "Название для файла вывода (НЕ указывать расширение)"
+
+#: ../misc/m.nviz.image/args.c:82 ../misc/m.nviz.image/args.c:96
+#: ../misc/m.nviz.image/args.c:106
+msgid "Image"
+msgstr "Изображение"
+
+#: ../misc/m.nviz.image/args.c:94
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
+msgid "Graphics file format"
+msgstr "Формат графического файла"
+
+#: ../misc/m.nviz.image/args.c:104
+#, fuzzy
+msgid "Size (width, height) of output image"
+msgstr "Ширина и высота выходного изображения"
+
+#: ../misc/m.nviz.image/args.c:121
+msgid "Name of raster map(s) for elevation"
+msgstr "Имя растрового слоя (слоев) для высоты"
+
+#: ../misc/m.nviz.image/args.c:130
+msgid "Elevation value(s)"
+msgstr "Значение высоты"
+
+#: ../misc/m.nviz.image/args.c:137
+msgid "Name of raster map(s) for color"
+msgstr "Имя растрового слоя (слоев) для цвета"
+
+#: ../misc/m.nviz.image/args.c:143
+msgid "Color value(s)"
+msgstr "Значения цвета"
+
+#: ../misc/m.nviz.image/args.c:151
+msgid "Name of raster map(s) for mask"
+msgstr "Имя растрового слоя (слоев) для маски"
+
+#: ../misc/m.nviz.image/args.c:160
+msgid "Name of raster map(s) for transparency"
+msgstr "Имя растрового слоя (слоев) для прозрачности"
+
+#: ../misc/m.nviz.image/args.c:170
+msgid "Transparency value(s)"
+msgstr "Значения прозрачности"
+
+#: ../misc/m.nviz.image/args.c:178
+msgid "Name of raster map(s) for shininess"
+msgstr "Имя растрового слоя (слоев) для яркости"
+
+#: ../misc/m.nviz.image/args.c:188
+msgid "Shininess value(s)"
+msgstr "Значения яркости"
+
+#: ../misc/m.nviz.image/args.c:196
+msgid "Name of raster map(s) for emission"
+msgstr "Имя растрового слоя (слоев) для излучения"
+
+#: ../misc/m.nviz.image/args.c:206
+msgid "Emission value(s)"
+msgstr "Значения излучения"
+
+#: ../misc/m.nviz.image/args.c:220
+msgid "Draw mode"
+msgstr "Режим отрисовки"
+
+#: ../misc/m.nviz.image/args.c:223 ../misc/m.nviz.image/args.c:234
+#: ../misc/m.nviz.image/args.c:245 ../misc/m.nviz.image/args.c:257
+#: ../misc/m.nviz.image/args.c:269 ../misc/m.nviz.image/args.c:278
+#: ../misc/m.nviz.image/args.c:288 ../misc/m.nviz.image/args.c:508
+#: ../misc/m.nviz.image/args.c:520
+msgid "Draw"
+msgstr "Рисовать"
+
+#: ../misc/m.nviz.image/args.c:232
+msgid "Fine resolution"
+msgstr "Четкое разрешение"
+
+#: ../misc/m.nviz.image/args.c:243
+msgid "Coarse resolution"
+msgstr "Грубое разрешение"
+
+#: ../misc/m.nviz.image/args.c:254
+msgid "Draw style"
+msgstr "Стиль отрисовки"
+
+#: ../misc/m.nviz.image/args.c:266
+msgid "Shading"
+msgstr "Тени"
+
+#: ../misc/m.nviz.image/args.c:275
+msgid "Wire color"
+msgstr "Цвет каркаса"
+
+#: ../misc/m.nviz.image/args.c:287
+#, fuzzy
+msgid "Surface position"
+msgstr "Исходная проекция"
+
+#: ../misc/m.nviz.image/args.c:299
+msgid "Name of line vector overlay map(s)"
+msgstr "Имя векторных линейных слоев"
+
+#: ../misc/m.nviz.image/args.c:300 ../misc/m.nviz.image/args.c:311
+#: ../misc/m.nviz.image/args.c:322 ../misc/m.nviz.image/args.c:334
+#: ../misc/m.nviz.image/args.c:344 ../misc/m.nviz.image/args.c:356
+msgid "Vector lines"
+msgstr "Векторные линии"
+
+#: ../misc/m.nviz.image/args.c:310
+msgid "Vector line width"
+msgstr "Ширина векторной линии"
+
+#: ../misc/m.nviz.image/args.c:319
+msgid "Vector line color"
+msgstr "Цвет векторной линии"
+
+#: ../misc/m.nviz.image/args.c:331
+msgid "Vector line display mode"
+msgstr "Режим отображения векторной линии"
+
+#: ../misc/m.nviz.image/args.c:343
+msgid "Vector line height"
+msgstr "Высота векторной линии"
+
+#: ../misc/m.nviz.image/args.c:355
+#, fuzzy
+msgid "Vector lines position"
+msgstr "Ширина векторной линии"
+
+#: ../misc/m.nviz.image/args.c:367
+msgid "Name of point vector overlay map(s)"
+msgstr "Имя точечного векторного слоя (слоев)"
+
+#: ../misc/m.nviz.image/args.c:368 ../misc/m.nviz.image/args.c:379
+#: ../misc/m.nviz.image/args.c:391 ../misc/m.nviz.image/args.c:402
+#: ../misc/m.nviz.image/args.c:415 ../misc/m.nviz.image/args.c:425
+msgid "Vector points"
+msgstr "Векторные точки"
+
+#: ../misc/m.nviz.image/args.c:378
+msgid "Icon size"
+msgstr "Размер иконки"
+
+#: ../misc/m.nviz.image/args.c:390
+msgid "Icon width"
+msgstr "Ширина иконки"
+
+#: ../misc/m.nviz.image/args.c:399
+msgid "Icon color"
+msgstr "Цвет иконки"
+
+#: ../misc/m.nviz.image/args.c:411
+msgid "Icon marker"
+msgstr "Маркер иконки"
+
+#: ../misc/m.nviz.image/args.c:424
+#, fuzzy
+msgid "Vector points position"
+msgstr "Векторные точки"
+
+#: ../misc/m.nviz.image/args.c:441
+msgid "Viewpoint position (x,y model coordinates)"
+msgstr "Позиция точки обзора (координаты x,y)"
+
+#: ../misc/m.nviz.image/args.c:442 ../misc/m.nviz.image/args.c:453
+#: ../misc/m.nviz.image/args.c:463 ../misc/m.nviz.image/args.c:475
+msgid "Viewpoint"
+msgstr "Точка обзора"
+
+#: ../misc/m.nviz.image/args.c:452
+msgid "Viewpoint height (in map units)"
+msgstr "Высота точки обзора (в единицах слоя)"
+
+#: ../misc/m.nviz.image/args.c:462
+msgid "Viewpoint field of view (in degrees)"
+msgstr "Поле обзора с точки обзора (в градусах)"
+
+#: ../misc/m.nviz.image/args.c:474
+msgid "Viewpoint twist angle (in degrees)"
+msgstr "Угол наклона точки обзора (в градусах)"
+
+#: ../misc/m.nviz.image/args.c:495 ../misc/m.nviz.image/args.c:530
+#: ../misc/m.nviz.image/args.c:542 ../misc/m.nviz.image/args.c:552
+#, fuzzy
+msgid "Volumes"
+msgstr "Объем"
+
+#: ../misc/m.nviz.image/args.c:505
+msgid "Volume draw mode"
+msgstr "Режим отрисовки объема"
+
+#: ../misc/m.nviz.image/args.c:517
+msgid "Volume shading"
+msgstr "Тени объема"
+
+#: ../misc/m.nviz.image/args.c:529
+msgid "Volume position"
+msgstr "Позиционирование объема"
+
+#: ../misc/m.nviz.image/args.c:540
+msgid "Volume resolution"
+msgstr "Разрешение объекма"
+
+#: ../misc/m.nviz.image/args.c:551
+msgid "Isosurface level"
+msgstr "Уровень изоповерхности"
+
+#: ../misc/m.nviz.image/args.c:566
+#, fuzzy
+msgid "Light position (x,y,z model coordinates)"
+msgstr "Позиция точки обзора (координаты x,y)"
+
+#: ../misc/m.nviz.image/args.c:567 ../misc/m.nviz.image/args.c:573
+#: ../misc/m.nviz.image/args.c:582 ../misc/m.nviz.image/args.c:592
+#, fuzzy
+msgid "Lighting"
+msgstr "Существует"
+
+#: ../misc/m.nviz.image/args.c:572
+#, fuzzy
+msgid "Light color"
+msgstr "Цвет выделения"
+
+#: ../misc/m.nviz.image/args.c:581
+msgid "Light brightness"
+msgstr ""
+
+#: ../misc/m.nviz.image/args.c:591
+msgid "Light ambient"
+msgstr ""
+
+#: ../misc/m.nviz.image/args.c:603
+msgid ""
+"nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
+msgstr ""
+
+#: ../misc/m.nviz.image/args.c:607
+#, fuzzy
+msgid "Fringe edges"
+msgstr "Запись узлов..."
+
+#: ../misc/m.nviz.image/args.c:608 ../misc/m.nviz.image/args.c:614
+#: ../misc/m.nviz.image/args.c:623
+#, fuzzy
+msgid "Fringe"
+msgstr "Форматирование"
+
+#: ../misc/m.nviz.image/args.c:613
+#, fuzzy
+msgid "Fringe color"
+msgstr "Цвет линии"
+
+#: ../misc/m.nviz.image/args.c:622
+#, fuzzy
+msgid "Fringe elevation"
+msgstr "Трассировать высоту"
+
+#: ../misc/m.nviz.image/args.c:667
+#, c-format
+msgid "At least one <%s> or <%s> required"
+msgstr "Необходимо как минимум один <%s> или требуется <%s>"
+
+#: ../misc/m.nviz.image/args.c:681 ../misc/m.nviz.image/args.c:711
+#: ../misc/m.nviz.image/args.c:723 ../misc/m.nviz.image/args.c:729
+#: ../misc/m.nviz.image/args.c:735 ../misc/m.nviz.image/args.c:741
+#, c-format
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
+msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d)"
+
+#: ../misc/m.nviz.image/args.c:717
+#, c-format
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
+msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d"
+
+#: ../misc/m.nviz.image/args.c:754 ../misc/m.nviz.image/args.c:768
+#: ../misc/m.nviz.image/args.c:775
+#, c-format
+msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
+msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d)"
+
+#: ../misc/m.nviz.image/args.c:761
+#, c-format
+msgid "Inconsistent number of attributes (<%s> %d: <%s> %d"
+msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d"
+
+#: ../misc/m.nviz.image/args.c:787
+#, c-format
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
+msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d, <%s> %d"
+
+#: ../misc/m.nviz.image/vector.c:179
+msgid "Unknown icon marker"
+msgstr "Неизвестная иконка маркера"
+
+#: ../misc/m.nviz.image/surface.c:71
+#, c-format
+msgid "Missing topography attribute for surface %d"
+msgstr "Отсутствует атрибут топографии для поверхности %d"
+
+#: ../misc/m.nviz.image/surface.c:124
+#, c-format
+msgid "Color attribute not defined, using default <%s>"
+msgstr "Атрибут цвета не определен, используется стандартный <%s>"
+
+#: ../misc/m.nviz.image/surface.c:201
+#, c-format
+msgid "Surface id %d doesn't exist"
+msgstr "Поверхность id %d не существует"
+
+#: ../misc/m.nviz.image/surface.c:248 ../misc/m.nviz.image/surface.c:255
+#, c-format
+msgid "Unable to set draw mode for surface id %d"
+msgstr "Невозможно установить режим отрисовки для поверхности id %d"
+
+#: ../misc/m.nviz.image/volume.c:40
+#, c-format
+msgid "3d raster map <%s> not found"
+msgstr "3d растровый слой <%s> не найден"
+
+#: ../misc/m.nviz.image/volume.c:72
+#, c-format
+msgid "Error tokenize '%s'"
+msgstr "Ошибка разбиения '%s'"
+
+#: ../misc/m.nviz.image/volume.c:79
+#, c-format
+msgid "Volume set number %d is not available"
+msgstr "Объем номер %d недоступен"
+
+#: ../misc/m.nviz.image/volume.c:85
+#, c-format
+msgid "Unable to add isosurface (volume set %d)"
+msgstr "Невозможно добавить изоповерхность (объем установлен %d)"
+
+#: ../misc/m.nviz.image/volume.c:93 ../misc/m.nviz.image/volume.c:99
+#, c-format
+msgid "Unable to set isosurface (%d) attribute (%d) of volume %d"
+msgstr "Невозможно задать изоповерхность (%d) атрибут (%d) объема %d"
+
 #: ../misc/m.cogo/main.c:225
 #, fuzzy
 msgid "miscellaneous, distance"
@@ -27998,11 +28440,6 @@ msgstr "Невозможно получить достаточно цветов.
 msgid "Using private colormap for DirectColor visual."
 msgstr "Использовать частную цветовую таблицу для визуализации DirectColor."
 
-#: ../visualization/nviz/src/nvizMain.c:71
-#: ../visualization/nviz2/cmd/main.c:48
-msgid "visualization, raster, vector, raster3d"
-msgstr "визуализация, растр, вектор, 3D растр"
-
 #: ../visualization/nviz/src/nvizMain.c:73
 msgid "nviz - Visualization and animation tool for GRASS data."
 msgstr "nviz - Инструмент визуализации и анимации для данных GRASS."
@@ -28074,396 +28511,6 @@ msgstr "Количество файлов высот не соответству
 #: ../visualization/nviz/src/nviz_init.c:166
 msgid "Loading data failed"
 msgstr "Не удалось загрузить данные"
-
-#: ../visualization/nviz2/cmd/main.c:49
-#, fuzzy
-msgid "Creates a 3D rendering of GIS data."
-msgstr "Создать векторный 3D точечный слой из 3 столбцов данных Matlab"
-
-#: ../visualization/nviz2/cmd/main.c:50
-msgid ""
-"Renders surfaces (raster data), 2D/3D vector data, and volumes (3D raster "
-"data) in 3D."
-msgstr ""
-
-#: ../visualization/nviz2/cmd/main.c:128
-#, c-format
-msgid "Vertical exaggeration not given, using calculated value %.0f"
-msgstr ""
-"Не задан вертикальный коэффициент масштабирования, используется расчетное "
-"значение %.0f"
-
-#: ../visualization/nviz2/cmd/main.c:140
-#, c-format
-msgid "Viewpoint height not given, using calculated value %.0f"
-msgstr "Высота точки обзора не задана, используется расчетного значение %.0f"
-
-#: ../visualization/nviz2/cmd/main.c:201
-msgid "Unsupported output format"
-msgstr "Неподдерживаемый выходной формат"
-
-#: ../visualization/nviz2/cmd/main.c:203 ../imagery/i.cluster/main.c:346
-#, c-format
-msgid "File <%s> created."
-msgstr "Файл <%s> создан."
-
-#: ../visualization/nviz2/cmd/args.c:49
-msgid "Use draw mode for all loaded surfaces"
-msgstr "Использовать режим отрисовки для всех загруженных поверхностей"
-
-#: ../visualization/nviz2/cmd/args.c:50 ../visualization/nviz2/cmd/args.c:122
-#: ../visualization/nviz2/cmd/args.c:131 ../visualization/nviz2/cmd/args.c:138
-#: ../visualization/nviz2/cmd/args.c:144 ../visualization/nviz2/cmd/args.c:152
-#: ../visualization/nviz2/cmd/args.c:161 ../visualization/nviz2/cmd/args.c:171
-#: ../visualization/nviz2/cmd/args.c:179 ../visualization/nviz2/cmd/args.c:189
-#: ../visualization/nviz2/cmd/args.c:197 ../visualization/nviz2/cmd/args.c:207
-#, fuzzy
-msgid "Surfaces"
-msgstr "Поверхность"
-
-#: ../visualization/nviz2/cmd/args.c:81
-#, fuzzy
-msgid "Name for output image file (without extension)"
-msgstr "Название для файла вывода (НЕ указывать расширение)"
-
-#: ../visualization/nviz2/cmd/args.c:82 ../visualization/nviz2/cmd/args.c:96
-#: ../visualization/nviz2/cmd/args.c:106
-msgid "Image"
-msgstr "Изображение"
-
-#: ../visualization/nviz2/cmd/args.c:94
-#: ../locale/scriptstrings/d.out.file_to_translate.c:4
-msgid "Graphics file format"
-msgstr "Формат графического файла"
-
-#: ../visualization/nviz2/cmd/args.c:104
-#, fuzzy
-msgid "Size (width, height) of output image"
-msgstr "Ширина и высота выходного изображения"
-
-#: ../visualization/nviz2/cmd/args.c:121
-msgid "Name of raster map(s) for elevation"
-msgstr "Имя растрового слоя (слоев) для высоты"
-
-#: ../visualization/nviz2/cmd/args.c:130
-msgid "Elevation value(s)"
-msgstr "Значение высоты"
-
-#: ../visualization/nviz2/cmd/args.c:137
-msgid "Name of raster map(s) for color"
-msgstr "Имя растрового слоя (слоев) для цвета"
-
-#: ../visualization/nviz2/cmd/args.c:143
-msgid "Color value(s)"
-msgstr "Значения цвета"
-
-#: ../visualization/nviz2/cmd/args.c:151
-msgid "Name of raster map(s) for mask"
-msgstr "Имя растрового слоя (слоев) для маски"
-
-#: ../visualization/nviz2/cmd/args.c:160
-msgid "Name of raster map(s) for transparency"
-msgstr "Имя растрового слоя (слоев) для прозрачности"
-
-#: ../visualization/nviz2/cmd/args.c:170
-msgid "Transparency value(s)"
-msgstr "Значения прозрачности"
-
-#: ../visualization/nviz2/cmd/args.c:178
-msgid "Name of raster map(s) for shininess"
-msgstr "Имя растрового слоя (слоев) для яркости"
-
-#: ../visualization/nviz2/cmd/args.c:188
-msgid "Shininess value(s)"
-msgstr "Значения яркости"
-
-#: ../visualization/nviz2/cmd/args.c:196
-msgid "Name of raster map(s) for emission"
-msgstr "Имя растрового слоя (слоев) для излучения"
-
-#: ../visualization/nviz2/cmd/args.c:206
-msgid "Emission value(s)"
-msgstr "Значения излучения"
-
-#: ../visualization/nviz2/cmd/args.c:220
-msgid "Draw mode"
-msgstr "Режим отрисовки"
-
-#: ../visualization/nviz2/cmd/args.c:223 ../visualization/nviz2/cmd/args.c:234
-#: ../visualization/nviz2/cmd/args.c:245 ../visualization/nviz2/cmd/args.c:257
-#: ../visualization/nviz2/cmd/args.c:269 ../visualization/nviz2/cmd/args.c:278
-#: ../visualization/nviz2/cmd/args.c:288 ../visualization/nviz2/cmd/args.c:508
-#: ../visualization/nviz2/cmd/args.c:520
-msgid "Draw"
-msgstr "Рисовать"
-
-#: ../visualization/nviz2/cmd/args.c:232
-msgid "Fine resolution"
-msgstr "Четкое разрешение"
-
-#: ../visualization/nviz2/cmd/args.c:243
-msgid "Coarse resolution"
-msgstr "Грубое разрешение"
-
-#: ../visualization/nviz2/cmd/args.c:254
-msgid "Draw style"
-msgstr "Стиль отрисовки"
-
-#: ../visualization/nviz2/cmd/args.c:266
-msgid "Shading"
-msgstr "Тени"
-
-#: ../visualization/nviz2/cmd/args.c:275
-msgid "Wire color"
-msgstr "Цвет каркаса"
-
-#: ../visualization/nviz2/cmd/args.c:287
-#, fuzzy
-msgid "Surface position"
-msgstr "Исходная проекция"
-
-#: ../visualization/nviz2/cmd/args.c:299
-msgid "Name of line vector overlay map(s)"
-msgstr "Имя векторных линейных слоев"
-
-#: ../visualization/nviz2/cmd/args.c:300 ../visualization/nviz2/cmd/args.c:311
-#: ../visualization/nviz2/cmd/args.c:322 ../visualization/nviz2/cmd/args.c:334
-#: ../visualization/nviz2/cmd/args.c:344 ../visualization/nviz2/cmd/args.c:356
-msgid "Vector lines"
-msgstr "Векторные линии"
-
-#: ../visualization/nviz2/cmd/args.c:310
-msgid "Vector line width"
-msgstr "Ширина векторной линии"
-
-#: ../visualization/nviz2/cmd/args.c:319
-msgid "Vector line color"
-msgstr "Цвет векторной линии"
-
-#: ../visualization/nviz2/cmd/args.c:331
-msgid "Vector line display mode"
-msgstr "Режим отображения векторной линии"
-
-#: ../visualization/nviz2/cmd/args.c:343
-msgid "Vector line height"
-msgstr "Высота векторной линии"
-
-#: ../visualization/nviz2/cmd/args.c:355
-#, fuzzy
-msgid "Vector lines position"
-msgstr "Ширина векторной линии"
-
-#: ../visualization/nviz2/cmd/args.c:367
-msgid "Name of point vector overlay map(s)"
-msgstr "Имя точечного векторного слоя (слоев)"
-
-#: ../visualization/nviz2/cmd/args.c:368 ../visualization/nviz2/cmd/args.c:379
-#: ../visualization/nviz2/cmd/args.c:391 ../visualization/nviz2/cmd/args.c:402
-#: ../visualization/nviz2/cmd/args.c:415 ../visualization/nviz2/cmd/args.c:425
-msgid "Vector points"
-msgstr "Векторные точки"
-
-#: ../visualization/nviz2/cmd/args.c:378
-msgid "Icon size"
-msgstr "Размер иконки"
-
-#: ../visualization/nviz2/cmd/args.c:390
-msgid "Icon width"
-msgstr "Ширина иконки"
-
-#: ../visualization/nviz2/cmd/args.c:399
-msgid "Icon color"
-msgstr "Цвет иконки"
-
-#: ../visualization/nviz2/cmd/args.c:411
-msgid "Icon marker"
-msgstr "Маркер иконки"
-
-#: ../visualization/nviz2/cmd/args.c:424
-#, fuzzy
-msgid "Vector points position"
-msgstr "Векторные точки"
-
-#: ../visualization/nviz2/cmd/args.c:441
-msgid "Viewpoint position (x,y model coordinates)"
-msgstr "Позиция точки обзора (координаты x,y)"
-
-#: ../visualization/nviz2/cmd/args.c:442 ../visualization/nviz2/cmd/args.c:453
-#: ../visualization/nviz2/cmd/args.c:463 ../visualization/nviz2/cmd/args.c:475
-msgid "Viewpoint"
-msgstr "Точка обзора"
-
-#: ../visualization/nviz2/cmd/args.c:452
-msgid "Viewpoint height (in map units)"
-msgstr "Высота точки обзора (в единицах слоя)"
-
-#: ../visualization/nviz2/cmd/args.c:462
-msgid "Viewpoint field of view (in degrees)"
-msgstr "Поле обзора с точки обзора (в градусах)"
-
-#: ../visualization/nviz2/cmd/args.c:474
-msgid "Viewpoint twist angle (in degrees)"
-msgstr "Угол наклона точки обзора (в градусах)"
-
-#: ../visualization/nviz2/cmd/args.c:495 ../visualization/nviz2/cmd/args.c:530
-#: ../visualization/nviz2/cmd/args.c:542 ../visualization/nviz2/cmd/args.c:552
-#, fuzzy
-msgid "Volumes"
-msgstr "Объем"
-
-#: ../visualization/nviz2/cmd/args.c:505
-msgid "Volume draw mode"
-msgstr "Режим отрисовки объема"
-
-#: ../visualization/nviz2/cmd/args.c:517
-msgid "Volume shading"
-msgstr "Тени объема"
-
-#: ../visualization/nviz2/cmd/args.c:529
-msgid "Volume position"
-msgstr "Позиционирование объема"
-
-#: ../visualization/nviz2/cmd/args.c:540
-msgid "Volume resolution"
-msgstr "Разрешение объекма"
-
-#: ../visualization/nviz2/cmd/args.c:551
-msgid "Isosurface level"
-msgstr "Уровень изоповерхности"
-
-#: ../visualization/nviz2/cmd/args.c:566
-#, fuzzy
-msgid "Light position (x,y,z model coordinates)"
-msgstr "Позиция точки обзора (координаты x,y)"
-
-#: ../visualization/nviz2/cmd/args.c:567 ../visualization/nviz2/cmd/args.c:573
-#: ../visualization/nviz2/cmd/args.c:582 ../visualization/nviz2/cmd/args.c:592
-#, fuzzy
-msgid "Lighting"
-msgstr "Существует"
-
-#: ../visualization/nviz2/cmd/args.c:572
-#, fuzzy
-msgid "Light color"
-msgstr "Цвет выделения"
-
-#: ../visualization/nviz2/cmd/args.c:581
-msgid "Light brightness"
-msgstr ""
-
-#: ../visualization/nviz2/cmd/args.c:591
-msgid "Light ambient"
-msgstr ""
-
-#: ../visualization/nviz2/cmd/args.c:603
-msgid ""
-"nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
-msgstr ""
-
-#: ../visualization/nviz2/cmd/args.c:607
-#, fuzzy
-msgid "Fringe edges"
-msgstr "Запись узлов..."
-
-#: ../visualization/nviz2/cmd/args.c:608 ../visualization/nviz2/cmd/args.c:614
-#: ../visualization/nviz2/cmd/args.c:623
-#, fuzzy
-msgid "Fringe"
-msgstr "Форматирование"
-
-#: ../visualization/nviz2/cmd/args.c:613
-#, fuzzy
-msgid "Fringe color"
-msgstr "Цвет линии"
-
-#: ../visualization/nviz2/cmd/args.c:622
-#, fuzzy
-msgid "Fringe elevation"
-msgstr "Трассировать высоту"
-
-#: ../visualization/nviz2/cmd/args.c:667
-#, c-format
-msgid "At least one <%s> or <%s> required"
-msgstr "Необходимо как минимум один <%s> или требуется <%s>"
-
-#: ../visualization/nviz2/cmd/args.c:681 ../visualization/nviz2/cmd/args.c:711
-#: ../visualization/nviz2/cmd/args.c:723 ../visualization/nviz2/cmd/args.c:729
-#: ../visualization/nviz2/cmd/args.c:735 ../visualization/nviz2/cmd/args.c:741
-#, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
-msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d)"
-
-#: ../visualization/nviz2/cmd/args.c:717
-#, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
-msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d"
-
-#: ../visualization/nviz2/cmd/args.c:754 ../visualization/nviz2/cmd/args.c:768
-#: ../visualization/nviz2/cmd/args.c:775
-#, c-format
-msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
-msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d)"
-
-#: ../visualization/nviz2/cmd/args.c:761
-#, c-format
-msgid "Inconsistent number of attributes (<%s> %d: <%s> %d"
-msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d"
-
-#: ../visualization/nviz2/cmd/args.c:787
-#, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
-msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d, <%s> %d"
-
-#: ../visualization/nviz2/cmd/vector.c:179
-msgid "Unknown icon marker"
-msgstr "Неизвестная иконка маркера"
-
-#: ../visualization/nviz2/cmd/surface.c:71
-#, c-format
-msgid "Missing topography attribute for surface %d"
-msgstr "Отсутствует атрибут топографии для поверхности %d"
-
-#: ../visualization/nviz2/cmd/surface.c:124
-#, c-format
-msgid "Color attribute not defined, using default <%s>"
-msgstr "Атрибут цвета не определен, используется стандартный <%s>"
-
-#: ../visualization/nviz2/cmd/surface.c:201
-#, c-format
-msgid "Surface id %d doesn't exist"
-msgstr "Поверхность id %d не существует"
-
-#: ../visualization/nviz2/cmd/surface.c:248
-#: ../visualization/nviz2/cmd/surface.c:255
-#, c-format
-msgid "Unable to set draw mode for surface id %d"
-msgstr "Невозможно установить режим отрисовки для поверхности id %d"
-
-#: ../visualization/nviz2/cmd/volume.c:40
-#, c-format
-msgid "3d raster map <%s> not found"
-msgstr "3d растровый слой <%s> не найден"
-
-#: ../visualization/nviz2/cmd/volume.c:72
-#, c-format
-msgid "Error tokenize '%s'"
-msgstr "Ошибка разбиения '%s'"
-
-#: ../visualization/nviz2/cmd/volume.c:79
-#, c-format
-msgid "Volume set number %d is not available"
-msgstr "Объем номер %d недоступен"
-
-#: ../visualization/nviz2/cmd/volume.c:85
-#, c-format
-msgid "Unable to add isosurface (volume set %d)"
-msgstr "Невозможно добавить изоповерхность (объем установлен %d)"
-
-#: ../visualization/nviz2/cmd/volume.c:93
-#: ../visualization/nviz2/cmd/volume.c:99
-#, c-format
-msgid "Unable to set isosurface (%d) attribute (%d) of volume %d"
-msgstr "Невозможно задать изоповерхность (%d) атрибут (%d) объема %d"
 
 #: ../visualization/ximgview/main.c:62
 msgid "Unable to open display"
@@ -28577,12 +28624,6 @@ msgstr "Программа экспорта карты в PostScript."
 #: ../ps/ps.map/main.c:82
 msgid "Rotate plot 90 degrees"
 msgstr "Повернуть диаграмму на 90 градусов"
-
-#: ../ps/ps.map/main.c:83 ../ps/ps.map/main.c:95 ../ps/ps.map/main.c:120
-#: ../ps/ps.map/main.c:128
-#, fuzzy
-msgid "Output settings"
-msgstr "Output_options"
 
 #: ../ps/ps.map/main.c:88
 #, fuzzy
@@ -28710,17 +28751,17 @@ msgstr ""
 "Инструкция картографирования <%s> будет переименована в <%s> в будущих "
 "версиях GRASS. Используйте вместо нее <%s>."
 
-#: ../ps/ps.map/r_header.c:64 ../ps/ps.map/getgrid.c:59
-#: ../ps/ps.map/getgrid.c:83 ../ps/ps.map/getgrid.c:169
-#: ../ps/ps.map/getgrid.c:193 ../ps/ps.map/r_info.c:66
+#: ../ps/ps.map/r_header.c:64 ../ps/ps.map/getgrid.c:60
+#: ../ps/ps.map/getgrid.c:84 ../ps/ps.map/getgrid.c:170
+#: ../ps/ps.map/getgrid.c:194 ../ps/ps.map/r_info.c:66
 #: ../ps/ps.map/ps_outline.c:85
 #, fuzzy
 msgid "Unsupported color request"
 msgstr "Неверный цвет '%s'"
 
-#: ../ps/ps.map/r_header.c:66 ../ps/ps.map/getgrid.c:61
-#: ../ps/ps.map/getgrid.c:85 ../ps/ps.map/getgrid.c:171
-#: ../ps/ps.map/getgrid.c:195 ../ps/ps.map/r_instructions.c:131
+#: ../ps/ps.map/r_header.c:66 ../ps/ps.map/getgrid.c:62
+#: ../ps/ps.map/getgrid.c:86 ../ps/ps.map/getgrid.c:172
+#: ../ps/ps.map/getgrid.c:196 ../ps/ps.map/r_instructions.c:131
 #: ../ps/ps.map/r_instructions.c:446 ../ps/ps.map/r_info.c:68
 #: ../ps/ps.map/ps_outline.c:87
 #, fuzzy
@@ -28809,22 +28850,22 @@ msgstr "PSmap: do_scale(): не должно произойти"
 msgid "Can't open temporary PostScript mask file."
 msgstr "Невозможно открыть временный файл маски  PostScript"
 
-#: ../ps/ps.map/getgrid.c:93 ../ps/ps.map/getgrid.c:204
+#: ../ps/ps.map/getgrid.c:94 ../ps/ps.map/getgrid.c:205
 #, fuzzy
 msgid "illegal numbers request"
 msgstr "Неверный запрос на удаление"
 
-#: ../ps/ps.map/getgrid.c:124 ../ps/ps.map/getgrid.c:232
+#: ../ps/ps.map/getgrid.c:125 ../ps/ps.map/getgrid.c:233
 #, fuzzy
 msgid "illegal grid width request"
 msgstr "Неверный запрос на удаление"
 
-#: ../ps/ps.map/getgrid.c:130
+#: ../ps/ps.map/getgrid.c:131
 #, fuzzy
 msgid "illegal request (grid)"
 msgstr "Неверный запрос на удаление"
 
-#: ../ps/ps.map/getgrid.c:238
+#: ../ps/ps.map/getgrid.c:239
 #, fuzzy
 msgid "illegal request (geogrid)"
 msgstr "Неверный запрос на удаление"
@@ -29193,14 +29234,19 @@ msgstr ""
 "столбец '%s', тип 'string': unknown width -> сохранено как varchar(250) "
 "часть данных может быть утрачена"
 
-#: ../db/drivers/sqlite/describe.c:159
+#: ../db/drivers/sqlite/describe.c:160
 #, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
 msgstr "Драйвер SQLite: столбец '%s', SQLite тип %d  не поддерживается"
 
-#: ../db/drivers/sqlite/db.c:84
+#: ../db/drivers/sqlite/db.c:85
 msgid "Unable to open database: "
 msgstr "Невозможно открыть базу данных:"
+
+#: ../db/drivers/sqlite/db.c:110
+#, fuzzy
+msgid "SQLite database connection is still busy"
+msgstr "Не определено соединение с базой данных"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
 #: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
@@ -34004,7 +34050,8 @@ msgid "imagery, map management"
 msgstr "общее, управление картой"
 
 #: ../imagery/i.group/main.c:54
-msgid "Creates, edits, and lists groups and subgroups of imagery files."
+#, fuzzy
+msgid "Creates, edits, and lists groups and subgroups of imagery data."
 msgstr ""
 "Создать, редактировать и показать список групп и подгрупп файлов изображений."
 
@@ -34016,86 +34063,90 @@ msgstr "Имя подгруппы изображений"
 msgid "Name of raster map(s) to include in group"
 msgstr "Имя растрового слоя (слоев) для включения в группу"
 
-#: ../imagery/i.group/main.c:72
+#: ../imagery/i.group/main.c:69 ../imagery/i.group/main.c:74
+msgid "Maps"
+msgstr ""
+
+#: ../imagery/i.group/main.c:73
 msgid "Remove selected files from specified group"
 msgstr "Удалить выбранные файлы из заданной группы"
 
-#: ../imagery/i.group/main.c:76
+#: ../imagery/i.group/main.c:78
 msgid "List files from specified (sub)group (fancy)"
 msgstr "Список файлов из заданной (суб)группы (расширенный)"
 
-#: ../imagery/i.group/main.c:82
+#: ../imagery/i.group/main.c:84
 msgid "List files from specified (sub)group (shell script style)"
 msgstr "Список файлов из заданной (суб)группы (в стиле скрипта shell)"
 
-#: ../imagery/i.group/main.c:102
+#: ../imagery/i.group/main.c:104
 msgid "No input raster map(s) specified"
 msgstr "Не заданы исходные растровые слои"
 
-#: ../imagery/i.group/main.c:110 ../imagery/i.target/main.c:79
+#: ../imagery/i.group/main.c:112 ../imagery/i.target/main.c:79
 #: ../imagery/i.class/main.c:103
 msgid "Group must exist in the current mapset"
 msgstr "Группа должна существовать в текущем наборе"
 
-#: ../imagery/i.group/main.c:120 ../imagery/i.group/main.c:141
+#: ../imagery/i.group/main.c:122 ../imagery/i.group/main.c:143
 msgid "Specified group does not exist in current mapset"
 msgstr "Указанная группа не существует в текущем наборе "
 
-#: ../imagery/i.group/main.c:124
+#: ../imagery/i.group/main.c:126
 #, c-format
 msgid "Removing raster maps from subgroup <%s>..."
 msgstr "Удаление растровых слое из подгруппы <%s>..."
 
-#: ../imagery/i.group/main.c:129
+#: ../imagery/i.group/main.c:131
 #, c-format
 msgid "Removing raster maps from group <%s>..."
 msgstr "Удаление растровых слое из группы <%s>..."
 
-#: ../imagery/i.group/main.c:164
+#: ../imagery/i.group/main.c:166
 #, c-format
 msgid "Group <%s> does not yet exist. Creating..."
 msgstr "Группа <%s> не существует. Создание..."
 
-#: ../imagery/i.group/main.c:168 ../imagery/i.group/main.c:177
+#: ../imagery/i.group/main.c:170 ../imagery/i.group/main.c:179
 #, c-format
 msgid "Adding raster maps to group <%s>..."
 msgstr "Добавление растровых слоев в группу <%s>..."
 
-#: ../imagery/i.group/main.c:172
+#: ../imagery/i.group/main.c:174
 #, c-format
 msgid "Adding raster maps to subgroup <%s>..."
 msgstr "Добавление растровых слоев в подгруппу <%s>..."
 
-#: ../imagery/i.group/main.c:203
+#: ../imagery/i.group/main.c:205
 #, c-format
 msgid "Adding raster map <%s> to group"
 msgstr "Добавление растрового слоя <%s>  в группу"
 
-#: ../imagery/i.group/main.c:209
+#: ../imagery/i.group/main.c:211
 #, c-format
 msgid "Raster map <%s> exists in group. Skipping..."
 msgstr "Растровый слой <%s> уже в группе. Пропускается..."
 
-#: ../imagery/i.group/main.c:243
+#: ../imagery/i.group/main.c:245
 #, c-format
 msgid "Adding raster map <%s> to subgroup"
 msgstr "Добавить растровый слой <%s> в подгруппу"
 
-#: ../imagery/i.group/main.c:249
+#: ../imagery/i.group/main.c:251
 #, c-format
 msgid "Raster map <%s> exists in subgroup. Skipping..."
 msgstr "Растровый слой <%s> уже в подгруппе. Пропускается..."
 
-#: ../imagery/i.group/main.c:298
+#: ../imagery/i.group/main.c:300
 #, c-format
 msgid "Removing raster map <%s> from group"
 msgstr "Удаление растрового слоя <%s> из группы"
 
-#: ../imagery/i.group/main.c:315 ../imagery/i.group/main.c:374
+#: ../imagery/i.group/main.c:317 ../imagery/i.group/main.c:376
 msgid "No raster map removed"
 msgstr "Ни одного растрового слоя не удалено"
 
-#: ../imagery/i.group/main.c:357
+#: ../imagery/i.group/main.c:359
 #, c-format
 msgid "Removing raster map <%s> from subgroup"
 msgstr "Удаление растрового слоя <%s> из подгруппы"
@@ -36518,10 +36569,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 
 #, fuzzy
 #~ msgid "%s - %s not found"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "raster map <%s> not found"
 #~ msgstr " "
 
 #, fuzzy
