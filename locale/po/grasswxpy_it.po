@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-04 18:33+0200\n"
-"PO-Revision-Date: 2011-09-19 11:03+0100\n"
+"PO-Revision-Date: 2011-10-05 16:07+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -343,7 +343,7 @@ msgstr "Messaggio"
 
 #: ../gui/wxpython/wxgui.py:1624
 msgid "Starting GRASS GUI..."
-msgstr "Si sta avvia GRASS GUI..."
+msgstr "Si sta avviando GRASS GUI..."
 
 #: ../gui/wxpython/icons/icon.py:88
 #, python-format
@@ -1160,7 +1160,7 @@ msgstr "&File"
 
 #: ../gui/wxpython/menustrings.py:3
 msgid "Workspace"
-msgstr "Workspace"
+msgstr "Ambiente di lavoro"
 
 #: ../gui/wxpython/menustrings.py:4
 #: ../gui/wxpython/menustrings.py:811
@@ -2325,7 +2325,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:306
 msgid "Statistical overlay"
-msgstr ""
+msgstr "Statistiche di sovrapposizioni"
 
 #: ../gui/wxpython/menustrings.py:307
 msgid "Calculates category or object oriented statistics."
@@ -2442,7 +2442,7 @@ msgstr "Caratteristiche di trasformazione"
 
 #: ../gui/wxpython/menustrings.py:335
 msgid "Clump"
-msgstr ""
+msgstr "Raggruppa"
 
 #: ../gui/wxpython/menustrings.py:336
 msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
@@ -2450,7 +2450,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:337
 msgid "Grow"
-msgstr ""
+msgstr "Aumenta"
 
 #: ../gui/wxpython/menustrings.py:338
 msgid "Generates a raster map layer with contiguous areas grown by one cell."
@@ -2494,7 +2494,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:348
 msgid "Flow accumulation"
-msgstr ""
+msgstr "Flusso di accumulo"
 
 #: ../gui/wxpython/menustrings.py:349
 msgid "Flow computation for massive grids (float version)."
@@ -2502,7 +2502,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:350
 msgid "Flow lines"
-msgstr ""
+msgstr "Linee di flusso"
 
 #: ../gui/wxpython/menustrings.py:351
 msgid "Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)."
@@ -2526,7 +2526,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:356
 msgid "Topographic index map"
-msgstr ""
+msgstr "Mappa degli indici topografici"
 
 #: ../gui/wxpython/menustrings.py:357
 msgid "Creates topographic index map from elevation raster map."
@@ -2542,7 +2542,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:360
 msgid "Watershed subbasins"
-msgstr ""
+msgstr "Sottobacini dello spartiacque "
 
 #: ../gui/wxpython/menustrings.py:361
 msgid "Generates watershed subbasins raster map."
@@ -2567,7 +2567,7 @@ msgstr "Comando per la generazione di bacini idrografici."
 #: ../gui/wxpython/menustrings.py:366
 #: ../gui/wxpython/menustrings.py:741
 msgid "Groundwater modeling"
-msgstr ""
+msgstr "Modellistica delle acque sotterranee "
 
 #: ../gui/wxpython/menustrings.py:367
 msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
@@ -2575,7 +2575,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:368
 msgid "Landscape structure modeling"
-msgstr ""
+msgstr "Modellistica della struttura del paesaggio"
 
 #: ../gui/wxpython/menustrings.py:369
 msgid "Set up (requires XTerm)"
@@ -2607,7 +2607,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:377
 msgid "Landscape patch analysis"
-msgstr ""
+msgstr "Analisi delle patch del paesaggio"
 
 #: ../gui/wxpython/menustrings.py:378
 msgid "Set up sampling and analysis framework"
@@ -2619,7 +2619,7 @@ msgstr "Editor per la configurazione di r.li"
 
 #: ../gui/wxpython/menustrings.py:380
 msgid "Edge density"
-msgstr ""
+msgstr "Densità dei bordi"
 
 #: ../gui/wxpython/menustrings.py:381
 msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
@@ -2635,7 +2635,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:384
 msgid "Patch area mean"
-msgstr ""
+msgstr "Area media delle patch"
 
 #: ../gui/wxpython/menustrings.py:385
 msgid "Calculates mean patch size index on a raster map, using a 4 neighbour algorithm"
@@ -2667,7 +2667,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:392
 msgid "Patch density"
-msgstr ""
+msgstr "Densità delle patch"
 
 #: ../gui/wxpython/menustrings.py:393
 msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:396
 msgid "Dominance's diversity"
-msgstr ""
+msgstr "Diversità della dominanza"
 
 #: ../gui/wxpython/menustrings.py:397
 #: ../gui/wxpython/menustrings.py:403
@@ -2720,7 +2720,7 @@ msgstr "Calcola l'indice shape su un raster"
 
 #: ../gui/wxpython/menustrings.py:406
 msgid "Wildfire modeling"
-msgstr ""
+msgstr "Modellistica degli incendi"
 
 #: ../gui/wxpython/menustrings.py:407
 msgid "Rate of spread"
@@ -3148,7 +3148,7 @@ msgstr "Strumenti per aggiustare la topologia di un vettore."
 
 #: ../gui/wxpython/menustrings.py:512
 msgid "Smooth or simplify"
-msgstr ""
+msgstr "Arrotondare o semplificare"
 
 #: ../gui/wxpython/menustrings.py:513
 msgid "Vector based generalization."
@@ -3220,7 +3220,7 @@ msgstr "Converte vettoriale a 3D utilizzando un raster dell'elevazione"
 
 #: ../gui/wxpython/menustrings.py:530
 msgid "Extrude 3D vector map"
-msgstr ""
+msgstr "Crea vettoriale 3D"
 
 #: ../gui/wxpython/menustrings.py:531
 msgid "Extrudes flat vector object to 3D with defined height."
@@ -3316,7 +3316,7 @@ msgstr "Rileva i bordi dell'oggetto da un dataset LIDAR"
 
 #: ../gui/wxpython/menustrings.py:558
 msgid "Detect interiors"
-msgstr ""
+msgstr "Rileva interni"
 
 #: ../gui/wxpython/menustrings.py:559
 msgid "Building contour determination and Region Growing algorithm for determining the building inside"
@@ -3344,7 +3344,7 @@ msgstr "Crea sistema di riferimento lineare"
 
 #: ../gui/wxpython/menustrings.py:565
 msgid "Create stationing"
-msgstr ""
+msgstr "Crea dislocazioni"
 
 #: ../gui/wxpython/menustrings.py:566
 msgid "Create stationing from input lines, and linear reference system"
@@ -3360,7 +3360,7 @@ msgstr "Crea punti/segmenti da linee, il sistema di riferimento lineare e i punt
 
 #: ../gui/wxpython/menustrings.py:569
 msgid "Find line id and offset"
-msgstr ""
+msgstr "Trova id linea e offset"
 
 #: ../gui/wxpython/menustrings.py:570
 msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
@@ -3412,11 +3412,11 @@ msgstr "Trova il percorso più breve in una rete vettoriale."
 
 #: ../gui/wxpython/menustrings.py:582
 msgid "Shortest path for sets of features"
-msgstr ""
+msgstr "Percorso più breve per insiemi di elementi"
 
 #: ../gui/wxpython/menustrings.py:583
 msgid "Computes shortest distance via the network between the given sets of features."
-msgstr ""
+msgstr "Calcola la distanza più corta attraverso la rete tra il selezionato insieme di elementi."
 
 #: ../gui/wxpython/menustrings.py:584
 msgid "Shortest path using timetables"
@@ -3428,15 +3428,15 @@ msgstr "Trova il percorso più breve usanto tabelle dei tempi"
 
 #: ../gui/wxpython/menustrings.py:586
 msgid "Shortest path for all pairs"
-msgstr ""
+msgstr "Percorso più breve per tutte le coppie"
 
 #: ../gui/wxpython/menustrings.py:587
 msgid "Computes the shortest path between all pairs of nodes in the network."
-msgstr ""
+msgstr "Calcola il percorso più breve tra tutte le coppie di nodi nella rete."
 
 #: ../gui/wxpython/menustrings.py:588
 msgid "Visibility network"
-msgstr ""
+msgstr "Visibilità della rete"
 
 #: ../gui/wxpython/menustrings.py:589
 msgid "Visibility graph construction."
@@ -3444,7 +3444,7 @@ msgstr "Costruzione del grafico di visibilità."
 
 #: ../gui/wxpython/menustrings.py:590
 msgid "Bridges and articulation points"
-msgstr ""
+msgstr "Ponti e punti di articolazione"
 
 #: ../gui/wxpython/menustrings.py:591
 msgid "Computes bridges and articulation points in the network."
@@ -3452,7 +3452,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:592
 msgid "Maximum flow"
-msgstr ""
+msgstr "Portata massima"
 
 #: ../gui/wxpython/menustrings.py:593
 msgid "Computes the maximum flow between two sets of nodes in the network."
