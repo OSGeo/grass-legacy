@@ -400,8 +400,9 @@ class MapCalcFrame(wx.Frame):
 
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
+        expr = self.text_mcalc.GetValue().strip().replace("\n", " ")
         self.SetStatusText("r.mapcalc '%s = %s'" % (self.newmaptxt.GetValue(),
-                                                    self.text_mcalc.GetValue()))
+                                                    expr))
         event.Skip()
         
     def _addSomething(self, what):
@@ -437,24 +438,24 @@ class MapCalcFrame(wx.Frame):
         name = self.newmaptxt.GetValue().strip()
         if not name:
             gcmd.GError(parent = self,
-                        message = _("You must enter the name of a new map to create"))
+                        message = _("You must enter the name of "
+                                    "a new raster map to create."))
             return
         
-        if not self.text_mcalc.GetValue().strip():
+        expr = self.text_mcalc.GetValue().strip().replace("\n", " ")
+        if not expr:
             gcmd.GError(parent = self,
-                        message = _("You must enter a mapcalc statement to create a new map"))
+                        message = _("You must enter an expression "
+                                    "to create a new raster map."))
             return
-        
-        mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
-        mctxt = mctxt.replace(" " , "")
         
         if self.log:
-            cmd = [self.cmd, str('%s = %s' % (name, mctxt))]
+            cmd = [self.cmd, str('%s = %s' % (name, expr))]
             self.log.RunCmd(cmd, onDone = self.OnDone)
             self.parent.Raise()
         else:
             gcmd.RunCommand(self.cmd,
-                            "%s=%s" % (name, mctxt))
+                            "%s=%s" % (name, expr))
         
     def OnDone(self, cmd, returncode):
         """!Add create map to the layer tree"""
