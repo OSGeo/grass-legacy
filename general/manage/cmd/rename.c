@@ -40,7 +40,8 @@ int main(int argc, char *argv[])
     module->keywords = _("general, map management");
     module->description =
 	_("Renames data base element files in the user's current mapset.");
-
+    module->overwrite = TRUE;
+    
     parm = (struct Option **)G_calloc(nlist, sizeof(struct Option *));
 
     for (n = 0; n < nlist; n++) {
@@ -56,6 +57,14 @@ int main(int argc, char *argv[])
 	p->gisprompt = str;
 	G_asprintf(&str, _("%s file(s) to be renamed"), list[n].alias);
 	p->description = str;
+	if (G_strcasecmp(list[n].mainelem, "cell") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "grid3") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "vector") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "windows") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "group") == 0)
+	    p->guisection = _("Basic");
+	else
+	    p->guisection = _("Other");
     }
 
     if (G_parser(argc, argv))

@@ -1013,6 +1013,9 @@ static int uses_new_gisprompt(void)
     char element[KEYLENGTH];
     char desc[KEYLENGTH];
 
+    if (module_info.overwrite)
+	return 1;
+    
     /* figure out if any of the options use a "new" gisprompt */
     /* This is to see if we should spit out the --o flag      */
     if (n_opts) {

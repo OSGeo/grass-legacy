@@ -119,6 +119,14 @@ int main(int argc, char *argv[])
 	p->gisprompt = str;
 	G_asprintf(&str, _("%s file(s) to be removed"), list[n].alias);
 	p->description = str;
+	if (G_strcasecmp(list[n].mainelem, "cell") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "grid3") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "vector") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "windows") == 0 ||
+	    G_strcasecmp(list[n].mainelem, "group") == 0)
+	    p->guisection = _("Basic");
+	else
+	    p->guisection = _("Other");
     }
 
     if (G_parser(argc, argv))
