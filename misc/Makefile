@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 SUBDIRS = \
 	m.cogo
 
-ifneq ($(strip $(OPENGLLIB)),)
+ifneq ($(USE_OPENGL),)
     SUBDIRS += m.nviz.image
 endif
 
