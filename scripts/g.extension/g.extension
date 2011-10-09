@@ -243,6 +243,18 @@ if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
     exit 1
 fi
 
+# make doesn't like spaces in path names, issue a warning if we see one:
+GLOOM="The build which follows will likely fail."
+if [ `echo "$GISBASE" | grep -c ' '` -gt 0 ] ; then
+    g.message -w "The GRASS program path: [$GISBASE] contains a space. $GLOOM"
+fi
+if [ `echo "$PREFIX" | grep -c ' '` -gt 0 ] ; then
+    g.message -w "The specified install path: [$PREFIX] contains a space. $GLOOM"
+fi
+if [ `echo "$TMPDIR" | grep -c ' '` -gt 0 ] ; then
+    g.message -w "The path to your GIS data: [`g.gisenv GISDBASE`] may contain a space. $GLOOM"
+fi
+
 
 if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    g.message message="Removing <$MODULE>..."
@@ -293,12 +305,13 @@ fi
 # without having to install whole distribution even after modifying only
 # one module. It will update both $(GRASS_HOME)/dist.$(ARCH) and $(INST_DIR).
 #   see $GISBASE/include/Make/Grass.make
+### actually this may not be needed anymore ###
 INST_NOW=true
 export INST_NOW
 
 make MODULE_TOPDIR="$GISBASE" \
-   ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/$DIST_DIR/include" \
-   ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/$DIST_DIR/lib" \
+   ARCH_INC="'-I$GISBASE/include' '-I${MYINST_DIR}/include' '-I$TMPDIR/$DIST_DIR/include'" \
+   ARCH_LIBPATH="'-L$GISBASE/lib' '-L${MYINST_DIR}/lib' '-L$TMPDIR/$DIST_DIR/lib'" \
    ARCH_LIBDIR="$GISBASE/lib" \
    ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
    ARCH_BINDIR="$TMPDIR/$DIST_DIR/bin"
