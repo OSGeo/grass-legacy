@@ -672,11 +672,11 @@
 	  <command>nviz</command>
 	</menuitem>
 	<menuitem>
-	  <label>NVIZ (non-interactive)</label>
+	  <label>3D image rendering</label>
 	  <help>Allows rendering GIS data is a 3D space.</help>
 	  <keywords>visualization,raster,vector,raster3d</keywords>
 	  <handler>OnMenuCmd</handler>
-	  <command>nviz_cmd</command>
+	  <command>m.nviz.image</command>
 	</menuitem>
 	<separator />
 	<menuitem>

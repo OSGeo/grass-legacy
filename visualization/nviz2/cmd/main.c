@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       nviz_cmd
+ * MODULE:       m.nviz.image
  *               
  * AUTHOR(S):    Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  *               
