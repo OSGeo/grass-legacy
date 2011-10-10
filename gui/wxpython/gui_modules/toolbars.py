@@ -1356,6 +1356,8 @@ class ModelToolbar(AbstractToolbar):
                                       self.parent.OnAddData),
                                      ('relation', icons['relation'],
                                       self.parent.OnDefineRelation),
+                                     ('loop', icons['loop'],
+                                      self.parent.OnDefineLoop),
                                      (None, ),
                                      ('redraw', icons['redraw'],
                                       self.parent.OnCanvasRefresh),
