@@ -620,7 +620,7 @@ def list_grouped(type, check_search_path = True):
     mapset_re = re.compile("<(.*)>")
     result = {}
     if check_search_path:
-        for mapset in mapsets(accessible = True):
+        for mapset in mapsets(search_path = True):
             result[mapset] = []
     
     mapset = None
@@ -703,7 +703,7 @@ def mlist_grouped(type, pattern = None, check_search_path = True):
     """
     result = {}
     if check_search_path:
-        for mapset in mapsets(accessible = True):
+        for mapset in mapsets(search_path = True):
             result[mapset] = []
     
     mapset = None
@@ -866,14 +866,14 @@ def float_or_dms(s):
 
 # interface to g.mapsets
 
-def mapsets(accessible = True):
-    """!List accessible mapsets (mapsets in search path)
+def mapsets(search_path = False):
+    """!List available mapsets
 
-    @param accessible False to list all mapsets in the location
-
+    @param searchPatch True to list mapsets only in search path
+    
     @return list of mapsets
     """
-    if accessible:
+    if search_path:
         flags = 'p'
     else:
         flags = 'l'
@@ -883,7 +883,7 @@ def mapsets(accessible = True):
                            quiet = True)
     if not mapsets:
         fatal(_("Unable to list mapsets"))
-        
+    
     return mapsets.splitlines()
 
 # interface to `g.proj -c`
