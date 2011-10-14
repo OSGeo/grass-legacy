@@ -764,7 +764,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.SetItemText(layer, '%s %s' % (_('raster'), label))
         elif ltype == '3d-raster':
             self.SetItemImage(layer, self.rast3d_icon)
-            self.SetItemText(layer, '%s %s' % (_('3d raster'), label))
+            self.SetItemText(layer, '%s %s' % (_('3D raster'), label))
         elif ltype == 'rgb':
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, '%s %s' % (_('RGB'), label))
@@ -773,7 +773,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.SetItemText(layer, '%s %s' % (_('HIS'), label))
         elif ltype == 'shaded':
             self.SetItemImage(layer, self.shaded_icon)
-            self.SetItemText(layer, '%s %s' % (_('Shaded relief'), label))
+            self.SetItemText(layer, '%s %s' % (_('shaded relief'), label))
         elif ltype == 'rastnum':
             self.SetItemImage(layer, self.rnum_icon)
             self.SetItemText(layer, '%s %s' % (_('raster cell numbers'), label))
@@ -827,7 +827,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 ctrlId = ctrl.GetId()
             else:
                 ctrlId = None
-                
+            
             # add a data object to hold the layer's command (does not apply to generic command layers)
             self.SetPyData(layer, ({'cmd'      : cmd,
                                     'type'     : ltype,
@@ -889,7 +889,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         # updated progress bar range (mapwindow statusbar)
         if checked is True:
             self.mapdisplay.statusbarWin['progress'].SetRange(len(self.Map.GetListOfLayers(l_active = True)))
-            
+        
         return layer
 
     def PropertiesDialog (self, layer, show = True):
