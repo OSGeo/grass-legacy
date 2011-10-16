@@ -1223,7 +1223,7 @@ class MapFrame(wx.Frame):
             if pgnum > -1:
                 self.layerbook.DeletePage(pgnum)
         
-    def GetRender(self):
+    def GetMap(self):
         """!Returns current instance of render.Map()
         """
         return self.Map

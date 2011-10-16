@@ -952,7 +952,7 @@ class MapFrame(wx.Frame):
         self.PopupMenu(printmenu)
         printmenu.Destroy()
 
-    def GetRender(self):
+    def GetMap(self):
         """!Returns current instance of render.Map()
         """
         return self.Map
