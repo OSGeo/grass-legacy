@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       r.mapcalc_wrapper 
+# AUTHOR(S):    Martin Landa <landa.martin gmail.com>
+# PURPOSE:      Simulate standard g.parser interface for GUI
+# COPYRIGHT:    (C) 2011 by The GRASS Development Team
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+############################################################################
+
+#%module
+#% description: Raster map calculator.
+#% keywords: raster, algebra
+#%end
+#%option
+#% key: expression
+#% type: string
+#% required: no
+#% multiple: no
+#% description: Expression to evaluate
+#% guisection: Expression
+#%end
+#%option
+#% key: file
+#% type: string
+#% required: no
+#% multiple: no
+#% key_desc: name
+#% description: File containing expression(s) to evaluate
+#% gisprompt: old,file,input
+#% guisection: Expression
+#%end
+
+if  [ -z "$GISBASE" ] ; then
+   echo "You must be in GRASS GIS to run this program." 1>&2
+   exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+   exec g.parser "$0" "$@"
+fi
+
+if [ -n "$GIS_OPT_FILE" ] ; then
+    exec r.mapcalc < "$GIS_OPT_FILE"
+else
+    if [ -n "$GIS_OPT_EXPRESSION" ] ; then
+	exec r.mapcalc "$GIS_OPT_EXPRESSION"
+    else
+	exec g.message -e message="Either <expression> or <file> option must be given"
+	exit 1
+    fi
+fi
+
+exit 0

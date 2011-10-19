@@ -1241,11 +1241,6 @@ class ModelFrame(wx.Frame):
         
         # add action to canvas
         width, height = self.canvas.GetSize()
-        if cmd[0] == 'r.mapcalc':
-            GMessage(parent = self,
-                     message = _("Module r.mapcalc cannot be used in the model. "
-                                 "Use r.mapcalculator instead."))
-            return
         
         action = ModelAction(self.model, cmd = cmd, x = width/2, y = height/2,
                              id = self.model.GetNextId())
@@ -1747,6 +1742,9 @@ class ModelAction(ModelObject, ogl.RectangleShape):
             width = UserSettings.Get(group='modeler', key='action', subkey=('size', 'width'))
         if not height:
             height = UserSettings.Get(group='modeler', key='action', subkey=('size', 'height'))
+
+        if cmd[0] in ('r.mapcalc', 'v.type'):
+            cmd[0] += '_wrapper'
         
         if cmd:
             self.task = menuform.GUI(show = None).ParseCommand(cmd = cmd)
