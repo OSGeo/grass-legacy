@@ -1086,6 +1086,9 @@ class PreferencesBaseDialog(wx.Dialog):
             else:
                 self.settings.Set(group, value, key, subkey)
         
+        if self.parent.GetName() == 'Modeler':
+            return True
+        
         #
         # update default window dimension
         #
