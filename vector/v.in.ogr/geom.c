@@ -121,6 +121,8 @@ centroid(OGRGeometryH hGeom, CENTR * Centr, SPATIAL_INDEX * Sindex, int field,
 	    double x, y;
 
 	    Vect_line_box(Points, &box);
+	    /* centroid's z is set to zero */
+	    box.T = box.B = 0;
 	    Vect_spatial_index_select(Sindex, &box, List);
 
 	    for (i = 0; i < List->n_values; i++) {
