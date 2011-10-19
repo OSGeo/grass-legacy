@@ -1778,7 +1778,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Sum area by raster map and category</label>
-	      <help>Reports statistics for raster map layers.</help>
+	      <help>Reports statistics for raster maps.</help>
 	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.report</command>
@@ -2473,7 +2473,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Create/edit group</label>
-	      <help>Creates, edits, and lists groups and subgroups of imagery files.</help>
+	      <help>Creates, edits, and lists groups and subgroups of imagery data.</help>
 	      <keywords>imagery,map management</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.group</command>
@@ -2521,6 +2521,7 @@
 	    </menuitem>
 	  </items>
 	</menu>
+	<separator />
 	<menuitem>
 	  <label>Rectify image or raster</label>
 	  <help>Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points.</help>
@@ -2529,11 +2530,16 @@
 	  <command>i.rectify</command>
 	</menuitem>
 	<menuitem>
-	  <label>Ortho photo rectification (requires Xterm)</label>
-	  <help>Menu driver for the photo imagery programs.</help>
-	  <keywords>imagery,orthorectify</keywords>
-	  <handler>OnXTerm</handler>
-	  <command>i.ortho.photo</command>
+	  <label>Histogram</label>
+	  <help>Generate histogram of image</help>
+	  <handler>DispHistogram</handler>
+	</menuitem>
+	<menuitem>
+	  <label>Spectral response</label>
+	  <help>Displays spectral response at user specified locations in group or images.</help>
+	  <keywords>imagery,raster,multispectral</keywords>
+	  <handler>OnMenuCmd</handler>
+	  <command>i.spectral</command>
 	</menuitem>
 	<separator />
 	<menuitem>
@@ -2611,25 +2617,6 @@
 	    </menuitem>
 	  </items>
 	</menu>
-	<menuitem>
-	  <label>Histogram</label>
-	  <help>Generate histogram of image</help>
-	  <handler>DispHistogram</handler>
-	</menuitem>
-	<menuitem>
-	  <label>Spectral response</label>
-	  <help>Displays spectral response at user specified locations in group or images.</help>
-	  <keywords>imagery,raster,multispectral</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>i.spectral</command>
-	</menuitem>
-	<menuitem>
-	  <label>Tasseled cap vegetation index</label>
-	  <help>Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data</help>
-	  <keywords>raster,imagery</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>i.tasscap</command>
-	</menuitem>
 	<menu>
 	  <label>Transform image</label>
 	  <items>
@@ -2663,13 +2650,47 @@
 	    </menuitem>
 	  </items>
 	</menu>
-	<menuitem>
-	  <label>Atmospheric correction</label>
-	  <help>Performs atmospheric correction using the 6S algorithm.</help>
-	  <keywords>imagery,atmospheric correction</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>i.atcorr</command>
-	</menuitem>
+    <separator />
+	<menu>
+	  <label>Satellite images tools</label>
+	  <items>
+	    <menuitem>
+	      <label>Landsat DN to radiance/reflectance</label>
+	      <help>Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+.</help>
+	      <keywords>imagery,landsat,top-of-atmosphere reflectance,dos-type simple atmospheric correction</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.landsat.toar</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Modis quality control</label>
+	      <help>Extract quality control parameters from Modis QC layers</help>
+	      <keywords>QC,Quality Control,surface reflectance,Modis</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.modis.qc</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Atmospheric correction</label>
+	      <help>Performs atmospheric correction using the 6S algorithm.</help>
+	      <keywords>imagery,atmospheric correction</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.atcorr</command>
+	    </menuitem>
+	  </items>
+	</menu>
+	<menu>
+	  <label>Satellite images products</label>
+	  <items>
+	    <menuitem>
+	      <label>Tasseled cap vegetation index</label>
+	      <help>Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data</help>
+	      <keywords>raster,imagery</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.tasscap</command>
+	    </menuitem>
+	   </items>
+	  </menu> 
 	<separator />
 	<menu>
 	  <label>Report and statistics</label>
