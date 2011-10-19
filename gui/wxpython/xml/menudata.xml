@@ -2661,6 +2661,13 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>i.landsat.toar</command>
 	    </menuitem>
+	    <menuitem>
+	      <label>Landsat cloud cover assessment</label>
+	      <help>Landsat TM/ETM+ Automatic Cloud Cover Assessment (ACCA).</help>
+	      <keywords>imagery,landsat,acca</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.landsat.acca</command>
+	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Modis quality control</label>
