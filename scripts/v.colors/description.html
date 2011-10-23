@@ -33,6 +33,14 @@ v.db.addtable map=rand5k_elev column='elevation double precision'
 v.what.rast vector=rand5k_elev raster=elevation.10m column=elevation
 v.colors map=rand5k_elev column=elevation color=bcyr
 
+# See some GRASSRGB values:
+v.db.select rand5k_elev | head -n 4
+cat|elevation|GRASSRGB
+1|1609.643677|255:210:0
+2|1347.657959|34:255:221
+3|1142.30835|0:81:255
+4|1212.105469|0:152:255
+
 # display colorized points map
 d.mon x0
 d.vect -a rand5k_elev
