@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     lsat_data lsat;
     char band_in[GNAME_MAX], band_out[GNAME_MAX];
     int i, j, q, method, pixel, dn_dark[MAX_BANDS], dn_mode[MAX_BANDS];
+    int overwrite;
     double qcal, rad, ref, percent, ref_mode, sat_zenith, rayleigh;
     
     struct Colors colors;
@@ -63,7 +64,8 @@ int main(int argc, char *argv[])
     module->description =
 	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+.");
     module->keywords = _("imagery, landsat, top-of-atmosphere reflectance, dos-type simple atmospheric correction");
-
+    module->overwrite = TRUE;
+    
     /* It defines the different parameters */
     input_prefix = G_define_option();
     input_prefix->key = "input_prefix";
@@ -206,6 +208,8 @@ int main(int argc, char *argv[])
     inputname = input_prefix->answer;
     outputname = output_prefix->answer;
     sensorname = sensor -> answer ? sensor->answer: "";
+    
+    overwrite = G_check_overwrite(argc, argv);
     
     G_zero(&lsat, sizeof(lsat));
     
@@ -478,6 +482,15 @@ int main(int argc, char *argv[])
 	    continue;
 	}
 
+	if (G_find_cell2(band_out, "")) {
+	    if (overwrite) {
+		G_warning(_("Raster map <%s> already exists and will be overwritten"), band_out);
+	    }
+	    else {
+		G_warning(_("Raster map <%s> exists. Skipping."), band_out);
+		continue;
+	    }
+	}
 	if ((infd = G_open_cell_old(band_in, mapset)) < 0)
 	    G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 	in_data_type = G_raster_map_type(band_in, mapset);
