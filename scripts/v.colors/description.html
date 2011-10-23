@@ -1,9 +1,11 @@
 <H2>DESCRIPTION</H2>
 
-<EM>v.colors</EM> is much like <em>r.colors</em>, but may be used for vector maps.
-You give it a vector map and numeric data column, together with color rules
-like you would do for a raster. It creates a new column in the database with
-R:G:B values suitable for use with '<tt>d.vect -a</tt>'.
+<em>v.colors</em> allows the user to create and/or modify the color table for a
+raster map layer. <em>v.colors</em> is much like <em>r.colors</em>, but may be
+used for vector maps.
+
+As input a vector map with a numeric data column is required. It populates this
+column in the database with R:G:B values suitable for use with '<tt>d.vect -a</tt>'.
 
 <P>
 How it works: it creates a dummy raster map with the same data range as
@@ -17,13 +19,14 @@ renders thematic vector maps directly instead requiring the overhead of
 saving the colors into the DB.
 
 <P>
+<!-- really? this is all a bit confusing: -->
 If the target column name given by the <b>rgb_column</b> option does
 not exist, it will be created. The default name is "<tt>GRASSRGB</tt>".
 
 <h2>EXAMPLES</h2>
 
-Create a random sample point map, query raster map values for those points,
-and colorize output.
+Creating a random sample point map, query raster map values for those points,
+and colorize output:
 
 <div class="code"><pre>
 # Spearfish dataset
@@ -87,16 +90,23 @@ d.vect -a tin
 <H2>SEE ALSO</H2>
 
 <EM>
-<A HREF="d.vect.html">d.vect</a> -z<br>
-<A HREF="r.colors.html">r.colors</A><BR>
-<A HREF="r.colors.stddev.html">r.colors.stddev</A><BR>
-<A HREF="r.what.color.html">r.what.color</A><BR>
-<A HREF="v.db.addcol">v.db.addcol</A><BR>
-<A HREF="v.db.select.html">v.db.select</A><BR>
+<A HREF="d.vect.html">d.vect</a> -z,
+<A HREF="r.colors.html">r.colors</A>,
+<A HREF="r.colors.stddev.html">r.colors.stddev</A>,
+<A HREF="r.what.color.html">r.what.color</A>,
+<A HREF="v.db.addcol">v.db.addcol</A>,
+<A HREF="v.db.select.html">v.db.select</A>,
 <A HREF="db.execute.html">db.execute</A>
 </EM>
 
+<p>
+See also wiki
+page <a href="http://grass.osgeo.org/wiki/Color_tables">Color
+tables</a> (from GRASS User Wiki)
 
+<p>
+<a href="http://colorbrewer.org">ColorBrewer</a> is an online tool designed to
+help people select good color schemes for maps and other graphics.
 
 <H2>AUTHOR</H2>
 
