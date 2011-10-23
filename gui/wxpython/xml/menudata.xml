@@ -744,7 +744,7 @@
 	    <menuitem>
 	      <label>User access</label>
 	      <help>Controls access to the current mapset for other users on the system.</help>
-	      <keywords>general,map management</keywords>
+	      <keywords>general,map management,permission</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.access</command>
 	    </menuitem>
@@ -1792,8 +1792,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Total corrected area</label>
-	      <help>Surface area estimation for rasters.</help>
-	      <keywords>raster,statistics</keywords>
+	      <help>Prints estimation of surface area for raster map.</help>
+	      <keywords>raster,surface,statistics,area estimation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.area</command>
 	    </menuitem>
@@ -2473,9 +2473,9 @@
 	  <items>
 	    <menuitem>
 	      <label>Create/edit group</label>
-	      <help>Creates, edits, and lists groups and subgroups of imagery data.</help>
+	      <help>Creates, edits, and lists groups of imagery files.</help>
 	      <keywords>imagery,map management</keywords>
-	      <handler>OnMenuCmd</handler>
+	      <handler>OnEditImageryGroups</handler>
 	      <command>i.group</command>
 	    </menuitem>
 	    <menuitem>

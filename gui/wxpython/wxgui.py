@@ -1089,6 +1089,13 @@ class GMFrame(wx.Frame):
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
         
+    def OnEditImageryGroups(self, event, cmd = None):
+        """!Show dialog for creating and editing groups.
+        """
+        dlg = gdialogs.GroupDialog(self)
+        dlg.CentreOnScreen()
+        dlg.Show()
+        
     def OnInstallExtension(self, event):
         """!Install extension from GRASS Addons SVN repository"""
         win = InstallExtensionWindow(self, size = (650, 550))
