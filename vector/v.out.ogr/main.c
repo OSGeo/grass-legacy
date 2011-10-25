@@ -96,7 +96,8 @@ int main(int argc, char *argv[])
     module->keywords = _("vector, export");
     module->description =
 	_("Converts to one of the supported OGR vector formats.");
-
+    module->overwrite = TRUE;
+    
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
     type_opt = G_define_standard_option(G_OPT_V3_TYPE);
