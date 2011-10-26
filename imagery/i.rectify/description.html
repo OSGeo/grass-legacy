@@ -1,11 +1,11 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
 
-<EM>i.rectify</EM> uses the control
+<em>i.rectify</em> uses the control
 points identified in 
-<EM><A HREF="i.points.html">i.points</A></EM>
+<em><a href="i.points.html">i.points</a></em>
 or
-<EM><A HREF="i.vpoints.html">i.vpoints</A></EM>
+<em><a href="i.vpoints.html">i.vpoints</a></em>
 
 to calculate a transformation matrix based on a first,
 second, or third order polynomial and then converts x,y
@@ -14,42 +14,41 @@ in the image. The result is a planimetric image with a
 transformed coordinate system (i.e., a different coordinate
 system than before it was rectified).
 
-<P>
-
-<EM><A HREF="i.points.html">i.points</A></EM>
+<p>
+<em><a href="i.points.html">i.points</a></em>
 or
-<EM><A HREF="i.vpoints.html">i.vpoints</A></EM>
+<em><a href="i.vpoints.html">i.vpoints</a></em>
 
-must be run before <EM>i.rectify</EM>, and both programs
+must be run before <em>i.rectify</em>, and both programs
 are required to rectify an image. An image must be
 rectified before it can reside in a standard coordinate
 LOCATION, and therefore be analyzed with the other map
 layers in the standard coordinate LOCATION. Upon
-completion of <EM>i.rectify</EM>, the rectified image is
+completion of <em>i.rectify</em>, the rectified image is
 deposited in the target standard coordinate LOCATION. This
 LOCATION is selected using
 
-<EM><A HREF="i.target.html">i.target</A></EM>.
+<em><a href="i.target.html">i.target</a></em>.
 
-<H2>Program Prompts</H2>
+<h2>Program Prompts</h2>
 
 The first prompt in the program asks for the name of
 the group containing the files to be rectified.
 
 
-<PRE>
+<pre>
      Enter the group containing files to be rectified
      Enter 'list' for a list of existing imagery groups
      Enter 'list -f' for a verbose listing
      Hit RETURN to cancel request
      &gt;
-</PRE>
+</pre>
 
  This is the same imagery group that was selected in 
 
-<EM><A HREF="i.points.html">i.points</A></EM>
+<em><a href="i.points.html">i.points</a></em>
 or
-<EM><A HREF="i.vpoints.html">i.vpoints</A></EM>
+<em><a href="i.vpoints.html">i.vpoints</a></em>
 
 and the group that contains the raster maps with the marked
 points and their associated map  coordinates.  You are then
@@ -57,7 +56,7 @@ asked to select the raster map(s) within the group to be
 rectified:
 
 
-<PRE>
+<pre>
 Please select the file(s) to rectify by naming an output file
 
        spot1.1 in mapsetname      .............
@@ -71,32 +70,32 @@ Please select the file(s) to rectify by naming an output file
 
 AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
            (OR&lt;Ctrl-C&gt; TO CANCEL)
-</PRE>
+</pre>
 
 More than one raster map may be rectified at a time.  Each
 cell file should be given a unique output file name.
 
 
-<P>
+<p>
 
 Next, you are asked to select one of two windows regions:
 
 
-<PRE>
+<pre>
   Please select one of the following options
   1.  Use the current window in the target location
   2.  Determine the smallest window which covers the image
   &gt;
-</PRE>
+</pre>
 
-The <EM>i.rectify</EM> program will only rectify that
+The <em>i.rectify</em> program will only rectify that
 portion of the image or raster map that occurs within the
 chosen window region, and only that portion of the cell
 file will be relocated in the target database.  It is
 important therefore, to check the current mapset window in
 the target LOCATION if choice number one is selected.
 
-<P>
+<p>
 
 If you are rectifying a file with plans to patch it to
 another file using the GRASS program <em>r.patch</em>,
@@ -114,13 +113,13 @@ patched, rectify all of the files using the same default
 window.
 
 
-<P>
+<p>
 
 Select the order of transformation desired with the <b>order</b> option:
 
-<PRE>
+<pre>
 Select order of transformation --&gt;   1st Order   2nd Order  3rd Order
-</PRE>
+</pre>
 
 The program will immediately recalculate the RMSE and the
 number of points required.
@@ -204,7 +203,7 @@ located in the target LOCATION when the program is
 completed.  The original unrectified files are not modified
 or removed.
 
-<P>
+<p>
 <!--
 Note: In interactive mode it is possible to define a new file name
 for the target images. This is (currently) not provided in command line
@@ -213,52 +212,53 @@ mode.
 
 <h2>NOTES</h2>
 
-<EM>i.rectify</EM> uses nearest neighbor resampling during
+<em>i.rectify</em> uses nearest neighbor resampling during
 the transformation choosing the actual pixel that has its centre nearest to
 the point location in the image. Advantage of this method is that the pixel
-brightness of the image is kept as <EM>i.rectify</EM> rearranges the
+brightness of the image is kept as <em>i.rectify</em> rearranges the
 geometry of the image pixels.
-<P>
+<p>
 
 If <em>i.rectify</em> starts normally but after some time the following text is seen:
 <br><tt>
 GIS ERROR: error while writing to temp file
 </tt><br>
-the user may try the flag <EM>-c</EM> (or the module needs more free space
+the user may try the flag <em>-c</em> (or the module needs more free space
 on the hard drive).
 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
 The GRASS 4 <em>
-<A HREF="http://grass.itc.it/gdp/imagery/grass4_image_processing.pdf">Image
-Processing manual</A></EM>
+<a href="http://grass.osgeo.org/gdp/imagery/grass4_image_processing.pdf">Image
+Processing manual</a></em>
 
-<P>
-<EM>
-<A HREF="g.transform.html">g.transform</A>,
-<A HREF="r.proj.html">r.proj</A>,
-<A HREF="v.proj.html">v.proj</A>,
-<A HREF="i.group.html">i.group</A>,
-<A HREF="i.points.html">i.points</A>,
-<A HREF="i.vpoints.html">i.vpoints</A>,
-<A HREF="i.target.html">i.target</A>
-</EM><br>
-<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em>
+<p>
+<em>
+<a href="g.transform.html">g.transform</a>,
+<a href="r.proj.html">r.proj</a>,
+<a href="v.proj.html">v.proj</a>,
+<a href="i.group.html">i.group</a>,
+<a href="i.points.html">i.points</a>,
+<a href="i.vpoints.html">i.vpoints</a>,
+<a href="i.target.html">i.target</a>
+</em><br>
+<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em> and
+<em><a href="wxGUI.GCP_Manager.html">wxGUI: Manage Ground Control Points</a></em>
 
 
-<H2>AUTHORS</H2>
+<h2>AUTHORS</h2>
 
 William R. Enslin, 
 Michigan State University,
 Center for Remote Sensing
 
 <p>
-Modified for GRASS 5.0 by:<BR>
-Luca Palmeri (palmeri@ux1.unipd.it)<BR>
-Bill Hughes<BR>
+Modified for GRASS 5.0 by:<br>
+Luca Palmeri (palmeri@ux1.unipd.it)<br>
+Bill Hughes<br>
 Pierre de Mouveaux (pmx@audiovu.com)
-<BR>
+<br>
 CMD mode by Bob Covill
 
 <p>

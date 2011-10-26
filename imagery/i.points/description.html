@@ -1,18 +1,18 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>i.points</EM> is an
-<A HREF="imagery.html">imagery</A> function that enables
+<em>i.points</em> is an
+<a href="imagery.html">imagery</a> function that enables
 the user to mark points on a (raster) image to be rectified
 and then input the geographic coordinates of each point for
 calculation of a coordinate transformation matrix.
-<EM>i.points</EM> must be followed by use of the GRASS
-program <EM><A HREF="i.rectify.html">i.rectify</A></EM>, which
+<em>i.points</em> must be followed by use of the GRASS
+program <em><a href="i.rectify.html">i.rectify</a></em>, which
 rectifies the image using the transformation matrix
-coefficients calculated by <EM>i.points</EM>.
+coefficients calculated by <em>i.points</em>.
 
-<P>
+<p>
 
-<EM>Rectification</EM> is the mapping (transformation) of
+<em>Rectification</em> is the mapping (transformation) of
 an image from one coordinate system to another.  The
 geometry of an image extracted into a GRASS LOCATION having
 an x,y coordinate system is not planimetric.  To create a
@@ -21,64 +21,64 @@ system into a standard coordinate system (for example, the
 UTM coordinate system or the State Plane coordinate
 system), points from a map having the standard coordinates
 must be associated with the same points on the image to be
-rectified.  <EM>i.points</EM> enables the user to mark
+rectified.  <em>i.points</em> enables the user to mark
 points on an image and input the standard coordinates for
-that point.  <EM>i.points</EM> then calculates a least
+that point.  <em>i.points</em> then calculates a least
 squares regression using the two coordinate systems (x,y
 and standard) for the marked points.  A matrix containing
 transformation coefficients is the output file for
-<EM>i.points</EM>.
+<em>i.points</em>.
 
-<P>
+<p>
 During the process of marking points and entering map
 coordinates, the user can compute the RMS (root mean
-square) error for each point entered.  <EM>i.points</EM>
+square) error for each point entered.  <em>i.points</em>
 does this by calculating the transformation equation (the
-same one that is calculated in the GRASS program <EM>
-<A HREF="i.rectify.html">i.rectify</A></EM>), and then
+same one that is calculated in the GRASS program <em>
+<a href="i.rectify.html">i.rectify</a></em>), and then
 plugging these results into an equation for RMS error.
 
-<P>
-<EM>i.points</EM> offers a zoom option to locate precisely
+<p>
+<em>i.points</em> offers a zoom option to locate precisely
 the point to be marked on an image.  This program also
 offers the user the option of acquiring standard
 coordinates for a marked point from a map layer in the
 target data base.
 
-<P>
-<EM><A HREF="i.target.html">i.target</A></EM> must be
-run before running <EM>i.points</EM> to enable the PLOT
+<p>
+<em><a href="i.target.html">i.target</a></em> must be
+run before running <em>i.points</em> to enable the PLOT
 RASTER option to be used and to identify a target data base
 LOCATION_NAME and MAPSET for the rectified image.  To run
-<EM>i.points</EM>, a graphics monitor is required.
+<em>i.points</em>, a graphics monitor is required.
 
-<P>
+<p>
 The procedure for marking points, entering coordinates, and
 calculating RMS error is described below.
 
-<P>
+<p>
 The first prompt in the program asks the user for the 
-<A HREF="i.group.html">imagery group</A> to be
+<a href="i.group.html">imagery group</a> to be
 registered.  Note that if 
-<EM><A HREF="i.target.html">i.target</A></EM> is not run
-before <EM>i.points</EM>, the <EM>i.points</EM> program
+<em><a href="i.target.html">i.target</a></em> is not run
+before <em>i.points</em>, the <em>i.points</em> program
 will display the following error message:
 
-<PRE>
+<pre>
 ERROR: Target information for group [spot] missing
        Please run i.target for group [spot]
-</PRE>
+</pre>
 
 After entering the group to be registered the terminal screen
 displays the message: 
 
-<PRE>
+<pre>
       Use mouse now...
-</PRE>
+</pre>
 
 The graphics monitor displays the following screen:
 
-<PRE>
+<pre>
  ______________________________________________________________
 | imagery  filename  (mag)        |  target  filename  (mag)  |
 |_________________________________|___________________________|
@@ -100,13 +100,13 @@ The graphics monitor displays the following screen:
 |_________________________________|___________________________|
 | QUIT  ZOOM  PLOT RASTER  ANALYZE|                           |
 |_________________________________|___________________________|
-</PRE>
+</pre>
 
 A pop-down menu like that shown below will be superimposed on the
 left half of the screen:
 
 
-<PRE>
+<pre>
         __________________________________
        | Double click on raster map layer|
        |          to be plotted          |
@@ -122,26 +122,26 @@ left half of the screen:
               |__________|________|
               | spot.3   |        |
               |__________|________|
-</PRE>
+</pre>
 
 Any single raster map layer in the 
 
-<A HREF="i.group.html">imagery group</A> may be used on
+<a href="i.group.html">imagery group</a> may be used on
 
 which to mark points, and the user can mark points on more
 than one raster map layer in the 
 
-<A HREF="i.group.html">imagery group</A> to accumulate the
+<a href="i.group.html">imagery group</a> to accumulate the
 
 suggested minimum number of 12 points.  Any raster map
-layer in the <A HREF="i.group.html">imagery group</A>
+layer in the <a href="i.group.html">imagery group</a>
 can be rectified (using 
 
-<EM><A HREF="i.rectify.html">i.rectify</A></EM>) based on the
+<em><a href="i.rectify.html">i.rectify</a></em>) based on the
 transformation matrix computed from these points.
 
 
-<P>
+<p>
 
 The imagery file chosen by
 the user is displayed in the upper left quadrant of the
@@ -153,11 +153,11 @@ To magnify the displayed file, the user must
 place the mouse cross hairs on the word ZOOM.  The following menu
 will then be displayed at the bottom of the screen:
 
-<PRE>
+<pre>
    ____________________________________________
   | Cancel|  Box|  Point|  Select type of ZOOM|
   |_______|_____|_______|_____________________|
-</PRE>
+</pre>
  
 
 The user has the option of identifying the zoom region
@@ -178,7 +178,7 @@ image.  The user's terminal will display the following
 menu:
 
 
-<PRE>
+<pre>
  ___________________________________________________________
 | Point 1 marked on the image at|                          |
 | East: 1023.77                 |                          |
@@ -191,7 +191,7 @@ menu:
 |__________________________________________________________|
 | Enter coordinates as east north:                         |
 |__________________________________________________________|
-</PRE>
+</pre>
 
 The user then enters the easting and northing (separated by
 a space) for the point marked on the image.  If the user
@@ -210,11 +210,11 @@ The following line is then displayed at the bottom of the
 graphics monitor:
 
 
-<PRE>
+<pre>
        ________________________________________________
       | Cancel|  Indicate which side should be plotted|
       |_______|_______________________________________|
-</PRE>
+</pre>
 
 Which side of the graphics monitor is to be plotted
 is indicated by placing the mouse cross hairs on the 
@@ -223,7 +223,7 @@ and pressing the left mouse button.  The following pop-down
 menu will be superimposed on the half of the screen that was chosen:
 
 
-<PRE>
+<pre>
     _________________________________________
    | Double click on raster (cell) map layer|
    |              to be plotted             |
@@ -247,17 +247,17 @@ menu will be superimposed on the half of the screen that was chosen:
          |______________|______________|
          | roads        |              |
          |______________|______________|
-</PRE>
+</pre>
 
 After the raster map layer is displayed the following message appears
 at the bottom of the graphics monitor:
 
 
-<PRE>
+<pre>
      ______________________________________
      | input method --&gt;|  keyboard|  screen|
      |_________________|__________|________|
-</PRE>
+</pre>
 
 If the user wishes to use the plotted raster map layer only
 as a comparative reference, then the keyboard can be chosen
@@ -267,7 +267,7 @@ mouse cross hairs on the word KEYBOARD and pressing the
 left button on the mouse.
 
 
-<P>
+<p>
 
 If the user selects the SCREEN option, then points marked
 on the image will automatically be associated with the
@@ -277,7 +277,7 @@ point on the image, the following menu is displayed at the
 terminal:
 
 
-<PRE>
+<pre>
 ___________________________________________________________
 | Point 5 marked on the image at|                          |
 | East: 1023.77                 |                          |
@@ -295,7 +295,7 @@ ___________________________________________________________
 |__________________________________________________________|
 | use mouse now...                                         |
 |__________________________________________________________|
-</PRE>
+</pre>
 
 
 The user then uses the mouse to mark a corresponding point
@@ -314,7 +314,7 @@ error report resembling that shown below is superimposed on
 the graphics monitor:
 
 
-<PRE>
+<pre>
 ______________________________________________________________________
 |         error                 image                 target         |
 |#     row     col    target    east    north      east       north  |
@@ -328,15 +328,15 @@ ______________________________________________________________________
 |____________________________________________________________________|
 |    overall   rms    error:   4.46                                  |
 |____________________________________________________________________|
-</PRE>
+</pre>
  
 The following menu then appears at the bottom of the graphics monitor:
 
-<PRE>
+<pre>
  ____________________________________________________________________
 | DONE|  PRINT FILE|   Double click on point to be included/excluded|
 |_____|____________|________________________________________________|
-</PRE>
+</pre>
 
 The RMS error for the image is given under the column
 TITLEd "error" and subTITLEd "row" and "col".  In the above
@@ -351,9 +351,9 @@ screen in meters.  Points that create high RMS error are
 displayed in red on the graphics monitor (represented here
 in italics).
 
-<P>
+<p>
 The location of the point marked on the 
-<A HREF="i.group.html">imagery group</A> file is given
+<a href="i.group.html">imagery group</a> file is given
 under the heading "image" and the subheadings "east" and
 "north".  The location of the point in the target data base
 is given under the heading "target" and the subheadings
@@ -365,58 +365,59 @@ displayed) and pressing the left button on the mouse
 twice.  When a point is excluded, it is not afterwards
 included in the calculation of the RMS error, or included
 in the final transformation matrix.  However, it can be
-retrieved within <EM>i.points</EM> at any time by double
+retrieved within <em>i.points</em> at any time by double
 clicking with the mouse as described above.
 
 <H3>QUIT</H3>
 
-To end the <EM>i.points</EM> program place the mouse cross
+To end the <em>i.points</em> program place the mouse cross
 hairs on the word QUIT;  the marked points (including
 coordinates) will be saved.
 
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 A good rule of thumb is to mark at least 12 to 15 points
 which are evenly distributed over the entire 
-<A HREF="i.group.html">imagery group</A> file in order to
+<a href="i.group.html">imagery group</a> file in order to
 obtain an accurate transformation equation for the
 rectification process.  The RMS error may increase with
 more points added, but the transformation equation will be
 more accurate.
 
-<P>
+<p>
 An RMS error of less than or equal to approximately one
 resolution unit (pixel or cell) for the image being
 rectified is generally considered acceptable.
 
-<P>
-In order to use a digitizer with <EM>i.points</EM>, at
+<p>
+In order to use a digitizer with <em>i.points</em>, at
 least one digitizer driver besides "none" (the on-screen
 digitizer) must be available in the digitcap file.
 
-<P>
+<p>
 This program is interactive.
 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
 The GRASS 4 <em>
-<A HREF="http://grass.itc.it/gdp/imagery/grass4_image_processing.pdf">Image
-Processing manual</A></EM>
+<a href="http://grass.osgeo.org/gdp/imagery/grass4_image_processing.pdf">Image
+Processing manual</a></em>
 
-<P>
-<EM>
-<A HREF="g.mapsets.html">g.mapsets</A><br>
-<A HREF="i.group.html">i.group</A><br>
-<A HREF="i.rectify.html">i.rectify</A><br>
-<A HREF="i.target.html">i.target</A><br>
-<A HREF="i.vpoints.html">i.vpoints</A>
-</EM><br>
-<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em>
+<p>
+<em>
+<a href="g.mapsets.html">g.mapsets</a>,
+<a href="i.group.html">i.group</a>,
+<a href="i.rectify.html">i.rectify</a>,
+<a href="i.target.html">i.target</a>,
+<a href="i.vpoints.html">i.vpoints</a>
+</em><br>
+<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em> and
+<em><a href="wxGUI.GCP_Manager.html">wxGUI: Manage Ground Control Points</a></em>
 
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Michael Shapiro,
 U.S.Army Construction Engineering Research Laboratory
