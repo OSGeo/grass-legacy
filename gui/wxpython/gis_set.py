@@ -692,6 +692,11 @@ class GRASSStartup(wx.Frame):
 
         if dlg.ShowModal() ==  wx.ID_OK:
             mapset = dlg.GetValue()
+            if mapset in self.listOfMapsets:
+                GMessage(parent = self,
+                         message = _("Mapset <%s> already exists.") % mapset)
+                return
+            
             try:
                 os.mkdir(os.path.join(self.gisdbase, location, mapset))
                 # copy WIND file and its permissions from PERMANENT and set permissions to u+rw,go+r
