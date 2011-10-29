@@ -38,6 +38,8 @@ try:
 except ImportError:
     import elementtree.ElementTree as etree # Python <= 2.4
 
+import wx
+
 if not os.getenv("GISBASE"):
     sys.exit("GRASS is not running. Exiting...")
 
@@ -62,6 +64,7 @@ class MenuData:
 	    gcmd     = mi.find('command')  # optional
             keywords = mi.find('keywords') # optional
             shortcut = mi.find('shortcut') # optional
+            wxId     = mi.find('id')       # optional
 	    if gcmd != None:
 		gcmd = gcmd.text
 	    else:
@@ -74,7 +77,11 @@ class MenuData:
                 shortcut = shortcut.text
             else:
                 shortcut = ""
-	    return (label, help, handler, gcmd, keywords, shortcut)
+            if wxId != None:
+                wxId = eval('wx.' + wxId.text)
+            else:
+                wxId = wx.ID_ANY
+	    return (label, help, handler, gcmd, keywords, shortcut, wxId)
 	elif mi.tag == 'menu':
 	    return self._getMenu(mi)
 	else:
