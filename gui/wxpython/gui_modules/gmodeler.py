@@ -1796,8 +1796,8 @@ class ModelAction(ModelObject, ogl.RectangleShape):
             width = UserSettings.Get(group='modeler', key='action', subkey=('size', 'width'))
         if not height:
             height = UserSettings.Get(group='modeler', key='action', subkey=('size', 'height'))
-
-        if cmd[0] in ('r.mapcalc', 'v.type'):
+        
+        if cmd and cmd[0] in ('r.mapcalc', 'v.type'):
             cmd[0] += '_wrapper'
         
         if cmd:
