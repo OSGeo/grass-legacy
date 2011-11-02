@@ -51,6 +51,7 @@ wxCmdProgress, EVT_CMD_PROGRESS = NewEvent()
 wxCmdRun,      EVT_CMD_RUN      = NewEvent()
 wxCmdDone,     EVT_CMD_DONE     = NewEvent()
 wxCmdAbort,    EVT_CMD_ABORT    = NewEvent()
+wxCmdPrepare,  EVT_CMD_PREPARE  = NewEvent()
 
 def GrassCmd(cmd, stdout = None, stderr = None):
     """!Return GRASS command thread"""
@@ -89,7 +90,7 @@ class CmdThread(threading.Thread):
         os.environ['GRASS_MESSAGE_FORMAT'] = 'gui'
         while True:
             requestId, args, kwds = self.requestQ.get()
-            for key in ('callable', 'onDone', 'userData'):
+            for key in ('callable', 'onDone', 'onPrepare', 'userData'):
                 if key in kwds:
                     vars()[key] = kwds[key]
                     del kwds[key]
@@ -100,6 +101,16 @@ class CmdThread(threading.Thread):
                 vars()['callable'] = GrassCmd
             
             requestTime = time.time()
+            
+            # prepare
+            event = wxCmdPrepare(cmd = args[0],
+                                 time = requestTime,
+                                 pid = requestId,
+                                 onPrepare = vars()['onPrepare'],
+                                 userData = vars()['userData'])
+            wx.PostEvent(self.parent, event)
+            
+            # run command
             event = wxCmdRun(cmd = args[0],
                              pid = requestId)
             wx.PostEvent(self.parent, event)
@@ -208,8 +219,9 @@ class GMConsole(wx.SplitterWindow):
         self.cmdOutputTimer = wx.Timer(self.cmdOutput, id = wx.ID_ANY)
         self.cmdOutput.Bind(EVT_CMD_OUTPUT, self.OnCmdOutput)
         self.cmdOutput.Bind(wx.EVT_TIMER, self.OnProcessPendingOutputWindowEvents)
-        self.Bind(EVT_CMD_RUN, self.OnCmdRun)
-        self.Bind(EVT_CMD_DONE, self.OnCmdDone)
+        self.Bind(EVT_CMD_RUN,     self.OnCmdRun)
+        self.Bind(EVT_CMD_DONE,    self.OnCmdDone)
+        self.Bind(EVT_CMD_PREPARE, self.OnCmdPrepare)
         
         # search & command prompt
         self.cmdPrompt = prompt.GPromptSTC(parent = self)
@@ -425,7 +437,7 @@ class GMConsole(wx.SplitterWindow):
         self.WriteLog(line, style = self.cmdOutput.StyleError, switchPage = True)
 
     def RunCmd(self, command, compReg = True, switchPage = False,
-               onDone = None):
+               onDone = None, onPrepare = None, userData = None):
         """!Run command typed into console command prompt (GPrompt).
         
         @todo Display commands (*.d) are captured and processed
@@ -437,6 +449,8 @@ class GMConsole(wx.SplitterWindow):
         @param compReg True use computation region
         @param switchPage switch to output page
         @param onDone function to be called when command is finished
+        @param onPrepare function to be called before command is launched
+        @param userData data defined for the command
         """
         if len(command) == 0:
             Debug.msg(2, "GPrompt:RunCmd(): empty command")
@@ -543,7 +557,7 @@ class GMConsole(wx.SplitterWindow):
                 else:
                     # process GRASS command with argument
                     self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
-                                          onDone = onDone)
+                                          onDone = onDone, onPrepare = onPrepare, userData = userData)
                     self.cmdOutputTimer.Start(50)
                     
                     return None
@@ -568,7 +582,7 @@ class GMConsole(wx.SplitterWindow):
                 menuform.GUI(parent = self).ParseCommand(command)
             else:
                 self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
-                                      onDone = onDone)
+                                      onDone = onDone, onPrepare = onPrepare, userData = userData)
             self.cmdOutputTimer.Start(50)
         
         return None
@@ -726,6 +740,13 @@ class GMConsole(wx.SplitterWindow):
         self.WriteCmdLog('(%s)\n%s' % (str(time.ctime()), ' '.join(event.cmd)))
         self.btnCmdAbort.Enable()
 
+    def OnCmdPrepare(self, event):
+        """!Prepare for running command"""
+        if self.parent.GetName() == 'Modeler':
+            self.parent.OnCmdPrepare(event)
+        
+        event.Skip()
+        
     def OnCmdDone(self, event):
         """!Command done (or aborted)"""
         if self.parent.GetName() == 'Modeler':
