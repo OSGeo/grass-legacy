@@ -450,7 +450,9 @@ def parse_interface(name, parser = processTask, blackList = None):
     """
     enc = locale.getdefaultlocale()[1]
     if enc and enc.lower() == "cp932":
-        tree = etree.fromstring(get_interface_description(name).decode(enc).encode("utf-8"))
+        p = re.compile('encoding="' + enc + '"', re.IGNORECASE)
+        tree = etree.fromstring(p.sub('encoding="utf-8"',
+                                      get_interface_description(name).decode(enc).encode("utf-8")))
     else:
         tree = etree.fromstring(get_interface_description(name))
     

@@ -1919,7 +1919,7 @@ class GUI:
         if not self.grass_task:
             enc = locale.getdefaultlocale()[1]
             if enc and enc.lower() == "cp932":
-                p = re.compile('encoding="' + enc + "'", re.IGNORECASE)
+                p = re.compile('encoding="' + enc + '"', re.IGNORECASE)
                 tree = etree.fromstring(p.sub('encoding="utf-8"',
                                               gtask.get_interface_description(cmd).decode(enc).encode('utf-8')))
             else:
