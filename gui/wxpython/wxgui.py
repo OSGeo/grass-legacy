@@ -212,8 +212,12 @@ class GMFrame(wx.Frame):
         # redirect stderr to log area    
         self.goutput.Redirect()
         
-        # fix goutput's pane size (required for Mac OSX)
-        self.goutput.SetSashPosition(int(self.GetSize()[1] * .54))
+        # fix goutput's pane size (required for Mac OSX)`
+        if sys.platform == 'darwin':
+            coef = .80
+        else:
+            coef = .54
+        self.goutput.SetSashPosition(int(self.GetSize()[1] * coef))
         
         self.workspaceChanged = False
         

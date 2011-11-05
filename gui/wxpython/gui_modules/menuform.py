@@ -439,11 +439,12 @@ class mainFrame(wx.Frame):
         self.btn_cancel.SetToolTipString(_("Close this window without executing the command (Ctrl+Q)"))
         btnsizer.Add(item = self.btn_cancel, proportion = 0, flag = wx.ALL | wx.ALIGN_CENTER, border = 10)
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+
         if self.get_dcmd is not None: # A callback has been set up
             btn_apply = wx.Button(parent = self.panel, id = wx.ID_APPLY)
             btn_ok = wx.Button(parent = self.panel, id = wx.ID_OK)
             btn_ok.SetDefault()
-            
+
             btnsizer.Add(item = btn_apply, proportion = 0,
                          flag = wx.ALL | wx.ALIGN_CENTER,
                          border = 10)
