@@ -234,8 +234,14 @@ fi
 if [ -d "$PREFIX" ] ; then
     MYINST_DIR="$PREFIX"
 else
-    g.message -e "'$PREFIX' does not exist"
-    exit 1
+    if [ "$PREFIX" = "$HOME/.grass6/addons/bin" ] ; then
+	APREFIX=~/.grass6/addons
+	mkdir -p $APREFIX/bin $APREFIX/docs $APREFIX/docs/html \
+	    $APREFIX/etc $APREFIX/man $APREFIX/man/man1 $APREFIX/scripts
+    else
+	g.message -e "'$PREFIX' does not exist"
+	exit 1 
+    fi
 fi
 
 if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
