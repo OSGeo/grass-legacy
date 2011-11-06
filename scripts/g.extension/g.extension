@@ -235,7 +235,7 @@ if [ -d "$PREFIX" ] ; then
     MYINST_DIR="$PREFIX"
 else
     g.message -w "'$PREFIX' does not exist. Creating ..."
-    mkdir "$PREFIX"
+    mkdir -p "$PREFIX"
     if [ $? -ne 0 ] || [ ! -d "$PREFIX" ] ; then
 	g.message -e "Unable to create '$PREFIX' directory"
 	exit 1
