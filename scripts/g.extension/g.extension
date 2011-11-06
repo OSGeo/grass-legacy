@@ -234,13 +234,11 @@ fi
 if [ -d "$PREFIX" ] ; then
     MYINST_DIR="$PREFIX"
 else
-    if [ "$PREFIX" = "$HOME/.grass6/addons/bin" ] ; then
-	APREFIX=~/.grass6/addons
-	mkdir -p $APREFIX/bin $APREFIX/docs $APREFIX/docs/html \
-	    $APREFIX/etc $APREFIX/man $APREFIX/man/man1 $APREFIX/scripts
-    else
-	g.message -e "'$PREFIX' does not exist"
-	exit 1 
+    g.message -w "'$PREFIX' does not exist. Creating ..."
+    mkdir "$PREFIX"
+    if [ $? -ne 0 ] || [ ! -d "$PREFIX" ] ; then
+	g.message -e "Unable to create '$PREFIX' directory"
+	exit 1
     fi
 fi
 
