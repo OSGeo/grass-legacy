@@ -256,10 +256,10 @@ else
 	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
+# if it doesn't exist set it to something so that g.extension's default is reasonable
 if [ -z "$GRASS_ADDON_PATH" ] ; then
-    GRASS_ADDON_PATH="$HOME/.grass6/addons/bin:$HOME/.grass6/addons/scripts"
+    GRASS_ADDON_PATH="$HOME/.grass6/addons"
     export GRASS_ADDON_PATH
-    echo "GRASS_ADDON_PATH undefined, using '$GRASS_ADDON_PATH'"
 fi
 PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
 export PATH
