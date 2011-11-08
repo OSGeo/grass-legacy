@@ -33,10 +33,10 @@ and indicate areas on the displayed raster map that are to be edited.
 <p>
 Selections available via the <em>Main Menu</em> and the
 subsequent functions or sub-menus are described below:
-<DL>
-<DD>
+<dl>
+<dd>
 1. Edit
-<BR>
+<br>
 
 <b>invokes edit mode</b>, during which no graphic menus are used,
 so that none of the displayed map is hidden. 
@@ -45,15 +45,15 @@ cells to help distinguish cell boundaries.
 Interaction with the program during edit mode
 is done by using the three mouse buttons as follows:
 
-<DL>
-<DD> Left Button
-<BR>
+<dl>
+<dd> Left Button
+<br>
 <b>what's here</b>.  Identify the category value of the
 cell under the mouse cursor when the button is pressed.
 The category value of this cell is printed in the text frame.
 <p>
-<DD> Middle Button
-<BR>
+<dd> Middle Button
+<br>
 <b>edit</b>.  The current category value of the cell under the mouse
 cursor is iterated and a prompt for a new cell value
 appears on the textual command frame.  (Remember to
@@ -66,21 +66,21 @@ it has been edited, since, if the value of the cell
 is polled (before leaving edit mode), the old category value
 will be reported.
 <p>
-<DD> Right Button
-<BR>
+<dd> Right Button
+<br>
 <b>exit edit mode</b>.  Command is returned to the <em>Main Menu</em>
 on the graphics monitor.  If cell value changes were made
 during edit mode, they will be saved upon exit.
-</DL>
+</dl>
 
 <p>
 2. Redraw
-<BR>
+<br>
 <b>redisplays</b> the raster map layer on the graphics monitor.
 <p>
 3. Zoom
 
-<BR>
+<br>
 calls the <em><a href="d.zoom.html">d.zoom</a>
 </em> program, to allow changing the view of the
 raster layer.
@@ -89,7 +89,7 @@ Interaction is conducted using mouse keys.
 
 <p>
 4. Arrow
-<BR>
+<br>
 This function is available for users editing aspect maps.  The
 <em><a href="d.rast.arrow.html">d.rast.arrow</a></em> program is called, which draws arrows over the displayed
 cells to indicate the downslope direction of the cell.
@@ -112,20 +112,20 @@ or a choice for using default settings may be used.
 
 <p>
 5. Number
-<BR>
+<br>
 calls the <em>
 <a href="d.rast.num.html">d.rast.num</a></em> program, which will print the cell category values
 over the displayed cells on the graphic monitor.
 
 <p>
 6. Exit
-<BR>
+<br>
 <b>quit</b> the <em>d.rast.edit</em> program.  If edits have been made,
 the new raster map layer will be created.  Support files are constructed.
 Category labels and color maps (if any) are copied from the original layer.
 <em>d.rast.edit</em> redisplays the original raster map file on the monitor
 as it exits.
-</DL>
+</dl>
 
 <h2>NOTES</h2>
 

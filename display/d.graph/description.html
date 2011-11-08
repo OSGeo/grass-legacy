@@ -42,8 +42,8 @@ If the <b>-m</b> flag is given, geographic coordinates will be used instead.
 
 <p>
 The graphics language is simple, and uses the following commands: 
-<BR>
-<DD>[
+<br>
+<dd>[
 <a href="#comment">#</a>&nbsp;|
 <a href="#move">move</a>&nbsp;|
 <a href="#draw">draw</a>&nbsp;|
@@ -59,14 +59,14 @@ The graphics language is simple, and uses the following commands:
 ]</DD>
 
 
-<DL>
+<dl>
 <a name="comment"></a>
-<DT><b>#</b> <em>comment</em> 
-<DD>A line of comment which is ignored in the processing. 
+<dt><b>#</b> <em>comment</em> 
+<dd>A line of comment which is ignored in the processing. 
 
 <a name="move"></a>
-<DT><b>move</b> <em>xpos ypos</em> 
-<DD>The current location is updated to <em>xpos ypos</em>. 
+<dt><b>move</b> <em>xpos ypos</em> 
+<dd>The current location is updated to <em>xpos ypos</em>. 
 
 Unless the <b>-m</b> flag is used,
 values are stated as a percent of the active display frame's 
@@ -75,8 +75,8 @@ and may be floating point values. Values are between 0-100.
 <b>Note.</b> A space must separate <em>xpos</em> and <em>ypos</em>.
 
 <a name="draw"></a>
-<DT><b>draw</b> <em>xpos ypos</em> 
-<DD>A line is drawn in the current color from the current location to the new 
+<dt><b>draw</b> <em>xpos ypos</em> 
+<dd>A line is drawn in the current color from the current location to the new 
 location <em>xpos ypos</em>, which then becomes the current location. 
 Unless the <b>-m</b> flag is used,
 values are stated as a percent of the active display frame's 
@@ -85,28 +85,28 @@ and may be floating point values. Values are between 0-100.
 <b>Note.</b> A space must separate <em>xpos</em> and <em>ypos</em>. 
 
 <a name="polygon"></a>
-<DT><b>polygon</b> 
-<BR>&nbsp;&nbsp;<em> xpos ypos</em> 
-<BR>&nbsp;&nbsp;<em> xpos ypos</em> 
-<BR>&nbsp;&nbsp;... 
+<dt><b>polygon</b> 
+<br>&nbsp;&nbsp;<em> xpos ypos</em> 
+<br>&nbsp;&nbsp;<em> xpos ypos</em> 
+<br>&nbsp;&nbsp;... 
 
-<DD>The coordinates appearing beneath the word <em>polygon</em>, 
+<dd>The coordinates appearing beneath the word <em>polygon</em>, 
 one pair per line, 
 circumscribe a polygon that is to be filled with the current color. 
 
 <a name="polyline"></a>
-<DT><b>polyline</b> 
-<BR>&nbsp;&nbsp;<em> xpos ypos</em> 
-<BR>&nbsp;&nbsp;<em> xpos ypos</em> 
-<BR>&nbsp;&nbsp;... 
+<dt><b>polyline</b> 
+<br>&nbsp;&nbsp;<em> xpos ypos</em> 
+<br>&nbsp;&nbsp;<em> xpos ypos</em> 
+<br>&nbsp;&nbsp;... 
 
-<DD>The coordinates appearing beneath the word <em>polyline</em>, 
+<dd>The coordinates appearing beneath the word <em>polyline</em>, 
 one pair per line, 
 circumscribe a polygon that is not to be filled with color. 
 
 <a name="color"></a>
-<DT><b>color</b> <em>color</em> 
-<DD>Sets the current color to that stated; subsequent graphics will be drawn 
+<dt><b>color</b> <em>color</em> 
+<dd>Sets the current color to that stated; subsequent graphics will be drawn 
 in the stated color, until the current color is set to a different color. 
 Options are <em>red</em>, 
 <em>orange</em>,
@@ -124,24 +124,24 @@ an R:G:B triplet (separated by colons),
 or the word "none" (draws in the default background color).
 
 <a name="text"></a>
-<DT><b>text</b> <em>line-of-text</em> 
-<DD>The stated text is drawn at the current location using the current color, 
+<dt><b>text</b> <em>line-of-text</em> 
+<dd>The stated text is drawn at the current location using the current color, 
 and the new current location is then positioned at the end of the text string. 
 
 <a name="size"></a>
-<DT><b>size</b> <em>xper yper</em> 
-<DD>Subsequent text will be drawn such that the text is 
+<dt><b>size</b> <em>xper yper</em> 
+<dd>Subsequent text will be drawn such that the text is 
 <em>xper</em> percent of the graphics monitor display frame wide and 
 <em>yper</em> percent of the frame high. By default, the text size is set to
 5 percent of the active frame's width and 5 percent of the frame's height.
 If only one value is given, then that value will be used for both x and y 
 scaling.
-<BR>
+<br>
 <b>Note.</b> A space must separate <em>xper</em> and <em>yper</em>.
 
 <a name="symbol"></a>
-<DT><b>symbol</b> <em>type size xper yper [line_color [fill_color]]</em>
-<DD>A symbol is drawn at the given size on the display monitor. The
+<dt><b>symbol</b> <em>type size xper yper [line_color [fill_color]]</em>
+<dd>A symbol is drawn at the given size on the display monitor. The
 <em>xper</em> and <em>yper</em> options define the center of the icon and
 are given as a percentage of the display frame (<tt>0,0</tt> is lower left).
 The symbol can be any of those stored in <tt>$GISBASE/etc/symbol/</tt>
@@ -153,24 +153,24 @@ If not specified the default <em>line_color</em> is black and the default
 <em>fill_color</em> is grey.
 
 <a name="rotation"></a>
-<DT><b>rotation</b> <em>angle</em> 
-<DD>Subsequent text and symbols will be drawn such that they are rotated 
+<dt><b>rotation</b> <em>angle</em> 
+<dd>Subsequent text and symbols will be drawn such that they are rotated 
 <em>angle</em> degrees counter-clockwise from east.
 
 <a name="icon"></a>
-<DT><b>icon</b> <em>type size x y</em> 
-<DD>Draws an icon of types <em>o</em>, <em>x</em>, or <em>+</em> 
+<dt><b>icon</b> <em>type size x y</em> 
+<dd>Draws an icon of types <em>o</em>, <em>x</em>, or <em>+</em> 
 with specified <em>size</em> (in %) at location <em>x,y</em>. 
 Note: type <em>o</em> designates a square.
-<BR>
+<br>
 
 <a name="width"></a>
-<DT><b>width</b> <em>value</em> 
-<DD>Subsequent lines (including non-FreeType text) will be drawn with
+<dt><b>width</b> <em>value</em> 
+<dd>Subsequent lines (including non-FreeType text) will be drawn with
 the given pixel thickness.
-<BR>The default value is 0.
+<br>The default value is 0.
 
-</DL>
+</dl>
 
 <h2>EXAMPLES</h2>
 

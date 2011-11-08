@@ -21,30 +21,30 @@ installation (OGR library), for details see
 
 <h2>EXAMPLES</h2>
 
-<b>SHAPE files</b><BR>
+<b>SHAPE files</b><br>
 <div class="code"><pre>
 v.external dsn=/home/user/shape_data layer=test_shape output=grass_map 
 </pre></div>
 
 <p>
-<b>MapInfo files</b><BR>
+<b>MapInfo files</b><br>
 <div class="code"><pre>
 v.external dsn=./ layer=mapinfo_test output=grass_map
 </pre></div>
 <p>
-<b>SDTS files</b> (you have to select the CATD file)<BR>
+<b>SDTS files</b> (you have to select the CATD file)<br>
 <div class="code"><pre>
 v.external dsn=CITXCATD.DDF output=cities
 </pre></div>
 
 <p>
-<b>TIGER files</b><BR>
+<b>TIGER files</b><br>
 <div class="code"><pre>
 v.external dsn=input/2000/56015/ layer=CompleteChain,PIP output=t56015_all
 </pre></div>
 
 <p>
-<b>PostGIS maps (area example)</b><BR>
+<b>PostGIS maps (area example)</b><br>
 <div class="code"><pre>
 v.external dsn="PG:host=localhost user=postgres dbname=postgis" layer=polymap \
 output=polygons

@@ -24,7 +24,7 @@ not specified will be set (automatically) to their default values.
 
 <h2>NOTES</h2>
 
-<H3>Menu Information:</H3> 
+<h3>Menu Information:</h3> 
 
 After the user has (optionally) specified menu colors and
 size, the program expects the user to enter information
@@ -40,66 +40,66 @@ when displayed.  The user <em>must</em> enter a menu TITLE
 and at least one menu option.
 All <tt>.dot</tt> commands are optional.
 
-<DL>
-<DT>
+<dl>
+<dt>
 <b>#</b>
-<DD>
+<dd>
 Comment line. (ignored)
 
-<DT>
+<dt>
 <b>.B</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's background color.
 
-<DT>
+<dt>
 <b>.C</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's text color. 
 
-<DT>
+<dt>
 <b>.D</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's dividing line color.
 
-<DT>
+<dt>
 <b>.F</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's font. May be any of the standard GRASS fonts.
 (see <em><a href="d.font.html">d.font</a></em>)
 
-<DT>
+<dt>
 <b>.S</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's font size.
 (as a percentage of the active frame's height). 
 
-<DT>
+<dt>
 <b>.T</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's distance from the active display frame's top edge 
 (as a percentage of the active frame's height). 
 
-<DT>
+<dt>
 <b>.L</b> <em>value</em> 
-<DD>
+<dd>
 Specifies the menu's distance from the active display frame's left edge 
 (as a percentage of the active frame's width). 
 
-<DT>
+<dt>
 <em>menu TITLE</em> 
-<DD>
+<dd>
 A TITLE that describes the type of options listed in the menu, 
 and that will appear at the top of the menu when it is displayed. 
 
-<DT>
+<dt>
 <em>option name</em>(s) 
-<DD>
+<dd>
 The options that will appear in the menu when displayed. 
 Each menu option should appear on a separate line. 
 The user may enter as many options as desired, but must enter at least 
 one menu option. 
 
-</DL>
+</dl>
 
 Note: The user should choose a menu size and location that will allow 
 all menu options to be displayed in the active frame. 
@@ -146,7 +146,7 @@ EOF
 
 echo "You have just chosen option $a"
 </pre></div>
-<BR>
+<br>
 
 <h3>Example 2</h3>
 
@@ -157,7 +157,7 @@ frame on the graphics monitor.  After the user selects an
 option from the display menu, the selection number is
 available for use by <em>menu2</em>.
 
-<H4>Contents of file <em>menu2</em>:</H4> 
+<h4>Contents of file <em>menu2</em>:</h4> 
 
 <div class="code"><PRE>
 #! /bin/csh -f
@@ -173,7 +173,7 @@ endif
 exit
 </PRE></div>
 
-<H4>Contents of file <em>color.select</em>:</H4> 
+<h4>Contents of file <em>color.select</em>:</h4> 
 
 <div class="code"><PRE>
 #! /bin/csh -f
