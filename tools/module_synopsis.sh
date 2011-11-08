@@ -217,10 +217,10 @@ cat << EOF > "${TMP}.html"
 -->
 
 <center>
-<H1>`g.version | cut -f1 -d'('` Command list</H1>
+<h1>`g.version | cut -f1 -d'('` Command list</h1>
 <h3>`date "+%e %B %Y"`</h3>
 </center>
-<BR><BR><BR>
+<br><br><br>
 
 <!--
 <i><font size="-1" color="#778877">
@@ -281,10 +281,10 @@ for SECTION in d db g i m ps r r3 v ; do
 
     cat << EOF >> "${TMP}.html"
 </ul>
-<BR>
+<br>
 
 <a name="$SECTION"></a>
-<H3>$SEC_NAME $SEC_TYPE:</H3>
+<h3>$SEC_NAME $SEC_TYPE:</h3>
 
 <ul>
 EOF
@@ -329,8 +329,8 @@ cat << EOF >> "${TMP}.html"
 &copy; 2007-2011 <a href="http://grass.osgeo.org">GRASS Development Team</a>
 </p>
 
-</BODY>
-</HTML>
+</body>
+</html>
 EOF
 
 \mv "${TMP}.html" "$GISBASE/docs/html/module_synopsis.html"

@@ -1,7 +1,7 @@
-<H3>
+<h3>
 This module is superseded and scheduled for demolition.
-<BR>Please use "<em><a href="d.graph.html">d.graph</a>
-<b>-m</b></em>" instead.</H3>
+<br>Please use "<em><a href="d.graph.html">d.graph</a>
+<b>-m</b></em>" instead.</h3>
 
 <h2>DESCRIPTION</h2>
 
@@ -49,15 +49,15 @@ displayed).
 <p>
 The graphics language is simple and uses the following commands: 
 
-<DL>
+<dl>
 
-<DT><b>#</b> <em>comment</em> 
+<dt><b>#</b> <em>comment</em> 
 
-<DD>A line of comment which is ignored in the processing. 
+<dd>A line of comment which is ignored in the processing. 
 
-<DT><b>move</b> <em>xpos ypos</em> 
+<dt><b>move</b> <em>xpos ypos</em> 
 
-<DD>The current location is updated to <em>xpos ypos</em>
+<dd>The current location is updated to <em>xpos ypos</em>
 (where these, respectively, are the easting and northing of
 geographic coordinates stated in the map coordinate system
 of the user's current GRASS location, falling within the
@@ -75,13 +75,13 @@ to obtain the coordinates of current location.  Use <em>
 map coordinates of various points on the raster map
 displayed in the active frame.
 
-<BR>
+<br>
 
 Note: there must be a space between <em>xpos</em> and <em>ypos</em>.
 
-<DT><b>draw</b> <em>xpos ypos</em> 
+<dt><b>draw</b> <em>xpos ypos</em> 
 
-<DD>A line is drawn in the current color from the current
+<dd>A line is drawn in the current color from the current
 location to the new location <em>xpos ypos</em>, which then
 becomes the current location.  <em>xpos</em> and
 <em>ypos</em> are (respectively) an easting and northing
@@ -93,9 +93,9 @@ geographic region and active frame.
 
 Note: there must be a space between <em>xpos</em> and <em>ypos</em>.
 
-<DT><b>color</b> <em>color</em> 
+<dt><b>color</b> <em>color</em> 
 
-<DD>Sets the current color to that stated. 
+<dd>Sets the current color to that stated. 
 Color options are: <em>red</em>, 
 <em>orange</em>, 
 <em>yellow</em>, 
@@ -111,37 +111,37 @@ Color options are: <em>red</em>,
 an R:G:B triplet (separated by colons),
 or the word "none" (draws in the default background color).
 
-<DT><b>size</b> <em>xper yper</em>
+<dt><b>size</b> <em>xper yper</em>
 
-<DD>Subsequent text will be drawn such that the text is
+<dd>Subsequent text will be drawn such that the text is
 <em>xper</em> percent of the display frame's width and
 <em>yper</em> percent of the display frame height.  If not
 specified by the user, the text size becomes 5 percent of
 the active frame's width and 5 percent of the frame's
 height.  This is equivalent to entering <b>size 5 5</b>.
 
-<DT><b>text</b> <em>line-of-text</em> 
+<dt><b>text</b> <em>line-of-text</em> 
 
-<DD>The stated text is drawn at the current location using
+<dd>The stated text is drawn at the current location using
 the current color and the current size.
 
-<DT><b>icon</b> <em>type size x y</em> 
+<dt><b>icon</b> <em>type size x y</em> 
 
-<DD>Draws an icon of types o, x, or + with specified size
+<dd>Draws an icon of types o, x, or + with specified size
 at location x,y.  Note: type o designates a square.
 
-<DT><b>polygon</b> <BR>
-<em> xpos ypos</em> <BR>
-<em> xpos ypos</em> <BR>
-. <BR>
-. <BR>
-. <BR>
+<dt><b>polygon</b> <br>
+<em> xpos ypos</em> <br>
+<em> xpos ypos</em> <br>
+. <br>
+. <br>
+. <br>
 
-<DD>The map coordinates appearing on lines beneath the word
+<dd>The map coordinates appearing on lines beneath the word
 <em>polygon</em>, one pair per line, circumscribe a
 polygon which is to be filled with the current color.
 
-</DL>
+</dl>
 
 <h2>NOTES</h2>
 
@@ -172,10 +172,10 @@ Draw some text in the center of the display:
 
 <h2>SEE ALSO</h2>
 
-<em><a href="d.frame.html">d.frame</a></em><BR>
-<em><a href="d.graph.html">d.graph</a></em><BR>
-<em><a href="d.rast.html">d.rast</a></em><BR>
-<em><a href="d.zoom.html">d.zoom</a></em><BR>
+<em><a href="d.frame.html">d.frame</a></em><br>
+<em><a href="d.graph.html">d.graph</a></em><br>
+<em><a href="d.rast.html">d.rast</a></em><br>
+<em><a href="d.zoom.html">d.zoom</a></em><br>
 <em><a href="g.region.html">g.region</a></em>
 
 <h2>AUTHOR</h2>

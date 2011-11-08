@@ -1,19 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<HTML>
-<HEAD>
- <META name="Author" content="Markus Neteler/GRASS Development Team">
- <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <TITLE>GRASS Quickstart</TITLE>
+<html>
+<head>
+ <meta name="Author" content="Markus Neteler/GRASS Development Team">
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+ <title>GRASS Quickstart</title>
  <link rel="stylesheet" href="grassdocs.css" type="text/css">
-</HEAD>
-<BODY bgcolor="#ffffff">
+</head>
+<body bgcolor="#ffffff">
 
 <img src="grass_logo.png" alt="GRASS logo"><hr align=center size=6 noshade>
 
 <!-- stored in SVN in: lib/init/helptext.html -->
 
 <!-- meta page description: GRASS Quickstart -->
-<H1>GRASS Quickstart</H1>
+<h1>GRASS Quickstart</h1>
 
 <h2>Geographic Resources Analysis Support System</h2>
 
@@ -27,9 +27,9 @@ and environmental consulting companies.
 <h2>1. Startup of GRASS GIS</h2>
 
 <p>
-&nbsp;&nbsp;&nbsp;<IMG SRC="grass_start.png" ALT="[GRASS start screen]">
+&nbsp;&nbsp;&nbsp;<img src="grass_start.png" alt="[GRASS start screen]">
 
-<h3><IMG SRC="circle_1.png" ALT="[(1)]">&nbsp;Selecting the GIS Database directory</h3>
+<h3><img src="circle_1.png" alt="[(1)]">&nbsp;Selecting the GIS Database directory</h3>
 
 GRASS data are stored in a directory referred to as DATABASE
 (also called "GISDBASE").  This directory has to be created
@@ -37,7 +37,7 @@ with a file manager or the <tt>mkdir</tt> command, before starting to work
 with GRASS.  Within this DATABASE, the projects are organized
 by project areas stored in subdirectories called LOCATIONs.
 
-<h3><IMG SRC="circle_2.png" ALT="[(2)]">&nbsp;Selecting the LOCATION (a project)</h3>
+<h3><img src="circle_2.png" alt="[(2)]">&nbsp;Selecting the LOCATION (a project)</h3>
 
 A LOCATION is defined by its coordinate system, map projection and
 geographical boundaries. The subdirectories and files defining a
@@ -45,18 +45,18 @@ LOCATION are created automatically when GRASS is started the first
 time with a new LOCATION. It is important to understand that each
 projection stays in its own LOCATION.
 <p>
-See <IMG SRC="circle_4.png" ALT="[(4)]">&nbsp; the "Location Wizard" to
+See <img src="circle_4.png" alt="[(4)]">&nbsp; the "Location Wizard" to
 easily create a new LOCATION from scratch from a geocoded file, by
 defining the parameters or by selecting the corresponding EPSG projection
 code.
 
-<h3><IMG SRC="circle_3.png" ALT="[(3)]">&nbsp;Selecting the MAPSET (a subproject)</h3>
+<h3><img src="circle_3.png" alt="[(3)]">&nbsp;Selecting the MAPSET (a subproject)</h3>
 
 Each LOCATION can have many MAPSETs. Each MAPSET is a LOCATION's
 subdirectory. New MAPSET can be added at GRASS startup (see related
 button).
 
-<h3><IMG SRC="circle_4.png" ALT="[(4)]">&nbsp;Location Wizard</h3>
+<h3><img src="circle_4.png" alt="[(4)]">&nbsp;Location Wizard</h3>
 
 The "Location Wizard" let's you easily create a new LOCATION. You
 will be guided through a series of dialogues to browse and select
@@ -64,7 +64,7 @@ predefined projections (also via EPSG code) or to define individual
 projections. Find below some rules to define the default raster
 resolution for a new LOCATION.
 
-<h3><IMG SRC="circle_5.png" ALT="[(5)]">&nbsp;Start GRASS</h3>
+<h3><img src="circle_5.png" alt="[(5)]">&nbsp;Start GRASS</h3>
 
 Once you have selected an existing LOCATION/MAPSET or defined a new
 one, you can enter GRASS. The graphical user interface 
@@ -75,8 +75,8 @@ menu system, map visualization tool, digitizer, and more.
 <h2>2. Background GRASS Location structure</h2>
 
 <p>
-&nbsp;&nbsp;&nbsp;<IMG SRC="help_loc_struct.png" ALT="[GRASS Location structure]">
-<BR>
+&nbsp;&nbsp;&nbsp;<img src="help_loc_struct.png" alt="[GRASS Location structure]">
+<br>
 <i>Fig. 1: GRASS Location structure</i>
 <p>
 
@@ -123,13 +123,13 @@ have the option of switching back to the default region at any time.
 
 To create the GRASS database:
 
-<OL>
-<LI> Find a place on your disk where you have write access and that
-    has enough diskspace to hold your spatial data.</LI>
-<LI> Create a subdirectory that will hold the general GRASS database
+<ol>
+<li> Find a place on your disk where you have write access and that
+    has enough diskspace to hold your spatial data.</li>
+<li> Create a subdirectory that will hold the general GRASS database
     (e.g. using a file manager or with <tt>mkdir /data/grassdata</tt> or 
-    <tt>mkdir /home/yourlogin/grassdata</tt>).</LI>
-</OL>
+    <tt>mkdir /home/yourlogin/grassdata</tt>).</li>
+</ol>
 
 <p>
 Sample data such as the "Spearfish" or the "North Carolina" sample datasets
@@ -159,32 +159,32 @@ Next you will need to assign parameters to the location such
 as the coordinate system and datum you want to use, the project area's
 boundary coordinates, and the default resolution for raster data:
 
-<UL>
-<LI> Start by chosing between, X,Y, Latitude-Longitude, UTM, or
+<ul>
+<li> Start by chosing between, X,Y, Latitude-Longitude, UTM, or
    "other" coordinate system. This choice depends on your data and the
-   use you will make of it.</LI>
-<LI> You are then prompted for a single line of text describing the 
-   project area, for example "Topo Map of the Alps".</LI>
-</UL>
+   use you will make of it.</li>
+<li> You are then prompted for a single line of text describing the 
+   project area, for example "Topo Map of the Alps".</li>
+</ul>
 
 <p>
 Next you are requested for some more information about the projection.
 Note that the prompts vary from projection to projection, an example follows:
 
-<UL>
-<LI> (if you chose "D - Other Projection") "specify projection name": 
+<ul>
+<li> (if you chose "D - Other Projection") "specify projection name": 
   "list" gives you the list of all available projections, examples are 
   "tmerc" for Transverse Mercator, "lcc" for Lambert Conformal Conic,
   "moll" for Mollweide, etc.
-<LI> specify datum name: again use "list" to get a list of available 
+<li> specify datum name: again use "list" to get a list of available 
   datums, examples are "wgs84", "nad27", "eur79",  etc.
-<LI> Enter Central Parallel: 0 if you want the Equator as the
+<li> Enter Central Parallel: 0 if you want the Equator as the
   central parallel
-<LI> Enter Central Meridian: 0 if you want the Greenwich meridian as
+<li> Enter Central Meridian: 0 if you want the Greenwich meridian as
   central meridian
-<LI> Enter Scale Factor at the Central Meridian
-<LI> Enter plural form of map units: for example, meters
-</UL>
+<li> Enter Scale Factor at the Central Meridian
+<li> Enter plural form of map units: for example, meters
+</ul>
 
 <p>
 The next step is the description of the project area's boundary coordinates
@@ -222,8 +222,8 @@ Please have a look at the GRASS web site for tutorials and books:
 <a href="grass6.html">GRASS 6 launch manual page</a>
 
 <p><i>Last changed: $Date$</i>
-<HR>
+<hr>
 <p><a href=index.html>Help Index</a>
-<p>&copy; 2005-2010 <a href="http://grass.osgeo.org">GRASS Development Team</a></P>
-</BODY>
-</HTML>
+<p>&copy; 2005-2010 <a href="http://grass.osgeo.org">GRASS Development Team</a>
+</body>
+</html>

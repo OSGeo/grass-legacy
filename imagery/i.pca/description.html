@@ -15,31 +15,31 @@ min,max range.
 
 <h2>OPTIONS</h2>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><b>input=</b><em>name,name</em>[<em>,name,name</em>,...] 
-<DD>Name of two or more input raster map layers.
+<h3>Parameters:</h3>
+<dl>
+<dt><b>input=</b><em>name,name</em>[<em>,name,name</em>,...] 
+<dd>Name of two or more input raster map layers.
 
-<DT><b>output=</b><em>name</em> 
-<DD>The output raster map layer name to which suffixes are
+<dt><b>output=</b><em>name</em> 
+<dd>The output raster map layer name to which suffixes are
 added.  Each output raster map layer is assigned this
 user-specified <em>name</em> with a numerical (.1, .2, ...
 .n) suffix.
 
-<DT><b>rescale=</b><em>min,max</em> 
-<DD>The optional output category range. (Default: 0,255) If
+<dt><b>rescale=</b><em>min,max</em> 
+<dd>The optional output category range. (Default: 0,255) If
 rescale=0,0,  no rescaling is performed on output files.
 
-<DD>If output is rescaled, the output raster will be of type CELL. If 
+<dd>If output is rescaled, the output raster will be of type CELL. If 
 the output is not rescaled, the output raster will be of type DCELL.
 
-<DT><B>-n</B> <EM>normalize input raster maps</EM>
-<DD>By default, the values of the input raster maps are centered for each
+<dt><B>-n</B> <EM>normalize input raster maps</EM>
+<dd>By default, the values of the input raster maps are centered for each
 map separately with <EM>x - mean</EM>. With <EM>-n</EM>, the input raster
 maps are normalized for each map separately with <EM>(x - mean) / stddev</EM>.
 Normalizing is highly recommended when the input raster maps have different
 units, e.g. represent different environmental parameters.
-</DL>
+</dl>
 
 
 <h2>NOTES</h2>
