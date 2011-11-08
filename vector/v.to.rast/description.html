@@ -20,15 +20,15 @@ specified alone when using the <em>dir</em> option.
 <p>
 <em><b>use</b></em> options are:
 <ul>
-<LI>
+<li>
 <em>attr</em> - read values from attribute table (default)
-<LI>
+<li>
 <em>cat</em>  - read values from category
-<LI>
+<li>
 <em>val</em>  - use value specified by <em><b>value</b></em> option
-<LI>
+<li>
 <em>z</em>    - use z coordinate (points or contours only)
-<LI>
+<li>
 <em>dir</em>  - output as flow direction in degrees (lines only)
 </ul>
 <p>
@@ -42,15 +42,15 @@ been assigned category/attribute labels (e.g., through use of
 <p>
 Otherwise:
 <ul>
-<LI>
+<li>
 Labeled areas and/or centroids will produce filled raster coverages with edges 
 that straddle the original area boundary <b>as long as the boundary is NOT 
 labeled</b>.
-<BR>(Use <tt>v.category option=del type=boundary</tt> to remove.)
-<LI>
+<br>(Use <tt>v.category option=del type=boundary</tt> to remove.)
+<li>
 Labeled lines and boundaries will produce lines of raster cells which touch the 
 original vector line. This tends to be more aggressive than area-only conversions.
-<LI>
+<li>
 Points and orphaned centroids will be converted into single cells on the
 resultant raster map.
 </ul>
@@ -83,7 +83,7 @@ v.to.rast in=vect_map out=raster_map col=SPEED
 <div class="code"><pre>
 v.to.rast in=streams out=streamsdir use=dir
 </pre></div>
-</p>
+
 
 <p>
 <p>
@@ -92,7 +92,7 @@ v.to.rast in=streams out=streamsdir use=dir
 v.to.rast in=fields out=myfields use=attr col=cat labelcol=label
 r.category myfields
 </pre></div>
-</p>
+
 
 <h2>SEE ALSO</h2>
 <em>
@@ -113,5 +113,5 @@ GRASS 6.3 code cleanup and label support: Brad Douglas
 <p>
 <p>
 <i>Last changed: $Date$</i>
-</p>
+
 

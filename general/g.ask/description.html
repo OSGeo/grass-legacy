@@ -12,70 +12,70 @@ specified by <em>unixfile</em>.
 <!-- unused
 <h2>OPTIONS</h2>
 
-<H3>Parameters:</H3>
+<h3>Parameters:</h3>
 
 
-<DL>
+<dl>
 
 
-<DT><b>type=</b><em>name</em> 
+<dt><b>type=</b><em>name</em> 
 
-<DD>The type of query.  Options for <em>name</em> are 
+<dd>The type of query.  Options for <em>name</em> are 
 <em>old</em>, <em>new</em>,
 <em>any</em>, and <em>mapset</em>;  their functions are given below.
 "New", "any", and "mapset" only look in the user's current mapset.
 
-<DL>
-<DD>
-<DT><b>old</b>
-<DD>For existing data files anywhere in the user's mapset search path.
+<dl>
+<dd>
+<dt><b>old</b>
+<dd>For existing data files anywhere in the user's mapset search path.
 
-<DT><b>new</b> 
+<dt><b>new</b> 
 
-<DD>Used to create a new file in the current mapset, which must not
+<dd>Used to create a new file in the current mapset, which must not
 already exist there (if a file with this name exists there,
 it will not be overwritten).
 
-<DT><b>any</b> 
+<dt><b>any</b> 
 
-<DD>Creates a file in the current mapset, which may or may not
+<dd>Creates a file in the current mapset, which may or may not
 already exist there.  If a file with this name exists in the
 current mapset, it will be overwritten;
 if not, a new file with this name will be created.
 
-<DT><b>mapset</b> 
+<dt><b>mapset</b> 
 
-<DD>For files that must exist in the current mapset
+<dd>For files that must exist in the current mapset
 The shell write wants the name of a file which exists
 in the user's current mapset.  This type would
 used instead of "old" if the file is to be modified.
-</DL>
+</dl>
 
-<DT><b>prompt=</b>"<em>string</em>" 
+<dt><b>prompt=</b>"<em>string</em>" 
 
-<DD>The prompt to be displayed to the user.  If more than
+<dd>The prompt to be displayed to the user.  If more than
 one word, the prompt should be enclosed within double
 quotes ("").
 
-<DT><b>element=</b><em>name</em> 
+<dt><b>element=</b><em>name</em> 
 
-<DD>The name of the GRASS data base element (i.e.,
+<dd>The name of the GRASS data base element (i.e.,
 directory under a GRASS mapset) whose files are to be
 queried.
 
-<DT><b>desc=</b>"<em>string</em>" 
+<dt><b>desc=</b>"<em>string</em>" 
 
-<DD>A short description of the data base element which is
+<dd>A short description of the data base element which is
 meaningful to the user.  If description contains more than
 one word, it should be enclosed within double quotes ("").
 
-<DT><b>unixfile=</b><em>name</em> 
+<dt><b>unixfile=</b><em>name</em> 
 
-<DD>The name of a UNIX file to store the user's response.
+<dd>The name of a UNIX file to store the user's response.
 See next section for what is written to this file and how
 it can be used by shell scripts.
 
-</DL>
+</dl>
 -->
 
 <h2>OUTPUT</h2>
@@ -107,10 +107,10 @@ it, and <em>file</em> to the full UNIX path name
 identifying this file.  These variables may be set in the
 <em>/bin/sh</em> as follows:
 
-<DL>
-<DD>
+<dl>
+<dd>
 <b>. unixfile</b>
-</DL>
+</dl>
 
 
 <p>

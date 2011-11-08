@@ -4,112 +4,112 @@
 <em>d.text.freetype</em>
 draws text in the graphics monitor's active display frame using TrueType
 fonts already installed on the user's system.
-<BR>
+<br>
 
 
-<H3>Parameter Notes:</H3>
+<h3>Parameter Notes:</h3>
 
-<DL>
+<dl>
 
-<DT><b>at=</b><em>x,y</em>
-<DD>Locates the text at this screen position (percentage, [0,0] is bottom
+<dt><b>at=</b><em>x,y</em>
+<dd>Locates the text at this screen position (percentage, [0,0] is bottom
     left). If this option is omitted, 
     the user will be prompted to use the mouse to specify the location.
-<DT><b>font=</b><em>name</em>
-<DD>Specifies a font listed in the GRASS 'freetypecap' definition file.
+<dt><b>font=</b><em>name</em>
+<dd>Specifies a font listed in the GRASS 'freetypecap' definition file.
 
-<DT><b>charset=</b><em>name</em>
-<DD>Sets character encoding for input <b>text</b>. (e.g. <TT>ISO-8859-1</TT>)
+<dt><b>charset=</b><em>name</em>
+<dd>Sets character encoding for input <b>text</b>. (e.g. <TT>ISO-8859-1</TT>)
 
-<DT><b>color=</b><em>name</em>
-<DD>Sets text color to <em>name</em> or <em>R:G:B triplet</em>.
+<dt><b>color=</b><em>name</em>
+<dd>Sets text color to <em>name</em> or <em>R:G:B triplet</em>.
 	It can also be a hexadecimal value of <TT>0xRRGGBB</TT>
-	(deprecated).<BR>
+	(deprecated).<br>
     Options: red, orange, yellow, green, blue, indigo, 
-    violet, gray, white, and black<BR>
-    Default: <em>gray</em><BR>
+    violet, gray, white, and black<br>
+    Default: <em>gray</em><br>
 
-<DT><b>size=</b><em>value</em>
-<DD>Sets text height in percent of available frame height.<BR>
+<dt><b>size=</b><em>value</em>
+<dd>Sets text height in percent of available frame height.<br>
     Default: 10
 
-<DT><b>align=</b><em>name</em>
-<DD>Aligns text in this way.<BR>
-    Options: ll, lc, lr, cl, cc, cr, ul, uc, ur<BR>
-    l?: Lower, c?: Vertically Centered, u?: Upper,<BR>
-    ?l: Left, ?c: Horizontally Centered, ?r: Right<BR>
-    Default: <em>ll</em> (Lower Left)<BR>
+<dt><b>align=</b><em>name</em>
+<dd>Aligns text in this way.<br>
+    Options: ll, lc, lr, cl, cc, cr, ul, uc, ur<br>
+    l?: Lower, c?: Vertically Centered, u?: Upper,<br>
+    ?l: Left, ?c: Horizontally Centered, ?r: Right<br>
+    Default: <em>ll</em> (Lower Left)<br>
 
-</DL>
+</dl>
 
 
-<H3>Command mode:</H3>
+<h3>Command mode:</h3>
 
-<H4>Key</H4>
-<DL>
-<DT>{REQUIRED}
-<DD>
-<DT>[OPTIONAL]
-<DD>
-<DT>THIS|orTHAT
-<DD>
-<DT>+, - 
-<DD>Relative value
-<DT>r, %, p
-<DD>Radian, Percentage, and Pixels respectively
-</DL>
+<h4>Key</h4>
+<dl>
+<dt>{REQUIRED}
+<dd>
+<dt>[OPTIONAL]
+<dd>
+<dt>THIS|orTHAT
+<dd>
+<dt>+, - 
+<dd>Relative value
+<dt>r, %, p
+<dd>Radian, Percentage, and Pixels respectively
+</dl>
 
-<H4>Commands</H4>
+<h4>Commands</h4>
 
-<DL>
-<DT><DD>.F {font|path}[:charset] <em>font</em>
-<DD>
-<DT><DD>.C {color_name|R:G:B} <em>color</em> (default: gray)
-<DD>
-<DT><DD>.S [+|-]size[p] <em>size</em> (default: 5)
-<DD>
-<DT><DD>.B {0|1} <em>bold</em> (default: 0)
-<DD>
-<DT><DD>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <em>align</em> (default: ll)
-<DD>
-<DT><DD>.R [+|-]rotation[r] <em>rotation</em> (default: 0)
-<DD>
-<DT><DD>.I linespacing <em>linespacing</em> (default: 1.1)
-<DD>
-<DT><DD>.X [+|-]x[%|p] <em>x-coord</em>
-<DD>
-<DT><DD>.Y [+|-]y[%|p] <em>y-coord</em>
-<DD>
-<DT><DD>.L {0|1} <em>linefeed</em> (default: 1)
-<DD>
-<DT><DD>.E [+|-]east[%|p] <em>x-origin</em>
-<DD>
-<DT><DD>.N [+|-]north[%|p] <em>y-origin</em>
-<DD>
-<DT><DD>.. <em>dot</em>
-<DD>
-</DL>
+<dl>
+<dt><dd>.F {font|path}[:charset] <em>font</em>
+<dd>
+<dt><dd>.C {color_name|R:G:B} <em>color</em> (default: gray)
+<dd>
+<dt><dd>.S [+|-]size[p] <em>size</em> (default: 5)
+<dd>
+<dt><dd>.B {0|1} <em>bold</em> (default: 0)
+<dd>
+<dt><dd>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <em>align</em> (default: ll)
+<dd>
+<dt><dd>.R [+|-]rotation[r] <em>rotation</em> (default: 0)
+<dd>
+<dt><dd>.I linespacing <em>linespacing</em> (default: 1.1)
+<dd>
+<dt><dd>.X [+|-]x[%|p] <em>x-coord</em>
+<dd>
+<dt><dd>.Y [+|-]y[%|p] <em>y-coord</em>
+<dd>
+<dt><dd>.L {0|1} <em>linefeed</em> (default: 1)
+<dd>
+<dt><dd>.E [+|-]east[%|p] <em>x-origin</em>
+<dd>
+<dt><dd>.N [+|-]north[%|p] <em>y-origin</em>
+<dd>
+<dt><dd>.. <em>dot</em>
+<dd>
+</dl>
 
 To end input, press Ctrl-d on a blank line.
-<BR><BR>
+<br><br>
 
 <h2>EXAMPLES</h2>
 
-<H4>Standard mode:</H4>
+<h4>Standard mode:</h4>
 
-<TT><b>d.text.freetype</b> text="GRASS GIS" -g at=2107055,5603133 \<BR>
+<TT><b>d.text.freetype</b> text="GRASS GIS" -g at=2107055,5603133 \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size=7 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf</TT>
 <p>
 
-<H4>Command mode:</H4>
+<h4>Command mode:</h4>
 The following example prints three lines: "<TT><font color=gray>GRASS</font>
  <font color=red>d.text.freetype</font> <font color=gray>output</font></TT>",
 "<TT><font color=gray>See test.input file</font></TT>", and 
 "<TT><font color=gray>for more details.</font></TT>".
 
-<DL>
-<DT><TT><b>d.text.freetype -c</b></TT>
-</DL>
+<dl>
+<dt><TT><b>d.text.freetype -c</b></TT>
+</dl>
 <pre>.F /usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:ISO-8859-1
 .S 20p
 .L 0
@@ -123,7 +123,7 @@ See test.input file
 for more details.
 </pre>
 
-Command mode instructions may also be read directly from a text file:<BR><BR>
+Command mode instructions may also be read directly from a text file:<br><br>
 <TT><b>d.text.freetype</b> -c &lt; test.input</TT>
 
 
@@ -138,7 +138,7 @@ To help users select fonts conveniently, the definition file,
 </PRE>
 
 See the file for examples.
-<BR><BR>
+<br><br>
 
 <h2>SEE ALSO</h2>
 
@@ -147,7 +147,7 @@ See the file for examples.
 <em><a href="d.font.html">d.font</a></em><br>
 <em><a href="d.title.html">d.title</a></em><br>
 <em><a href="d.where.html">d.where</a></em><br>
-<BR><BR>
+<br><br>
 
 <h2>AUTHOR</h2>
 

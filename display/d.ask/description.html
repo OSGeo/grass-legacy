@@ -10,14 +10,14 @@ listed file names with the mouse. Specifically, the query that appears
 to the user takes the form: 
 
 <p>
-<DL>
-<DD> <b>Double</b> click on the <em>prompt</em> "message"
-<DD> <b>Double</b> click here to cancel
+<dl>
+<dd> <b>Double</b> click on the <em>prompt</em> "message"
+<dd> <b>Double</b> click here to cancel
 <p>
-<DD> (A list of files of the specified <em>element</em> type from each 
+<dd> (A list of files of the specified <em>element</em> type from each 
      of the mapsets listed in the user's mapset search path is also 
      displayed.) 
-</DL>
+</dl>
 
 <p>
 
@@ -27,18 +27,18 @@ the displayed menu is erased from the screen
 Three lines are written to standard output (the user's terminal screen): 
 
 <p>
-<DL>
-<DD><b>name=</b><em>file_name</em>
-<DD><b>mapset=</b><em>mapset_name</em>
-<DD><b>fullname=</b><em>file_name@mapset_name</em>
-</DL>
+<dl>
+<dd><b>name=</b><em>file_name</em>
+<dd><b>mapset=</b><em>mapset_name</em>
+<dd><b>fullname=</b><em>file_name@mapset_name</em>
+</dl>
 <p>
 
-<H3>Parameters:</H3>
+<h3>Parameters:</h3>
 
-<DL>
-<DT><b>element=</b><em>name,description</em>
-<DD>Name of a GRASS data base element, followed by a one word description of the 
+<dl>
+<dt><b>element=</b><em>name,description</em>
+<dd>Name of a GRASS data base element, followed by a one word description of the 
 element. GRASS data base elements are mapset subdirectories; these include: 
 bdlg, cats, cell, cell_misc, cellhd, colr, colr2, dig, dig_ascii, dig_att, 
 dig_cats, dig_plus, dlg, group, hist, icons, noise, paint, site_lists, and 
@@ -49,25 +49,25 @@ The prompt "<em>message</em>" will appear in the pop-up menu displayed on the
 user's graphics monitor. The files listed in the menu will be of the 
 specified <em>element</em> type, and exist in mapsets listed in the user's 
 current mapset search path. 
-<DT><b>prompt=</b>"<em>message</em>"
-<DD>A brief message with which the user will be prompted. 
+<dt><b>prompt=</b>"<em>message</em>"
+<dd>A brief message with which the user will be prompted. 
 If this message contains more than one word, it should be 
 enclosed within double quotes (""). 
 It is a non-selectable message displayed in the menu bar of a pop-up menu. 
 Selectable items in the displayed menu include a cancel option and any of the 
 files in the mapset subdirectory <em>name</em> in the user's mapset search path. 
-</DL>
+</dl>
 
 <h2>EXAMPLE</h2>
 
 Given the following input, 
 
 <p>
-<DL>
-<DD>
+<dl>
+<dd>
 <b>d.ask element=</b>cell,raster <b>prompt=</b>"raster map layer to 
 be used"
-</DL>
+</dl>
 
 <p>
 <em>d.ask</em> will prompt the user to select a raster (cell) file from among 
@@ -76,10 +76,10 @@ mapset search path. A pop-up menu will be displayed on the user's graphics
 monitor, containing the prompt: 
 
 <p>
-<DL>
-<DD> <b>Double</b> click on the <em>raster</em> map layer to be used
-<DD> <b>Double</b> click here to cancel
-</DL>
+<dl>
+<dd> <b>Double</b> click on the <em>raster</em> map layer to be used
+<dd> <b>Double</b> click here to cancel
+</dl>
 
 <h2>OUTPUT</h2>
 
@@ -87,11 +87,11 @@ If the user selects a file name from the displayed menu,
 <em>d.ask</em> writes three lines to standard output: 
 
 <p>
-<DL>
-<DD> <b>name=</b><em>file_name</em> 
-<DD> <b>mapset=</b><em>mapset_name</em> 
-<DD> <b>fullname=</b><em>file_name@mapset_name</em> 
-</DL>
+<dl>
+<dd> <b>name=</b><em>file_name</em> 
+<dd> <b>mapset=</b><em>mapset_name</em> 
+<dd> <b>fullname=</b><em>file_name@mapset_name</em> 
+</dl>
 
 <p>
 The output is in the form of /bin/sh commands to set the variable 
@@ -115,10 +115,10 @@ current mapset search path, the mouse is activated and the following message
 is displayed on the user's graphics monitor: 
 
 <p>
-<DL>
-<DD> <b>No <em>element</em> description files found</b> 
-<DD> <b>Click here to continue</b> 
-</DL>
+<dl>
+<dd> <b>No <em>element</em> description files found</b> 
+<dd> <b>Click here to continue</b> 
+</dl>
 
 <p>
 

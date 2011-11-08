@@ -30,13 +30,13 @@ status frame on the right.
 
 The mouse-button menu initially offers you three options: 
 
-<DL>
-<DD>
-Mouse Buttons: <BR>
-Left: Where am I? <BR>
-Middle: Mark FIRST Point of Profile Line. <BR>
-Right: QUIT this. <BR>
-</DL>
+<dl>
+<dd>
+Mouse Buttons: <br>
+Left: Where am I? <br>
+Middle: Mark FIRST Point of Profile Line. <br>
+Right: QUIT this. <br>
+</dl>
 
 You may query the displayed raster map layer by indicating
 points with the left mouse-button. The coordinates and
@@ -45,13 +45,13 @@ displayed on in the status frame.  If you mark the first
 point of the profile line you will be presented with the
 following mouse-button menu:
 
-<DL>
-<DD>
-Mouse Buttons: <BR>
-Left: Where am I? <BR>
-Middle: Mark SECOND Point of Profile Line. <BR>
-Right: QUIT this. <BR>
-</DL>
+<dl>
+<dd>
+Mouse Buttons: <br>
+Left: Where am I? <br>
+Middle: Mark SECOND Point of Profile Line. <br>
+Right: QUIT this. <br>
+</dl>
 
 Once you mark the second point of the profile line, the
 profile line will be labeled (with a letter from A to D)
@@ -59,13 +59,13 @@ and displayed in one of the four display frames on the
 right hand side of the screen. You will then be presented
 with a third mouse-button menu:
 
-<DL>
-<DD>
-Mouse Buttons: <BR>
-Left: DO ANOTHER <BR>
-Middle: CLEAR DISPLAY <BR>
-Right: QUIT this. <BR>
-</DL>
+<dl>
+<dd>
+Mouse Buttons: <br>
+Left: DO ANOTHER <br>
+Middle: CLEAR DISPLAY <br>
+Right: QUIT this. <br>
+</dl>
 
 If you would like to view another profile, click on the
 left mouse-button.  If you would like to redisplay the
@@ -132,23 +132,23 @@ This may not always be the case, but it is at the time of this writing.
 
 Useful enhancements to <em>d.profile</em> would include: 
 
-<UL>
+</ul>
 
-<LI>Adding an option to display profiles using category
+<li>Adding an option to display profiles using category
 colors, like a bar-chart.
 
-<LI>Allowing profile lines to be defined by a series of
+<li>Allowing profile lines to be defined by a series of
 points, not just two.
 
-<LI>Allowing profiles to be saved in a file, for later
+<li>Allowing profiles to be saved in a file, for later
 viewing by GRASS.
 
-<LI>Allowing the user to enter profile line points by
+<li>Allowing the user to enter profile line points by
 typing coordinates.
 
-</UL>
+</ul>
 
-<H3>Perl Script to convert output to a site_list</H3>
+<h3>Perl Script to convert output to a site_list</h3>
 
 The script below will convert the <b>plotfile</b> output to the site_list format.
 It probably won't work 100% for lat/lon datasets.
@@ -156,24 +156,24 @@ It probably won't work 100% for lat/lon datasets.
 <p>
 
 <TT>
-<b>#! /usr/bin/perl -w</b><BR>
+<b>#! /usr/bin/perl -w</b><br>
 # prof2sites.pl: converts the output of d.profile to a site_list
-<BR><BR>
+<br><br>
 <b>my</b> (<em>$dist</em>, <em>$elev</em>, <em>$east</em>, <em>$north</em>);
-<BR><BR>
-<b>while</b> (&lt;<b>STDIN</b>&gt;)<BR>
-{<BR>
-&nbsp;&nbsp;<b>if</b> (m/^#/)<BR>
-&nbsp;&nbsp;{<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$_</em>";<BR>
-&nbsp;&nbsp;}<BR>
-&nbsp;&nbsp;<b>else</b><BR>
-&nbsp;&nbsp;{<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<b>chomp</b>;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;(<em>$dist</em>, <em>$elev</em>, <em>$east</em>, <em>$north</em>) = <b>split</b> / /;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$east</em>|<em>$north</em>|<em>$elev</em>|#1 \%<em>$dist</em> \@Profile\n";<BR>
-&nbsp;&nbsp;}<BR>
-}<BR>
+<br><br>
+<b>while</b> (&lt;<b>STDIN</b>&gt;)<br>
+{<br>
+&nbsp;&nbsp;<b>if</b> (m/^#/)<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$_</em>";<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<b>else</b><br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>chomp</b>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<em>$dist</em>, <em>$elev</em>, <em>$east</em>, <em>$north</em>) = <b>split</b> / /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$east</em>|<em>$north</em>|<em>$elev</em>|#1 \%<em>$dist</em> \@Profile\n";<br>
+&nbsp;&nbsp;}<br>
+}<br>
 </TT>
 
 <h2>BUGS</h2>
@@ -183,8 +183,8 @@ None known.
 <h2>AUTHOR</h2>
 
 Dave Johnson
-<BR> DBA Systems, Inc. <BR>
-10560 Arrowhead Drive <BR>
+<br> DBA Systems, Inc. <br>
+10560 Arrowhead Drive <br>
 Fairfax, Virginia 22030
 
 <p>

@@ -126,10 +126,10 @@ number of points required.
 
 <h3>Linear affine transformation (1st order transformation)</h3>
 
-<DL>
-	<DD> x' = ax + by +c
-	<DD> y' = Ax + Bt +C
-</DL>
+<dl>
+	<dd> x' = ax + by +c
+	<dd> y' = Ax + Bt +C
+</dl>
 
 The a,b,c,A,B,C are determined by least squares regression
 based on the control points entered.  This transformation
@@ -141,7 +141,7 @@ images, and (2) the terrain or camera distortion effect can
 be ignored.
 
 
-<H3>Polynomial Transformation Matrix (2nd, 3d order transformation)</H3>
+<h3>Polynomial Transformation Matrix (2nd, 3d order transformation)</h3>
 
 The ANALYZE function has been changed to support
 calculating the registration coefficients using a first,
@@ -149,9 +149,9 @@ second, or third order transformation matrix.  The number
 of control points required for a selected order of
 transformation (represented by n) is
 
-<DL>
-<DD>((n + 1) * (n + 2) / 2) 
-</DL>
+<dl>
+<dd>((n + 1) * (n + 2) / 2) 
+</dl>
 
 or 3, 6, and 10 respectively. It is strongly recommended
 that one or more additional points be identified to allow
@@ -196,7 +196,7 @@ If nearest neighbor assignment is used, the output map has the same raster
 format as the input map. If any of the other interpolations is used, the
 output map is written as floating point.
 
-<H3>Program Execution</H3>
+<h3>Program Execution</h3>
 
 Note:  The rectified image or rectified raster maps will be
 located in the target LOCATION when the program is

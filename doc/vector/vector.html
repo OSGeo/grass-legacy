@@ -1,9 +1,9 @@
-<HEAD>
-<TITLE>GRASS 5.7/6 Vector Format and API</TITLE>
-</HEAD>
-<BODY>
+<head>
+<title>GRASS 5.7/6 Vector Format and API</title>
+</head>
+<body>
 <p>
-<H1>GRASS 5.7/6 Vector Format and API</H1>
+<h1>GRASS 5.7/6 Vector Format and API</h1>
 
 The API is described in
 <p>
@@ -13,7 +13,7 @@ The API is described in
 source code file:<br>
 lib/vector/vectorlib.dox
 
-<HR>
+<hr>
 
 <h2><A NAME="ascii">Vector ASCII Format Specification</a></h2>
 <p>
@@ -27,9 +27,9 @@ z-coordinates, and the new types centroid, face, and kernel.
 Points and centroids are saved as one coordinate pair instead of two.
 File is saved in old dig_ascii directory but the name will be probably changed.
 
-<H3>Head</H3>
+<h3>Head</h3>
 The head of the file is similar as the head file of vector binary
-format but contains bounding box also. Key words are:<BR>
+format but contains bounding box also. Key words are:<br>
 <PRE>
 ORGANIZATION
 DIGIT DATE
@@ -46,7 +46,7 @@ NORTH EDGE
 MAP THRESH
 </PRE>
 
-<H3>Body</H3>
+<h3>Body</h3>
 The body begins with the row:
 <PRE>
 VERTI:
@@ -65,23 +65,23 @@ TYPE NUMBER_OF_COORDINATES [NUMBER_OF_CATEGORIES]
 Everything above in <b>[ ]</b> is optional.
 Note the coordinate order in the old version (Y X) has been changed
 to (X Y [Z]).
-<BR><BR>
+<br><br>
 
-TYPE may be:<BR>
+TYPE may be:<br>
 <ul>
-<li><b>P</b> point (dot) <BR> 
-<li><b>p</b> dead point (dead dot) <BR> 
-<li><b>L</b> line  <BR>
-<li><b>l</b> dead line <BR> 
-<li><b>B(A)</b> boundary  <BR>
-<li><b>b(a)</b> dead boundary  <BR>
-<li><b>C</b> centroid  <BR>
-<li><b>c</b> dead centroid  <BR>
-<li><b>F</b> face (3D boundary) <BR>
-<li><b>K</b> kernel (3D centroid) <BR>
+<li><b>P</b> point (dot) <br> 
+<li><b>p</b> dead point (dead dot) <br> 
+<li><b>L</b> line  <br>
+<li><b>l</b> dead line <br> 
+<li><b>B(A)</b> boundary  <br>
+<li><b>b(a)</b> dead boundary  <br>
+<li><b>C</b> centroid  <br>
+<li><b>c</b> dead centroid  <br>
+<li><b>F</b> face (3D boundary) <br>
+<li><b>K</b> kernel (3D centroid) <br>
 </ul>
 
-<BR>
+<br>
 Example of records:
 <PRE>
 P 1 1
@@ -94,7 +94,7 @@ L 3 1
  1 355
 </PRE>
 
-<HR>
+<hr>
 <h2><A NAME="example">Vector module programming example</a></h2>
 
 <a href=v.example/>Vector module C programming example</a>
@@ -105,5 +105,5 @@ L 3 1
 
 <hr>
 $Date$
-</BODY>
-</HTML>
+</body>
+</html>

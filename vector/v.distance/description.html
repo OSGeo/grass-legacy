@@ -23,7 +23,7 @@ distances on a sphere.
 
 <h2>EXAMPLES</h2>
 
-<H3>Find nearest lines</H3>
+<h3>Find nearest lines</h3>
 
 Find <em>nearest lines</em> in vector map <b>ln</b> for points from
 vector map <b>pnt</b> within the given threshold and write related
@@ -34,7 +34,7 @@ to vector map <b>pnt</b>:
 v.distance from=pnt to=ln upload=cat column=linecat
 </pre></div>
 
-<H3>Find nearest area</H3>
+<h3>Find nearest area</h3>
 
 For each point from vector map <b>pnt</b>, find the <em>nearest area</em>
 from map <b>ar</b> within the given threshold and write the related
@@ -46,7 +46,7 @@ the distance is zero):
 v.distance from=pnt to=ar upload=cat column=areacat
 </pre></div>
 
-<H3>Create a new vector map</H3>
+<h3>Create a new vector map</h3>
 
 Create a new vector map which contains <em>lines connecting nearest
 features</em> of maps <b>pnt</b> and map <b>ln</b>. The resulting
@@ -57,7 +57,7 @@ needed for network analysis:
 v.distance -p from=pnt to=ln out=connections upload=dist column=dist
 </pre></div>
 
-<H3>Query information</H3>
+<h3>Query information</h3>
 
 Query information from selected point(s). <em>v.distance</em> takes
 points from a vector map as input instead of stdin. A new vector map
@@ -76,7 +76,7 @@ Find nearest features:
 v.distance from=pnt to=map_to_query upload=cat col=somecol -p
 </pre></div>
 
-<H3>Point-in-polygon</H3>
+<h3>Point-in-polygon</h3>
 
 The option <em>dmax=0</em> is here important because otherwise for
 points not falling into any area, the category of the nearest area is
@@ -91,7 +91,7 @@ the attribute table attached to vector map <b>pnt</b>:
 v.distance from=pnt to=ar dmax=0 upload=cat column=areacat
 </pre></div>
 
-<H3>Univariate statistics on results</H3>
+<h3>Univariate statistics on results</h3>
 
 Create a vector map containing connecting lines and investigate mean
 distance to targets. An alternative solution is to use
@@ -122,7 +122,7 @@ v.to.db map=vdistance_vectors option=length column=length
 v.univar vdistance_vectors column=length
 </pre></div>
 
-<H3>Print distance matrix</H3>
+<h3>Print distance matrix</h3>
 
 <div class="code"><pre>
 v.distance -pa from=archsites to=archsites upload=dist col=dist
@@ -142,9 +142,9 @@ given upload option.
 
 <h2>AUTHOR</h2>
 
-Janne Soimasuo 1994, University of Joensuu, Faculty of Forestry, Finland<BR>
-Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<BR>
-Updated for 5.1: Radim Blazek, ITC-irst, Trento, Italy<BR>
+Janne Soimasuo 1994, University of Joensuu, Faculty of Forestry, Finland<br>
+Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<br>
+Updated for 5.1: Radim Blazek, ITC-irst, Trento, Italy<br>
 Martix-like output by Martin Landa, FBK-irst, Trento, Italy
 
 <p><i>Last changed: $Date$</i>
