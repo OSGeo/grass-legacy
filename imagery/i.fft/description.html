@@ -30,34 +30,41 @@ then rescaling to 255, or whatever optional range is given
 on the command line, as suggested by Richards (1986).  A
 color table is assigned to the resultant map layer.
 
-
 <P>
-
 The current geographic region and mask settings are
 respected when reading the input file.  The presence of a
 mask will, in general, make the resulting fast Fourier
 transform invalid, or at least difficult to interpret.
 
+<h2>EXAMPLE</h2>
+
+North Carolina example:
+
+<div class="code"><pre>
+g.region rast=lsat7_2002_70
+i.fft input_image=lsat7_2002_70 real=lsat7_2002_70.real imaginary=lsat7_2002_70.imag
+
+# set region to resulting FFT output map (due to new FFT coordinate space):
+g.region rast=lsat7_2002_70.real -p
+d.mon x0
+d.rast lsat7_2002_70.real
+d.rast lsat7_2002_70.imag
+</pre></div>
+
 <H2>SEE ALSO</H2>
 
-M. Frigo and S. G. Johnson (1998): "FFTW: An Adaptive Software Architecture
+<ul>
+<li> M. Frigo and S. G. Johnson (1998): "FFTW: An Adaptive Software Architecture
 for the FFT". See <a href=>www.FFTW.org</a>: FFTW is a C subroutine library
 for computing the Discrete Fourier Transform (DFT) in one or more
 dimensions, of both real and complex data, and of arbitrary input size.
 
-<P>
-
-<B>Remote Sensing Digital Image Analysis</B>,
-by John A. Richards,
-Springer-Verlag, 1986.
-
+<li> John A. Richards, 1986. Remote Sensing Digital Image Analysis, Springer-Verlag.
+</ul>
 
 <P>
-
-Personal communication,
-between progam author and Ali R. Vali,
-Space Research Center, 
-<A HREF="http://www.utexas.edu">University of Texas</A>, Austin, 1990.
+Personal communication, between progam author and Ali R. Vali,
+Space Research Center, <A HREF="http://www.utexas.edu">University of Texas</A>, Austin, 1990.
 
 <P>
 
