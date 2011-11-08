@@ -193,7 +193,7 @@ write_html_footer()
 {
 # $1: filename
 # $2: help index url
-echo "<BR><BR>
+echo "<br><br>
 <hr>
 <p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>
 &copy; 2003-2011 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>
@@ -273,8 +273,8 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
 write_html_header "$FULLINDEX" "GRASS GIS $GRASSVERSION Reference Manual: Full index"
-echo "Go <a href=\"index.html\">back to help overview</a><BR>" >> "$FULLINDEX"
-echo "<BR><h3>Full command index:</h3>" >> "$FULLINDEX"
+echo "Go <a href=\"index.html\">back to help overview</a><br>" >> "$FULLINDEX"
+echo "<br><h3>Full command index:</h3>" >> "$FULLINDEX"
 
 #generate main index of all modules:
 echo "[ " >> "$FULLINDEX"
@@ -288,7 +288,7 @@ do
   fi
 done
 echo " ]
-<BR><BR>
+<br><br>
 " >> "$FULLINDEX"
 
 echo "<table border=0>" >> "$FULLINDEX"
@@ -312,7 +312,7 @@ echo "</table>" >> "$FULLINDEX"
 for i in $CMDLIST
 do 
   echo "<a name=\"$i\"></a>" >> "$FULLINDEX"
-  echo "<BR><h3>$i.* commands:</h3>" >> "$FULLINDEX"
+  echo "<br><h3>$i.* commands:</h3>" >> "$FULLINDEX"
   echo "<table>" >> "$FULLINDEX"
 
   #for all modules:  
