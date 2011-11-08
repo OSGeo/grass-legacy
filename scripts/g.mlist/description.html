@@ -1,33 +1,33 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>g.mlist</EM> is an extended version of 
-<EM><a href="g.list.html">g.list</a></EM> which
+<em>g.mlist</em> is an extended version of 
+<em><a href="g.list.html">g.list</a></em> which
 provides regular-expression and wildcard support.
-<EM>g.mlist</EM> will only print map names and an optional separator,
+<em>g.mlist</em> will only print map names and an optional separator,
 without extraneous output. In addition, map search is also available.
 
-<P>
-See the <EM>g.list</EM> help page for discussion of module options.
+<p>
+See the <em>g.list</em> help page for discussion of module options.
 
 
-<H2>EXAMPLES</H2>
+<h2>EXAMPLES</h2>
 
 List all available GRASS data base files:
 <BR>
 <TT>g.mlist type=all</TT>
-<P>
+<p>
 
 List all raster and vector maps:
 <BR>
 <TT>g.mlist type=rast,vect</TT>
-<P>
+<p>
 
 <H3>Wildcards:</H3>
 
 List all vector maps starting with letter "r":
 <BR>
 <TT>g.mlist type=vect pattern="r*"</TT>
-<P>
+<p>
 
 List certain raster maps with one variable character/number:
 <BR>
@@ -37,32 +37,32 @@ List certain raster maps with one variable character/number:
 
 Print out all soils map with "soils" in their name:<BR>
 <TT>g.mlist -r type=rast pattern='^soils'</TT>
-<P>
+<p>
 
 Print out "tmp" if "tmp" raster map exists:<BR>
 <TT>g.mlist -r pattern='^tmp$'</TT>
-<P>
+<p>
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name linewise):<BR>
 <TT>g.mlist -r type=vect pattern='^tmp[0-9]$'</TT>
-<P>
+<p>
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
 <TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT>
-<P>
+<p>
 This may be useful for other programs' parameter input 
-(e.g. <EM><a href="r.series.html">r.series</a></EM>).
+(e.g. <em><a href="r.series.html">r.series</a></em>).
 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="g.list.html">g.list</A></EM>
-<P>
-<A HREF="http://en.wikipedia.org/wiki/Regular_expression">Regular expressions</A>
+<em><a href="g.list.html">g.list</a></em>
+<p>
+<a href="http://en.wikipedia.org/wiki/Regular_expression">Regular expressions</a>
 (aka regex) - from Wikipedia, the free encyclopedia
 
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 Huidae Cho
 <p>
 <i>Last changed: $Date$</i>

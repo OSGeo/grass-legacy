@@ -12,7 +12,7 @@ binary format. The module may import two formats:
 </ul>
 
 <p>
-The <a HREF="v.out.ascii.html">v.out.ascii</a> GRASS module performs
+The <a href="v.out.ascii.html">v.out.ascii</a> GRASS module performs
 the function of <em>v.in.ascii</em> in reverse; i.e., it converts
 vector maps in binary format to ASCII format. These two companion
 programs are useful both for importing and exporting vector maps
@@ -163,7 +163,7 @@ If the input file contains any header lines, such as column headings, the
 <b>skip</b> parameter should be used. These skipped header lines will be
 written to the map's history file for later reference (read with
 <tt>v.info&nbsp;-h</tt>). The skip option only works in <tt>points</tt> mode.
-<P>
+<p>
 Any line starting with the hash character ('<tt>#</tt>') will be treated as
 a comment and skipped completely if located in the main data file. If located
 in the header, as defined by the <b>skip</b> parameter, it will be treated as
@@ -314,7 +314,7 @@ Generate a 3D points vector map 'points3d.dat' with attributes as ASCII file:
 593549.3|4925500.7|442.6|mineralni pramen|mineral spring
 600375.7|4925235.6|342.2|kozi stezka|goat path
 </pre></div>
-<P>
+<p>
 Import into GRASS:
 <div class="code"><pre>
 #As the 'cat' option is set to 0 by default, an extra column 'cat'
@@ -355,21 +355,21 @@ cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
 
 <h2>REFERENCES</h2>
 
-<a HREF="sql.html">SQL command notes</a> for creating databases
+<a href="sql.html">SQL command notes</a> for creating databases
 
 <h2>SEE ALSO</h2>
 
 <em>
-<a HREF="db.execute.html">db.execute</a>,
-<a HREF="r.in.ascii.html">r.in.ascii</a>,
-<a HREF="r.in.xyz.html">r.in.xyz</a>,
-<a HREF="v.build.html">v.build</a>,
-<a HREF="v.build.polylines.html">v.build.polylines</a>,
-<a HREF="v.centroids.html">v.centroids</a>,
-<a HREF="v.clean.html">v.clean</a>,
-<a HREF="v.db.connect.html">v.db.connect</a>,
-<a HREF="v.info.html">v.info</a>,
-<a HREF="v.out.ascii.html">v.out.ascii</a>,
+<a href="db.execute.html">db.execute</a>,
+<a href="r.in.ascii.html">r.in.ascii</a>,
+<a href="r.in.xyz.html">r.in.xyz</a>,
+<a href="v.build.html">v.build</a>,
+<a href="v.build.polylines.html">v.build.polylines</a>,
+<a href="v.centroids.html">v.centroids</a>,
+<a href="v.clean.html">v.clean</a>,
+<a href="v.db.connect.html">v.db.connect</a>,
+<a href="v.info.html">v.info</a>,
+<a href="v.out.ascii.html">v.out.ascii</a>,
 </em>
 
 <h2>AUTHORS</h2>

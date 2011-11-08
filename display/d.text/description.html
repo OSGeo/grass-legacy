@@ -1,6 +1,6 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>d.text</EM> draws text in the active display frame on
+<em>d.text</em> draws text in the active display frame on
 the graphics monitor.  Text can be provided through
 standard input or redirected from a file (using the UNIX
 redirection mechanism).
@@ -8,7 +8,7 @@ redirection mechanism).
 In addition to the options provided on the command line,
 colors, text size, font type, rotation angle, and boldness can be adjusted
 with commands in the standard input (i.e., if the user
-invokes <EM>d.text</EM> without options on the command
+invokes <em>d.text</em> without options on the command
 line, and then assigns values to these options on lines
 within the standard input).
 
@@ -16,58 +16,58 @@ within the standard input).
 
 <DL>
 
-<DT><B>.C</B> <EM>color</EM> 
+<DT><b>.C</b> <em>color</em> 
 <DD>
-(where <EM>color</EM> is one of the available colors) causes text appearing on 
+(where <em>color</em> is one of the available colors) causes text appearing on 
 subsequent lines to be drawn in that color. 
 
-<DT><B>.S </B> <EM>size</EM>
+<DT><b>.S </b> <em>size</em>
 <DD>
-(where <EM>size</EM> is a percentage within the range 0 to
+(where <em>size</em> is a percentage within the range 0 to
 100) adjusts text size.  Note that a size of 10 would allow
 10 lines to be drawn in the active display frame, 5 would
 allow the drawing of 20 lines, and 50 would allow the
 drawing of 2 lines.
 
-<P>
-<DT><B>.F</B> <EM>font</EM>
+<p>
+<DT><b>.F</b> <em>font</em>
 <DD>
-(where <EM>font</EM> is one of the fonts known by the GRASS program 
-<EM><A HREF="d.font.html">d.font</A></EM>) manipulates
+(where <em>font</em> is one of the fonts known by the GRASS program 
+<em><a href="d.font.html">d.font</a></em>) manipulates
 the font type. Available fonts are listed in the GRASS manual entry for 
-<EM><A HREF="d.font.html">d.font</A></EM>. 
+<em><a href="d.font.html">d.font</a></em>. 
 The default font type used (if unspecified by the user) 
-is <EM>romans</EM>.
+is <em>romans</em>.
 <!-- Run the GRASS macro 
-<EM><A  HREF="show.fonts.sh.html">show.fonts.sh</A></EM> 
+<em><A  HREF="show.fonts.sh.html">show.fonts.sh</a></em> 
 to see what these fonts look like. -->
 
-<DT><B>.R </B> <EM>rotation</EM>
+<DT><b>.R </b> <em>rotation</em>
 <DD>
-(where <EM>rotation</EM> is an angle in degrees, counter-clockwise)
+(where <em>rotation</em> is an angle in degrees, counter-clockwise)
 to rotate the text.
 
-<DT><B>.B 1</B>
-<DD>stipulates that following text be printed in <B>bold</B>.
-This command means <EM>bold on</EM>.
+<DT><b>.B 1</b>
+<DD>stipulates that following text be printed in <b>bold</b>.
+This command means <em>bold on</em>.
 
-<DT><B>.B 0</B>
-<DD> turns <EM>bold off</EM> of all text appearing on lines beneath 
-     it. (<EM>Bold off</EM> is used by default, if unspecified by the user.) 
+<DT><b>.B 0</b>
+<DD> turns <em>bold off</em> of all text appearing on lines beneath 
+     it. (<em>Bold off</em> is used by default, if unspecified by the user.) 
 
 </DL>
 
-<H2>EXAMPLE</H2>
+<h2>EXAMPLE</h2>
 
 The following command will print the short phrase "This is
 a test of d.text" in the active display frame using the
 color yellow, in bold, and using 4/100'ths (4%) of the
 active frame's vertical space per line:
-<P>
+<p>
 
 
 <pre>
-    <B>d.text</B> << EOF
+    <b>d.text</b> << EOF
     .C yellow 
     .S 4 
     .B 1
@@ -76,31 +76,31 @@ active frame's vertical space per line:
 </pre>
 
 
-The user presses <EM>control-d</EM> 
-(the "Ctrl" and "d" keys) to end input to <EM>d.text</EM> (equal to EOF).
+The user presses <em>control-d</em> 
+(the "Ctrl" and "d" keys) to end input to <em>d.text</em> (equal to EOF).
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 Note that the GRASS command 
-<EM><A HREF="d.title.html">d.title</A></EM> creates map TITLEs in a format 
-suitable for input to <EM>d.text</EM>.
+<em><a href="d.title.html">d.title</a></em> creates map TITLEs in a format 
+suitable for input to <em>d.text</em>.
 
-<P>
+<p>
 
-<EM>d.text</EM> needs escape sequences that can be used
+<em>d.text</em> needs escape sequences that can be used
 within lines to change colors, boldness, and perhaps size.
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="d.font.html">d.font</A></EM><br>
-<EM><A HREF="d.font.freetype.html">d.font.freetype</A></EM><br>
-<EM><A HREF="d.title.html">d.title</A></EM><br>
-<!-- <EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM><br> -->
-<EM><A HREF="d.text.freetype.html">d.text.freetype</A></EM><br>
-<EM><A HREF="d.labels.html">d.labels</A></EM><br>
+<em><a href="d.font.html">d.font</a></em><br>
+<em><a href="d.font.freetype.html">d.font.freetype</a></em><br>
+<em><a href="d.title.html">d.title</a></em><br>
+<!-- <em><a href="show.fonts.sh.html">show.fonts.sh</a></em><br> -->
+<em><a href="d.text.freetype.html">d.text.freetype</a></em><br>
+<em><a href="d.labels.html">d.labels</a></em><br>
 
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 James Westervelt, 
 U.S. Army Construction Engineering 

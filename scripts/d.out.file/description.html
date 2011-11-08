@@ -1,21 +1,21 @@
-<H2>DESCRIPTION</H2>
-<EM>(GRASS Shell Script)</EM>
-<P>
-<EM><b>d.out.file</b></EM> uses <em>d.save</em>, the GRASS PNG or PostScript
+<h2>DESCRIPTION</h2>
+<em>(GRASS Shell Script)</em>
+<p>
+<em><b>d.out.file</b></em> uses <em>d.save</em>, the GRASS PNG or PostScript
 driver, and <tt>gdal_translate</tt> to export the currently selected X display
 monitor to a graphics file of several formats. Output image size can be set
 prior to export.
-<P>
+<p>
 PNG and PPM formats are supported directly by the GRASS PNG driver and
 PostScript output is supported directly by the GRASS PS driver.
-<P>
+<p>
 TIFF, GeoTIFF, JPEG, and BMP formats are supported by using <tt>gdal_translate</tt>
 on PPM format files produced by the GRASS PNG driver. Different levels of
 compression/quality are supported for JPEG files.
-<P>
+<p>
 Graphic files are exported to the user's current working directory by
 default, but different paths may be specified in the output field.
-<P>
+<p>
 EPS files are not compatible with <em>d.frame</em>, as it is not possible to nest
 encapsulation. Only the first frame will be drawn. In these cases it is
 recommended to output to regular PostScript format and then use a utility
@@ -23,7 +23,7 @@ like <tt>ps2epsi</tt> to convert to an EPS file.
 Output from this module using the regular PostScript format may contain
 subframes.
 
-<P>
+<p>
 GeoTIFF export is provided as a convenience. For raster export
 it is generally preferable to use the <em>r.out.gdal</em> or
 <em>r.out.tiff</em> modules. The advantage of using <em>d.out.file</em>
@@ -36,7 +36,7 @@ raster rows and columns of the map, and feed these numbers into
 <em>d.out.file</em>'s <b>size</b> parameter as columns,rows.
 
 
-<H2>EXAMPLES</H2>
+<h2>EXAMPLES</h2>
 
 <h4>Speafish dataset</h4>
 
@@ -77,27 +77,27 @@ from the Wiki-Addons site</h4>
 </pre></div>
 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM>
-<A HREF="d.frame.html">d.frame</A>,
-<A HREF="d.mon.html">d.mon</A>,
-<A HREF="d.out.png.html">d.out.png</A>,
-<A HREF="d.save.html">d.save</A>,
-<A HREF="g.region.html">g.region</A>,
-<A HREF="ps.map.html">ps.map</A>,
-<A HREF="r.out.gdal.html">r.out.gdal</A>,
-<A HREF="r.out.tiff.html">r.out.tiff</A>
-</EM><BR>
-<A HREF="cairodriver.html">Cairo driver</A>,
-<A HREF="pngdriver.html">PNG driver</A>,
-<A HREF="psdriver.html">PostScript driver</A>,
-<A HREF="htmlmapdriver.html">HTML-map driver</A>,
-<A HREF="xdriver.html">X driver</A><BR>
-<A HREF="http://www.gdal.org">GDAL Homepage</a>
+<em>
+<a href="d.frame.html">d.frame</a>,
+<a href="d.mon.html">d.mon</a>,
+<a href="d.out.png.html">d.out.png</a>,
+<a href="d.save.html">d.save</a>,
+<a href="g.region.html">g.region</a>,
+<a href="ps.map.html">ps.map</a>,
+<a href="r.out.gdal.html">r.out.gdal</a>,
+<a href="r.out.tiff.html">r.out.tiff</a>
+</em><BR>
+<a href="cairodriver.html">Cairo driver</a>,
+<a href="pngdriver.html">PNG driver</a>,
+<a href="psdriver.html">PostScript driver</a>,
+<a href="htmlmapdriver.html">HTML-map driver</a>,
+<a href="xdriver.html">X driver</a><BR>
+<a href="http://www.gdal.org">GDAL Homepage</a>
 
 
-<H2>AUTHORS</H2>
+<h2>AUTHORS</h2>
 
 Michael Barton, Arizona State University<BR>
 Hamish Bowman, Otago University, New Zealand

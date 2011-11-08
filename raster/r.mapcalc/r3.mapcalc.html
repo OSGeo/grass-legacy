@@ -9,44 +9,44 @@
 <img src="grass_logo.png" alt="GRASS logo"><hr align=center size=6 noshade>
 
 
-<h2>NAME</H2>
-<EM><B>r3.mapcalc</B></EM>
+<h2>NAME</h2>
+<em><b>r3.mapcalc</b></em>
 
 
-<h2>DESCRIPTION</H2>
-<EM>r3.mapcalc</EM> performs arithmetic on 3D grid volume data. New 3D grids
+<h2>DESCRIPTION</h2>
+<em>r3.mapcalc</em> performs arithmetic on 3D grid volume data. New 3D grids
 can be created which are arithmetic expressions involving existing 3D grids, 
 integer or floating point constants, and functions.
 
 
-<h2>PROGRAM USE</H2>
-If used without command line arguments, <EM>r3.mapcalc</EM> will read its
+<h2>PROGRAM USE</h2>
+If used without command line arguments, <em>r3.mapcalc</em> will read its
 input, one line at a time, from standard input (which is the keyboard,
 unless redirected from a file or across a pipe).
-Otherwise, the expression on the command line is evaluated. <EM>r3.mapcalc</EM>
+Otherwise, the expression on the command line is evaluated. <em>r3.mapcalc</em>
 expects its input to have the form:
-<P>
-<B>result=</B><EM>expression</EM>
-<P>
-where <EM>result</EM> is the name of a 3D grid to contain the result of
-the calculation and <EM>expression</EM> is any legal arithmetic expression
+<p>
+<b>result=</b><em>expression</em>
+<p>
+where <em>result</em> is the name of a 3D grid to contain the result of
+the calculation and <em>expression</em> is any legal arithmetic expression
 involving existing 3D grid, floating point constants, and functions known
 to the calculator. Parentheses are allowed in the expression and may be
-nested to any depth. <EM>result</EM> will be created in the user's current
+nested to any depth. <em>result</em> will be created in the user's current
 mapset.
-<P>
-The formula entered to <EM>r3.mapcalc</EM> by the user is recorded both
-in the <EM>result</EM> grid title (which appears in the category file for
-<EM>result</EM>)
-and in the history file for <EM>result</EM>.
-<P>
+<p>
+The formula entered to <em>r3.mapcalc</em> by the user is recorded both
+in the <em>result</em> grid title (which appears in the category file for
+<em>result</em>)
+and in the history file for <em>result</em>.
+<p>
 Some characters have special meaning to the command shell. If the user
-is entering input to <EM>r.mapcalc</EM> on the command line, expressions
+is entering input to <em>r.mapcalc</em> on the command line, expressions
 should be enclosed within single quotes.  See NOTES, below.
-<P>
+<p>
 
 
-<h2>OPERATORS AND ORDER OF PRECEDENCE</H2>
+<h2>OPERATORS AND ORDER OF PRECEDENCE</h2>
 The following operators are supported:
 <div class="code"><PRE>
      Operator   Meaning                    Type        Precedence
@@ -78,114 +78,114 @@ The following operators are supported:
      ?:         conditional                Logical      1
 </PRE></div>
 (modulus is the remainder upon division)
-<P>
+<p>
 [1] The &amp;&amp;&amp; and ||| operators handle null values differently to other
 operators. See the section entitled <b>NULL support</b> below for more
 details.
-<P>
+<p>
 The operators are applied from left to right, with those of higher precedence
 applied before those with lower precedence.
 Division by 0 and modulus by 0 are acceptable and give a NULL result.
 The logical operators give a 1 result if the comparison is true, 0 otherwise.
-<P>
-<P>
+<p>
+<p>
 
 
-<h2>3D GRID NAMES</H2>
+<h2>3D GRID NAMES</h2>
 Anything in the expression which is not a number, operator, or function
 name is taken to be a 3D grid name. Examples:
-<P>
+<p>
 <div class="code"><PRE>
 volume
 x3
 3d.his
 </PRE></div>
-<P>
+<p>
 Most GRASS raster map layers and 3D grids meet this naming convention.
 However, if a 3D grid has a name which conflicts with the above rule, it
 should be quoted. For example, the expression
-<P>
+<p>
 <div class="code"><PRE>
 x = a-b
 </PRE></div>
-<P>
+<p>
 would be interpreted as:  x equals a minus b, whereas
-<P>
+<p>
 <div class="code"><PRE>
 x = "a-b"
 </PRE></div>
-<P>
-would be interpreted as: x equals the 3D grid named <EM>a-b</EM>
-<P>
+<p>
+would be interpreted as: x equals the 3D grid named <em>a-b</em>
+<p>
 Also
-<P>
+<p>
 <div class="code"><PRE>
 x = 3107
 </PRE></div>
-<P>
-would create <EM>x</EM> filled with the number 3107, while
-<P>
+<p>
+would create <em>x</em> filled with the number 3107, while
+<p>
 <div class="code"><PRE>
 x = "3107"
 </PRE></div>
-<P>
-would copy the 3D grid <EM>3107</EM> to the 3D grid <EM>x</EM>.
+<p>
+would copy the 3D grid <em>3107</em> to the 3D grid <em>x</em>.
 
-<P>
+<p>
 Quotes are not required unless the 3D grid names look like numbers or
 contain operators, OR unless the program is run non-interactively. Examples
 given here assume the program is run interactively. See NOTES, below.
-<P>
-<EM>r3.mapcalc</EM> will look for the 3D grids according to the user's
+<p>
+<em>r3.mapcalc</em> will look for the 3D grids according to the user's
 current mapset search path. It is possible to override the search path
 and specify the mapset from which to select the 3D grid. This is done by
 specifying the 3D grid name in the form:
-<P>
+<p>
 <div class="code"><PRE>
 name@mapset
 </PRE></div>
-<P>
+<p>
 For example, the following is a legal expression:
-<P>
+<p>
 <div class="code"><PRE>
 result = x@PERMANENT / y@SOILS
 </PRE></div>
-<P>
+<p>
 The mapset specified does not have to be in the mapset search path. (This
 method of overriding the mapset search path is common to all GRASS commands,
-not just <EM>r3.mapcalc</EM>.)
-<P>
+not just <em>r3.mapcalc</em>.)
+<p>
 
 
-<h2>THE NEIGHBORHOOD MODIFIER</H2>
+<h2>THE NEIGHBORHOOD MODIFIER</h2>
 3D grids are data base files stored in voxel format, i.e., three-dimensional
-matrices of float/double values. In <EM>r3.mapcalc</EM>, 3D grids may be
-followed by a <EM>neighborhood</EM> modifier that specifies a relative offset
+matrices of float/double values. In <em>r3.mapcalc</em>, 3D grids may be
+followed by a <em>neighborhood</em> modifier that specifies a relative offset
 from the current cell being evaluated. The format is
-<EM>map[r,c,d]</EM>,
-where <EM>r</EM> is the row offset, <EM>c</EM> is the column offset and <EM>d</EM>
-is the depth offset. For example, <EM>map[1,2,3]</EM> refers to the cell
+<em>map[r,c,d]</em>,
+where <em>r</em> is the row offset, <em>c</em> is the column offset and <em>d</em>
+is the depth offset. For example, <em>map[1,2,3]</em> refers to the cell
 one row below, two columns to the right and 3 levels below of the current
-cell, <EM>map[-3,-2,-1]</EM> refers to the cell three rows above, two columns
-to the left and one level below of the current cell, and <EM>map[0,1,0]</EM>
+cell, <em>map[-3,-2,-1]</em> refers to the cell three rows above, two columns
+to the left and one level below of the current cell, and <em>map[0,1,0]</em>
 refers to the cell one column to the right of the current cell. This syntax
 permits the development of neighborhood-type filters within a single 3D
 grid or across multiple 3D grids.
 
-<P>
+<p>
 
 
-<h2>FUNCTIONS</H2>
+<h2>FUNCTIONS</h2>
 The functions currently supported are listed in the table below.
 The type of the result is indicated in the last column.
-<EM>F</EM>
+<em>F</em>
 means that the functions always results in a floating point value,
-<EM>I</EM>
+<em>I</em>
 means that the function gives an integer result, and
-<EM>*</EM>
+<em>*</em>
 indicates that the result is float if any of the arguments to the function
 are floating point values and integer if all arguments are integer.
-<P>
+<p>
 <div class="code"><PRE>
 function		description					type
 ---------------------------------------------------------------------------
@@ -239,7 +239,7 @@ Internal variables:
 Note, that the row(), col() and depth() indexing starts with 1. 
 
 
-<h2>FLOATING POINT VALUES IN THE EXPRESSION</H2>
+<h2>FLOATING POINT VALUES IN THE EXPRESSION</h2>
 Floating point numbers are allowed in the expression. A floating point
 number is a number which contains a decimal point:
 <div class="code"><PRE>
@@ -252,11 +252,11 @@ This means, in particular that division of integers results in a
 (truncated) integer, while division of floats results in an accurate
 floating point value.  With functions of type * (see table above),
 the result is float if any argument is float, integer otherwise.
-<P>
+<p>
 Note: If you calculate with integer numbers, the resulting map will
 be integer. If you want to get a float result, add the decimal point
 to integer number(s).
-<P>
+<p>
 If you want floating point division, at least one of the arguments has
 to be a floating point value. Multiplying one of them by 1.0 will
 produce a floating-point result, as will using float():
@@ -265,7 +265,7 @@ produce a floating-point result, as will using float():
 </PRE></div>
 
 
-<h2>NULL support</H2>
+<h2>NULL support</h2>
 <ul>
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
@@ -304,7 +304,7 @@ sqrt(-2)
 pow(a,b) where a is negative and b is not an integer 
 </PRE></div>
 </ul>
-<P>
+<p>
 NULL support: Please note that any math performed with NULL cells always
 results in a NULL value for these cells. If you want to replace a NULL cell
 on-the-fly, use the isnull() test function in a if-statement.
@@ -376,9 +376,9 @@ unknown quantity. E.g. if x and y are both unknown, then the values of
 values, the user doesn't know whether or not they both have the same value.
 
 
-<h2>EXAMPLES</H2>
+<h2>EXAMPLES</h2>
 To compute the average of two 3D grids
-<EM>a</EM> and <EM>b</EM>:
+<em>a</em> and <em>b</em>:
 <div class="code"><PRE>
 ave = (a + b)/2
 </pre></div>
@@ -387,7 +387,7 @@ To form a weighted average:
 ave = (5*a + 3*b)/8.0
 </pre></div>
 To produce a binary representation of 3D grid
-<EM>a</EM> so that category 0 remains 0 and all other categories become 1:
+<em>a</em> so that category 0 remains 0 and all other categories become 1:
 <div class="code"><PRE>
 mask = a != 0
 </pre></div>
@@ -395,7 +395,7 @@ This could also be accomplished by:
 <div class="code"><PRE>
 mask = if(a)
 </pre></div>
-To mask 3D grid <EM>b</EM> by 3D grid <EM>a</EM>:
+To mask 3D grid <em>b</em> by 3D grid <em>a</em>:
 <div class="code"><PRE>
 result = if(a,b)
 </pre></div>
@@ -430,86 +430,86 @@ X (map) values supplied and y (newmap) values returned:
 </pre></div>
 
 
-<h2>NOTES</H2>
+<h2>NOTES</h2>
 Extra care must be taken if the expression is given on the command line.
 Some characters have special meaning to the UNIX shell.
 These include, among others:
-<P>
+<p>
 * ( ) &gt; &amp; |
-<P>
+<p>
 It is advisable to put single quotes around the expression; e.g.:
 <div class="code"><PRE>
 result = 'elevation * 2'
 </pre></div>
 Without the quotes, the *, which has special meaning to the UNIX shell,
-would be altered and <EM>r3.mapcalc</EM> would see something other than the *.
-<P>
-If the input comes directly from the keyboard and the <EM>result</EM>
+would be altered and <em>r3.mapcalc</em> would see something other than the *.
+<p>
+If the input comes directly from the keyboard and the <em>result</em>
 3D grid exists, the user will be asked if it can be overwritten. Otherwise,
-the <EM>result</EM> 3D grid will automatically be overwritten if it exists.
-<P>
-Quoting <EM>result</EM> is not allowed. However, it is never necessary
-to quote <EM>result</EM> since it is always taken to be a 3D grid name.
-<P>
+the <em>result</em> 3D grid will automatically be overwritten if it exists.
+<p>
+Quoting <em>result</em> is not allowed. However, it is never necessary
+to quote <em>result</em> since it is always taken to be a 3D grid name.
+<p>
 For formulas that the user enters from standard input (rather than from
 the command line), a line continuation feature now exists. If the user
-adds \e to the end of an input line, <EM>r3.mapcalc</EM> assumes that the
+adds \e to the end of an input line, <em>r3.mapcalc</em> assumes that the
 formula being entered by the user continues on to the next input line.
 There is no limit to the possible number of input lines or to the length
 of a formula.
-<P>
-If the <EM>r3.mapcalc</EM> formula entered by the user is very long, the
+<p>
+If the <em>r3.mapcalc</em> formula entered by the user is very long, the
 map title will contain only some of it, but most (if not all) of the formula
-will be placed into the history file for the <EM>result</EM> map.
-<P>
-When the user enters input to <EM>r3.mapcalc</EM> non-interactively on
+will be placed into the history file for the <em>result</em> map.
+<p>
+When the user enters input to <em>r3.mapcalc</em> non-interactively on
 the command line, the program will not warn the user not to overwrite existing
 3D grids. Users should therefore take care to assign program outputs 3D
 grid file names that do not yet exist in their current mapsets.
-<P>
+<p>
 The environment variable GRASS_RND_SEED is read to initialise the
 random number generator.
 
 
-<h2>BUGS</H2>
+<h2>BUGS</h2>
 Continuation lines must end with a \ and have NO trailing white space
 (blanks or tabs).  If the user does leave white space at the end of
-continuation lines, the error messages produced by <EM>r.mapcalc</EM> will
+continuation lines, the error messages produced by <em>r.mapcalc</em> will
 be meaningless and the equation will not work as the user intended.
 This is important for the eval() function.
-<P>
-Error messages produced by <EM>r.mapcalc</EM> are almost useless.
-In future, <EM>r.mapcalc</EM> should make some attempt
+<p>
+Error messages produced by <em>r.mapcalc</em> are almost useless.
+In future, <em>r.mapcalc</em> should make some attempt
 to point the user to the offending section of the equation, e.g.:
 <div class="code"><PRE>
 x = a * b ++ c
 ERROR: somewhere in line 1: ...  b ++ c ...
 </pre></div>
-<P>
-Currently, there is no comment mechanism in <EM>r3.mapcalc</EM>. Perhaps
+<p>
+Currently, there is no comment mechanism in <em>r3.mapcalc</em>. Perhaps
 adding a capability that would cause the entire line to be ignored when
 the user inserted a # at the start of a line as if it were not present,
 would do the trick.
-<P>
+<p>
 The function should require the user to type "end" or "exit" instead
 of simply a blank line. This would make separation of multiple scripts
 separable by white space.
-<P>
+<p>
 r.mapcalc does not print a warning in case of operations on NULL cells.
 It is left to the user to utilize the isnull() function.
 
 
-<h2>SEE ALSO</H2>
-<B><A HREF="http://grass.osgeo.org/gdp/raster/mapcalc-algebra.pdf">r.mapcalc: An Algebra for GIS and Image
-Processing</A></B>, by Michael Shapiro and Jim Westervelt, U.S. Army
+<h2>SEE ALSO</h2>
+<b><a href="http://grass.osgeo.org/gdp/raster/mapcalc-algebra.pdf">r.mapcalc: An Algebra for GIS and Image
+Processing</a></b>, by Michael Shapiro and Jim Westervelt, U.S. Army
 Construction Engineering Research Laboratory (March/1991).
-<P> 
-<B><A HREF="http://grass.osgeo.org/gdp/raster/mapcalc.pdf">Performing Map Calculations on GRASS Data:
-r.mapcalc Program Tutorial</A></B>, by Marji Larson, Michael Shapiro and Scott
+<p> 
+<b><a href="http://grass.osgeo.org/gdp/raster/mapcalc.pdf">Performing Map Calculations on GRASS Data:
+r.mapcalc Program Tutorial</a></b>, by Marji Larson, Michael Shapiro and Scott
 Tweddale, U.S. Army Construction Engineering Research Laboratory (December
 1991)
 <p>
-<EM><a href="r.mapcalc.html">r.mapcalc</a></EM>
+<em><a href="r.mapcalc.html">r.mapcalc</a></em>
 
 
 <h2>AUTHORS</h2>

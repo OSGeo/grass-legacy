@@ -1,153 +1,153 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>d.ask</EM> is designed for shell scripts that need to prompt the user for 
+<em>d.ask</em> is designed for shell scripts that need to prompt the user for 
 the name of a data base file in the user's current GRASS mapset search path. 
-After <EM>d.ask</EM> is invoked with needed parameters, 
+After <em>d.ask</em> is invoked with needed parameters, 
 the mouse becomes active and a menu containing files of the specified 
-<EM>element</EM> type is displayed on the user's graphics monitor. 
-The user is prompted by the prompt "<EM>message</EM>" to select one of the 
+<em>element</em> type is displayed on the user's graphics monitor. 
+The user is prompted by the prompt "<em>message</em>" to select one of the 
 listed file names with the mouse. Specifically, the query that appears 
 to the user takes the form: 
 
-<P>
+<p>
 <DL>
-<DD> <B>Double</B> click on the <EM>prompt</EM> "message"
-<DD> <B>Double</B> click here to cancel
-<P>
-<DD> (A list of files of the specified <EM>element</EM> type from each 
+<DD> <b>Double</b> click on the <em>prompt</em> "message"
+<DD> <b>Double</b> click here to cancel
+<p>
+<DD> (A list of files of the specified <em>element</em> type from each 
      of the mapsets listed in the user's mapset search path is also 
      displayed.) 
 </DL>
 
-<P>
+<p>
 
 After the user responds, the mouse is deactivated and 
 the displayed menu is erased from the screen 
 (leaving any underlying materials on display intact). 
 Three lines are written to standard output (the user's terminal screen): 
 
-<P>
+<p>
 <DL>
-<DD><B>name=</B><EM>file_name</em>
-<DD><B>mapset=</B><EM>mapset_name</em>
-<DD><B>fullname=</B><EM>file_name@mapset_name</em>
+<DD><b>name=</b><em>file_name</em>
+<DD><b>mapset=</b><em>mapset_name</em>
+<DD><b>fullname=</b><em>file_name@mapset_name</em>
 </DL>
-<P>
+<p>
 
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>element=</B><EM>name,description</em>
+<DT><b>element=</b><em>name,description</em>
 <DD>Name of a GRASS data base element, followed by a one word description of the 
 element. GRASS data base elements are mapset subdirectories; these include: 
 bdlg, cats, cell, cell_misc, cellhd, colr, colr2, dig, dig_ascii, dig_att, 
 dig_cats, dig_plus, dlg, group, hist, icons, noise, paint, site_lists, and 
 windows. 
-The <EM>description</EM> will be used to display an error message to the screen 
+The <em>description</em> will be used to display an error message to the screen 
 if no files of the named element type exist in the user's mapset search path. 
-The prompt "<EM>message</EM>" will appear in the pop-up menu displayed on the 
+The prompt "<em>message</em>" will appear in the pop-up menu displayed on the 
 user's graphics monitor. The files listed in the menu will be of the 
-specified <EM>element</EM> type, and exist in mapsets listed in the user's 
+specified <em>element</em> type, and exist in mapsets listed in the user's 
 current mapset search path. 
-<DT><B>prompt=</B>"<EM>message</EM>"
+<DT><b>prompt=</b>"<em>message</em>"
 <DD>A brief message with which the user will be prompted. 
 If this message contains more than one word, it should be 
 enclosed within double quotes (""). 
 It is a non-selectable message displayed in the menu bar of a pop-up menu. 
 Selectable items in the displayed menu include a cancel option and any of the 
-files in the mapset subdirectory <EM>name</EM> in the user's mapset search path. 
+files in the mapset subdirectory <em>name</em> in the user's mapset search path. 
 </DL>
 
-<H2>EXAMPLE</H2>
+<h2>EXAMPLE</h2>
 
 Given the following input, 
 
-<P>
+<p>
 <DL>
 <DD>
-<B>d.ask element=</B>cell,raster <B>prompt=</B>"raster map layer to 
+<b>d.ask element=</b>cell,raster <b>prompt=</b>"raster map layer to 
 be used"
 </DL>
 
-<P>
-<EM>d.ask</EM> will prompt the user to select a raster (cell) file from among 
+<p>
+<em>d.ask</em> will prompt the user to select a raster (cell) file from among 
 those listed in the "cell" directories of the mapsets listed in his current 
 mapset search path. A pop-up menu will be displayed on the user's graphics 
 monitor, containing the prompt: 
 
-<P>
+<p>
 <DL>
-<DD> <B>Double</B> click on the <EM>raster</EM> map layer to be used
-<DD> <B>Double</B> click here to cancel
+<DD> <b>Double</b> click on the <em>raster</em> map layer to be used
+<DD> <b>Double</b> click here to cancel
 </DL>
 
-<H2>OUTPUT</H2>
+<h2>OUTPUT</h2>
 
 If the user selects a file name from the displayed menu, 
-<EM>d.ask</EM> writes three lines to standard output: 
+<em>d.ask</em> writes three lines to standard output: 
 
-<P>
+<p>
 <DL>
-<DD> <B>name=</B><EM>file_name</EM> 
-<DD> <B>mapset=</B><EM>mapset_name</EM> 
-<DD> <B>fullname=</B><EM>file_name@mapset_name</EM> 
+<DD> <b>name=</b><em>file_name</em> 
+<DD> <b>mapset=</b><em>mapset_name</em> 
+<DD> <b>fullname=</b><em>file_name@mapset_name</em> 
 </DL>
 
-<P>
+<p>
 The output is in the form of /bin/sh commands to set the variable 
-<EM>name</EM>
+<em>name</em>
 to the file name specified by the user 
-(of the <EM>element</EM> type requested by <EM>d.ask</EM>), <EM>mapset</EM>
-to the GRASS mapset in which this file resides, and <EM>fullname</EM>
+(of the <em>element</em> type requested by <em>d.ask</em>), <em>mapset</em>
+to the GRASS mapset in which this file resides, and <em>fullname</em>
 to the name of the file and its mapset. 
 
-<P>
+<p>
 
 If the user elects not to select a file but instead chooses the 
 "Double click here to cancel" option, 
 the mouse will be deactivated and no variable assignments will be 
 returned to standard output. 
 
-<P>
+<p>
 
-If no files of the specified <EM>element</EM> type are found in the user's 
+If no files of the specified <em>element</em> type are found in the user's 
 current mapset search path, the mouse is activated and the following message 
 is displayed on the user's graphics monitor: 
 
-<P>
+<p>
 <DL>
-<DD> <B>No <EM>element</EM> description files found</B> 
-<DD> <B>Click here to continue</B> 
+<DD> <b>No <em>element</em> description files found</b> 
+<DD> <b>Click here to continue</b> 
 </DL>
 
-<P>
+<p>
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 Parameter values 
-(the <EM>element</EM> name and description, and <EM>prompt</EM> message) 
-cannot be supplied to <EM>d.ask</EM> interactively; 
+(the <em>element</em> name and description, and <em>prompt</em> message) 
+cannot be supplied to <em>d.ask</em> interactively; 
 they must be supplied on the command line or from a file. 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM>
-<A HREF="d.menu.html">d.menu</A>,<br>
-<A HREF="g.ask.html">g.ask</A>,<br>
-<A HREF="g.filename.html">g.filename</A>,<br>
-<A HREF="g.findfile.html">g.findfile</A>,<br>
-<A HREF="g.gisenv.html">g.gisenv</A>,<br>
-<A HREF="g.mapsets.html">g.mapsets</A>
-</EM>
+<em>
+<a href="d.menu.html">d.menu</a>,<br>
+<a href="g.ask.html">g.ask</a>,<br>
+<a href="g.filename.html">g.filename</a>,<br>
+<a href="g.findfile.html">g.findfile</a>,<br>
+<a href="g.gisenv.html">g.gisenv</a>,<br>
+<a href="g.mapsets.html">g.mapsets</a>
+</em>
 
-<H2>BUGS</H2>
+<h2>BUGS</h2>
 
 This program calls other GRASS programs which may generate confusing 
 error messages. Example: an error message from the 
-program <A HREF="d.menu.html">d.menu</A> 
+program <a href="d.menu.html">d.menu</a> 
 will appear if a nonexistent map element is chosen. 
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
 
