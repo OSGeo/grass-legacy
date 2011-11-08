@@ -141,6 +141,8 @@ libs:
 	done
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -fr --parents include ${ARCH_DISTDIR}/
+	-sed -e 's+(MODULE_TOPDIR)/tools/g.html2man/g.html2man+(GISBASE)/tools/g.html2man+' \
+		include/Make/Man.make > ${ARCH_DISTDIR}/include/Make/Man.make
 
 #we leave this target for a while so that people can easily upgrade (11/2004):
 mix:
@@ -292,7 +294,6 @@ endif
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" -e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" ${GISBASE}/include/Make/Platform.make > ${INST_DIR}/include/Make/Platform.make
 	-sed -e "s#^\(ARCH_DISTDIR.[^=]*\).*#\1= ${INST_DIR}#" -e "s#^\(ARCH_BINDIR.[^=]*\).*#\1= ${UNIX_BIN}#" ${GISBASE}/include/Make/Grass.make > ${INST_DIR}/include/Make/Grass.make
-	-sed -e 's#/tools/g.html2man/g.html2man#/tools/g.html2man#' ${GISBASE}/include/Make/Man.make > ${INST_DIR}/include/Make/Man.make
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
