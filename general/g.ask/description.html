@@ -1,16 +1,16 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>g.ask</EM> is designed for shell scripts that need to
+<em>g.ask</em> is designed for shell scripts that need to
 prompt the user for the name of a data base file in the
-user's current GRASS location.  After <EM>g.ask</EM> is
+user's current GRASS location.  After <em>g.ask</em> is
 invoked with needed parameters, it will query the user for
-a file name of the specified <EM>type</EM> and
-<EM>element</EM>.  After the user responds to this query,
+a file name of the specified <em>type</em> and
+<em>element</em>.  After the user responds to this query,
 the program will write four lines to the UNIX output file
-specified by <EM>unixfile</EM>.
+specified by <em>unixfile</em>.
 
 <!-- unused
-<H2>OPTIONS</H2>
+<h2>OPTIONS</h2>
 
 <H3>Parameters:</H3>
 
@@ -18,32 +18,32 @@ specified by <EM>unixfile</EM>.
 <DL>
 
 
-<DT><B>type=</B><EM>name</EM> 
+<DT><b>type=</b><em>name</em> 
 
-<DD>The type of query.  Options for <EM>name</EM> are 
-<EM>old</EM>, <EM>new</EM>,
-<EM>any</EM>, and <EM>mapset</EM>;  their functions are given below.
+<DD>The type of query.  Options for <em>name</em> are 
+<em>old</em>, <em>new</em>,
+<em>any</em>, and <em>mapset</em>;  their functions are given below.
 "New", "any", and "mapset" only look in the user's current mapset.
 
 <DL>
 <DD>
-<DT><B>old</B>
+<DT><b>old</b>
 <DD>For existing data files anywhere in the user's mapset search path.
 
-<DT><B>new</B> 
+<DT><b>new</b> 
 
 <DD>Used to create a new file in the current mapset, which must not
 already exist there (if a file with this name exists there,
 it will not be overwritten).
 
-<DT><B>any</B> 
+<DT><b>any</b> 
 
 <DD>Creates a file in the current mapset, which may or may not
 already exist there.  If a file with this name exists in the
 current mapset, it will be overwritten;
 if not, a new file with this name will be created.
 
-<DT><B>mapset</B> 
+<DT><b>mapset</b> 
 
 <DD>For files that must exist in the current mapset
 The shell write wants the name of a file which exists
@@ -51,25 +51,25 @@ in the user's current mapset.  This type would
 used instead of "old" if the file is to be modified.
 </DL>
 
-<DT><B>prompt=</B>"<EM>string</EM>" 
+<DT><b>prompt=</b>"<em>string</em>" 
 
 <DD>The prompt to be displayed to the user.  If more than
 one word, the prompt should be enclosed within double
 quotes ("").
 
-<DT><B>element=</B><EM>name</EM> 
+<DT><b>element=</b><em>name</em> 
 
 <DD>The name of the GRASS data base element (i.e.,
 directory under a GRASS mapset) whose files are to be
 queried.
 
-<DT><B>desc=</B>"<EM>string</EM>" 
+<DT><b>desc=</b>"<em>string</em>" 
 
 <DD>A short description of the data base element which is
 meaningful to the user.  If description contains more than
 one word, it should be enclosed within double quotes ("").
 
-<DT><B>unixfile=</B><EM>name</EM> 
+<DT><b>unixfile=</b><em>name</em> 
 
 <DD>The name of a UNIX file to store the user's response.
 See next section for what is written to this file and how
@@ -78,49 +78,49 @@ it can be used by shell scripts.
 </DL>
 -->
 
-<H2>OUTPUT</H2>
+<h2>OUTPUT</h2>
 
 Upon receiving the user's response to its request for a
-file name, <EM>g.ask</EM> writes four lines to the
-specified <EM>unixfile</EM>; this output file is placed in
+file name, <em>g.ask</em> writes four lines to the
+specified <em>unixfile</em>; this output file is placed in
 the user's current working directory, unless otherwise
 specified, and contains the following lines:
 
 
 <div class="code">
 <PRE>
-name='<EM>some_name</EM>'
-mapset='<EM>some_mapset</EM>'
-fullname='<EM>some_fullname</EM>'
-file='<EM>some_fullpath</EM>'
+name='<em>some_name</em>'
+mapset='<em>some_mapset</em>'
+fullname='<em>some_fullname</em>'
+file='<em>some_fullpath</em>'
 </pre></div>
 
-<P>
+<p>
 
-The output is <EM>/bin/sh</EM> commands to set the variable
-<EM>name</EM> to the file name specified by the user (of
-the <EM>element</EM> and <EM>type</EM> requested by
-<EM>g.ask</EM>), <EM>mapset</EM> to the GRASS mapset in
+The output is <em>/bin/sh</em> commands to set the variable
+<em>name</em> to the file name specified by the user (of
+the <em>element</em> and <em>type</em> requested by
+<em>g.ask</em>), <em>mapset</em> to the GRASS mapset in
 which this file resides (or will be created),
-<EM>fullname</EM> is the name with the mapset embedded in
-it, and <EM>file</EM> to the full UNIX path name
+<em>fullname</em> is the name with the mapset embedded in
+it, and <em>file</em> to the full UNIX path name
 identifying this file.  These variables may be set in the
-<EM>/bin/sh</EM> as follows:
+<em>/bin/sh</em> as follows:
 
 <DL>
 <DD>
-<B>. unixfile</B>
+<b>. unixfile</b>
 </DL>
 
 
-<P>
+<p>
 
 The . is a shell command which means read the
-<EM>unixfile</EM> and execute the commands found there.  It
-is NOT part of the <EM>unixfile</EM> name and MUST be
+<em>unixfile</em> and execute the commands found there.  It
+is NOT part of the <em>unixfile</em> name and MUST be
 followed by a space.
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 The user may choose to simply hit the return key and not enter a file name.
 If this happens the variables will be set as follows:
@@ -134,7 +134,7 @@ fullname=
 file=
 </pre></div>
 
-<P>
+<p>
 
 The following is a way to test for this case:
 
@@ -146,15 +146,15 @@ then
 fi
 </PRE></div>
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="d.ask.html">d.ask</A></EM>,
-<EM><A HREF="g.filename.html">g.filename</A></EM>,
-<EM><A HREF="g.findfile.html">g.findfile</A></EM>,
-<EM><A HREF="g.gisenv.html">g.gisenv</A></EM>,
-<EM><A HREF="g.parser.html">g.parser</A></EM>
+<em><a href="d.ask.html">d.ask</a></em>,
+<em><a href="g.filename.html">g.filename</a></em>,
+<em><a href="g.findfile.html">g.findfile</a></em>,
+<em><a href="g.gisenv.html">g.gisenv</a></em>,
+<em><a href="g.parser.html">g.parser</a></em>
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Michael Shapiro,
 U.S.Army Construction Engineering Research Laboratory

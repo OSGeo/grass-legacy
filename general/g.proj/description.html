@@ -1,13 +1,13 @@
 <h2>DESCRIPTION</h2>
 
-<P><em>g.proj</em> provides a means of converting a co-ordinate system
+<p><em>g.proj</em> provides a means of converting a co-ordinate system
 description (i.e. projection information) between various formats.
-It requires <A HREF="http://www.gdal.org/ogr/">OGR</A> to compile. The basic
+It requires <a href="http://www.gdal.org/ogr/">OGR</a> to compile. The basic
 functionality of the module is to report the projection information for the
 current location, either in conventional GRASS (-p flag) or PROJ.4 (-j flag) 
 format.</P>
 
-<P>Projection information may also be output in the Well-Known Text (WKT) 
+<p>Projection information may also be output in the Well-Known Text (WKT) 
 format popularised
 by proprietary GIS. In addition, if one of the parameters <em>georef</em>, 
 <em>wkt</em>, <em>proj4</em> or <em>epsg</em> is specified, rather than the 
@@ -28,7 +28,7 @@ file.</dd>
 
 <dt>proj4=<em>description</em> or <em>-</em></dt>
 <dd><em>description</em> should be a projection description in 
-<A HREF="http://remotesensing.org/proj/">PROJ.4</a> format, enclosed in
+<a href="http://remotesensing.org/proj/">PROJ.4</a> format, enclosed in
 quotation marks if there are any spaces. If <em>-</em> is given for
 <em>description</em>, the PROJ.4 description will be read from stdin rather 
 than as a directly-supplied command-line parameter.</dd>
@@ -42,13 +42,13 @@ ${GISBASE}/etc/ogr_csv. These can be updated if necessary to support future
 revisions of the EPSG database.</dd>
 </dl>
 
-<P>The -p, -j, -w, etc. flags are all functional when importing projection
+<p>The -p, -j, -w, etc. flags are all functional when importing projection
 information from an external source, meaning that <em>g.proj</em> can be
 used to convert between representations of the information. It is
 <strong>not</strong> required that either the input or output be in GRASS
 format.
 
-<P>In addition however, if the -c flag is specified, <em>g.proj</em> will 
+<p>In addition however, if the -c flag is specified, <em>g.proj</em> will 
 create new GRASS projection files (PROJ_INFO, PROJ_UNITS, WIND and 
 DEFAULT_WIND) based on the imported information. If the <em>location</em> 
 parameter is specified in addition to -c, then a new location will be created. 
@@ -56,14 +56,14 @@ Otherwise the projection information files in the current location will be
 overwritten. The program will warn before doing this only if command-line
 interactive mode (<em>-i</em> flag) is selected.</P>
 
-<P>The final mode of operation of g.proj is to report on the datum
+<p>The final mode of operation of g.proj is to report on the datum
 information and datum transformation parameters associated with the
 co-ordinate system. The -d flag will report a human-readable summary of
 this.</P>
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
-<P>If the input co-ordinate system contains a datum name but no
+<p>If the input co-ordinate system contains a datum name but no
 transformation parameters, and there is more than one suitable parameter set
 available (according to the files datum.table and datumtransform.table in
 ${GISBASE}/etc), g.proj will check the value of the <em>datumtrans</em>
@@ -85,18 +85,18 @@ datum transformation parameters using one of the above two methods
 <strong>even if</strong> a valid parameter set is already specified in the 
 input co-ordinate system.</P>
 
-<P>Output is simply based on the input projection information. g.proj does 
+<p>Output is simply based on the input projection information. g.proj does 
 <strong>not</strong> attempt to verify that the co-ordinate system thus 
 described matches an existing system in use in the world. In particular,
 this means there are no EPSG Authority codes in the WKT output.</P>
 
-<P>WKT format shows the false eastings and northings in the projected unit
+<p>WKT format shows the false eastings and northings in the projected unit
 (e.g. meters, feet) but in PROJ format it should always be given in meters.</P>
 
-<P>The maximum size of input WKT or PROJ.4 projection descriptions is
+<p>The maximum size of input WKT or PROJ.4 projection descriptions is
 limited to 8000 bytes.</P>
 
-<H2>EXAMPLES</H2>
+<h2>EXAMPLES</h2>
 
 Print the projection information for the current location:<br>
 
@@ -193,25 +193,25 @@ ogr2ogr -t_srs "`g.proj -wf`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
 </pre></div>
 
 
-<H2>REFERENCES</H2>
+<h2>REFERENCES</h2>
 
 <a href="http://proj.maptools.org">PROJ 4</a>: Projection/datum support library<br>
 <a href="http://www.gdal.org">GDAL raster library and toolset</a><br>
 <a href="http://www.gdal.org/ogr/">OGR vector library and toolset</a>
 
-<P>
-<B>Further reading</B>
+<p>
+<b>Further reading</b>
 <ul>
 <li> <a href="http://www.asprs.org/resources/grids/">ASPRS Grids and Datum</a>
 <li> <a href="http://www.mapref.org">MapRef - The Collection of Map Projections and Reference Systems for Europe</a>
 <li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ4)
 </ul>
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
  
-<EM><a href="g.setproj.html">g.setproj</a></EM><BR>
-<EM><a href="r.in.gdal.html">r.in.gdal</a></EM><BR>
-<EM><a href="v.in.ogr.html">v.in.ogr</a></EM>
+<em><a href="g.setproj.html">g.setproj</a></em><BR>
+<em><a href="r.in.gdal.html">r.in.gdal</a></em><BR>
+<em><a href="v.in.ogr.html">v.in.ogr</a></em>
 
 <h2>AUTHOR</h2>
 

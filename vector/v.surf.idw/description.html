@@ -1,7 +1,7 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
 <p>
-<EM>v.surf.idw</EM> fills a raster matrix with interpolated
+<em>v.surf.idw</em> fills a raster matrix with interpolated
 values generated from a set of irregularly spaced data
 points using numerical approximation (weighted averaging)
 techniques. The interpolated value of a cell is determined
@@ -13,12 +13,12 @@ features), restricts the spatial influence of any errors,
 and generates the interpolated surface from the data
 points.</p>
 
-<P>
+<p>
 This program allows the user to use a GRASS vector point map file,
 rather than a raster map layer, as input.</p>
 
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 <p>
 The amount of memory used by this program is related to the number
@@ -34,7 +34,7 @@ To read and interpolate from the elevation co-ordinates as 3rd dimension
 of the vector geometry, use <em>layer=0</em>. In this case no <em>column</em>
 parameter has to be specified.</p>
 
-<P>
+<p>
 If the user has a mask set, then interpolation is only done
 for those cells that fall within the mask. However, all
 vector points in the current region are used even
@@ -46,37 +46,37 @@ interpolation. The <em>-n</em> flag may also be used to
 achieve a similar result.</p>
 
 <p>
-If more than <EM>count</EM> points fall into one target raster cell, 
+If more than <em>count</em> points fall into one target raster cell, 
 the mean of all the site values will determine the cell value (unless
-the -n flag is specified, in which case only the <EM>count</EM> 
+the -n flag is specified, in which case only the <em>count</em> 
 points closest to the centre of the cell will be interpolated).</p>
 
-<P>
-The <EM>power=</EM> parameter defines an exponential distance weight.
+<p>
+The <em>power=</em> parameter defines an exponential distance weight.
 Greater values assign greater influence to values closer to the
 point to be interpolated. The interpolation function peaks sharply over
-the given data points for 0 &lt; <EM>p</EM> &lt; 1 and more smoothly for
+the given data points for 0 &lt; <em>p</em> &lt; 1 and more smoothly for
 larger values. The default value for the power parameter is 2.  
 </p>
 
-<P>
-By setting <EM>npoints=1</EM>, the module can be used 
+<p>
+By setting <em>npoints=1</em>, the module can be used 
 to calculate raster Voronoi diagrams (Thiessen polygons).</p>
 
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="d.vect.html">d.vect</A></EM><br>
-<EM><A HREF="g.region.html">g.region</A></EM><br>
-<EM><A HREF="r.surf.contour.html">r.surf.contour</A></EM><br>
-<EM><A HREF="r.surf.idw.html">r.surf.idw</A></EM><br>
-<EM><A HREF="r.surf.idw2.html">r.surf.idw2</A></EM><br>
-<EM><A HREF="r.surf.gauss.html">r.surf.gauss</A></EM><br>
-<EM><A HREF="r.surf.fractal.html">r.surf.fractal</A></EM><br>
-<EM><A HREF="r.surf.random.html">r.surf.random</A></EM><br>
-<EM><A HREF="v.surf.rst.html">v.surf.rst</A></EM>
+<em><a href="d.vect.html">d.vect</a></em><br>
+<em><a href="g.region.html">g.region</a></em><br>
+<em><a href="r.surf.contour.html">r.surf.contour</a></em><br>
+<em><a href="r.surf.idw.html">r.surf.idw</a></em><br>
+<em><a href="r.surf.idw2.html">r.surf.idw2</a></em><br>
+<em><a href="r.surf.gauss.html">r.surf.gauss</a></em><br>
+<em><a href="r.surf.fractal.html">r.surf.fractal</a></em><br>
+<em><a href="r.surf.random.html">r.surf.random</a></em><br>
+<em><a href="v.surf.rst.html">v.surf.rst</a></em>
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Michael Shapiro,  
 U.S. Army Construction Engineering 

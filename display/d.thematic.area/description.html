@@ -1,4 +1,4 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
 <em>d.thematic.area</em> draws thematic coropleth vector maps based on an attribute column or an expression involving several columns. It takes a number of class breaks (excluding the minimum and maximum values) and a list of colors to apply to the classes (has to be the number of class breaks + 1).
 
@@ -7,7 +7,7 @@ The <em>-l</em> flag instructs the module to print legend information (class min
 One can used <em>v.class</em> to supply class breaks for d.thematic.area (see example below);
 
 
-<H2>EXAMPLE</H2>
+<h2>EXAMPLE</h2>
 
 <div class="code"><pre>
 d.thematic.area -l map=communes3 data=pop breaks=111393.250000,222785.500000,334177.750000 colors=255:0:0,0:255:0,0:0:255,0,0,0
@@ -18,13 +18,13 @@ The following example uses a calculated attribute (density = pop/area) and v.cla
 d.thematic.area -l map=communes2 data=pop/area breaks=`v.class -g map=communes2 column=pop/area algo=std nbcla=5` colors=0:0:255,50:100:255,255:100:50,255:0:0,156:0:0
 </pre></div>
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="v.class.html">v.class</A></EM>
-<EM><A HREF="d.vect.html">d.vect</A></EM>
-<EM><A HREF="v.univar.html">v.univar</A></EM>
+<em><a href="v.class.html">v.class</a></em>
+<em><a href="d.vect.html">d.vect</a></em>
+<em><a href="v.univar.html">v.univar</a></em>
 
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Moritz Lennert
