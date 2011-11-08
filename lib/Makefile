@@ -73,5 +73,7 @@ headers:
 	for file in ../include/vect/*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/vect/ ; done
 	for file in ../include/iostream/*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/iostream/ ; done
 	for file in ../include/Make/*.make ; do $(INSTALL_DATA) $$file $(GISBASE)/include/Make/ ; done
+	sed -e 's+(MODULE_TOPDIR)/tools/g.html2man/g.html2man+(GISBASE)/tools/g.html2man+' \
+		../include/Make/Man.make > $(GISBASE)/include/Make/Man.make
 
 clean: cleansubdirs
