@@ -201,7 +201,7 @@ if [ "$GIS_FLAG_T" -eq 1 ] ; then
    g.message -d "true slope: $TRUE_SLOPE"
    g.message -d "scaled slope: $SCALED_SLOPE"
 
-   eval `r.regression.line -sg map1="$GIS_OPT_LAYER2" map2="$GIS_OPT_LAYER1"`
+   eval `r.regression.line -g map1="$GIS_OPT_LAYER2" map2="$GIS_OPT_LAYER1"`
    # redo it, just to confirm
    END_X=100
    END_L=`echo "$a $b" | awk '{print ( $1 + (100 * $2) )}'`
