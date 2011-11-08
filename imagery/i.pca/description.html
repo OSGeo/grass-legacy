@@ -32,6 +32,13 @@ rescale=0,0,  no rescaling is performed on output files.
 
 <DD>If output is rescaled, the output raster will be of type CELL. If 
 the output is not rescaled, the output raster will be of type DCELL.
+
+<DT><B>-n</B> <EM>normalize input raster maps</EM>
+<DD>By default, the values of the input raster maps are centered for each
+map separately with <EM>x - mean</EM>. With <EM>-n</EM>, the input raster
+maps are normalized for each map separately with <EM>(x - mean) / stddev</EM>.
+Normalizing is highly recommended when the input raster maps have different
+units, e.g. represent different environmental parameters.
 </DL>
 
 
@@ -42,7 +49,7 @@ components analysis (pca) to a time series of LANDSAT images of a burned
 region in Australia.
 <P>
 Eigenvalue and eigenvector information is stored in the output maps'
-history files. View with <em>r.info</em>.
+history files. View with <em>r.info -h</em>.
 
 
 <H2>EXAMPLE</H2>
@@ -54,9 +61,9 @@ i.pca in=spot.ms.1,spot.ms.2,spot.ms.3 out=spot_pca
 
 r.info -h spot_pca.1
    Eigen values, (vectors), and [percent importance]:
-   PC1   1170.12 ( -0.63 -0.65 -0.43 ) [ 88.07% ]
-   PC2    152.49 (  0.23  0.37 -0.90 ) [ 11.48% ]
-   PC3      6.01 (  0.75 -0.66 -0.08 ) [  0.45% ]
+   PC1   1159.75 ( 0.6237, 0.6503, 0.4337) [88.38%]
+   PC2    146.50 ( 0.2403, 0.3685,-0.8981) [11.16%]
+   PC3      5.97 (-0.7438, 0.6643, 0.0735) [ 0.45%]
 </pre></div>
 
 
