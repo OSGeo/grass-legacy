@@ -1,4 +1,4 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
 This command works only interactively. It clears the entire
 graphics screen and provides a graphical interaction
@@ -6,7 +6,7 @@ allowing the selection of transects for which profiles are
 then generated. Input parameters can be specified on the command line
 for quicker start-up.
 
-<H2>USER PROMPTS</H2>
+<h2>USER PROMPTS</h2>
 
 First, you will be presented with a prompt asking you to
 choose a raster map layer to be profiled. Then you will be 
@@ -17,7 +17,7 @@ in an aerial photo or satellite image. Finally, you will
 be prompted for the name prefix for output file(s) containing the profile
 data. This is an optional feature.
 
-<P>
+<p>
 
 After parameters are given, the raster layer will be
 displayed in the left half of the graphics monitor, and the
@@ -26,7 +26,7 @@ frames. There will also be two frames along the top of the
 monitor: a mouse-button menu frame on the left, and a
 status frame on the right.
 
-<P>
+<p>
 
 The mouse-button menu initially offers you three options: 
 
@@ -73,15 +73,15 @@ raster map layer and clear out the four profile frames,
 click on the middle mouse-button. If you would like to
 quit, then click on the right button.
 
-<P>
+<p>
 
-If you selected the <B>plotfile</B> option, you will have up to
-four files starting with the <EM>name</EM> and followed by a suffix
-of the plot letter <EM>A, B, C,</EM> or <EM>D</EM>.  The plots that
+If you selected the <b>plotfile</b> option, you will have up to
+four files starting with the <em>name</em> and followed by a suffix
+of the plot letter <em>A, B, C,</em> or <em>D</em>.  The plots that
 are written to these files reflect the last of each plot done with that
 letter (i.e. They will match what's in the display when you quit).
 
-<P>
+<p>
 The format of the plot files is not geared toward any particular software,
 but should be easy to coax into a number of other programs.  The first 
 three lines contain some header information about the plot, each prefixed
@@ -105,7 +105,7 @@ of a plotfile:
 ...
 </pre></div>
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 You might notice the first two 'dist' values in the profile output above are
 both zero.  This is due to the fact the cell resolution for this file is
@@ -120,17 +120,17 @@ which still fall within the same cell boundaries.  The difference should
 always be less than the distance between the center and any corner (not
 edge!) of the cell at the resolution of the profiled raster.
 
-<P>
+<p>
 
 Only four output plotfiles can be made.  Each time a new profile is run, the
-plotfile is immediately written to the file <EM>name</EM>.<EM>letter</EM>.
+plotfile is immediately written to the file <em>name</em>.<em>letter</em>.
 One can take advantage of this fact to create an unlimited number of
 plotfiles simply by renaming the output files before running more profiles. 
 This may not always be the case, but it is at the time of this writing.
 
-<P>
+<p>
 
-Useful enhancements to <EM>d.profile</EM> would include: 
+Useful enhancements to <em>d.profile</em> would include: 
 
 <UL>
 
@@ -150,44 +150,44 @@ typing coordinates.
 
 <H3>Perl Script to convert output to a site_list</H3>
 
-The script below will convert the <B>plotfile</B> output to the site_list format.
+The script below will convert the <b>plotfile</b> output to the site_list format.
 It probably won't work 100% for lat/lon datasets.
 
-<P>
+<p>
 
 <TT>
-<B>#! /usr/bin/perl -w</B><BR>
+<b>#! /usr/bin/perl -w</b><BR>
 # prof2sites.pl: converts the output of d.profile to a site_list
 <BR><BR>
-<B>my</B> (<EM>$dist</EM>, <EM>$elev</EM>, <EM>$east</EM>, <EM>$north</EM>);
+<b>my</b> (<em>$dist</em>, <em>$elev</em>, <em>$east</em>, <em>$north</em>);
 <BR><BR>
-<B>while</B> (&lt;<B>STDIN</B>&gt;)<BR>
+<b>while</b> (&lt;<b>STDIN</b>&gt;)<BR>
 {<BR>
-&nbsp;&nbsp;<B>if</B> (m/^#/)<BR>
+&nbsp;&nbsp;<b>if</b> (m/^#/)<BR>
 &nbsp;&nbsp;{<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<B>print</B> "<EM>$_</EM>";<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$_</em>";<BR>
 &nbsp;&nbsp;}<BR>
-&nbsp;&nbsp;<B>else</B><BR>
+&nbsp;&nbsp;<b>else</b><BR>
 &nbsp;&nbsp;{<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<B>chomp</B>;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;(<EM>$dist</EM>, <EM>$elev</EM>, <EM>$east</EM>, <EM>$north</EM>) = <B>split</B> / /;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;<B>print</B> "<EM>$east</EM>|<EM>$north</EM>|<EM>$elev</EM>|#1 \%<EM>$dist</EM> \@Profile\n";<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>chomp</b>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;(<em>$dist</em>, <em>$elev</em>, <em>$east</em>, <em>$north</em>) = <b>split</b> / /;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>print</b> "<em>$east</em>|<em>$north</em>|<em>$elev</em>|#1 \%<em>$dist</em> \@Profile\n";<BR>
 &nbsp;&nbsp;}<BR>
 }<BR>
 </TT>
 
-<H2>BUGS</H2>
+<h2>BUGS</h2>
 
 None known.
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 Dave Johnson
 <BR> DBA Systems, Inc. <BR>
 10560 Arrowhead Drive <BR>
 Fairfax, Virginia 22030
 
-<P>
+<p>
 Modified by Eric G. Miller for profile output, support of 
 floating point rasters, and optional display raster (02-Dec-2000).
 
