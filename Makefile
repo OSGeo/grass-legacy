@@ -141,7 +141,7 @@ libs:
 	done
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -fr --parents include ${ARCH_DISTDIR}/
-	-sed -e 's+(MODULE_TOPDIR)/tools/g.html2man/g.html2man+(GISBASE)/tools/g.html2man+' \
+	-sed -e 's+tools/g.html2man/g.html2man+tools/g.html2man+' \
 		include/Make/Man.make > ${ARCH_DISTDIR}/include/Make/Man.make
 
 #we leave this target for a while so that people can easily upgrade (11/2004):
