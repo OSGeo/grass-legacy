@@ -390,7 +390,7 @@ else
      exit 1
    fi
 
-   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$GRASS_ADDON_PATH1" = ~/.grass6/addons  ] ; then
+   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons  ] ; then
       # symlink into path which is actually in the $PATH
       ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
