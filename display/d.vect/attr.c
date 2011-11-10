@@ -49,13 +49,11 @@ int attr(struct Map_info *Map, int type, char *attrcol,
     Vect_rewind(Map);
     while (1) {
 	ltype = Vect_read_next_line(Map, Points, Cats);
-	switch (ltype) {
-	case -1:
+	if (ltype == -1)
 	    G_fatal_error(_("Can't read vector map"));
-	case -2:		/* EOF */
-	    return 0;
-	}
-
+	else if (ltype == -2)
+	    break;
+	
 	if (!(type & ltype))
 	    continue;		/* used for both lines and labels */
 
