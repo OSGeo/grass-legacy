@@ -247,10 +247,10 @@ def ListOfMapsets(get = 'ordered'):
                               read = True,
                               quiet = True,
                               flags = 'l',
-                              fs = ';')
+                              fs = 'newline')
         
         if ret:
-            mapsets = ret.replace('\n', '').strip().split(';')
+            mapsets = ret.splitlines()
             ListSortLower(mapsets)
         else:
             return None
@@ -260,12 +260,12 @@ def ListOfMapsets(get = 'ordered'):
                               read = True,
                               quiet = True,
                               flags = 'p',
-                              fs = ';')
+                              fs = 'newline')
         if ret:
             if get == 'accessible':
-                mapsets = ret.replace('\n', '').strip().split(';')
+                mapsets = ret.splitlines()
             else:
-                mapsets_accessible = ret.replace('\n', '').strip().split(';')
+                mapsets_accessible = ret.splitlines()
                 for mapset in mapsets_accessible:
                     mapsets.remove(mapset)
                 mapsets = mapsets_accessible + mapsets
