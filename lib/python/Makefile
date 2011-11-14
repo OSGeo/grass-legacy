@@ -24,16 +24,20 @@ default: $(PYFILES) $(PYCFILES) $(GDIR)/__init__.py $(GDIR)/__init__.pyc
 $(PYDIR):
 	$(MKDIR) $@
 
-$(GDIR): | $(PYDIR)
+$(GDIR):
+	$(MAKE) $(PYDIR)
 	$(MKDIR) $@
 
-$(DSTDIR): | $(GDIR)
+$(DSTDIR):
+	$(MAKE) $(GDIR)
 	$(MKDIR) $@
 
-$(GDIR)/__init__.py: grass__init__.py | $(GDIR)
+$(GDIR)/__init__.py: grass__init__.py
+	$(MAKE) $(GDIR)
 	$(INSTALL_DATA) $< $@
 
-$(DSTDIR)/%: % | $(DSTDIR)
+$(DSTDIR)/%: %
+	$(MAKE) $(DSTDIR)
 	$(INSTALL_DATA) $< $@
 
 setup.py: setup.py.sed
