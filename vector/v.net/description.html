@@ -1,9 +1,28 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.net</em> is used for vector network maps maintenance.
-It reports about the current network graph status.
-It also permits to globally insert missing nodes and to connect
-unconnected nodes to the graph within a given distance threshold.
+<em>v.net</em> is used for network preparation and maintenance. 
+It permits to insert missing nodes or arcs and to connect unconnected 
+nodes to the network within a given distance threshold.
+It can also report the current network graph status. 
+
+<p>
+In terms of network analysis, a network consists of nodes connected by 
+arcs. In a vector map prepared for network analysis, nodes are represented 
+by the grass-internal geometry type <em>node</em> and arcs by the geometry 
+type <em>line</em>. If a <em>line</em> consists of several vertices and 
+segments (the typical case), only its starting and ending vertex are 
+regarded as network nodes. Further more, explicit starting and ending 
+nodes for e.g. least cost path search or subnetwork allocation are 
+represented by the geometry type point which must be identical with the 
+start or end vertex (network node) of a line.
+
+<p>
+In general, network analysis will find the least costly (shortest or 
+fastest) path from point A to point B by follwing the existing lines. 
+This implies that the points A, B must lie at the start or end point of a 
+line with is part of the network. If no line is starting or ending at a 
+given point, this point is not part of the network, i.e. the point is 
+unconnected and unreachable.
 
 <h3>NOTES</h3>
 
@@ -19,16 +38,16 @@ Spearfish based examples:<p>
 Create nodes globally for all line ends and intersections:
 <br>
 <div class="code"><pre>
-v.net in=streams out=streams_node
+v.net input=roads output=roads_node operation=nodes
 </pre></div>
 
 <p>
 Merge in nodes from a separate map within given threshold:
 <br>
 <div class="code"><pre>
-echo "1|601653.5|4922869.2|start
-2|593330.8|4924096.6|end" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
-                         east double precision, north double precision, label varchar(43)"
+echo "1|601955.1|4916944.9|start
+2|594385.6|4921565.2|end" | v.in.ascii in=- cat=1 x=2 y=3 out=startend col="cat integer, \
+                         east double precision, north double precision, label varchar(6)"
 
 #create lines map connecting points to network (on layer 2)
 v.net myroads points=startend out=myroads_net op=connect thresh=200
