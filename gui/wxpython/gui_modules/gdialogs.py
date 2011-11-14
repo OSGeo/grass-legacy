@@ -1531,19 +1531,20 @@ class ImportDialog(wx.Dialog):
         btnsizer = wx.BoxSizer(orient = wx.HORIZONTAL)
         
         btnsizer.Add(item = self.btn_cmd, proportion = 0,
-                     flag = wx.ALL | wx.ALIGN_CENTER,
-                     border = 10)
-        
-        btnsizer.Add(item = self.btn_run, proportion = 0,
-                     flag = wx.ALL | wx.ALIGN_CENTER,
+                     flag = wx.RIGHT | wx.ALIGN_CENTER,
                      border = 10)
         
         btnsizer.Add(item = self.btn_cancel, proportion = 0,
-                     flag = wx.ALL | wx.ALIGN_CENTER,
+                     flag = wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER,
+                     border = 10)
+        
+        btnsizer.Add(item = self.btn_run, proportion = 0,
+                     flag = wx.RIGHT | wx.ALIGN_CENTER,
                      border = 10)
         
         dialogSizer.Add(item = btnsizer, proportion = 0,
-                        flag = wx.ALIGN_CENTER)
+                        flag = wx.ALIGN_CENTER_VERTICAL | wx.BOTTOM | wx.ALIGN_RIGHT,
+                        border = 10)
         
         # dialogSizer.SetSizeHints(self.panel)
         self.panel.SetAutoLayout(True)
