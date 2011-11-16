@@ -470,6 +470,17 @@ def install_extension():
             fd = open(html_man, "w")
             fd.write(html_str)
             fd.close()
+
+    # symlink for binaries needed, see http://trac.osgeo.org/grass/changeset/49124
+    src = None
+    if os.path.exists(os.path.join(options['prefix'], 'bin',
+                                   options['extension'])):
+        src = os.path.join(options['prefix'], 'bin', options['extension'])
+    elif os.path.exists(os.path.join(options['prefix'], 'scripts',
+                                     options['extension'])):
+        src = os.path.join(options['prefix'], 'scripts', options['extension'])
+    if src and not os.path.exists(os.path.join(options['prefix'], options['extension'])):
+        os.symlink(src, os.path.join(options['prefix'], options['extension']))
     
     if not os.environ.has_key('GRASS_ADDON_PATH') or \
             not os.environ['GRASS_ADDON_PATH']:
@@ -519,6 +530,9 @@ def remove_extension():
     except HTTPError:
         remove_extension_std()
 
+    # symlink for binaries needed, see http://trac.osgeo.org/grass/changeset/49124
+    grass.try_remove(os.path.join(options['prefix'], options['extension']))
+    
     grass.message(_("Extension <%s> successfully uninstalled.") % options['extension'])
     
 def remove_extension_std():
