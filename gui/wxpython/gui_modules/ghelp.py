@@ -810,7 +810,7 @@ class InstallExtensionWindow(wx.Frame):
         self.repo = wx.TextCtrl(parent = self.panel, id = wx.ID_ANY)
         self.fullDesc = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                     label = _("Fetch full info including description and keywords (takes time)"))
-        self.fullDesc.SetValue(False)
+        self.fullDesc.SetValue(True)
         
         self.search = SearchModuleWindow(parent = self.panel)
         self.search.SetSelection(2) 
@@ -820,7 +820,7 @@ class InstallExtensionWindow(wx.Frame):
         self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
                                       label = " %s " % _("Options"))
         
-        task = gtask.parse_interface('g.extension')
+        task = gtask.parse_interface('g.extension.py')
         
         for f in task.get_options()['flags']:
             name = f.get('name', '')
@@ -834,7 +834,7 @@ class InstallExtensionWindow(wx.Frame):
             self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                              label = desc)
         self.repo.SetValue(task.get_param(value = 'svnurl').get('default',
-                                                                'https://svn.osgeo.org/grass/grass-addons'))
+                                                                'http://svn.osgeo.org/grass/grass-addons'))
         
         self.statusbar = self.CreateStatusBar(number = 1)
         
@@ -848,7 +848,7 @@ class InstallExtensionWindow(wx.Frame):
         self.btnInstall.Enable(False)
         self.btnCmd = wx.Button(parent = self.panel, id = wx.ID_ANY,
                                 label = _("Command dialog"))
-        self.btnCmd.SetToolTipString(_('Open %s dialog') % 'g.extension')
+        self.btnCmd.SetToolTipString(_('Open %s dialog') % 'g.extension.py')
 
         self.btnClose.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
         self.btnFetch.Bind(wx.EVT_BUTTON, self.OnFetch)
@@ -913,7 +913,7 @@ class InstallExtensionWindow(wx.Frame):
     def _getCmd(self):
         item = self.tree.GetSelected()
         if not item or not item.IsOk():
-            return ['g.extension']
+            return ['g.extension.py']
         
         name = self.tree.GetItemText(item)
         if not name:
@@ -924,8 +924,8 @@ class InstallExtensionWindow(wx.Frame):
             if self.options[key].IsChecked():
                 flags.append('-%s' % key)
         
-        return ['g.extension'] + flags + ['extension=' + name,
-                                          'svnurl=' + self.repo.GetValue().strip()]
+        return ['g.extension.py'] + flags + ['extension=' + name,
+                                             'svnurl=' + self.repo.GetValue().strip()]
     
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
