@@ -12,7 +12,7 @@ rem ----------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
-set PACKAGE_DIR=.\GRASS-65-Devel-Package
+set PACKAGE_DIR=.\GRASS-65-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
