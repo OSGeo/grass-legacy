@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-05 23:14+0200\n"
-"PO-Revision-Date: 2010-02-15 14:06+0900\n"
+"PO-Revision-Date: 2011-11-15 18:22+0900\n"
 "Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -399,8 +399,7 @@ msgstr "警告： 環境変数を取得出来ません"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 "警告：環境変数GRASS_PROJSHAREを取得することができません \n"
 "これは、GRASSのインストール時のエラーです \n"
@@ -508,14 +507,8 @@ msgid "Select datum transformation parameters:"
 msgstr "データム変換パラメータ選択："
 
 #: ../lib/init/epsg_option.tcl:290 ../lib/init/file_option.tcl:244
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
-msgstr ""
-"パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータム"
-"を使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用"
-"されます"
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgstr "パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータムを使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用されます"
 
 #: ../lib/init/epsg_option.tcl:342
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
@@ -572,11 +565,8 @@ msgstr "警告: i間違った ロケーション "
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまた"
-"はディレクトリが存在しません"
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまたはディレクトリが存在しません"
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -717,13 +707,8 @@ msgid "Starting GRASS for the first time"
 msgstr "GRASSの初回実行"
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
-msgstr ""
-"GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成"
-"してください。一般には \"grassdata\"が使用されます。"
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
+msgstr "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成してください。一般には \"grassdata\"が使用されます。"
 
 #: ../lib/init/gis_set.tcl:589
 msgid "Select GIS data directory"
@@ -771,20 +756,19 @@ msgid ""
 "Something went wrong while processing GISRC file named \"%s\".\n"
 "It's a fatal error. GRASS will not start till issue with GISRC file is fixed."
 msgstr ""
+"GISRC処理のファイルである \"%s\"は何かが間違っていた.\n"
+"致命的なエラーです. GISRCファイルが正しくなるまでGRASSは開始されません"
 
 #: ../lib/init/gis_set.tcl:938
 msgid ""
 "\n"
 "\n"
-"On MS-Windows systems failure might be caused by non-latin letter in GISRC "
-"file path.  Check that Your username doesn't contain non-latin letters.  Due "
-"to non-latin letter encoding handling in MS-Windows, it's not possible to "
-"run GRASS if username contains non-latin letters."
+"On MS-Windows systems failure might be caused by non-latin letter in GISRC file path.  Check that Your username doesn't contain non-latin letters.  Due to non-latin letter encoding handling in MS-Windows, it's not possible to run GRASS if username contains non-latin letters."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:942
 msgid "ERROR: unable to read GISRC"
-msgstr ""
+msgstr "エラー:GISRCを読み込むことができません"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
@@ -897,7 +881,7 @@ msgstr "セルグリッド色:       "
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "white"
-msgstr ""
+msgstr "白色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -906,7 +890,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "grey"
-msgstr ""
+msgstr "灰色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -915,7 +899,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "gray"
-msgstr ""
+msgstr "灰色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -924,7 +908,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "black"
-msgstr ""
+msgstr "黒色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -932,9 +916,8 @@ msgstr ""
 #: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
-#, fuzzy
 msgid "brown"
-msgstr "増加"
+msgstr "茶色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -943,7 +926,7 @@ msgstr "増加"
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "red"
-msgstr ""
+msgstr "赤色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -951,9 +934,8 @@ msgstr ""
 #: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
-#, fuzzy
 msgid "orange"
-msgstr "完了"
+msgstr "橙色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -962,7 +944,7 @@ msgstr "完了"
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "yellow"
-msgstr ""
+msgstr "黄色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -971,7 +953,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "green"
-msgstr ""
+msgstr "緑色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -979,9 +961,8 @@ msgstr ""
 #: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
-#, fuzzy
 msgid "aqua"
-msgstr "不透明"
+msgstr "水色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -990,7 +971,7 @@ msgstr "不透明"
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "cyan"
-msgstr ""
+msgstr "シアン"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -999,7 +980,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "indigo"
-msgstr ""
+msgstr "藍色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -1007,9 +988,8 @@ msgstr ""
 #: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
-#, fuzzy
 msgid "blue"
-msgstr "テーブル"
+msgstr "青色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -1018,7 +998,7 @@ msgstr "テーブル"
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "purple"
-msgstr ""
+msgstr "赤紫"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -1027,7 +1007,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "violet"
-msgstr ""
+msgstr "紫色"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
@@ -1036,7 +1016,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
 #: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
 msgid "magenta"
-msgstr ""
+msgstr "マゼンダ"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:181
 msgid "  cell values font "
@@ -1072,8 +1052,7 @@ msgstr "ジオメトリをマップに割り当てますか？"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -1214,11 +1193,11 @@ msgstr "グラフスタイル"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:175 ../gui/tcltk/gis.m/chart.tcl:280
 msgid "bar"
-msgstr ""
+msgstr "バー"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:175 ../gui/tcltk/gis.m/chart.tcl:280
 msgid "pie"
-msgstr ""
+msgstr "パイ"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:176
 msgid "\ttext font "
@@ -1253,7 +1232,6 @@ msgid "Display scale and north arrow"
 msgstr "スケールと方位表示"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
-#, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr "縮尺パーセント: 0-100% でディスプレイの左上から指定"
 
@@ -1263,7 +1241,7 @@ msgstr "\t スケール/方位の左上端のXY入力"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "    "
-msgstr "      "
+msgstr "    "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:190
 msgid "\t "
@@ -1527,20 +1505,12 @@ msgid "Could not create TIF"
 msgstr "TIFを作成できません"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgstr "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgstr "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -1619,9 +1589,7 @@ msgid "4. Select map"
 msgstr "４．マップ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -1721,29 +1689,16 @@ msgid "Exit georectifier"
 msgstr "幾何補正"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必"
-"要があります"
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgstr "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２で"
-"は６点、第３では１０点以上必要です"
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgstr "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２では６点、第３では１０点以上必要です"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要"
-"があります"
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
+msgstr "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -1766,10 +1721,8 @@ msgid "Drag with mouse to pan"
 msgstr "マウスのドラッグでパン"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
-msgstr ""
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
+msgstr "データベース または ロケーション名 または マップセット はからです.  致命的なエラーです. gis.mは適切な設定無くしては実行できません"
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1810,9 +1763,8 @@ msgid "Character encoding: "
 msgstr "文字エンコード："
 
 #: ../gui/tcltk/gis.m/gm.tcl:539
-#, fuzzy
 msgid "End current GRASS session"
-msgstr "GRASSのバージョン表示"
+msgstr "現在のGRASSセッション終了"
 
 #: ../gui/tcltk/gis.m/gm.tcl:540
 msgid ""
@@ -1820,25 +1772,29 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
+"GRASSを終了してもよろしいですか?\n"
+"\n"
+"この動作はgis.mインスタンスの全てのセッションを終了します.\n"
+"\n"
+"GRASSのコマンドラインから実行している場合は, そのコマンドが完了した後でGRASSが終了します."
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
-#, fuzzy
 msgid "Terminate current GRASS session"
-msgstr "GRASSのバージョン表示"
+msgstr "GRASSを終了する"
 
 #: ../gui/tcltk/gis.m/gm.tcl:550
-#, fuzzy
 msgid "Not supported"
-msgstr "クエリはサポートしていません"
+msgstr "サポートしていません"
 
 #: ../gui/tcltk/gis.m/gm.tcl:551
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
 " You have to type 'exit' in terminal manually."
 msgstr ""
+"このフィーチャーはサポートしていません \n"
+"キーボードで 'exit' と入力してください"
 
 #: ../gui/tcltk/gis.m/gm.tcl:573
 #, tcl-format
@@ -1968,12 +1924,8 @@ msgid "Select label font"
 msgstr "ラベルフォント選択"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
-msgstr ""
-"ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント"
-"出力のみ) "
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgstr "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント出力のみ) "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -1988,19 +1940,16 @@ msgid "     coordinate type for text placement "
 msgstr "     テキスト表示位置の座標タイプ"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
-#, fuzzy
 msgid "pixels"
-msgstr "(ピクセル)  "
+msgstr "ピクセル"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
-#, fuzzy
 msgid "percent"
-msgstr "印刷"
+msgstr "パーセント"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
-#, fuzzy
 msgid "geographic"
-msgstr "地理座標"
+msgstr "地理"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:162 ../gui/tcltk/gis.m/dtext.tcl:209
 msgid "     align text with coordinate point  "
@@ -2008,54 +1957,48 @@ msgstr "     テキスト座標値位置調整"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "lower left"
-msgstr "流線"
+msgstr "左下"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
-#, fuzzy
 msgid "bottom center"
-msgstr "下："
+msgstr "中央下"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "lower right"
-msgstr " 右："
+msgstr "右下"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "center left"
-msgstr ""
+msgstr "中央左"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maptext.tcl:175
 #: ../gui/tcltk/gis.m/dtext.tcl:213 ../gui/tcltk/gis.m/vector.tcl:483
 #: ../gui/tcltk/gis.m/vector.tcl:488 ../gui/tcltk/gis.m/maplabels.tcl:200
 #: ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "center"
-msgstr "セントロイド"
+msgstr "中央"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "center right"
-msgstr " 右："
+msgstr "中央右"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "upper left"
-msgstr ""
+msgstr "左上"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 msgid "top center"
-msgstr ""
+msgstr "中央上"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "upper right"
-msgstr " 右："
+msgstr "右上"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:172
 msgid "     justification"
@@ -2063,15 +2006,13 @@ msgstr "    行揃え "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:175 ../gui/tcltk/gis.m/vector.tcl:483
 #: ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "left"
-msgstr "左："
+msgstr "左"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:175 ../gui/tcltk/gis.m/vector.tcl:483
 #: ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "right"
-msgstr "右："
+msgstr "右"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:176
 msgid "  line width"
@@ -2163,27 +2104,22 @@ msgid "    vector type"
 msgstr "    ベクトルタイプ"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:282
-#, fuzzy
 msgid "area"
 msgstr "エリア"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:282
-#, fuzzy
 msgid "point"
 msgstr "ポイント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:282
-#, fuzzy
 msgid "centroid"
-msgstr "セントロイド"
+msgstr "重心"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:282
-#, fuzzy
 msgid "line"
 msgstr "ライン"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:282
-#, fuzzy
 msgid "boundary"
 msgstr "境界"
 
@@ -2233,42 +2169,36 @@ msgid "Thematic map: type"
 msgstr "主題図：タイプ"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:318
-#, fuzzy
 msgid "graduated colors"
-msgstr "ランダムカラー"
+msgstr "グラデーション色"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:318
-#, fuzzy
 msgid "graduated points"
-msgstr "ポイントとラインの目盛："
+msgstr "グラデーションポイント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:318
-#, fuzzy
 msgid "graduated lines"
-msgstr "ポイントとラインの目盛："
+msgstr "グラデーションライン"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:320 ../gui/tcltk/d.m/thematic.tcl:171
 msgid " map by"
 msgstr " マップ－"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:323
-#, fuzzy
 msgid "interval"
-msgstr "ポインタ"
+msgstr "間隔"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:323
-#, fuzzy
 msgid "std deviation"
-msgstr "早送り"
+msgstr "標準偏差"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:323
-#, fuzzy
 msgid "quartiles"
-msgstr "境界"
+msgstr "四分位数"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:323
 msgid "custom breaks"
-msgstr ""
+msgstr "カスタムブレイク"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:330
 msgid "    number of intervals to map (interval themes):"
@@ -2321,47 +2251,43 @@ msgstr "階調色：カラースキーマでプリセット"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "blue red"
-msgstr ""
+msgstr "青 赤"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "red blue"
-msgstr "テーブル作成"
+msgstr "赤 青"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "green red"
-msgstr ""
+msgstr "緑 赤"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "red green"
-msgstr ""
+msgstr "赤 緑"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "blue green"
-msgstr ""
+msgstr "青 緑"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "green blue"
-msgstr "テーブル作成"
+msgstr "緑 青"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "cyan yellow"
-msgstr ""
+msgstr "シアン 黄"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "yellow cyan"
-msgstr ""
+msgstr "黄 シアン"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "custom gradient"
-msgstr "スムーズグラデーション描画"
+msgstr "カスタムグラデーション"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "single color"
-msgstr "ラインカラー"
+msgstr "単色"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:387
 msgid "    custom color scheme - start color"
@@ -2498,12 +2424,10 @@ msgid "Raster map: "
 msgstr "ラスターマップ："
 
 #: ../gui/tcltk/gis.m/legend.tcl:229
-#, tcl-format
 msgid "Legend placement and size as 0-100% of display"
-msgstr "ディスプレイを0-100 % として凡例の配置とサイズを設定"
+msgstr "ディスプレイを0-100% として凡例の配置とサイズを設定"
 
 #: ../gui/tcltk/gis.m/legend.tcl:235
-#, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr "    左下端のXY (ディスプレイの左上端から %  ) "
 
@@ -2512,7 +2436,6 @@ msgid "    legend height "
 msgstr "    凡例 高さ  "
 
 #: ../gui/tcltk/gis.m/legend.tcl:248
-#, tcl-format
 msgid "Legend height (% of display)"
 msgstr "凡例 高さ (ディスプレイの%  ) "
 
@@ -2521,7 +2444,6 @@ msgid "%  width"
 msgstr "%   幅"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, tcl-format
 msgid "Legend width (% of display)"
 msgstr "凡例の幅 (ディスプレイの%  ) "
 
@@ -2623,42 +2545,40 @@ msgid "Preset paper type"
 msgstr "プリセットの用紙の種類"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
-#, fuzzy
 msgid "letter"
-msgstr "削除"
+msgstr "レター"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
-#, fuzzy
 msgid "legal"
-msgstr "クリア"
+msgstr "リーガル"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "11x17"
-msgstr ""
+msgstr "11x17"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "ledger"
-msgstr ""
+msgstr "台帳"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A0"
-msgstr ""
+msgstr "A0"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A1"
-msgstr ""
+msgstr "A1"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A2"
-msgstr ""
+msgstr "A2"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:281
 msgid "Custom paper size"
@@ -2915,7 +2835,6 @@ msgid "Frame name (optional): "
 msgstr "フレーム名 (オプション)："
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
 
@@ -3014,9 +2933,8 @@ msgid "ASCII points or GRASS ASCII vector"
 msgstr "ASCIIポイントまたはGRASS ASCIIベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:115
-#, fuzzy
 msgid "ASCII points as vector lines"
-msgstr "ASCIIポリゴンおよびライン"
+msgstr "ベクトルラインとしてのASCIIポイント"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:116
 msgid "Old GRASS vector"
@@ -3212,14 +3130,12 @@ msgid "PostScript plot"
 msgstr "ポストスクリプトプロット"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:205
-#, fuzzy
 msgid "Exit &GRASS"
-msgstr "GRASSの起動"
+msgstr "GRASS終了(&G)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:206
-#, fuzzy
 msgid "&Quit GIS Manager"
-msgstr "GISマネージャーロード"
+msgstr "GISマネージャー終了(&Q)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:208 ../gui/tcltk/d.m/menu.tcl:188
 msgid "&Config"
@@ -3380,9 +3296,8 @@ msgid "HIS to RGB"
 msgstr "HIS → RGB"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:265
-#, fuzzy
 msgid "Query raster color"
-msgstr "テキストカラー"
+msgstr "クエリラスターカラー"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:268 ../gui/tcltk/d.m/menu.tcl:253
 #: ../gui/tcltk/d.m/menu.tcl:409
@@ -3636,7 +3551,6 @@ msgid "Simpson's diversity"
 msgstr "シンプソン多様性"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:359
-#, fuzzy
 msgid "Richness"
 msgstr "濃厚"
 
@@ -3887,9 +3801,8 @@ msgid "Split polylines"
 msgstr "ポリラインの分割"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:448
-#, fuzzy
 msgid "Split lines to segments"
-msgstr "ポリゴンをセグメントに分割 "
+msgstr "ラインをセグメントに分割 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:449
 msgid "Parallel lines"
@@ -3916,9 +3829,8 @@ msgid "Create labels"
 msgstr "ラベル作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:459
-#, fuzzy
 msgid "Create optimally placed labels"
-msgstr "ラベル作成"
+msgstr "最適な配置でラベルを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:460
 msgid "Assign colors"
@@ -4139,7 +4051,7 @@ msgstr "単変量ラスタ統計"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:542
 msgid "Attribute classification"
-msgstr ""
+msgstr "属性分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:544
 msgid "Quadrat indices"
@@ -4444,8 +4356,7 @@ msgid "chart for %s"
 msgstr " %s のグラフ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -4521,9 +4432,8 @@ msgid "\tchart outline color:"
 msgstr "\tグラフ外枠線の色："
 
 #: ../gui/tcltk/gis.m/chart.tcl:292
-#, fuzzy
 msgid "none"
-msgstr "完了"
+msgstr "無し"
 
 #: ../gui/tcltk/gis.m/labels.tcl:96
 msgid "Labels for vectors"
@@ -4650,14 +4560,12 @@ msgid "Icon size"
 msgstr "アイコンサイズ"
 
 #: ../gui/tcltk/gis.m/vector.tcl:423
-#, fuzzy
 msgid "Attribute column for size"
-msgstr "   ラベルにする属性列"
+msgstr "サイズの属性カラム"
 
 #: ../gui/tcltk/gis.m/vector.tcl:425
-#, fuzzy
 msgid "Attribute column for rotation"
-msgstr "   ラベルにする属性列"
+msgstr "回転の属性カラム"
 
 #: ../gui/tcltk/gis.m/vector.tcl:433 ../gui/tcltk/d.m/vector.tcl:259
 msgid "Draw lines:"
@@ -4712,23 +4620,20 @@ msgid "text size"
 msgstr "テキストサイズ"
 
 #: ../gui/tcltk/gis.m/vector.tcl:480
-#, fuzzy
 msgid "Label part to align with vector point "
-msgstr "ベクトルポイントにラベルの部分を合わせる"
+msgstr "ベクトルポイントに沿ったラベル部"
 
 #: ../gui/tcltk/gis.m/vector.tcl:485
 msgid "   Justification"
 msgstr "   行揃え "
 
 #: ../gui/tcltk/gis.m/vector.tcl:488
-#, fuzzy
 msgid "top"
-msgstr "上："
+msgstr "上"
 
 #: ../gui/tcltk/gis.m/vector.tcl:488
-#, fuzzy
 msgid "bottom"
-msgstr "下："
+msgstr "下"
 
 #: ../gui/tcltk/gis.m/vector.tcl:495
 msgid "     Layer for labels"
@@ -4848,8 +4753,7 @@ msgstr "アニメーションのマップ"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr ""
-"1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
+msgstr "1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -4880,9 +4784,8 @@ msgid "Animation Window"
 msgstr "アニメーションウィンドウ"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:127
-#, fuzzy
 msgid "Label file"
-msgstr "ラベルファイル："
+msgstr "ラベルファイル"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:163
 msgid "Create postscript labels for vector objects from v.labels file"
@@ -4902,11 +4805,11 @@ msgstr "ベクトルオブジェクトのラベル整列："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "lower center"
-msgstr ""
+msgstr "中央下"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "upper center"
-msgstr ""
+msgstr "中央上"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:206
 msgid "Offset label from vector object: "
@@ -5010,21 +4913,20 @@ msgid "    aspect value type"
 msgstr "    方位値のタイプ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
-#, fuzzy
 msgid "grass"
-msgstr "エリア"
+msgstr "grass"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
 msgid "compass"
-msgstr ""
+msgstr "コンパス"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
 msgid "agnps"
-msgstr ""
+msgstr "agnps"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
 msgid "answers"
-msgstr ""
+msgstr "回答"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:188
 msgid "    draw arrows every Nth grid cell"
@@ -5068,8 +4970,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr "青または彩度チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr "R，G，Bまたは色相/照度/彩度チャンネルとして３つのラスターを表示"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
@@ -5829,8 +5730,7 @@ msgstr "DXFファイル(ASCII) "
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr ""
-"GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
+msgstr "GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
@@ -6093,9 +5993,7 @@ msgid "Create color image from RGB files"
 msgstr "RGBファイルからカラー画像作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
 msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
@@ -6300,8 +6198,7 @@ msgstr "ベクトルポイントデータを用いた距離逆関数重み付補
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr ""
-"ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
+msgstr "ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
@@ -6428,20 +6325,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "入力ラインから配置測点と線型参照システム作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
-msgstr ""
-"入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照シス"
-"テム"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
+msgstr "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照システム"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
-msgstr ""
-"線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オ"
-"フセットを表示"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgstr "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オフセットを表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6560,18 +6449,15 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "4つの隣り合う画像までのモザイク "
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "RGB表示するマルチバンド画像のカラーバランスと拡張カラーテーブル"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr "HIS(色相/明度/彩度)カラーからRGB（赤/緑/青)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr "RGB（赤/緑/青)カラーからHIS(色相/明度/彩度)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
@@ -6580,13 +6466,11 @@ msgstr "画像の位置補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr ""
-"ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr ""
-"ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6697,10 +6581,7 @@ msgid "  align text with coordinate point"
 msgstr "   座標を指定しテキストの位置を補正"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
 msgstr "     (座標は, % は画面の左下から定義,ピクセルは左上)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
