@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassnviz_it.po\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-05 23:14+0200\n"
-"PO-Revision-Date: 2011-09-19 16:34+0100\n"
+"PO-Revision-Date: 2011-11-19 19:20+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -845,9 +845,7 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr ""
-"Gli attuali campi non sono stati salvati, si è sicuri di volere caricare "
-"nuovi campi?"
+msgstr "Gli attuali campi non sono stati salvati, si è sicuri di volere caricare nuovi campi?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
 #: ../visualization/nviz/scripts/nviz2.2_script:873
@@ -1233,8 +1231,7 @@ msgstr "mostra etichette"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:79
 msgid "Select font family, size, and style for legend text"
-msgstr ""
-"Seleziona famiglia, dimensione e stile del font per il testo della legenda"
+msgstr "Seleziona famiglia, dimensione e stile del font per il testo della legenda"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:86
 msgid "set value range "
@@ -1257,12 +1254,8 @@ msgid "Place legend"
 msgstr "Posizione legenda"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid ""
-"Use mouse to place legend; left button defines first corner,  right button "
-"defines opposite corner."
-msgstr ""
-"Usa il mouse per posizionare la legenda; il bottone sinistro definisce il "
-"primo angolo, il bottone destro definisce l'angolo opposto."
+msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgstr "Usa il mouse per posizionare la legenda; il bottone sinistro definisce il primo angolo, il bottone destro definisce l'angolo opposto."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -1986,15 +1979,15 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/nviz2.2_script:420
 msgid "Create New Scriptfile"
-msgstr ""
+msgstr "Crea nuovo scriptfile"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:423
 msgid "Open and Play Script"
-msgstr ""
+msgstr "Apri ad esegui script"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:426
 msgid "Close Script"
-msgstr ""
+msgstr "Chiudi script"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:431
 #: ../visualization/nviz/scripts/script_get_line:15
@@ -2142,15 +2135,11 @@ msgid "Erase all labels"
 msgstr "Elimina tutte le etichette"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid ""
-"Fill 2 or more entry fields with  desired min and max values, then press "
-"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid ""
-"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
-"press [Auto] to automatically generate a color table."
+msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
@@ -2182,9 +2171,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid ""
-"Automatically generate a color  table distributed across range of attribute "
-"values"
+msgid "Automatically generate a color  table distributed across range of attribute values"
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
@@ -2483,3 +2470,4 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_fringe.tcl:80
 msgid "Draw Fringe"
 msgstr ""
+
