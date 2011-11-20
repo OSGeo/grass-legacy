@@ -12,11 +12,10 @@ rem ----------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
+set PACKAGE_DIR=.\GRASS-64-Package
+
 set OSGEO4W_DIR=c:\osgeo4w
 
-rem set PACKAGE_DIR=.\GRASS-64-Release-Package
-set PACKAGE_DIR=.\GRASS-64-Devel-Package
-rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.2
 set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.2svn
 
 set SVN_PATH=c:\Subversion
