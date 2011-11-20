@@ -1,25 +1,17 @@
-#! /bin/sh
-#############################################################################
-#
-# MODULE:   	GRASS Initialization
-# AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-# PURPOSE:  	The source file for this shell script is in
-#   	    	lib/init/grass.src and is the grass startup script. It
-#   	    	requires a source file because the definition of GISBASE
-#   	    	is not known until compile time and is substituted from the
-#   	    	Makefile. Any command line options are passed to Init.sh.
-# COPYRIGHT:    (C) 2000-2005, 2011 by the GRASS Development Team
-#
-#               This program is free software under the GNU General Public
-#   	    	License (>=v2). Read the file COPYING that comes with GRASS
-#   	    	for details.
-#
-#############################################################################
+#!/bin/sh
 
-trap "echo 'User break!' ; exit" 2 3 9 15
+OSGEO4W_ROOT_MSYS=@OSGEO4W_ROOT_MSYS@
+GISBASE=$OSGEO4W_ROOT_MSYS/apps/grass/grass-@VERSION@
+GRASS_SH=$OSGEO4W_ROOT_MSYS/apps/msys/bin/sh.exe
+GRASS_WISH=$OSGEO4W_ROOT_MSYS/bin/wish.exe
+GRASS_PYTHON=$OSGEO4W_ROOT_MSYS/bin/python.exe
+PYTHONHOME=$OSGEO4W_ROOT_MSYS/apps/Python25
+GRASS_PROJSHARE=$OSGEO4W_ROOT_MSYS/share/proj
+PATH=$OSGEO4W_ROOT_MSYS/apps/grass/grass-@VERSION@/bin:$PATH
 
-# Set the GISBASE variable
-GISBASE="@osgeo4w@/apps/grass/grass-@VERSION@"
-export GISBASE
+export $OSGEO4W_ROOT_MSYS $GISBASE $GRASS_SH $GRASS_WISH $GRASS_PYTHON $PYTHONHOME $GRASS_PROJSHARE
+export $PATH
 
 exec "$GISBASE/etc/Init.sh" "$@"
+
+exit 0
