@@ -7,14 +7,14 @@
 #   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
-#		Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
+#		Hamish Bowman - New Zealand - hamish_b at yahoo,com
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
 #   	    	command line options for setting the GISDBASE, LOCATION, and/or
 #   	    	MAPSET. Finally it starts GRASS with the appropriate user
 #   	    	interface and cleans up after it is finished.
-# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000-2011 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -256,11 +256,12 @@ else
 	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
-if [ -n "$GRASS_ADDON_PATH" ] ; then
-   PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
-else
-   PATH="$GISBASE/bin:$GISBASE/scripts:$PATH"
+# if it doesn't exist set it to something so that g.extension's default is reasonable
+if [ -z "$GRASS_ADDON_PATH" ] ; then
+    GRASS_ADDON_PATH="$HOME/.grass6/addons"
+    export GRASS_ADDON_PATH
 fi
+PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
 export PATH
 
 # Set LD_LIBRARY_PATH to find GRASS shared libraries

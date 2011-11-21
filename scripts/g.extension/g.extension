@@ -41,7 +41,7 @@
 #% key_desc: url
 #% description: SVN Addons repository URL
 #% required: yes
-#% answer: https://svn.osgeo.org/grass/grass-addons
+#% answer: http://svn.osgeo.org/grass/grass-addons
 #%end
 #%option
 #% key: prefix
@@ -234,8 +234,12 @@ fi
 if [ -d "$PREFIX" ] ; then
     MYINST_DIR="$PREFIX"
 else
-    g.message -e "'$PREFIX' does not exist"
-    exit 1
+    g.message -w "'$PREFIX' does not exist. Creating ..."
+    mkdir -p "$PREFIX"
+    if [ $? -ne 0 ] || [ ! -d "$PREFIX" ] ; then
+	g.message -e "Unable to create '$PREFIX' directory"
+	exit 1
+    fi
 fi
 
 if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
@@ -386,7 +390,7 @@ else
      exit 1
    fi
 
-   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] ; then
+   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons  ] ; then
       # symlink into path which is actually in the $PATH
       ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
