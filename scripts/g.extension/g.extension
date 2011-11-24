@@ -305,6 +305,18 @@ else
    DIST_DIR="dist.unknown"
 fi
 
+# set up a demolocation so --html-description works
+GVER=`echo "$GRASS_VERSION" | cut -f1,2 -d'.' | sed -e 's/\.//'`
+mkdir -p "$TMPDIR/$DIST_DIR/demolocation/PERMANENT"
+cat << EOF > "$TMPDIR/$DIST_DIR/demolocation/.grassrc$GVER"
+GISDBASE: $TMPDIR/$DIST_DIR
+LOCATION_NAME: demolocation
+MAPSET: PERMANENT
+GRASS_DB_ENCODING: utf-8
+DEBUG: 0
+GRASS_GUI: text
+EOF
+
 # $INST_NOW helps compile and install modules directly into $(INST_DIR)
 # without having to install whole distribution even after modifying only
 # one module. It will update both $(GRASS_HOME)/dist.$(ARCH) and $(INST_DIR).
@@ -390,7 +402,7 @@ else
      exit 1
    fi
 
-   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons  ] ; then
+   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons ] ; then
       # symlink into path which is actually in the $PATH
       ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
