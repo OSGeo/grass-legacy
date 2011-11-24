@@ -382,6 +382,7 @@ else
       fi
    else
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
+         g.message -w "Replacing previously built <$MODULE>"
          rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
       fi
 
@@ -404,7 +405,15 @@ else
 
    if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons ] ; then
       # symlink into path which is actually in the $PATH
-      ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+      if [ 1 -eq 1 ] ; then
+         ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+      else
+          # TODO: move them out of bin/ and script/ into .., and rmdir bin/ and script/ if they are empty.
+         mv "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+         if [ `ls -a "$MYINST_DIR/$PROGTYPE" | wc -l` -le 2 ] ; then
+            rmdir "$MYINST_DIR/$PROGTYPE"
+         fi
+      fi
    fi
 fi
 
