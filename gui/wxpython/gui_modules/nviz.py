@@ -29,7 +29,9 @@ try:
     import nviz_mapdisp
     import nviz_tools
     import wxnviz
-    haveNviz = True
+    # disable wxNviz for 6.4.2
+    # TODO: backport wxNviz from devbr6 *after* releasing 6.4.2
+    haveNviz = False
 except ImportError, err:
     haveNviz = False
     errorMsg = err

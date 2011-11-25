@@ -213,12 +213,12 @@ class MapToolbar(AbstractToolbar):
             self.toolId['3d'] = 1
         else:
             from nviz import errorMsg
-            log.WriteCmdLog(_('3D view mode not available'))
-            log.WriteWarning(_('Reason: %s') % str(errorMsg))
-            log.WriteLog(_('Note that the wxGUI\'s 3D view mode is currently disabled '
-                           'on MS Windows (hopefully this will be fixed soon). '
-                           'Please keep an eye out for updated versions of GRASS. '
-                           'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
+            ### log.WriteCmdLog(_('3D view mode not available'))
+            ### log.WriteWarning(_('Reason: %s') % str(errorMsg))
+            ### log.WriteLog(_('Note that the wxGUI\'s 3D view mode is currently disabled '
+            ### 'on MS Windows (hopefully this will be fixed soon). '
+            ### 'Please keep an eye out for updated versions of GRASS. '
+            ### 'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
             
             self.toolId['3d'] = -1
 
