@@ -122,7 +122,7 @@ class AbstractToolbar(wx.ToolBar):
             return
         
         if hasattr(self.parent, 'toolbars'):
-            if self.parent.toolbars['vdigit']:
+            if self.parent.GetToolbar('vdigit'):
                 # update vdigit toolbar (unselect currently selected tool)
                 id = self.parent.toolbars['vdigit'].GetAction(type = 'id')
                 self.parent.toolbars['vdigit'].ToggleTool(id, False)
@@ -362,13 +362,13 @@ class MapToolbar(AbstractToolbar):
             self.parent.AddNviz()
             
         elif tool == self.toolId['vdigit'] and \
-                not self.parent.toolbars['vdigit']:
+                not self.parent.GetToolbar('vdigit'):
             self.ExitToolbars()
             self.parent.AddToolbar("vdigit")
             self.parent.MapWindow.SetFocus()
         
     def ExitToolbars(self):
-        if self.parent.toolbars['vdigit']:
+        if self.parent.GetToolbar('vdigit'):
             self.parent.toolbars['vdigit'].OnExit()
         if self.parent.GetLayerManager().IsPaneShown('toolbarNviz'):
             self.parent.RemoveNviz()
@@ -428,8 +428,8 @@ class GCPDisplayToolbar(AbstractToolbar):
         # add tool to toggle active map window
         self.togglemapid = wx.NewId()
         self.togglemap = wx.Choice(parent = self, id = self.togglemapid,
-						    choices = [_('source'), _('target')],
-						    style = wx.CB_READONLY)
+                                   choices = [_('source'), _('target')],
+                                   style = wx.CB_READONLY)
 
         self.InsertControl(10, self.togglemap)
 
@@ -1071,9 +1071,9 @@ class VDigitToolbar(AbstractToolbar):
                 UserSettings.Set(group = 'vdigit', key = 'bgmap',
                                  subkey = 'value', value = '', internal = True)
             
-            self.parent.statusbar.SetStatusText(_("Please wait, "
-                                                  "opening vector map <%s> for editing...") % mapLayer.GetName(),
-                                                0)
+            self.parent.SetStatusText(_("Please wait, "
+                                        "opening vector map <%s> for editing...") % mapLayer.GetName(),
+                                        0)
         
         self.parent.MapWindow.pdcVector = wx.PseudoDC()
         self.digit = self.parent.MapWindow.digit = VDigit(mapwindow = self.parent.MapWindow)
@@ -1133,10 +1133,10 @@ class VDigitToolbar(AbstractToolbar):
                         self.digit.Undo(0)
                     dlg.Destroy()
             
-            self.parent.statusbar.SetStatusText(_("Please wait, "
-                                                  "closing and rebuilding topology of "
-                                                  "vector map <%s>...") % self.mapLayer.GetName(),
-                                                0)
+            self.parent.SetStatusText(_("Please wait, "
+                                        "closing and rebuilding topology of "
+                                        "vector map <%s>...") % self.mapLayer.GetName(),
+                                      0)
             self.digit.CloseMap()
             
             lmgr = self.parent.GetLayerManager()

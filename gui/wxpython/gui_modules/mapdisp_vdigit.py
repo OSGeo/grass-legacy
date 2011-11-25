@@ -40,7 +40,7 @@ class VDigitWindow(BufferedWindow):
                                 style, **kwargs)
         
         self.pdcVector = wx.PseudoDC()
-        self.toolbar   = self.parent.toolbars['vdigit']
+        self.toolbar   = self.parent.GetToolbar('vdigit')
         self.digit     = None # wxvdigit.IVDigit
         
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
@@ -71,7 +71,7 @@ class VDigitWindow(BufferedWindow):
             distance_tot += self.Distance(self.polycoords[idx-1],
                                           self.polycoords[idx],
                                           screen = False)[0]
-        self.parent.statusbar.SetStatusText("%.*f, %.*f (seg: %.*f; tot: %.*f)" % \
+        self.parent.SetStatusText("%.*f, %.*f (seg: %.*f; tot: %.*f)" % \
                                                 (precision, e, precision, n,
                                                  precision, distance_seg,
                                                  precision, distance_tot), 0)

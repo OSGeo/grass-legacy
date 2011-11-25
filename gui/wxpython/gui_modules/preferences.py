@@ -460,12 +460,6 @@ class Settings:
                     'width' : 2,
                     },
                 },
-            'georect' : {
-                'symbol' : {
-                    'color' : (0, 0, 255, 255),
-                    'width' : 2,
-                    },
-                },
             'nviz' : {
                 'view' : {
                     'persp' : {
@@ -710,7 +704,7 @@ class Settings:
         self.internalSettings['appearance']['gSelectPopupHeight']['max'] = 1000
         
         self.internalSettings['display']['driver']['choices'] = ['default']
-        self.internalSettings['display']['statusbarMode']['choices'] = globalvar.MAP_DISPLAY_STATUSBAR_MODE
+        self.internalSettings['display']['statusbarMode']['choices'] = None # set during MapFrame init
 
         self.internalSettings['nviz']['view'] = {}
         self.internalSettings['nviz']['view']['twist'] = {}

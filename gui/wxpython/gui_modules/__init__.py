@@ -20,6 +20,7 @@ all = [
     "mapdisp_command.py",
     "mapdisp_window.py",
     "mapdisp.py",
+    "mapdisp_statusbar.py",
     "mcalc_builder.py",
     "menu.py",
     "menudata.py",

@@ -725,14 +725,14 @@ class DispMapPage(TitledPage):
         else:
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
 
-class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
+class GCP(MapFrame, ColumnSorterMixin):
     """!
     Manages ground control points for georectifying. Calculates RMS statics.
     Calls i.rectify or v.transform to georectify map.
     """
     def __init__(self, parent, grwiz = None, id = wx.ID_ANY,
                  title = _("Manage Ground Control Points"),
-                 size = (700, 300), toolbars=["gcpdisp"], Map=None, lmgr=None):
+                 size = (700, 300), toolbars = ["gcpdisp"], Map = None, lmgr = None):
 
         self.grwiz = grwiz # GR Wizard
 
@@ -742,8 +742,8 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
             self.show_target = True
         
         #wx.Frame.__init__(self, parent, id, title, size = size, name = "GCPFrame")
-        MapFrame.__init__(self, parent, id, title, size = size,
-                            Map=Map, toolbars=["gcpdisp"], lmgr=lmgr, name='GCPMapWindow')
+        MapFrame.__init__(self, parent = parent, title = title, size = size,
+                            Map = Map, toolbars = toolbars, lmgr = lmgr, name = 'GCPMapWindow')
 
         #
         # init variables
@@ -894,11 +894,20 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetListCtrl(self):
         return self.list
+        
+    def GetMapCoordList(self):
+        return self.mapcoordlist
 
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetSortImages(self):
         return (self.sm_dn, self.sm_up)
 
+    def GetFwdError(self):
+        return self.fwd_rmserror
+        
+    def GetBkwError(self):
+        return self.bkw_rmserror
+                
     def InitMapDisplay(self):
         self.list.LoadData()
         
@@ -942,7 +951,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
                                    0.0,                # forward error
                                    0.0 ] )             # backward error
 
-        if self.statusbarWin['toggle'].GetSelection() == 7: # go to
+        if self.statusbarManager.GetMode() == 8: # go to
             self.StatusbarUpdate()
 
     def DeleteGCP(self, event):
@@ -983,11 +992,10 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
         self.UpdateColours()
 
-        if self.statusbarWin['toggle'].GetSelection() == 7: # go to
+        if self.statusbarManager.GetMode() == 8: # go to
             self.StatusbarUpdate()
             if self.list.selectedkey > 0:
-                self.statusbarWin['goto'].SetValue(self.list.selectedkey)
-            #self.statusbarWin['goto'].SetValue(0)
+                self.statusbarManager.SetProperty('gotoGCP', self.list.selectedkey)
 
     def ClearGCP(self, event):
         """
@@ -1783,7 +1791,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
     def UpdateActive(self, win):
 
         # optionally disable tool zoomback tool
-        self.toolbars['gcpdisp'].Enable('zoomback', enable = (len(self.MapWindow.zoomhistory) > 1))
+        self.GetMapToolbar().Enable('zoomback', enable = (len(self.MapWindow.zoomhistory) > 1))
 
         if self.activemap.GetSelection() != (win == self.TgtMapWindow):
             self.activemap.SetSelection(win == self.TgtMapWindow)
@@ -1879,7 +1887,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
     def OnDispResize(self, event):
         """!GCP Map Display resized, adjust Map Windows
         """
-        if self.toolbars['gcpdisp']:
+        if self.GetMapToolbar():
             srcwidth, srcheight = self.SrcMapWindow.GetSize()
             tgtwidth, tgtheight = self.TgtMapWindow.GetSize()
             srcwidth = (srcwidth + tgtwidth) / 2
@@ -2752,7 +2760,7 @@ class GrSettingsDialog(wx.Dialog):
                     self.parent.show_target = True
                     self.parent._mgr.GetPane("target").Show()
                     self.parent._mgr.Update()
-                    self.parent.toolbars['gcpdisp'].Enable('zoommenu', enable = True)
+                    self.parent.GetMapToolbar().Enable('zoommenu', enable = True)
                     self.parent.activemap.Enable()
                     self.parent.TgtMapWindow.ZoomToMap(layers = self.parent.TgtMap.GetListOfLayers())
             else: # tgt_map == ''
@@ -2762,7 +2770,7 @@ class GrSettingsDialog(wx.Dialog):
                     self.parent._mgr.Update()
                     self.parent.activemap.SetSelection(0)
                     self.parent.activemap.Enable(False)
-                    self.parent.toolbars['gcpdisp'].Enable('zoommenu', enable = False)
+                    self.parent.GetMapToolbar().Enable('zoommenu', enable = False)
 
         self.parent.UpdateColours(srcrender, srcrenderVector, tgtrender, tgtrenderVector)
 

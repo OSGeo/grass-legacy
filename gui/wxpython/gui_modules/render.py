@@ -598,6 +598,8 @@ class Map(object):
         
         @return region settings as directory, e.g. {
         'n':'4928010', 's':'4913700', 'w':'589980',...}
+        
+        @see GetCurrentRegion()
         """
         region = {}
         
@@ -680,7 +682,10 @@ class Map(object):
         return region
 
     def GetCurrentRegion(self):
-        """!Get current display region settings"""
+        """!Get current display region settings
+        
+        @see GetRegion()
+        """
         return self.region
 
     def SetRegion(self, windres = False):
