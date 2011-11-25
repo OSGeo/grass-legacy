@@ -227,7 +227,7 @@ class MapFrame(wx.Frame):
         self.statusbarWin['projection'].SetToolTip(wx.ToolTip (_("Reproject coordinates displayed "
                                                                  "in the statusbar. Projection can be "
                                                                  "defined in GUI preferences dialog "
-                                                                 "(tab 'Display')")))
+                                                                 "(tab 'Projection')")))
         self.statusbarWin['projection'].Hide()
         
         # mask
@@ -271,7 +271,7 @@ class MapFrame(wx.Frame):
         # Update fancy gui style
         #
         self._mgr.AddPane(self.MapWindow, wx.aui.AuiPaneInfo().CentrePane().
-                          Dockable(False).BestSize((-1,-1)).
+                          Dockable(False).BestSize((-1,-1)).Name('2d').
                           CloseButton(False).DestroyOnClose(True).
                           Layer(0))
         self._mgr.Update()
@@ -336,21 +336,23 @@ class MapFrame(wx.Frame):
                                                 Map = self.Map, tree = self.tree,
                                                 lmgr = self._layerManager)
             self.MapWindowVDigit.Show()
+            self._mgr.AddPane(self.MapWindowVDigit, wx.aui.AuiPaneInfo().CentrePane().
+                          Dockable(False).BestSize((-1,-1)).Name('vdigit').
+                          CloseButton(False).DestroyOnClose(True).
+                          Layer(0))
         
         self.MapWindow = self.MapWindowVDigit
         
-        self._mgr.DetachPane(self.MapWindow2D)
-        self.MapWindow2D.Hide()
-        
+        if self._mgr.GetPane('2d').IsShown():
+            self._mgr.GetPane('2d').Hide()
+        elif self._mgr.GetPane('3d').IsShown():
+            self._mgr.GetPane('3d').Hide()
+        self._mgr.GetPane('vdigit').Show()
         self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent = self, mapcontent = self.Map,
                                                          layerTree = self.tree,
                                                          log = log)
         self.MapWindowVDigit.SetToolbar(self.toolbars['vdigit'])
         
-        self._mgr.AddPane(self.MapWindowVDigit, wx.aui.AuiPaneInfo().CentrePane().
-                          Dockable(False).BestSize((-1,-1)).
-                          CloseButton(False).DestroyOnClose(True).
-                          Layer(0))
         self._mgr.AddPane(self.toolbars['vdigit'],
                           wx.aui.AuiPaneInfo().
                           Name("vdigittoolbar").Caption(_("Vector Digitizer Toolbar")).
@@ -365,71 +367,116 @@ class MapFrame(wx.Frame):
         self.MapWindow.pen          = wx.Pen(colour = 'red',   width = 2, style = wx.SOLID)
         self.MapWindow.polypen      = wx.Pen(colour = 'green', width = 2, style = wx.SOLID)
 
-    def _addToolbarNviz(self):
-        """!Add 3D view mode toolbar
+    def AddNviz(self):
+        """!Add 3D view mode window
         """
         import nviz
         
         # check for GLCanvas and OpenGL
         if not nviz.haveNviz:
-            self.toolbars['map'].combo.SetValue (_("2D view"))
+            self.toolbars['map'].combo.SetValue(_("2D view"))
             gcmd.GError(parent = self,
                         message = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
                                     "was not found or loaded properly.\n"
                                     "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg))
             return
         
-        # add Nviz toolbar and disable 2D display mode tools
-        self.toolbars['nviz'] = toolbars.NvizToolbar(self, self.Map)
+        # disable 3D mode for other displays
+        for page in range(0, self._layerManager.gm_cb.GetPageCount()):
+            if self._layerManager.gm_cb.GetPage(page) != self._layerManager.curr_page:
+                if '3D' in self._layerManager.gm_cb.GetPage(page).maptree.mapdisplay.toolbars['map'].combo.GetString(1):
+                    self._layerManager.gm_cb.GetPage(page).maptree.mapdisplay.toolbars['map'].combo.Delete(1)
         self.toolbars['map'].Enable2D(False)
-        
+        # add rotate tool to map toolbar
+        self.toolbars['map'].InsertTool((('rotate', Icons['nviz']['rotate'],
+                                          self.OnRotate, wx.ITEM_CHECK, 7),)) # 7 is position
+        self.toolbars['map'].InsertTool((('flyThrough', Icons['nviz']['flyThrough'],
+                                          self.OnFlyThrough, wx.ITEM_CHECK, 8),)) 
+        self.toolbars['map'].ChangeToolsDesc(mode2d = False)
         # update status bar
-        self.statusbarWin['toggle'].Enable(False)
+        choice = globalvar.MAP_DISPLAY_STATUSBAR_MODE
+        self.statusbarWin['toggle'].SetItems((choice[0], choice[1], choice[2],
+                                              choice[8], choice[9]))
+        self.statusbarWin['toggle'].SetSelection(0)
         
         # erase map window
         self.MapWindow.EraseMap()
         
-        self._layerManager.goutput.WriteCmdLog(_("Starting 3D view mode..."))
+        self._layerManager.goutput.WriteCmdLog(_("Starting 3D view mode..."),
+                                               switchPage = False)
         self.statusbar.SetStatusText(_("Please wait, loading data..."), 0)
         
-        # create GL window & NVIZ toolbar
+        # create GL window
         if not self.MapWindow3D:
             self.MapWindow3D = nviz.GLWindow(self, id = wx.ID_ANY,
                                              Map = self.Map, tree = self.tree, lmgr = self._layerManager)
             self.MapWindow = self.MapWindow3D
             self.MapWindow.SetCursor(self.cursors["default"])
             
-                # add Nviz notebookpage
-            self._layerManager.AddNviz()
+            # add Nviz notebookpage
+            self._layerManager.AddNvizTools()
+            
+            # switch from MapWindow to MapWindowGL
+            self._mgr.GetPane('2d').Hide()
+            self._mgr.AddPane(self.MapWindow3D, wx.aui.AuiPaneInfo().CentrePane().
+                              Dockable(False).BestSize((-1,-1)).Name('3d').
+                              CloseButton(False).DestroyOnClose(True).
+                              Layer(0))
             
             self.MapWindow3D.OnPaint(None) # -> LoadData
             self.MapWindow3D.Show()
+            self.MapWindow3D.ResetViewHistory()            
             self.MapWindow3D.UpdateView(None)
         else:
             self.MapWindow = self.MapWindow3D
+            os.environ['GRASS_REGION'] = self.Map.SetRegion(windres = True)
+            self.MapWindow3D.GetDisplay().Init()
+            del os.environ['GRASS_REGION']
+            
+            # switch from MapWindow to MapWindowGL
+            self._mgr.GetPane('2d').Hide()
+            self._mgr.GetPane('3d').Show()
+            
             # add Nviz notebookpage
-            self._layerManager.AddNviz()
-            self._layerManager.nviz.UpdatePage('view')
-            self._layerManager.nviz.UpdatePage('light')
-        
-        # switch from MapWindow to MapWindowGL
-        # add nviz toolbar
-        self._mgr.DetachPane(self.MapWindow2D)
-        self.MapWindow2D.Hide()
-        self._mgr.AddPane(self.MapWindow3D, wx.aui.AuiPaneInfo().CentrePane().
-                          Dockable(False).BestSize((-1,-1)).
-                          CloseButton(False).DestroyOnClose(True).
-                          Layer(0))
-        self._mgr.AddPane(self.toolbars['nviz'],
-                          wx.aui.AuiPaneInfo().
-                          Name("nviztoolbar").Caption(_("3D View Toolbar")).
-                          ToolbarPane().Top().Row(1).
-                          LeftDockable(False).RightDockable(False).
-                          BottomDockable(False).TopDockable(True).
-                          CloseButton(False).Layer(2).
-                          BestSize((self.toolbars['nviz'].GetBestSize())))
+            self._layerManager.AddNvizTools()
+            self.MapWindow3D.ResetViewHistory()
+            for page in ('view', 'light', 'fringe', 'constant', 'cplane', 'animation'):
+                self._layerManager.nviz.UpdatePage(page)
+                
+        self.MapWindow3D.overlays = self.MapWindow2D.overlays
+        self.MapWindow3D.textdict = self.MapWindow2D.textdict
+        # update overlays needs to be called after because getClientSize
+        # is called during update and it must give reasonable values
+        wx.CallAfter(self.MapWindow3D.UpdateOverlays)
         
         self.SetStatusText("", 0)
+        self._mgr.Update()
+    
+    def RemoveNviz(self):
+        """!Restore 2D view"""
+        self.toolbars['map'].RemoveTool(self.toolbars['map'].rotate)
+        self.toolbars['map'].RemoveTool(self.toolbars['map'].flyThrough)
+        # update status bar
+        self.statusbarWin['toggle'].SetItems(globalvar.MAP_DISPLAY_STATUSBAR_MODE)
+        self.statusbarWin['toggle'].SetSelection(UserSettings.Get(group = 'display',
+                                                                  key = 'statusbarMode',
+                                                                  subkey = 'selection'))
+        self.statusbar.SetStatusText(_("Please wait, unloading data..."), 0)
+        self._layerManager.goutput.WriteCmdLog(_("Switching back to 2D view mode..."),
+                                               switchPage = False)
+        self.MapWindow3D.OnClose(event = None)
+        # switch from MapWindowGL to MapWindow
+        self._mgr.GetPane('2d').Show()
+        self._mgr.GetPane('3d').Hide()
+        
+        self.MapWindow = self.MapWindow2D
+        # remove nviz notebook page
+        self._layerManager.RemoveNvizTools()
+        
+        self.MapWindow2D.overlays = self.MapWindow3D.overlays
+        self.MapWindow2D.textdict = self.MapWindow3D.textdict
+        self.MapWindow.UpdateMap()
+        self._mgr.Update()
         
     def AddToolbar(self, name):
         """!Add defined toolbar to the window
@@ -439,7 +486,6 @@ class MapFrame(wx.Frame):
          - 'vdigit'  - vector digitizer
          - 'gcpdisp' - GCP Manager Display
          - 'georect' - georectifier
-         - 'nviz'    - 3D view mode
         """
         # default toolbar
         if name == "map":
@@ -448,7 +494,7 @@ class MapFrame(wx.Frame):
             self._mgr.AddPane(self.toolbars['map'],
                               wx.aui.AuiPaneInfo().
                               Name("maptoolbar").Caption(_("Map Toolbar")).
-                              ToolbarPane().Top().
+                              ToolbarPane().Top().Name('mapToolbar').
                               LeftDockable(False).RightDockable(False).
                               BottomDockable(False).TopDockable(True).
                               CloseButton(False).Layer(2).
@@ -469,10 +515,6 @@ class MapFrame(wx.Frame):
                               BottomDockable(False).TopDockable(True).
                               CloseButton(False).Layer(2).
                               BestSize((self.toolbars['georect'].GetBestSize())))
-        # nviz
-        elif name == "nviz":
-            self._addToolbarNviz()
-        
         self._mgr.Update()
         
     def RemoveToolbar (self, name):
@@ -489,38 +531,22 @@ class MapFrame(wx.Frame):
         self.toolbars[name] = None
         
         if name == 'vdigit':
-            self._mgr.DetachPane(self.MapWindowVDigit)
-            self.MapWindowVDigit.Hide()
-            self.MapWindow2D.Show()
-            self._mgr.AddPane(self.MapWindow2D, wx.aui.AuiPaneInfo().CentrePane().
-                              Dockable(False).BestSize((-1,-1)).
-                              CloseButton(False).DestroyOnClose(True).
-                              Layer(0))
+            self._mgr.GetPane('vdigit').Hide()
+            self._mgr.GetPane('2d').Show()
             self.MapWindow = self.MapWindow2D
-        
-        elif name == 'nviz':
-            # unload data
-            # self.MapWindow3D.Reset()
-            # switch from MapWindowGL to MapWindow
-            self._mgr.DetachPane(self.MapWindow3D)
-            self.MapWindow3D.Hide()
-            self.MapWindow2D.Show()
-            self._mgr.AddPane(self.MapWindow2D, wx.aui.AuiPaneInfo().CentrePane().
-                              Dockable(False).BestSize((-1,-1)).
-                              CloseButton(False).DestroyOnClose(True).
-                              Layer(0))
-            self.MapWindow = self.MapWindow2D
-            # remove nviz notebook page
-            self._layerManager.RemoveNviz()
             
-            self.MapWindow.UpdateMap()
-        
         self.toolbars['map'].combo.SetValue(_("2D view"))
         self.toolbars['map'].Enable2D(True)
         self.statusbarWin['toggle'].Enable(True)
         
         self._mgr.Update()
-
+    
+    def IsPaneShown(self, name):
+        """!Check if pane (toolbar, mapWindow ...) of given name is currently shown"""
+        if self._mgr.GetPane(name).IsOk():
+            return self._mgr.GetPane(name).IsShown()
+        return False
+    
     def _initDisplay(self):
         """!Initialize map display, set dimensions and map region
         """
@@ -543,8 +569,7 @@ class MapFrame(wx.Frame):
         event.Skip()
         
     def OnFocus(self, event):
-        """
-        Change choicebook page to match display.
+        """!Change choicebook page to match display.
         Or set display for georectifying
         """
         if self._layerManager and \
@@ -558,6 +583,8 @@ class MapFrame(wx.Frame):
                 pgnum = self.layerbook.GetPageIndex(self.page)
                 if pgnum > -1:
                     self.layerbook.SetSelection(pgnum)
+                    self._layerManager.curr_page = self.layerbook.GetCurrentPage()
+                    self.layerbook
         
         event.Skip()
         
@@ -679,13 +706,37 @@ class MapFrame(wx.Frame):
         
         # change the cursor
         self.MapWindow.SetCursor(self.cursors["hand"])
-
+    
+    def OnRotate(self, event):
+        """!Rotate 3D view
+        """
+        if self.toolbars['map']:
+            self.toolbars['map'].OnTool(event)
+            self.toolbars['map'].action['desc'] = ''
+        
+        self.MapWindow.mouse['use'] = "rotate"
+        
+        # change the cursor
+        self.MapWindow.SetCursor(self.cursors["hand"])
     def OnErase(self, event):
         """
         Erase the canvas
         """
         self.MapWindow.EraseMap()
 
+    def OnFlyThrough(self, event):
+        """!Fly-through mode
+        """
+        if self.toolbars['map']:
+            self.toolbars['map'].OnTool(event)
+            self.toolbars['map'].action['desc'] = ''
+        
+        self.MapWindow.mouse['use'] = "fly"
+        
+        # change the cursor
+        self.MapWindow.SetCursor(self.cursors["hand"])
+        self.MapWindow.SetFocus()
+        
     def OnZoomRegion(self, event):
         """
         Zoom to region
@@ -831,6 +882,9 @@ class MapFrame(wx.Frame):
                                                         precision, region['center_northing']))
             return
         
+        if self.IsPaneShown('3d'):
+            self.MapWindow.GoTo(e, n)
+            return
         
         dn = (region['nsres'] * region['rows']) / 2.
         region['n'] = region['center_northing'] + dn
@@ -859,15 +913,16 @@ class MapFrame(wx.Frame):
         self.statusbarWin['goto'].Hide()
         self.statusbarWin['projection'].Hide()
         self.mapScaleValue = self.ppm = None
-
-        if self.statusbarWin['toggle'].GetSelection() == 0: # Coordinates
+        choice = globalvar.MAP_DISPLAY_STATUSBAR_MODE
+        
+        if self.statusbarWin['toggle'].GetStringSelection() == choice[0]: # Coordinates
             self.statusbar.SetStatusText("", 0)
             # enable long help
             self.StatusbarEnableLongHelp()
 
-        elif self.statusbarWin['toggle'].GetSelection() in (1, 2): # Extent
-            sel = self.statusbarWin['toggle'].GetSelection()
-            if sel == 1:
+        elif self.statusbarWin['toggle'].GetStringSelection() in (choice[1], choice[2]): # Extent
+            sel = self.statusbarWin['toggle'].GetStringSelection()
+            if sel == choice[1]:
                 region = self.Map.region
             else:
                 region = self.Map.GetRegion() # computation region
@@ -899,7 +954,7 @@ class MapFrame(wx.Frame):
                                                  precision = precision)
                             e, n = utils.Deg2DMS(coord2[0], coord2[1], string = False,
                                                  precision = precision)
-                            if sel == 1:
+                            if sel == choice[1]:
                                 self.statusbar.SetStatusText("%s - %s, %s - %s" %
                                                              (w, e, s, n), 0)
                             else:
@@ -912,7 +967,7 @@ class MapFrame(wx.Frame):
                         else:
                             w, s = coord1
                             e, n = coord2
-                            if sel == 1:
+                            if sel == choice[1]:
                                 self.statusbar.SetStatusText("%.*f - %.*f, %.*f - %.*f" %
                                                          (precision, w, precision, e,
                                                           precision, s, precision, n), 0)
@@ -930,7 +985,7 @@ class MapFrame(wx.Frame):
                                          string = False, precision = precision)
                     e, n = utils.Deg2DMS(region["e"], region["n"],
                                          string = False, precision = precision)
-                    if sel == 1:
+                    if sel == choice[1]:
                         self.statusbar.SetStatusText("%s - %s, %s - %s" %
                                                      (w, e, s, n), 0)
                     else:
@@ -941,7 +996,7 @@ class MapFrame(wx.Frame):
                 else:
                     w, s = region["w"], region["s"]
                     e, n = region["e"], region["n"]
-                    if sel == 1:
+                    if sel == choice[1]:
                         self.statusbar.SetStatusText("%.*f - %.*f, %.*f - %.*f" %
                                                      (precision, w, precision, e,
                                                       precision, s, precision, n), 0)
@@ -954,32 +1009,32 @@ class MapFrame(wx.Frame):
             # enable long help
             self.StatusbarEnableLongHelp()
 
-        elif self.statusbarWin['toggle'].GetSelection() == 3: # Show comp. extent
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[3]: # Show comp. extent
             self.statusbar.SetStatusText("", 0)
             self.statusbarWin['region'].Show()
             # disable long help
             self.StatusbarEnableLongHelp(False)
 
-        elif self.statusbarWin['toggle'].GetSelection() == 4: # Align extent
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[4]: # Align extent
             self.statusbar.SetStatusText("", 0)
             self.statusbarWin['alignExtent'].Show()
             # disable long help
             self.StatusbarEnableLongHelp(False)
 
-        elif self.statusbarWin['toggle'].GetSelection() == 5: # Display resolution
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[5]: # Display resolution
             self.statusbar.SetStatusText("", 0)
             self.statusbarWin['resolution'].Show()
             # disable long help
             self.StatusbarEnableLongHelp(False)
 
-        elif self.statusbarWin['toggle'].GetSelection() == 6: # Display geometry
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[6]: # Display geometry
             self.statusbar.SetStatusText("rows=%d; cols=%d; nsres=%.2f; ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
                                           self.Map.region["nsres"], self.Map.region["ewres"]), 0)
             # enable long help
             self.StatusbarEnableLongHelp()
 
-        elif self.statusbarWin['toggle'].GetSelection() == 7: # Map scale
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[7]: # Map scale
             # TODO: need to be fixed...
             ### screen X region problem
             ### user should specify ppm
@@ -1028,7 +1083,7 @@ class MapFrame(wx.Frame):
             # disable long help
             self.StatusbarEnableLongHelp(False)
 
-        elif self.statusbarWin['toggle'].GetSelection() == 8: # go to
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[8]: # go to
             self.statusbar.SetStatusText("")
             region = self.Map.GetCurrentRegion()
             precision = int(UserSettings.Get(group = 'projection', key = 'format',
@@ -1069,7 +1124,7 @@ class MapFrame(wx.Frame):
             # disable long help
             self.StatusbarEnableLongHelp(False)
         
-        elif self.statusbarWin['toggle'].GetSelection() == 9: # projection
+        elif self.statusbarWin['toggle'].GetStringSelection() == choice[9]: # projection
             self.statusbar.SetStatusText("")
             epsg = UserSettings.Get(group = 'projection', key = 'statusbar', subkey = 'epsg')
             if epsg:
@@ -1131,10 +1186,10 @@ class MapFrame(wx.Frame):
     def SaveToFile(self, event):
         """!Save map to image
         """
-        if self.toolbars['nviz']:
+        if self.IsPaneShown('3d'):
             filetype = "PPM file (*.ppm)|*.ppm|TIF file (*.tif)|*.tif"
-            ltype = [{ 'ext' : 'ppm', 'type' : -1 },
-                     { 'ext' : 'tif', 'type' : wx.BITMAP_TYPE_TIF }]
+            ltype = [{ 'ext' : 'ppm', 'type' : 'ppm' },
+                     { 'ext' : 'tif', 'type' : 'tif' }]
         else:
             img = self.MapWindow.img
             if not img:
@@ -1212,9 +1267,8 @@ class MapFrame(wx.Frame):
             maplayer = self.toolbars['vdigit'].GetLayer()
             if maplayer:
                 self.toolbars['vdigit'].OnExit()
-        
-        if self.toolbars['nviz']:
-            self.toolbars['nviz'].OnExit()
+        if self.IsPaneShown('3d'):
+            self.RemoveNviz()
         
         if not self._layerManager:
             self.Destroy()
@@ -1231,28 +1285,6 @@ class MapFrame(wx.Frame):
     def GetWindow(self):
         """!Get map window"""
         return self.MapWindow
-    
-    def OnNvizQuerySurface(self, event):
-        """!Query current surface in 3D view mode"""
-        if self.toolbars['map'].GetAction() == 'nvizQuerySurface':
-            self.toolbars['map'].SelectDefault(event)
-            return
-        
-        self.toolbars['map'].action['desc'] = 'nvizQuerySurface'
-        
-        self.MapWindow.mouse['use'] = "nvizQuerySurface"
-        self._OnQuery()
-
-    def OnNvizQueryVector(self, event):
-        """!Query current vector in 3D view mode"""
-        if self.toolbars['map'].GetAction() == 'nvizQueryVector':
-            self.toolbars['map'].SelectDefault(event)
-            return
-        
-        self.toolbars['map'].action['desc'] = 'nvizQueryVector'
-        
-        self.MapWindow.mouse['use'] = "nvizQueryVector"
-        self._OnQuery()
         
     def QueryMap(self, x, y):
         """!Query raster or vector map layers by r/v.what
@@ -1298,7 +1330,9 @@ class MapFrame(wx.Frame):
                         rast.append(iname)
                 elif ltype in ('vector', 'thememap', 'themechart'):
                     vect.append(name)
-        
+        # rasters are not queried this way in 3D, we don't want them now
+        if self.IsPaneShown('3d'):
+            rast = list()
         # use display region settings instead of computation region settings
         self.tmpreg = os.getenv("GRASS_REGION")
         os.environ["GRASS_REGION"] = self.Map.SetRegion(windres = False)
@@ -1413,25 +1447,28 @@ class MapFrame(wx.Frame):
         
         cats = self.dialogs['attributes'].GetCats()
         
-        try:
-            qlayer = self.Map.GetListOfLayers(l_name = globalvar.QUERYLAYER)[0]
-        except IndexError:
-            qlayer = None
+        qlayer = None
+        if not self.IsPaneShown('3d'):
+            try:
+                qlayer = self.Map.GetListOfLayers(l_name = globalvar.QUERYLAYER)[0]
+            except IndexError:
+                pass
         
         if self.dialogs['attributes'].mapDBInfo and cats:
-            # highlight feature & re-draw map
-            if qlayer:
-                qlayer.SetCmd(self.AddTmpVectorMapLayer(mapName, cats,
-                                                        useId = False,
-                                                        addLayer = False))
-            else:
-                qlayer = self.AddTmpVectorMapLayer(mapName, cats, useId = False)
-            
-            # set opacity based on queried layer
-            opacity = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].GetOpacity(float = True)
-            qlayer.SetOpacity(opacity)
-            
-            self.MapWindow.UpdateMap(render = False, renderVector = False)
+            if not self.IsPaneShown('3d'):
+                # highlight feature & re-draw map
+                if qlayer:
+                    qlayer.SetCmd(self.AddTmpVectorMapLayer(mapName, cats,
+                                                            useId = False,
+                                                            addLayer = False))
+                else:
+                    qlayer = self.AddTmpVectorMapLayer(mapName, cats, useId = False)
+                
+                # set opacity based on queried layer
+                opacity = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].GetOpacity(float = True)
+                qlayer.SetOpacity(opacity)
+                
+                self.MapWindow.UpdateMap(render = False, renderVector = False)
             if not self.dialogs['attributes'].IsShown():
                 self.dialogs['attributes'].Show()
         else:
@@ -1446,39 +1483,19 @@ class MapFrame(wx.Frame):
         if self.toolbars['map']:
             self.toolbars['map'].OnTool(event)
             action = self.toolbars['map'].GetAction()
+            
+        self.toolbars['map'].action['desc'] = 'queryMap'
+        self.MapWindow.mouse['use'] = "query"
         
-        if self.toolbars['nviz']:
-            toolsmenu = wx.Menu()
-            raster = wx.MenuItem(parentMenu = toolsmenu, id = wx.ID_ANY,
-                                 text = _("Query surface (raster map)"),
-                                 kind = wx.ITEM_CHECK)
-            toolsmenu.AppendItem(raster)
-            self.Bind(wx.EVT_MENU, self.OnNvizQuerySurface, raster)
-            if action == "nvizQuerySurface":
-                raster.Check(True)
-            vector = wx.MenuItem(parentMenu = toolsmenu, id = wx.ID_ANY,
-                                 text = _("Query vector map"),
-                                 kind = wx.ITEM_CHECK)
-            toolsmenu.AppendItem(vector)
-            self.Bind(wx.EVT_MENU, self.OnNvizQueryVector, vector)
-            if action == "nvizQueryVector":
-                vector.Check(True)
-
-            self.PopupMenu(toolsmenu)
-            toolsmenu.Destroy()
-        else:
-            self.toolbars['map'].action['desc'] = 'queryMap'
-            self.MapWindow.mouse['use'] = "query"
-            
-            if not self.IsStandalone():
-                # switch to output console to show query results
-                self._layerManager.notebook.SetSelectionByName('output')
-            
-            self.MapWindow.mouse['box'] = "point"
-            self.MapWindow.zoomtype = 0
-            
-            # change the cursor
-            self.MapWindow.SetCursor(self.cursors["cross"])
+        if not self.IsStandalone():
+            # switch to output console to show query results
+            self._layerManager.notebook.SetSelectionByName('output')
+        
+        self.MapWindow.mouse['box'] = "point"
+        self.MapWindow.zoomtype = 0
+        
+        # change the cursor
+        self.MapWindow.SetCursor(self.cursors["cross"])
         
     def AddTmpVectorMapLayer(self, name, cats, useId = False, addLayer = True):
         """!Add temporal vector map layer to map composition
@@ -1735,6 +1752,13 @@ class MapFrame(wx.Frame):
         AddScale.SetBitmap(icons["addBarscale"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddScale)
         self.Bind(wx.EVT_MENU, self.OnAddBarscale, AddScale)
+        # temporary
+        if self.IsPaneShown('3d'):
+            AddScale.Enable(False)
+            AddArrow = wx.MenuItem(decmenu, wx.ID_ANY, _("Add north arrow"))
+            AddArrow.SetBitmap(icons["addBarscale"].GetBitmap(self.iconsize))
+            decmenu.AppendItem(AddArrow)
+            self.Bind(wx.EVT_MENU, self.OnAddArrow, AddArrow)
         
         AddLegend = wx.MenuItem(decmenu, wx.ID_ANY, icons["addLegend"].GetLabel())
         AddLegend.SetBitmap(icons["addLegend"].GetBitmap(self.iconsize))
@@ -1818,13 +1842,14 @@ class MapFrame(wx.Frame):
         """
         if self.MapWindow.dragid > -1:
             id = self.MapWindow.dragid
+            self.MapWindow.dragid = -1
         else:
             # index for overlay layer in render
             if len(self.MapWindow.textdict.keys()) > 0:
-                id = self.MapWindow.textdict.keys()[-1] + 1
+                id = max(self.MapWindow.textdict.keys()) + 1
             else:
                 id = 101
-
+        
         self.dialogs['text'] = gdialogs.TextLayerDialog(parent = self, ovlId = id, 
                                                         title = _('Add text layer'),
                                                         size = (400, 200))
@@ -1834,29 +1859,43 @@ class MapFrame(wx.Frame):
         if self.dialogs['text'].ShowModal() == wx.ID_OK:
             text = self.dialogs['text'].GetValues()['text']
             active = self.dialogs['text'].GetValues()['active']
-            coords, w, h = self.MapWindow.TextBounds(self.dialogs['text'].GetValues())
         
             # delete object if it has no text or is not active
             if text == '' or active == False:
                 try:
-                    self.MapWindow.pdc.ClearId(id)
-                    self.MapWindow.pdc.RemoveId(id)
+                    self.MapWindow2D.pdc.ClearId(id)
+                    self.MapWindow2D.pdc.RemoveId(id)
                     del self.MapWindow.textdict[id]
+                    if self.IsPaneShown('3d'):
+                        self.MapWindow3D.UpdateOverlays()
+                        self.MapWindow.UpdateMap()
+                    else:
+                        self.MapWindow2D.UpdateMap(render = False, renderVector = False)
                 except:
                     pass
                 return
 
-            self.MapWindow.pdc.ClearId(id)
-            self.MapWindow.pdc.SetId(id)
+            
             self.MapWindow.textdict[id] = self.dialogs['text'].GetValues()
             
-            self.MapWindow.Draw(self.MapWindow.pdcDec, img = self.MapWindow.textdict[id],
-                                drawid = id, pdctype = 'text', coords = coords)
-            
-            self.MapWindow.UpdateMap(render = False, renderVector = False)
+            if self.IsPaneShown('3d'):
+                self.MapWindow3D.UpdateOverlays()
+                self.MapWindow3D.UpdateMap()
+            else:
+                self.MapWindow2D.pdc.ClearId(id)
+                self.MapWindow2D.pdc.SetId(id)
+                self.MapWindow2D.UpdateMap(render = False, renderVector = False)
             
         self.MapWindow.mouse['use'] = 'pointer'
-
+    
+    def OnAddArrow(self, event):
+        """!Handler for north arrow menu selection.
+            Opens Appearance page of nviz notebook.
+        """
+        
+        self._layerManager.nviz.SetPage('decoration')
+        self.MapWindow3D.SetDrawArrow((70, 70))
+        
     def GetOptData(self, dcmd, type, params, propwin):
         """!Callback method for decoration overlay command generated by
         dialog created in menuform.py

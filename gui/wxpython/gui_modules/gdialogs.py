@@ -528,7 +528,7 @@ class DecorationDialog(wx.Dialog):
             resize.SetToolTipString(_("Click and drag on the map display to set legend"
                                         " size and position and then press OK"))
             resize.SetName('resize')
-            if self.parent.toolbars['nviz']:
+            if self.parent.IsPaneShown('3d'):
                 resize.Disable()
             box.Add(item = resize, proportion = 0, flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
             sizer.Add(item = box, proportion = 0,
@@ -579,7 +579,7 @@ class DecorationDialog(wx.Dialog):
         sizer.Fit(self)
 
         # create overlay if doesn't exist
-        self._CreateOverlay()
+        self._createOverlay()
         
         if len(self.parent.MapWindow.overlays[self.ovlId]['cmd']) > 1:
             if name == 'legend':
@@ -592,12 +592,12 @@ class DecorationDialog(wx.Dialog):
                                       mapName)
             
         
-    def _CreateOverlay(self):
+    def _createOverlay(self):
+        """!Creates overlay"""
         if not self.parent.Map.GetOverlay(self.ovlId):
             self.newOverlay = self.parent.Map.AddOverlay(id = self.ovlId, type = self.name,
                                                          command = self.cmd,
                                                          l_active = False, l_render = False, l_hidden = True)
-            
             prop = { 'layer' : self.newOverlay,
                      'params' : None,
                      'propwin' : None,
@@ -607,6 +607,7 @@ class DecorationDialog(wx.Dialog):
             self.parent.MapWindow2D.overlays[self.ovlId] = prop
             if self.parent.MapWindow3D:
                 self.parent.MapWindow3D.overlays[self.ovlId] = prop
+                
         else:
             if self.parent.MapWindow.overlays[self.ovlId]['propwin'] == None:
                 return
@@ -615,10 +616,7 @@ class DecorationDialog(wx.Dialog):
 
 
     def OnOptions(self, event):
-        """        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-        Sets option for decoration map overlays
+        """!Sets option for decoration map overlays
         """
         if self.parent.MapWindow.overlays[self.ovlId]['propwin'] is None:
             # build properties dialog
@@ -660,6 +658,9 @@ class DecorationDialog(wx.Dialog):
         self.parent.Map.GetOverlay(self.ovlId).SetActive(self.chkbox.IsChecked())
 
         # update map
+        if self.parent.IsPaneShown('3d'):
+            self.parent.MapWindow.UpdateOverlays()
+            
         self.parent.MapWindow.UpdateMap()
 
         # close dialog
@@ -710,12 +711,14 @@ class TextLayerDialog(wx.Dialog):
             self.currClr  = self.parent.MapWindow.textdict[self.ovlId]['color']
             self.currRot  = self.parent.MapWindow.textdict[self.ovlId]['rotation']
             self.currCoords = self.parent.MapWindow.textdict[self.ovlId]['coords']
+            self.currBB = self.parent.MapWindow.textdict[self.ovlId]['bbox']
         else:
             self.currClr = wx.BLACK
             self.currText = ''
             self.currFont = self.GetFont()
             self.currRot = 0.0
             self.currCoords = [10, 10, 10, 10]
+            self.currBB = wx.Rect()
 
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         box = wx.GridBagSizer(vgap = 5, hgap = 5)

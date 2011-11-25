@@ -233,7 +233,9 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             else:
                 vector = False
             if self.mapdisplay.statusbarWin['render'].GetValue():
-                self.mapdisplay.MapWindow.UpdateMap(render = True, renderVector = vector)
+                self.mapdisplay.MapWindow2D.UpdateMap(render = True, renderVector = vector)
+                if self.lmgr.IsPaneShown('toolbarNviz'): # nviz
+                    self.mapdisplay.MapWindow3D.UpdateMap(render = True)
             
             self.rerender = False
         
@@ -294,7 +296,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 self.popupMenu.Enable(self.popupID['opacity'], False)
                 self.popupMenu.Enable(self.popupID['properties'], False)
             
-            if ltype in ('raster', 'vector', '3d-raster') and self.mapdisplay.toolbars['nviz']:
+            if ltype in ('raster', 'vector', '3d-raster') and self.lmgr.IsPaneShown('toolbarNviz'):
                 self.popupMenu.Append(self.popupID['nviz'], _("3D view properties"))
                 self.Bind (wx.EVT_MENU, self.OnNvizProperties, id = self.popupID['nviz'])
             
@@ -876,7 +878,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         # updated progress bar range (mapwindow statusbar)
         if checked is True:
             self.mapdisplay.statusbarWin['progress'].SetRange(len(self.Map.GetListOfLayers(l_active = True)))
-        
+            
         return layer
 
     def PropertiesDialog (self, layer, show = True):
@@ -1033,6 +1035,22 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         # update progress bar range (mapwindow statusbar)
         self.mapdisplay.statusbarWin['progress'].SetRange(len(self.Map.GetListOfLayers(l_active = True)))
 
+        #
+        # nviz
+        #
+        if self.lmgr.IsPaneShown('toolbarNviz') and \
+                self.GetPyData(item) is not None:
+            # nviz - load/unload data layer
+            mapLayer = self.GetPyData(item)[0]['maplayer']
+            self.mapdisplay.SetStatusText(_("Please wait, updating data..."), 0)
+            if mapLayer.type == 'raster':
+                self.mapdisplay.MapWindow.UnloadRaster(item)
+            elif mapLayer.type == '3d-raster':
+                self.mapdisplay.MapWindow.UnloadRaster3d(item)
+            elif mapLayer.type == 'vector':
+                self.mapdisplay.MapWindow.UnloadVector(item)
+            self.mapdisplay.SetStatusText("", 0)
+            
         event.Skip()
 
     def OnLayerChecked(self, event):
@@ -1068,7 +1086,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.mapdisplay.statusbarWin['progress'].SetRange(len(self.Map.GetListOfLayers(l_active = True)))
         
         # nviz
-        if self.mapdisplay.toolbars['nviz'] and \
+        if self.lmgr.IsPaneShown('toolbarNviz') and \
                 self.GetPyData(item) is not None:
             # nviz - load/unload data layer
             mapLayer = self.GetPyData(item)[0]['maplayer']
@@ -1179,7 +1197,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                                     render = render)
         
         # update nviz tools
-        if self.mapdisplay.toolbars['nviz'] and \
+        if self.lmgr.IsPaneShown('toolbarNviz') and \
                 self.GetPyData(self.layer_selected) is not None:
             if self.layer_selected.IsChecked():
                 # update Nviz tool window
@@ -1390,7 +1408,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                                     render = render)
 
         # update nviz session        
-        if self.mapdisplay.toolbars['nviz'] and dcmd:
+        if self.lmgr.IsPaneShown('toolbarNviz') and dcmd:
             mapLayer = self.GetPyData(layer)[0]['maplayer']
             mapWin = self.mapdisplay.MapWindow
             if len(mapLayer.GetCmd()) > 0:

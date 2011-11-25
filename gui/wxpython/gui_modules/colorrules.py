@@ -9,7 +9,6 @@ Classes:
  - ColorTable
  - RasterColorTable
  - VectorColorTable
- - ThematicVectorTable
  - BuferedWindow
 
 (C) 2008, 2010-2011 by the GRASS Development Team
@@ -316,9 +315,6 @@ class ColorTable(wx.Frame):
                  **kwargs):
         """!Dialog for interactively entering rules for map management
         commands
-
-        @param raster True to raster otherwise vector
-        @param nviz True if ColorTable is called from nviz thematic mapping
         """
         self.parent = parent # GMFrame
         wx.Frame.__init__(self, parent, id, title, style = style, **kwargs)
@@ -1622,55 +1618,6 @@ class VectorColorTable(ColorTable):
         
         return ColorTable.OnApply(self, event)
         
-class ThematicVectorTable(VectorColorTable):
-    def __init__(self, parent, vectorType, **kwargs):
-        """!Dialog for interactively entering color/size rules
-            for vector maps for thematic mapping in nviz"""
-        self.vectorType = vectorType
-        VectorColorTable.__init__(self, parent = parent, **kwargs)
-              
-        self.SetTitle(_("Thematic mapping for vector map in 3D view"))       
-                    
-    def _initLayer(self):
-        """!Set initial layer when opening dialog"""
-        self.inmap = self.parent.GetLayerData(nvizType = 'vector', nameOnly = True)
-        self.selectionInput.SetValue(self.inmap)
-        self.selectionInput.Disable()
-        
-    def OnApply(self, event):
-        """!Apply selected color table
-
-        @return True on success otherwise False
-        """
-        ret = self.CreateColorTable()
-        if not ret:
-            gcmd.GMessage(parent = self, message = _("No valid color rules given."))
-        
-        data = self.parent.GetLayerData(nvizType = 'vector')
-        data['vector']['points']['thematic']['layer'] = int(self.properties['layer'])
-        
-        value = None
-        if self.properties['storeColumn']:
-            value = self.properties['storeColumn']
-            
-        if not self.colorTable:
-            if self.attributeType == 'color':
-                data['vector'][self.vectorType]['thematic']['rgbcolumn'] = value
-            else:
-                data['vector'][self.vectorType]['thematic']['sizecolumn'] = value
-        else:
-            if self.attributeType == 'color':
-                data['vector'][self.vectorType]['thematic']['rgbcolumn'] = None
-            else:
-                data['vector'][self.vectorType]['thematic']['sizecolumn'] = None
-        
-        data['vector'][self.vectorType]['thematic']['update'] = None
-        
-        event = wxUpdateProperties(data = data)
-        wx.PostEvent(self.parent.mapWindow, event)
-        self.parent.mapWindow.Refresh(False)
-        
-        return ret
            
 class BufferedWindow(wx.Window):
     """!A Buffered window class"""

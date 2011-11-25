@@ -12,6 +12,8 @@
    \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  */
 
+#include <math.h>
+
 #include <grass/glocale.h>
 #include <grass/nviz.h>
 
@@ -125,6 +127,25 @@ int Nviz_set_viewpoint_position(double x_pos, double y_pos)
     return 1;
 }
 
+void Nviz_get_viewpoint_position(double *x_pos, double *y_pos)
+{
+    float from[3];
+    double xpos, ypos;
+
+    GS_get_from(from);
+    xpos = (from[X] + RANGE_OFFSET) / RANGE;
+    ypos = (from[Y] + RANGE_OFFSET) / RANGE;
+    *x_pos = xpos;
+    *x_pos = (*x_pos < 0) ? 0 : (*x_pos > 1.0) ? 1.0 : *x_pos;
+    *y_pos = 1.0 - ypos;
+    *y_pos = (*y_pos < 0) ? 0 : (*y_pos > 1.0) ? 1.0 : *y_pos;
+
+    if (xpos < 0.0 || xpos > 1.0 || ypos < 0.0 || ypos > 1.0) {
+	G_debug(3, "Invalid view position coordinates, using %f,%f",
+		  *x_pos, 1.0 - *y_pos);
+    }
+}
+
 /*!
    \brief Change viewpoint height
 
@@ -157,6 +178,16 @@ int Nviz_set_viewpoint_height(double height)
     return 1;
 }
 
+void Nviz_get_viewpoint_height(double *height)
+{
+    float from[3];
+
+    G_debug(1, "Nviz_get_viewpoint_height():");
+
+    GS_get_from_real(from);
+
+    *height = from[Z];
+}
 /*!
    \brief Change viewpoint perspective (field of view)
 
@@ -220,4 +251,128 @@ int Nviz_change_exag(nv_data * data, double exag)
     }
 
     return 1;
+}
+/*!
+  \brief Change focused point
+  
+  \param sx,sy screen coordinates
+  
+  \return 1
+*/
+int Nviz_look_here(double sx, double sy)
+{
+     G_debug(1, "Nviz_look_here(): screen coordinates = %f %f", sx, sy); 
+     GS_look_here(sx, sy);
+     return 1;
+}
+
+/*!
+  \brief Get current modelview matrix
+*/
+void Nviz_get_modelview(double *modelMatrix)
+{
+    glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+}
+
+/*!
+  \brief Set rotation parameters
+
+  Rotate scene by given parameters related to mouse drag event
+  (difference from current state).
+  Coordinates determine the second point of rotation axis,
+  the first point is (0, 0, 0).
+
+  \param angle angle
+  \param x,y,z axis coordinate
+*/
+void Nviz_set_rotation(double angle, double x, double y, double z)
+{
+    G_debug(3, "Nviz_set_rotation(): angle = %f, x = %f, y = %f, z = %f", angle, x, y, z); 
+    GS_set_rotation(angle, x, y, z);
+}
+
+/*!
+  \brief Stop scene rotation
+*/
+void Nviz_unset_rotation(void)
+{
+    GS_unset_rotation();
+}
+
+/*!
+  \brief Stop scene rotation
+*/
+void Nviz_init_rotation(void)
+{
+    GS_init_rotation();
+}
+
+/*!
+  \brief Fly through the scene
+
+  Computes parameters needed for moving scene.
+  Changes viewpoint and viewdir.
+  Based on visualization/nviz/src/togl_flythrough.c and simplified.
+
+  \param fly_info values computed from mouse movement
+  \param scale rate of movement
+  \param lateral type of movement
+  
+*/
+void Nviz_flythrough(nv_data *data, float *fly_info, int *scale, int lateral)
+{
+    float dir[3], from[4], cur_from[4], cur_dir[4];
+    float speed, h, p, sh, ch, sp, cp;
+    float diff_x, diff_y, diff_z;
+    float quasi_zero;
+
+    quasi_zero = 0.0001;
+
+    GS_get_from(cur_from);
+    GS_get_viewdir(cur_dir);
+
+    p = asin(cur_dir[Z]);
+    h = atan2(- cur_dir[X], - cur_dir[Y]);
+
+    speed = scale[0] * fly_info[0];
+
+    h += scale[1] * fly_info[1]; /* change heading */
+    if (!lateral)   /* in case of "lateral" doesn't change pitch */
+        p -= scale[1] * fly_info[2];
+
+    h = fmod(h + M_PI, 2 * M_PI) - M_PI;
+
+    sh = sin(h);
+    ch = cos(h);
+    sp = sin(p);
+    cp = cos(p);
+
+    dir[X] = -sh * cp;
+    dir[Y] = -ch * cp;
+    dir[Z] = sp;
+
+    if (lateral) {
+        from[X] = cur_from[X] + speed * dir[Y];
+        from[Y] = cur_from[Y] - speed * dir[X];
+        from[Z] = cur_from[Z] + scale[0] * fly_info[2];
+    }
+    else {
+        from[X] = cur_from[X] + speed * dir[X];
+        from[Y] = cur_from[Y] + speed * dir[Y];
+        /* not sure how this should behave (change Z coord or not ?)*/
+        from[Z] = cur_from[Z]; /* + speed * dir[Z]*/
+    }
+
+    diff_x = fabs(cur_dir[X] - dir[X]);
+    diff_y = fabs(cur_dir[Y] - dir[Y]);
+    diff_z = fabs(cur_dir[Z] - dir[Z]);
+
+    if (    /* something has changed */
+        (diff_x > quasi_zero) || (diff_y > quasi_zero) ||
+        (diff_z > quasi_zero) || (cur_from[X] != from[X]) ||
+        (cur_from[Y] != from[Y]) || (cur_from[Z] != from[Z])
+    ) {
+    GS_moveto(from);
+    GS_set_viewdir(dir);	/* calls gsd_set_view */
+    }
 }

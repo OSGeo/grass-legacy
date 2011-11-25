@@ -78,6 +78,7 @@ static geodisplay Gd;
 static struct Cell_head wind;
 static int Buffermode;
 static int Numlights = 0;
+static int Resetlight = 1;
 static int Modelshowing = 0;
 
 void void_func(void)
@@ -113,9 +114,13 @@ void GS_libinit(void)
 
     Gv.scale = GS_UNIT_SIZE / Longdim;
 
+    G_debug(1, "GS_libinit(): n=%f s=%f w=%f e=%f scale=%f first=%d",
+	    Region[0], Region[1], Region[2], Region[3], Gv.scale, first);
+    
     Cxl_func = void_func;
     Swap_func = void_func;
 
+    
     if (first) {
 	gs_init();
     }
@@ -244,7 +249,16 @@ int GS_new_surface(void)
 
     return (-1);
 }
-
+void GS_set_light_reset(int i)
+{
+    Resetlight = i;
+    if (i)
+	Numlights = 0;
+}
+int GS_get_light_reset(void)
+{
+    return Resetlight;
+}
 /*!
    \brief Add new model light
 
@@ -253,11 +267,11 @@ int GS_new_surface(void)
  */
 int GS_new_light(void)
 {
-    static int first = 1;
     int i;
 
-    if (first) {
-	first = 0;
+    if (GS_get_light_reset()) {
+
+	GS_set_light_reset(0);
 
 	for (i = 0; i < MAX_LIGHTS; i++) {
 	    Gv.lights[i].position[X] = Gv.lights[i].position[Y] = 0.0;
@@ -277,10 +291,10 @@ int GS_new_light(void)
 	gsd_deflight(Numlights + 1, &(Gv.lights[Numlights]));
 	gsd_switchlight(Numlights + 1, 1);
 
-	return (++Numlights);
+	return ++Numlights;
     }
 
-    return (-1);
+    return -1;
 }
 
 /*!
@@ -1548,32 +1562,33 @@ int *GS_get_surf_list(int *numsurfs)
  */
 int GS_delete_surface(int id)
 {
-    int i, j, found = 0;
-
-    G_debug(3, "GS_delete_surface");
-
+    int i, j, found;
+    
+    found = FALSE;
+    
+    G_debug(1, "GS_delete_surface(): id=%d", id);
+    
     if (GS_surf_exists(id)) {
 	gs_delete_surf(id);
-
 	for (i = 0; i < Next_surf && !found; i++) {
 	    if (Surf_ID[i] == id) {
-		found = 1;
+		found = TRUE;
 
 		for (j = i; j < Next_surf; j++) {
 		    Surf_ID[j] = Surf_ID[j + 1];
 		}
 	    }
 	}
-
+	
 	gv_update_drapesurfs();
 
 	if (found) {
 	    --Next_surf;
-	    return (1);
+	    return 1;
 	}
     }
 
-    return (-1);
+    return -1;
 }
 
 
@@ -2864,6 +2879,72 @@ void GS_set_twist(int t)
 }
 
 /*!
+   \brief Set rotation params
+ */
+void GS_set_rotation(double angle, double x, double y, double z)
+{
+    Gv.rotate.rot_angle = angle;
+    Gv.rotate.rot_axes[0] = x;
+    Gv.rotate.rot_axes[1] = y;
+    Gv.rotate.rot_axes[2] = z;
+    Gv.rotate.do_rot = 1;
+
+    return;
+}
+
+/*!
+   \brief Stop scene rotation
+ */
+void GS_unset_rotation(void)
+{
+    Gv.rotate.do_rot = 0;
+}
+
+/*!
+   \brief Reset scene rotation
+ */
+void GS_init_rotation(void)
+{
+    int i;
+
+    for (i = 0; i < 16; i++) {
+	if (i == 0 || i == 5 || i == 10 || i == 15)
+	    Gv.rotate.rotMatrix[i] = 1.0;
+	else
+	    Gv.rotate.rotMatrix[i] = 0.0;
+    }
+    Gv.rotate.rot_angle = 0.0;
+    Gv.rotate.rot_axes[0] = 0.0;
+    Gv.rotate.rot_axes[1] = 0.0;
+    Gv.rotate.rot_axes[2] = 0.0;
+    Gv.rotate.do_rot = 0;
+    
+}
+/*!
+ * \brief Get rotation matrix
+ */ 
+void GS_get_rotation_matrix(double *matrix)
+{
+    int i;
+
+    for (i = 0; i < 16; i++) {
+	matrix[i] = Gv.rotate.rotMatrix[i];
+    }
+}
+
+/*!
+ * \brief Set rotation matrix
+ */ 
+void GS_set_rotation_matrix(double *matrix)
+{
+    int i;
+
+    for (i = 0; i < 16; i++) {
+	Gv.rotate.rotMatrix[i] = matrix[i];
+    }
+}
+
+/*!
    \brief Unset focus
  */
 void GS_set_nofocus(void)
@@ -3262,6 +3343,7 @@ int GS_load_3dview(const char *vname, int surfid)
  */
 void GS_init_view(void)
 {
+    int i;
     static int first = 1;
 
     G_debug(3, "GS_init_view");
@@ -3295,6 +3377,9 @@ void GS_init_view(void)
 	/* replace these with something meaningful */
 	Gv.fov = 450;
 	Gv.twist = 0;
+
+	GS_init_rotation();
+
 	Gv.from_to[FROM][X] = Gv.from_to[FROM][Y] =
 	    Gv.from_to[FROM][Z] = GS_UNIT_SIZE / 2.;
 

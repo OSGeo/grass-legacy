@@ -40,10 +40,7 @@ int load_rasters(const struct GParams *params, nv_data * data)
     nelev_map = opt_get_num_answers(params->elev_map);
     nelev_const = opt_get_num_answers(params->elev_const);
 
-    if (nelev_map > 0)
-	nelevs = nelev_map;
-    else
-	nelevs = nelev_const;
+    nelevs = nelev_const + nelev_map;
 
     /* topography (required) */
     for (i = 0; i < nelevs; i++) {
@@ -61,10 +58,10 @@ int load_rasters(const struct GParams *params, nv_data * data)
 				  0.0, data);
 	}
 	else {
-	    if (i < nelev_const && strcmp(params->elev_const->answers[i], "")) {
+	    if (i-nelev_map < nelev_const && strcmp(params->elev_const->answers[i-nelev_map], "")) {
 		id = Nviz_new_map_obj(MAP_OBJ_SURF,
 				      NULL,
-				      atof(params->elev_const->answers[i]),
+				      atof(params->elev_const->answers[i-nelev_map]),
 				      data);
 	    }
 	    else {
@@ -74,9 +71,16 @@ int load_rasters(const struct GParams *params, nv_data * data)
 	}
 
 	/* set position */
-	x = atof(params->surface_pos->answers[i]);
-	y = atof(params->surface_pos->answers[i+1]);
-	z = atof(params->surface_pos->answers[i+2]);
+    if (opt_get_num_answers(params->surface_pos) != 3 * nelevs){
+        x = atof(params->surface_pos->answers[0]);
+        y = atof(params->surface_pos->answers[1]);
+        z = atof(params->surface_pos->answers[2]);
+    }
+    else {
+        x = atof(params->surface_pos->answers[i*3+0]);
+        y = atof(params->surface_pos->answers[i*3+1]);
+        z = atof(params->surface_pos->answers[i*3+2]);
+    }
 
 	GS_set_trans(id, x, y, z);
     }
@@ -111,19 +115,25 @@ int load_rasters(const struct GParams *params, nv_data * data)
 			  data);
 	}
 	/* check for color value */
-	else if (i < ncolor_const &&
-		 strcmp(params->color_const->answers[i], "")) {
+	else if (i-ncolor_map < ncolor_const &&
+		 strcmp(params->color_const->answers[i-ncolor_map], "")) {
 	    Nviz_set_attr(id, MAP_OBJ_SURF, ATT_COLOR, CONST_ATT, NULL,
 			  Nviz_color_from_str(params->color_const->
-					      answers[i]), data);
+					      answers[i-ncolor_map]), data);
 	}
 	else {			/* use by default elevation map for coloring */
-	    Nviz_set_attr(id, MAP_OBJ_SURF, ATT_COLOR, MAP_ATT,
-			  G_fully_qualified_name(params->elev_map->answers[i],
-						 mapset), -1.0, data);
-	    G_verbose_message(_("Color attribute not defined, using default <%s>"),
-			      G_fully_qualified_name(params->elev_map->
-						     answers[i], mapset));
+	    if (nelev_map > 0){
+	        Nviz_set_attr(id, MAP_OBJ_SURF, ATT_COLOR, MAP_ATT,
+			      G_fully_qualified_name(params->elev_map->answers[i],
+						     mapset), -1.0, data);
+	        G_verbose_message(_("Color attribute not defined, using default <%s>"),
+				  G_fully_qualified_name(params->elev_map->
+							 answers[i], mapset));
+        }
+        else{
+            G_fatal_error(_("Missing color attribute for surface %d"),
+			      i + 1);
+        }
 	}
 	/* mask */
 	if (i < nmask_map && strcmp(params->mask_map->answers[i], "")) {
@@ -139,10 +149,10 @@ int load_rasters(const struct GParams *params, nv_data * data)
 						 answers[i], mapset), -1.0,
 			  data);
 	}
-	else if (i < ntransp_const &&
-		 strcmp(params->transp_const->answers[i], "")) {
+	else if (i-ntransp_map < ntransp_const &&
+		 strcmp(params->transp_const->answers[i-ntransp_map], "")) {
 	    Nviz_set_attr(id, MAP_OBJ_SURF, ATT_TRANSP, CONST_ATT, NULL,
-			  atof(params->transp_const->answers[i]), data);
+			  atof(params->transp_const->answers[i-ntransp_map]), data);
 	}
 
 	/* shininess */
@@ -152,10 +162,10 @@ int load_rasters(const struct GParams *params, nv_data * data)
 						 answers[i], mapset), -1.0,
 			  data);
 	}
-	else if (i < nshine_const &&
-		 strcmp(params->shine_const->answers[i], "")) {
+	else if (i-nshine_map < nshine_const &&
+		 strcmp(params->shine_const->answers[i-nshine_map], "")) {
 	    Nviz_set_attr(id, MAP_OBJ_SURF, ATT_SHINE, CONST_ATT, NULL,
-			  atof(params->shine_const->answers[i]), data);
+			  atof(params->shine_const->answers[i-nshine_map]), data);
 	}
 
 	/* emission */
@@ -164,10 +174,10 @@ int load_rasters(const struct GParams *params, nv_data * data)
 			  G_fully_qualified_name(params->emit_map->answers[i],
 						 mapset), -1.0, data);
 	}
-	else if (i < nemit_const &&
-		 strcmp(params->emit_const->answers[i], "")) {
+	else if (i-nemit_map < nemit_const &&
+		 strcmp(params->emit_const->answers[i-nemit_map], "")) {
 	    Nviz_set_attr(id, MAP_OBJ_SURF, ATT_EMIT, CONST_ATT, NULL,
-			  atof(params->emit_const->answers[i]), data);
+			  atof(params->emit_const->answers[i-nemit_map]), data);
 	}
 
 	/*
@@ -229,7 +239,7 @@ void surface_set_draw_mode(const struct GParams *params)
 	}
 
 	/* style */
-	if (strcmp(params->style->answers[i], "wire") == 0) {
+	if (strcmp(style, "wire") == 0) {
 	    draw_mode |= DM_GRID_WIRE;
 	}
 	else {			/* surface */
@@ -237,7 +247,7 @@ void surface_set_draw_mode(const struct GParams *params)
 	}
 
 	/* shading */
-	if (strcmp(params->shade->answers[i], "flat") == 0) {
+	if (strcmp(shade, "flat") == 0) {
 	    draw_mode |= DM_FLAT;
 	}
 	else {			/* gouraud */

@@ -3,12 +3,14 @@
 
 @brief wxGUI 3D view mode
 
-This module implements 3D visualization mode for map display.
+This module implements 3D visualization mode for map display (ctypes
+required).
 
 List of classes:
  - Nviz
+ - Texture
 
-(C) 2008-2010 by the GRASS Development Team
+(C) 2008-2011 by the GRASS Development Team
 
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
@@ -16,21 +18,29 @@ for details.
 
 @author Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
 @author Pythonized by Glynn Clements
+@author Anna Kratochvilova <KratochAnna seznam.cz> (Google SoC 2011)
 """
 
+import wx
 import sys
+import locale
+import struct
 from threading import Thread
+from math import sqrt
+from numpy import matrix
 
 from ctypes import *
 try:
-    from grass.lib.gis   import *
-    from grass.lib.g3d   import *
-    from grass.lib.ogsf  import *
-    from grass.lib.nviz  import *
+    from grass.lib.gis      import *
+    from grass.lib.g3d import *
+    from grass.lib.vector   import *
+    from grass.lib.ogsf     import *
+    from grass.lib.nviz     import *
 except ImportError, e:
     sys.stderr.write(_("3D view mode: %s\n") % e)
-
+    
 from debug import Debug
+import grass.script as grass
 
 log      = None
 progress = None
@@ -65,20 +75,24 @@ class Nviz(object):
         """!Initialize Nviz class instance
         
         @param log logging area
+        @param gprogress progressbar
         """
         global errfunc, perfunc, log, progress
         log = glog
         progress = gprogress
         
-        G_gisinit("")
+        G_gisinit("wxnviz")
+        # gislib is already initialized (where?)
         G_set_error_routine(errfunc)
         G_set_percent_routine(perfunc)
         
-        GS_libinit()
-        GVL_libinit()
+        self.Init()
         
         self.data_obj = nv_data()
         self.data = pointer(self.data_obj)
+        self.color_obj = Colors()
+        self.color = pointer(self.color_obj)
+        
         self.width = self.height = -1
         self.showLight = False
         
@@ -91,7 +105,16 @@ class Nviz(object):
         del self.data
         del self.data_obj
         self.log = None
-        
+
+    def Init(self):
+        """!Initialize window"""
+        locale.setlocale(locale.LC_NUMERIC, 'C')
+        #G_unset_window()
+        #Rast_unset_window()
+        #Rast__init_window()
+        GS_libinit()
+        GVL_libinit()
+    
     def ResizeWindow(self, width, height):
         """!GL canvas resized
         
@@ -106,6 +129,10 @@ class Nviz(object):
         Debug.msg(3, "Nviz::ResizeWindow(): width=%d height=%d",
                   width, height)
         return Nviz_resize_window(width, height)
+    
+    def GetLongDim(self):
+        """!Get longest dimension, used for initial size of north arrow"""
+        return Nviz_get_longdim(self.data)
     
     def SetViewDefault(self):
         """!Set default view (based on loaded data)
@@ -141,7 +168,62 @@ class Nviz(object):
         
         Debug.msg(3, "Nviz::SetView(): x=%f, y=%f, height=%f, persp=%f, twist=%f",
                   x, y, height, persp, twist)
+                
+    def GetViewpointPosition(self):
+        x = c_double()
+        y = c_double()
+        h = c_double()
+        Nviz_get_viewpoint_height(byref(h))
+        Nviz_get_viewpoint_position(byref(x), byref(y))
         
+        return (x.value, y.value, h.value)
+        
+    def LookHere(self, x, y):
+        """!Look here feature 
+        @param x,y screen coordinates
+        """
+        
+        Nviz_look_here(x, y)
+        Debug.msg(3, "Nviz::LookHere(): x=%f, y=%f", x, y)
+    
+    def LookAtCenter(self):
+        """!Center view at center of displayed surface"""
+        Nviz_set_focus_map(MAP_OBJ_UNDEFINED, -1)
+        Debug.msg(3, "Nviz::LookAtCenter()")
+    
+    def GetFocus(self):
+        """!Get focus"""
+        Debug.msg(3, "Nviz::GetFocus()")
+        if Nviz_has_focus(self.data):
+            x = c_float()
+            y = c_float()
+            z = c_float()
+            Nviz_get_focus(self.data, byref(x), byref(y), byref(z))
+            return x.value, y.value, z.value
+        else:
+            return -1, -1, -1
+        
+    def SetFocus(self, x, y, z):
+        """!Set focus"""
+        Debug.msg(3, "Nviz::SetFocus()")
+        Nviz_set_focus(self.data, x, y, z)
+        
+    def GetViewdir(self):
+        """!Get viewdir"""
+        Debug.msg(3, "Nviz::GetViewdir()")
+        dir = (c_float * 3)()
+        GS_get_viewdir(byref(dir))
+        
+        return dir[0], dir[1], dir[2]
+        
+    def SetViewdir(self, x, y, z):
+        """!Set viewdir"""
+        Debug.msg(3, "Nviz::SetViewdir(): x=%f, y=%f, z=%f" % (x, y, z))
+        dir = (c_float * 3)()
+        for i, coord in enumerate((x, y, z)):
+            dir[i] = coord
+        GS_set_viewdir(byref(dir))
+                
     def SetZExag(self, z_exag):
         """!Set z-exag value
         
@@ -189,7 +271,7 @@ class Nviz(object):
         # set background color
         Nviz_set_bgcolor(self.data, Nviz_color_from_str("white"))
         
-        GS_clear(Nviz_get_bgcolor(self.data))
+        GS_clear(Nviz_get_bgcolor(self.data))        
         # initialize view, lights
         Nviz_init_view(self.data)
         
@@ -265,7 +347,19 @@ class Nviz(object):
         Debug.msg(1, "Nviz::LoadRaster(): name=%s -> id=%d", name, id)
         
         return id
-
+    
+    def AddConstant(self, value, color):
+        """!Add new constant surface"""
+        id = Nviz_new_map_obj(MAP_OBJ_SURF, None, value, self.data)
+        
+        Nviz_set_attr(id, MAP_OBJ_SURF, ATT_COLOR, CONST_ATT,
+                        None, Nviz_color_from_str(color),
+                        self.data)
+        Nviz_set_focus_map(MAP_OBJ_UNDEFINED, -1)
+        
+        Debug.msg(1, "Nviz::AddConstant(): id=%d", id)
+        return id
+        
     def UnloadSurface(self, id):
         """!Unload surface
         
@@ -290,16 +384,17 @@ class Nviz(object):
         @param name vector map name
         @param points if true load 2d points rather then 2d lines
         
-        @return object id
+        @return object id, id of base surface (or -1 if it is not loaded)
         @return -1 on failure
         """
+        baseId = -1
         if GS_num_surfs() == 0:     # load base surface if no loaded
-            Nviz_new_map_obj(MAP_OBJ_SURF, None, 0.0, self.data)
+            baseId = Nviz_new_map_obj(MAP_OBJ_SURF, None, 0.0, self.data)
             
             nsurf = c_int()
             surf_list = GS_get_surf_list(byref(nsurf))
             GS_set_att_const(surf_list[0], ATT_TRANSP, 255)
-        
+            
         mapset = G_find_vector2 (name, "")
         if mapset is None:
             G_warning(_("Vector map <%s> not found"),
@@ -316,7 +411,7 @@ class Nviz(object):
         
         Debug.msg(1, "Nviz::LoadVector(): name=%s -> id=%d", name, id)
         
-        return id
+        return id, baseId
     
     def UnloadVector(self, id, points):
         """!Unload vector set
@@ -342,6 +437,19 @@ class Nviz(object):
         
         return 1
 
+    def VectorSurfaceSelected(self, vid, sid):
+        """!Check if surface is selected (currently unused)
+        
+        @param vid vector id
+        @param sid surface id
+        
+        @return True if selected
+        @return False if not selected
+        """
+        selected = GV_surf_is_selected(vid, sid)
+        Debug.msg(1, "Nviz::VectorSurfaceSelected(): vid=%s, sid=%d -> selected=%d", vid, sid, selected)
+        return selected
+    
     def LoadVolume(self, name, color_name, color_value):
         """!Load 3d raster map (volume)
         
@@ -423,7 +531,7 @@ class Nviz(object):
         
         @param id surface id
         @param map if true use map otherwise constant
-        @param value map name of value
+        @param value map name or value
         
         @return 1 on success
         @return -1 surface not found
@@ -444,7 +552,7 @@ class Nviz(object):
         @return -1 surface not found
         @return -2 setting attributes failed
         """
-        return self.SetSurfaceAttr(id, ATT_MASK, true, value)
+        return self.SetSurfaceAttr(id, ATT_MASK, True, value)
     
     def SetSurfaceTransp(self, id, map, value):
         """!Set surface mask
@@ -475,7 +583,7 @@ class Nviz(object):
         return self.SetSurfaceAttr(id, ATT_SHINE, map, value)
     
     def SetSurfaceEmit(self, id, map, value):
-        """!Set surface emission
+        """!Set surface emission (currently unused)
         
         @param id surface id
         @param map if true use map otherwise constant
@@ -546,7 +654,7 @@ class Nviz(object):
         return self.UnsetSurfaceAttr(id, ATT_TRANSP)
     
     def UnsetSurfaceEmit(self, id):
-        """!Unset surface emission
+        """!Unset surface emission (currently unused)
         
         @param id surface id
         
@@ -784,6 +892,28 @@ class Nviz(object):
         
         return 1
 
+    def UnsetVectorLineSurface(self, id, surf_id):
+        """!Unset reference surface of vector set (lines)
+        
+        @param id vector set id
+        @param surf_id surface id
+        
+        @return 1 on success
+        @return -1 vector set not found
+        @return -2 surface not found
+        @return -3 on failure
+        """
+        if not GV_vect_exists(id):
+            return -1
+        
+        if not GS_surf_exists(surf_id):
+            return -2
+        
+        if GV_unselect_surf(id, surf_id) < 0:
+            return -3
+        
+        return 1
+        
     def SetVectorPointMode(self, id, color_str, width, size, marker):
         """!Set mode of vector point overlay
         
@@ -803,9 +933,8 @@ class Nviz(object):
         
         color = Nviz_color_from_str(color_str)
         
-        ### TODO
-        # if GP_set_style(id, color, width, size, marker) < 0:
-        #    return -2
+        if GP_set_sitemode(id, ST_ATT_NONE, color, width, size, marker) < 0:
+            return -2
         
         return 1
 
@@ -850,7 +979,64 @@ class Nviz(object):
         
         return 1
 
-    def AddIsosurface(self, id, level):
+    def ReadVectorColors(self, name, mapset):
+        """!Read vector colors
+        
+        @param name vector map name
+        @mapset mapset name ("" for search path)
+        
+        @return -1 on error 
+        @return 0 if color table missing 
+        @return 1 on success (color table found) 
+        """
+        return Vect_read_colors(name, mapset, self.color)
+        
+    def CheckColorTable(self, id, type):
+        """!Check if color table exists.
+        
+        @param id vector set id
+        @param type vector set type (lines/points)
+        
+        @return 1 color table exists
+        @return 0 no color table found
+        @return -1 on error
+        @return -2 vector set not found
+        """
+        file = c_char_p()
+        
+        if type == 'points':
+            ret = GP_get_sitename(id, byref(file))
+        elif type == 'lines':
+            ret = GV_get_vectname(id, byref(file))
+            
+        if ret < 0:
+            return -2
+        
+        return self.ReadVectorColors(file, "")
+        
+    def UnsetVectorPointSurface(self, id, surf_id):
+        """!Unset reference surface of vector set (points)
+        
+        @param id vector set id
+        @param surf_id surface id
+        
+        @return 1 on success
+        @return -1 vector set not found
+        @return -2 surface not found
+        @return -3 on failure
+        """
+        if not GP_site_exists(id):
+            return -1
+        
+        if not GS_surf_exists(surf_id):
+            return -2
+        
+        if GP_unselect_surf(id, surf_id) < 0:
+            return -3
+        
+        return 1
+        
+    def AddIsosurface(self, id, level, isosurf_id = None):
         """!Add new isosurface
         
         @param id volume id
@@ -862,6 +1048,11 @@ class Nviz(object):
         if not GVL_vol_exists(id):
             return -1
         
+        if isosurf_id is not None:
+            num = GVL_isosurf_num_isosurfs(id)
+            if num < 0 or isosurf_id != num:
+                return -1
+                
         if GVL_isosurf_add(id) < 0:
             return -1
         
@@ -869,6 +1060,27 @@ class Nviz(object):
         nisosurfs = GVL_isosurf_num_isosurfs(id)
         
         return GVL_isosurf_set_att_const(id, nisosurfs - 1, ATT_TOPO, level)
+    
+    def AddSlice(self, id, slice_id = None):
+        """!Add new slice
+        
+        @param id volume id
+        
+        @return -1 on failure
+        @return number of slices
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if slice_id is not None:
+            num = GVL_slice_num_slices(id)
+            if num < 0 or slice_id != num:
+                return -1
+                
+        if GVL_slice_add(id) < 0:
+            return -1
+        
+        return GVL_slice_num_slices(id)
     
     def DeleteIsosurface(self, id, isosurf_id):
         """!Delete isosurface
@@ -888,6 +1100,30 @@ class Nviz(object):
             return -2
         
         ret = GVL_isosurf_del(id, isosurf_id)
+        
+        if ret < 0:
+            return -3
+
+        return 1
+    
+    def DeleteSlice(self, id, slice_id):
+        """!Delete slice
+        
+        @param id volume id
+        @param slice_id slice id
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 slice not found
+        @return -3 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if slice_id > GVL_slice_num_slices(id):
+            return -2
+        
+        ret = GVL_slice_del(id, slice_id)
         
         if ret < 0:
             return -3
@@ -922,6 +1158,49 @@ class Nviz(object):
 
         return 1
 
+    def MoveSlice(self, id, slice_id, up):
+        """!Move slice up/down in the list
+        
+        @param id volume id
+        @param slice_id slice id
+        @param up if true move up otherwise down
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 slice not found
+        @return -3 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if slice_id > GVL_slice_num_slices(id):
+            return -2
+        
+        if up:
+            ret = GVL_slice_move_up(id, slice_id)
+        else:
+            ret = GVL_slice_move_down(id, slice_id)
+        
+        if ret < 0:
+            return -3
+
+        return 1
+    
+    def SetIsosurfaceTopo(self, id, isosurf_id, map, value):
+        """!Set isosurface level
+        
+        @param id volume id
+        @param isosurf_id isosurface id (0 - MAX_ISOSURFS)
+        @param map if true use map otherwise constant
+        @param value map name of value
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 isosurface not found
+        @return -3 on failure
+        """
+        return self.SetIsosurfaceAttr(id, isosurf_id, ATT_TOPO, map, value)
+    
     def SetIsosurfaceColor(self, id, isosurf_id, map, value):
         """!Set isosurface color
         
@@ -952,7 +1231,7 @@ class Nviz(object):
         @return -2 isosurface not found
         @return -3 on failure
         """
-        return self.SetIsosurfaceAttr(id, isosurf_id, ATT_MASK, true, value)
+        return self.SetIsosurfaceAttr(id, isosurf_id, ATT_MASK, True, value)
     
     def SetIsosurfaceTransp(self, id, isosurf_id, map, value):
         """!Set isosurface transparency
@@ -985,7 +1264,7 @@ class Nviz(object):
         return self.SetIsosurfaceAttr(id, isosurf_id, ATT_SHINE, map, value)
     
     def SetIsosurfaceEmit(self, id, isosurf_id, map, value):
-        """!Set isosurface emission
+        """!Set isosurface emission (currently unused)
         
         @param id volume id
         @param isosurf_id isosurface id (0 - MAX_ISOSURFS)
@@ -1030,7 +1309,7 @@ class Nviz(object):
             ret = GVL_isosurf_set_att_const(id, isosurf_id, attr, val)
         
         Debug.msg(3, "Nviz::SetIsosurfaceAttr(): id=%d, isosurf=%d, "
-                  "attr=%d, map=%d, value=%s",
+                  "attr=%d, map=%s, value=%s",
                   id, isosurf_id, attr, map, value)
         
         if ret < 0:
@@ -1065,7 +1344,7 @@ class Nviz(object):
         return self.UnsetIsosurfaceAttr(id, isosurf_id, ATT_TRANSP)
     
     def UnsetIsosurfaceEmit(self, id, isosurf_id):
-        """!Unset isosurface emission
+        """!Unset isosurface emission (currently unused)
         
         @param id volume id
         @param isosurf_id isosurface id (0 - MAX_ISOSURFS)
@@ -1124,6 +1403,25 @@ class Nviz(object):
         
         return 1
     
+    def SetSliceMode(self, id, mode):
+        """!Set draw mode for slices
+        
+        @param mode
+        
+        @return 1 on success
+        @return -1 volume set not found
+        @return -2 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        ret = GVL_slice_set_drawmode(id, mode)
+        
+        if ret < 0:
+            return -2
+        
+        return 1
+    
     def SetIsosurfaceRes(self, id, res):
         """!Set draw resolution for isosurfaces
         
@@ -1142,7 +1440,228 @@ class Nviz(object):
             return -2
         
         return 1
-
+    
+    def SetSliceRes(self, id, res):
+        """!Set draw resolution for slices
+        
+        @param res resolution value
+        
+        @return 1 on success
+        @return -1 volume set not found
+        @return -2 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        ret = GVL_slice_set_drawres(id, res, res, res)
+        
+        if ret < 0:
+            return -2
+        
+        return 1
+    
+    def SetSlicePosition(self, id, slice_id, x1, x2, y1, y2, z1, z2, dir):
+        """!Set slice position
+        
+        @param id volume id
+        @param slice_id slice id
+        @param x1,x2,y1,y2,z1,z2 slice coordinates
+        @param dir axis
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 slice not found
+        @return -3 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if slice_id > GVL_slice_num_slices(id):
+            return -2
+        
+        ret = GVL_slice_set_pos(id, slice_id, x1, x2, y1, y2, z1, z2, dir)
+        
+        if ret < 0:
+            return -2
+        
+        return 1
+    
+    def SetSliceTransp(self, id, slice_id, value):
+        """!Set slice transparency
+        
+        @param id volume id
+        @param slice_id slice id
+        @param x1,x2,y1,y2,z1,z2 slice coordinates
+        @param value transparency value (0 - 255)
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 slice not found
+        @return -3 on failure
+        """
+        
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if slice_id > GVL_slice_num_slices(id):
+            return -2
+        
+        ret = GVL_slice_set_transp(id, slice_id, value)
+        
+        if ret < 0:
+            return -2
+        
+        return 1
+    
+    def SetIsosurfaceInOut(self, id, isosurf_id, inout):
+        """!Set inout mode
+        
+        @param inout mode true/false
+        
+        @return 1 on success
+        @return -1 volume set not found
+        @return -2 isosurface not found
+        @return -3 on failure
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        if isosurf_id > GVL_isosurf_num_isosurfs(id) - 1:
+            return -2
+        
+        ret = GVL_isosurf_set_flags(id, isosurf_id, inout)
+        
+        if ret < 0:
+            return -3
+        
+        return 1
+    
+    def GetVolumePosition(self, id):
+        """!Get volume position
+        
+        @param id volume id
+        
+        @return x,y,z
+        @return zero-length vector on error
+        """
+        if not GVL_vol_exists(id):
+            return []
+        
+        x, y, z = c_float(), c_float(), c_float()
+        GVL_get_trans(id, byref(x), byref(y), byref(z))
+        
+        Debug.msg(3, "Nviz::GetVolumePosition(): id=%d, x=%f, y=%f, z=%f",
+                  id, x.value, y.value, z.value)
+        
+        return [x.value, y.value, z.value]
+    
+    def SetVolumePosition(self, id, x, y, z):
+        """!Set volume position
+        
+        @param id volume id
+        @param x,y,z translation values
+        
+        @return 1 on success
+        @return -1 volume not found
+        @return -2 setting position failed
+        """
+        if not GVL_vol_exists(id):
+            return -1
+        
+        Debug.msg(3, "Nviz::SetVolumePosition(): id=%d, x=%f, y=%f, z=%f",
+                  id, x, y, z)
+        
+        GVL_set_trans(id, x, y, z)
+        
+        return 1
+    
+    def GetCPlaneCurrent(self):
+        return Nviz_get_current_cplane(self.data)
+    
+    def GetCPlanesCount(self):
+        """!Returns number of cutting planes"""
+        return Nviz_num_cplanes(self.data) 
+    
+    def GetCPlaneRotation(self):
+        """!Returns rotation parameters of current cutting plane"""
+        x, y, z = c_float(), c_float(), c_float()
+        
+        current = Nviz_get_current_cplane(self.data)
+        Nviz_get_cplane_rotation(self.data, current, byref(x), byref(y), byref(z))
+        
+        return x.value, y.value, z.value
+    
+    def GetCPlaneTranslation(self):
+        """!Returns translation parameters of current cutting plane"""
+        x, y, z = c_float(), c_float(), c_float()
+        
+        current = Nviz_get_current_cplane(self.data)
+        Nviz_get_cplane_translation(self.data, current, byref(x), byref(y), byref(z))
+        
+        return x.value, y.value, z.value
+    
+    def SetCPlaneRotation(self, x, y, z):
+        """!Set current clip plane rotation
+        
+        @param x,y,z rotation parameters
+        """
+        current = Nviz_get_current_cplane(self.data)
+        Nviz_set_cplane_rotation(self.data, current, x, y, z)
+        Nviz_draw_cplane(self.data, -1, -1)
+    
+    def SetCPlaneTranslation(self, x, y, z):
+        """!Set current clip plane translation
+        
+        @param x,y,z translation parameters
+        """
+        current = Nviz_get_current_cplane(self.data)
+        Nviz_set_cplane_translation(self.data, current, x, y, z)
+        Nviz_draw_cplane(self.data, -1, -1) 
+        Debug.msg(3, "Nviz::SetCPlaneTranslation(): id=%d, x=%f, y=%f, z=%f",
+                  current, x, y, z)
+                
+    def SetCPlaneInteractively(self, x, y):
+        current = Nviz_get_current_cplane(self.data)
+        ret = Nviz_set_cplane_here(self.data, current, x, y)
+        if ret:
+            Nviz_draw_cplane(self.data, -1, -1)
+            x, y, z = self.GetCPlaneTranslation()
+            return x, y, z
+        else:
+            return None, None, None
+        
+        
+    def SelectCPlane(self, index):
+        """!Select cutting plane
+        
+        @param index index of cutting plane
+        """
+        Nviz_on_cplane(self.data, index)
+    
+    def UnselectCPlane(self, index):
+        """!Unselect cutting plane
+        
+        @param index index of cutting plane
+        """
+        Nviz_off_cplane(self.data, index)
+        
+    def SetFenceColor(self, index):
+        """!Select current cutting plane
+        
+        @param index type of fence - from 0 (off) to 4
+        """    
+        Nviz_set_fence_color(self.data, index)
+            
+    def GetXYRange(self):
+        """!Get xy range"""
+        return Nviz_get_xyrange(self.data)
+    
+    def GetZRange(self):
+        """!Get z range"""
+        min, max = c_float(), c_float()
+        Nviz_get_zrange(self.data, byref(min), byref(max))
+        return min.value, max.value
+    
     def SaveToFile(self, filename, width = 20, height = 20, itype = 'ppm'):
         """!Save current GL screen to ppm/tif file
 
@@ -1167,8 +1686,12 @@ class Nviz(object):
     def DrawLightingModel(self):
         """!Draw lighting model"""
         if self.showLight:
-            GS_draw_lighting_model()
+            Nviz_draw_model(self.data)
 
+    def DrawFringe(self):
+        """!Draw fringe"""
+        Nviz_draw_fringe(self.data)
+        
     def SetFringe(self, sid, color, elev, nw = False, ne = False, sw = False, se = False):
         """!Set fringe
 
@@ -1178,10 +1701,48 @@ class Nviz(object):
         @param nw,ne,sw,se fringe edges (turn on/off)
         """
         scolor = str(color[0]) + ':' + str(color[1]) + ':' + str(color[2])
-
         Nviz_set_fringe(self.data,
                         sid, Nviz_color_from_str(scolor),
                         elev, int(nw), int(ne), int(sw), int(se))
+    
+    def DrawArrow(self):
+        """!Draw north arrow
+        """
+        return Nviz_draw_arrow(self.data)
+        
+    def SetArrow(self, sx, sy, size, color):
+        """!Set north arrow from canvas coordinates
+        
+        @param sx,sy canvas coordinates
+        @param size arrow length
+        @param color arrow color
+        """
+        return Nviz_set_arrow(self.data, sx, sy, size, Nviz_color_from_str(color))       
+        
+    def DeleteArrow(self):
+        """!Delete north arrow
+        """
+        Nviz_delete_arrow(self.data)
+    
+    def SetScalebar(self, id, sx, sy, size, color):
+        """!Set scale bar from canvas coordinates
+        
+        @param sx,sy canvas coordinates
+        @param id scale bar id
+        @param size scale bar length
+        @param color scale bar color
+        """
+        return Nviz_set_scalebar(self.data, id, sx, sy, size, Nviz_color_from_str(color))
+    
+    def DrawScalebar(self):
+        """!Draw scale bar
+        """
+        return Nviz_draw_scalebar(self.data)
+    
+    def DeleteScalebar(self, id):
+        """!Delete scalebar
+        """
+        Nviz_delete_scalebar(self.data, id)
         
     def GetPointOnSurface(self, sx, sy):
         """!Get point on surface
@@ -1192,7 +1753,7 @@ class Nviz(object):
         x   = c_float()
         y   = c_float()
         z   = c_float()
-        Debug.msg(5, "GLWindow.GetPointOnSurface(): sx=%d sy=%d" % (sx, sy))
+        Debug.msg(5, "Nviz::GetPointOnSurface(): sx=%d sy=%d" % (sx, sy))
         num = GS_get_selected_point_on_surface(sx, sy, byref(sid), byref(x), byref(y), byref(z))
         if num == 0:
             return (None, None, None, None)
@@ -1228,3 +1789,246 @@ class Nviz(object):
                                   byref(d), int(useExag))
         
         return d.value
+
+    def GetRotationParameters(self, dx, dy):
+        """!Get rotation parameters (angle, x, y, z axes)
+        
+        @param dx,dy difference from previous mouse drag event
+        """
+        modelview = (c_double * 16)()
+        Nviz_get_modelview(byref(modelview))
+        
+        angle = sqrt(dx*dx+dy*dy)/float(self.width+1)*180.0
+        m = []
+        row = []
+        for i, item in enumerate(modelview):
+            row.append(item)
+            if (i+1) % 4 == 0:
+                m.append(row)
+                row = []
+        inv = matrix(m).I
+        ax, ay, az = dy, dx, 0.
+        x = inv[0,0]*ax + inv[1,0]*ay + inv[2,0]*az
+        y = inv[0,1]*ax + inv[1,1]*ay + inv[2,1]*az
+        z = inv[0,2]*ax + inv[1,2]*ay + inv[2,2]*az
+        
+        return angle, x, y, z 
+       
+    def Rotate(self, angle, x, y, z):
+        """!Set rotation parameters
+        Rotate scene (difference from current state).
+
+        @param angle angle
+        @param x,y,z axis coordinate
+        """
+        Nviz_set_rotation(angle, x, y, z)
+        
+    def UnsetRotation(self):
+        """!Stop rotating the scene"""
+        Nviz_unset_rotation()
+        
+    def ResetRotation(self):
+        """!Reset scene rotation"""
+        Nviz_init_rotation()
+        
+    def GetRotationMatrix(self):
+        """!Get rotation matrix"""
+        matrix = (c_double * 16)()
+        GS_get_rotation_matrix(byref(matrix))
+        returnMatrix = []
+        for item in matrix:
+            returnMatrix.append(item)
+        return returnMatrix
+        
+    def SetRotationMatrix(self, matrix):
+        """!Set rotation matrix"""
+        mtrx = (c_double * 16)()
+        for i in range(len(matrix)):
+            mtrx[i] = matrix[i]
+        GS_set_rotation_matrix(byref(mtrx))
+    
+    def Start2D(self):
+        Nviz_set_2D(self.width, self.height)
+        
+    def FlyThrough(self, flyInfo, mode, exagInfo):
+        """!Fly through the scene
+        
+        @param flyInfo fly parameters
+        @param mode 0 or 1 for different fly behaviour
+        @param exagInfo parameters changing fly speed
+        """
+        fly = (c_float * 3)()
+        for i, item in enumerate(flyInfo):
+            fly[i] = item
+        exag = (c_int * 2)()
+        exag[0] = int(exagInfo['move'])
+        exag[1] = int(exagInfo['turn'])
+        Nviz_flythrough(self.data, fly, exag, mode)
+        
+class Texture(object):
+    """!Class representing OpenGL texture"""
+    def __init__(self, filepath, overlayId, coords):
+        """!Load image to texture
+
+        @param filepath path to image file
+        @param overlayId id of overlay (1 for legend, 101 and more for text)
+        @param coords image coordinates
+        """
+        self.path = filepath
+        self.image = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+        self.width = self.image.GetWidth()
+        self.height = self.image.GetHeight()
+        self.id = overlayId
+        self.coords = list(coords)
+        self.bounds = wx.Rect()
+        self.active = True
+        
+        # alpha needs to be initialized
+        if not self.image.HasAlpha():
+            self.image.InitAlpha()
+    
+        # resize image to match 2^n
+        self.Resize()
+        
+        # check max texture size
+        maxSize = c_int()
+        Nviz_get_max_texture(byref(maxSize))
+        self.maxSize = maxSize.value
+        if self.maxSize < self.width or self.maxSize < self.height:
+            # TODO: split up image 
+            self.textureId = None
+        else:
+            self.textureId = self.Load()
+            
+    def __del__(self):
+        """!Delete texture"""
+        if self.textureId:
+            Nviz_del_texture(self.textureId)
+        grass.try_remove(self.path)
+            
+    def Resize(self):    
+        """!Resize image to match 2^n"""
+        n = m = 1
+        while self.width > pow(2,n):
+            n += 1
+        while self.height > pow(2,m):
+            m += 1
+        self.image.Resize(size = (pow(2,n), pow(2,m)), pos = (0, 0))
+        self.width = self.image.GetWidth()
+        self.height = self.image.GetHeight()
+        
+    def Load(self):
+        """!Load image to texture"""  
+        if self.image.HasAlpha():
+            bytesPerPixel = 4
+        else:
+            bytesPerPixel = 3
+        bytes = bytesPerPixel * self.width * self.height
+        rev_val = self.height - 1
+        im = (c_ubyte * bytes)()
+        bytes3 = 3 * self.width * self.height
+        bytes1 = self.width * self.height
+        imageData = struct.unpack(str(bytes3) + 'B', self.image.GetData())
+        if self.image.HasAlpha():
+            alphaData = struct.unpack(str(bytes1) + 'B', self.image.GetAlphaData())
+        
+        # this takes too much time
+        wx.BeginBusyCursor()
+        for i in range(self.height):
+            for j in range(self.width):
+                im[(j + i * self.width) * bytesPerPixel + 0] = imageData[( j + (rev_val - i) * self.width) * 3 + 0]
+                im[(j + i * self.width) * bytesPerPixel + 1] = imageData[( j + (rev_val - i) * self.width) * 3 + 1]
+                im[(j + i * self.width) * bytesPerPixel + 2] = imageData[( j + (rev_val - i) * self.width) * 3 + 2]
+                if self.image.HasAlpha():
+                    im[(j + i * self.width) * bytesPerPixel + 3] = alphaData[( j + (rev_val - i) * self.width)]
+        wx.EndBusyCursor()
+        
+        id = Nviz_load_image(im, self.width, self.height, self.image.HasAlpha())
+        
+        return id
+        
+    def Draw(self):
+        """!Draw texture as an image"""
+        Nviz_draw_image(self.coords[0], self.coords[1], self.width, self.height, self.textureId)
+    
+        
+    def SetBounds(self, rect):
+        """!Set Bounding Rectangle"""
+        self.bounds = rect
+        
+    def HitTest(self, x, y, radius):
+        copy = wx.Rect(*self.bounds)
+        copy.Inflate(radius, radius)
+        return copy.ContainsXY(x, y)
+    
+    def MoveTexture(self, dx, dy):
+        """!Move texture on the screen"""
+        self.coords[0] += dx
+        self.coords[1] += dy
+        self.bounds.OffsetXY(dx, dy)
+    
+    def SetCoords(self, coords):
+        """!Set coordinates"""
+        dx = coords[0] - self.coords[0]
+        dy = coords[1] - self.coords[1]
+        self.MoveTexture(dx, dy)
+        
+    def GetId(self):
+        """!Returns image id."""
+        return self.id
+    
+    def SetActive(self, active = True):
+        self.active = active
+        
+    def IsActive(self):
+        return self.active
+        
+class ImageTexture(Texture):
+    """!Class representing OpenGL texture as an overlay image"""
+    def __init__(self, filepath, overlayId, coords, cmd):
+        """!Load image to texture
+
+        @param filepath path to image file
+        @param overlayId id of overlay (1 for legend)
+        @param coords image coordinates
+        @param cmd d.legend command      
+        """
+        Texture.__init__(self, filepath = filepath, overlayId = overlayId, coords = coords)
+        
+        self.cmd = cmd
+        
+    def GetCmd(self):
+        """!Returns overlay command."""
+        return self.cmd
+        
+    def Corresponds(self, item):
+        return sorted(self.GetCmd()) == sorted(item.GetCmd())
+        
+class TextTexture(Texture):
+    """!Class representing OpenGL texture as a text label"""
+    def __init__(self, filepath, overlayId, coords, textDict):
+        """!Load image to texture
+
+        @param filepath path to image file
+        @param overlayId id of overlay (101 and more for text)
+        @param coords text coordinates
+        @param textDict text properties      
+        """
+        Texture.__init__(self, filepath = filepath, overlayId = overlayId, coords = coords)
+        
+        self.textDict = textDict
+        
+    def GetTextDict(self):
+        """!Returns text properties."""
+        return self.textDict
+        
+        
+    def Corresponds(self, item):
+        t = self.GetTextDict()
+        for prop in t.keys():
+            if prop in ('coords','bbox'): continue
+            if t[prop] != item[prop]:
+                return False
+                
+        return True
+    

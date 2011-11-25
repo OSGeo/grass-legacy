@@ -16,7 +16,7 @@ License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
 @author Martin Landa <landa.martin gmail.com>
-@author Anna Kratochvilova <anna.kratochvilova fsv.cvut.cz>
+@author Anna Kratochvilova <kratochanna gmail.com>
 """
 
 import os
@@ -364,30 +364,27 @@ Icons = {
                                desc = _('Settings dialog for georectification tool')),
         },
     'nviz' : {
-        'view'    : MetaIcon(img = iconSet.get('3d-view', wx.ART_ERROR),
-                             label = _('Switch to view control page'),
-                             desc = _('Change view settings')),
-        'surface' : MetaIcon(img = iconSet.get('3d-raster', wx.ART_ERROR),
-                             label = _('Switch to surface (raster) control page'),
-                             desc = _('Change surface (loaded raster maps) settings')),
-        'vector'  : MetaIcon(img = iconSet.get('3d-vector', wx.ART_ERROR),
-                             label = _('Switch to vector (2D/3D) control page'),
-                             desc = _('Change 2D/3D vector settings')),
-        'volume'  : MetaIcon(img = iconSet.get('3d-volume', wx.ART_ERROR),
-                             label = _('Switch to volume (3D raster) control page'),
-                             desc = _('Change volume (loaded 3D raster maps) settings')),
-        'light'   : MetaIcon(img = iconSet.get('3d-light', wx.ART_ERROR),
-                             label = _('Switch to lighting control page'),
-                             desc = _('Change lighting settings')),
-        'fringe'  : MetaIcon(img = iconSet.get('3d-fringe', wx.ART_ERROR),
-                             label = _('Switch to fringe control page'),
-                             desc = _('Switch on/off fringes')),
-        'settings': MetaIcon(img = iconSet.get('settings', wx.ART_ERROR),
-                             label = _('3D view mode tools'),
-                             desc = _('Show/hide 3D view mode settings dialog')),
-        'quit'    : MetaIcon(img = iconSet.get('quit', wx.ART_ERROR),
-                             label = _('Quit 3D view mode'),
-                             desc = _('Switch back to 2D view mode')),
+        'rotate':   MetaIcon(img = iconSet.get('3d-rotate', wx.ART_ERROR),
+                             label = _('Rotate 3D scene'),
+                             desc = _('Drag with mouse to rotate 3D scene')), 
+        'flyThrough':   MetaIcon(img = iconSet.get('', wx.ART_MISSING_IMAGE),
+                             label = _('Fly-through mode'),
+                             desc = _('Drag with mouse, hold Ctrl down for different mode'
+                                      ' or Shift to accelerate')),
+        'zoomIn':   MetaIcon(img = iconSet.get('zoom-in', wx.ART_ERROR),
+                            label = _('Zoom in'),
+                            desc = _('Click mouse to zoom')),
+        'zoomOut':  MetaIcon(img = iconSet.get('zoom-out', wx.ART_ERROR),
+                            label = _('Zoom out'),
+                            desc = _('Click mouse to unzoom')),
+        'nvizCmd': MetaIcon(img = iconSet.get('script-save', wx.ART_ERROR),
+                            label = _('Generate command for m.nviz.image'),
+                            desc = _('Generate command for m.nviz.image based on current state')),
+        'settings': MetaIcon(img = iconSet.get('3d-settings', wx.ART_ERROR),
+                             label = _('3D view mode settings'),
+                             desc = _('Show 3D view mode settings dialog')),
+        'help'    : MetaIcon(img = iconSet.get('3d-help', wx.ART_ERROR),
+                             label = _('Show 3D view mode manual')),
         },
     'modeler' : {
         'new'        : MetaIcon(img = iconSet.get('create', wx.ART_ERROR),

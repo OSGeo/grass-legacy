@@ -698,8 +698,7 @@ class Map(object):
         if windres:
             compRegion = self.GetRegion()
             region = copy.copy(self.region)
-            for key in ('nsres', 'ewres',
-                        'rows', 'cols', 'cells'):
+            for key in ('nsres', 'ewres', 'cells'):
                 region[key] = compRegion[key]
         else:
             # adjust region settings to match monitor
@@ -733,10 +732,14 @@ class Map(object):
                         (region['nsres'])
                     continue
                 elif key == "cols":
+                    if windres:
+                        continue
                     grass_region += 'cols: %d; ' % \
                         region['cols']
                     continue
                 elif key == "rows":
+                    if windres:
+                        continue
                     grass_region += 'rows: %d; ' % \
                         region['rows']
                     continue
@@ -1241,7 +1244,7 @@ class Map(object):
     def DeleteOverlay(self, overlay):
         """!Delete overlay
         
-        @param id overlay id
+        @param overlay overlay layer
         
         @return removed overlay on success or None
         """
@@ -1288,6 +1291,12 @@ class Map(object):
         """!Reverse list of layers"""
         return self.layers.reverse()
 
+    def RenderOverlays(self, force):
+        """!Render overlays only (for nviz)"""
+        for layer in self.overlays:
+            if force or layer.force_render:
+                layer.Render()
+                
 if __name__ == "__main__":
     import gettext
     gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)

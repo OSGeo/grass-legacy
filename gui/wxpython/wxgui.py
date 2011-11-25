@@ -77,7 +77,8 @@ from gui_modules import vclean
 from gui_modules import nviz_tools
 from gui_modules.debug    import Debug
 from gui_modules.ghelp    import MenuTreeWindow, AboutWindow, InstallExtensionWindow
-from gui_modules.toolbars import LMWorkspaceToolbar, LMDataToolbar, LMToolsToolbar, LMMiscToolbar, LMVectorToolbar
+from gui_modules.toolbars import LMWorkspaceToolbar, LMDataToolbar, LMToolsToolbar,\
+                                 LMMiscToolbar, LMVectorToolbar, LMNvizToolbar
 from gui_modules.gpyshell import PyShellWindow
 from icons.icon           import Icons
 
@@ -113,6 +114,7 @@ class GMFrame(wx.Frame):
         self.workspaceChanged = False     # track changes in workspace
         self.georectifying = None         # reference to GCP class or None
         self.gcpmanagement = None         # reference to GCP class or None
+        
         # list of open dialogs
         self.dialogs        = dict()
         self.dialogs['preferences'] = None
@@ -126,7 +128,8 @@ class GMFrame(wx.Frame):
                            'data'      : LMDataToolbar(parent = self),
                            'tools'     : LMToolsToolbar(parent = self),
                            'misc'      : LMMiscToolbar(parent = self),
-                           'vector'    : LMVectorToolbar(parent = self) }
+                           'vector'    : LMVectorToolbar(parent = self),
+                           'nviz'      : LMNvizToolbar(parent = self)}
         
         self._toolbarsData = { 'workspace' : ("toolbarWorkspace",     # name
                                               _("Workspace Toolbar"), # caption
@@ -143,13 +146,16 @@ class GMFrame(wx.Frame):
                                'vector'    : ("toolbarVector",
                                               _("Vector Toolbar"),
                                               2),
+                               'nviz'      : ("toolbarNviz",
+                                              _("3D view Toolbar"),
+                                              2),                                            
                                }
         if sys.platform == 'win32':
             self._toolbarsList = ('workspace', 'data',
-                                  'vector', 'tools', 'misc')
+                                  'vector', 'tools', 'misc', 'nviz')
         else:
             self._toolbarsList = ('data', 'workspace',
-                                  'misc', 'tools', 'vector')
+                                  'nviz', 'misc', 'tools', 'vector')
         for toolbar in self._toolbarsList:
             name, caption, row = self._toolbarsData[toolbar]
             self._auimgr.AddPane(self.toolbars[toolbar],
@@ -161,6 +167,7 @@ class GMFrame(wx.Frame):
                                  CloseButton(False).Layer(2).
                                  BestSize((self.toolbars[toolbar].GetBestSize())))
         
+        self._auimgr.GetPane('toolbarNviz').Hide()
         # bindings
         self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
@@ -231,7 +238,13 @@ class GMFrame(wx.Frame):
     def _setCopyingOfSelectedText(self):
         copy = UserSettings.Get(group = 'manager', key = 'copySelectedTextToClipboard', subkey = 'enabled')
         self.goutput.SetCopyingOfSelectedText(copy)
-        
+    
+    def IsPaneShown(self, name):
+        """!Check if pane (toolbar, ...) of given name is currently shown"""
+        if self._auimgr.GetPane(name).IsOk():
+            return self._auimgr.GetPane(name).IsShown()
+        return False
+    
     def _createNoteBook(self):
         """!Creates notebook widgets"""
         self.notebook = menuform.GNotebook(parent = self, style = globalvar.FNPageDStyle)
@@ -270,20 +283,36 @@ class GMFrame(wx.Frame):
         
         return self.notebook
             
-    def AddNviz(self):
+    def AddNvizTools(self):
         """!Add nviz notebook page"""
+        Debug.msg(5, "GMFrame.AddNvizTools()")
+        # show toolbar
+        self._auimgr.GetPane('toolbarNviz').Show()
+        # reorder other toolbars
+        for pos, toolbar in enumerate(('toolbarVector', 'toolbarTools', 'toolbarMisc','toolbarNviz')):
+            self._auimgr.GetPane(toolbar).Row(2).Position(pos)
+        self._auimgr.Update()
+        
+        # create nviz tools tab
         self.nviz = nviz_tools.NvizToolWindow(parent = self,
-                                              display = self.curr_page.maptree.GetMapDisplay()) 
-        self.notebook.AddPage(page = self.nviz, text = _("3D view"), name = 'nviz')
+                                              display = self.curr_page.maptree.GetMapDisplay())
+        idx = self.notebook.GetPageIndexByName('layers')
+        self.notebook.InsertPage(indx = idx + 1, page = self.nviz, text = _("3D view"), name = 'nviz')
         self.notebook.SetSelectionByName('nviz')
         
-    def RemoveNviz(self):
+        
+    def RemoveNvizTools(self):
         """!Remove nviz notebook page"""
-        # print self.notebook.GetPage(1)
+        # if more mapwindow3D were possible, check here if nb page should be removed
+        self.notebook.SetSelectionByName('layers')
         self.notebook.RemovePage(self.notebook.GetPageIndexByName('nviz'))
         del self.nviz
-        self.notebook.SetSelectionByName('layers')
-        
+        # hide toolbar
+        self._auimgr.GetPane('toolbarNviz').Hide()
+        for pos, toolbar in enumerate(('toolbarVector', 'toolbarTools', 'toolbarMisc')):
+            self._auimgr.GetPane(toolbar).Row(2).Position(pos)
+        self._auimgr.Update()
+    
     def WorkspaceChanged(self):
         """!Update window title"""
         if not self.workspaceChanged:
@@ -745,7 +774,7 @@ class GMFrame(wx.Frame):
             return
 
         Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
-
+        
         # delete current layer tree content
         self.OnWorkspaceClose()
         
@@ -869,8 +898,22 @@ class GMFrame(wx.Frame):
             # reverse list of map layers
             maptree.Map.ReverseListOfLayers()
             
-        for mdisp in mapdisplay:
+        for idx, mdisp in enumerate(mapdisplay):
             mdisp.MapWindow2D.UpdateMap()
+            #nviz
+            if gxwXml.displays[idx]['viewMode'] == '3d':
+                mdisp.AddNviz()
+                self.nviz.UpdateState(view = gxwXml.nviz_state['view'],
+                                              iview = gxwXml.nviz_state['iview'],
+                                              light = gxwXml.nviz_state['light'])
+                mdisp.MapWindow3D.constants = gxwXml.nviz_state['constants']
+                for idx, constant in enumerate(mdisp.MapWindow3D.constants):
+                    mdisp.MapWindow3D.AddConstant(constant, idx + 1)
+                for page in ('view', 'light', 'fringe', 'constant', 'cplane'):
+                    self.nviz.UpdatePage(page)
+                self.nviz.UpdateSettings()
+                mapdisp.toolbars['map'].combo.SetSelection(1)
+
 
         return True
     
@@ -1277,6 +1320,23 @@ class GMFrame(wx.Frame):
         # show ATM window
         dbmanager.Show()
         
+    def OnNewDisplayWMS(self, event = None):
+        """!Create new layer tree and map display instance"""
+        self.NewDisplayWMS()
+
+    def NewDisplayWMS(self, show = True):
+        Debug.msg(1, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
+        try:
+            from gui_modules.wms.wmsmenu import DisplayWMSMenu
+        except:
+            gcmd.GError(parent = self.parent,
+                        message = _("Experimental WMS support for wxGUI not available. "
+                                    "You can install it by '%s'") % \
+                            "g.extension -s extension=wx.wms")
+            return
+        
+        DisplayWMSMenu()
+    
     def OnNewDisplay(self, event = None):
         """!Create new layer tree and map display instance"""
         self.NewDisplay()

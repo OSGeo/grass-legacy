@@ -2000,7 +2000,15 @@ class GNotebook(FN.FlatNotebook):
             self.notebookPages[kwargs['name']] = kwargs['page']
             del kwargs['name']
         super(GNotebook, self).AddPage(**kwargs)
-
+        
+    def InsertPage(self, **kwargs):
+        """!Insert a new page
+        """
+        if 'name' in kwargs:
+            self.notebookPages[kwargs['name']] = kwargs['page']
+            del kwargs['name']
+        super(GNotebook, self).InsertPage(**kwargs)
+        
     def SetSelectionByName(self, page):
         """!Set notebook
         

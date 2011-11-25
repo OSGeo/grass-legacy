@@ -470,25 +470,33 @@ class Settings:
                 'view' : {
                     'persp' : {
                         'value' : 20,
-                        'step' : 5,
+                        'step' : 2,
                         },
                     'position' : {
                         'x' : 0.84,
                         'y' : 0.16,
                         },
-                    'height' : {
-                        'step' : 100,
-                        },
                     'twist' : {
                         'value' : 0,
-                        'step' : 5,
                         },
                     'z-exag' : {
-                        'step' : 1,
+                        'min' : 0,
+                        'max' : 10,
+                        'value': 1,
                         },
                     'background' : {
                         'color' : (255, 255, 255, 255), # white
                         },
+                    },
+                'fly' : {
+                    'exag' : {
+                        'move' : 5,
+                        'turn' : 5,
+                        }
+                    },
+                'animation' : {
+                    'fps' : 24,
+                    'prefix' : _("animation")
                     },
                 'surface' : {
                     'shine': {
@@ -497,7 +505,7 @@ class Settings:
                         },
                     'color' : {
                         'map' : True,
-                        'value' : (0, 0, 0, 255), # constant: black
+                        'value' : (100, 100, 100, 255), # constant: grey
                         },
                     'draw' : {
                         'wire-color' : (136, 136, 136, 255),
@@ -513,6 +521,12 @@ class Settings:
                         'z' : 0,
                         },
                     },
+                'constant' : {
+                    'color' : (100, 100, 100, 255),
+                    'value' : 0.0,
+                    'transp' : 0,
+                    'resolution': 6
+                },
                 'vector' : {
                     'lines' : {
                         'show' : False,
@@ -533,7 +547,7 @@ class Settings:
                 'volume' : {
                     'color' : {
                         'map' : True,
-                        'value' : (0, 0, 0, 255), # constant: black
+                        'value' : (100, 100, 100, 255), # constant: grey
                         },
                     'draw' : {
                         'mode'       : 0, # isosurfaces
@@ -544,11 +558,44 @@ class Settings:
                         'map' : False,
                         'value' : 60,
                         },
+                    'topo': {
+                        'map' : None,
+                        'value' : 0.0
+                        },
+                    'transp': {
+                        'map' : None,
+                        'value': 0
+                        },
+                    'mask': {
+                        'map' : None,
+                        'value': ''
+                        },
+                    'slice_position': {
+                        'x1' : 0,
+                        'x2' : 1,
+                        'y1' : 0,
+                        'y2' : 1,
+                        'z1' : 0,
+                        'z2' : 1,
+                        'axis' : 0,
+                        }
                     },
+                'cplane' : {
+                    'shading': 4,
+                    'rotation':{
+                        'rot': 0, 
+                        'tilt': 0
+                        }, 
+                    'position':{
+                        'x' : 0,
+                        'y' : 0,
+                        'z' : 0
+                    }   
+                },
                 'light' : {
                     'position' : {
                         'x' : 0.68,
-                        'y' : 0.68,
+                        'y' : -0.68,
                         'z' : 80,
                         },
                     'bright'  : 80,
@@ -559,6 +606,12 @@ class Settings:
                     'elev'   : 55,
                     'color'  : (128, 128, 128, 255), # grey
                     },
+                'arrow': {
+                    'color': (0, 0, 0),
+                    },
+                'scalebar': {
+                    'color': (0, 0, 0),
+                    }
                 },
             'modeler' : {
                 'disabled': {
@@ -668,6 +721,25 @@ class Settings:
         self.internalSettings['nviz']['view']['persp']['max'] = 100
         self.internalSettings['nviz']['view']['height'] = {}
         self.internalSettings['nviz']['view']['height']['value'] = -1
+        self.internalSettings['nviz']['view']['z-exag'] = {}
+        self.internalSettings['nviz']['view']['z-exag']['original'] = 1
+        self.internalSettings['nviz']['view']['rotation'] = None
+        self.internalSettings['nviz']['view']['focus'] = {}
+        self.internalSettings['nviz']['view']['focus']['x'] = -1
+        self.internalSettings['nviz']['view']['focus']['y'] = -1
+        self.internalSettings['nviz']['view']['focus']['z'] = -1
+        self.internalSettings['nviz']['view']['dir'] = {}
+        self.internalSettings['nviz']['view']['dir']['x'] = -1
+        self.internalSettings['nviz']['view']['dir']['y'] = -1
+        self.internalSettings['nviz']['view']['dir']['z'] = -1
+        self.internalSettings['nviz']['view']['dir']['use'] = False
+        
+        for decor in ('arrow', 'scalebar'):
+            self.internalSettings['nviz'][decor] = {}
+            self.internalSettings['nviz'][decor]['position'] = {}
+            self.internalSettings['nviz'][decor]['position']['x'] = 0
+            self.internalSettings['nviz'][decor]['position']['y'] = 0
+            self.internalSettings['nviz'][decor]['size'] = 100
         self.internalSettings['nviz']['vector'] = {}
         self.internalSettings['nviz']['vector']['points'] = {}
         self.internalSettings['nviz']['vector']['points']['marker'] = ("x",
@@ -933,6 +1005,16 @@ class Settings:
         """!Get default user settings"""
         return self.defaultSettings
 
+    def Reset(self, key = None):
+        """!Reset to default settings
+
+        @key key in settings dict (None for all keys)
+        """
+        if not key:
+            self.userSettings = copy.deepcopy(self.defaultSettings)
+        else:
+            self.userSettings[key] = copy.deepcopy(self.defaultSettings[key])
+        
 globalSettings = Settings()
 
 class PreferencesBaseDialog(wx.Dialog):
