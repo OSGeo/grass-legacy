@@ -1432,7 +1432,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                     mapWin.LoadVector(layer)
 
                 # reset view when first layer loaded
-                nlayers = len(mapWin.Map.GetListOfLayers(l_type = ('raster', 'vector'),
+                nlayers = len(mapWin.Map.GetListOfLayers(l_type = ('raster', '3d-raster', 'vector'),
                                                          l_active = True))
                 if nlayers < 2:
                     mapWin.ResetView()
