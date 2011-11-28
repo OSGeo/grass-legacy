@@ -38,7 +38,10 @@ from goutput        import wxCmdOutput
 from preferences    import globalSettings as UserSettings
 from workspace      import Nviz as NvizDefault
 
-import wxnviz
+try:
+    import wxnviz
+except (ImportError, NameError):
+    pass
 
 wxUpdateProperties, EVT_UPDATE_PROP  = NewEvent()
 wxUpdateView,       EVT_UPDATE_VIEW  = NewEvent()

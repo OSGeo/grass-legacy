@@ -42,7 +42,7 @@ from preferences import PreferencesBaseDialog
 try:
     from nviz_mapdisp import wxUpdateView, wxUpdateLight, wxUpdateProperties
     import wxnviz
-except ImportError:
+except (ImportError, NameError):
     pass
 from debug import Debug
 
