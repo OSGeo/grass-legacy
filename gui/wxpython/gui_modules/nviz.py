@@ -25,14 +25,14 @@ import sys
 import wx
 import globalvar
 try:
-    from wx import glcanvas
-    import nviz_mapdisp
-    import nviz_tools
-    import wxnviz
+    # from wx import glcanvas
     # disable wxNviz for 6.4.2
     # TODO: backport wxNviz from devbr6 *after* releasing 6.4.2
+    # import nviz_mapdisp
+    # import nviz_tools
+    # import wxnviz
     haveNviz = False
-except ImportError, err:
+except (ImportError, NameError), err:
     haveNviz = False
     errorMsg = err
 

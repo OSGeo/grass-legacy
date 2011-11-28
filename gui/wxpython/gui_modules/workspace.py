@@ -38,7 +38,7 @@ from preferences import globalSettings as UserSettings
 
 try:
     import wxnviz
-except ImportError:
+except (ImportError, NameError):
     wxnviz = None
 
 class ProcessWorkspaceFile:
