@@ -269,7 +269,7 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    if test -f "$MYINST_DIR/scripts/$MODULE" ; then
        rm -f "$MYINST_DIR/scripts/$MODULE"
    fi
-   if test -h "$MYINST_DIR/$MODULE" ; then
+   if test -f "$MYINST_DIR/$MODULE" ; then
        rm -f "$MYINST_DIR/$MODULE"
    fi
    if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
@@ -278,6 +278,9 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    fi
    if test -f "${MYINST_DIR}/man/man1/${MODULE}.1" ; then
        rm -f "${MYINST_DIR}/man/man1/${MODULE}.1"
+   fi
+   if test -f "$MYINST_DIR/docs/man/man1/$MODULE.1" ; then
+       rm -f "$MYINST_DIR/docs/man/man1/$MODULE.1"
    fi
 
    exit 0
@@ -413,6 +416,17 @@ else
          if [ `ls -a "$MYINST_DIR/$PROGTYPE" | wc -l` -le 2 ] ; then
             rmdir "$MYINST_DIR/$PROGTYPE"
          fi
+	 # and move the man page into docs/
+	 if [ -e "$MYINST_DIR/man/man1/$MODULE.1" ] ; then
+	    mkdir -p "$MYINST_DIR/docs/man/man1"
+	    mv "$MYINST_DIR/man/man1/$MODULE.1" "$MYINST_DIR/docs/man/man1/"
+	    if [ `ls -a "$MYINST_DIR/man/man1" | wc -l` -le 2 ] ; then
+	       rmdir "$MYINST_DIR/man/man1"
+               if [ `ls -a "$MYINST_DIR/man" | wc -l` -le 2 ] ; then
+                  rmdir "$MYINST_DIR/man"
+               fi
+	    fi
+	 fi
       fi
    fi
 fi
