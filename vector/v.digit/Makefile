@@ -20,6 +20,8 @@ endif
 AUXDIR := $(GISBASE)/etc/v.digit
 TCLFILES := $(patsubst %,$(AUXDIR)/%,$(wildcard *.tcl))
 
+#compile if TCLTKLIBS present:
+ifneq ($(strip $(TCLTKLIBS)),)
 default: cmd $(TCLFILES)
 
 $(AUXDIR):
@@ -28,5 +30,6 @@ $(AUXDIR):
 
 $(AUXDIR)/%.tcl: %.tcl $(AUXDIR)
 	$(INSTALL_DATA) $< $@
-
-
+else
+default:
+endif
