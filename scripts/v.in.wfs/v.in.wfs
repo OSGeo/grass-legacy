@@ -68,7 +68,7 @@ if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     exit 1
 fi
 
-OUT="$GIS_OPT_output"
+OUT="$GIS_OPT_OUTPUT"
 WFS_URL="$GIS_OPT_WFS"
 
 g.message "Retrieving data ..."
