@@ -43,7 +43,7 @@ try:
     from wxvdigit  import IVDigit, GV_LINES
     haveVDigit = True
     errorMsg = ''
-except ImportError, err:
+except (ImportError, NameError), err:
     haveVDigit = False
     errorMsg = err
     GV_LINES = -1
