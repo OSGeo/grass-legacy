@@ -3,12 +3,20 @@ MODULE_TOPDIR = ../..
 
 SUBDIRS = \
 	ccmath \
-	bwidget \
 	shapelib
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: parsubdirs
+TCLTKBASED = \
+	bwidget
+
+#compile if TCLTKLIBS present:
+ifneq ($(strip $(TCLTKLIBS)),)
+    SUBDIRS += $(TCLTKBASED)
+endif
+
+default:
+	$(MAKE) subdirs
 
 clean: cleansubdirs
 
