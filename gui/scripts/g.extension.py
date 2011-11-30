@@ -430,6 +430,7 @@ def install_extension():
                         'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
 
 def install_extension_other():
+    gisbase = os.getenv('GISBASE')
     gui_list = list_wxgui_extensions(print_module = False)
 
     if options['extension'] not in gui_list:
