@@ -1,17 +1,12 @@
 MODULE_TOPDIR = ..
 
-SUBDIRS = icons images scripts xml
+SUBDIRS = icons images scripts xml wxpython
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 #compile if Tcl/Tk present:
 ifneq ($(strip $(TCLTKLIBS)),)
     SUBDIRS += tcltk
-endif
-
-#compile if wxwidgets present:
-ifneq ($(strip $(WXVERSION)),)
-    SUBDIRS += wxpython
 endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
