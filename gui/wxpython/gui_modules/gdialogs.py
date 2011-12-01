@@ -46,6 +46,7 @@ import globalvar
 import gselect
 import menuform
 import utils
+from debug import Debug
 from preferences import globalSettings as UserSettings
 
 class ElementDialog(wx.Dialog):
@@ -216,20 +217,37 @@ class MapsetDialog(ElementDialog):
         return self.GetElement()
     
 class NewVectorDialog(ElementDialog):
-    """!Dialog for creating new vector map"""
-    def __init__(self, parent, id, title, disableAdd=False, disableTable=False,
-                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+    def __init__(self, parent, id = wx.ID_ANY, title = _('Create new vector map'),
+                 disableAdd = False, disableTable = False,
+                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, *kwargs):
+        """!Dialog for creating new vector map
+
+        @param parent parent window
+        @param id window id
+        @param title window title
+        @param disableAdd disable 'add layer' checkbox
+        @param disableTable disable 'create table' checkbox
+        @param style window style
+        @param kwargs other argumentes for ElementDialog
         
+        @return dialog instance       
+        """
         ElementDialog.__init__(self, parent, title, label = _("Name for new vector map:"))
         
-        self.element = gselect.Select(parent=self.panel, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
-                                      type='vector', mapsets=[grass.gisenv()['MAPSET'],])
+        self.element = gselect.Select(parent = self.panel, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE,
+                                      type = 'vector', mapsets = [grass.gisenv()['MAPSET'],])
         
         self.table = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                  label = _("Create attribute table"))
         self.table.SetValue(True)
         if disableTable:
             self.table.Enable(False)
+        
+        self.keycol = wx.TextCtrl(parent = self.panel, id =  wx.ID_ANY,
+                                  size = globalvar.DIALOG_SPIN_SIZE)
+        self.keycol.SetValue(UserSettings.Get(group = 'atm', key = 'keycolumn', subkey = 'value'))
+        if disableTable:
+            self.keycol.Enable(False)
         
         self.addbox = wx.CheckBox(parent = self.panel,
                                   label = _('Add created map into layer tree'), style = wx.NO_BORDER)
@@ -238,125 +256,179 @@ class NewVectorDialog(ElementDialog):
             self.addbox.Enable(False)
         else:
             self.addbox.SetValue(UserSettings.Get(group = 'cmd', key = 'addNewLayer', subkey = 'enabled'))
+
+        self.table.Bind(wx.EVT_CHECKBOX, self.OnTable)
         
         self.PostInit()
         
-        self.__Layout()
+        self._layout()
         self.SetMinSize(self.GetSize())
         
     def OnMapName(self, event):
         """!Name for vector map layer given"""
         self.OnElement(event)
         
-    def __Layout(self):
+    def OnTable(self, event):
+        self.keycol.Enable(event.IsChecked())
+        
+    def _layout(self):
         """!Do layout"""
-        self.dataSizer.Add(self.element, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
+        self.dataSizer.Add(self.element, proportion = 0,
+                      flag = wx.EXPAND | wx.ALL, border = 1)
         
-        self.dataSizer.Add(self.table, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
-        
+        self.dataSizer.Add(self.table, proportion = 0,
+                      flag = wx.EXPAND | wx.ALL, border = 1)
+
+        keySizer = wx.BoxSizer(wx.HORIZONTAL)
+        keySizer.Add(item = wx.StaticText(parent = self.panel, label = _("Key column:")),
+                     proportion = 0,
+                     flag = wx.ALIGN_CENTER_VERTICAL)
+        keySizer.AddSpacer(10)
+        keySizer.Add(item = self.keycol, proportion = 0,
+                     flag = wx.ALIGN_RIGHT)
+        self.dataSizer.Add(item = keySizer, proportion = 1,
+                           flag = wx.EXPAND | wx.ALL, border = 1)
+
         self.dataSizer.AddSpacer(5)
         
-        self.dataSizer.Add(item=self.addbox, proportion=0,
-                      flag=wx.EXPAND | wx.ALL, border=1)
+        self.dataSizer.Add(item = self.addbox, proportion = 0,
+                      flag = wx.EXPAND | wx.ALL, border = 1)
         
         self.panel.SetSizer(self.sizer)
         self.sizer.Fit(self)
 
-    def GetName(self):
-        """!Return (mapName, overwrite)"""
-        return self.GetElement().split('@', 1)[0]
-            
-def CreateNewVector(parent, cmd, title=_('Create new vector map'),
-                    exceptMap=None, log=None, disableAdd=False, disableTable=False):
-    """!Create new vector map layer
+    def GetName(self, full = False):
+        """!Get name of vector map to be created
 
-    @cmd cmd (prog, **kwargs)
-    
-    @return tuple (name of create vector map, add to layer tree)
-    @return None of failure
-    """
-    dlg = NewVectorDialog(parent, wx.ID_ANY, title,
-                          disableAdd, disableTable)
-    if dlg.ShowModal() == wx.ID_OK:
-        outmap = dlg.GetName()
-        if outmap == exceptMap:
-            wx.MessageBox(parent=parent,
-                          message=_("Unable to create vector map <%s>.") % outmap,
-                          caption=_("Error"),
-                          style=wx.ID_OK | wx.ICON_ERROR | wx.CENTRE)
-            return (None, None)
-        
-        if outmap == '': # should not happen
-            return (None, None)
-        
-        cmd[1][cmd[2]] = outmap
-        
-        try:
-            listOfVectors = grass.list_grouped('vect')[grass.gisenv()['MAPSET']]
-        except KeyError:
-            listOfVectors = []
-        
-        overwrite = False
-        if not UserSettings.Get(group='cmd', key='overwrite', subkey='enabled') and \
-                outmap in listOfVectors:
-            dlgOw = wx.MessageDialog(parent, message=_("Vector map <%s> already exists "
-                                                       "in the current mapset. "
-                                                       "Do you want to overwrite it?") % outmap,
-                                     caption=_("Overwrite?"),
-                                     style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
-            if dlgOw.ShowModal() == wx.ID_YES:
-                overwrite = True
+        @param full True to get fully qualified name
+        """
+        name = self.GetElement()
+        if full:
+            if '@' in name:
+                return name
             else:
-                dlgOw.Destroy()
-                return (None, None)
-
-        if UserSettings.Get(group='cmd', key='overwrite', subkey='enabled') is True:
-            overwrite = True
+                return name + '@' + grass.gisenv()['MAPSET']
         
-        try:
-            gcmd.RunCommand(prog = cmd[0],
-                            overwrite = overwrite,
-                            **cmd[1])
-        except gcmd.GException, e:
-            gcmd.GError(parent = self,
-                        message = e.value)
-            return (None, None)
-        
-        #
-        # create attribute table
-        #
-        if dlg.table.IsEnabled() and dlg.table.IsChecked():
-            key = UserSettings.Get(group='atm', key='keycolumn', subkey='value')
-            sql = 'CREATE TABLE %s (%s INTEGER)' % (outmap, key)
-            
-            gcmd.RunCommand('db.connect',
-                            flags = 'c')
-            
-            gcmd.RunCommand('db.execute',
-                            quiet = True,
-                            parent = parent,
-                            stdin = sql)
-            
-            gcmd.RunCommand('v.db.connect',
-                            quiet = True,
-                            parent = parent,
-                            map = outmap,
-                            table = outmap,
-                            key = key,
-                            layer = '1')
-            
-        # return fully qualified map name
-        if '@' not in outmap:
-            outmap += '@' + grass.gisenv()['MAPSET']
+        return name.split('@', 1)[0]
 
-        if log:
-            log.WriteLog(_("New vector map <%s> created") % outmap)
-
-        return (outmap, dlg.addbox.IsChecked())
+    def GetKey(self):
+        """!Get key column name"""
+        return self.keycol.GetValue()
     
-    return (None, dlg.addbox.IsChecked())
+    def IsChecked(self, key):
+        """!Get dialog properties
+
+        @param key window key ('add', 'table')
+
+        @return True/False
+        @return None on error
+        """
+        if key == 'add':
+            return self.addbox.IsChecked()
+        elif key == 'table':
+            return self.table.IsChecked()
+        
+        return None
+
+def CreateNewVector(parent, cmd, title = _('Create new vector map'),
+                    exceptMap = None, log = None, disableAdd = False, disableTable = False):
+    """!Create new vector map layer
+    
+    @param cmd (prog, **kwargs)
+    @param title window title
+    @param exceptMap list of maps to be excepted
+    @param log
+    @param disableAdd disable 'add layer' checkbox
+    @param disableTable disable 'create table' checkbox
+
+    @return dialog instance
+    @return None on error
+    """
+    dlg = NewVectorDialog(parent, title = title,
+                          disableAdd = disableAdd, disableTable = disableTable)
+    
+    if dlg.ShowModal() != wx.ID_OK:
+        dlg.Destroy()
+        return None
+
+    outmap = dlg.GetName()
+    key    = dlg.GetKey()
+    if outmap == exceptMap:
+        gcmd.GError(parent = parent,
+                    message = _("Unable to create vector map <%s>.") % outmap)
+        dlg.Destroy()
+        return None
+    if dlg.table.IsEnabled() and not key:
+        gcmd.GError(parent = parent,
+                    message = _("Invalid or empty key column.\n"
+                                "Unable to create vector map <%s>.") % outmap)
+        dlg.Destroy()
+        return
+        
+    if outmap == '': # should not happen
+        dlg.Destroy()
+        return None
+    
+    # update cmd -> output name defined
+    cmd[1][cmd[2]] = outmap
+        
+    listOfVectors = grass.list_grouped('vect')[grass.gisenv()['MAPSET']]
+    
+    overwrite = False
+    if not UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled') and \
+            outmap in listOfVectors:
+        dlgOw = wx.MessageDialog(parent, message = _("Vector map <%s> already exists "
+                                                     "in the current mapset. "
+                                                     "Do you want to overwrite it?") % outmap,
+                                 caption = _("Overwrite?"),
+                                 style = wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+        if dlgOw.ShowModal() == wx.ID_YES:
+            overwrite = True
+        else:
+            dlgOw.Destroy()
+            dlg.Destroy()
+            return None
+    
+    if UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'):
+        overwrite = True
+        
+    ret = gcmd.RunCommand(prog = cmd[0],
+                          parent = parent,
+                          overwrite = overwrite,
+                          **cmd[1])
+    if ret != 0:
+        dlg.Destroy()
+        return None
+    
+    # create attribute table
+    if dlg.table.IsEnabled() and dlg.table.IsChecked():
+        sql = 'CREATE TABLE %s (%s INTEGER)' % (outmap, key)
+        
+        gcmd.RunCommand('db.connect',
+                        flags = 'c')
+        
+        Debug.msg(1, "SQL: %s" % sql)
+        gcmd.RunCommand('db.execute',
+                        quiet = True,
+                        parent = parent,
+                        stdin = sql)
+        
+        gcmd.RunCommand('v.db.connect',
+                        quiet = True,
+                        parent = parent,
+                        map = outmap,
+                        table = outmap,
+                        key = key,
+                        layer = '1')
+    
+    # return fully qualified map name
+    if '@' not in outmap:
+        outmap += '@' + grass.gisenv()['MAPSET']
+    
+    if log:
+        log.WriteLog(_("New vector map <%s> created") % outmap)
+        
+    return dlg
 
 class SavedRegion(wx.Dialog):
     def __init__(self, parent, id = wx.ID_ANY, title="", loadsave='load',

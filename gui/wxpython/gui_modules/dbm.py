@@ -529,7 +529,7 @@ class AttributeManager(wx.Frame):
     """
     def __init__(self, parent, id=wx.ID_ANY,
                  size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
-                 title=None, vectorName=None, item=None, log=None):
+                 title=None, vectorName=None, item=None, log=None, selection = 0):
 
         self.vectorName = vectorName
         self.parent     = parent # GMFrame
@@ -649,9 +649,8 @@ class AttributeManager(wx.Frame):
         self.__createBrowsePage()
         self.__createManageTablePage()
         self.__createManageLayerPage()
-
-        self.notebook.SetSelection(0) # select browse tab
-
+        wx.CallAfter(self.notebook.SetSelection, selection)
+        
         #
         # buttons
         #
@@ -2051,8 +2050,7 @@ class AttributeManager(wx.Frame):
         event.Skip()
 
     def OnExtractSelected(self, event):
-        """!
-        Extract vector objects selected in attribute browse window
+        """!Extract vector objects selected in attribute browse window
         to new vector map
         """
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
@@ -2065,20 +2063,23 @@ class AttributeManager(wx.Frame):
             return
         else:
             # dialog to get file name
-            name, add = gdialogs.CreateNewVector(parent = self, title = _('Extract selected features'),
-                                                 log = self.cmdLog,
-                                                 cmd = (('v.extract',
-                                                         { 'input' : self.vectorName,
-                                                           'list' : utils.ListOfCatsToRange(cats) },
-                                                         'output')),
-                                                 disableTable = True)
-            if name and add:
+            dlg = gdialogs.CreateNewVector(parent = self, title = _('Extract selected features'),
+                                           log = self.cmdLog,
+                                           cmd = (('v.extract',
+                                                   { 'input' : self.vectorName,
+                                                     'list' : utils.ListOfCatsToRange(cats) },
+                                                   'output')),
+                                           disableTable = True)
+            if not dlg:
+                return
+            
+            name = dlg.GetName(full = True)
+            if name and dlg.IsChecked('add'):
                 # add layer to map layer tree
-                self.parent.curr_page.maptree.AddLayer(ltype='vector',
-                                                       lname=name,
-                                                       lchecked=True,
-                                                       lopacity=1.0,
-                                                       lcmd=['d.vect', 'map=%s' % name])
+                self.parent.curr_page.maptree.AddLayer(ltype = 'vector',
+                                                       lname = name,
+                                                       lcmd = ['d.vect', 'map=%s' % name])
+            dlg.Destroy()
             
     def OnDeleteSelected(self, event):
         """
