@@ -544,8 +544,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
     def OnUnivariateStats(self, event):
         """!Univariate raster statistics"""
         name = self.GetPyData(self.layer_selected)[0]['maplayer'].GetName()
-        menuform.GUI(parent = self).ParseCommand(['r.univar',
-                                                  'map=%s' % name])
+        self.lmgr.goutput.RunCmd(['r.univar', 'map=%s' % name], switchPage = True)
 
     def OnStartEditing(self, event):
         """!Start editing vector map layer requested by the user
@@ -881,7 +880,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             
         return layer
 
-    def PropertiesDialog (self, layer, show = True):
+    def PropertiesDialog(self, layer, show = True):
         """!Launch the properties dialog"""
         if 'propwin' in self.GetPyData(layer)[0] and \
                 self.GetPyData(layer)[0]['propwin'] is not None:
@@ -902,7 +901,8 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 
         Debug.msg (3, "LayerTree.PropertiesDialog(): ltype=%s" % \
                    ltype)
-
+        
+        cmd = None
         if self.GetPyData(layer)[0]['cmd']:
             module = menuform.GUI(parent = self, show = show, centreOnParent = False)
             module.ParseCommand(self.GetPyData(layer)[0]['cmd'],
@@ -911,37 +911,28 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.GetPyData(layer)[0]['cmd'] = module.GetCmd()
         elif ltype == 'raster':
             cmd = ['d.rast']
-            
             if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
                 cmd.append('-o')
-            
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(cmd,
-                                                                             completed = (self.GetOptData,layer,params))
                          
         elif ltype == '3d-raster':
             cmd = ['d.rast3d']
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(cmd,
-                                                                             completed = (self.GetOptData,layer,params))
                                         
         elif ltype == 'rgb':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.rgb'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.rgb']
+            if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
+                cmd.append('-o')
             
         elif ltype == 'his':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.his'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.his']
             
         elif ltype == 'shaded':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.shadedmap'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.shadedmap']
             
         elif ltype == 'rastarrow':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.rast.arrow'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.rast.arrow']
             
         elif ltype == 'rastnum':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.rast.num'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.rast.num']
             
         elif ltype == 'vector':
             types = list()
@@ -949,39 +940,31 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 if UserSettings.Get(group = 'cmd', key = 'showType', subkey = [ftype, 'enabled']):
                     types.append(ftype)
             
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.vect', 'type=%s' % ','.join(types)],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.vect', 'type=%s' % ','.join(types)]
             
         elif ltype == 'thememap':
             # -s flag requested, otherwise only first thematic category is displayed
             # should be fixed by C-based d.thematic.* modules
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.vect.thematic', '-s'], 
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.vect.thematic', '-s']
             
         elif ltype == 'themechart':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.vect.chart'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.vect.chart']
             
         elif ltype == 'grid':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.grid'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.grid']
             
         elif ltype == 'geodesic':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.geodesic'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.geodesic']
             
         elif ltype == 'rhumb':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.rhumbline'],
-                                                                             completed = (self.GetOptData,layer,params))
+            cmd = ['d.rhumbline']
             
         elif ltype == 'labels':
-            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(['d.labels'],
+            cmd = ['d.labels']
+        
+        if cmd:
+            menuform.GUI(parent = self, centreOnParent = False).ParseCommand(cmd,
                                                                              completed = (self.GetOptData,layer,params))
-            
-        elif ltype == 'cmdlayer':
-            pass
-        elif ltype == 'group':
-            pass
         
     def OnActivateLayer(self, event):
         """!Double click on the layer item.
