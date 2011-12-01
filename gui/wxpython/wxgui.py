@@ -596,18 +596,26 @@ class GMFrame(wx.Frame):
         
     def OnNewVector(self, event):
         """!Create new vector map layer"""
-        name, add = gdialogs.CreateNewVector(self, log = self.goutput,
-                                             cmd = (('v.edit',
-                                                     { 'tool' : 'create' },
-                                                     'map')))
+        dlg = gdialogs.CreateNewVector(self, log = self.goutput,
+                                       cmd = (('v.edit',
+                                               { 'tool' : 'create' },
+                                               'map')))
         
-        if name and add:
+        if not dlg:
+            return
+        
+        name = dlg.GetName(full = True)
+        if name and dlg.IsChecked('add'):
             # add layer to map layer tree
             self.curr_page.maptree.AddLayer(ltype = 'vector',
                                             lname = name,
-                                            lchecked = True,
-                                            lopacity = 1.0,
                                             lcmd = ['d.vect', 'map=%s' % name])
+        
+        # create table ?
+        if dlg.IsChecked('table'):
+            self.OnShowAttributeTable(None, selection = 1)
+        
+        dlg.Destroy()
         
     def OnAboutGRASS(self, event):
         """!Display 'About GRASS' dialog"""
@@ -1173,7 +1181,7 @@ class GMFrame(wx.Frame):
                 
         dlg.Destroy()
         
-    def OnShowAttributeTable(self, event):
+    def OnShowAttributeTable(self, event, selection = 0):
         """!Show attribute table of the given vector map layer
         """
         if not self.curr_page:
@@ -1210,7 +1218,8 @@ class GMFrame(wx.Frame):
         
         dbmanager = dbm.AttributeManager(parent = self, id = wx.ID_ANY,
                                          size = wx.Size(500, 300),
-                                         item = layer, log = self.goutput)
+                                         item = layer, log = self.goutput,
+                                         selection = selection)
         
         busy.Destroy()
         
