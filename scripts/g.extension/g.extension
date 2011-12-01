@@ -240,6 +240,7 @@ else
 	g.message -e "Unable to create '$PREFIX' directory"
 	exit 1
     fi
+    MYINST_DIR="$PREFIX"
 fi
 
 if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
