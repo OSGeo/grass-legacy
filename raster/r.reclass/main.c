@@ -60,7 +60,8 @@ int main(int argc, char *argv[])
 
     parm.rules = G_define_standard_option(G_OPT_F_INPUT);
     parm.rules->key = "rules";
-    parm.rules->description = _("File containing reclass rules");
+    parm.rules->label = _("File containing reclass rules");
+    parm.rules->description = _("\"-\" to read from stdin");
     parm.rules->required = NO;
     parm.rules->guisection = _("Required");
 
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Input map can NOT be the same as output map"));
 
     srcfp = stdin;
-    if (parm.rules->answer) {
+    if (parm.rules->answer && strcmp("-", parm.rules->answer) != 0) {
 	srcfp = fopen(parm.rules->answer, "r");
 	if (!srcfp)
 	    G_fatal_error(_("Cannot open rules file <%s>"),
