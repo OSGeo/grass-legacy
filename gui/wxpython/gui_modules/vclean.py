@@ -451,13 +451,31 @@ class VectorCleaningFrame(wx.Frame):
 	else:
 	    self.selected = -1
 
+    def OnDone(self, cmd, returncode):
+        """!Command done"""
+        self.SetStatusText('')
+
     def OnCleaningRun(self, event):
         """!Builds options and runs v.clean
         """
+        self.GetCmdStrings()
+
+        err = list()
+        for p, name in ((self.inmap, _('Name of input vector map')),
+                        (self.outmap, _('Name for output vector map')),
+                        (self.tools_string, _('Tools')),
+                        (self.thresh_string, _('Threshold'))):
+            if not p:
+                err.append(_("'%s' not defined") % name)
+        if err:
+            gcmd.GError(_("Some parameters not defined. Operation "
+                          "cancelled.\n\n%s") % '\n'.join(err),
+                        parent = self)
+            return
+
 	self.SetStatusText(_("Executing selected cleaning operations..."))
         snum = len(self.toolslines.keys())
-	self.GetCmdStrings()
-
+        
         if self.log:
 	    cmd = [ self.cmd,
                     'input=%s' % self.inmap,
@@ -469,7 +487,7 @@ class VectorCleaningFrame(wx.Frame):
 	    if self.overwrite.IsChecked():
 		cmd.append('--overwrite')
             
-            self.log.RunCmd(cmd)
+            self.log.RunCmd(cmd, onDone = self.OnDone)
             self.parent.Raise()
         else:
 	    if self.overwrite.IsChecked():
