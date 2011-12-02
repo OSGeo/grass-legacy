@@ -1,4 +1,3 @@
-
 /****************************************************************************
  *
  * MODULE:       r.recode
@@ -6,7 +5,7 @@
  *               Bob Covill <bcovill tekmap.ns.ca>, Hamish Bowman <hamish_nospam yahoo.com>,
  *               Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      Recode categorical raster maps
- * COPYRIGHT:    (C) 1999-2006, 2010 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General
  *               Public License (>=v2). Read the file COPYING that
@@ -88,7 +87,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Input map can NOT be the same as output map"));
 
     srcfp = stdin;
-    if (parm.rules->answer) {
+    if (parm.rules->answer && strcmp("-", parm.rules->answer) != 0) {
 	srcfp = fopen(parm.rules->answer, "r");
 	if (!srcfp)
 	    G_fatal_error(_("Unable to open file <%s>"),
