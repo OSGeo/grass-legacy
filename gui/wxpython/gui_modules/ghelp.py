@@ -1065,7 +1065,7 @@ class ExtensionTree(ItemTree):
             flags = 'g'
         else:
             flags = 'l'
-        ret = gcmd.RunCommand('g.extension.py', read = True,
+        ret = gcmd.RunCommand('g.extension.py', read = True, parent = self,
                               svnurl = url,
                               flags = flags, quiet = True)
         if not ret:
