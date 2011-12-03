@@ -45,7 +45,7 @@
 #% key_desc: url
 #% description: SVN Addons repository URL
 #% required: yes
-#% answer: http://svn.osgeo.org/grass/grass-addons
+#% answer: http://svn.osgeo.org/grass/grass-addons/grass6
 #%end
 #%option
 #% key: prefix
