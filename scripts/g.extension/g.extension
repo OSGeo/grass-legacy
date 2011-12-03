@@ -41,7 +41,7 @@
 #% key_desc: url
 #% description: SVN Addons repository URL
 #% required: yes
-#% answer: http://svn.osgeo.org/grass/grass-addons
+#% answer: http://svn.osgeo.org/grass/grass-addons/grass6
 #%end
 #%option
 #% key: prefix
@@ -405,7 +405,7 @@ else
 
    if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons ] ; then
       # symlink into path which is actually in the $PATH
-      ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+      ln -sf "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
 fi
 
