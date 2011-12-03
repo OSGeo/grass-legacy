@@ -64,14 +64,14 @@
  *    that the "map" option is required and also that the number 12 is
  *    out of range.  The acceptable range (or list) will be printed.
  *
- * (C) 2001-2009 by the GRASS Development Team
+ * (C) 2001-2009, 2011 by the GRASS Development Team
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
  * \author Original author CERL; enhancements: Radim Blazek
  *
- * \date 2003-2009
+ * \date 2003-2011
  *
  */
 
@@ -966,7 +966,7 @@ int G_parser(int argc, char **argv)
 	    }
 
 	    /* If we see the non valid argument (no "=", just argument) */
-	    else if (contains(ptr, '=') == 0) {
+	    else {
 		fprintf(stderr, _("Sorry <%s> is not a valid option\n"), ptr);
 		error = 1;
 	    }
