@@ -789,18 +789,23 @@ Section "GRASS" SecGRASS
 	;replace \ with / in $GIS_DATABASE
 	${StrReplace} "$UNIX_LIKE_GIS_DATABASE_PATH" "\" "/" "$GIS_DATABASE"
   
-	;create $PROFILE\.grassrc6
-	SetShellVarContext current
-	ClearErrors
-	FileOpen $0 $PROFILE\.grassrc6 w
-	IfErrors done_create_.grassrc6
-	FileWrite $0 'GISDBASE: $UNIX_LIKE_GIS_DATABASE_PATH$\r$\n'
-	FileWrite $0 'LOCATION_NAME: demolocation$\r$\n'
-	FileWrite $0 'MAPSET: PERMANENT$\r$\n'
-	FileClose $0	
-	done_create_.grassrc6:
+	SetShellVarContext current  
+	${If} ${FileExists} "$APPDATA\GRASS6\grassrc6"
+	      DetailPrint "File $APPDATA\GRASS6\grassrc6 already exists. Skipping."
+	${Else}
+	      ;create $APPDATA\GRASS6\grassrc6
+	      ClearErrors
+	      CreateDirectory	$APPDATA\GRASS6
+	      FileOpen $0 $APPDATA\GRASS6\grassrc6 w
+	      IfErrors done_create_grass6_rc
+	      FileWrite $0 'GISDBASE: $UNIX_LIKE_GIS_DATABASE_PATH$\r$\n'
+	      FileWrite $0 'LOCATION_NAME: demolocation$\r$\n'
+	      FileWrite $0 'MAPSET: PERMANENT$\r$\n'
+	      FileClose $0	
+	      done_create_grass6_rc:
+	${EndIf}
 	
-	CopyFiles $PROFILE\.grassrc6 $INSTALL_DIR\msys\home\$USERNAME
+	CopyFiles $APPDATA\GRASS6\grassrc6 $INSTALL_DIR\msys\home\$USERNAME\.grassrc6
                  
 SectionEnd
 
@@ -908,10 +913,14 @@ Section "Uninstall"
 	SetShellVarContext all
 	RMDir /r "$SMPROGRAMS\${GRASS_BASE}"
 	
-	;remove the .grassrc6 file
+	;remove the $APPDATA\GRASS6 folder
+	;disabled, don't remove user settings
 	SetShellVarContext current
-	Delete "$PROFILE\.grassrc6"	
-
+	;RMDir /r "$APPDATA\GRASS6"	
+	${If} ${FileExists} "$APPDATA\GRASS6\addons\*.*"
+	      RMDir /r "$APPDATA\GRASS6\addons"
+	${EndIf}
+	
 	;remove the Registry Entries
 	DeleteRegKey HKLM "Software\${GRASS_BASE}"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}"
