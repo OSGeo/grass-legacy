@@ -408,28 +408,23 @@ else
    fi
 
    if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons ] ; then
-      # symlink into path which is actually in the $PATH
-      if [ 1 -eq 1 ] ; then
-         ln -sf "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
-      else
-          # TODO: move them out of bin/ and script/ into .., and rmdir bin/ and script/ if they are empty.
-         mv "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
-         if [ `ls -a "$MYINST_DIR/$PROGTYPE" | wc -l` -le 2 ] ; then
-            rmdir "$MYINST_DIR/$PROGTYPE"
-         fi
-	 # and move the man page into docs/
-	 if [ -e "$MYINST_DIR/man/man1/$MODULE.1" ] ; then
-	    mkdir -p "$MYINST_DIR/docs/man/man1"
-	    mv "$MYINST_DIR/man/man1/$MODULE.1" "$MYINST_DIR/docs/man/man1/"
-	    if [ `ls -a "$MYINST_DIR/man/man1" | wc -l` -le 2 ] ; then
-	       rmdir "$MYINST_DIR/man/man1"
-               if [ `ls -a "$MYINST_DIR/man" | wc -l` -le 2 ] ; then
-                  rmdir "$MYINST_DIR/man"
-               fi
-	    fi
-	 fi
-      fi
-   fi
+	# move bin/ and script/ into ../, then rmdir if they are empty
+	mv "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+	if [ `ls -a "$MYINST_DIR/$PROGTYPE" | wc -l` -le 2 ] ; then
+	   rmdir "$MYINST_DIR/$PROGTYPE"
+	fi
+	# and move the man page into docs/
+	if [ -e "$MYINST_DIR/man/man1/$MODULE.1" ] ; then
+	   mkdir -p "$MYINST_DIR/docs/man/man1"
+	   mv "$MYINST_DIR/man/man1/$MODULE.1" "$MYINST_DIR/docs/man/man1/"
+	   if [ `ls -a "$MYINST_DIR/man/man1" | wc -l` -le 2 ] ; then
+	      rmdir "$MYINST_DIR/man/man1"
+	      if [ `ls -a "$MYINST_DIR/man" | wc -l` -le 2 ] ; then
+		 rmdir "$MYINST_DIR/man"
+	      fi
+	   fi
+	fi
+    fi
 fi
 
 cleanup
