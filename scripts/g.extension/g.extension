@@ -270,7 +270,7 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    if test -f "$MYINST_DIR/scripts/$MODULE" ; then
        rm -f "$MYINST_DIR/scripts/$MODULE"
    fi
-   if test -f "$MYINST_DIR/$MODULE" ; then
+   if test -e "$MYINST_DIR/$MODULE" ; then
        rm -f "$MYINST_DIR/$MODULE"
    fi
    if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
