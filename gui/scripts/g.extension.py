@@ -430,6 +430,7 @@ def install_extension():
                         'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
 
 def install_extension_other():
+    # todo: rip all this out and replace it with a call to the g.extension shell script.
     gisbase = os.getenv('GISBASE')
     gui_list = list_wxgui_extensions(print_module = False)
 
@@ -513,7 +514,41 @@ def install_extension_other():
     else:
         grass.message(_("Installation of '%s' successfully finished.") % options['extension'])
     
+    # cleanup build cruft
+    if not flags['s']:
+        # move script/ and bin/ to main dir
+        if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension'])):
+            shutil.move(os.path.join(options['prefix'], 'bin', options['extension']),
+                        os.path.join(options['prefix'], options['extension']))
+        if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
+            shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
+                        os.path.join(options['prefix'], options['extension']))
+
+        # if empty, rmdir scripts/ and bin/
+        if os.path.exists(os.path.join(options['prefix'], 'bin')):
+            if os.listdir(os.path.join(options['prefix'], 'bin')) == []:
+                os.removedirs(os.path.join(options['prefix'], 'bin'))
+
+        if os.path.exists(os.path.join(options['prefix'], 'scripts')):
+            if os.listdir(os.path.join(options['prefix'], 'scripts')) == []:
+                os.removedirs(os.path.join(options['prefix'], 'scripts'))
+
+        # move man/ into docs/
+        if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
+            shutil.move(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1'),
+                        os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'))
+
+        # if empty, rmdir man/man1
+        if os.path.exists(os.path.join(options['prefix'], 'man', 'man1')):
+            if os.listdir(os.path.join(options['prefix'], 'man', 'man1')) == []:
+                os.removedirs(os.path.join(options['prefix'], 'man', 'man1'))
+        # if empty, rmdir man/
+        if os.path.exists(os.path.join(options['prefix'], 'man')):
+            if os.listdir(os.path.join(options['prefix'], 'man')) == []:
+                os.removedirs(os.path.join(options['prefix'], 'man'))
+
 def remove_extension():
+    # the following relies on an online file manifest for each module; remove_extension_std() does not.
     # try to download XML metadata file first
     url = "http://grass.osgeo.org/addons/grass%s.xml" % grass.version()['version'].split('.')[0]
     name = options['extension']
@@ -562,16 +597,19 @@ def remove_extension():
     grass.message(_("Extension <%s> successfully uninstalled.") % options['extension'])
     
 def remove_extension_std():
-    # is module available?
-    if not os.path.exists(os.path.join(options['prefix'], 'bin', options['extension'])):
-        grass.fatal(_("Extension <%s> not found") % options['extension'])
-    
-    for file in [os.path.join(options['prefix'], 'bin', options['extension']),
+    # is module available?     what if the user has leftover cruft to uninstall?
+    #if not os.path.exists(os.path.join(options['prefix'], options['extension'])):
+    #    grass.fatal(_("Extension <%s> not found") % options['extension'])
+    for file in [os.path.join(options['prefix'], options['extension']),
+                 os.path.join(options['prefix'], 'bin', options['extension']),
                  os.path.join(options['prefix'], 'scripts', options['extension']),
-                 os.path.join(options['prefix'], 'docs', 'html', options['extension'] + '.html')]:
+                 os.path.join(options['prefix'], 'docs', 'html', options['extension'] + '.html'),
+                 os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'),
+                 os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')]:
         if os.path.isfile(file):
+            #grass.message(_("Removing <%s> ..." % file))
             os.remove(file)
-    
+
 def create_dir(path):
     if os.path.isdir(path):
         return
@@ -585,8 +623,8 @@ def create_dir(path):
 
 def check_style_files(fil):
     #check the links to grassdocs.css/grass_logo.png to a correct manual page of addons
-    dist_file = os.path.join(os.getenv('GISBASE'),'docs','html',fil)
-    addons_file = os.path.join(options['prefix'],'docs','html',fil)
+    dist_file = os.path.join(os.getenv('GISBASE'), 'docs', 'html', fil)
+    addons_file = os.path.join(options['prefix'], 'docs', 'html', fil)
     #check if file already exists in the grass addons docs html path
     if os.path.isfile(addons_file):
 	return
@@ -600,11 +638,12 @@ def check_style_files(fil):
 
 def check_dirs():
     create_dir(os.path.join(options['prefix'], 'bin'))
+    create_dir(os.path.join(options['prefix'], 'scripts'))
+    create_dir(os.path.join(options['prefix'], 'man', 'man1'))
+    create_dir(os.path.join(options['prefix'], 'docs', 'man', 'man1'))
     create_dir(os.path.join(options['prefix'], 'docs', 'html'))
     check_style_files('grass_logo.png')
     check_style_files('grassdocs.css')    
-    create_dir(os.path.join(options['prefix'], 'man', 'man1'))
-    create_dir(os.path.join(options['prefix'], 'scripts'))
 
 def main():
     # check dependecies
@@ -638,7 +677,8 @@ def main():
             options['prefix'] = path_list[0]
     
     # check dirs
-    check_dirs()
+    if options['operation'] == 'add':
+        check_dirs()
     
     if flags['d']:
         if options['operation'] != 'add':
