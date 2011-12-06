@@ -1016,7 +1016,8 @@ class ExtensionTree(ItemTree):
                  'r3' : 'raster3D',
                  's'  : 'sites',
                  'v'  : 'vector',
-                 'wx' : 'wxGUI' }
+                 'wx' : 'wxGUI',
+                 ''   : 'other' }
         
         if c in name:
             return name[c]
@@ -1055,7 +1056,12 @@ class ExtensionTree(ItemTree):
             if full:
                 key, value = line.split('=', 1)
                 if key == 'name':
-                    prefix, name = value.split('.', 1)
+                    try:
+                        prefix, name = value.split('.', 1)
+                    except ValueError:
+                        prefix = ''
+                        name = value
+                    
                     if prefix not in mdict:
                         mdict[prefix] = dict()
                     mdict[prefix][name] = dict()
@@ -1065,11 +1071,11 @@ class ExtensionTree(ItemTree):
                 try:
                     prefix, name = line.strip().split('.', 1)
                 except:
-                    prefix = 'unknown'
+                    prefix = ''
                     name = line.strip()
                 
                 if self._expandPrefix(prefix) == prefix:
-                    prefix = 'unknown'
+                    prefix = ''
                     
                 if prefix not in mdict:
                     mdict[prefix] = dict()
@@ -1082,8 +1088,12 @@ class ExtensionTree(ItemTree):
             names = mdict[prefix].keys()
             names.sort()
             for name in names:
+                if prefix:
+                    text = prefix + '.' + name
+                else:
+                    text = name
                 new = self.AppendItem(parentId = item,
-                                      text = prefix + '.' + name)
+                                      text = text)
                 data = dict()
                 for key in mdict[prefix][name].keys():
                     data[key] = mdict[prefix][name][key]
