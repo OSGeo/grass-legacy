@@ -476,8 +476,15 @@ class CommandThread(Thread):
         Debug.msg(1, "gcmd.CommandThread(): %s" % ' '.join(self.cmd))
 
         self.startTime = time.time()
+
+        # TODO: replace ugly hack bellow
+        args = self.cmd
+        if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == '.py':
+            os.chdir(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'scripts'))
+            args = [sys.executable, self.cmd[0]] + self.cmd[1:]
+        
         try:
-            self.module = Popen(self.cmd,
+            self.module = Popen(args,
                                 stdin = subprocess.PIPE,
                                 stdout = subprocess.PIPE,
                                 stderr = subprocess.PIPE,
