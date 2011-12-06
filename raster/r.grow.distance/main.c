@@ -222,6 +222,7 @@ int main(int argc, char **argv)
     G_set_c_null_value(old_x_row, ncols);
     G_set_c_null_value(old_y_row, ncols);
 
+    G_important_message(_("Reading input data..."));
     for (row = 0; row < nrows; row++) {
 	int irow = nrows - 1 - row;
 
@@ -261,14 +262,14 @@ int main(int argc, char **argv)
 
 	swap_rows();
     }
-
-    G_percent(row, nrows, 2);
+    G_percent(1, 1, 1);
 
     G_close_cell(in_fd);
 
     G_set_c_null_value(old_x_row, ncols);
     G_set_c_null_value(old_y_row, ncols);
 
+    G_important_message(_("Writing output data..."));
     for (row = 0; row < nrows; row++) {
 	int irow = nrows - 1 - row;
 	off_t offset =
@@ -309,7 +310,7 @@ int main(int argc, char **argv)
 	swap_rows();
     }
 
-    G_percent(row, nrows, 2);
+    G_percent(1, 1, 1);
 
     close(temp_fd);
     remove(temp_name);
