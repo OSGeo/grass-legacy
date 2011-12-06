@@ -84,9 +84,13 @@ if [ $? -eq 0 ] ; then
  exit 1
 fi
 
-if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ||
-    [ -n "$GIS_OPT_GREATER" -a -n "$GIS_OPT_LESSER" ]; then
+if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
   g.message -e message="You have to specify either lesser= or greater="
+  exit 1
+fi
+
+if [ -n "$GIS_OPT_GREATER" -a -n "$GIS_OPT_LESSER" ] ; then
+  g.message -e message="lesser= and greater= are mutually exclusive"
   exit 1
 fi
 
