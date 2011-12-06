@@ -3,15 +3,16 @@
 #            neteler geog.uni-hannover.de
 # mosaic code from Felix Gershunov (Felix spsl.nsc.ru)
 # updated for GRASS 5.7 by Michael Barton 2004/04/05
+# further cleanup by H.Bowman, December 2011
 #
-# COPYRIGHT:    (C) 1999,2007 by the GRASS Development Team
+# COPYRIGHT:    (C) 1999,2007,2011 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
 #               for details.
 #
-# TODO: - implement g.findfile for 3 and 4 maps (currently only current mapset supported)
-#            [done for 2 maps]
+# TODO: 
+#       - test if g.findfile for colr file succeeds
 #       - fix isnull() in r.mapcalc for 3 and 4 maps composites
 #            [done for 2 maps]
 #       - fix color table length (currently only 256 cols supported, make
@@ -21,42 +22,46 @@
 
 
 #% Module
-#%  description: Mosaics up to 4 images and extends colormap; creates map *.mosaic
+#%  label: Mosaics up to four images, extending the color table.
+#%  description: creates map *.mosaic
 #%  keywords: raster, imagery, mosaicking
 #% End
 #% option
-#% key: image1
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: 1st map for mosaic (top of image stack).
-#% required : yes
+#%  key: image1
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: 1st map for mosaic (top of image stack)
+#%  required : yes
+#%  key_desc: name
 #% end
 #% option
-#% key: image2
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: 2nd map for mosaic.
-#% required : yes
+#%  key: image2
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: 2nd map for mosaic
+#%  required : yes
+#%  key_desc: name
+#% end
+#%  option
+#%  key: image3
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: 3rd map for mosaic
+#%  required : no
+#%  key_desc: name
 #% end
 #% option
-#% key: image3
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: 3rd map for mosaic.
-#% required : no
-#% end
-#% option
-#% key: image4
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: 4th map for mosaic.
-#% required : no
+#%  key: image4
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: 4th map for mosaic
+#%  required : no
+#%  key_desc: name
 #% end
 
-if  [ -z "$GISBASE" ]
-then
-	echo "You must be in GRASS GIS to run this program" >&2
-	exit 1
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program" >&2
+    exit 1
 fi
 
 # save command line
@@ -87,68 +92,103 @@ eval `g.gisenv`
 CURRLOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 g.message -w message='Do not forget to set region properly to cover all images!'
+#g.region rast=map1,map2,map3,map4
+
+
+IMAGE1=`echo "$GIS_OPT_IMAGE1" | cut -f1 -d'@'`
+IMAGE2=`echo "$GIS_OPT_IMAGE2" | cut -f1 -d'@'`
+IMAGE3=`echo "$GIS_OPT_IMAGE3" | cut -f1 -d'@'`
+IMAGE4=`echo "$GIS_OPT_IMAGE4" | cut -f1 -d'@'`
+
 
 # two images to patch
 if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
-     g.message "Mosaicing two images..."
-     r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic = if(isnull($GIS_OPT_IMAGE1),\
-					$GIS_OPT_IMAGE2+256,\
-					$GIS_OPT_IMAGE1)"
-     #modify the color table:
-     echo '% 0 1024' > "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic"
+     g.message "Mosaicking two images..."
 
-     eval `g.findfile element=cell file=$GIS_OPT_IMAGE1`
-     mapset1="${mapset}"
+     OUTNAME="$IMAGE1.$IMAGE2.mosaic"
+
+     r.mapcalc "$OUTNAME = if(isnull(\"$GIS_OPT_IMAGE1\"), \
+					\"$GIS_OPT_IMAGE2\" + 256, \
+					\"$GIS_OPT_IMAGE1\")"
+
+     #modify the color table:
+     echo '% 0 1024' > "$CURRLOCATION/colr/$OUTNAME"
+
+     eval `g.findfile element=cell file="$GIS_OPT_IMAGE1"`
+     mapset1="$mapset"
      cat "$GISDBASE/$LOCATION_NAME/$mapset1/colr/$GIS_OPT_IMAGE1" | \
-        grep -v '%' | tr -s ' ' '\012' >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic"
+        grep -v '%' | tr -s ' ' '\012' >> "$CURRLOCATION/colr/$OUTNAME"
 
      eval `g.findfile element=cell file="$GIS_OPT_IMAGE2"`
-     mapset2="${mapset}"
+     mapset2="$mapset"
      cat "$GISDBASE/$LOCATION_NAME/$mapset2/colr/$GIS_OPT_IMAGE2" | \
-        grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'\
-	>> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic"
-     
-     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
+        grep -v '%' | tr -s ' ' '\012' | \
+	awk -F':' '{print $1+256":"$2":"$3":"$4}' \
+	>> "$CURRLOCATION/colr/$OUTNAME"
+
+     g.message message="Done. New raster map <$OUTNAME> created."
 
      # write cmd history:
-     r.support "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic" history="${CMDLINE}"
+     r.support "$OUTNAME" history="$CMDLINE"
      exit 0
 fi
 
 # three images to patch
-if [ -z "$GIS_OPT_IMAGE3" -o  -z "$GIS_OPT_IMAGE4" ]; then
-     g.message "Mosaicing three images..."
-     r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic = eval(t1=if($GIS_OPT_IMAGE1,$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2+256), t2=if(t1 % 256,t1,$GIS_OPT_IMAGE3+512), t2)"
+if [ -z "$GIS_OPT_IMAGE3" -o  -z "$GIS_OPT_IMAGE4" ] ; then
+     g.message "Mosaicking three images..."
+
+     OUTNAME="$IMAGE1.$IMAGE2.$IMAGE3.mosaic"
+
+     r.mapcalc "$OUTNAME = eval(t1=if(\"$GIS_OPT_IMAGE1\", \
+		\"$GIS_OPT_IMAGE1\", \"$GIS_OPT_IMAGE2\" + 256), \
+		t2=if(t1 % 256, t1, \"$GIS_OPT_IMAGE3\" + 512), t2)"
+
      #modify the color table:
-     echo '% 0 1024' > "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic"
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE1 >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic"
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}' \
-        >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic"
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}' \
-        >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic"
-     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic created."
+     echo '% 0 1024' > "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE1"`
+     tail -256 "$file" >> "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE2"`
+     tail -256 "$file" | awk -F':' '{print $1+256":"$2":"$3":"$4}' \
+        >> "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE3"`
+     tail -256 "$file" | awk -F':' '{print $1+512":"$2":"$3":"$4}' \
+        >> "$CURRLOCATION/colr/$OUTNAME"
+     g.message message="Done. New raster map <$OUTNAME> created."
 
      # write cmd history:
-     r.support $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic history="${CMDLINE}"
+     r.support "$OUTNAME" history="$CMDLINE"
      exit 0
 fi
 
 # four images to patch
-if [ $GIS_OPT_IMAGE3 != "" -a  $GIS_OPT_IMAGE4 != "" ]; then
-     g.message "Mosaicing four images..."
-     r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic = eval(t1=if($GIS_OPT_IMAGE1,$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2+256), t2=if(t1 % 256,t1,$GIS_OPT_IMAGE3+512), t3=if(t2 % 256,t2,$GIS_OPT_IMAGE4+768),t3)"
+if [ -n "$GIS_OPT_IMAGE3" -a  -n "$GIS_OPT_IMAGE4" ] ; then
+     g.message "Mosaicking four images..."
+
+     OUTNAME="$IMAGE1.$IMAGE2.$IMAGE3.$IMAGE4.mosaic"
+
+     r.mapcalc "$OUTNAME = eval(t1=if(\"$GIS_OPT_IMAGE1\", \"$GIS_OPT_IMAGE1\", \
+		\"$GIS_OPT_IMAGE2\" + 256), \
+		t2=if(t1 % 256, t1, \"$GIS_OPT_IMAGE3\" + 512), \
+		t3=if(t2 % 256, t2, \"$GIS_OPT_IMAGE4\" + 768), t3)"
+
      #modify the color table:
-     echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE1 >> $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}' \
-        >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic"
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}' \
-        >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic"
-     tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE4 |awk -F':' '{print $1+768":"$2":"$3":"$4}' \
-        >> "$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic"
-     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic created."
+     echo '% 0 1024' > "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE1"`
+     tail -256 "$file" >> "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE2"`
+     tail -256 "$file" | awk -F':' '{print $1+256":"$2":"$3":"$4}' \
+        >> "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE3"`
+     tail -256 "$file" | awk -F':' '{print $1+512":"$2":"$3":"$4}' \
+        >> "$CURRLOCATION/colr/$OUTNAME"
+     eval `g.findfile element=colr file="$GIS_OPT_IMAGE4"`
+     tail -256 "$file" | awk -F':' '{print $1+768":"$2":"$3":"$4}' \
+        >> "$CURRLOCATION/colr/$OUTNAME"
+
+     g.message message="Done. New raster map <$OUTNAME> created."
 
      # write cmd history:
-     r.support "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic" history="${CMDLINE}"
+     r.support "$OUTNAME" history="$CMDLINE"
      exit 0
 fi
+
