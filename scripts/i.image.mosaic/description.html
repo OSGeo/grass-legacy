@@ -3,6 +3,19 @@
 <em>i.image.mosaic</em> mosaics several images or raster maps using the
 GRASS GIS map calculator, and extends the colormap to the range of all images.
 
+
+<h2>NOTES</h2>
+
+For simple quilting of various maps together, see the <em>r.patch</em>
+module.
+<p>
+To expand the region to the greatest extent of all input maps, run
+<div class="code"><pre>
+  g.region rast=map1,map2,map3,map4 -p
+</pre></div>
+<!-- align=map1 ? -->
+
+
 <h2>SEE ALSO</h2>
 
 <em>
@@ -15,4 +28,5 @@ GRASS GIS map calculator, and extends the colormap to the range of all images.
 Markus Neteler, ITC-Irst, Trento, Italy
 Updated to GRASS 5.7 by Michael Barton, Arizona State University
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
