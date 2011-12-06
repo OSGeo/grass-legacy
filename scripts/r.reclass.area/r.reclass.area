@@ -84,6 +84,12 @@ if [ $? -eq 0 ] ; then
  exit 1
 fi
 
+if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] || \
+    [ -n "$GIS_OPT_GREATER" -a -n "$GIS_OPT_LESSER" ]; then
+  g.message -e message="You have to specify either lesser= or greater="
+  exit 1
+fi
+
 if [ -n "$GIS_OPT_LESSER" ] ; then
   op=0
   limit="$GIS_OPT_LESSER"
@@ -91,10 +97,6 @@ fi
 if [ -n "$GIS_OPT_GREATER" ] ; then
   op=1
   limit="$GIS_OPT_GREATER"
-fi
-if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
-  g.message -e "You have to specify either lesser= or greater="
-  exit 1
 fi
 
 file2="$infile.clump.$outfile"
@@ -153,7 +155,7 @@ if test $op = 0; then
         '{hectares=$5 * 0.0001; 
           {if (hectares <= LIM)
 	     printf("%d = %d %s\n",$1,$3,$4) } }' > "$infile.rules"
-  else
+else
    g.message  "Generating a reclass rules file with area size greater than or equal to $limit hectares..."
    r.stats -aln in="$file2","$infile" fs='|' | \
       awk -F'|' -v LIM="$limit" \
@@ -169,6 +171,8 @@ fi
 g.message "Generating output raster map <$outfile>..."
 cat "$infile.rules" | r.reclass i="$file2" o="$outfile.recl"
 r.mapcalc "$outfile = $outfile.recl"
+r.colors map=$outfile raster=$infile --quiet
+
 g.remove rast="$outfile.recl","$file2" --quiet
 
 #####cleanup
