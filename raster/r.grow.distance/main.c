@@ -9,7 +9,7 @@
  * PURPOSE:      Generates a raster map layer with contiguous areas 
  *               grown by one cell.
  *
- * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006, 2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -129,19 +129,21 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("raster, geometry");
     module->description =
-	_("Generates a raster map layer of distance to features in input layer.");
+	_("Generates a raster map of distance to features in input raster map.");
 
     opt.in = G_define_standard_option(G_OPT_R_INPUT);
 
     opt.dist = G_define_standard_option(G_OPT_R_OUTPUT);
     opt.dist->key = "distance";
     opt.dist->required = NO;
-    opt.dist->description = _("Name for distance output map");
+    opt.dist->description = _("Name for distance output raster map");
+    opt.dist->guisection = _("Output");
 
     opt.val = G_define_standard_option(G_OPT_R_OUTPUT);
     opt.val->key = "value";
     opt.val->required = NO;
-    opt.val->description = _("Name for value output map");
+    opt.val->description = _("Name for value output raster map");
+    opt.val->guisection = _("Output");
 
     opt.met = G_define_option();
     opt.met->key = "metric";
