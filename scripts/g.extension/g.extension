@@ -145,7 +145,7 @@ expand_module_class_name()
   elif [ "$1" = "r" ]  ; then
     echo "raster"
   elif [ "$1" = "r3" ]  ; then
-    echo "raster3D"
+    echo "raster3d"
 #  elif [ "$1" = "s" ]  ; then
 #    echo "sites"
   elif [ "$1" = "v" ]  ; then
