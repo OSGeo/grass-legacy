@@ -405,7 +405,7 @@ def install_extension():
     src = None
     if sys.platform == 'win32':
         bin_ext = '.exe'
-        sct_ext  = '.py'
+        sct_ext  = '.bat'
     else:
         bin_ext = sct_ext = ''
     
@@ -413,10 +413,15 @@ def install_extension():
                                    options['extension'] + bin_ext)):
         src = os.path.join(options['prefix'], 'bin', options['extension']) + bin_ext
         dst = os.path.join(options['prefix'], options['extension']) + bin_ext
-    elif os.path.exists(os.path.join(options['prefix'], 'scripts',
-                                     options['extension'] + sct_ext)):
-        src = os.path.join(options['prefix'], 'scripts', options['extension']) + sct_ext
-        dst = os.path.join(options['prefix'], options['extension']) + sct_ext
+    else:
+        if sys.platform == 'win32':
+            pdir = 'bin'
+        else:
+            pdir = 'scripts'
+        if os.path.exists(os.path.join(options['prefix'], pdir,
+                                       options['extension'] + sct_ext)):
+            src = os.path.join(options['prefix'], pdir, options['extension']) + sct_ext
+            dst = os.path.join(options['prefix'], options['extension']) + sct_ext
     
     if src and not os.path.exists(dst):
         if sys.platform == 'win32':
