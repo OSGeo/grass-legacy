@@ -109,7 +109,7 @@ from grass.script import core as grass
 remove_tmpdir = True
 
 # check requirements
-def check():
+def check_progs():
     for prog in ('svn', 'make', 'gcc'):
         if not grass.find_program(prog, ['--help']):
             grass.fatal(_("'%s' required. Please install '%s' first.") % (prog, prog))
@@ -559,14 +559,31 @@ def check_style_files(fil):
 	except OSError, e:
 	    grass.fatal(_("Unable to create '%s': %s") % (addons_file, e))
 
+def create_dir(path):
+    if os.path.isdir(path):
+        return
+
+    try:
+        os.makedirs(path)
+    except OSError, e:
+        grass.fatal(_("Unable to create '%s': %s") % (path, e))
+    
+    grass.debug("'%s' created" % path)
+    
 def check_dirs():
+    create_dir(os.path.join(options['prefix'], 'bin'))
+    create_dir(os.path.join(options['prefix'], 'docs', 'html'))
     check_style_files('grass_logo.png')
-    check_style_files('grassdocs.css')    
+    check_style_files('grassdocs.css')
+    # create_dir(os.path.join(options['prefix'], 'etc'))
+    create_dir(os.path.join(options['prefix'], 'docs', 'man', 'man1'))
+    create_dir(os.path.join(options['prefix'], 'man', 'man1'))
+    create_dir(os.path.join(options['prefix'], 'scripts'))
 
 def main():
     # check dependecies
     if sys.platform != "win32":
-        check()
+        check_progs()
     
     # list available modules
     if flags['l'] or flags['c'] or flags['g']:
@@ -594,10 +611,6 @@ def main():
                 grass.warning(_("GRASS_ADDON_PATH has more items, using first defined - '%s'") % path_list[0])
             options['prefix'] = path_list[0]
     
-    # check dirs
-    if options['operation'] == 'add':
-        check_dirs()
-    
     if flags['d']:
         if options['operation'] != 'add':
             grass.warning(_("Flag 'd' is relevant only to 'operation=add'. Ignoring this flag."))
@@ -606,6 +619,7 @@ def main():
             remove_tmpdir = False
     
     if options['operation'] == 'add':
+        check_dirs()
         install_extension()
     else: # remove
         remove_extension(flags['f'])
