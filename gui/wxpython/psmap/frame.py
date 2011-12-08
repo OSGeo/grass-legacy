@@ -164,7 +164,7 @@ class PsMapFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
         
-        if not haveImage:
+        if not havePILImage:
             wx.CallAfter(self._showErrMsg)
         
     def _showErrMsg(self):

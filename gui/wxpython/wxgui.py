@@ -75,6 +75,7 @@ from lmgr.toolbars         import LMWorkspaceToolbar, LMDataToolbar, LMToolsTool
 from lmgr.toolbars         import LMMiscToolbar, LMVectorToolbar, LMNvizToolbar
 from lmgr.pyshell          import PyShellWindow
 from gui_core.forms        import GUI
+from gcp.manager           import GCPWizard
 
 class GMFrame(wx.Frame):
     """!Layer Manager frame with notebook widget for controlling GRASS
@@ -315,8 +316,6 @@ class GMFrame(wx.Frame):
         
     def OnLocationWizard(self, event):
         """!Launch location wizard"""
-        from gui_modules import location_wizard
-        
         gisdbase = grass.gisenv()['GISDBASE']
         gWizard = location_wizard.LocationWizard(parent = self,
                                                  grassdatabase = gisdbase)
@@ -349,8 +348,7 @@ class GMFrame(wx.Frame):
     def OnGCPManager(self, event):
         """!Launch georectifier module
         """
-        from gui_modules import gcpmanager
-        gcpmanager.GCPWizard(self)
+        GCPWizard(self)
 
     def OnGModeler(self, event):
         """!Launch Graphical Modeler"""
@@ -362,14 +360,6 @@ class GMFrame(wx.Frame):
     def OnPsMap(self, event):
         """!Launch Cartographic Composer
         """
-        try:
-            from gui_modules import psmap
-        except:
-            GError(parent = self.parent,
-                   message = _("Hardcopy Map Output Utility is not available. You can install it by %s") % \
-                       'g.extension.py -s svnurl=https://svn.osgeo.org/grass/grass-addons extension=wx.psmap')
-            return
-        
         win = PsMapFrame(parent = self)
         win.CentreOnScreen()
         
@@ -1315,19 +1305,6 @@ class GMFrame(wx.Frame):
         """!Create new layer tree and map display instance"""
         self.NewDisplayWMS()
 
-    def NewDisplayWMS(self, show = True):
-        Debug.msg(1, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
-        try:
-            from gui_modules.wms.wmsmenu import DisplayWMSMenu
-        except:
-            GError(parent = self.parent,
-                   message = _("Experimental WMS support for wxGUI not available. "
-                               "You can install it by '%s'") % \
-                       "g.extension -s extension=wx.wms")
-            return
-        
-        DisplayWMSMenu()
-    
     def OnNewDisplay(self, event = None):
         """!Create new layer tree and map display instance"""
         self.NewDisplay()

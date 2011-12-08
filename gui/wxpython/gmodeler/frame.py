@@ -142,7 +142,7 @@ class ModelFrame(wx.Frame):
         
         self.SetMenuBar(self.menubar)
         
-        self.toolbar = toolbars.ModelToolbar(parent = self)
+        self.toolbar = ModelToolbar(parent = self)
         self.SetToolBar(self.toolbar)
         
         self.statusbar = self.CreateStatusBar(number = 1)
