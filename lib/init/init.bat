@@ -32,6 +32,10 @@ set GIS_LOCK=1
 set GRASS_VERSION=GRASS_VERSION_NUMBER
 if "%HOME%"=="" set HOME=%USERPROFILE%
 set WINGISRC=%APPDATA%\GRASS6\grassrc6
+rem Create missing folder
+if not exist "%APPDATA%\GRASS6" (
+	md "%APPDATA%\GRASS6"
+)
 rem Make sure %GISRC% is set so g.dirseps will work
 rem (not actually used)
 set GISRC=junk
