@@ -61,7 +61,7 @@ if gisbase is None:
     gisbase = os.path.join(os.path.dirname(sys.argv[0]), os.path.pardir)
     wxbase = gisbase
 else:
-    wxbase = os.path.join(gisbase, 'etc', 'gui', 'wxpython')
+    wxbase = os.path.join(gisbase, 'etc', 'wxpython')
 
 sys.path.append(wxbase)
 
@@ -778,7 +778,8 @@ class CmdPanel(wx.Panel):
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
         if self.parent.GetName() ==  "MainFrame" and self.parent.get_dcmd is None:
-            self.goutput = goutput.GMConsole(parent = self, margin = False)
+            from gui_core.goutput import GMConsole
+            self.goutput = GMConsole(parent = self, margin = False)
             self.outpage = self.notebook.AddPage(page = self.goutput, text = _("Command output"), name = 'output')
         else:
             self.goutput = None
