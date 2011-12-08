@@ -1,4 +1,4 @@
-p"""
+"""
 @package gui_core.forms
 
 @brief Construct simple wxPython GUI from a GRASS command interface

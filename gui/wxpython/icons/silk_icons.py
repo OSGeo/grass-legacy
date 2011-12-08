@@ -10,7 +10,7 @@ import os
 
 import wx
 
-import globalvar
+from core import globalvar
 
 iconPath = os.path.join(globalvar.ETCDIR, "gui", "icons", "silk")
 

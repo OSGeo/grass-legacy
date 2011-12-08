@@ -142,7 +142,7 @@ class Popen(subprocess.Popen):
     """!Subclass subprocess.Popen"""
     def __init__(self, args, **kwargs):
         if subprocess.mswindows:
-            args = map(utils.EncodeString, args)
+            args = map(EncodeString, args)
         
         subprocess.Popen.__init__(self, args, **kwargs)
         
@@ -637,7 +637,7 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         ps.stdin = None
     
     Debug.msg(3, "gcmd.RunCommand(): decoding string")
-    stdout, stderr = map(utils.DecodeString, ps.communicate())
+    stdout, stderr = map(DecodeString, ps.communicate())
     
     ret = ps.returncode
     Debug.msg(1, "gcmd.RunCommand(): get return code %d" % ret)

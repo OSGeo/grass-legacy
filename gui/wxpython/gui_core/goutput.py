@@ -1051,7 +1051,7 @@ class GMStc(wx.stc.StyledTextCtrl):
         """!Set styles for styled text output windows with type face 
         and point size selected by user (Courier New 10 is default)"""
 
-        settings = preferences.Settings()
+        settings = Settings()
         
         typeface = settings.Get(group = 'appearance', key = 'outputfont', subkey = 'type')   
         if typeface == "":

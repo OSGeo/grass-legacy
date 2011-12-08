@@ -228,7 +228,7 @@ class PreferencesBaseDialog(wx.Dialog):
 class PreferencesDialog(PreferencesBaseDialog):
     """!User preferences dialog"""
     def __init__(self, parent, title = _("GUI Settings"),
-                 settings = globalSettings):
+                 settings = UserSettings):
         
         PreferencesBaseDialog.__init__(self, parent = parent, title = title,
                                        settings = settings)
@@ -1251,7 +1251,7 @@ class DefaultFontDialog(wx.Dialog):
     def __init__(self, parent, title, id = wx.ID_ANY,
                  style = wx.DEFAULT_DIALOG_STYLE |
                  wx.RESIZE_BORDER,
-                 settings = globalSettings,
+                 settings = UserSettings,
                  type = 'font'):
         
         self.settings = settings

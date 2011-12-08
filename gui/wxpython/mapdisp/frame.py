@@ -48,7 +48,6 @@ from core.settings      import UserSettings
 from gui_core.mapdisp   import MapFrameBase
 from mapdisp.mapwindow  import BufferedWindow
 from modules.histogram  import HistogramFrame
-from wxplot.histogram   import Histogram2Frame
 from wxplot.profile     import ProfileFrame
 from nviz.main          import haveNviz
 from nviz.mapwindow     import GLWindow

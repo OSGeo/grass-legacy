@@ -890,7 +890,7 @@ class Map(object):
         self._renderLayers(force, mapWindow, maps, masks, opacities)
         
         # ugly hack for MSYS
-        if not subprocess.mswindows:
+        if sys.platform != 'win32':
             mapstr = ",".join(maps)
             maskstr = ",".join(masks)
             mapoutstr = self.mapfile

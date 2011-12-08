@@ -58,7 +58,7 @@ from modules.mcalc_builder import MapCalcFrame
 from dbmgr.manager         import AttributeManager
 from core.workspace        import ProcessWorkspaceFile, ProcessGrcFile, WriteWorkspaceFile
 from gui_core.goutput      import GMConsole
-from gui_core.dialogs      import GdalOutputDialog, DxfImportDialog, GdalImportDialog, MapLayersDialog
+from gui_core.dialogs      import DxfImportDialog, GdalImportDialog, MapLayersDialog
 from gui_core.dialogs      import LocationDialog, MapsetDialog, CreateNewVector, GroupDialog
 from modules.ogc_services  import WMSDialog
 from modules.colorrules    import RasterColorTable, VectorColorTable

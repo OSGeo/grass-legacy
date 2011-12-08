@@ -41,11 +41,10 @@ import wx
 from ctypes import *
 try:
     from grass.lib.gis      import *
-    from grass.lib.raster3d import *
+    from grass.lib.g3d      import *
     from grass.lib.vector   import *
     from grass.lib.ogsf     import *
     from grass.lib.nviz     import *
-    from grass.lib.raster   import *
 except ImportError, e:
     sys.stderr.write(_("3D view mode: %s\n") % e)
     

@@ -750,7 +750,7 @@ def GetSettingsPath():
     """!Get full path to the settings directory
     """
     try:
-        verFd = open(os.path.join(globalvar.ETCDIR, "VERSIONNUMBER"))
+        verFd = open(os.path.join(ETCDIR, "VERSIONNUMBER"))
         version = int(verFd.readlines()[0].split(' ')[0].split('.')[0])
     except (IOError, ValueError, TypeError, IndexError), e:
         sys.exit(_("ERROR: Unable to determine GRASS version. Details: %s") % e)

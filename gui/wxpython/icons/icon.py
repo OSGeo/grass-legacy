@@ -27,7 +27,7 @@ sys.path.append(os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modul
 
 import wx
 
-from preferences import globalSettings as UserSettings
+from core.settings import UserSettings
 
 import grass2_icons # default icon set
 iconPathDefault = grass2_icons.iconPath

@@ -67,7 +67,7 @@ def createDbInfoDesc(panel, mapDBInfo, layer):
     
     return infoFlexSizer
         
-class VectorDBInfo(gselect.VectorDBInfoBase):
+class VectorDBInfo(VectorDBInfoBase):
     """!Class providing information about attribute tables
     linked to the vector map"""
     def __init__(self, map):

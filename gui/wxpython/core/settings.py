@@ -983,4 +983,4 @@ class Settings:
         else:
             self.userSettings[key] = copy.deepcopy(self.defaultSettings[key])
         
-globalSettings = Settings()
+UserSettings = Settings()
