@@ -47,7 +47,7 @@ class MapToolbar(BaseToolbar):
             choices.append(_('3D view'))
             self.toolId['3d'] = 1
         else:
-            from nviz import errorMsg
+            from nviz.main import errorMsg
             log.WriteCmdLog(_('3D view mode not available'))
             log.WriteWarning(_('Reason: %s') % str(errorMsg))
             log.WriteLog(_('Note that the wxGUI\'s 3D view mode is currently disabled '
@@ -64,7 +64,7 @@ class MapToolbar(BaseToolbar):
             else:
                 self.toolId['vdigit'] = 1
         else:
-            from vdigit import errorMsg
+            from vdigit.main import errorMsg
             log.WriteCmdLog(_('Vector digitizer not available'))
             log.WriteWarning(_('Reason: %s') % errorMsg)
             log.WriteLog(_('Note that the wxGUI\'s vector digitizer is currently disabled '
