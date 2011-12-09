@@ -49,8 +49,7 @@ from gui_core.mapdisp   import MapFrameBase
 from mapdisp.mapwindow  import BufferedWindow
 from modules.histogram  import HistogramFrame
 from wxplot.profile     import ProfileFrame
-from nviz.main          import haveNviz
-from nviz.mapwindow     import GLWindow
+from nviz.main          import haveNviz, GLWindow
 
 from mapdisp import statusbar as sb
 

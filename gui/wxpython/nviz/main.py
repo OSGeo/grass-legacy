@@ -20,18 +20,21 @@ This program is free software under the GNU General Public License
 errorMsg = ''
 
 try:
-    from wx import glcanvas
-    import nviz.mapwindow
-    import nviz.tools
+    from wx   import glcanvas
+    from nviz import mapwindow
+    from nviz import tools
+    from nviz import workspace
     import wxnviz
     haveNviz = True
-except ImportError, err:
+except (ImportError, NameError), err:
     haveNviz = False
     errorMsg = err
 
 if haveNviz:
-    GLWindow       = nviz.mapwindow.GLWindow
-    NvizToolWindow = nviz.tools.NvizToolWindow
+    GLWindow       = mapwindow.GLWindow
+    NvizToolWindow = tools.NvizToolWindow
+    NvizSettings   = workspace.NvizSettings
 else:
     GLWindow       = None
     NvizToolWindow = None
+    NvizSettings   = None
