@@ -1073,9 +1073,8 @@ class MapFrame(MapFrameBase):
     def Histogram(self, event):
         """!Init histogram display canvas and tools
         """
-        self.histogram = histogram.HistogramFrame(self,
-                                                  id = wx.ID_ANY, size = globalvar.HIST_WINDOW_SIZE,
-                                                  style = wx.DEFAULT_FRAME_STYLE)
+        self.histogram = HistogramFrame(self, size = globalvar.HIST_WINDOW_SIZE,
+                                        style = wx.DEFAULT_FRAME_STYLE)
 
         #show new display
         self.histogram.Show()
