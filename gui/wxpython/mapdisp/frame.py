@@ -49,7 +49,6 @@ from gui_core.mapdisp   import MapFrameBase
 from mapdisp.mapwindow  import BufferedWindow
 from modules.histogram  import HistogramFrame
 from wxplot.profile     import ProfileFrame
-from nviz.main          import haveNviz, GLWindow
 
 from mapdisp import statusbar as sb
 
@@ -186,7 +185,7 @@ class MapFrame(MapFrameBase):
     def _addToolbarVDigit(self):
         """!Add vector digitizer toolbar
         """
-        from vdigit import haveVDigit
+        from vdigit.main import haveVDigit
         
         if not haveVDigit:
             from vdigit import errorMsg
@@ -214,7 +213,7 @@ class MapFrame(MapFrameBase):
             log = None
         
         if not self.MapWindowVDigit:
-            from mapdisp_vdigit import VDigitWindow
+            from vdigit.mapwindow import VDigitWindow
             self.MapWindowVDigit = VDigitWindow(self, id = wx.ID_ANY,
                                                 Map = self.Map, tree = self.tree,
                                                 lmgr = self._layerManager)
@@ -253,6 +252,8 @@ class MapFrame(MapFrameBase):
     def AddNviz(self):
         """!Add 3D view mode window
         """
+        from nviz.main import haveNviz, GLWindow
+        
         # check for GLCanvas and OpenGL
         if not haveNviz:
             self.toolbars['map'].combo.SetValue(_("2D view"))
