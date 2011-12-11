@@ -147,6 +147,13 @@ else
    VECTORFULL="${VECTOR}@${VECT_MAPSET}"
 fi
 
+# check the input vector map
+eval `v.info -t map="$VECTORFULL" layer="$GIS_OPT_LAYER"`
+if [ $areas -eq 0 ] ; then
+   g.message -e "No areas found in vector map"
+   exit 1
+fi
+
 # check the input raster map
 eval `g.findfile element=cell file="$RASTER"`
 if [ ! "$file" ] ; then
