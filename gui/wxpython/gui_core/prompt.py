@@ -909,7 +909,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
         """
         # keycodes used: "." = 46, "=" = 61, "-" = 45 
         pos = self.GetCurrentPos()
-        #complete command after pressing '.'
+        # complete command after pressing '.'
         if event.GetKeyCode() == 46 and not event.ShiftDown():
             self.autoCompList = list()
             entry = self.GetTextLeft()
@@ -1080,7 +1080,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             self.LineEnd()
             self.parent.parent.statusbar.SetStatusText('')
             
-        elif event.GetKeyCode() == wx.WXK_RETURN and \
+        elif event.GetKeyCode() in [wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER] and \
                 self.AutoCompActive() == False:
             # run command on line when <return> is pressed
             
