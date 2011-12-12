@@ -24,6 +24,7 @@ This program is free software under the GNU General Public License
 
 import os
 import codecs
+import sys
 
 import wx
 try:
@@ -811,6 +812,11 @@ class InstallExtensionWindow(wx.Frame):
         
         task = gtask.parse_interface('g.extension.py')
         
+        ignoreFlags = ['l', 'c', 'g', 'f', 'quiet', 'verbose']
+        if sys.platform == 'win32':
+            ignoreFlags.append('d')
+            ignoreFlags.append('i')
+        
         for f in task.get_options()['flags']:
             name = f.get('name', '')
             desc = f.get('label', '')
@@ -818,7 +824,7 @@ class InstallExtensionWindow(wx.Frame):
                 desc = f.get('description', '')
             if not name and not desc:
                 continue
-            if name in ('l', 'c', 'g', 'quiet', 'verbose'):
+            if name in ignoreFlags:
                 continue
             self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                              label = desc)
