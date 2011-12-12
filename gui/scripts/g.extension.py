@@ -270,7 +270,9 @@ def install_extension_win():
         fo.close()
     except HTTPError:
         grass.fatal(_("GRASS Addons <%s> not found") % options['extension'])
-    
+
+    grass.message(_("Installation of <%s> successfully finished.") % options['extension'])
+
 # install extension
 def install_extension():
     gisbase = os.getenv('GISBASE')
@@ -279,11 +281,20 @@ def install_extension():
     
     if grass.find_program(options['extension'], ['--help']):
         grass.warning(_("Extension <%s> already installed. Will be updated...") % options['extension'])
-
+    
     if sys.platform == "win32":
         install_extension_win()
     else:
         install_extension_other()
+    
+    # cleanup build cruft
+    if not flags['s']:
+        tidy_citizen()
+    
+    if not os.environ.has_key('GRASS_ADDON_PATH') or \
+            not os.environ['GRASS_ADDON_PATH']:
+        grass.warning(_('This add-on module will not function until you set the '
+                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
     
     # manual page: fix href
     if os.getenv('GRASS_ADDON_PATH'):
@@ -308,39 +319,6 @@ def install_extension():
             fd = open(html_man, "w")
             fd.write(html_str)
             fd.close()
-
-    # symlink for binaries needed, see http://trac.osgeo.org/grass/changeset/49124
-    src = None
-    if sys.platform == 'win32':
-        bin_ext = '.exe'
-        sct_ext  = '.bat'
-    else:
-        bin_ext = sct_ext = ''
-    
-    if os.path.exists(os.path.join(options['prefix'], 'bin',
-                                   options['extension'] + bin_ext)):
-        src = os.path.join(options['prefix'], 'bin', options['extension']) + bin_ext
-        dst = os.path.join(options['prefix'], options['extension']) + bin_ext
-    else:
-        if sys.platform == 'win32':
-            pdir = 'bin'
-        else:
-            pdir = 'scripts'
-        if os.path.exists(os.path.join(options['prefix'], pdir,
-                                       options['extension'] + sct_ext)):
-            src = os.path.join(options['prefix'], pdir, options['extension']) + sct_ext
-            dst = os.path.join(options['prefix'], options['extension']) + sct_ext
-    
-    if src and not os.path.exists(dst):
-        if sys.platform == 'win32':
-            shutil.copyfile(src, dst)
-        else:
-            os.symlink(src, dst)
-    
-    if not os.environ.has_key('GRASS_ADDON_PATH') or \
-            not os.environ['GRASS_ADDON_PATH']:
-        grass.warning(_('This add-on module will not function until you set the '
-                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
 
 # install extension on other plaforms
 def install_extension_other():
@@ -427,45 +405,41 @@ def install_extension_other():
     else:
         grass.message(_("Installation of <%s> successfully finished.") % options['extension'])
     
-    # cleanup build cruft
-    if not flags['s']:
-        # move script/ and bin/ to main dir
-        if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension'])):
-            shutil.move(os.path.join(options['prefix'], 'bin', options['extension']),
-                        os.path.join(options['prefix'], options['extension']))
+# remove dir if empty
+def remove_empty_dir(path):
+    if os.path.exists(path) and not os.listdir(path):
+        os.removedirs(path)
+
+# see http://lists.osgeo.org/pipermail/grass-dev/2011-December/056938.html
+def tidy_citizen():
+    if sys.platform == 'win32':
+        EXT_BIN = '.exe'
+        EXT_SCT = '.bat'
+    else:
+        EXT_BIN = EXT_SCT = ''
+    
+    # move script/ and bin/ to main dir
+    if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN):
+        shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN,
+                    os.path.join(options['prefix'], options['extension']) + EXT_BIN)
+    if sys.platform == 'win32':
+        if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT):
+            shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT,
+                        os.path.join(options['prefix'], options['extension']) + EXT_SCT)
+    else:
         if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
             shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
                         os.path.join(options['prefix'], options['extension']))
-        
-        # if empty, rmdir scripts/ and bin/
-        if os.path.exists(os.path.join(options['prefix'], 'bin')):
-            if os.listdir(os.path.join(options['prefix'], 'bin')) == []:
-                os.removedirs(os.path.join(options['prefix'], 'bin'))
-        
-        if os.path.exists(os.path.join(options['prefix'], 'scripts')):
-            if os.listdir(os.path.join(options['prefix'], 'scripts')) == []:
-                os.removedirs(os.path.join(options['prefix'], 'scripts'))
-        
-        # move man/ into docs/
-        if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
-            shutil.move(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1'),
-                        os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'))
-        
-        # if empty, rmdir man/man1
-        if os.path.exists(os.path.join(options['prefix'], 'man', 'man1')):
-            if os.listdir(os.path.join(options['prefix'], 'man', 'man1')) == []:
-                os.removedirs(os.path.join(options['prefix'], 'man', 'man1'))
-        
-        # if empty, rmdir man/
-        if os.path.exists(os.path.join(options['prefix'], 'man')):
-            if os.listdir(os.path.join(options['prefix'], 'man')) == []:
-                os.removedirs(os.path.join(options['prefix'], 'man'))
     
-    if not os.environ.has_key('GRASS_ADDON_PATH') or \
-            not os.environ['GRASS_ADDON_PATH']:
-        grass.warning(_('This add-on module will not function until you set the '
-                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
-
+    # move man/ into docs/
+    if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
+        shutil.move(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1'),
+                    os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'))
+        
+    # if empty, rmdir bin, etc, man, scripts
+    for d in ('bin', 'etc', os.path.join('man', 'man1'), 'man', 'scripts'):
+        remove_empty_dir(os.path.join(options['prefix'], d))
+    
 # remove existing extension (reading XML file)
 def remove_extension(force = False):
     # try to download XML metadata file first
