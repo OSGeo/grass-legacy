@@ -279,7 +279,7 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     }
 
     if (db_create_index2(driver, Fi->table, argv[3]) != DB_OK) {
-	G_warning("%s", _("Cannot create index"));
+	G_warning(_("Cannot create index"));
 	db_set_string(&err, _("Cannot create index:\n"));
 	db_append_string(&err, db_get_error_msg());
 	db_close_database(driver);
