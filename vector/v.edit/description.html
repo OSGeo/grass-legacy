@@ -186,6 +186,9 @@ Add point to the vector map (without header):
 echo "P 1 1
  640794 214874
  1 1" | v.edit -n tool=add map=vectmap
+
+# insert new row for each category in attribute table if doesn't exist yet
+v.to.db map=vectmap option=cat
 </pre></div>
 
 Add new features read from standard input:
