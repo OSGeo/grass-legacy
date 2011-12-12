@@ -155,7 +155,7 @@ Global int nMaxFieldCat, aMaxFieldCat;
 Global SYMB Symb[SYMB_COUNT];
 
 Global struct Map_info Map;
-Global struct Cell_head GRegion;	/* Current region (synchronized with GRASS WIND) */
+Global char temp_wind_file[24];
 Global Tcl_Interp *Toolbox;
 Global int Tool_next;		/* Next tool to be run */
 Global double Xscale, Yscale;	/* Scale factors = size_in_map / size_on_screen */

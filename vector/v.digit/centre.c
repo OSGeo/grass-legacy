@@ -1,19 +1,16 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.digit
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Edit vector
- * *              
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * **************************************************************/
+/***************************************************************
+ *
+ * MODULE:	 v.digit
+ * AUTHOR(S):	 Radim Blazek
+ * PURPOSE:	 Edit vector
+ *		
+ * COPYRIGHT:	 (C) 2001 by the GRASS Development Team
+ *		 This program is free software under the 
+ *		 GNU General Public License (>=v2). 
+ *		 Read the file COPYING that comes with GRASS
+ *		 for details.
+ *
+ **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -24,7 +21,8 @@
 #include "global.h"
 #include "proto.h"
 
-/* This function is started from the GUI, it regularly updates GUI and checks GUI requirements. 
+/* This function is started from the GUI, it regularly updates GUI and
+ *  checks GUI requirements.
  *  If Tool_next is set by GUI, the tool is started by the tool_centre()
  */
 void tool_centre(void)
@@ -174,8 +172,10 @@ void end(void)
     Vect_build(&Map);
     Vect_close(&Map);
 
-    if (1 == G_put_window(&GRegion))
-	G_message("%s", _("Region restored to original extent."));
+    /* abandon temporary region, back to the real one */
+    /* is unsetenv() portable? */
+    putenv("WIND_OVERRIDE=");
+    G_remove("windows", temp_wind_file);
 
     /* clear the screen */
     Tcl_Eval(Toolbox, ".screen.canvas delete all");

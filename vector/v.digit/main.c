@@ -12,6 +12,8 @@
 #define MAIN
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <tcl.h>
 #include <tk.h>
 #include <grass/gis.h>
@@ -97,6 +99,7 @@ int main(int argc, char *argv[])
     char **tokens;
     char *fake_argv[4];
     char toolbox[GPATH_MAX];
+    struct Cell_head GRegion;
 
     G_gisinit(argv[0]);
 
@@ -139,9 +142,14 @@ int main(int argc, char *argv[])
 	G_debug(2, "cmd %d : %s", i, Bgcmd[i].cmd);
 
     Tool_next = TOOL_NOTHING;
+
     G_get_window(&GRegion);
     G_debug(1, "Region: N = %f S = %f E = %f W = %f", GRegion.north,
 	    GRegion.south, GRegion.east, GRegion.west);
+    /* set up temporary region */
+    sprintf(temp_wind_file, "tmp_vdigit_%d", getpid());
+    G__put_window(&GRegion, "windows", temp_wind_file);
+    G_putenv("WIND_OVERRIDE", temp_wind_file);
 
     /* Open map */
     mapset = G_find_vector2(map_opt->answer, G_mapset());
