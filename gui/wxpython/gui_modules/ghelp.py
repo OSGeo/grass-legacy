@@ -787,6 +787,7 @@ class InstallExtensionWindow(wx.Frame):
         self.options = dict() # list of options
         
         wx.Frame.__init__(self, parent = parent, id = id, title = title, **kwargs)
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
         
         self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
 
@@ -798,17 +799,17 @@ class InstallExtensionWindow(wx.Frame):
         self.repo = wx.TextCtrl(parent = self.panel, id = wx.ID_ANY)
         self.fullDesc = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                     label = _("Fetch full info including description and keywords (takes time)"))
-        self.fullDesc.SetValue(False)
+        self.fullDesc.SetValue(True)
         
         self.search = SearchModuleWindow(parent = self.panel)
-        self.search.SetSelection(2) 
+        self.search.SetSelection(0) 
         
         self.tree   = ExtensionTree(parent = self.panel, log = parent.GetLogWindow())
         
         self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
                                       label = " %s " % _("Options"))
         
-        task = gtask.parse_interface('g.extension')
+        task = gtask.parse_interface('g.extension.py')
         
         for f in task.get_options()['flags']:
             name = f.get('name', '')
@@ -817,12 +818,12 @@ class InstallExtensionWindow(wx.Frame):
                 desc = f.get('description', '')
             if not name and not desc:
                 continue
-            if name in ('l', 'f', 'g', 'quiet', 'verbose'):
+            if name in ('l', 'c', 'g', 'quiet', 'verbose'):
                 continue
             self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                              label = desc)
         self.repo.SetValue(task.get_param(value = 'svnurl').get('default',
-                                                                'https://svn.osgeo.org/grass/grass-addons'))
+                                                                'http://svn.osgeo.org/grass/grass-addons'))
         
         self.statusbar = self.CreateStatusBar(number = 1)
         
@@ -836,7 +837,7 @@ class InstallExtensionWindow(wx.Frame):
         self.btnInstall.Enable(False)
         self.btnCmd = wx.Button(parent = self.panel, id = wx.ID_ANY,
                                 label = _("Command dialog"))
-        self.btnCmd.SetToolTipString(_('Open %s dialog') % 'g.extension')
+        self.btnCmd.SetToolTipString(_('Open %s dialog') % 'g.extension.py')
 
         self.btnClose.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
         self.btnFetch.Bind(wx.EVT_BUTTON, self.OnFetch)
@@ -901,7 +902,7 @@ class InstallExtensionWindow(wx.Frame):
     def _getCmd(self):
         item = self.tree.GetSelected()
         if not item or not item.IsOk():
-            return ['g.extension']
+            return ['g.extension.py']
         
         name = self.tree.GetItemText(item)
         if not name:
@@ -912,8 +913,8 @@ class InstallExtensionWindow(wx.Frame):
             if self.options[key].IsChecked():
                 flags.append('-%s' % key)
         
-        return ['g.extension'] + flags + ['extension=' + name,
-                                          'svnurl=' + self.repo.GetValue().strip()]
+        return ['g.extension.py'] + flags + ['extension=' + name,
+                                             'svnurl=' + self.repo.GetValue().strip()]
     
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
@@ -954,10 +955,18 @@ class InstallExtensionWindow(wx.Frame):
     def OnInstall(self, event):
         """!Install selected extension"""
         log = self.parent.GetLogWindow()
-        log.RunCmd(self._getCmd())
+        log.RunCmd(self._getCmd(), onDone = self.OnDone)
         
-        ### self.OnCloseWindow(None)
-                
+    def OnDone(self, cmd, returncode):
+        item = self.tree.GetSelected()
+        if not item or not item.IsOk() or \
+                returncode != 0 or \
+                not os.getenv('GRASS_ADDON_PATH'):
+            return
+        
+        name = self.tree.GetItemText(item)
+        globalvar.grassCmd['all'].append(name)
+        
     def OnItemSelected(self, event):
         """!Item selected"""
         item = event.GetItem()
@@ -999,7 +1008,7 @@ class ExtensionTree(ItemTree):
         for prefix in ('display', 'database',
                        'general', 'imagery',
                        'misc', 'postscript', 'paint',
-                       'raster', 'raster3D', 'sites', 'vector', 'wxGUI'):
+                       'raster', 'raster3D', 'sites', 'vector', 'wxGUI', 'other'):
             self.AppendItem(parentId = self.root,
                             text = prefix)
         self._loaded = False
@@ -1045,7 +1054,7 @@ class ExtensionTree(ItemTree):
             flags = 'g'
         else:
             flags = 'l'
-        ret = gcmd.RunCommand('g.extension.py', read = True,
+        ret = gcmd.RunCommand('g.extension.py', read = True, parent = self,
                               svnurl = url,
                               flags = flags, quiet = True)
         if not ret:
@@ -1061,7 +1070,6 @@ class ExtensionTree(ItemTree):
                     except ValueError:
                         prefix = ''
                         name = value
-                    
                     if prefix not in mdict:
                         mdict[prefix] = dict()
                     mdict[prefix][name] = dict()
