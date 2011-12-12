@@ -28,7 +28,6 @@
 #% type: string
 #% key_desc: name
 #% description: Name of extension to install/remove
-#% required: no
 #%end
 #%option
 #% key: operation
@@ -61,8 +60,8 @@
 #% guisection: Print
 #%end
 #%flag
-#% key: f
-#% description: List available modules in the GRASS Addons SVN repository including modules description
+#% key: c
+#% description: List available modules in the GRASS Addons SVN repository including module description
 #% guisection: Print
 #%end
 #%flag
@@ -82,24 +81,40 @@
 #% key: i
 #% description: Don't install new extension, just compile it
 #%end
+#%flag
+#% key: f
+#% description: Force removal when uninstalling extension (operation=remove)
+#%end
 
 import os
 import sys
 import re
 import atexit
+import shutil
+import glob
+import zipfile
+import tempfile
+import shutil
 
-import urllib
+from urllib2 import urlopen, HTTPError
+
+try:
+    import xml.etree.ElementTree as etree
+except ImportError:
+    import elementtree.ElementTree as etree # Python <= 2.4
 
 from grass.script import core as grass
 
 # temp dir
 remove_tmpdir = True
 
-def check():
+# check requirements
+def check_progs():
     for prog in ('svn', 'make', 'gcc'):
         if not grass.find_program(prog, ['--help']):
             grass.fatal(_("'%s' required. Please install '%s' first.") % (prog, prog))
     
+# expand prefix to class name
 def expand_module_class_name(c):
     name = { 'd'   : 'display',
              'db'  : 'database',
@@ -109,7 +124,7 @@ def expand_module_class_name(c):
              'ps'  : 'postscript',
              'p'   : 'paint',
              'r'   : 'raster',
-             'r3'  : 'raster3D',
+             'r3'  : 'raster3d',
              's'   : 'sites',
              'v'   : 'vector',
              'gui' : 'gui/wxpython' }
@@ -119,27 +134,62 @@ def expand_module_class_name(c):
     
     return c
 
+# list modules (read XML file from grass.osgeo.org/addons)
 def list_available_modules():
+    mlist = list()
+
+    # try to download XML metadata file first
+    url = "http://grass.osgeo.org/addons/grass%s.xml" % grass.version()['version'].split('.')[0]
+    try:
+        f = urlopen(url)
+        tree = etree.fromstring(f.read())
+        for mnode in tree.findall('task'):
+            name = mnode.get('name')
+            if flags['c'] or flags['g']:
+                desc = mnode.find('description').text
+                if not desc:
+                    desc = ''
+                keyw = mnode.find('keywords').text
+                if not keyw:
+                    keyw = ''
+            
+            if flags['g']:
+                print 'name=' + name
+                print 'description=' + desc
+                print 'keywords=' + keyw
+            elif flags['c']:
+                print name + ' - ' + desc
+            else:
+                print name
+    except HTTPError:
+        return list_available_modules_svn()
+    
+    return mlist
+
+# list modules (scan SVN repo)
+def list_available_modules_svn():
     mlist = list()
     grass.message(_('Fetching list of modules from GRASS-Addons SVN (be patient)...'))
     pattern = re.compile(r'(<li><a href=".+">)(.+)(</a></li>)', re.IGNORECASE)
-    i = 0
+
+    if flags['c']:
+        grass.warning(_("Flag 'c' ignored, metadata file not available"))
+    if flags['g']:
+        grass.warning(_("Flag 'g' ignored, metadata file not available"))
+        
     prefix = ['d', 'db', 'g', 'i', 'm', 'ps',
               'p', 'r', 'r3', 's', 'v']
     nprefix = len(prefix)
     for d in prefix:
-        if flags['g']:
-            grass.percent(i, nprefix, 1)
-            i += 1
-        
         modclass = expand_module_class_name(d)
         grass.verbose(_("Checking for '%s' modules...") % modclass)
         
         url = '%s/%s' % (options['svnurl'], modclass)
         grass.debug("url = %s" % url, debug = 2)
-        f = urllib.urlopen(url)
-        if not f:
-            grass.warning(_("Unable to fetch '%s'") % url)
+        try:
+            f = urlopen(url)
+        except HTTPError:
+            grass.debug(_("Unable to fetch '%s'") % url, debug = 1)
             continue
         
         for line in f.readlines():
@@ -149,16 +199,14 @@ def list_available_modules():
                 continue
             name = sline.group(2).rstrip('/')
             if name.split('.', 1)[0] == d:
-                print_module_desc(name, url)
+                print name
                 mlist.append(name)
     
     mlist += list_wxgui_extensions()
-    
-    if flags['g']:
-        grass.percent(1, 1, 1)
-    
+        
     return mlist
 
+# list wxGUI extensions
 def list_wxgui_extensions(print_module = True):
     mlist = list()
     grass.debug('Fetching list of wxGUI extensions from GRASS-Addons SVN (be patient)...')
@@ -167,7 +215,7 @@ def list_wxgui_extensions(print_module = True):
     
     url = '%s/%s' % (options['svnurl'], 'gui/wxpython')
     grass.debug("url = %s" % url, debug = 2)
-    f = urllib.urlopen(url)
+    f = urlopen(url)
     if not f:
         grass.warning(_("Unable to fetch '%s'") % url)
         return
@@ -180,119 +228,101 @@ def list_wxgui_extensions(print_module = True):
         name = sline.group(2).rstrip('/')
         if name not in ('..', 'Makefile'):
             if print_module:
-                print_module_desc(name, url)
+                print name
             mlist.append(name)
     
     return mlist
-
-def print_module_desc(name, url):
-    if not flags['f'] and not flags['g']:
-        print name
-        return
-    
-    if flags['g']:
-        print 'name=' + name
-    
-    # check main.c first
-    desc = get_module_desc(url + '/' + name + '/' + name)
-    if not desc:
-        desc = get_module_desc(url + '/' + name + '/main.c', script = False)
-    if not desc:
-        if not flags['g']:
-            print name + '-'
-            return
-    
-    if flags['g']:
-        print 'description=' + desc.get('description', '')
-        print 'keywords=' + ','.join(desc.get('keywords', list()))
-    else:
-        print name + ' - ' + desc.get('description', '')
-    
-def get_module_desc(url, script = True):
-    grass.debug('url=%s' % url)
-    f = urllib.urlopen(url)
-    if script:
-        ret = get_module_script(f)
-    else:
-        ret = get_module_main(f)
-        
-    return ret
-
-def get_module_main(f):
-    if not f:
-        return dict()
-    
-    ret = { 'keyword' : list() }
-    
-    pattern = re.compile(r'(module.*->)(.+)(=)(.*)', re.IGNORECASE)
-    keyword = re.compile(r'(G_add_keyword\()(.+)(\);)', re.IGNORECASE)
-    
-    key   = ''
-    value = ''
-    for line in f.readlines():
-        line = line.strip()
-        find = pattern.search(line)
-        if find:
-            key = find.group(2).strip()
-            line = find.group(4).strip()
-        else:
-            find = keyword.search(line)
-            if find:
-                ret['keyword'].append(find.group(2).replace('"', '').replace('_(', '').replace(')', ''))
-        if key:
-            value += line
-            if line[-2:] == ');':
-                value = value.replace('"', '').replace('_(', '').replace(');', '')
-                if key == 'keywords':
-                    ret[key] = map(lambda x: x.strip(), value.split(','))
-                else:
-                    ret[key] = value
-                
-                key = value = ''
-    
-    return ret
-
-def get_module_script(f):
-    ret = dict()
-    if not f:
-        return ret
-    
-    begin = re.compile(r'#%.*module', re.IGNORECASE)
-    end   = re.compile(r'#%.*end', re.IGNORECASE)
-    mline = None
-    for line in f.readlines():
-        if not mline:
-            mline = begin.search(line)
-        if mline:
-            if end.search(line):
-                break
-            try:
-                key, value = line.split(':', 1)
-                key = key.replace('#%', '').strip()
-                value = value.strip()
-                if key == 'keywords':
-                    ret[key] = map(lambda x: x.strip(), value.split(','))
-                else:
-                    ret[key] = value
-            except ValueError:
-                pass
-    
-    return ret
 
 def cleanup():
     if remove_tmpdir:
         grass.try_rmdir(tmpdir)
     else:
-        grass.info(_("Path to the source code: '%s'") % os.path.join(tmpdir, options['extension']))
-                        
+        grass.message(_("Path to the source code:"))
+        sys.stderr.write('%s\n' % os.path.join(tmpdir, options['extension']))
+
+# install extension on MS Windows
+def install_extension_win():
+    ### TODO: do not use hardcoded url
+    version = grass.version()['version'].split('.')
+    url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons/" % (version[0], version[1])
+    grass.message(_("Downloading precompiled GRASS Addons <%s>...") % options['extension'])
+    try:
+        f = urlopen(url + options['extension'] + '.zip')
+        
+        # create addons dir if not exists
+        if not os.path.exists(options['prefix']):
+            os.mkdir(options['prefix'])
+        
+        # download data
+        fo = tempfile.TemporaryFile()
+        fo.write(f.read())
+        zfobj = zipfile.ZipFile(fo)
+        for name in zfobj.namelist():
+            if name.endswith('/'):
+                d = os.path.join(options['prefix'], name)
+                if not os.path.exists(d):
+                    os.mkdir(d)
+            else:
+                outfile = open(os.path.join(options['prefix'], name), 'wb')
+                outfile.write(zfobj.read(name))
+                outfile.close()
+        
+        fo.close()
+    except HTTPError:
+        grass.fatal(_("GRASS Addons <%s> not found") % options['extension'])
+
+    grass.message(_("Installation of <%s> successfully finished.") % options['extension'])
+
+# install extension
 def install_extension():
     gisbase = os.getenv('GISBASE')
     if not gisbase:
         grass.fatal(_('$GISBASE not defined'))
     
     if grass.find_program(options['extension'], ['--help']):
-        grass.warning(_("Extension '%s' already installed. Will be updated...") % options['extension'])
+        grass.warning(_("Extension <%s> already installed. Will be updated...") % options['extension'])
     
+    if sys.platform == "win32":
+        install_extension_win()
+    else:
+        install_extension_other()
+    
+    # cleanup build cruft
+    if not flags['s']:
+        tidy_citizen()
+    
+    if not os.environ.has_key('GRASS_ADDON_PATH') or \
+            not os.environ['GRASS_ADDON_PATH']:
+        grass.warning(_('This add-on module will not function until you set the '
+                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
+    
+    # manual page: fix href
+    if os.getenv('GRASS_ADDON_PATH'):
+        html_man = os.path.join(os.getenv('GRASS_ADDON_PATH'), 'docs', 'html', 'description.html')
+        if os.path.exists(html_man):
+            fd = open(html_man)
+            html_str = '\n'.join(fd.readlines())
+            fd.close()
+            for rep in ('grassdocs.css', 'grass_logo.png'):
+                patt = re.compile(rep, re.IGNORECASE)
+                html_str = patt.sub(os.path.join(gisbase, 'docs', 'html', rep),
+                                    html_str)
+                
+            patt = re.compile(r'(<a href=")(d|db|g|i|m|p|ps|r|r3|s|v|wxGUI)(\.)(.+)(.html">)', re.IGNORECASE)
+            while True:
+                m = patt.search(html_str)
+                if not m:
+                    break
+                html_str = patt.sub(m.group(1) + os.path.join(gisbase, 'docs', 'html',
+                                                              m.group(2) + m.group(3) + m.group(4)) + m.group(5),
+                                    html_str, count = 1)
+            fd = open(html_man, "w")
+            fd.write(html_str)
+            fd.close()
+
+# install extension on other plaforms
+def install_extension_other():
+    gisbase = os.getenv('GISBASE')
     gui_list = list_wxgui_extensions(print_module = False)
 
     if options['extension'] not in gui_list:
@@ -304,7 +334,7 @@ def install_extension():
         if not flags['s']:
             grass.fatal(_("Installation of wxGUI extension requires -%s flag.") % 's')
         
-    grass.message(_("Fetching '%s' from GRASS-Addons SVN (be patient)...") % options['extension'])
+    grass.message(_("Fetching <%s> from GRASS-Addons SVN (be patient)...") % options['extension'])
     
     os.chdir(tmpdir)
     if grass.verbosity() == 0:
@@ -314,7 +344,7 @@ def install_extension():
     
     if grass.call(['svn', 'checkout',
                    url], stdout = outdev) != 0:
-        grass.fatal(_("GRASS Addons '%s' not found in repository") % options['extension'])
+        grass.fatal(_("GRASS Addons <%s> not found") % options['extension'])
     
     dirs = { 'bin' : os.path.join(tmpdir, options['extension'], 'bin'),
              'docs' : os.path.join(tmpdir, options['extension'], 'docs'),
@@ -331,7 +361,7 @@ def install_extension():
                'HTMLDIR=%s' % dirs['html'],
                'MANDIR=%s' % dirs['man1'],
                'SCRIPTDIR=%s' % dirs['scripts'],
-               'ETC=%s' % dirs['etc']
+               'ETC=%s' % os.path.join(dirs['etc'],options['extension'])
                ]
     
     installCmd = ['make',
@@ -342,18 +372,16 @@ def install_extension():
                   ]
     
     if flags['d']:
+        grass.message(_("To compile run:"))
         sys.stderr.write(' '.join(makeCmd) + '\n')
+        grass.message(_("To install run:\n\n"))
         sys.stderr.write(' '.join(installCmd) + '\n')
         return
     
     os.chdir(os.path.join(tmpdir, options['extension']))
     
-    grass.message(_("Compiling '%s'...") % options['extension'])    
+    grass.message(_("Compiling <%s>...") % options['extension'])    
     if options['extension'] not in gui_list:
-        for d in dirs.itervalues():
-            if not os.path.exists(d):
-                os.makedirs(d)
-        
         ret = grass.call(makeCmd,
                          stdout = outdev)
     else:
@@ -363,11 +391,11 @@ def install_extension():
     
     if ret != 0:
         grass.fatal(_('Compilation failed, sorry. Please check above error messages.'))
-    
+
     if flags['i'] or options['extension'] in gui_list:
         return
     
-    grass.message(_("Installing '%s'...") % options['extension'])
+    grass.message(_("Installing <%s>...") % options['extension'])
     
     ret = grass.call(installCmd,
                      stdout = outdev)
@@ -375,30 +403,140 @@ def install_extension():
     if ret != 0:
         grass.warning(_('Installation failed, sorry. Please check above error messages.'))
     else:
-        grass.message(_("Installation of '%s' successfully finished.") % options['extension'])
+        grass.message(_("Installation of <%s> successfully finished.") % options['extension'])
+    
+# remove dir if empty
+def remove_empty_dir(path):
+    if os.path.exists(path) and not os.listdir(path):
+        os.removedirs(path)
 
-    if not os.environ.has_key('GRASS_ADDON_PATH') or \
-            not os.environ['GRASS_ADDON_PATH']:
-        grass.warning(_('This add-on module will not function until you set the '
-                        'GRASS_ADDON_PATH environment variable (see "g.manual variables")'))
+# see http://lists.osgeo.org/pipermail/grass-dev/2011-December/056938.html
+def tidy_citizen():
+    if sys.platform == 'win32':
+        EXT_BIN = '.exe'
+        EXT_SCT = '.bat'
+    else:
+        EXT_BIN = EXT_SCT = ''
+    
+    # move script/ and bin/ to main dir
+    if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN):
+        shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN,
+                    os.path.join(options['prefix'], options['extension']) + EXT_BIN)
+    if sys.platform == 'win32':
+        if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT):
+            shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT,
+                        os.path.join(options['prefix'], options['extension']) + EXT_SCT)
+    else:
+        if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
+            shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
+                        os.path.join(options['prefix'], options['extension']))
+    
+    # move man/ into docs/
+    if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
+        shutil.move(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1'),
+                    os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'))
+        
+    # if empty, rmdir bin, etc, man, scripts
+    for d in ('bin', 'etc', os.path.join('man', 'man1'), 'man', 'scripts'):
+        remove_empty_dir(os.path.join(options['prefix'], d))
+    
+# remove existing extension (reading XML file)
+def remove_extension(force = False):
+    # try to download XML metadata file first
+    url = "http://grass.osgeo.org/addons/grass%s.xml" % grass.version()['version'].split('.')[0]
+    name = options['extension']
+    if force:
+        grass.verbose(_("List of removed files:"))
+    else:
+        grass.info(_("Files to be removed (use flag 'f' to force removal):"))
+    
+    try:
+        f = urlopen(url)
+        tree = etree.fromstring(f.read())
+        flist = []
+        for task in tree.findall('task'):
+            if name == task.get('name', default = '') and \
+                    task.find('binary') is not None:
+                for f in task.find('binary').findall('file'):
+                    fname = f.text
+                    if fname:
+                        fpath = fname.split('/')
+                        if sys.platform == 'win32':
+                            if fpath[0] == 'bin':
+                                fpath[-1] += '.exe'
+                            if fpath[0] == 'scripts':
+                                fpath[-1] += '.py'
+                        
+                        flist.append(fpath)
+        
+        if flist:
+            removed = False
+            err = list()
+            for f in flist:
+                fpath = os.path.join(options['prefix'], os.path.sep.join(f))
+                try:
+                    if force:
+                        grass.verbose(fpath)
+                        os.remove(fpath)
+                        removed = True
+                    else:
+                        print fpath
+                except OSError:
+                    err.append((_("Unable to remove file '%s'") % fpath))
+            if force and not removed:
+                grass.fatal(_("Extension <%s> not found") % options['extension'])
+            
+            if err:
+                for e in err:
+                    grass.error(e)
+        else:
+            remove_extension_std(force)
+    except HTTPError:
+        remove_extension_std(force)
 
-def remove_extension():
+    if force:
+        grass.message(_("Extension <%s> successfully uninstalled.") % options['extension'])
+    else:
+        grass.warning(_("Extension <%s> not removed. "
+                        "Re-run '%s' with 'f' flag to force removal") % (options['extension'], 'g.extension'))
+    
+# remove exising extension (using standard files layout)
+def remove_extension_std(force = False):
     # is module available?
     if not os.path.exists(os.path.join(options['prefix'], 'bin', options['extension'])):
-        grass.fatal(_("Module '%s' not found") % options['extension'])
+        grass.fatal(_("Extension <%s> not found") % options['extension'])
     
-    for file in [os.path.join(options['prefix'], 'bin', options['extension']),
-                 os.path.join(options['prefix'], 'scripts', options['extension']),
-                 os.path.join(options['prefix'], 'docs', 'html', options['extension'] + '.html')]:
-        if os.path.isfile(file):
-            os.remove(file)
-                    
-    grass.message(_("'%s' successfully uninstalled.") % options['extension'])
+    for fpath in [os.path.join(options['prefix'], 'bin', options['extension']),
+                  os.path.join(options['prefix'], 'scripts', options['extension']),
+                  os.path.join(options['prefix'], 'docs', 'html', options['extension'] + '.html'),
+                  os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')]:
+        if os.path.isfile(fpath):
+            if force:
+                grass.verbose(fpath)
+                os.remove(fpath)
+            else:
+                print fpath
+    
+# check links in CSS
+def check_style_files(fil):
+    # check the links to grassdocs.css/grass_logo.png to a correct manual page of addons
+    dist_file = os.path.join(os.getenv('GISBASE'), 'docs', 'html', fil)
+    addons_file = os.path.join(options['prefix'], 'docs', 'html', fil)
+    # check if file already exists in the grass addons docs html path
+    if os.path.isfile(addons_file):
+	return
+    # otherwise copy the file from $GISBASE/docs/html, it doesn't use link 
+    # because os.symlink it work only in Linux
+    else:
+	try:
+	    shutil.copyfile(dist_file,addons_file)
+	except OSError, e:
+	    grass.fatal(_("Unable to create '%s': %s") % (addons_file, e))
 
 def create_dir(path):
     if os.path.isdir(path):
         return
-    
+
     try:
         os.makedirs(path)
     except OSError, e:
@@ -409,15 +547,20 @@ def create_dir(path):
 def check_dirs():
     create_dir(os.path.join(options['prefix'], 'bin'))
     create_dir(os.path.join(options['prefix'], 'docs', 'html'))
+    check_style_files('grass_logo.png')
+    check_style_files('grassdocs.css')
+    # create_dir(os.path.join(options['prefix'], 'etc'))
+    create_dir(os.path.join(options['prefix'], 'docs', 'man', 'man1'))
     create_dir(os.path.join(options['prefix'], 'man', 'man1'))
     create_dir(os.path.join(options['prefix'], 'scripts'))
 
 def main():
     # check dependecies
-    check()
+    if sys.platform != "win32":
+        check_progs()
     
     # list available modules
-    if flags['l'] or flags['f'] or flags['g']:
+    if flags['l'] or flags['c'] or flags['g']:
         list_available_modules()
         return 0
     else:
@@ -442,9 +585,6 @@ def main():
                 grass.warning(_("GRASS_ADDON_PATH has more items, using first defined - '%s'") % path_list[0])
             options['prefix'] = path_list[0]
     
-    # check dirs
-    check_dirs()
-    
     if flags['d']:
         if options['operation'] != 'add':
             grass.warning(_("Flag 'd' is relevant only to 'operation=add'. Ignoring this flag."))
@@ -453,9 +593,10 @@ def main():
             remove_tmpdir = False
     
     if options['operation'] == 'add':
+        check_dirs()
         install_extension()
     else: # remove
-        remove_extension()
+        remove_extension(flags['f'])
     
     return 0
 

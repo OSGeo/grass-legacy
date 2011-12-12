@@ -25,8 +25,8 @@ rem #########################################################################
 set SAVEPATH=%PATH%
 rem DON'T include scripts directory in PATH - .bat files in bin directory
 rem are used to run scripts on Windows
-if "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%APPDATA%\GRASS6\addons;%PATH%
-if not "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
+if "%GRASS_ADDON_PATH%"=="" set GRASS_ADDON_PATH=%APPDATA%\GRASS6\addons
+PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
 
 set GIS_LOCK=1
 set GRASS_VERSION=GRASS_VERSION_NUMBER
