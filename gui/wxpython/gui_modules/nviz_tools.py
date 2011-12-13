@@ -892,7 +892,7 @@ class NvizToolWindow(FN.FlatNotebook):
         box = wx.StaticBox (parent = panel, id = wx.ID_ANY,
                             label = " %s " % (_("3D raster map")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        rmaps = gselect.Select(parent = panel, type = 'raster3D',
+        rmaps = gselect.Select(parent = panel, type = 'raster3d',
                                onPopup = self.GselectOnPopup)
         rmaps.GetChildren()[0].Bind(wx.EVT_TEXT, self.OnSetRaster3D)
         self.win['volume']['map'] = rmaps.GetId()
