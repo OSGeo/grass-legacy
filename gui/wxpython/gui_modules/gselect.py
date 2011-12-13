@@ -275,7 +275,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                        'raster files':'rast',
                        'grid3':'rast3d',
                        'rast3d':'rast3d',
-                       'raster3D':'rast3d',
+                       'raster3d':'rast3d',
                        'raster3D files':'rast3d',
                        'vector':'vect',
                        'vect':'vect',
