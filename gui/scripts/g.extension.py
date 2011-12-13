@@ -502,13 +502,13 @@ def remove_extension(force = False):
     
 # remove exising extension (using standard files layout)
 def remove_extension_std(force = False):
-    # is module available?
-    if not os.path.exists(os.path.join(options['prefix'], 'bin', options['extension'])):
-        grass.fatal(_("Extension <%s> not found") % options['extension'])
-    
-    for fpath in [os.path.join(options['prefix'], 'bin', options['extension']),
+    # try even if module does not seem to be available,
+    # as the user may be trying to get rid of left over cruft
+    for fpath in [os.path.join(options['prefix'], options['extension']),
+                  os.path.join(options['prefix'], 'bin', options['extension']),
                   os.path.join(options['prefix'], 'scripts', options['extension']),
                   os.path.join(options['prefix'], 'docs', 'html', options['extension'] + '.html'),
+                  os.path.join(options['prefix'], 'docs', 'man', 'man1', options['extension'] + '.1'),
                   os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')]:
         if os.path.isfile(fpath):
             if force:
