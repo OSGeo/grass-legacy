@@ -753,7 +753,9 @@ def main():
         return 0
     elif flags['a']:
         grass.message(_("List of installed extensions:"))
-        print os.linesep.join(get_installed_extensions())
+        elist = get_installed_extensions()
+        if elist:
+            print os.linesep.join(elist)
         return 0
     else:
         if not options['extension']:

@@ -59,7 +59,7 @@ from modules.vclean        import VectorCleaningFrame
 from psmap.frame           import PsMapFrame
 from core.debug            import Debug
 from gui_core.ghelp        import MenuTreeWindow, AboutWindow
-from modules.extensions    import InstallExtensionWindow
+from modules.extensions    import InstallExtensionWindow, UninstallExtensionWindow
 from lmgr.toolbars         import LMWorkspaceToolbar, LMDataToolbar, LMToolsToolbar
 from lmgr.toolbars         import LMMiscToolbar, LMVectorToolbar, LMNvizToolbar
 from lmgr.pyshell          import PyShellWindow
@@ -1119,6 +1119,12 @@ class GMFrame(wx.Frame):
     def OnInstallExtension(self, event):
         """!Install extension from GRASS Addons SVN repository"""
         win = InstallExtensionWindow(self, size = (650, 550))
+        win.CentreOnScreen()
+        win.Show()
+
+    def OnUninstallExtension(self, event):
+        """!Uninstall extension"""
+        win = UninstallExtensionWindow(self, size = (650, 300))
         win.CentreOnScreen()
         win.Show()
 
