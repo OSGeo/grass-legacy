@@ -270,7 +270,7 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    if test -f "$MYINST_DIR/scripts/$MODULE" ; then
        rm -f "$MYINST_DIR/scripts/$MODULE"
    fi
-   if test -h "$MYINST_DIR/$MODULE" ; then
+   if test -e "$MYINST_DIR/$MODULE" ; then
        rm -f "$MYINST_DIR/$MODULE"
    fi
    if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
@@ -279,6 +279,9 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    fi
    if test -f "${MYINST_DIR}/man/man1/${MODULE}.1" ; then
        rm -f "${MYINST_DIR}/man/man1/${MODULE}.1"
+   fi
+   if test -f "$MYINST_DIR/docs/man/man1/$MODULE.1" ; then
+       rm -f "$MYINST_DIR/docs/man/man1/$MODULE.1"
    fi
 
    exit 0
@@ -383,6 +386,7 @@ else
       fi
    else
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
+         g.message -w "Replacing previously built <$MODULE>"
          rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
       fi
 
@@ -404,9 +408,23 @@ else
    fi
 
    if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] || [ "$MYINST_DIR" = ~/.grass6/addons ] ; then
-      # symlink into path which is actually in the $PATH
-      ln -sf "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
-   fi
+	# move bin/ and script/ into ../, then rmdir if they are empty
+	mv "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+	if [ `ls -a "$MYINST_DIR/$PROGTYPE" | wc -l` -le 2 ] ; then
+	   rmdir "$MYINST_DIR/$PROGTYPE"
+	fi
+	# and move the man page into docs/
+	if [ -e "$MYINST_DIR/man/man1/$MODULE.1" ] ; then
+	   mkdir -p "$MYINST_DIR/docs/man/man1"
+	   mv "$MYINST_DIR/man/man1/$MODULE.1" "$MYINST_DIR/docs/man/man1/"
+	   if [ `ls -a "$MYINST_DIR/man/man1" | wc -l` -le 2 ] ; then
+	      rmdir "$MYINST_DIR/man/man1"
+	      if [ `ls -a "$MYINST_DIR/man" | wc -l` -le 2 ] ; then
+		 rmdir "$MYINST_DIR/man"
+	      fi
+	   fi
+	fi
+    fi
 fi
 
 cleanup
