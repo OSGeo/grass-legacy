@@ -753,7 +753,7 @@ def main():
     
     # list available modules
     if flags['l'] or flags['c'] or flags['g']:
-        list_available_modules()
+        list_available_extensions()
         return 0
     elif flags['a']:
         grass.message(_("List of installed extensions:"))
