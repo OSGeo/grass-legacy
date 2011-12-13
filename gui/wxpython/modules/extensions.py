@@ -267,7 +267,7 @@ class ExtensionTree(ItemTree):
         for prefix in ('display', 'database',
                        'general', 'imagery',
                        'misc', 'postscript', 'paint',
-                       'raster', 'raster3D', 'sites', 'vector', 'wxGUI', 'other'):
+                       'raster', 'raster3d', 'sites', 'vector', 'wxGUI', 'other'):
             self.AppendItem(parentId = self.root,
                             text = prefix)
         self._loaded = False
@@ -281,7 +281,7 @@ class ExtensionTree(ItemTree):
                  'ps' : 'postscript',
                  'p'  : 'paint',
                  'r'  : 'raster',
-                 'r3' : 'raster3D',
+                 'r3' : 'raster3d',
                  's'  : 'sites',
                  'v'  : 'vector',
                  'wx' : 'wxGUI',
