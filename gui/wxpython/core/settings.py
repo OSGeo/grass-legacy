@@ -36,14 +36,27 @@ class Settings:
         # key/value separator
         self.sep = ';'
         
+        # define default settings
+        self._defaultSettings()  # -> self.defaultSettings
+        
+        # read settings from the file
+        self.userSettings = copy.deepcopy(self.defaultSettings)
+        try:
+            self.ReadSettingsFile()
+        except GException, e:
+            print >> sys.stderr, e.value
+        
+        # define internal settings
+        self._internalSettings() # -> self.internalSettings
+        
+    def _defaultSettings(self):
+        """!Define default settings
+        """
         try:
             projFile = PathJoin(os.environ["GRASS_PROJSHARE"], 'epsg')
         except KeyError:
             projFile = ''
         
-        #
-        # default settings
-        #
         self.defaultSettings = {
             #
             # general
@@ -633,19 +646,10 @@ class Settings:
         # TODO
         if sys.platform == 'darwin':
             self.defaultSettings['general']['defWindowPos']['enabled'] = False
-        
-        #
-        # user settings
-        #
-        self.userSettings = copy.deepcopy(self.defaultSettings)
-        try:
-            self.ReadSettingsFile()
-        except GException, e:
-            print >> sys.stderr, e.value
 
-        #
-        # internal settings (based on user settings)
-        #
+    def _internalSettings(self):
+        """!Define internal settings (based on user settings)
+        """
         self.internalSettings = {}
         for group in self.userSettings.keys():
             self.internalSettings[group] = {}
