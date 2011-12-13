@@ -28,6 +28,7 @@
 #% type: string
 #% key_desc: name
 #% description: Name of extension to install/remove
+#% guisection: Required
 #%end
 #%option
 #% key: operation
@@ -42,7 +43,6 @@
 #% type: string
 #% key_desc: url
 #% description: SVN Addons repository URL
-#% required: yes
 #% answer: http://svn.osgeo.org/grass/grass-addons/grass6
 #%end
 #%option
@@ -77,18 +77,22 @@
 #%flag
 #% key: s
 #% description: Install system-wide (may need system administrator rights)
+#% guisection: Install
 #%end
 #%flag
 #% key: d
 #% description: Download source code and exit
+#% guisection: Install
 #%end
 #%flag
 #% key: i
 #% description: Don't install new extension, just compile it
+#% guisection: Install
 #%end
 #%flag
 #% key: f
 #% description: Force removal when uninstalling extension (operation=remove)
+#% guisection: Remove
 #%end
 
 import os
