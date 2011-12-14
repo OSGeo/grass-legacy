@@ -35,7 +35,7 @@ import grass.script as grass
 
 from core             import globalvar
 from core             import utils
-from core.gcmd        import GMessage, RunCommand
+from core.gcmd        import GMessage, RunCommand, GError
 from gui_core.gselect import Select, LayerSelect, ColumnSelect, VectorDBInfo
 from core.render      import Map
 from gui_core.forms   import GUI
@@ -525,8 +525,9 @@ class ColorTable(wx.Frame):
         ret = self.CreateColorTable()
         if not ret:
             GMessage(parent = self, message = _("No valid color rules given."))
-        
-        if ret:
+        else:
+            # re-render preview and current map window
+            self.OnPreview(None)
             display = self.parent.GetLayerTree().GetMapDisplay()
             if display and display.IsAutoRendered():
                 display.GetWindow().UpdateMap(render = True)
@@ -681,12 +682,12 @@ class ColorTable(wx.Frame):
             output.write(rulestxt)
         finally:
             output.close()
-                
-        cmd = ['%s.colors' % self.mapType[0],#r.colors/v.colors
+        
+        cmd = ['%s.colors' % self.mapType[0], #r.colors/v.colors
                 'map=%s' % self.inmap,
                 'rules=%s' % gtemp]
-        if self.mapType == 'vector' and self.properties['sourceColumn']\
-                                    and self.properties['sourceColumn'] != 'cat':
+        if self.mapType == 'vector' and self.properties['sourceColumn'] \
+                and self.properties['sourceColumn'] != 'cat':
             cmd.append('column=%s' % self.properties['sourceColumn'])
         cmd = utils.CmdToTuple(cmd)
         ret = RunCommand(cmd[0], **cmd[1])               
@@ -1213,9 +1214,9 @@ class VectorColorTable(ColorTable):
     
     def AddTemporaryColumn(self, type):
         """!Add temporary column to not overwrite the original values,
-            need to be deleted when closing dialog and unloading map
-            
-            @param type type of column (e.g. vachar(11))"""
+        need to be deleted when closing dialog and unloading map
+        
+        @param type type of column (e.g. vachar(11))"""
         # because more than one dialog with the same map can be opened we must test column name and
         # create another one
         while self.properties['tmpColumn'] in self.dbInfo.GetTableDesc(self.properties['table']).keys():
@@ -1558,6 +1559,7 @@ class VectorColorTable(ColorTable):
                 ret = self.UpdateColorColumn(tmp)
             else:
                 ret = True
+        
         return ret
         
     def UpdateColorColumn(self, tmp):
@@ -1577,8 +1579,9 @@ class VectorColorTable(ColorTable):
             else:
                 rgb_col = self.properties['storeColumn']
                 if not self.properties['storeColumn']:
-                    GMessage(self.parent, message = _("Please select column to save values to."))
-                    
+                    GMessage(parent = self.parent,
+                             message = _("Please select column to save values to."))
+            
             rulestxt += "UPDATE %s SET %s='%s' WHERE %s ;\n" % (self.properties['table'],
                                                                 rgb_col,
                                                                 rule[self.attributeType],
@@ -1613,6 +1616,11 @@ class VectorColorTable(ColorTable):
         if self.colorTable:
             self.UseAttrColumn(False)
         else:
+            if not self.properties['storeColumn']:
+                GError(_("No color column defined. Operation canceled."),
+                       parent = self)
+                return
+            
             self.UseAttrColumn(True)
         
         return ColorTable.OnApply(self, event)
