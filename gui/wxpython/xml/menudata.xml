@@ -750,7 +750,7 @@
 	    <menuitem>
 	      <label>User access</label>
 	      <help>Controls access to the current mapset for other users on the system.</help>
-	      <keywords>general,map management,permission</keywords>
+	      <keywords>general,map management</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.access</command>
 	    </menuitem>
@@ -864,7 +864,7 @@
 	    <menuitem>
 	      <label>Remove extension</label>
 	      <help>Removes installed GRASS AddOns extension.</help>
-	      <keywords>general,installation,extensions</keywords>
+	      <keywords>general,extensions</keywords>
 	      <handler>OnUninstallExtension</handler>
 	      <command>g.extension</command>
 	    </menuitem>
@@ -1227,7 +1227,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Distance to features</label>
-	      <help>Generates a raster map layer of distance to features in input layer.</help>
+	      <help>Generates a raster map of distance to features in input raster map.</help>
 	      <keywords>raster,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.grow.distance</command>
@@ -1736,7 +1736,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Fill NULL cells</label>
-	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
+	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation.</help>
 	      <keywords>raster,elevation,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fillnulls</command>
@@ -1806,8 +1806,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Total corrected area</label>
-	      <help>Prints estimation of surface area for raster map.</help>
-	      <keywords>raster,surface,statistics,area estimation</keywords>
+	      <help>Surface area estimation for rasters.</help>
+	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.area</command>
 	    </menuitem>
@@ -2502,7 +2502,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Mosaic images</label>
-	      <help>Mosaics up to 4 images and extends colormap; creates map *.mosaic</help>
+	      <help>Mosaics up to four images, extending the color table.</help>
 	      <keywords>raster,imagery,mosaicking</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.image.mosaic</command>
@@ -2677,7 +2677,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Landsat cloud cover assessment</label>
-	      <help>Landsat TM/ETM+ Automatic Cloud Cover Assessment (ACCA).</help>
+	      <help>Performs Landsat TM/ETM+ Automatic Cloud Cover Assessment (ACCA).</help>
 	      <keywords>imagery,landsat,acca</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.landsat.acca</command>
@@ -2697,6 +2697,13 @@
 	      <keywords>imagery,atmospheric correction</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.atcorr</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Topographic correction</label>
+	      <help>Computes topographic correction of reflectance.</help>
+	      <keywords>imagery,terrain,topographic correction</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.topo.corr</command>
 	    </menuitem>
 	  </items>
 	</menu>
