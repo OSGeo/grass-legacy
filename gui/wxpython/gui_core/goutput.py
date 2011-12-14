@@ -544,9 +544,11 @@ class GMConsole(wx.SplitterWindow):
                         del os.environ["GRASS_REGION"]
                 
                 if len(command) == 1:
-                    task = gtask.parse_interface(command[0])
-                    # if not task.has_required():
-                    # task = None # run command
+                    try:
+                        task = gtask.parse_interface(command[0])
+                    except grass.ScriptError, e:
+                        print >> sys.stderr, e
+                        task = None
                 else:
                     task = None
                 
@@ -805,7 +807,8 @@ class GMConsole(wx.SplitterWindow):
             
             try:
                 task = GUI(show = None).ParseCommand(event.cmd)
-            except GException:
+            except GException, e:
+                print >> sys.stderr, e
                 task = None
                 return
             

@@ -1794,9 +1794,8 @@ class GUI:
             global _blackList
             self.grass_task = gtask.parse_interface(cmd[0],
                                                     blackList = _blackList)
-        except ValueError, e: #grass.ScriptError, e:
-            gcmd.GError(e.value)
-            return
+        except (grass.ScriptError, ValueError), e: 
+            raise gcmd.GException(e.value)
         
         # if layer parameters previously set, re-insert them into dialog
         if completed is not None:
