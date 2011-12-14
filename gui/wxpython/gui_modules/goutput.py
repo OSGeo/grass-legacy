@@ -533,10 +533,9 @@ class GMConsole(wx.SplitterWindow):
                     import menuform
                     try:
                         task = gtask.parse_interface(command[0])
-                    except gcmd.ScriptError, e:
+                    except grass.ScriptError, e:
                         print >> sys.stderr, e
-                    # if not task.has_required():
-                    # task = None # run command
+                        task = None
                 else:
                     task = None
                 
@@ -781,7 +780,8 @@ class GMConsole(wx.SplitterWindow):
             
             try:
                 task = menuform.GUI(show = None).ParseCommand(event.cmd)
-            except gcmd.GException:
+            except gcmd.GException, e:
+                print >> sys.stderr, e
                 task = None
                 return
             
