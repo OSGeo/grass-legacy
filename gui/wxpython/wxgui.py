@@ -82,7 +82,7 @@ from gui_modules import gmodeler
 from gui_modules import vclean
 from gui_modules import nviz_tools
 from gui_modules.debug    import Debug
-from gui_modules.ghelp    import MenuTreeWindow, AboutWindow, InstallExtensionWindow
+from gui_modules.ghelp    import MenuTreeWindow, AboutWindow, InstallExtensionWindow, UninstallExtensionWindow
 from gui_modules.toolbars import LMWorkspaceToolbar, LMDataToolbar, LMToolsToolbar, LMMiscToolbar, LMVectorToolbar
 from gui_modules.gpyshell import PyShellWindow
 from icons.icon           import Icons
@@ -1051,6 +1051,12 @@ class GMFrame(wx.Frame):
     def OnInstallExtension(self, event):
         """!Install extension from GRASS Addons SVN repository"""
         win = InstallExtensionWindow(self, size = (650, 550))
+        win.CentreOnScreen()
+        win.Show()
+
+    def OnUninstallExtension(self, event):
+        """!Uninstall extension"""
+        win = UninstallExtensionWindow(self, size = (650, 300))
         win.CentreOnScreen()
         win.Show()
 
