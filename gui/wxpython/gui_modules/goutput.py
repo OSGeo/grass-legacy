@@ -531,7 +531,10 @@ class GMConsole(wx.SplitterWindow):
                 
                 if len(command) == 1:
                     import menuform
-                    task = gtask.parse_interface(command[0])
+                    try:
+                        task = gtask.parse_interface(command[0])
+                    except gcmd.ScriptError, e:
+                        print >> sys.stderr, e
                     # if not task.has_required():
                     # task = None # run command
                 else:
