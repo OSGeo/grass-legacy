@@ -95,6 +95,7 @@ import glob
 import zipfile
 import tempfile
 import shutil
+import fileinput
 
 from urllib2 import urlopen, HTTPError
 
@@ -422,14 +423,18 @@ def tidy_citizen():
     if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN):
         shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_BIN,
                     os.path.join(options['prefix'], options['extension']) + EXT_BIN)
-    if sys.platform == 'win32':
-        if os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT):
-            shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT,
-                        os.path.join(options['prefix'], options['extension']) + EXT_SCT)
-    else:
-        if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
-            shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
-                        os.path.join(options['prefix'], options['extension']))
+    if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
+        shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
+                    os.path.join(options['prefix'], options['extension']))
+    if sys.platform == 'win32' and \
+            os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT):
+        shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT,
+                    os.path.join(options['prefix'], options['extension']) + EXT_SCT)
+        # fix script path
+        for line in fileinput.FileInput(os.path.join(options['prefix'], options['extension']) + EXT_SCT,
+                                        inplace = True):
+            line = line.replace("%GISBASE%/scripts", "%GRASS_ADDON_PATH%")
+            print line
     
     # move man/ into docs/
     if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
