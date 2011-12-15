@@ -19,6 +19,7 @@ import string
 import glob
 import shlex
 import re
+import locale
 
 from core.globalvar import ETCDIR
 sys.path.append(os.path.join(ETCDIR, "python"))
