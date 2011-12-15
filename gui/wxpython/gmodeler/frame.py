@@ -243,6 +243,9 @@ class ModelFrame(wx.Frame):
         
     def OnCmdPrepare(self, event):
         """!Prepare for running command"""
+        if not event.userData:
+            return
+        
         event.onPrepare(item = event.userData['item'],
                         params = event.userData['params'])
         
@@ -329,7 +332,7 @@ class ModelFrame(wx.Frame):
         
         if not rast and not vect and not rast3d:
             GMessage(parent = self,
-                     message = _('Nothing to delete.'))
+                     message = _('No intermediate data to delete.'))
             return
         
         dlg = wx.MessageDialog(parent = self,
