@@ -57,7 +57,7 @@ class SQLFrame(wx.Frame):
         
         # db info
         self.layer = layer
-        self.dbInfo = dbm_base.VectorDBInfo(self.vectmap)
+        self.dbInfo = VectorDBInfo(self.vectmap)
         self.tablename = self.dbInfo.GetTable(self.layer)
         self.driver, self.database = self.dbInfo.GetDbSettings(self.layer)
         
@@ -86,7 +86,7 @@ class SQLFrame(wx.Frame):
         databasebox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
                                    label = " %s " % _("Database connection"))
         databaseboxsizer = wx.StaticBoxSizer(databasebox, wx.VERTICAL)
-        databaseboxsizer.Add(item=dbm_base.createDbInfoDesc(self.panel, self.dbInfo, layer = self.layer),
+        databaseboxsizer.Add(item=createDbInfoDesc(self.panel, self.dbInfo, layer = self.layer),
                              proportion=1,
                              flag=wx.EXPAND | wx.ALL,
                              border=3)
