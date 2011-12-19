@@ -2575,21 +2575,6 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Maximum likelihood classification (MLC)</label>
-	      <help>Classifies the cell spectral reflectances in imagery data.</help>
-	      <keywords>imagery,classification,MLC</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>i.maxlik</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Sequential maximum a posteriori classification (SMAP)</label>
-	      <help>Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation.</help>
-	      <keywords>imagery,classification,supervised,SMAP</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>i.smap</command>
-	    </menuitem>
-	    <separator />
-	    <menuitem>
 	      <label>Interactive input for supervised classification (requires Xterm)</label>
 	      <help>Generates spectral signatures for an image by allowing the user to outline regions of interest.</help>
 	      <keywords>imagery,classification</keywords>
@@ -2609,6 +2594,21 @@
 	      <keywords>imagery,classification,supervised,SMAP</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.gensigset</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Maximum likelihood classification (MLC)</label>
+	      <help>Classifies the cell spectral reflectances in imagery data.</help>
+	      <keywords>imagery,classification,MLC</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.maxlik</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Sequential maximum a posteriori classification (SMAP)</label>
+	      <help>Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation.</help>
+	      <keywords>imagery,classification,supervised,SMAP</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.smap</command>
 	    </menuitem>
 	  </items>
 	</menu>
