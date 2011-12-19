@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-05 23:14+0200\n"
-"PO-Revision-Date: 2011-12-10 00:02+0100\n"
+"PO-Revision-Date: 2011-12-18 22:42+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr "widok 3D"
 #: ../gui/wxpython/wxgui.py:327
 #, python-format
 msgid "Hardcopy Map Output Utility is not available. You can install it by %s"
-msgstr ""
+msgstr "Narzędzie zapisu wydruku map nie jest dostępne. Możesz je zainstalować poprzez %s"
 
 #: ../gui/wxpython/wxgui.py:346
 msgid "Choose model to run"
@@ -96,7 +96,7 @@ msgstr "Zamknij Okno Mapy %d "
 
 #: ../gui/wxpython/wxgui.py:516 ../gui/wxpython/wxgui.py:1198
 msgid "Selected map layer is not vector."
-msgstr ""
+msgstr "Wybrana warstwa mapy nie jest wektorową."
 
 #: ../gui/wxpython/wxgui.py:521
 #, fuzzy
@@ -119,7 +119,7 @@ msgstr "Plik mskryptu '%s' nie istnieje. Operacja przerwana."
 #: ../gui/wxpython/wxgui.py:553
 #, python-format
 msgid "Launching script '%s'..."
-msgstr ""
+msgstr "Uruchamianie skryptu '%s'..."
 
 #: ../gui/wxpython/wxgui.py:568
 #, python-format
@@ -332,7 +332,7 @@ msgstr "Wyczyść wyświetlanie"
 
 #: ../gui/wxpython/icons/icon.py:153
 msgid "Erase display canvas with given background color"
-msgstr ""
+msgstr "Wyczyść płótno mapy zadanym kolorem tła"
 
 #: ../gui/wxpython/icons/icon.py:155
 msgid "Pointer"
@@ -420,7 +420,7 @@ msgstr "Analiza mapy"
 
 #: ../gui/wxpython/icons/icon.py:188
 msgid "Measuring, profiling, histogramming, ..."
-msgstr ""
+msgstr "Pomiary, profile, histogramy, ..."
 
 #: ../gui/wxpython/icons/icon.py:190
 msgid "Measure distance"
@@ -630,7 +630,7 @@ msgstr "Wektoryzuj nowy centroid"
 
 #: ../gui/wxpython/icons/icon.py:291
 msgid "Digitize new area (composition of boundaries without category and one centroid with category)"
-msgstr ""
+msgstr "Wektoryzuj nowy poligon (kompozycję granic bez kategorii i jednego centroidu z kategorią)"
 
 #: ../gui/wxpython/icons/icon.py:294
 msgid "Add new vertex"
@@ -686,7 +686,7 @@ msgstr "Wyjdź z digitizera"
 
 #: ../gui/wxpython/icons/icon.py:321
 msgid "Quit digitizer and save changes"
-msgstr ""
+msgstr "Wyjdź z digitizera i zapisz zmiany"
 
 #: ../gui/wxpython/icons/icon.py:323
 msgid "Additional tools (copy, flip, connect, etc.)"
@@ -906,11 +906,11 @@ msgstr "Pokaż podręcznik"
 
 #: ../gui/wxpython/icons/icon.py:434
 msgid "Generate text file with mapping instructions"
-msgstr ""
+msgstr "Utwórz plik tekstowy z instrukcjami mapy"
 
 #: ../gui/wxpython/icons/icon.py:436
 msgid "Load text file with mapping instructions"
-msgstr ""
+msgstr "Wczytaj plik tekstowy z instrukcjami mapy"
 
 #: ../gui/wxpython/icons/icon.py:438
 msgid "Generate PostScript output"
@@ -929,7 +929,7 @@ msgstr "Ustawienia strony"
 
 #: ../gui/wxpython/icons/icon.py:443
 msgid "Specify paper size, margins and orientation"
-msgstr ""
+msgstr "Ustaw rozmiar i orientację papieru, marginesy"
 
 #: ../gui/wxpython/icons/icon.py:445
 msgid "Full extent"
@@ -1304,7 +1304,7 @@ msgstr "Punkty ASCII na linie wektorowe"
 
 #: ../gui/wxpython/menustrings.py:60
 msgid "Import ASCII x,y[,z] coordinates as a series of lines."
-msgstr ""
+msgstr "Importuje współrzędne x,y[,z] jako serie linii."
 
 #: ../gui/wxpython/menustrings.py:61
 msgid "Historical GRASS vector import"
@@ -1464,7 +1464,7 @@ msgstr "Eksportuje mapę rastrową GRASS do pliku mapy GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/wxpython/menustrings.py:100
 msgid "Matlab 2D array export"
-msgstr ""
+msgstr "do Matlab 2D"
 
 #: ../gui/wxpython/menustrings.py:101
 msgid "Exports a GRASS raster to a binary MAT-File."
@@ -1524,7 +1524,7 @@ msgstr "do TIFF"
 
 #: ../gui/wxpython/menustrings.py:115
 msgid "Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel resolution of the currently defined region."
-msgstr "Konwertuje 3 warstwy rastrowe GRASS (R,G,B) do pliku obrazu PPM o rozdzielczości piksela aktualnie zdefiniowanego regionu"
+msgstr "Konwertuje 3 warstwy rastrowe GRASS (R,G,B) do pliku obrazu PPM o rozdzielczości piksela aktualnie zdefiniowanego regionu."
 
 #: ../gui/wxpython/menustrings.py:116
 msgid "VRML export"
@@ -1532,7 +1532,7 @@ msgstr "do VRML"
 
 #: ../gui/wxpython/menustrings.py:117
 msgid "Export a raster map to the Virtual Reality Modeling Language (VRML)"
-msgstr ""
+msgstr "Eksportuje mape rastrową do Virtual Reality Modeling Language (VRML)"
 
 #: ../gui/wxpython/menustrings.py:118 ../gui/wxpython/menustrings.py:133
 #: ../gui/wxpython/menustrings.py:140
@@ -1719,7 +1719,7 @@ msgstr "Wektor do rastra"
 
 #: ../gui/wxpython/menustrings.py:171
 msgid "Converts (rasterize) a vector map into a raster map."
-msgstr ""
+msgstr "Konwertje (rasteryzuje) mapę wektorową na mapę rastrową."
 
 #: ../gui/wxpython/menustrings.py:172
 msgid "Vector to volume"
@@ -1783,7 +1783,7 @@ msgstr "NVIZ (nieinteraktywny)"
 
 #: ../gui/wxpython/menustrings.py:189
 msgid "Allows rendering GIS data is a 3D space."
-msgstr ""
+msgstr "Pozwala na renderowanie danych GIS w przestrzeni 3D."
 
 #: ../gui/wxpython/menustrings.py:190
 msgid "Bearing/distance to coordinates"
@@ -1795,7 +1795,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:193
 msgid "Launch Cartographic Composer"
-msgstr "Uruchom kompozytor wydruków"
+msgstr "Otwórz kompozytor wydruków"
 
 #: ../gui/wxpython/menustrings.py:194
 msgid "Launch script"
@@ -1971,7 +1971,7 @@ msgstr "Wektoryzacja rastra /wymaga XTerm/ (r.digit)"
 
 #: ../gui/wxpython/menustrings.py:239
 msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse) and save to a raster map."
-msgstr ""
+msgstr "Interaktywne narzędzie do rysowania i zapisywania obiektów wektorowych na monitorze graficznym (przy użyciu myszki) i zapisu do mapy rastrowej."
 
 #: ../gui/wxpython/menustrings.py:240
 msgid "Compress/decompress"
@@ -1995,7 +1995,7 @@ msgstr "Wstawianie wartości NULL"
 
 #: ../gui/wxpython/menustrings.py:245
 msgid "Manages NULL-values of given raster map."
-msgstr ""
+msgstr "Zarządzanie wartościami NULL na mapach rastrowych."
 
 #: ../gui/wxpython/menustrings.py:246
 msgid "Quantization"
@@ -2095,7 +2095,7 @@ msgstr "Tabele kolorów"
 
 #: ../gui/wxpython/menustrings.py:270
 msgid "Set color rules based on stddev from a map's mean value."
-msgstr ""
+msgstr "Ustawia reguły kolorów bazując na odchyleniu standardowym średniej wartości mapy."
 
 #: ../gui/wxpython/menustrings.py:271 ../gui/wxpython/menustrings.py:545
 msgid "Color rules"
@@ -2127,16 +2127,15 @@ msgstr "Utwórz RGB"
 
 #: ../gui/wxpython/menustrings.py:278
 msgid "Combines red, green and blue raster maps into a single composite raster map."
-msgstr ""
+msgstr "Łączy warstwy red, green i blue mapy w jedną rastrową kompozycję mapy."
 
 #: ../gui/wxpython/menustrings.py:279 ../gui/wxpython/menustrings.py:679
 msgid "RGB to HIS"
 msgstr "RGB na HIS"
 
 #: ../gui/wxpython/menustrings.py:280
-#, fuzzy
 msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
-msgstr "Tworzy 3 mapy rastrowe R, G, B (red - czerwień, green - zieleń, blue - niebieskość) z map rastrowych H, I, S (hue - barwa, intensity - intensywność, saturation - nasycenie)"
+msgstr "Tworzy 3 mapy rastrowe R, G, B (red - czerwień, green - zieleń, blue - niebieskość) z map rastrowych H, I, S (hue - barwa, intensity - intensywność, saturation - nasycenie)."
 
 #: ../gui/wxpython/menustrings.py:281
 msgid "Query raster maps"
@@ -2148,7 +2147,7 @@ msgstr "Odpytaj wartości według współrzędnych"
 
 #: ../gui/wxpython/menustrings.py:283
 msgid "Queries raster map layers on their category values and category labels."
-msgstr ""
+msgstr "Odpytuje wartości kategorii map rastrowych, wyświetla etykiety kategorii."
 
 #: ../gui/wxpython/menustrings.py:284
 msgid "Query colors by value"
@@ -2260,7 +2259,7 @@ msgstr "Promieniowanie słoneczne i napromienienie"
 
 #: ../gui/wxpython/menustrings.py:310
 msgid "Solar irradiance and irradiation model."
-msgstr "Promieniowanie słoneczne i napromienienie"
+msgstr "Promieniowanie słoneczne i napromienienie."
 
 #: ../gui/wxpython/menustrings.py:311
 msgid "Shadows map"
@@ -2269,7 +2268,7 @@ msgstr "Mapa cieniowana"
 #: ../gui/wxpython/menustrings.py:312
 #, fuzzy
 msgid "Calculates cast shadow areas from sun position and elevation raster map."
-msgstr "Oblicza shape index z mapy rastrowej GRASS"
+msgstr "Oblicza shape index z mapy rastrowej GRASS."
 
 #: ../gui/wxpython/menustrings.py:313
 msgid "Terrain analysis"
@@ -2297,7 +2296,7 @@ msgstr "Droga spływu"
 
 #: ../gui/wxpython/menustrings.py:319
 msgid "Traces a flow through an elevation model on a raster map."
-msgstr "Kreśli spływ po modelu powierzchni terenu w warstwie mapy rastrowej "
+msgstr "Kreśli spływ po modelu powierzchni terenu w warstwie mapy rastrowej."
 
 #: ../gui/wxpython/menustrings.py:320
 #: ../gui/wxpython/gui_modules/layertree.py:766
@@ -2322,7 +2321,7 @@ msgstr "Parametry terenu"
 
 #: ../gui/wxpython/menustrings.py:325
 msgid "Extracts terrain parameters from a DEM."
-msgstr "Wpisz parametry dla"
+msgstr "Ekstrachuje parametry terenu z DEM."
 
 #: ../gui/wxpython/menustrings.py:326
 msgid "Textural features"
@@ -2382,7 +2381,7 @@ msgstr "Zrób cieńsze"
 
 #: ../gui/wxpython/menustrings.py:340
 msgid "Thins non-zero cells that denote linear features in a raster map."
-msgstr "Wycienia niezerowe komórki rastra, które tworzą struktury liniowe na mapach rastrowych"
+msgstr "Wycienia niezerowe komórki rastra, które tworzą struktury liniowe na mapach rastrowych."
 
 #: ../gui/wxpython/menustrings.py:341
 msgid "Hydrologic modeling"
@@ -2402,7 +2401,7 @@ msgstr "Wypełnij jeziora"
 
 #: ../gui/wxpython/menustrings.py:345
 msgid "Fills lake from seed at given level."
-msgstr "Wypełnia jeziora z wartości próbki na zadanym poziomie"
+msgstr "Wypełnia jeziora z wartości próbki na zadanym poziomie."
 
 #: ../gui/wxpython/menustrings.py:346
 msgid "Depressionless map and flowlines"
