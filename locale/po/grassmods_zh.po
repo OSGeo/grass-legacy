@@ -28220,13 +28220,11 @@ msgstr "矢量文件读取错误"
 #: ../ps/ps.map/ps_vpoints.c:175 ../ps/ps.map/ps_vpoints.c:199
 #: ../ps/ps.map/ps_vpoints.c:240 ../ps/ps.map/ps_vpoints.c:250
 #: ../ps/ps.map/ps_vareas.c:101
-#, c-format
 msgid "No record for category [%d]"
 msgstr "类别 [%d] 没有相关的记录"
 
 #: ../ps/ps.map/ps_vlines.c:124 ../ps/ps.map/ps_vpoints.c:205
 #: ../ps/ps.map/ps_vareas.c:107
-#, c-format
 msgid "Invalid RGB color definition in column <%s> for category [%d]"
 msgstr "类别[%d]的行<%s>无效的RGB颜色定义"
 

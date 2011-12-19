@@ -2938,7 +2938,6 @@ msgid "Frame name (optional): "
 msgstr "Jméno èásti (volitelné):"
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr ""
 "Natavit hranice èásti displeje v 0-100% ze spodního levého rohu displeje"
@@ -6749,7 +6748,6 @@ msgid "  align text with coordinate point"
 msgstr "  zarovnání textu na základì souøadnic bodu"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, tcl-format
 msgid ""
 "     (for coordinates, % is from bottom left of display, pixels from top "
 "left)"
@@ -6781,6 +6779,3 @@ msgstr "zelená (RGB) nebo intenzita (HIS)"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "modrá (RGB) nebo sytost (HIS):"
 
-#, fuzzy
-#~ msgid "Test"
-#~ msgstr "Text"
