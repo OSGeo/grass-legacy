@@ -486,7 +486,8 @@ class ColorTable(wx.Frame):
         
         # preview window
         self._createPreview(parent = parent)
-        bodySizer.Add(item = self.preview, pos = (row, 2))
+        bodySizer.Add(item = self.preview, pos = (row, 2),
+                      flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER)
         
         row += 1
         # add ckeck all and clear all
