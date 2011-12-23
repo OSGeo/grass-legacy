@@ -140,6 +140,7 @@ def GetGRASSCmds(scriptsOnly = False):
     # scan gui/scripts/
     if os.path.exists(os.path.join(gisbase, 'etc', 'gui', 'scripts')):
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'gui', 'scripts')
+        os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'wxpython', 'scripts')
         cmd = cmd + os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts'))
     
     # scan addons
