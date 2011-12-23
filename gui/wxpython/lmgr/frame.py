@@ -310,28 +310,34 @@ class GMFrame(wx.Frame):
         
     def OnLocationWizard(self, event):
         """!Launch location wizard"""
-        gisdbase = grass.gisenv()['GISDBASE']
-        gWizard = location_wizard.LocationWizard(parent = self,
-                                                 grassdatabase = gisdbase)
+        from location_wizard.wizard import LocationWizard
         
-        if gWizard.location !=  None:
+        gWizard = LocationWizard(parent = self,
+                                 grassdatabase = grass.gisenv()['GISDBASE'])
+        location = gWizard.location
+        
+        if location !=  None:
             dlg = wx.MessageDialog(parent = self,
                                    message = _('Location <%s> created.\n\n'
                                                'Do you want to switch to the '
-                                               'new location?') % gWizard.location,
+                                               'new location?') % location,
                                    caption=_("Switch to new location?"),
                                    style = wx.YES_NO | wx.NO_DEFAULT |
                                    wx.ICON_QUESTION | wx.CENTRE)
             
             ret = dlg.ShowModal()
-            if ret == wx.ID_YES:
-                RunCommand("g.gisenv",
-                           set = "LOCATION_NAME=%s" % gWizard.location)
-                RunCommand("g.gisenv",
-                           set = "MAPSET=PERMANENT")
-            
             dlg.Destroy()
-            
+            if ret == wx.ID_YES:
+                if RunCommand('g.mapset', parent = self,
+                              location = location,
+                              mapset = 'PERMANENT') != 0:
+                    return
+                
+                GMessage(parent = self,
+                         message = _("Current location is <%(loc)s>.\n"
+                                     "Current mapset is <%(mapset)s>.") % \
+                             { 'loc' : location, 'mapset' : 'PERMANENT' })
+        
     def OnSettingsChanged(self, event):
         """!Here can be functions which have to be called after EVT_SETTINGS_CHANGED. 
         Now only set copying of selected text to clipboard (in goutput).
