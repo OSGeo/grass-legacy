@@ -1190,11 +1190,7 @@ class GMFrame(wx.Frame):
     def OnVectorCleaning(self, event, cmd = ''):
         """!Init interactive vector cleaning
         """
-        
-        if event:
-            cmd = self.GetMenuCmd(event)
-
-        win = VectorCleaningFrame(parent = self, cmd = cmd[0])
+        win = VectorCleaningFrame(parent = self)
         win.CentreOnScreen()
         win.Show()
         
