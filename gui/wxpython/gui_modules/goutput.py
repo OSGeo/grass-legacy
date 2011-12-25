@@ -515,6 +515,32 @@ class GMConsole(wx.SplitterWindow):
             
             else:
                 # other GRASS commands (r|v|g|...)
+                task = menuform.GUI(show = None).ParseCommand(command)
+                hasParams = False
+                if task:
+                    options = task.get_options()
+                    hasParams = options['params'] and options['flags']
+                    # check for <input>=-
+                    for p in options['params']:
+                        if p.get('prompt', '') == 'input' and \
+                                p.get('element', '') == 'file' and \
+                                p.get('age', 'new') == 'old_file' and \
+                                p.get('value', '') == '-':
+                            gcmd.GError(parent = self,
+                                        message = _("Unable to run command:\n%(cmd)s\n\n"
+                                                    "Option <%(opt)s>: read from standard input is not "
+                                                    "supported by wxGUI") % { 'cmd': ' '.join(command),
+                                                                              'opt': p.get('name', '') })
+                            return None
+                
+                if len(command) == 1 and hasParams:
+                    # no arguments given
+                    try:
+                        menuform.GUI(parent = self).ParseCommand(command)
+                    except gcmd.GException, e:
+                        print >> sys.stderr, e
+                    return 0
+                
                 # switch to 'Command output' if required
                 if switchPage:
                     self._notebook.SetSelectionByName('output')
@@ -529,26 +555,10 @@ class GMConsole(wx.SplitterWindow):
                     if "GRASS_REGION" in os.environ:
                         del os.environ["GRASS_REGION"]
                 
-                if len(command) == 1:
-                    import menuform
-                    try:
-                        task = gtask.parse_interface(command[0])
-                    except grass.ScriptError, e:
-                        print >> sys.stderr, e
-                        task = None
-                else:
-                    task = None
-                
-                if task and command[0] not in ('v.krige.py'):
-                    # process GRASS command without argument
-                    menuform.GUI(parent = self).ParseCommand(command)
-                else:
-                    # process GRASS command with argument
-                    self.cmdThread.RunCmd(command, stdout = self.cmd_stdout, stderr = self.cmd_stderr,
-                                          onDone = onDone)
-                    self.cmd_output_timer.Start(50)
-                    
-                    return None
+                # process GRASS command with argument
+                self.cmdThread.RunCmd(command, stdout = self.cmd_stdout, stderr = self.cmd_stderr,
+                                      onDone = onDone)
+                self.cmd_output_timer.Start(50)
                 
                 # deactivate computational region and return to display settings
                 if compReg and tmpreg:
@@ -557,7 +567,6 @@ class GMConsole(wx.SplitterWindow):
             # Send any other command to the shell. Send output to
             # console output window
             if len(command) == 1:
-                import menuform
                 try:
                     task = gtask.parse_interface(command[0])
                 except:
