@@ -529,6 +529,33 @@ class GMConsole(wx.SplitterWindow):
             
             else:
                 # other GRASS commands (r|v|g|...)
+                task = GUI(show = None).ParseCommand(command)
+                hasParams = False
+                if task:
+                    options = task.get_options()
+                    hasParams = options['params'] and options['flags']
+                    # check for <input>=-
+                    for p in options['params']:
+                        if p.get('prompt', '') == 'input' and \
+                                p.get('element', '') == 'file' and \
+                                p.get('age', 'new') == 'old' and \
+                                p.get('value', '') == '-':
+                            GError(parent = self,
+                                   message = _("Unable to run command:\n%(cmd)s\n\n"
+                                               "Option <%(opt)s>: read from standard input is not "
+                                               "supported by wxGUI") % { 'cmd': ' '.join(command),
+                                                                         'opt': p.get('name', '') })
+                            return 1
+                
+                if len(command) == 1 and hasParams and \
+                        command[0] != 'v.krige.py':
+                    # no arguments given
+                    try:
+                        GUI(parent = self).ParseCommand(command)
+                    except GException, e:
+                        print >> sys.stderr, e
+                    return 0
+                
                 # switch to 'Command output' if required
                 if switchPage:
                     self._notebook.SetSelectionByName('output')
@@ -543,25 +570,10 @@ class GMConsole(wx.SplitterWindow):
                     if "GRASS_REGION" in os.environ:
                         del os.environ["GRASS_REGION"]
                 
-                if len(command) == 1:
-                    try:
-                        task = gtask.parse_interface(command[0])
-                    except grass.ScriptError, e:
-                        print >> sys.stderr, e
-                        task = None
-                else:
-                    task = None
-                
-                if task and command[0] not in ('v.krige.py'):
-                    # process GRASS command without argument
-                    GUI(parent = self).ParseCommand(command)
-                else:
-                    # process GRASS command with argument
-                    self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
-                                          onDone = onDone, onPrepare = onPrepare, userData = userData)
-                    self.cmdOutputTimer.Start(50)
-                    
-                    return None
+                # process GRASS command with argument
+                self.cmdThread.RunCmd(command, stdout = self.cmdStdOut, stderr = self.cmdStdErr,
+                                      onDone = onDone, onPrepare = onPrepare, userData = userData)
+                self.cmdOutputTimer.Start(50)
                 
                 # deactivate computational region and return to display settings
                 if compReg and tmpreg:
