@@ -55,7 +55,7 @@ class VDigitError:
             message = _('Unable to open vector map <%s>.') % name
         else:
             message =  _('No vector map open for editing.')
-        GError(message + ' ' + _('Operation cancelled.'),
+        GError(message + ' ' + _('Operation canceled.'),
                parent  = self.parent,
                caption = self.caption)
 
@@ -71,7 +71,7 @@ class VDigitError:
         """!Reading line failed
         """
         GError(message = _('Reading feature id %d failed. '
-                           'Operation cancelled.') % line,
+                           'Operation canceled.') % line,
                parent  = self.parent,
                caption = self.caption)
 
@@ -79,7 +79,7 @@ class VDigitError:
         """!No dblink available
         """
         GError(message = _('Database link %d not available. '
-                           'Operation cancelled.') % dblink,
+                           'Operation canceled.') % dblink,
                parent  = self.parent,
                caption = self.caption)
 
@@ -87,7 +87,7 @@ class VDigitError:
         """!Staring driver failed
         """
         GError(message = _('Unable to start database driver <%s>. '
-                           'Operation cancelled.') % driver,
+                           'Operation canceled.') % driver,
                parent  = self.parent,
                caption = self.caption)
 
@@ -95,7 +95,7 @@ class VDigitError:
         """!Opening database failed
         """
         GError(message = _('Unable to open database <%(db)s> by driver <%(driver)s>. '
-                           'Operation cancelled.') % { 'db' : database, 'driver' : driver},
+                           'Operation canceled.') % { 'db' : database, 'driver' : driver},
                parent  = self.parent,
                caption = self.caption)
 
@@ -103,7 +103,7 @@ class VDigitError:
         """!Sql query failed
         """
         GError(message = _("Unable to execute SQL query '%s'. "
-                           "Operation cancelled.") % sql,
+                           "Operation canceled.") % sql,
                parent  = self.parent,
                caption = self.caption)
 
@@ -111,7 +111,7 @@ class VDigitError:
         """!Dead line
         """
         GError(message = _("Feature id %d is marked as dead. "
-                           "Operation cancelled.") % line,
+                           "Operation canceled.") % line,
                parent  = self.parent,
                caption = self.caption)
 
@@ -119,7 +119,7 @@ class VDigitError:
         """!Unknown feature type
         """
         GError(message = _("Unsupported feature type %d. "
-                           "Operation cancelled.") % ftype,
+                           "Operation canceled.") % ftype,
                parent  = self.parent,
                caption = self.caption)
         
