@@ -258,9 +258,13 @@ fi
 
 # if it doesn't exist set it to something so that g.extension's default is reasonable
 if [ -z "$GRASS_ADDON_PATH" ] ; then
-    GRASS_ADDON_PATH="$HOME/.grass6/addons"
-    export GRASS_ADDON_PATH
+    if [ "$MINGW" ] ; then
+	GRASS_ADDON_PATH="$APPDATA/GRASS6/addons"
+    else
+	GRASS_ADDON_PATH="$HOME/.grass6/addons"
+    fi
 fi
+export GRASS_ADDON_PATH
 PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
 export PATH
 
@@ -725,6 +729,15 @@ if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
     echo "Check the <$GISRCRC> file."
     cleanup_tmp
     exit 1
+fi
+
+# check gisenv's ADDON_PATH
+ADDON_PATH=`g.gisenv ADDON_PATH`
+if [ -n "$ADDON_PATH" ] ; then
+    GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$ADDON_PATH"
+    export GRASS_ADDON_PATH
+    PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
+    export PATH
 fi
 
 LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
