@@ -180,7 +180,9 @@ class MapFrame(MapFrameBase):
 
         self.decorationDialog = None # decoration/overlays
         
-        
+    def GetMapWindow(self):
+        return self.MapWindow
+    
     def _addToolbarVDigit(self):
         """!Add vector digitizer toolbar
         """
