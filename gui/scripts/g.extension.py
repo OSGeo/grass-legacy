@@ -18,7 +18,7 @@
 #############################################################################
 
 #%module
-#% label: Tool to maintain the extensions in local GRASS installation.
+#% label: Maintains GRASS Addons extensions in local GRASS installation.
 #% description: Downloads, installs extensions from GRASS Addons SVN repository into local GRASS installation or removes installed extensions.
 #% keywords: general, installation, extensions
 #%end
@@ -498,7 +498,7 @@ def install_extension_other():
     grass.message(_("Fetching <%s> from GRASS-Addons SVN (be patient)...") % options['extension'])
     
     os.chdir(tmpdir)
-    if grass.verbosity() == 0:
+    if grass.verbosity() <= 2:
         outdev = open(os.devnull, 'w')
     else:
         outdev = sys.stdout
@@ -541,7 +541,7 @@ def install_extension_other():
     
     os.chdir(os.path.join(tmpdir, options['extension']))
     
-    grass.message(_("Compiling <%s>...") % options['extension'])    
+    grass.message(_("Compiling..."))
     if options['extension'] not in gui_list:
         ret = grass.call(makeCmd,
                          stdout = outdev)
@@ -556,7 +556,7 @@ def install_extension_other():
     if flags['i'] or options['extension'] in gui_list:
         return
     
-    grass.message(_("Installing <%s>...") % options['extension'])
+    grass.message(_("Installing..."))
     
     return grass.call(installCmd,
                       stdout = outdev)
