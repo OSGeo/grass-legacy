@@ -581,6 +581,9 @@ def tidy_citizen():
     if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'])):
         shutil.move(os.path.join(options['prefix'], 'scripts', options['extension']),
                     os.path.join(options['prefix'], options['extension']))
+    if os.path.exists(os.path.join(options['prefix'], 'scripts', options['extension'] + '.py')):
+        shutil.move(os.path.join(options['prefix'], 'scripts', options['extension'] + '.py'),
+                    os.path.join(options['prefix'], options['extension'] + '.py'))
     if sys.platform == 'win32' and \
             os.path.exists(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT):
         shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + EXT_SCT,
