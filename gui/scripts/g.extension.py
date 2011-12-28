@@ -767,6 +767,7 @@ def main():
         if elist:
             grass.message(_("List of installed extensions:"))
             sys.stdout.write('\n'.join(elist))
+            sys.stdout.write('\n')
         else:
             grass.info(_("No extension installed"))
         return 0
