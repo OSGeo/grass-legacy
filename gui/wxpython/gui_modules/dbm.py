@@ -916,7 +916,6 @@ class AttributeManager(wx.Frame):
                                      label = " %s " % _("Rename column"))
             renameSizer = wx.StaticBoxSizer(renameBox, wx.HORIZONTAL)
             
-            # label  = 
             column = wx.ComboBox(parent = panel, id = wx.ID_ANY, size = (150, -1),
                                  style = wx.CB_SIMPLE | wx.CB_READONLY,
                                  choices = self.mapDBInfo.GetColumns(table))
