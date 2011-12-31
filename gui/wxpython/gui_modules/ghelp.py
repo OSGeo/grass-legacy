@@ -1234,8 +1234,9 @@ class CheckListExtension(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Ch
         for ext in gcmd.RunCommand('g.extension.py',
                                    quiet = True, parent = self, read = True,
                                    flags = 'a').splitlines():
-            self.InsertStringItem(sys.maxint, ext)
-
+            if ext:
+                self.InsertStringItem(sys.maxint, ext)
+        
     def GetExtensions(self):
         """!Get extensions to be un-installed
         """
