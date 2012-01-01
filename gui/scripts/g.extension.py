@@ -176,7 +176,7 @@ def list_available_extensions():
     mlist = list()
 
     # try to download XML metadata file first
-    url = "http://grass.osgeo.org/addons/grass%s.xml" % grass.version()['version'].split('.')[0]
+    url = "http://grass.osgeo.org/addons/grass%s/modules.xml" % grass.version()['version'].split('.')[0]
     try:
         f = urlopen(url)
         tree = etree.fromstring(f.read())
@@ -323,7 +323,7 @@ def write_xml_modules(name, tree = None):
 # update local meta-file when installing new extension
 def install_extension_xml():
     # read metadata from remote server
-    url = "http://grass.osgeo.org/addons/grass%s.xml" % grass.version()['version'].split('.')[0]
+    url = "http://grass.osgeo.org/addons/grass%s/modules.xml" % grass.version()['version'].split('.')[0]
     data = None
     try:
         f = urlopen(url)
