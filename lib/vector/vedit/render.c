@@ -134,9 +134,12 @@ struct robject_list *Vedit_render_map(struct Map_info *Map,
 	(struct robject **)G_realloc(list_obj->item,
 				     list_obj->nitems *
 				     sizeof(struct robject *));
-
+    
+    G_debug(1, "Vedit_render_map(): -> nitems = %d",
+	    list_obj->nitems);
+    
     Vect_destroy_list(list);
-
+    
     return list_obj;
 }
 
