@@ -841,7 +841,8 @@ class GMFrame(wx.Frame):
         #
         # load layer manager window properties
         #
-        if UserSettings.Get(group = 'workspace', key = 'posManager', subkey = 'enabled') is False:
+        if not UserSettings.Get(group = 'general', key = 'workspace',
+                                subkey = ['posManager', 'enabled']):
             if gxwXml.layerManager['pos']:
                 self.SetPosition(gxwXml.layerManager['pos'])
             if gxwXml.layerManager['size']:
