@@ -522,6 +522,9 @@ class GMConsole(wx.SplitterWindow):
             
             else:
                 # other GRASS commands (r|v|g|...)
+                if sys.platform == 'win32':
+                    if command[0] in globalvar.grassCmd['script']:
+                        command[0] += globalvar.EXT_SCT
                 task = GUI(show = None).ParseCommand(command)
                 hasParams = False
                 if task:

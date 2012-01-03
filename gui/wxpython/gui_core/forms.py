@@ -1944,6 +1944,9 @@ if __name__ ==  "__main__":
     if sys.argv[1] !=  'test':
         q = wx.LogNull()
         cmd = utils.split(sys.argv[1])
+        if sys.platform == 'win32':
+            if cmd[0] in globalvar.grassCmd['script']:
+                cmd[0] += globalvar.EXT_SCT
         task = gtask.grassTask(cmd[0])
         task.set_options(cmd[1:])
         app = GrassGUIApp(task)

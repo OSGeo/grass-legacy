@@ -803,6 +803,9 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                 self.UpdateCmdHistory([cmd])
                 self.OnCmdErase(None)
             else:
+                if sys.platform == 'win32':
+                    if cmd in globalvar.grassCmd['script']:
+                        cmd += globalvar.EXT_SCT
                 try:
                     self.cmdDesc = gtask.parse_interface(cmd)
                 except IOError:
@@ -1042,6 +1045,10 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             if cmd not in globalvar.grassCmd['all']:
                 return
             
+            if sys.platform == 'win32':
+                if cmd in globalvar.grassCmd['script']:
+                    cmd += globalvar.EXT_SCT
+            
             info = gtask.command_info(cmd)
             
             self.CallTipSetBackground("#f4f4d1")
@@ -1118,6 +1125,9 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                 if cmd in globalvar.grassCmd['all'] and \
                         cmd != 'r.mapcalc' and \
                         (not self.cmdDesc or cmd != self.cmdDesc.get_name()):
+                    if sys.platform == 'win32':
+                        if cmd in globalvar.grassCmd['script']:
+                            cmd += globalvar.EXT_SCT
                     try:
                         self.cmdDesc = gtask.parse_interface(cmd)
                     except IOError:
