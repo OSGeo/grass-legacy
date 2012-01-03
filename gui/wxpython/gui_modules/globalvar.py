@@ -152,12 +152,27 @@ def GetGRASSCmds(bin = True, scripts = True, gui_scripts = True):
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'wxpython', 'scripts')
         cmd = cmd + os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts'))
     
+    if os.getenv('GRASS_ADDON_PATH'):
+        for path in os.getenv('GRASS_ADDON_PATH').split(os.pathsep):
+            if not os.path.exists(path) or not os.path.isdir(path):
+                continue
+            for fname in os.listdir(path):
+                name, ext = os.path.splitext(fname)
+                if bin:
+                    if ext == EXT_BIN:
+                        cmd.append(name)
+                if scripts:
+                    if ext == EXT_SCT:
+                        cmd.append(name)
+                    elif ext == '.py':
+                        cmd.append(fname)
+        
     if sys.platform == 'win32':
         for idx in range(len(cmd)):
             name, ext = os.path.splitext(cmd[idx])
             if ext in (EXT_BIN, EXT_SCT):
                 cmd[idx] = name
-
+    
     return cmd
 
 """@brief Collected GRASS-relared binaries/scripts"""
