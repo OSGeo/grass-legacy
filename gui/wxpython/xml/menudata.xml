@@ -841,6 +841,13 @@
 	      <command>g.extension</command>
 	    </menuitem>
 	    <menuitem>
+	      <label>Update installed extensions</label>
+	      <help>Rebuilds all locally installed GRASS Addons extensions.</help>
+	      <keywords>general,installation,extensions</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>g.extension.rebuild.all.py</command>
+	    </menuitem>
+	    <menuitem>
 	      <label>Remove extension</label>
 	      <help>Removes installed GRASS AddOns extension.</help>
 	      <keywords>general,extensions</keywords>
