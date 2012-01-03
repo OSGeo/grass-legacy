@@ -288,6 +288,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnSubmit(self, event):
         """!Submit records"""
+        ret = 0
         for sql in self.GetSQLString(updateValues = True):
             enc = UserSettings.Get(group = 'atm', key = 'encoding', subkey = 'value')
             if not enc and 'GRASS_DB_ENCODING' in os.environ:
@@ -295,14 +296,14 @@ class DisplayAttributesDialog(wx.Dialog):
             if enc:
                 sql = sql.encode(enc)
             
-            gcmd.RunCommand('db.execute',
-                            parent = self,
-                            quiet = True,
-                            stdin = sql)
+            ret += gcmd.RunCommand('db.execute',
+                                   parent = self,
+                                   quiet = True,
+                                   stdin = sql)
         
-        if self.closeDialog.IsChecked():
+        if ret == 0 and self.closeDialog.IsChecked():
             self.OnCancel(event)
-
+        
     def OnFeature(self, event):
         self.fid = int(event.GetString())
         self.UpdateDialog(cats = self.cats, fid = self.fid)
