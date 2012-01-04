@@ -802,7 +802,7 @@ class InstallExtensionWindow(wx.Frame):
         
         self.repo = wx.TextCtrl(parent = self.panel, id = wx.ID_ANY)
         self.fullDesc = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
-                                    label = _("Fetch full info including description and keywords (takes time)"))
+                                    label = _("Fetch full info including description and keywords"))
         self.fullDesc.SetValue(True)
         
         self.search = SearchModuleWindow(parent = self.panel)
@@ -981,7 +981,7 @@ class InstallExtensionWindow(wx.Frame):
         item = event.GetItem()
         self.tree.itemSelected = item
         data = self.tree.GetPyData(item)
-        if not data:
+        if data is None:
             self.SetStatusText('', 0)
             self.btnInstall.Enable(False)
         else:
@@ -1072,7 +1072,12 @@ class ExtensionTree(ItemTree):
         mdict = dict()
         for line in ret.splitlines():
             if full:
-                key, value = line.split('=', 1)
+                try:
+                    key, value = line.split('=', 1)
+                except ValueError:
+                    key = 'name'
+                    value = line
+                
                 if key == 'name':
                     try:
                         prefix, name = value.split('.', 1)
