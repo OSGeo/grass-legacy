@@ -150,10 +150,9 @@ def GetGRASSCmds(scriptsOnly = False):
                 continue
             for fname in os.listdir(path):
                 name, ext = os.path.splitext(fname)
-                if bin:
-                    if ext == EXT_BIN:
+                if not scriptsOnly and ext == EXT_BIN:
                         cmd.append(name)
-                if scripts:
+                if scriptsOnly:
                     if ext == EXT_SCT:
                         cmd.append(name)
                     elif ext == '.py':
