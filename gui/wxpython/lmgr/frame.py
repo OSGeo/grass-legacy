@@ -875,7 +875,7 @@ class GMFrame(wx.Frame):
                                          value = display['projection']['proj'])
             
             # set position and size of map display
-            if UserSettings.Get(group = 'workspace', key = 'posDisplay', subkey = 'enabled') is False:
+            if not UserSettings.Get(group = 'general', key = 'workspace', subkey = ['posDisplay', 'enabled']):
                 if display['pos']:
                     mapdisp.SetPosition(display['pos'])
                 if display['size']:
