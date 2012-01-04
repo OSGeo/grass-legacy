@@ -227,7 +227,7 @@ class InstallExtensionWindow(wx.Frame):
             return
         
         name = self.tree.GetItemText(item)
-        globalvar.grassCmd['all'].append(name)
+        globalvar.grassCmd['all'].add(name)
         
     def OnItemSelected(self, event):
         """!Item selected"""
@@ -325,7 +325,10 @@ class ExtensionTree(ItemTree):
         mdict = dict()
         for line in ret.splitlines():
             if full:
-                key, value = line.split('=', 1)
+                try:
+                    key, value = line.split('=', 1)
+                except ValueError:
+                    continue
                 if key == 'name':
                     try:
                         prefix, name = value.split('.', 1)
