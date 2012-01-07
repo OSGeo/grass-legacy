@@ -575,7 +575,7 @@ Section "GRASS" SecGRASS
 	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wx"\
 	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with wxGUI"
 
-	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER} with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/bin/${GRASS_COMMAND} -wxpython"\
+	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER} with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND} -wx"\
 	"$INSTALL_DIR\icons\GRASS_MSys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with the new wxPython GUI and a MSYS UNIX terminal"
  
 	;Create the Windows Start Menu Shortcuts
@@ -586,7 +586,7 @@ Section "GRASS" SecGRASS
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Old TclTk GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
 	"$INSTALL_DIR\icons\GRASS_tcltk.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with the old TclTk GUI"
 
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wxpython"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wx"\
 	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with wxGUI"
 
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Command Line.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-text"\
@@ -598,7 +598,7 @@ Section "GRASS" SecGRASS
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Web Site.lnk" "$INSTALL_DIR\GRASS-WebSite.url" ""\
 	"$INSTALL_DIR\icons\GRASS_Web.ico" "" SW_SHOWNORMAL "" "Visit the GRASS website"
 	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/bin/${GRASS_COMMAND} -wxpython"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND} -wx"\
 	"$INSTALL_DIR\icons\GRASS_MSys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with wxGUI and a MSYS UNIX terminal"
 	
 ; FIXME: ship the WinGrass release notes .html file instead of URL
@@ -691,7 +691,7 @@ Section "GRASS" SecGRASS
   
 	;create the $INSTALL_DIR\bin grass_command
 	ClearErrors
-	FileOpen $0 $INSTALL_DIR\bin\${GRASS_COMMAND} w
+	FileOpen $0 $INSTALL_DIR\${GRASS_COMMAND} w
 	IfErrors done_create_grass_command
 	FileWrite $0 '#! /bin/sh$\r$\n'
 	FileWrite $0 '#########################################################################$\r$\n'
