@@ -42,11 +42,12 @@ int main(int argc, char *argv[])
     struct Map_info In, Out;
     struct line_pnts *Points;
     struct line_cats *Cats;
+    struct bound_box map_box;
 
     struct Cell_head window;
     struct cat_list *Clist;
 
-    int i, only_type, cat, ctype, fdrast = 0, areanum = 0;
+    int i, only_type, cat, ctype, fdrast = -1, areanum = 0;
     int nelements;
     int line, type;
     int area, trace, centroid;
@@ -131,7 +132,7 @@ int main(int argc, char *argv[])
     trace = (t_flag->answer) ? 1 : 0;
     area = (only_type & GV_AREA) ? 1 : 0;
     if (area && (only_type & GV_BOUNDARY)) {
-	/* do not wrire wall twice -> disable boundary type */
+	/* do not write wall twice -> disable boundary type */
 	only_type &= ~GV_BOUNDARY;
     }
 
@@ -342,12 +343,16 @@ int main(int argc, char *argv[])
     Vect_set_comment(&Out, comment);
     G_free(comment);
 
+    Vect_get_map_box(&Out, &map_box);
+
     Vect_close(&In);
     Vect_close(&Out);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 
+    G_done_msg("T: %f B: %f.", map_box.T, map_box.B);
+    
     exit(EXIT_SUCCESS);
 }
 
@@ -396,7 +401,7 @@ static int extrude(struct Map_info *In, struct Map_info *Out,
 
     voffset_dem = 0.0;
     /* do not trace -> calculate minumum dem offset */
-    if (fdrast && !trace) {
+    if (fdrast >= 0 && !trace) {
 	for (k = 0; k < Points->n_points; k++) {
 	    voffset_curr = G_get_raster_sample(fdrast, &window, NULL,
 					       Points->y[k], Points->x[k], 0,
@@ -420,7 +425,7 @@ static int extrude(struct Map_info *In, struct Map_info *Out,
 	voffset_curr = voffset_next = 0.0;
 
 	/* trace */
-	if (fdrast && trace) {
+	if (fdrast >= 0 && trace) {
 	    voffset_curr = G_get_raster_sample(fdrast, &window, NULL,
 					       Points->y[k], Points->x[k], 0,
 					       NEAREST);
@@ -492,6 +497,7 @@ static int extrude(struct Map_info *In, struct Map_info *Out,
 	    nlines++;
 
 	    if (type == GV_AREA) {
+		/* roof */
 		Vect_append_point(Points_roof, Points->x[k], Points->y[k],
 				  Points->z[k] + objheight + voffset_curr);
 	    }
