@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 
     char *mapset;
     struct Map_info In, Net, Out;
-    int fdout = 0, maskfd = 0;
+    int fdout = -1, maskfd = -1;
     int node_method, kernel_function;
     int row, col;
     struct Cell_head window;
