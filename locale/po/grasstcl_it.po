@@ -146,7 +146,7 @@ msgstr "Finestra"
 
 #: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
-msgstr "Zoom alla region di defult"
+msgstr "Zoom alla region di default"
 
 #: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
@@ -1450,7 +1450,7 @@ msgstr "Zoom sulla regione corrente (imp. con g.region)"
 #: ../gui/tcltk/gis.m/maptool.tcl:197
 #, fuzzy
 msgid "Zoom display to default region"
-msgstr "Zoom sulla regione di defult"
+msgstr "Zoom sulla regione di default"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:200
 #, fuzzy
