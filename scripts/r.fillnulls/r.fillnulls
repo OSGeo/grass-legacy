@@ -3,14 +3,15 @@
 ############################################################################
 #
 # MODULE:	r.fillnulls
-# AUTHOR(S):	Markus Neteler <neteler itc it>
+# AUTHOR(S):	Markus Neteler
 #               Updated to GRASS 5.7 by Michael Barton
 #               Updated to GRASS 6.0 by Markus Neteler
 #               Ring improvements by Hamish Bowman
+#               v.surf.bspline support by Markus Neteler
 # PURPOSE:	fills NULL (no data areas) in raster maps
 #               The script respects a user mask (MASK) if present.
 #
-# COPYRIGHT:	(C) 2001,2004-2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2001-2012 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -20,7 +21,7 @@
 
 
 #%Module
-#% description: Fills no-data areas in raster maps using v.surf.rst splines interpolation.
+#% description: Fills no-data areas in raster maps using v.surf.rst splines or v.surf.bspline interpolation.
 #% keywords: raster, elevation, interpolation
 #%End
 #%option
@@ -50,6 +51,14 @@
 #% description: Spline smoothing parameter
 #% required : no
 #% answer : 0.1
+#%end
+#%option
+#% key: method
+#% type: string
+#% description: Interpolation method
+#% options:bilinear,bicubic,rst
+#% answer:rst
+#% required:yes
 #%end
 
 if test "$GISBASE" = ""; then
@@ -115,6 +124,10 @@ if [ ! "$file" ] ; then
     g.message -e "<$GIS_OPT_INPUT> does not exist! Aborting."
     exit 1
 fi
+case "$GIS_OPT_METHOD" in
+  rst | bilinear | bicubic) ;;
+  *) GIS_OPT_METHOD=rst ;;
+esac
 
 #check if a MASK is already present:
 MASKTMP=mask.$$
@@ -170,6 +183,8 @@ if [ $? -ne 0 ] ; then
     g.rename "$USERMASK",MASK --quiet > /dev/null
     exit 1
 fi
+# this mask not needed any more
+g.remove rast=MASK --quiet
 
 #count number of points to control segmax parameter for interpolation:
 # check-me: quoting?
@@ -197,8 +212,10 @@ fi
 
 g.message "Note: The following warnings may be ignored."
 
-#remove internal MASK first -- WHY???? MN 10/2005
-g.remove MASK > /dev/null
+# rst
+if [ "$GIS_OPT_METHOD" = "rst" ] ; then
+
+g.message "Using RST interpolation"
 
 eval `g.findfile element=cell file=$USERMASK`
 if [ "$file" ] ; then
@@ -218,14 +235,36 @@ else
   $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" segmax="$SEGMAX" #2> /dev/null
 fi
 
-g.message "Note: Above warnings may be ignored."
-
 #restoring user's mask, if present:
 eval `g.findfile element=cell file=$USERMASK`
 if [ "$file" ] ; then
    g.message "Restoring user mask (MASK)..."
    g.rename "$USERMASK",MASK --quiet > /dev/null
 fi
+
+# bspline
+else
+
+g.message "Using $GIS_OPT_METHOD (v.surf.bspline) interpolation"
+
+#restoring user's mask, if present
+# pointless for now, since v.surf.bspline ignores MASK, but someday...
+if test -f $LOCATION/cell/$USERMASK
+then
+ g.message "Restoring user mask (MASK)..."
+ g.rename --q $USERMASK,MASK
+fi
+
+eval `g.region -g`
+SIE="`echo $ewres | cut -d'=' -f2 | awk '{printf "%f", $1 * 3.}'`"
+SIN="`echo $nsres | cut -d'=' -f2 | awk '{printf "%f", $1 * 3.}'`"
+
+v.surf.bspline input=${VECTTMP} raster=${TMP1}_filled method=$GIS_OPT_METHOD layer=1 column=value sie=${SIE} sin=${SIN}
+
+# rst or bspline
+fi
+
+g.message "Note: Above warnings may be ignored."
 
 #patch orig and fill map
 g.message "Patching fill data into NULL areas..."
