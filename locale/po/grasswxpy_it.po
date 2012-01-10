@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-05 23:24+0200\n"
-"PO-Revision-Date: 2011-12-16 01:10+0100\n"
+"PO-Revision-Date: 2012-01-10 09:23+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -1409,18 +1409,16 @@ msgid "ASCII 3D import"
 msgstr "Importa ASCII 3D"
 
 #: ../gui/wxpython/menustrings.py:83
-#, fuzzy
 msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
-msgstr "Converte un file testuale raster ASCII 3D in un layer raster 3D (binario)"
+msgstr "Converte un file testuale raster ASCII 3D in un layer raster 3D (binario)."
 
 #: ../gui/wxpython/menustrings.py:84
 msgid "Vis5D import"
 msgstr "Importa Vis5D"
 
 #: ../gui/wxpython/menustrings.py:85
-#, fuzzy
 msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
-msgstr "Importa file Vis5D tridimensionale (es file v5d con una variabile e un time step)"
+msgstr "Importa file Vis5D tridimensionale (es file v5d con una variabile e un time step)."
 
 #: ../gui/wxpython/menustrings.py:86
 msgid "Import database table"
@@ -1616,18 +1614,16 @@ msgid "ASCII 3D export"
 msgstr "Esporta ASCII 3D"
 
 #: ../gui/wxpython/menustrings.py:137
-#, fuzzy
 msgid "Converts a 3D raster map layer into an ASCII text file."
-msgstr "Converte un raster 3D in un file di testo ASCII"
+msgstr "Converte un raster 3D in un file di testo ASCII."
 
 #: ../gui/wxpython/menustrings.py:138
 msgid "Vis5D export"
 msgstr "Esporta Vis5D"
 
 #: ../gui/wxpython/menustrings.py:139
-#, fuzzy
 msgid "Exports GRASS 3D raster map to 3-dimensional Vis5D file."
-msgstr "Esporta raster GRASS 3D in un file Vis5D tridimensionale"
+msgstr "Esporta raster GRASS 3D in un file Vis5D tridimensionale."
 
 #: ../gui/wxpython/menustrings.py:141
 msgid "Converts 3D raster maps into the VTK-ASCII format."
@@ -1674,7 +1670,6 @@ msgid "List"
 msgstr "Lista"
 
 #: ../gui/wxpython/menustrings.py:154
-#, fuzzy
 msgid "Lists available GRASS data base files of the user-specified data type."
 msgstr "Lista dei file del database di GRASS disponibili secondo il tipo specificato dall'utente."
 
@@ -1683,7 +1678,6 @@ msgid "List filtered"
 msgstr "Lista filtrata"
 
 #: ../gui/wxpython/menustrings.py:156
-#, fuzzy
 msgid "Lists available GRASS data base files of the user-specified data type optionally using the search pattern."
 msgstr "Lista dei file del database di GRASS disponibili secondo il tipo specificato dall'utente."
 
@@ -1803,13 +1797,12 @@ msgid "nviz - Visualization and animation tool for GRASS data."
 msgstr "nviz - Strumento per la visualizzazione e l'animazione per dati GRASS"
 
 #: ../gui/wxpython/menustrings.py:188
-#, fuzzy
 msgid "3D image rendering"
-msgstr "Attiva auto-rendering"
+msgstr "Rendering immagine 3D"
 
 #: ../gui/wxpython/menustrings.py:189
 msgid "Creates a 3D rendering of GIS data."
-msgstr ""
+msgstr "Crea un rendering 3D di dati GIS"
 
 #: ../gui/wxpython/menustrings.py:190
 msgid "Bearing/distance to coordinates"
@@ -2900,7 +2893,7 @@ msgstr "Comando per la generazione di superfice da contorni rasterizzati"
 
 #: ../gui/wxpython/menustrings.py:465
 msgid "Regularized spline tension"
-msgstr ""
+msgstr "Tensione spline regolarizzata"
 
 #: ../gui/wxpython/menustrings.py:466
 msgid "Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension."
@@ -3981,9 +3974,8 @@ msgid "Cross section"
 msgstr "Sezione trasversale"
 
 #: ../gui/wxpython/menustrings.py:742
-#, fuzzy
 msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
-msgstr "Crea una sezione trasversale  2D da un raster 3D e una mappa dell'elevazione 2D"
+msgstr "Crea una sezione trasversale  2D da un raster 3D e una mappa dell'elevazione 2D."
 
 #: ../gui/wxpython/menustrings.py:744
 msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
@@ -4014,7 +4006,6 @@ msgid "Voxel statistics"
 msgstr "Statistiche voxel"
 
 #: ../gui/wxpython/menustrings.py:751
-#, fuzzy
 msgid "Generates volume statistics for 3D raster maps."
 msgstr "Genera statistiche volumetriche per raster 3D."
 
@@ -4545,9 +4536,8 @@ msgid "Use color column instead of color table:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:969
-#, fuzzy
 msgid "Add column"
-msgstr "Aggiungi colonne"
+msgstr "Aggiungi colonna"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:970
 #, fuzzy
@@ -9772,7 +9762,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:561
 #: ../gui/wxpython/gui_modules/dbm.py:3079
 msgid "GRASS GIS Attribute Table Manager"
-msgstr "GRASS GIS Manager della Tabella degli Attributi"
+msgstr "GRASS GIS Gestore della Tabella degli Attributi"
 
 #: ../gui/wxpython/gui_modules/dbm.py:591
 #, python-format
@@ -9781,7 +9771,7 @@ msgstr "La connessione al databse per la mappa vettoriale <%s> non è definito n
 
 #: ../gui/wxpython/gui_modules/dbm.py:595
 msgid "Attribute Table Manager"
-msgstr "Gestione della tabella degli attributi"
+msgstr "Gestore della Tabella degli Attributi"
 
 #: ../gui/wxpython/gui_modules/dbm.py:619
 msgid "Browse data"
@@ -9797,7 +9787,7 @@ msgstr "Gestione dei layer"
 
 #: ../gui/wxpython/gui_modules/dbm.py:648
 msgid "Close Attribute Table Manager"
-msgstr "Chiude Attribute Table Manager"
+msgstr "Chiude Gestore della Tabella degli Attributi"
 
 #: ../gui/wxpython/gui_modules/dbm.py:650
 msgid "Reload attribute data (selected layer only)"
@@ -10179,11 +10169,13 @@ msgid "Unable to create vector map <%s>."
 msgstr "Impossibile creare vettore <%s>."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:363
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Invalid or empty key column.\n"
 "Unable to create vector map <%s>."
-msgstr "Impossibile creare vettore <%s>."
+msgstr ""
+"Chiave della colonna vuota o invalida.\n"
+"Impossibile creare vettore <%s>."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:380
 #, python-format
@@ -11593,6 +11585,9 @@ msgid ""
 "\n"
 "If you really are running another GRASS session doing this could corrupt your data. Have another look in the processor manager just to be sure..."
 msgstr ""
+"SEI REALMENTE SICURO?\n"
+"\n"
+"Se si sta eseguendo un'altra sessione di GRASS si potrebbero corrompere i vostri dati. Controllate il gestore dei processi per essere sicuri..."
 
 #: ../gui/wxpython/gis_set.py:771
 #, python-format
@@ -11635,6 +11630,33 @@ msgstr ""
 "\n"
 "Uso concorrente non è permesso"
 
+msgid "Manage add-ons extensions"
+msgstr "Gestisci estensioni"
+
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr "Calcola la regressione lineare per due raster: y = a + b*x"
+
+msgid "Lists available GRASS data base files of the user-specified data type to standard output."
+msgstr "Lista dei file del database di GRASS disponibili secondo il tipo specificato dall'utente."
+
+msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
+msgstr "Converte un file testuale raster ASCII 3D in un layer raster 3D (binario)"
+
+msgid "import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)"
+msgstr "Importa file Vis5D tridimensionale (es file v5d con una variabile e un time step)"
+
+msgid "Converts a 3D raster map layer into an ASCII text file"
+msgstr "Converte un raster 3D in un file di testo ASCII"
+
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
+msgstr "Esporta raster GRASS 3D in un file Vis5D tridimensionale"
+
+msgid "Creates cross section 2D raster map from 3d raster map based on 2D elevation map"
+msgstr "Crea una sezione trasversale  2D da un raster 3D e una mappa dell'elevazione 2D"
+
+msgid "Generates volume statistics for raster3d maps."
+msgstr "Genera statistiche volumetriche per raster 3D."
+
 #~ msgid "Unable to switch to mapset <%s>."
 #~ msgstr "Impossibile spostarsi al mapset <%s>."
 
@@ -11658,9 +11680,6 @@ msgstr ""
 
 #~ msgid "Postscript plot"
 #~ msgstr "Stampa Postscript"
-
-#~ msgid "Manage add-ons extensions"
-#~ msgstr "Gestisci estensioni"
 
 #~ msgid "Query with attributes"
 #~ msgstr "Interrogazione dagli attributi"
@@ -11756,9 +11775,6 @@ msgstr ""
 
 #~ msgid "Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer."
 #~ msgstr "Crea un nuovo layer dove i valori della categoria sono basati sulla riclassificazione delle categorie esistenti in un altro raster"
-
-#~ msgid "Calculates linear regression from two raster maps: y = a + b*x"
-#~ msgstr "Calcola la regressione lineare per due raster: y = a + b*x"
 
 #~ msgid "Creates parallel line to input vector lines."
 #~ msgstr "Crea linee parallele di un vettore lineare di input."
@@ -12721,9 +12737,6 @@ msgstr ""
 #~ msgid "Ortho Photo rectification"
 #~ msgstr "Rettificazione ortofoto"
 
-#~ msgid "Lists available GRASS data base files of the user-specified data type to standard output."
-#~ msgstr "Lista dei file del database di GRASS disponibili secondo il tipo specificato dall'utente."
-
 #~ msgid "Create new color table for vector map"
 #~ msgstr "Crea nuova tavola dei colori per vettoriale"
 
@@ -12745,24 +12758,6 @@ msgstr ""
 #~ msgid "'%(cmd)s' failed. Details: %(det)s"
 #~ msgstr "'%(cmd)s' fallito. Dettagli: %(det)s"
 
-#~ msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
-#~ msgstr "Converte un file testuale raster ASCII 3D in un layer raster 3D (binario)"
-
-#~ msgid "import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)"
-#~ msgstr "Importa file Vis5D tridimensionale (es file v5d con una variabile e un time step)"
-
-#~ msgid "Converts a 3D raster map layer into an ASCII text file"
-#~ msgstr "Converte un raster 3D in un file di testo ASCII"
-
-#~ msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
-#~ msgstr "Esporta raster GRASS 3D in un file Vis5D tridimensionale"
-
-#~ msgid "Creates cross section 2D raster map from 3d raster map based on 2D elevation map"
-#~ msgstr "Crea una sezione trasversale  2D da un raster 3D e una mappa dell'elevazione 2D"
-
-#~ msgid "Generates volume statistics for raster3d maps."
-#~ msgstr "Genera statistiche volumetriche per raster 3D."
-
 #~ msgid "&Clear output"
 #~ msgstr "&Pulisci output"
 
@@ -12774,3 +12769,72 @@ msgstr ""
 
 #~ msgid "Takes vector stream data, transforms it to raster and subtracts depth from the output DEM."
 #~ msgstr "Partendo dal dato vettoriale dell'idrografia, trasforma in raster e ottiene la profondità per il DEM di output."
+
+#~ msgid ""
+#~ "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
+#~ "\n"
+#~ "New attribute table can be created by Attribute Table Manager."
+#~ msgstr ""
+#~ "Nessuna tabella degli attributi linkata al vettore <%(vector)s> trovata. %(msg)s\n"
+#~ "\n"
+#~ "Una nuova tabella degli attributi può essere creata dal Gestore della Tabella degli Attributi"
+
+#~ msgid "Fetch full info including description and keywords"
+#~ msgstr "Trova tutte le informazioni includendo descrizione e parole chiave"
+
+#~ msgid "Uninstall GRASS Addons extensions"
+#~ msgstr "Disinstalla estensioni degli GRASS Addons"
+
+#~ msgid "List of installed extensions"
+#~ msgstr "Lista delle estensioni installate"
+
+#~ msgid "&Uninstall"
+#~ msgstr "&Disinstalla"
+
+#~ msgid "Uninstall selected AddOns extensions"
+#~ msgstr "Disinstalla l'estensioni selezionata degli GRASS Addons"
+
+#~ msgid "No extension selected for removal. Operation canceled."
+#~ msgstr "Nessuna estensione selezionata da rimuove. Operazione cancellata"
+
+#~ msgid "Remove extension"
+#~ msgstr "Rimuovi estensione"
+
+#~ msgid "Extension"
+#~ msgstr "Estensione"
+
+#~ msgid "3D view mode: %s\n"
+#~ msgstr "Modalità visualizzazione 3D: %s\n"
+
+#~ msgid "Column"
+#~ msgstr "Colonna"
+
+#~ msgid "Length"
+#~ msgstr "Lunghezza"
+
+#~ msgid "Installs new extension from GRASS AddOns SVN repository."
+#~ msgstr "Installa nuova estensione da GRASS AddOns SVN repository."
+
+#~ msgid "Update installed extensions"
+#~ msgstr "Aggiorna estensioni installate"
+
+#~ msgid "Rebuilds all locally installed GRASS Addons extensions."
+#~ msgstr "Ricompila tutte le estensioni degli GRASS Addons installate"
+
+#~ msgid "Removes installed GRASS AddOns extension."
+#~ msgstr "Rimuove l'estensione degli GRASS AddOns installata"
+
+#~ msgid "Update database values from vector"
+#~ msgstr "Aggiorna i valori del database da elementi vettoriali"
+
+#~ msgid "Satellite images tools"
+#~ msgstr "Strumenti per le immagini satellitari"
+
+#~ msgid "Topographic correction"
+#~ msgstr "Correzione topografica"
+
+#~ msgid "Computes topographic correction of reflectance."
+#~ msgstr "Calcola la correzione topografica della riflettanza."
+
+#~ msgid "Satellite images products"
+#~ msgstr "Prodotti immagini satellitari"
