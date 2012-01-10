@@ -29737,7 +29737,7 @@ msgstr "Rows เปลี่ยนแปลง"
 
 #: ../vector/v.vol.rst/main.c:204
 msgid ""
-"Interpolates point data to a G3D grid volume using regularized spline with "
+"Interpolates point data to a 3D raster map using regularized spline with "
 "tension (RST) algorithm."
 msgstr ""
 "ข้อมูลจุดไม่เหมาะสม กับค่า G3D กริด ใช้ regularized spline กับ tension (RST) "
