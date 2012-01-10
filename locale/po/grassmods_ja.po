@@ -21053,7 +21053,7 @@ msgid "%d elements processed"
 msgstr "%d の要素を処理しました"
 
 #: ../vector/v.vol.rst/main.c:204
-msgid "Interpolates point data to a G3D grid volume using regularized spline with tension (RST) algorithm."
+msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
 msgstr "テンション (RST) アルゴリズムの正規化スプライン曲線を使って，ポイントデータを3Dグリッドボリュームへ挿入"
 
 #: ../vector/v.vol.rst/main.c:237

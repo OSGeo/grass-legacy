@@ -4403,7 +4403,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:746
 msgid ""
-"Interpolates point data to a G3D grid volume using regularized spline with "
+"Interpolates point data to a 3D raster map using regularized spline with "
 "tension (RST) algorithm."
 msgstr ""
 

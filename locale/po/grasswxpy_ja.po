@@ -4005,7 +4005,7 @@ msgid "Interpolate volume from points"
 msgstr "ポイントからボリュームを補間"
 
 #: ../gui/wxpython/menustrings.py:746
-msgid "Interpolates point data to a G3D grid volume using regularized spline with tension (RST) algorithm."
+msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
 msgstr "テンション（ＲＳＴ）アルゴリズムによる正規化スプライン曲線を使用して3Dグリッドのポイントを補間する"
 
 #: ../gui/wxpython/menustrings.py:747
