@@ -18,6 +18,16 @@
 #% keywords: vector, database, attribute table
 #%End
 
+#%flag
+#% key: c
+#% description: Skip the join column in other table
+#%end
+
+#%flag
+#% key: a
+#% description: Copy all the columns from other table to map
+#%end
+
 #%option
 #% key: map
 #% type: string
@@ -85,6 +95,11 @@ if [ "$driver" = "dbf" ] ; then
    exit 1
 fi
 
+if [ "$GIS_FLAG_C" -eq 1 ] && [ "$GIS_FLAG_A" -eq 1 ]; then
+   g.message -e "It is not possible set flag c and a together, please set only one."
+   exit 1
+fi
+
 maptable=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f2`
 
 if [ -z "$maptable" ] ; then
@@ -108,7 +123,15 @@ COLTYPES=`db.describe -c driver="$driver" database="$database" table="$GIS_OPT_O
 
 i=1
 for col in $COLLIST ; do
-  v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+  if [ "$GIS_FLAG_C" -eq 1 ] ; then
+    if [ $col != $GIS_OPT_COLUMN ] ; then
+      v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+    fi
+  elif [ "$GIS_FLAG_A" -eq 1 ] ; then
+    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="${col}_o `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+  else 
+    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="${col} `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+  fi
   if [ $? -ne 0 ] ; then
 	g.message -e "Cannot continue."
 	exit 1
