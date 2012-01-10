@@ -11182,7 +11182,7 @@ msgstr "Interpoliere Volumen aus Punkten"
 
 #: ../gui/wxpython/menustrings.py:752
 msgid ""
-"Interpolates point data to a G3D grid volume using regularized spline with "
+"Interpolates point data to a 3D raster map using regularized spline with "
 "tension (RST) algorithm."
 msgstr ""
 "Interpoliert Punkte zu einem G3D Grid Volumen unter Verwendung des "

@@ -29515,7 +29515,7 @@ msgstr "zmieniony"
 #: ../vector/v.vol.rst/main.c:204
 #, fuzzy
 msgid ""
-"Interpolates point data to a G3D grid volume using regularized spline with "
+"Interpolates point data to a 3D raster map using regularized spline with "
 "tension (RST) algorithm."
 msgstr "Interpoluje dane punktowe do G3D za pomocą algorytmu RST."
 
