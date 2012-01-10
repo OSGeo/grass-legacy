@@ -227,8 +227,10 @@ int main(int argc, char *argv[])
 
     extend_flag = G_define_flag();
     extend_flag->key = 'e';
+    extend_flag->label =
+	_("Extend region extents based on new dataset");
     extend_flag->description =
-	_("Extend location extents based on new dataset");
+	_("Also updates the default region if in the PERMANENT mapset");
 
     tolower_flag = G_define_flag();
     tolower_flag->key = 'w';
@@ -496,7 +498,7 @@ int main(int argc, char *argv[])
 
 	/* Does the projection of the current location match the dataset? */
 	/* G_get_window seems to be unreliable if the location has been changed */
-	G__get_window(&loc_wind, "", "DEFAULT_WIND", "PERMANENT");
+	G_get_default_window(&loc_wind);
 	/* fetch LOCATION PROJ info */
 	if (loc_wind.proj != PROJECTION_XY) {
 	    loc_proj_info = G_get_projinfo();
@@ -695,29 +697,17 @@ int main(int argc, char *argv[])
 		}
 
 		/** Simple 32bit integer                     OFTInteger = 0        **/
-
 		/** List of 32bit integers                   OFTIntegerList = 1    **/
-
 		/** Double Precision floating point          OFTReal = 2           **/
-
 		/** List of doubles                          OFTRealList = 3       **/
-
 		/** String of ASCII chars                    OFTString = 4         **/
-
 		/** Array of strings                         OFTStringList = 5     **/
-
 		/** Double byte string (unsupported)         OFTWideString = 6     **/
-
 		/** List of wide strings (unsupported)       OFTWideStringList = 7 **/
-
 		/** Raw Binary data (unsupported)            OFTBinary = 8         **/
-
 		/**                                          OFTDate = 9           **/
-
 		/**                                          OFTTime = 10          **/
-
 		/**                                          OFTDateTime = 11      **/
-
 
 		if (Ogr_ftype == OFTInteger) {
 		    sprintf(buf, ", %s integer", Ogr_fieldname);
@@ -1186,22 +1176,32 @@ int main(int argc, char *argv[])
     /*      Extend current window based on dataset.                         */
     /* -------------------------------------------------------------------- */
     if (extend_flag->answer) {
-	G_get_default_window(&loc_wind);
+	if (strcmp(G_mapset(), "PERMANENT") == 0)
+	    /* fixme: expand WIND and DEFAULT_WIND independently. (currently
+		WIND gets forgotten and DEFAULT_WIND is expanded for both) */
+	    G_get_default_window(&cur_wind);
+	else
+	    G_get_window(&cur_wind);
 
-	loc_wind.north = MAX(loc_wind.north, cellhd.north);
-	loc_wind.south = MIN(loc_wind.south, cellhd.south);
-	loc_wind.west = MIN(loc_wind.west, cellhd.west);
-	loc_wind.east = MAX(loc_wind.east, cellhd.east);
+	cur_wind.north = MAX(cur_wind.north, cellhd.north);
+	cur_wind.south = MIN(cur_wind.south, cellhd.south);
+	cur_wind.west = MIN(cur_wind.west, cellhd.west);
+	cur_wind.east = MAX(cur_wind.east, cellhd.east);
 
-	loc_wind.rows = (int)ceil((loc_wind.north - loc_wind.south)
-				  / loc_wind.ns_res);
-	loc_wind.south = loc_wind.north - loc_wind.rows * loc_wind.ns_res;
+	cur_wind.rows = (int)ceil((cur_wind.north - cur_wind.south)
+				  / cur_wind.ns_res);
+	cur_wind.south = cur_wind.north - cur_wind.rows * cur_wind.ns_res;
 
-	loc_wind.cols = (int)ceil((loc_wind.east - loc_wind.west)
-				  / loc_wind.ew_res);
-	loc_wind.east = loc_wind.west + loc_wind.cols * loc_wind.ew_res;
+	cur_wind.cols = (int)ceil((cur_wind.east - cur_wind.west)
+				  / cur_wind.ew_res);
+	cur_wind.east = cur_wind.west + cur_wind.cols * cur_wind.ew_res;
 
-	G__put_window(&loc_wind, "../PERMANENT", "DEFAULT_WIND");
+	if (strcmp(G_mapset(), "PERMANENT") == 0) {
+	    G__put_window(&cur_wind, "", "DEFAULT_WIND");
+	    G_message(_("Default region for this location updated"));
+	}
+	G_put_window(&cur_wind);
+	G_message(_("Region for the current mapset updated"));
     }
 
     if (with_z && !z_flag->answer)
