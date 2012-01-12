@@ -90,6 +90,7 @@ void *G3d_cache_new(int nofElts, int sizeOfElts, int nofNames,
 		    int (*eltLoadFun) (), void *eltLoadFunData)
 {
     G3D_cache *tmp;
+    int i;
 
     tmp = G3d_malloc(sizeof(G3D_cache));
     if (tmp == NULL) {
@@ -114,6 +115,10 @@ void *G3d_cache_new(int nofElts, int sizeOfElts, int nofNames,
 	G3d_error("G3d_cache_new: error in G3d_malloc");
 	return (void *)NULL;
     }
+
+    /* Init the cache lock */
+    for(i = 0; i < tmp->nofElts; i++)
+        tmp->locks[i] = 0;
 
     tmp->eltRemoveFun = eltRemoveFun;
     tmp->eltRemoveFunData = eltRemoveFunData;
@@ -196,7 +201,7 @@ static void cache_queue_enqueue(G3D_cache * c, int left, int index)
 	return;
     }
 
-    if (IS_NOT_IN_QUEUE_ELT(left))
+    if (left >= 0 && IS_NOT_IN_QUEUE_ELT(left))
 	G3d_fatalError("cache_queue_enqueue: position not in queue");
 
 
