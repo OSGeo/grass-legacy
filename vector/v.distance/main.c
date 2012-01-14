@@ -224,7 +224,9 @@ int main(int argc, char *argv[])
     all_flag->key = 'a';
     all_flag->label =
 	_("Calculate distances to all features within the threshold");
-    all_flag->description = _("The output is written to stdout but may be uploaded " "to a new table created by this module. " "From categories are may be multiple.");	/* huh? */
+    all_flag->description =
+	_("Output is written to stdout but may be uploaded to a new table "
+	  "created by this module; multiple 'upload' options may be used.");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
