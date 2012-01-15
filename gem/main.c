@@ -402,7 +402,8 @@ int main(int argc, char *argv[])
     fprintf(stdout, "\033[0m");
 
     tmp = malloc(sizeof(char) * MAXSTR);
-    strcpy(invocation, argv[0]);
+    strncpy(invocation, argv[0], MAXSTR);
+    invocation[MAXSTR-1] = '\0';
 
     /* all output should be unbuffered */
     setvbuf(stdout, (char *)NULL, _IONBF, 0);
