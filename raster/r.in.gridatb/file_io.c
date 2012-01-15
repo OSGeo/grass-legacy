@@ -61,7 +61,8 @@ void rdwr_gridatb()
 	G_put_f_raster_row(fd, cell);
     }
     G_percent(i, cellhd.rows, 2);
-    fclose(fp);
+    if(fp)
+	fclose(fp);
     G_close_cell(fd);
 
     G_put_cell_title(oname, buf);
