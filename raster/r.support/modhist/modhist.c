@@ -25,7 +25,7 @@
 
 int main(int argc, char *argv[])
 {
-    char name[64];
+    char name[GNAME_MAX];
     char *mapset;
     struct History hist;
 
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     }
     else {
 	strncpy(name, argv[1], sizeof(name));
+	name[sizeof(name) - 1] = '\0';
 	if ((mapset = G_find_cell2(name, G_mapset())) == NULL)
 	    G_fatal_error(_("Raster file [%s] not found. Exiting."), argv[1]);
     }
