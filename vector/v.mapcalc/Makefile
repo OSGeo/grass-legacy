@@ -1,10 +1,17 @@
-CC = gcc
+MODULE_TOPDIR = ../..
+PGM = v.mapcalc
+
 #CFLAGS = -g -Wall -Werror -rdynamic
 CFLAGS = -O2 -Wall -Werror -rdynamic
 LDFLAGS = -ldl -lm #-lefence
 YACC = bison
 #YACC = bison -t
 YACCFLAGS = -d
+
+LIBES = $(VECTLIB) $(GISLIB)
+DEPENDENCIES = $(VECTDEP) $(GISDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 all: v.mapcalc
 
