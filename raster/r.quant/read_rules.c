@@ -65,7 +65,7 @@ int report_range(void)
 
 int read_rules(void)
 {
-    char buf[256];
+    char buf[1024];
     DCELL dLow, dHigh;
     CELL iLow, iHigh;
     int line, n, nrules = 0;
