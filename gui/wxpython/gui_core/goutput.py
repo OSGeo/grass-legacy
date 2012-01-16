@@ -525,23 +525,27 @@ class GMConsole(wx.SplitterWindow):
                 if sys.platform == 'win32':
                     if command[0] in globalvar.grassCmd['script']:
                         command[0] += globalvar.EXT_SCT
-                task = GUI(show = None).ParseCommand(command)
+                
                 hasParams = False
-                if task:
-                    options = task.get_options()
-                    hasParams = options['params'] and options['flags']
-                    # check for <input>=-
-                    for p in options['params']:
-                        if p.get('prompt', '') == 'input' and \
-                                p.get('element', '') == 'file' and \
-                                p.get('age', 'new') == 'old' and \
-                                p.get('value', '') == '-':
-                            GError(parent = self,
-                                   message = _("Unable to run command:\n%(cmd)s\n\n"
-                                               "Option <%(opt)s>: read from standard input is not "
-                                               "supported by wxGUI") % { 'cmd': ' '.join(command),
-                                                                         'opt': p.get('name', '') })
-                            return 1
+                if command[0] != 'r.mapcalc':
+                    task = GUI(show = None).ParseCommand(command)
+                    if task:
+                        options = task.get_options()
+                        hasParams = options['params'] and options['flags']
+                        # check for <input>=-
+                        for p in options['params']:
+                            if p.get('prompt', '') == 'input' and \
+                                    p.get('element', '') == 'file' and \
+                                    p.get('age', 'new') == 'old' and \
+                                    p.get('value', '') == '-':
+                                GError(parent = self,
+                                       message = _("Unable to run command:\n%(cmd)s\n\n"
+                                                   "Option <%(opt)s>: read from standard input is not "
+                                                   "supported by wxGUI") % { 'cmd': ' '.join(command),
+                                                                             'opt': p.get('name', '') })
+                                return 1
+                else:
+                    task = None
                 
                 if len(command) == 1 and hasParams and \
                         command[0] != 'v.krige.py':
