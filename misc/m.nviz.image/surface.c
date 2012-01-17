@@ -74,10 +74,16 @@ int load_rasters(const struct GParams *params, nv_data * data)
 	}
 
 	/* set position */
-	x = atof(params->surface_pos->answers[i]);
-	y = atof(params->surface_pos->answers[i+1]);
-	z = atof(params->surface_pos->answers[i+2]);
-
+	if (params->mode_all->answer) {	/* use one mode for all surfaces */
+	    x = atof(params->surface_pos->answers[0]);
+	    y = atof(params->surface_pos->answers[1]);
+	    z = atof(params->surface_pos->answers[2]);
+	}
+	else {
+	    x = atof(params->surface_pos->answers[i]);
+	    y = atof(params->surface_pos->answers[i+1]);
+	    z = atof(params->surface_pos->answers[i+2]);
+	}
 	GS_set_trans(id, x, y, z);
     }
 
@@ -186,7 +192,7 @@ int load_rasters(const struct GParams *params, nv_data * data)
 */
 void surface_set_draw_mode(const struct GParams *params)
 {
-    int *surf_list, nsurfs;
+    int *surf_list, nsurfs, idx;
     int i, id, draw_mode;
     int resol_fine, resol_coarse;
 
@@ -194,29 +200,26 @@ void surface_set_draw_mode(const struct GParams *params)
 
     surf_list = GS_get_surf_list(&nsurfs);
 
+    /* use one mode for all surfaces */
+    if (params->mode_all->answer)
+	idx = 0;
+    
     for (i = 0; i < nsurfs; i++) {
 	draw_mode = 0;
 	id = surf_list[i];
 	if (!GS_surf_exists(id))
 	    G_fatal_error(_("Surface id %d doesn't exist"), id);
 
-	if (params->mode_all->answer) {	/* use one mode for all surfaces */
-	    mode = params->mode->answers[0];
-	    style = params->style->answers[0];
-	    shade = params->shade->answers[0];
-	    res_fine = params->res_fine->answers[0];
-	    res_coarse = params->res_coarse->answers[0];
-	    wire_color = params->wire_color->answers[0];
-	}
-	else {
-	    mode = params->mode->answers[i];
-	    style = params->style->answers[i];
-	    shade = params->shade->answers[i];
-	    res_fine = params->res_fine->answers[i];
-	    res_coarse = params->res_coarse->answers[i];
-	    wire_color = params->wire_color->answers[i];
-	}
+	if (!params->mode_all->answer)
+	    idx = i;
 
+	mode = params->mode->answers[idx];
+	style = params->style->answers[idx];
+	shade = params->shade->answers[idx];
+	res_fine = params->res_fine->answers[idx];
+	res_coarse = params->res_coarse->answers[idx];
+	wire_color = params->wire_color->answers[idx];
+	
 	/* mode */
 	if (strcmp(mode, "coarse") == 0) {
 	    draw_mode |= DM_WIRE;
@@ -229,7 +232,7 @@ void surface_set_draw_mode(const struct GParams *params)
 	}
 
 	/* style */
-	if (strcmp(params->style->answers[i], "wire") == 0) {
+	if (strcmp(params->style->answers[idx], "wire") == 0) {
 	    draw_mode |= DM_GRID_WIRE;
 	}
 	else {			/* surface */
@@ -237,7 +240,7 @@ void surface_set_draw_mode(const struct GParams *params)
 	}
 
 	/* shading */
-	if (strcmp(params->shade->answers[i], "flat") == 0) {
+	if (strcmp(params->shade->answers[idx], "flat") == 0) {
 	    draw_mode |= DM_FLAT;
 	}
 	else {			/* gouraud */
