@@ -107,7 +107,7 @@ start_man()
 	 [ -f "$ADDON_PATH/docs/man/man1/$1.1.gz" ] ; then
         DOC_BASE="$ADDON_PATH/docs/man/man1"
         break
-    fi
+      fi
     done
     unset IFS
     if [ -z "$DOC_BASE" ] ; then
@@ -118,7 +118,7 @@ start_man()
 
   if [ -f "$DOC_BASE/$1.1" ] ; then
     man "$DOC_BASE/$1.1"
-  elif  [ -f "$DOC_BASE/$1.1.gz" ] ; then
+  elif [ -f "$DOC_BASE/$1.1.gz" ] ; then
     man "$DOC_BASE/$1.1.gz"
   else
     g.message -e "No man page entry for <$1>."
