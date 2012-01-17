@@ -26,7 +26,7 @@ set SAVEPATH=%PATH%
 rem DON'T include scripts directory in PATH - .bat files in bin directory
 rem are used to run scripts on Windows
 if "%GRASS_ADDON_PATH%"=="" set GRASS_ADDON_PATH=%APPDATA%\GRASS6\addons
-PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
+PATH=%GISBASE%\bin;%GISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
 
 set GIS_LOCK=1
 set GRASS_VERSION=GRASS_VERSION_NUMBER
@@ -41,10 +41,10 @@ rem (not actually used)
 set GISRC=junk
 
 rem Generate GISBASE by converting dirsep characters from \ to /
-FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%WINGISBASE%"`) DO @set GISBASE=%%i
+FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%GISBASE%"`) DO @set GISBASE=%%i
 
 if not "%LANG%"=="" goto langset
-FOR /F "usebackq delims==" %%i IN (`"%WINGISBASE%\etc\winlocale"`) DO @set LANG=%%i
+FOR /F "usebackq delims==" %%i IN (`"%GISBASE%\etc\winlocale"`) DO @set LANG=%%i
 :langset
 
 set GRASS_PAGER=more
@@ -80,9 +80,9 @@ if exist "%WINGISRC%" (
 
 set HAVE_GISRC=false
 rem Create an initial GISRC file based on current directory
-"%WINGISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
-"%WINGISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
-"%WINGISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"
+"%GISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
+"%GISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
+"%GISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"
 
 :aftercreategisrc
 
@@ -102,7 +102,7 @@ if "%GRASS_GUI%"=="" set GRASS_GUI=wxpython
 
 rem Clean out old .tmp files from the mapset
 if "%HAVE_GISRC%"=="true" (
-  "%WINGISBASE%\etc\clean_temp" > NUL:
+  "%GISBASE%\etc\clean_temp" > NUL:
 )
 set HAVE_GISRC=
 
@@ -110,9 +110,9 @@ if "%GRASS_GUI%"=="text" goto text
 if "%GRASS_GUI%"=="wxpython" goto wxpython
 
 if not "%GRASS_WISH%"=="" (
-	"%GRASS_WISH%" "%WINGISBASE%\etc\gis_set.tcl"
+	"%GRASS_WISH%" "%GISBASE%\etc\gis_set.tcl"
 ) else (
-	"%WINGISBASE%\etc\gis_set.tcl"
+	"%GISBASE%\etc\gis_set.tcl"
 )
 
 rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
@@ -121,19 +121,19 @@ if %errorlevel% == 2 goto exitinit
 
 rem Does line 42 above mean that GRASS_WISH will always be set?
 if not "%GRASS_WISH%"=="" (
-	start /b "GRASS Tcl/Tk" "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
+	start /b "GRASS Tcl/Tk" "%GRASS_WISH%" "%GISBASE%\etc\gm\gm.tcl"
 ) else (
-	start /b "GRASS Tcl/Tk" "%WINGISBASE%\etc\gm\gm.tcl"
+	start /b "GRASS Tcl/Tk" "%GISBASE%\etc\gm\gm.tcl"
 )
 
 rem Will redirecting output to NUL hide legitamite error messages, harming debugging?
-"%WINGISBASE%\etc\clean_temp" > NUL:
+"%GISBASE%\etc\clean_temp" > NUL:
 
 goto exitinit
 
 :wxpython
 
-set PYTHONPATH=%PYTHONPATH%;%WINGISBASE%\etc\python;%WINGISBASE%\etc\wxpython
+set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python;%GISBASE%\etc\wxpython
 
 python "%GISBASE%/etc/wxpython/gis_set.py"
 if %errorlevel% == 2 goto exitinit
@@ -143,22 +143,22 @@ goto exitinit
 
 :text
 
-"%WINGISBASE%\etc\set_data"
+"%GISBASE%\etc\set_data"
 
 if %errorlevel% == 1 goto exitinit
 
 rem Get LOCATION_NAME to use in prompt
 FOR /F "usebackq delims==" %%i IN (`g.gisenv "get=LOCATION_NAME"`) DO @set LOCATION_NAME=%%i
 
-type "%WINGISBASE%\etc\welcome"
+type "%GISBASE%\etc\welcome"
 
-"%WINGISBASE%\etc\echo" ""
-"%WINGISBASE%\etc\echo" "GRASS homepage:                          http://grass.osgeo.org/"
-"%WINGISBASE%\etc\echo" "This version running thru:               Windows Command Shell (cmd.exe)"
-"%WINGISBASE%\etc\echo" "When ready to quit enter:                exit"
-"%WINGISBASE%\etc\echo" "Help is available with the command:      g.manual -i"
-"%WINGISBASE%\etc\echo" "See the licence terms with:              g.version -c"
-"%WINGISBASE%\etc\echo" ""
+"%GISBASE%\etc\echo" ""
+"%GISBASE%\etc\echo" "GRASS homepage:                          http://grass.osgeo.org/"
+"%GISBASE%\etc\echo" "This version running thru:               Windows Command Shell (cmd.exe)"
+"%GISBASE%\etc\echo" "When ready to quit enter:                exit"
+"%GISBASE%\etc\echo" "Help is available with the command:      g.manual -i"
+"%GISBASE%\etc\echo" "See the licence terms with:              g.version -c"
+"%GISBASE%\etc\echo" ""
 
 prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F$G 
 
@@ -169,7 +169,7 @@ goto exitinit
 
 :displaylicence
 
-type "%WINGISBASE%\etc\license"
+type "%GISBASE%\etc\license"
 goto exitinit
 
 :settextmode
@@ -194,7 +194,7 @@ goto afterguicheck
 :exitinit
 
 rem Clean out old .tmp files from the mapset
-"%WINGISBASE%\etc\clean_temp" > NUL:
+"%GISBASE%\etc\clean_temp" > NUL:
 
 set PATH=%SAVEPATH%
 set SAVEPATH=
