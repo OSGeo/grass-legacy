@@ -461,7 +461,7 @@ def parser():
     
     if not lines or lines[0].rstrip('\r\n') != "@ARGS_PARSED@":
 	sys.stdout.write(s)
-	sys.exit(1)
+	sys.exit(p.returncode)
 
     return _parse_opts(lines[1:])
 
