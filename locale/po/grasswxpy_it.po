@@ -394,7 +394,7 @@ msgstr "Diverse opzioni di zoom"
 
 #: ../gui/wxpython/icons/icon.py:172
 msgid "Zoom to computational, default, saved region, ..."
-msgstr "Zoom alla region computazionale, di default, salvata..."
+msgstr "Zoom alla regione computazionale, di default, salvata..."
 
 #: ../gui/wxpython/icons/icon.py:174
 msgid "Zoom to selected map layer(s)"
@@ -4753,7 +4753,7 @@ msgstr "non uguale a"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:175
 msgid "one's complement"
-msgstr "Mostra region computazionale"
+msgstr "Mostra regione computazionale"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:177
 msgid "NOT"
@@ -5369,7 +5369,7 @@ msgstr "Seleziona metodo di interpolazione:"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2611
 msgid "clip to computational region in target location"
-msgstr "adatta la region computazionale nella location di destinazione"
+msgstr "adatta la regione computazionale nella location di destinazione"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2650
 msgid "RMS threshold factor must be > 0"
@@ -5467,7 +5467,7 @@ msgstr "Mostra l'estensione computazionale"
 #: ../gui/wxpython/gui_modules/mapdisp.py:170
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:176
 msgid "Show/hide computational region extent (set with g.region). Display region drawn as a blue box inside the computational region, computational region inside a display region as a red box)."
-msgstr "Mostra/nascondi l'estensione della region computazionale (impostata con g.region). Visualizza in blu la regione interna alla region computazionale, in rosso la regione esterna). "
+msgstr "Mostra/nascondi l'estensione della regione computazionale (impostata con g.region). Visualizza in blu la regione interna alla regione computazionale, in rosso la regione esterna)."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:178
 #: ../gui/wxpython/gui_modules/preferences.py:1515
@@ -5483,12 +5483,12 @@ msgstr "Forza la risoluzione del display all'impostazione del region computazion
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:184
 #: ../gui/wxpython/gui_modules/preferences.py:1528
 msgid "Constrain display resolution to computational settings"
-msgstr "Forza la risoluzione del display all'impostazione del region computazionale"
+msgstr "Forza la risoluzione del display all'impostazione della regione computazionale"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:191
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:188
 msgid "Constrain display resolution to computational region settings. Default value for new map displays can be set up in 'User GUI settings' dialog."
-msgstr "Forza la risoluzione del display all'impostazione del region computazionale. Il valore di default della nuova mappa visualizzata può essere impostato nella finestra  di dialogo 'Impostazioni GUI utente'."
+msgstr "Forza la risoluzione del display all'impostazione della regione computazionale. Il valore di default della nuova mappa visualizzata può essere impostato nella finestra  di dialogo 'Impostazioni GUI utente'."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:207
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:204
@@ -5675,7 +5675,7 @@ msgstr "oggetti della legenda"
 #: ../gui/wxpython/gui_modules/mapdisp.py:1917
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1058
 msgid "Zoom to computational region (set with g.region)"
-msgstr "Zoom alla region computazionale (impostata con g.region)"
+msgstr "Zoom alla regione computazionale (impostata con g.region)"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:1921
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1062
@@ -7774,7 +7774,7 @@ msgstr "Region computazionale"
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:151
 #: ../gui/wxpython/gui_modules/globalvar.py:111
 msgid "Show comp. extent"
-msgstr "Mostra region computazionale"
+msgstr "Mostra regione computazionale"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:152
 #: ../gui/wxpython/gui_modules/globalvar.py:112
@@ -7834,7 +7834,7 @@ msgstr "Successivo: %(forw)s, Precedente: %(back)s"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1070
 msgid "Set computational region from display"
-msgstr "Imposta la region computazionale dal display"
+msgstr "Imposta la regione computazionale dal display"
 
 #: ../gui/wxpython/gui_modules/dbm_base.py:43
 #: ../gui/wxpython/gui_modules/dbm.py:293
@@ -10574,7 +10574,7 @@ msgstr "Zoom alla mappa selezionata"
 
 #: ../gui/wxpython/gui_modules/layertree.py:304
 msgid "Set computational region from selected map(s)"
-msgstr "Imposta la region computazionale dalla/e mappa/e selezionata/e"
+msgstr "Imposta la regione computazionale dalla/e mappa/e selezionata/e"
 
 #: ../gui/wxpython/gui_modules/layertree.py:316
 #: ../gui/wxpython/gui_modules/layertree.py:389
@@ -10584,7 +10584,7 @@ msgstr "Esporta"
 #: ../gui/wxpython/gui_modules/layertree.py:323
 #: ../gui/wxpython/gui_modules/layertree.py:395
 msgid "Set color table"
-msgstr "Imposta il colore della tabella"
+msgstr "Imposta la tabella di colore"
 
 #: ../gui/wxpython/gui_modules/layertree.py:326
 msgid "Show attribute data"
@@ -10612,7 +10612,7 @@ msgstr "Zoom alla/e mappa/e selezionata/e (ignore i NULLS)"
 
 #: ../gui/wxpython/gui_modules/layertree.py:385
 msgid "Set computational region from selected map(s) (ignore NULLs)"
-msgstr "Imposta la region computazionale dalla/e mappa/e selezionata/e (ignora nulli)"
+msgstr "Imposta la regione computazionale dalla/e mappa/e selezionata/e (ignora nulli)"
 
 #: ../gui/wxpython/gui_modules/layertree.py:492
 msgid "Unable to create profile of raster map."
