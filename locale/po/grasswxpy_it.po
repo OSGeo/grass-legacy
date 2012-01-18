@@ -9531,7 +9531,7 @@ msgstr "Crea un nuovo vettore vuoto"
 
 #: ../gui/wxpython/menustrings.py:506
 msgid "Digitize vector map using Tcl/Tk digitizer"
-msgstr "DIgitalizza vettoriale usando il digitalizzatore Tcl/Tk"
+msgstr "Digitalizza vettoriale usando il digitalizzatore Tcl/Tk"
 
 #: ../gui/wxpython/menustrings.py:507
 msgid "Interactive editing and digitization of vector maps."
@@ -9539,7 +9539,7 @@ msgstr "Modifica e digitalizzazione interattiva di vettori."
 
 #: ../gui/wxpython/menustrings.py:508
 msgid "Edit vector map (non-interactively)"
-msgstr "Modifica vettore"
+msgstr "Modifica vettore (in maniera non interattiva)"
 
 #: ../gui/wxpython/menustrings.py:509
 msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
