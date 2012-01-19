@@ -498,6 +498,9 @@ class VDigitToolbar(AbstractToolbar):
         # disable undo/redo
         self.EnableTool(self.undo, False)
         
+        ### hide undo before releasing 6.4.2 - this tool is quite buggy in GRASS 6
+        self.RemoveTool(self.undo)
+        
         # toogle to pointer by default
         self.OnTool(None)
         
