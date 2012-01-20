@@ -282,12 +282,12 @@ msgstr "Nelze vykreslit mapovou vrstvu <%s>."
 
 #: ../gui/wxpython/gui_modules/render.py:1180
 #, python-format
-msgid "Unable render overlay <%s>."
+msgid "Unable to render overlay <%s>."
 msgstr "Nelze vykreslit pøekrytí <%s>."
 
 #: ../gui/wxpython/gui_modules/render.py:1219
 #, python-format
-msgid "Unable render overlay <%s>"
+msgid "Unable to render overlay <%s>"
 msgstr "Nelze vykreslit pøekrytí <%s>"
 
 #: ../gui/wxpython/gui_modules/profile.py:34
@@ -1399,7 +1399,7 @@ msgstr "Pøíkaz / Podmínka"
 #: ../gui/wxpython/gui_modules/dbm.py:1170
 #, python-format
 msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
+"Selected data records (%d) will be permanently deleted from table. Do you want "
 "to delete them?"
 msgstr ""
 "Vybrané záznamy dat (%d) budou natrvalo smazány z tabulky. Pøejete si je "
@@ -6822,7 +6822,7 @@ msgstr "Ulo¾it zmìny a zavøít"
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
 "Layer and category number must be integer.\n"
-"Layer number must be greater then zero."
+"Layer number must be greater than zero."
 msgstr ""
 "Nelze pøidat identifikátor nové vrstvy/kategorie <%(layer)s/%(category)s>.\n"
 "Identifikátor vrstvy a kategorie musí být celé èíslo.\n"
@@ -7117,7 +7117,7 @@ msgstr "Odstranit zvolené prvky"
 #: ../gui/wxpython/gui_modules/dbm.py:1216
 #, python-format
 msgid ""
-"All data records (%d) will permanently deleted from table. Do you want to "
+"All data records (%d) will be permanently deleted from table. Do you want to "
 "delete them?"
 msgstr ""
 "V¹echny záznamy dat (%d) budou natrvalo smazány z tabulky. pøejete se je "

@@ -266,12 +266,12 @@ msgstr "Kann die Kartenebene <%s> nicht rendern."
 
 #: ../gui/wxpython/gui_modules/render.py:1180
 #, python-format
-msgid "Unable render overlay <%s>."
+msgid "Unable to render overlay <%s>."
 msgstr "Kann die Überlagerung <%s> nicht rendern."
 
 #: ../gui/wxpython/gui_modules/render.py:1219
 #, python-format
-msgid "Unable render overlay <%s>"
+msgid "Unable to render overlay <%s>"
 msgstr "Kann die Überlagerung <%s> nicht rendern"
 
 #: ../gui/wxpython/gui_modules/profile.py:34
@@ -1347,7 +1347,7 @@ msgstr "Befehl / Bedingung"
 #: ../gui/wxpython/gui_modules/gmodeler.py:4469
 #: ../gui/wxpython/gui_modules/dbm.py:1170
 #, python-format
-msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
+msgid "Selected data records (%d) will be permanently deleted from table. Do you want to delete them?"
 msgstr "Selektierte Datensätze (%d) werden unwiderruflich aus der Tabelle gelöscht. Wollen Sie diese Datensätze löschen?"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:4472
@@ -6524,7 +6524,7 @@ msgstr "Änderungen anwenden und Dialog schließen"
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
 "Layer and category number must be integer.\n"
-"Layer number must be greater then zero."
+"Layer number must be greater than zero."
 msgstr ""
 "Kann den neuen Layer/Kategorie <%(layer)s/%(category)s> nicht hinzufügen.\n"
 "Layer und Kategorie Nummern müssen integer sein.\n"
@@ -6804,7 +6804,7 @@ msgstr "Selektierte Feature löschen"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1216
 #, python-format
-msgid "All data records (%d) will permanently deleted from table. Do you want to delete them?"
+msgid "All data records (%d) will be permanently deleted from table. Do you want to delete them?"
 msgstr "Alle Datensätze (%d) werden unwiderruflich aus der Tabelle gelöscht. Wollen Sie diese Datensätze löschen?"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1362

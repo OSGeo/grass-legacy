@@ -278,12 +278,12 @@ msgstr "Nie można wyświetlić warstwy mapy <%s>."
 
 #: ../gui/wxpython/gui_modules/render.py:1180
 #, python-format
-msgid "Unable render overlay <%s>."
+msgid "Unable to render overlay <%s>."
 msgstr "Nie można wyświetlić nakładki <%s>."
 
 #: ../gui/wxpython/gui_modules/render.py:1219
 #, python-format
-msgid "Unable render overlay <%s>"
+msgid "Unable to render overlay <%s>"
 msgstr "Nie można wyświetlić nakładki <%s>"
 
 #: ../gui/wxpython/gui_modules/profile.py:34
@@ -1368,7 +1368,7 @@ msgstr "Polecenie / Warunek"
 #: ../gui/wxpython/gui_modules/dbm.py:1170
 #, python-format
 msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
+"Selected data records (%d) will be permanently deleted from table. Do you want "
 "to delete them?"
 msgstr ""
 "Wybrane rekordy (%d) zostaną całkowicie usunięte z tabeli. Chcesz je "
@@ -6611,7 +6611,7 @@ msgstr "Zastosuj zmiany i zamknij okno"
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
 "Layer and category number must be integer.\n"
-"Layer number must be greater then zero."
+"Layer number must be greater than zero."
 msgstr ""
 "Nie powiodło się dodanie nowej warstwy/kategorii <%(layer)s/%(category)s>.\n"
 "Numer warstwy i kategorii musi być liczbą całkowitą.\n"
@@ -6905,7 +6905,7 @@ msgstr "Usuń zaznaczone obiekty"
 #: ../gui/wxpython/gui_modules/dbm.py:1216
 #, python-format
 msgid ""
-"All data records (%d) will permanently deleted from table. Do you want to "
+"All data records (%d) will be permanently deleted from table. Do you want to "
 "delete them?"
 msgstr ""
 "Wszystkie rekordy (%d) zostaną całkowicie usunięte z tabeli. Chcesz je "

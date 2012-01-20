@@ -1167,7 +1167,7 @@ class AttributeManager(wx.Frame):
 
         if UserSettings.Get(group='atm', key='askOnDeleteRec', subkey='enabled'):
             deleteDialog = wx.MessageBox(parent=self,
-                                         message=_("Selected data records (%d) will permanently deleted "
+                                         message=_("Selected data records (%d) will be permanently deleted "
                                                    "from table. Do you want to delete them?") % \
                                              (len(self.listOfSQLStatements)),
                                          caption=_("Delete records"),
@@ -1213,7 +1213,7 @@ class AttributeManager(wx.Frame):
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         if UserSettings.Get(group='atm', key='askOnDeleteRec', subkey='enabled'):
             deleteDialog = wx.MessageBox(parent=self,
-                                         message=_("All data records (%d) will permanently deleted "
+                                         message=_("All data records (%d) will be permanently deleted "
                                                    "from table. Do you want to delete them?") % \
                                              (len(list.itemIndexMap)),
                                          caption=_("Delete records"),
