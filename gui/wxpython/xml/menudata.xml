@@ -2553,7 +2553,7 @@
 	<menuitem>
 	  <label>Histogram</label>
 	  <help>Generate histogram of image</help>
-	  <handler>DispHistogram</handler>
+	  <handler>OnHistogram</handler>
 	</menuitem>
 	<menuitem>
 	  <label>Spectral response</label>

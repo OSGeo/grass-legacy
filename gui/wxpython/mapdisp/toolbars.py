@@ -239,8 +239,7 @@ class MapToolbar(BaseToolbar):
         """
         self._onMenu(((MapIcons["measure"],    self.parent.OnMeasure),
                       (MapIcons["profile"],    self.parent.OnProfile),
-                      (MapIcons["scatter"],    self.parent.OnScatterplot),
-                      (BaseIcons["histogram"], self.parent.OnHistogram)))
+                      (MapIcons["histogram"], self.parent.OnHistogram)))
         
     def OnDecoration(self, event):
         """!Decorations overlay menu

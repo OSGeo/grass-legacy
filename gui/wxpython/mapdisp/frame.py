@@ -977,21 +977,21 @@ class MapFrame(MapFrameBase):
         
         return dist
 
-    def Profile(self, event):
-        """!Init profile canvas and tools
+    def OnProfile(self, event):
+        """!Launch profile tool
         """
         raster = []
         if self.tree.layer_selected and \
                 self.tree.GetPyData(self.tree.layer_selected)[0]['type'] == 'raster':
             raster.append(self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name)
 
-        self.profile = ProfileFrame(self,
-                                    id = wx.ID_ANY, pos = wx.DefaultPosition, size = (700,300),
-                                    style = wx.DEFAULT_FRAME_STYLE, rasterList = raster)
-        self.profile.Show()
-        # Open raster select dialog to make sure that a raster (and the desired raster)
-        # is selected to be profiled
-        self.profile.OnSelectRaster(None)
+        win = ProfileFrame(parent = self, rasterList = raster)
+        
+        win.CentreOnParent()
+        win.Show()
+        # Open raster select dialog to make sure that a raster (and
+        # the desired raster) is selected to be profiled
+        win.OnSelectRaster(None)
 
     def FormatDist(self, dist):
         """!Format length numbers and units in a nice way,
@@ -1043,18 +1043,16 @@ class MapFrame(MapFrameBase):
         
         return (outdist, outunits)
     
-    def Histogram(self, event):
+    def OnHistogram(self, event):
         """!Init histogram display canvas and tools
         """
-        self.histogram = HistogramFrame(self, size = globalvar.HIST_WINDOW_SIZE,
-                                        style = wx.DEFAULT_FRAME_STYLE)
-
-        #show new display
-        self.histogram.Show()
-        self.histogram.Refresh()
-        self.histogram.Update()
-
-
+        win = HistogramFrame(self)
+        
+        win.CentreOnParent()
+        win.Show()
+        win.Refresh()
+        win.Update()
+        
     def OnAddBarscale(self, event):
         """!Handler for scale/arrow map decoration menu selection.
         """
