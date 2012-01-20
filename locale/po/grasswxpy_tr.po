@@ -276,12 +276,12 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/render.py:1180
 #, python-format
-msgid "Unable render overlay <%s>."
+msgid "Unable to render overlay <%s>."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/render.py:1219
 #, python-format
-msgid "Unable render overlay <%s>"
+msgid "Unable to render overlay <%s>"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:34
@@ -1448,7 +1448,7 @@ msgstr "Komut diyalog ayarları"
 #: ../gui/wxpython/gui_modules/dbm.py:1170
 #, python-format
 msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
+"Selected data records (%d) will be permanently deleted from table. Do you want "
 "to delete them?"
 msgstr ""
 
@@ -6993,7 +6993,7 @@ msgstr "Değişiklikleri uygula ve pencereyi kapat"
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
 "Layer and category number must be integer.\n"
-"Layer number must be greater then zero."
+"Layer number must be greater than zero."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1218
@@ -7290,7 +7290,7 @@ msgstr "Seçileni katmanı sil"
 #: ../gui/wxpython/gui_modules/dbm.py:1216
 #, python-format
 msgid ""
-"All data records (%d) will permanently deleted from table. Do you want to "
+"All data records (%d) will be permanently deleted from table. Do you want to "
 "delete them?"
 msgstr ""
 "Tüm (%d) veri kayıtları tablodan kalıcı olarak silinecek. Onları silmek "
