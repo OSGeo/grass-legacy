@@ -566,15 +566,14 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                "raster map. No map name defined."))
             return
         
-        histogramFrame = HistogramFrame(parent = self,
-                                        id = wx.ID_ANY,
-                                        pos = wx.DefaultPosition, size = globalvar.HIST_WINDOW_SIZE,
-                                        style = wx.DEFAULT_FRAME_STYLE)
-        histogramFrame.Show()
-        histogramFrame.SetHistLayer(mapLayer.GetName())
-        histogramFrame.HistWindow.UpdateHist()
-        histogramFrame.Refresh()
-        histogramFrame.Update()
+        win = HistogramFrame(parent = self)
+        
+        win.CentreOnScreen()
+        win.Show()
+        win.SetHistLayer(mapLayer.GetName())
+        win.HistWindow.UpdateHist()
+        win.Refresh()
+        win.Update()
         
     def OnUnivariateStats(self, event):
         """!Univariate raster statistics"""

@@ -99,7 +99,6 @@ DIALOG_LAYER_SIZE = (100, -1)
 DIALOG_COLOR_SIZE = (30, 30)
 
 MAP_WINDOW_SIZE = (800, 600)
-HIST_WINDOW_SIZE = (500, 350)
 GM_WINDOW_SIZE = (500, 600)
 
 """!File name extension binaries/scripts"""
