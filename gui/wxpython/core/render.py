@@ -1170,7 +1170,7 @@ class Map(object):
         self.overlays.append(overlay)
         
         if l_render and command != '' and not overlay.Render():
-            raise GException(_("Unable render overlay <%s>.") % 
+            raise GException(_("Unable to render overlay <%s>.") % 
                              name)
         
         return self.overlays[-1]
@@ -1209,7 +1209,7 @@ class Map(object):
             overlay.SetOpacity(kargs['opacity'])
         
         if render and overlay.GetCmd() != [] and not overlay.Render():
-            raise GException(_("Unable render overlay <%s>") % 
+            raise GException(_("Unable to render overlay <%s>.") % 
                              name)
         
         return overlay
