@@ -107,30 +107,11 @@ d.vect, or d.grid, for example).
     <em>Start new map display</em></dt>
   <dd>Opens a new map display and creates empty layer tree tab in Layer Manager.</dd>
   
-  <dt><img src="icons/layer-open.png">&nbsp;
-    <em>Load / import map layers into workspace</em></dt>
-  <dd>Loads or imports selected raster or vector maps into current layer tree.
+  <dt><img src="icons/create.png">&nbsp;
+    <em>Create new workspace</em></dt>
+  <dd>Removes all layers from the layer tree and creates a new, empty tree
+    where new layers can be added.</dd>
     
-    <dl>
-      <dt><img src="icons/create.png">&nbsp;
-	<em>Create new workspace file</em></dt>
-      <dd>Removes all layers in the layer tree and creates a new, empty tree
-	where new layers can be added.</dd>
-      
-      <dt><img src="icons/layer-open.png">&nbsp;
-	<em>Load map layers into workspace</em></dt>
-      <dd>Loads selected raster or vector maps into current layer tree.</dd>
-      
-      <dt><img src="icons/layer-import.png">&nbsp;
-	<em>Import raster data</em></dt>
-      <dd>Import selected raster data into GRASS and load them into current layer tree.</dd>
-      
-      <dt><img src="icons/layer-import.png">&nbsp;
-	<em>Import vector data</em></dt>
-      <dd>Import selected vector data into GRASS and load them into current layer tree.</dd>
-    </dl>
-  </dd>
-  
   <dt><img src="icons/open.png">&nbsp;
     <em>Open existing workspace file</em></dt>
   <dd>Opens an previously saved workspace file, containing a set of display
@@ -141,6 +122,10 @@ d.vect, or d.grid, for example).
   <dd>Saves current set of layers and their options to a workspace
     file.</dd>
   
+  <dt><img src="icons/layer-open.png">&nbsp;
+    <em>Load map layers into workspace</em></dt>
+  <dd>Loads selected raster or vector maps into current layer tree.</dd>
+
   <dt><img src="icons/layer-raster-add.png">&nbsp;
     <em>Add raster map layer</em></dt>
   <dd>Adds raster map to layer tree,
@@ -277,14 +262,54 @@ d.text text=Population\ density
     <em>Show attribute table</em></dt>
   <dd>Opens <em><a href="wxGUI.Attribute_Table_Manager.html">attribute table manager</a></em> for selected vector map.</dd>
   
+  <dt><img src="icons/layer-open.png">&nbsp;
+    <em>Import raster or vector data</em></dt>
+  <dd>
+    <dl>
+      <dt><img src="icons/layer-import.png">&nbsp;
+	<em>Import raster data</em></dt>
+      <dd>Import selected raster data into GRASS
+      using <em><a href="r.in.gdal.html">r.in.gdal</a></em> and load
+      them into current layer tree.</dd>
+      
+      <dt><img src="icons/layer-import.png">&nbsp;
+	<em>Import vector data</em></dt>
+      <dd>Import selected vector data into GRASS
+      using <em><a href="v.in.ogr.html">v.in.ogr</a></em> and load
+      them into current layer tree.</dd>
+    </dl>
+</dd>
+
+  <dt><img src="icons/calculator.png">&nbsp;
+    <em>Raster Map Calculator</em></dt>
+  <dd>Launches Raster Calculator GUI front-end
+  for <em><a href="r.mapcalc.html">r.mapcalc</a></em>.</dd>
+
   <dt><img src="icons/modeler-main.png">&nbsp;
-    <em>Start Graphical Modeler</em></dt>
-  <dd>Opens <em><a href="wxGUI.Modeler.html">graphical modeler</a></em> to create models and run them.</dd>
+    <em>Graphical Modeler</em></dt>
+  <dd>Launches <em><a href="wxGUI.Modeler.html">graphical
+  modeler</a></em> to create models and run them.</dd>
+
+  <dt><img src="icons/georectify.png">&nbsp;
+    <em>Georectifier Tool</em></dt>
+  <dd>Launches <em><a href="wxGUI.GCP_Manager.html">GCP
+    Manager</a></em> to create, edit, and manage Ground Control
+    Points.</dd>
+
+  <dt><img src="icons/print-compose.png">&nbsp;
+    <em>Cartographic Composer</em></dt>
+  <dd>Launches <em><a href="wxGUI.PsMap.html">Cartographic
+    Composer</a></em> to create interactively hardcopy map
+    outputs.</dd>
   
   <dt><img src="icons/settings.png">&nbsp;
     <em>Show GUI settings</em></dt>
-  <dd>Opens dialog to change GUI preferences.</dd>
+  <dd>Opens dialog to change GUI settings.</dd>
   
+  <dt><img src="icons/help.png">&nbsp;
+    <em>Show help</em></dt>
+  <dd>Opens GRASS manual.</dd>
+
 </dl>
 
 <h4>Key shortcuts</h4>
@@ -492,9 +517,10 @@ the computational region extents.
 	see <em><a href="gm_profile.html">Profile Tool help page</a></em>.</dd>
       
       <dt><img src="icons/layer-raster-histogram.png">&nbsp;
-	<em>Histogram tool</em></dt>
-      <dd>Displays histogram of selected raster map or image in new window,
-	see <em><a href="d.histogram.html">d.histogram</a></em>.</dd>
+        <em>Histogramming tool</em></dt>
+      <dd>Displays histogram of selected raster map or image in new
+        window,
+        see <em><a href="d.histogram.html">d.histogram</a></em>.</dd>
     </dl>
   </dd>
   
