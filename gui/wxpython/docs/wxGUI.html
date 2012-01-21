@@ -1,41 +1,47 @@
 <h2>DESCRIPTION</h2>
 
-<b>wxGUI</b> is a new generation of the GUI for GRASS GIS. It's a successor
-of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em> from GRASS 6.
+<b>wxGUI</b> is a new generation of the <em>Graphical User
+Interface</em> (GUI) for GRASS GIS written
+in <a href="http://www.python.org">Python</a>
+using <a href="http://www.wxpython.org">wxPython</a> library. It's a
+successor of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em> from
+GRASS 6.
 
 <p>
 If wxGUI is not your default GUI, you can define it as default by
-typing at GRASS command line prompt
+typing at GRASS command line prompt:
 
 <div class="code"><pre>
-   g.gui -u wxpython 
+g.gui -u wxpython 
 </pre></div>
 
-or define in your <tt>.grassrc6</tt> file 'GRASS_GUI' variable
+Alternatively it may be defined in GISRC file
+(<tt>$HOME/.grassrc6</tt> on GNU/Linux, <tt>$APPDATA\GRASS6\grassrc6</tt>
+on MS Windows) by <tt>GRASS_GUI</tt> variable
 
 <div class="code"><pre>
-    GRASS_GUI: wxpython
+GRASS_GUI: wxpython
 </pre></div>
 
 The GUI can be quit by selecting the 'File->Exit' menu item. The GUI
 can be restarted from the GRASS command line prompt by typing
 
 <div class="code"><pre>
-    g.gui wxpython
+g.gui wxpython
 </pre></div>
 
-or  to restart with previously saved workspace type:
+To restart with previously saved workspace file:
 
 <div class="code"><pre>
-    g.gui wxpython workspace=file.gxw
+g.gui wxpython workspace=file.gxw
 </pre></div>
 
 <p>
-You can also start GRASS from the shell command line with wxGUI
-defined by the <tt>-wxpython</tt> switch:
+The user can also start GRASS from the shell command line with the wxGUI
+specifying the <tt>-gui</tt> (or <tt>-wxpython</tt>) switch:
 
 <div class="code"><pre>
-    grass64 -wxpython
+grass65 -gui
 </pre></div>
 
 <p>
