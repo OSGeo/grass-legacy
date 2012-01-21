@@ -39,6 +39,8 @@ int db_column_sqltype(dbDriver * driver, const char *tab, const char *col)
     dbColumn *column;
     int ncol, cl, type;
 
+    type = -1;
+
     db_init_string(&table_name);
     db_set_string(&table_name, tab);
 
@@ -51,11 +53,14 @@ int db_column_sqltype(dbDriver * driver, const char *tab, const char *col)
 	column = db_get_table_column(table, cl);
 	if (strcmp(db_get_column_name(column), col) == 0) {
 	    type = db_get_column_sqltype(column);
-	    return type;
+	    type = db_get_column_sqltype(column);
+	    break;
 	}
     }
 
-    return -1;
+    db_free_table(table);
+
+    return type;
 }
 
 /*!
@@ -98,7 +103,7 @@ int db_column_Ctype(dbDriver * driver, const char *tab, const char *col)
 int db_get_column(dbDriver * Driver, const char *tname, const char *cname,
 		  dbColumn ** Column)
 {
-    int i, ncols;
+    int i, ncols, ret;
     dbTable *Table;
     dbColumn *Col, *NCol;
     dbString tabname;
@@ -112,6 +117,7 @@ int db_get_column(dbDriver * Driver, const char *tname, const char *cname,
     }
 
     *Column = NULL;
+    ret = DB_FAILED;
 
     ncols = db_get_table_number_of_columns(Table);
     G_debug(3, "ncol = %d", ncols);
@@ -138,8 +144,11 @@ int db_get_column(dbDriver * Driver, const char *tname, const char *cname,
 	    NCol->update = Col->update;
 
 	    *Column = NCol;
-	    return DB_OK;
+	    ret = DB_OK;
+	    break;
 	}
     }
-    return DB_OK;
+    db_free_table(Table);
+
+    return ret;
 }
