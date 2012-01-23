@@ -112,8 +112,8 @@ def GetGRASSCommands():
     gisbase = os.environ['GISBASE']
     cmd = list()
     if sys.platform == 'win32':
-        scripts = { 'bat' : list(),
-                    'py'  : list()
+        scripts = { '.bat' : list(),
+                    '.py'  : list()
                     }
     else:
         scripts = {}
@@ -123,7 +123,8 @@ def GetGRASSCommands():
         for fname in os.listdir(os.path.join(gisbase, 'bin')):
             if scripts: # win32
                 name, ext = os.path.splitext(fname)
-                cmd.append(name)
+                if ext != '.manifest':
+                    cmd.append(name)
                 if ext in scripts.keys():
                     scripts[ext].append(name)
             else:
