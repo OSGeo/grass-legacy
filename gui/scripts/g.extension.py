@@ -595,7 +595,7 @@ def tidy_citizen():
         # fix script path
         for line in fileinput.FileInput(os.path.join(options['prefix'], options['extension']) + EXT_SCT,
                                         inplace = True):
-            line = line.replace("%GISBASE%/scripts", "%GRASS_ADDON_PATH%")
+            line = line.replace("/scripts", "")
             print line
     
     # move man/ into docs/
