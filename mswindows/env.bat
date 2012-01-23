@@ -31,5 +31,5 @@ rem Set GEOTIFF_CSV
 set GEOTIFF_CSV=%GISBASE%\share\epsg_csv
 
 rem Path to the python directory
-set PYTHONHOME=%GISBASE%\Python25
+set PYTHONHOME=%GISBASE%\Python27
 if "x%GRASS_PYTHON%" == "x" set GRASS_PYTHON=python
