@@ -227,7 +227,7 @@ class InstallExtensionWindow(wx.Frame):
             return
         
         name = self.tree.GetItemText(item)
-        globalvar.grassCmd['all'].add(name)
+        globalvar.grassCmd.add(name)
         
     def OnItemSelected(self, event):
         """!Item selected"""

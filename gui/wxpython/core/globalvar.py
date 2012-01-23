@@ -102,40 +102,37 @@ DIALOG_COLOR_SIZE = (30, 30)
 MAP_WINDOW_SIZE = (800, 600)
 GM_WINDOW_SIZE = (500, 600)
 
-"""!File name extension binaries/scripts"""
-if sys.platform == 'win32':
-    EXT_BIN = '.exe'
-    EXT_SCT = ''
-else:
-    EXT_BIN = ''
-    EXT_SCT = ''
-
-def GetGRASSCmds(scriptsOnly = False):
+def GetGRASSCommands():
     """!Create list of available GRASS commands to use when parsing
     string from the command line
-    
-    @param scriptsOnly True to report only scripts
+
+    @return list of commands (set) and directory of scripts (collected
+    by extension - MS Windows only)
     """
     gisbase = os.environ['GISBASE']
     cmd = list()
+    if sys.platform == 'win32':
+        scripts = { 'bat' : list(),
+                    'py'  : list()
+                    }
+    else:
+        scripts = {}
     
     # scan bin/
-    if not scriptsOnly and os.path.exists(os.path.join(gisbase, 'bin')):
+    if os.path.exists(os.path.join(gisbase, 'bin')):
         for fname in os.listdir(os.path.join(gisbase, 'bin')):
-            name, ext = os.path.splitext(fname)
-            if not EXT_BIN:
-                cmd.append(fname)
-            elif ext == EXT_BIN:
+            if scripts: # win32
+                name, ext = os.path.splitext(fname)
                 cmd.append(name)
+                if ext in scripts.keys():
+                    scripts[ext].append(name)
+            else:
+                cmd.append(fname)
     
-    # scan scripts/
-    if os.path.exists(os.path.join(gisbase, 'scripts')):
+    # scan scripts/ (not on MS Windows)
+    if not scripts and os.path.exists(os.path.join(gisbase, 'scripts')):
         for fname in os.listdir(os.path.join(gisbase, 'scripts')):
-            name, ext = os.path.splitext(fname)
-            if not EXT_SCT:
-                cmd.append(fname)
-            elif ext == EXT_SCT:
-                cmd.append(name)
+            cmd.append(fname)
     
     # scan gui/scripts/
     if os.path.exists(os.path.join(gisbase, 'etc', 'gui', 'scripts')):
@@ -149,27 +146,24 @@ def GetGRASSCmds(scriptsOnly = False):
             if not os.path.exists(path) or not os.path.isdir(path):
                 continue
             for fname in os.listdir(path):
-                name, ext = os.path.splitext(fname)
-                if not scriptsOnly and ext == EXT_BIN:
-                        cmd.append(name)
-                if scriptsOnly:
-                    if ext == EXT_SCT:
-                        cmd.append(name)
-                    elif ext == '.py':
-                        cmd.append(fname)
+                if scripts: # win32
+                    name, ext = os.path.splitext(fname)
+                    cmd.append(name)
+                    if ext in scripts.keys():
+                        scripts[ext].append(name)
+                else:
+                    cmd.append(fname)
     
-    return set(cmd)
+    return set(cmd), scripts
 
 """@brief Collected GRASS-relared binaries/scripts"""
-grassCmd = {}
-grassCmd['all']    = GetGRASSCmds()
-grassCmd['script'] = GetGRASSCmds(scriptsOnly = True)
+grassCmd, grassScripts = GetGRASSCommands()
 
 """@Toolbar icon size"""
 toolbarSize = (24, 24)
 
 """@Is g.mlist available?"""
-if 'g.mlist' in grassCmd['all']:
+if 'g.mlist' in grassCmd:
     have_mlist = True
 else:
     have_mlist = False

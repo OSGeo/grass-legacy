@@ -90,7 +90,7 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
         listmix.ColumnSorterMixin.__init__(self, 1)
         
         # set choices (list of GRASS modules)
-        self._choicesCmd = globalvar.grassCmd['all']
+        self._choicesCmd = globalvar.grassCmd
         self._choicesMap = dict()
         for type in ('raster', 'vector'):
             self._choicesMap[type] = grass.list_strings(type = type[:4])
@@ -556,7 +556,7 @@ class GPrompt(object):
     def _getListOfModules(self):
         """!Get list of modules"""
         result = dict()
-        for module in globalvar.grassCmd['all']:
+        for module in globalvar.grassCmd:
             try:
                 group, name = module.split('.',1)
             except ValueError:
@@ -803,11 +803,8 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                 self.UpdateCmdHistory([cmd])
                 self.OnCmdErase(None)
             else:
-                if sys.platform == 'win32':
-                    if cmd in globalvar.grassCmd['script']:
-                        cmd += globalvar.EXT_SCT
                 try:
-                    self.cmdDesc = gtask.parse_interface(cmd)
+                    self.cmdDesc = gtask.parse_interface(utils.GetRealCmd(cmd))
                 except IOError:
                     self.cmdDesc = None
         
@@ -835,7 +832,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             return None
         
         if len(utils.split(str(entry))) > 1:
-            if cmd in globalvar.grassCmd['all']:
+            if cmd in globalvar.grassCmd:
                 toComplete['cmd'] = cmd
                 if entry[-1] == ' ':
                     words = entry.split(' ')
@@ -980,7 +977,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
 
             #complete command
             if self.toComplete['entity'] == 'command':
-                for command in globalvar.grassCmd['all']:
+                for command in globalvar.grassCmd:
                     if command.find(self.toComplete['cmd']) == 0:
                         dotNumber = list(self.toComplete['cmd']).count('.') 
                         self.autoCompList.append(command.split('.',dotNumber)[-1])
@@ -1042,14 +1039,10 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             except IndexError:
                 cmd = ''
             
-            if cmd not in globalvar.grassCmd['all']:
+            if cmd not in globalvar.grassCmd:
                 return
             
-            if sys.platform == 'win32':
-                if cmd in globalvar.grassCmd['script']:
-                    cmd += globalvar.EXT_SCT
-            
-            info = gtask.command_info(cmd)
+            info = gtask.command_info(utils.GetRealCmd(cmd))
             
             self.CallTipSetBackground("#f4f4d1")
             self.CallTipSetForeground("BLACK")
@@ -1122,14 +1115,12 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             items = self.GetTextLeft().split()
             if len(items) == 1:
                 cmd = items[0].strip()
-                if cmd in globalvar.grassCmd['all'] and \
+                if cmd in globalvar.grassCmd and \
                         cmd != 'r.mapcalc' and \
                         (not self.cmdDesc or cmd != self.cmdDesc.get_name()):
-                    if sys.platform == 'win32':
-                        if cmd in globalvar.grassCmd['script']:
-                            cmd += globalvar.EXT_SCT
+                    
                     try:
-                        self.cmdDesc = gtask.parse_interface(cmd)
+                        self.cmdDesc = gtask.parse_interface(utils.GetRealCmd(cmd))
                     except IOError:
                         self.cmdDesc = None
             event.Skip()
