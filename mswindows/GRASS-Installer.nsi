@@ -580,13 +580,16 @@ Section "GRASS" SecGRASS
 	
 	CreateDirectory "$SMPROGRAMS\${GRASS_BASE}"
 	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Old TclTk GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER} Old TclTk GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
 	"$INSTALL_DIR\icons\GRASS_tcltk.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with the old TclTk GUI"
 
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wx"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER} GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wx"\
 	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with wxGUI"
 
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Command Line.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-text"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER} GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND}.sh -wx"\
+	"$INSTALL_DIR\icons\GRASS_MSys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with wxGUI and a MSYS UNIX terminal"
+	
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER} Command Line.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-text"\
 	"$INSTALL_DIR\icons\GRASS_CMD.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} in text mode"
 	
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\MSYS UNIX Console.lnk" "$INSTALL_DIR\msys\msys.bat" ""\
@@ -594,9 +597,6 @@ Section "GRASS" SecGRASS
 	
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Web Site.lnk" "$INSTALL_DIR\GRASS-WebSite.url" ""\
 	"$INSTALL_DIR\icons\GRASS_Web.ico" "" SW_SHOWNORMAL "" "Visit the GRASS website"
-	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND}.sh -wx"\
-	"$INSTALL_DIR\icons\GRASS_MSys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with wxGUI and a MSYS UNIX terminal"
 	
 ; FIXME: ship the WinGrass release notes .html file instead of URL
 ; http://trac.osgeo.org/grass/browser/grass-web/trunk/grass64/binary/mswindows/native/README.html?format=raw
