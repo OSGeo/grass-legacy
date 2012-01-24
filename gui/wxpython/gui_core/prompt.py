@@ -35,7 +35,7 @@ from grass.script import task as gtask
 from core          import globalvar
 from core          import utils
 from lmgr.menudata import ManagerData
-from core.gcmd     import EncodeString, DecodeString
+from core.gcmd     import EncodeString, DecodeString, GetRealCmd
 
 class PromptListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
     """!PopUp window used by GPromptPopUp"""
@@ -804,7 +804,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                 self.OnCmdErase(None)
             else:
                 try:
-                    self.cmdDesc = gtask.parse_interface(utils.GetRealCmd(cmd))
+                    self.cmdDesc = gtask.parse_interface(GetRealCmd(cmd))
                 except IOError:
                     self.cmdDesc = None
         
@@ -1042,7 +1042,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             if cmd not in globalvar.grassCmd:
                 return
             
-            info = gtask.command_info(utils.GetRealCmd(cmd))
+            info = gtask.command_info(GetRealCmd(cmd))
             
             self.CallTipSetBackground("#f4f4d1")
             self.CallTipSetForeground("BLACK")
@@ -1120,7 +1120,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                         (not self.cmdDesc or cmd != self.cmdDesc.get_name()):
                     
                     try:
-                        self.cmdDesc = gtask.parse_interface(utils.GetRealCmd(cmd))
+                        self.cmdDesc = gtask.parse_interface(GetRealCmd(cmd))
                     except IOError:
                         self.cmdDesc = None
             event.Skip()

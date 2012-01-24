@@ -21,7 +21,7 @@ import shlex
 import re
 import locale
 
-from core.globalvar import ETCDIR, grassScripts
+from core.globalvar import ETCDIR
 sys.path.append(os.path.join(ETCDIR, "python"))
 
 from grass.script import core as grass
@@ -764,13 +764,3 @@ def GetSettingsPath():
         return os.path.join(os.getenv('APPDATA'), 'grass%d' % version)
     
     return os.path.join(os.getenv('HOME'), '.grass%d' % version)
-
-def GetRealCmd(cmd):
-    """!Return real command name - only for MS Windows
-    """
-    if sys.platform == 'win32':
-        for ext in grassScripts.keys():
-            if cmd in grassScripts[ext]:
-                return cmd + ext
-    
-    return cmd
