@@ -53,6 +53,7 @@ from grass.script import core as grass
 
 from core       import globalvar
 from core.debug import Debug
+from core.utils import GetRealCmd
 
 def DecodeString(string):
     """!Decode string using system encoding
@@ -627,7 +628,7 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
     if stdin:
         kwargs['stdin'] = subprocess.PIPE
     
-    ps = grass.start_command(prog, flags, overwrite, quiet, verbose, **kwargs)
+    ps = grass.start_command(GetRealCmd(prog), flags, overwrite, quiet, verbose, **kwargs)
     
     Debug.msg(2, "gcmd.RunCommand(): command started")
 
