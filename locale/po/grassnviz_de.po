@@ -2,19 +2,21 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2011, GRASS Development Team
 #
+# Robert Nuske <robert.nuske@nw-fva.de>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-05 23:24+0200\n"
-"PO-Revision-Date: 2011-05-14 22:47+0100\n"
-"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
-"Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
+"PO-Revision-Date: 2012-01-24 17:44+0100\n"
+"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
+"Language-Team: German <grass-translations@lists.osgeo.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../visualization/nviz/scripts/panel_vect.tcl:55
 msgid "Vector Lines/3D Polygons"
@@ -84,7 +86,6 @@ msgid "DRAW CURRENT"
 msgstr "Zeichne aktuelle Einstellungen"
 
 #: ../visualization/nviz/scripts/panel_vect.tcl:95
-#, fuzzy
 msgid "line width"
 msgstr "Linienbreite"
 
@@ -100,7 +101,6 @@ msgid "Color"
 msgstr "Farben"
 
 #: ../visualization/nviz/scripts/panel_vect.tcl:110
-#, fuzzy
 msgid "display flat"
 msgstr "flache Anzeige"
 
@@ -119,7 +119,6 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:98
 #: ../visualization/nviz/scripts/multimapBrowser.tcl:99
-#, fuzzy
 msgid "Remove"
 msgstr "Entferne"
 
@@ -133,7 +132,6 @@ msgstr "MAPSETS"
 #: ../visualization/nviz/scripts/fileBrowser.tcl:99
 #: ../visualization/nviz/scripts/multimapBrowser.tcl:119
 #: ../visualization/nviz/scripts/mapBrowser.tcl:168
-#, fuzzy
 msgid "FILES"
 msgstr "Dateien"
 
@@ -163,7 +161,6 @@ msgstr "Vektor"
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:158
 #: ../visualization/nviz/scripts/multimapBrowser.tcl:159
 #: ../visualization/nviz/scripts/mapBrowser.tcl:214
-#, fuzzy
 msgid "Site"
 msgstr "Punkt"
 
@@ -194,14 +191,12 @@ msgid "Icons"
 msgstr "Icons"
 
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:170
-#, fuzzy
 msgid "Blank"
 msgstr "Leer"
 
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:171
-#, fuzzy
 msgid "Previous"
-msgstr "Vorherige Änderungen rückgängig"
+msgstr "Vorherige"
 
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:172
 #: ../visualization/nviz/scripts/script_file_tools:54
@@ -242,12 +237,10 @@ msgstr "Abbrechen"
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:201
 #: ../visualization/nviz/scripts/multimapBrowser.tcl:200
 #: ../visualization/nviz/scripts/mapBrowser.tcl:141
-#, fuzzy
 msgid "Map Browser"
-msgstr "Daten-Browser"
+msgstr "Karten-Browser"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:41
-#, fuzzy
 msgid "Send results to: (no file selected)"
 msgstr "Übergebe Ergebnisse an: (keine Datei ausgewählt)"
 
@@ -256,7 +249,6 @@ msgid "Raster Query"
 msgstr "Rasterkarte abfragen"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:58
-#, fuzzy
 msgid "Raster Query Panel"
 msgstr "Einstellungen für Raster-Abfrage"
 
@@ -308,12 +300,10 @@ msgid "Northing"
 msgstr "Northing"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Elevation"
 msgstr "Höhe"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Category of color map"
 msgstr "Kategorie der Farbkarte"
 
@@ -322,19 +312,16 @@ msgid "XY dist from prev"
 msgstr "XY-Distanz von vorhergehenden Punkt"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "XYZ dist from prev"
-msgstr "XYZ-Distanz von vorhergehenden Punkt"
+msgstr "XYZ-Distanz von vorhergehendem Punkt"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Dist along surface"
-msgstr "Distanz entlang Oberfläche"
+msgstr "Entfernung entlang der Oberfläche"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Dist along exag surface"
-msgstr "Distanz entlang überhöhter Oberfläche"
+msgstr "Entfernung entlang überhöhter Oberfläche"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:93
 msgid "Select file to receive all future query results"
@@ -372,35 +359,34 @@ msgid "Surf map: %s"
 msgstr "Oberflächenkarte: %s"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:202
-#, fuzzy
 msgid "constant"
 msgstr "konstant"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:204
 #: ../visualization/nviz/scripts/panel_rquery.tcl:205
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Color map: %s"
 msgstr "Farbkarte: %s"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:224
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "XY distance from previous: \t%15.4f\n"
-msgstr "XY-Distanz von vorhergehenden Punkt: \t%15.4f\n"
+msgstr "XY-Distanz von vorhergehendem Punkt: \t%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:232
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "XYZ distance from previous: \t%15.4f\n"
-msgstr "XYZ-Distanz von vorhergehenden Punkt: \t%15.4f\n"
+msgstr "XYZ-Distanz von vorhergehendem Punkt: \t%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:241
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Distance along surface: \t%15.4f\n"
-msgstr "Distancz entlang der Oberfläche: \t%15.4f\n"
+msgstr "Entfernung entlang der Oberfläche: \t%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:252
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Distance along exag. surface:%15.4f\n"
-msgstr "Distanz entlang überhöhter Oberfläche:%15.4f\n"
+msgstr "Entfernung entlang überhöhter Oberfläche:%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_arrow.tcl:47
 msgid "North arrow"
@@ -411,7 +397,6 @@ msgid "North Arrow Panel"
 msgstr "Einstellungen für Nordpfeil"
 
 #: ../visualization/nviz/scripts/panel_arrow.tcl:53
-#, fuzzy
 msgid "Arrow: "
 msgstr "Pfeil: "
 
@@ -420,7 +405,6 @@ msgid "size (in map units) "
 msgstr "Größe (in Karteneinheiten)"
 
 #: ../visualization/nviz/scripts/panel_arrow.tcl:72
-#, fuzzy
 msgid "North text: "
 msgstr "Nordpfeil-Text:"
 
@@ -470,9 +454,8 @@ msgid "Accept"
 msgstr "Annehmen"
 
 #: ../visualization/nviz/scripts/fileBrowser.tcl:154
-#, fuzzy
 msgid "File Browser"
-msgstr "Daten-Browser"
+msgstr "Datei-Browser"
 
 #: ../visualization/nviz/scripts/ACS_utils.tcl:312
 #: ../visualization/nviz/scripts/ACS_utils.tcl:354
@@ -500,14 +483,12 @@ msgstr "fliege"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:68
 #: ../visualization/nviz/scripts/flythrough.tcl:271
-#, fuzzy
 msgid "none"
 msgstr "nichts"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:71
 #: ../visualization/nviz/scripts/flythrough.tcl:150
 #: ../visualization/nviz/scripts/flythrough.tcl:272
-#, fuzzy
 msgid "basic"
 msgstr "grundlegend"
 
@@ -526,18 +507,16 @@ msgid "Coarse Draw"
 msgstr "Grober Zeichen-Modus"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:87
-#, fuzzy
 msgid "fly help"
-msgstr "Zeige die Hilfe an."
+msgstr "Hilfe für fly"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:115
 msgid "Interactively set view position"
 msgstr "Interaktives setzen der Blickposition"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:136
-#, fuzzy
 msgid "flythrough help"
-msgstr "Zeige die Hilfe an."
+msgstr "Hilfe für flythrough"
 
 #: ../visualization/nviz/scripts/flythrough.tcl:175
 msgid "move"
@@ -552,7 +531,6 @@ msgid "Keyframe Animation"
 msgstr "Keyframe-Animation"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:80
-#, fuzzy
 msgid "Keyframe Animation Panel"
 msgstr "Einstellungen für Keyframe-Animation"
 
@@ -578,7 +556,6 @@ msgid "Animation: "
 msgstr "Animation: "
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:110
-#, fuzzy
 msgid "Run and Save"
 msgstr "Starten und speichern"
 
@@ -629,19 +606,16 @@ msgstr "linear"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:165
 #: ../visualization/nviz/scripts/panel_animation.tcl:189
-#, fuzzy
 msgid "spline"
-msgstr "Spline-Spannung (Tension) Parameter"
+msgstr "Spline"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:168
-#, fuzzy
 msgid "tension"
-msgstr "Spannung (Tension) Parameter"
+msgstr "Tension"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:230
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
 #: ../visualization/nviz/scripts/nviz2.2_script:414
-#, fuzzy
 msgid "On"
 msgstr "an"
 
@@ -740,32 +714,25 @@ msgid "Internal Error - Can't find channel %s for keyframe %s"
 msgstr "Interner Fehler - Kann Kanal %s für Keyframe %s nicht finden"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:856
-#, fuzzy
 msgid "Delete Keys"
 msgstr "Lösche Keys"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:857
-#, fuzzy
 msgid "Delete the selected keys?"
 msgstr "Selektierte Keys löschen?"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:872
 #: ../visualization/nviz/scripts/panel_animation.tcl:602
-#, fuzzy
 msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr ""
-"Interner Fehler - Löschen des Keyframes in GK-Key-Liste nicht erfolgreich"
+msgstr "Interner Fehler - Löschen des Key-Frames in GK-Key-Liste fehlgeschlagen."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
 #: ../visualization/nviz/scripts/panel_animation.tcl:643
-#, fuzzy
 msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr ""
-"Interner Fehler - Verschieben des Keyframes in GK-Key-Liste nicht erfolgreich"
+msgstr "Interner Fehler - Verschieben des Key-Frames in GK-Key-Liste fehlgeschlagen."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
 #: ../visualization/nviz/scripts/panel_animation.tcl:753
-#, fuzzy
 msgid "Replace Key"
 msgstr "Ersetze Key"
 
@@ -778,9 +745,8 @@ msgid "Keyframe Attributes"
 msgstr "Keyframe-Attribute"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1699
-#, fuzzy
 msgid "Enter a base name:"
-msgstr "Eingabe eines Basisnamens:"
+msgstr "Basisnamen eingeben:"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1702
 msgid "Render:"
@@ -844,18 +810,16 @@ msgid "Error - Could not open file %s for reading"
 msgstr "Fehler - Datei %s konnte nicht geöffnet werden"
 
 #: ../visualization/nviz/scripts/script_file_tools:36
-#, fuzzy
 msgid "Map Object File Sequencing"
-msgstr "Map Object File Ablaufsteuerung"
+msgstr "Map Object File Sequencing"
 
 #: ../visualization/nviz/scripts/script_file_tools:43
 msgid "Fields:"
 msgstr "Felder:"
 
 #: ../visualization/nviz/scripts/script_file_tools:46
-#, fuzzy
 msgid "State File: None"
-msgstr "Status-Datei: nichts"
+msgstr "Status-Datei: Nichts"
 
 #: ../visualization/nviz/scripts/script_file_tools:53
 msgid "Options:"
@@ -874,7 +838,6 @@ msgid "Load Fields..."
 msgstr "Lade Felder..."
 
 #: ../visualization/nviz/scripts/script_file_tools:58
-#, fuzzy
 msgid "Save Fields..."
 msgstr "Speichere Felder..."
 
@@ -884,36 +847,34 @@ msgstr "Frame"
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr ""
-"Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue "
-"Felder laden?"
+msgstr "Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue Felder laden?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
 #: ../visualization/nviz/scripts/nviz2.2_script:871
 #: ../visualization/nviz/scripts/nviz2.2_script:1025
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Error while opening file: %s"
 msgstr "Fehler bei Öffnen der Datei: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:135
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "While reading state_file: %s"
-msgstr "Status-Datei wird gelesen: %s"
+msgstr "Beim Lesen von state_file: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:142
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "While reading number of fields: %s"
-msgstr "Anzahl der Felder werden gelesen: %s"
+msgstr "Beim Lesen der Anzahl der Felder: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:151
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "While reading field type: %s"
-msgstr "Feldtyp wird gelesen: %s"
+msgstr "Beim Lesen des Feldtyp: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:157
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "While reading field attribute: %s"
-msgstr "Attributfeld wird gelesen: %s"
+msgstr "Beim Lesen der Attributfelder: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:542
 msgid "Field Type: "
@@ -926,7 +887,6 @@ msgid "Surface"
 msgstr "Oberfläche"
 
 #: ../visualization/nviz/scripts/script_file_tools:554
-#, fuzzy
 msgid "Field Attribute: "
 msgstr "Feldattribut: "
 
@@ -935,7 +895,6 @@ msgid "Topography"
 msgstr "Topographie"
 
 #: ../visualization/nviz/scripts/script_file_tools:566
-#, fuzzy
 msgid "Use Nviz Map: "
 msgstr "Verwende Nviz-Karte: "
 
@@ -949,12 +908,11 @@ msgid "None"
 msgstr "Keine"
 
 #: ../visualization/nviz/scripts/script_file_tools:853
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "State File: %s"
 msgstr "Status-Datei: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:885
-#, fuzzy
 msgid "Enter an image root name"
 msgstr "Gebe einen Bildnamen ein"
 
@@ -975,12 +933,10 @@ msgid "Clear NVIZ display"
 msgstr "Lösche NVIZ-Darstellungh"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:113
-#, fuzzy
 msgid "Cancel current draw"
-msgstr "Abbrechen der aktuellen Darstellung"
+msgstr "Aktuelle Darstellung abbrechen"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:119
-#, fuzzy
 msgid "Automatically render display:"
 msgstr "Automatisches Rendern der Anzeige:"
 
@@ -993,7 +949,6 @@ msgid "Show features:"
 msgstr "Zeige Objekte:"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:131
-#, fuzzy
 msgid "Main features..."
 msgstr "Hauptobjekte..."
 
@@ -1006,9 +961,8 @@ msgid "Vectors"
 msgstr "Vektorkarten"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:148
-#, fuzzy
 msgid "Sites"
-msgstr "Sites"
+msgstr "Punkte"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:151
 #: ../visualization/nviz/scripts/panel_vol.tcl:40
@@ -1030,14 +984,12 @@ msgstr "Maßstabsleiste"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:164
 #: ../visualization/nviz/scripts/panel_fringe.tcl:43
-#, fuzzy
 msgid "Fringe"
-msgstr "Randzone"
+msgstr "Fringe"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:175
-#, fuzzy
 msgid "View method:"
-msgstr "Zeige Methode:"
+msgstr "Darstellungsmethode:"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:177
 msgid "eye"
@@ -1045,7 +997,6 @@ msgstr "Auge"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:181
 #: ../visualization/nviz/scripts/panel_main.tcl:224
-#, fuzzy
 msgid "center"
 msgstr "in der Mitte"
 
@@ -1054,7 +1005,6 @@ msgid "Change view by moving eye position"
 msgstr "Ändere Blick durch Bewegen der Augenposition"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:191
-#, fuzzy
 msgid "Change view by moving scene center position"
 msgstr "Ändere Blick durch Bewegen der Szenenmitte"
 
@@ -1063,29 +1013,24 @@ msgid "Click to change scene center position, scroll to zoom in and out"
 msgstr ""
 
 #: ../visualization/nviz/scripts/panel_main.tcl:200
-#, fuzzy
 msgid "Change view using mouse to control fly-through"
 msgstr "Ändere Blick mit Maus, um Fly-through zu kontrollieren"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:209
 #: ../visualization/nviz/scripts/panel_main.tcl:210
-#, fuzzy
 msgid "Set vertical exaggeration"
 msgstr "Vertikaler Skalierfaktor"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:211
 #: ../visualization/nviz/scripts/panel_main.tcl:212
-#, fuzzy
 msgid "Set eye height"
 msgstr "Lege Augenhöhe fest"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:217
-#, fuzzy
 msgid "Look"
 msgstr "Zeige"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:218
-#, fuzzy
 msgid "here"
 msgstr "hier"
 
@@ -1102,32 +1047,26 @@ msgid "top"
 msgstr "oben"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:230
-#, fuzzy
 msgid "View directly from above"
-msgstr "Zeige direkt an"
+msgstr "Blick direkt von oben"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:253
-#, fuzzy
 msgid "Set field of view size (degrees)"
 msgstr "Sichtfeld des Betrachters (in Grad)."
 
 #: ../visualization/nviz/scripts/panel_main.tcl:254
-#, fuzzy
 msgid "Set twist angle (degrees)"
 msgstr "Drehwinkel des Betrachters (in Grad)."
 
 #: ../visualization/nviz/scripts/panel_main.tcl:257
-#, fuzzy
 msgid "reset"
 msgstr "Zurücksetzen"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:259
-#, fuzzy
 msgid "Reset view to default"
-msgstr "Zurücksetzen auf Standardansicht"
+msgstr "Zurücksetzen auf Standardwerte"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:522
-#, fuzzy
 msgid "Set eye position"
 msgstr "Lege Augenposition fest"
 
@@ -1136,43 +1075,36 @@ msgid "Set center of view position"
 msgstr "Lege Zentrum der Blickposition fest"
 
 #: ../visualization/nviz/scripts/script_tools:32
-#, fuzzy
 msgid "Open Loop"
-msgstr "Öffne Loop"
+msgstr "Öffene Schleife"
 
 #: ../visualization/nviz/scripts/script_tools:33
-#, fuzzy
 msgid "Close Loop"
-msgstr "Schließe Loop"
+msgstr "Schließe Schleife"
 
 #: ../visualization/nviz/scripts/script_tools:37
-#, fuzzy
 msgid "Open File Seq. Loop"
-msgstr "Öffne Datei mit Loop-Informationen"
+msgstr "Öffne Datei mit Schleifen-Informationen"
 
 #: ../visualization/nviz/scripts/script_tools:38
-#, fuzzy
 msgid "Close File Seq. Loop"
-msgstr "Schließe Datei mit Loop-Informationen"
+msgstr "Schließe Datei mit Schleifen-Informationen"
 
 #: ../visualization/nviz/scripts/script_tools:42
 msgid "File Sequence Tool"
 msgstr "File Sequence Tool"
 
 #: ../visualization/nviz/scripts/script_tools:104
-#, fuzzy
 msgid "Loop Start Value"
-msgstr "Anfangswert für Loop"
+msgstr "Anfangswert für Schleife"
 
 #: ../visualization/nviz/scripts/script_tools:106
-#, fuzzy
 msgid "Loop End Value"
-msgstr "Endwert für Loop"
+msgstr "Endwert für Schleife"
 
 #: ../visualization/nviz/scripts/script_tools:108
-#, fuzzy
 msgid "Loop Increment Value"
-msgstr "Zuwachswert für Loop"
+msgstr "Inkrement für Schleife"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:51
 msgid "Vector Query"
@@ -1220,9 +1152,7 @@ msgstr "Symbolgröße X"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:130
 msgid "Choose size in multiples of default to indicate point queried"
-msgstr ""
-"Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt "
-"anzuzeigen"
+msgstr "Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt anzuzeigen"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:137
 msgid "specific icon"
@@ -1233,9 +1163,8 @@ msgid "Select vectors to query"
 msgstr "Auswahl der Vektorpunkte für Abfrage"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:209
-#, fuzzy
 msgid "vectors displayed"
-msgstr "dargestellte Vektorkarten"
+msgstr "Dargestellte Vektorkarten"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:209
 msgid "vectors to query"
@@ -1252,7 +1181,6 @@ msgid "clear"
 msgstr "Lösche"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:496
-#, fuzzy
 msgid "Clear Window?"
 msgstr "Lösche Fenster?"
 
@@ -1265,7 +1193,6 @@ msgid "No"
 msgstr "Nein"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:619
-#, fuzzy
 msgid "set icon"
 msgstr "Wähle Symbol"
 
@@ -1290,9 +1217,8 @@ msgid "Select font family, size, and style for legend text"
 msgstr "Wähle Schriftfamilie, Größe, Stil für Legendentext"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:86
-#, fuzzy
 msgid "set value range "
-msgstr "Setze Wertebereich"
+msgstr "Setze Wertebereich "
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:91
 msgid "min "
@@ -1311,12 +1237,8 @@ msgid "Place legend"
 msgstr "Platziere Legende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid ""
-"Use mouse to place legend; left button defines first corner,  right button "
-"defines opposite corner."
-msgstr ""
-"Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, "
-"rechter Button legt gegenüberliegende Ecke fest."
+msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgstr "Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, rechter Button legt gegenüberliegende Ecke fest."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -1369,17 +1291,14 @@ msgid "Draw mode..."
 msgstr "Darstellungsmodus"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:112
-#, fuzzy
 msgid "Coarse"
 msgstr "grob"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:114
-#, fuzzy
 msgid "Fine"
 msgstr "fein"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:116
-#, fuzzy
 msgid "Both"
 msgstr "beides"
 
@@ -1388,7 +1307,6 @@ msgid "Coarse style..."
 msgstr "Grober Stil..."
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:123
-#, fuzzy
 msgid "Wire"
 msgstr "Gitternetz"
 
@@ -1399,7 +1317,6 @@ msgstr "Schattierung..."
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:132
 #: ../visualization/nviz/scripts/panel_vol.tcl:76
-#, fuzzy
 msgid "Flat"
 msgstr "flach"
 
@@ -1465,9 +1382,8 @@ msgid "Y:"
 msgstr "Y:"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:27
-#, fuzzy
 msgid "Resize Draw Area"
-msgstr "Ändere Größe des Darstellungsfenster"
+msgstr "Ändere Größe der Zeichenfläche"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:33
 msgid "Resize Panel"
@@ -1559,7 +1475,6 @@ msgstr "Oberflächenfarbe"
 #: ../visualization/nviz/scripts/attPopup.tcl:512
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:399
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:445
-#, fuzzy
 msgid "Constant"
 msgstr "konstant"
 
@@ -1568,7 +1483,6 @@ msgid "Enter value:"
 msgstr "Gebe Wert ein:"
 
 #: ../visualization/nviz/scripts/attPopup.tcl:516
-#, fuzzy
 msgid "Use slider to set value"
 msgstr "Benutze Slider, um Wert einzustellen"
 
@@ -1577,17 +1491,14 @@ msgid "Choose color"
 msgstr "Wähle Farbe"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:46
-#, fuzzy
 msgid "Volume Panel"
 msgstr "Einstellungen für Volumen"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:63
-#, fuzzy
 msgid "Visualization type..."
 msgstr "Visualisierungstyp..."
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:66
-#, fuzzy
 msgid "isosurfaces"
 msgstr "Iso-Oberflächen"
 
@@ -1629,23 +1540,19 @@ msgstr "Länge"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:459
 #: ../visualization/nviz/scripts/panel_vol.tcl:737
-#, fuzzy
 msgid "tilt"
 msgstr "Neigung"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:493
-#, fuzzy
 msgid "Add new slice"
 msgstr "Neuen Schnitt hinzufügen"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:495
-#, fuzzy
 msgid "Delete selected slice"
 msgstr "Selektierte Schnitte löschen"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:497
 #: ../visualization/nviz/scripts/panel_vol.tcl:865
-#, fuzzy
 msgid "Move Up"
 msgstr "Bewege höher"
 
@@ -1655,7 +1562,6 @@ msgstr "Bewege Slice in Liste aufwärts"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:499
 #: ../visualization/nviz/scripts/panel_vol.tcl:867
-#, fuzzy
 msgid "Move Down"
 msgstr "Bewege hinunter"
 
@@ -1668,17 +1574,14 @@ msgid "Isosurface attributes..."
 msgstr "Attribute der Iso-Oberflächen..."
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:839
-#, fuzzy
 msgid "toggle normal direction"
-msgstr "Umschalten in normaler Richtung"
+msgstr "Umschalten in normale Richtung"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:861
-#, fuzzy
 msgid "Add new isosurface"
 msgstr "Neue Iso-Oberfläche hinzufügen"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:863
-#, fuzzy
 msgid "Delete selected isosurface"
 msgstr "Selektierte Iso-Oberfläche löschen"
 
@@ -1687,9 +1590,8 @@ msgid "Move isosurface up in list"
 msgstr "Bewege Isosurface in Liste aufwärts"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:868
-#, fuzzy
 msgid "Move isosurface down in list"
-msgstr "Bewege Isosurface in Liste abwärts"
+msgstr "Bewege Iso-Oberfläche abwärts"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:1114
 msgid "Position Volume"
@@ -1701,43 +1603,36 @@ msgstr "x"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "sphere"
 msgstr "Kugel"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "diamond"
 msgstr "Raute"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "cube"
 msgstr "Würfel"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "box"
 msgstr "Box"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "gyro"
 msgstr "Kreisel"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "aster"
 msgstr "Aster"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
-#, fuzzy
 msgid "histogram"
 msgstr "Histogramm"
 
@@ -1750,21 +1645,18 @@ msgid "remove mask"
 msgstr "Entferne Maske"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
-#, fuzzy
 msgid "Enter value: "
-msgstr "Eingabe des Wertes:"
+msgstr "Wert eingeben: "
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:449
 msgid "Use slider to select constant value :"
 msgstr "Verwende Slider, um einen konstanten Wert zu wählen :"
 
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:30
-#, fuzzy
 msgid "Select Wire Color"
-msgstr "Wähle Netz-Farbe aus"
+msgstr "Wähle Gitter-Farbe"
 
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:57
-#, fuzzy
 msgid "use surface color"
 msgstr "Verwende Oberflächenfarbe"
 
@@ -1797,27 +1689,22 @@ msgid " set max frames:"
 msgstr " Stelle maximale Frame-Anzahl ein:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:136
-#, fuzzy
 msgid "Key Frames"
 msgstr "Key-Frames"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:145
-#, fuzzy
 msgid "Current frame:"
 msgstr "Aktueller Frame:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:148
-#, fuzzy
 msgid "Selected key frame:"
 msgstr "Ausgewählter Key-Frame:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:159
-#, fuzzy
 msgid "Add frame"
 msgstr "Füge einen Frame hinzu"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:161
-#, fuzzy
 msgid "Clear all"
 msgstr "Alles löschen"
 
@@ -1842,9 +1729,8 @@ msgid "volumes"
 msgstr "Volumen"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:184
-#, fuzzy
 msgid "Interpolation: "
-msgstr "Interpolierung:"
+msgstr "Interpolierung: "
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:200
 msgid "Run and save"
@@ -1855,9 +1741,8 @@ msgid "Run animation and save frames"
 msgstr "Spiele Animation ab und speichere Frames"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:222
-#, fuzzy
 msgid "spline tension"
-msgstr "Spline-Glättung"
+msgstr "Spline tension"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 #: ../visualization/nviz/scripts/panel_tst.tcl:21
@@ -1886,8 +1771,7 @@ msgstr "Präfix der Ausgabebilder:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:935
 msgid "Enter a prefix name for images to be created from animation frames"
-msgstr ""
-"Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
+msgstr "Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:940
 msgid "Output format: "
@@ -1934,9 +1818,8 @@ msgid "To (surface):"
 msgstr "Zur (Oberfläche):"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:49
-#, fuzzy
 msgid "Range/bearing:"
-msgstr "Wertebereich/Bearing:"
+msgstr "Wertebereich/Winkel:"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:52
 msgid "East"
@@ -1951,9 +1834,8 @@ msgid "North"
 msgstr "Nord"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:64
-#, fuzzy
 msgid "Bearing"
-msgstr "Bearing"
+msgstr "Winkel"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:68
 #: ../visualization/nviz/scripts/nviz2.2_script:803
@@ -1961,17 +1843,14 @@ msgid "Height"
 msgstr "Höhe"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:72
-#, fuzzy
 msgid "Elev"
 msgstr "Höhe"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:83
-#, fuzzy
 msgid "Eye to surface"
 msgstr "Auge zu Oberfläche"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:84
-#, fuzzy
 msgid "Surface to eye"
 msgstr "Oberfläche zu Auge"
 
@@ -2001,9 +1880,8 @@ msgid "length (in map units) "
 msgstr "Länge in Karteneinheiten"
 
 #: ../visualization/nviz/scripts/panel_scale.tcl:71
-#, fuzzy
 msgid "Scale text: "
-msgstr "Maßstabstext:"
+msgstr "Maßstabstext: "
 
 #: ../visualization/nviz/scripts/panel_scale.tcl:74
 msgid "size "
@@ -2104,12 +1982,10 @@ msgstr "Schließe Skript"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:431
 #: ../visualization/nviz/scripts/script_get_line:15
-#, fuzzy
 msgid "Add Script Line"
 msgstr "Kommandozeile hinzufügen"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:434
-#, fuzzy
 msgid "Add Script Command"
 msgstr "Kommando hinzufügen"
 
@@ -2130,9 +2006,8 @@ msgid "Maximum Resolution PPM"
 msgstr "Maximale Auflösung PPM"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:798
-#, fuzzy
 msgid "Set Size of Display Canvas"
-msgstr "Stelle Größe des Darstellungsfensters ein"
+msgstr "Bestimme Größe des Darstellungsfensters"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:801
 msgid "Width"
@@ -2143,7 +2018,6 @@ msgid "Unconstrained"
 msgstr "Zwanglos"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:924
-#, fuzzy
 msgid "Really reset Nviz?"
 msgstr "Nviz wirklich zurückstellen?"
 
@@ -2192,12 +2066,10 @@ msgid " Light source position"
 msgstr " Position der Lichtquelle"
 
 #: ../visualization/nviz/scripts/panel_lights.tcl:58
-#, fuzzy
 msgid "Follow surface viewpoint"
 msgstr "Folge Oberflächen-Standpunkt"
 
 #: ../visualization/nviz/scripts/panel_lights.tcl:60
-#, fuzzy
 msgid "Show lighting model"
 msgstr "Zeige Beleuchtungs-Modell"
 
@@ -2246,21 +2118,12 @@ msgid "Erase all labels"
 msgstr "Lösche alle Labels"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid ""
-"Fill 2 or more entry fields with  desired min and max values, then press "
-"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
-msgstr ""
-"Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, "
-"dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten "
-"Wertebereich der Symbolgröße."
+msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr "Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten Wertebereich der Symbolgröße."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid ""
-"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
-"press [Auto] to automatically generate a color table."
-msgstr ""
-"Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke "
-"[Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
+msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
+msgstr "Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke [Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
 #, tcl-format
@@ -2291,12 +2154,8 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid ""
-"Automatically generate a color  table distributed across range of attribute "
-"values"
-msgstr ""
-"Generiere automatisch eine über den Wertebereich der Attribute verteilte "
-"Farbtabelle"
+msgid "Automatically generate a color  table distributed across range of attribute values"
+msgstr "Generiere automatisch eine über den Wertebereich der Attribute verteilte Farbtabelle"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
 msgid "Clear all thematic settings"
@@ -2307,7 +2166,6 @@ msgid "Load/save theme preferences"
 msgstr "Lade/Speicher thematische Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:528
-#, fuzzy
 msgid "Select thematic prefs to use"
 msgstr "Wähle thematische Einstellungen aus"
 
@@ -2320,9 +2178,8 @@ msgid "prefs. from file"
 msgstr "Einstellungen aus Datei"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:542
-#, fuzzy
 msgid "(preserves current prefs.)"
-msgstr "(Speichere aktuelle Einstellungen)"
+msgstr "(erhält aktuelle Einstellungen)"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:553
 msgid "no prefs loaded"
@@ -2333,7 +2190,6 @@ msgid "View loaded thematic prefs"
 msgstr "Zeige geladene thematische Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:570
-#, fuzzy
 msgid "Load and save prefs."
 msgstr "Lade und speichere Einstellungen."
 
@@ -2360,32 +2216,28 @@ msgstr "Zuwenig Werte: zumindest 2!"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1107
 #: ../visualization/nviz/scripts/site_attr.tcl:1197
-#, fuzzy
 msgid "No prefs file loaded"
 msgstr "Keine Datei mit Einstellungen geladen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1138
-#, fuzzy
 msgid "No prefs"
 msgstr "Keine Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1146
 msgid "Thematic prefs and attribute have different types"
-msgstr ""
-"Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr "Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1207
 msgid "Thematic prefs and attributes have different types"
-msgstr ""
-"Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr "Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1408
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "WARNING: No attribute behaviour for %s!"
 msgstr "WARNUNG: Keine Attribute für %s!"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1418
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Thematic prefs file %s"
 msgstr "Thematische Einstellungen in Datei %s"
 
@@ -2400,17 +2252,14 @@ msgid "Type: %s"
 msgstr "Typ: %s"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1436
-#, fuzzy
 msgid "Save thematic prefs in file"
-msgstr "Speichere thematische Einstellungen in eine Datei"
+msgstr "Speichere thematische Einstellungen in Datei"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1439
-#, fuzzy
 msgid "Clear current thematic prefs"
-msgstr "Setze thematische Einstellungen auf Null"
+msgstr "Lösche aktuelle thematische Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1493
-#, fuzzy
 msgid "Load Thematic Prefs"
 msgstr "Lade thematische Einstellungen"
 
@@ -2419,7 +2268,6 @@ msgid "Load file"
 msgstr "Lade Datei"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1577
-#, fuzzy
 msgid "Save thematic prefs"
 msgstr "Speichere thematische Einstellungen"
 
@@ -2434,7 +2282,6 @@ msgid "Thematic preferences file \"%s\" saved"
 msgstr "Thematische Einstellung in Datei \"%s\" gespeichert"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1616
-#, fuzzy
 msgid "Load thematic prefs"
 msgstr "Lade thematische Einstellungen"
 
@@ -2444,10 +2291,9 @@ msgid "*** WARNING *** File \"%s\" is unavailable"
 msgstr "*** WARNUNG *** Datei \"%s\" ist nicht verfügbar"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1627
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
-msgstr ""
-"*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
+msgstr "*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1700
 #, tcl-format
@@ -2475,7 +2321,6 @@ msgid "Cutting Planes"
 msgstr "Schnittebenen"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:50
-#, fuzzy
 msgid "Cutting Planes Panel"
 msgstr "Einstellungen der Schnittebenen"
 
@@ -2512,19 +2357,16 @@ msgid "set shading"
 msgstr "Bestimme Schattierung"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:90
-#, fuzzy
 msgid "top color"
 msgstr "Farbe oben"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:92
-#, fuzzy
 msgid "bottom color"
 msgstr "Farbe unten"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:94
-#, fuzzy
 msgid "blend"
-msgstr "Mische"
+msgstr "Mischen"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:96
 msgid "shaded"
@@ -2552,14 +2394,12 @@ msgid "Plane %s"
 msgstr "Ebene %s"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:39
-#, fuzzy
 msgid "Scaled Difference"
 msgstr "Skalierter Unterschied"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:45
-#, fuzzy
 msgid "Scaled Difference Panel"
-msgstr "Eingabe der skalierten Unterschiede"
+msgstr "Einstellungen zu skalierten Unterschieden"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:54
 msgid "Reference surface:"
@@ -2613,3 +2453,18 @@ msgstr "Untere Höhe der Randzone:"
 #: ../visualization/nviz/scripts/panel_fringe.tcl:80
 msgid "Draw Fringe"
 msgstr "Zeichne Randzone"
+
+#~ msgid "perspective"
+#~ msgstr "Perspektive"
+
+#~ msgid "twist"
+#~ msgstr "Drehung"
+
+#~ msgid "z-exag"
+#~ msgstr "z-exag"
+
+#~ msgid "Visualize"
+#~ msgstr "Visualisiere"
+
+#~ msgid "Appearance"
+#~ msgstr "Erscheinung"
