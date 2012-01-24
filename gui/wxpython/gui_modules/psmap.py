@@ -725,7 +725,7 @@ class PsMapFrame(wx.Frame):
     def getTextExtent(self, textDict):
         """!Estimates bounding rectangle of text"""
         #fontsize = str(fontsize if fontsize >= 4 else 4)
-        dc = wx.PaintDC(self) # dc created because of method GetTextExtent, which pseudoDC lacks
+        dc = wx.ClientDC(self) # dc created because of method GetTextExtent, which pseudoDC lacks
        
         fn = self.makePSFont(textDict)
 
@@ -976,7 +976,7 @@ class PsMapBufferedWindow(wx.Window):
         self.pdcPaper = wx.PseudoDC()
         self.pdcTmp = wx.PseudoDC()
         self.pdcImage = wx.PseudoDC()
-        dc = wx.PaintDC(self)
+        dc = wx.ClientDC(self)
         self.font = dc.GetFont()
         
         self.SetClientSize((700,510))#?
@@ -1060,7 +1060,7 @@ class PsMapBufferedWindow(wx.Window):
             page = PageSetup(id = self.pageId)
             self.instruction.AddInstruction(page)
         
-        ppi = wx.PaintDC(self).GetPPI()
+        ppi = wx.ClientDC(self).GetPPI()
         cW, cH = self.GetClientSize()
         pW, pH = page['Width']*ppi[0], page['Height']*ppi[1]
 
@@ -1505,7 +1505,7 @@ class PsMapBufferedWindow(wx.Window):
         if pdctype in ('rect', 'rectText'):
             pdc.DrawRectangle(*bb)
         if pdctype == 'rectText':
-            dc = wx.PaintDC(self) # dc created because of method GetTextExtent, which pseudoDC lacks
+            dc = wx.ClientDC(self) # dc created because of method GetTextExtent, which pseudoDC lacks
             font = self.font
             size = 10
             font.SetPointSize(size)
