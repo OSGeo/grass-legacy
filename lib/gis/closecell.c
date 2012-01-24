@@ -292,7 +292,7 @@ static int close_new(int fd, int ok)
     /* NOW CLOSE THE FILE DESCRIPTOR */
 
     if (close(fd) != 0)
-	G_warning(_("Unable to close file"));;
+	G_warning(_("Unable to close file"));
 
     /* remember open_mode */
     open_mode = fcb->open_mode;
