@@ -997,7 +997,7 @@ class FormatSelect(wx.Choice):
         @param ogr True for OGR otherwise GDAL
         """
         super(FormatSelect, self).__init__(parent, id, size = size, 
-                                           style = wx.CB_READONLY, **kwargs)
+                                           **kwargs)
         self.SetName("FormatSelect")
         
         if ogr:
@@ -1691,7 +1691,7 @@ class ElementSelect(wx.Choice):
         @param parent parent window
         """
         super(ElementSelect, self).__init__(parent, id, size = size, 
-                                            style = wx.CB_READONLY, **kwargs)
+                                            **kwargs)
         self.SetName("ElementSelect")
         
         task = gtask.parse_interface('g.list')
