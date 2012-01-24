@@ -195,7 +195,10 @@ static int close_new(int fd, int ok)
 	G__make_mapset_element_misc("cell_misc", fcb->name);
 	G__file_name_misc(path, "cell_misc", NULL_FILE, fcb->name,
 			  G_mapset());
-	remove(path);
+
+	if (remove(path) != 0)
+	    G_warning(_("Unable to delete prior null-cells file"));
+	    /* should this be fatal? how to print human readable equiv of errno? */
 
 	if (fcb->null_cur_row > 0) {
 	    /* if temporary NULL file exists, write it into cell_misc/name/null */
@@ -222,20 +225,25 @@ static int close_new(int fd, int ok)
 		    G__write_null_bits(null_fd, fcb->null_work_buf, row,
 				       fcb->cellhd.cols, fd);
 	    }
-	    close(null_fd);
+	    if (close(null_fd) != 0)
+		G_warning(_("Unable to close the null-cells file"));
+		/* should this be fatal? how to print human readable equiv of errno? */
 
 	    if (rename(fcb->null_temp_name, path)) {
-		G_warning(_("closecell: can't move %s\nto null file %s"),
+		G_warning(_("closecell: can't move [%s] to null-cells file [%s]"),
 			  fcb->null_temp_name, path);
 		stat = -1;
 	    }
 	    else {
-		remove(fcb->null_temp_name);
+		if (remove(fcb->null_temp_name) != 0)
+		    G_warning(_("Unable to remove the temporary null-cells file"));
 	    }
 	}
 	else {
-	    remove(fcb->null_temp_name);
-	    remove(path);
+	    if (remove(fcb->null_temp_name) != 0)
+		G_warning(_("Unable to remove the temporary null-cells file"));
+	    if (remove(path) != 0)
+		G_warning(_("Unable to remove the null-cells file"));
 	}			/* null_cur_row > 0 */
 
 	if (fcb->open_mode == OPEN_NEW_COMPRESSED) {	/* auto compression */
@@ -257,24 +265,35 @@ static int close_new(int fd, int ok)
 	    cell_fd =
 		creat(G__file_name(path, "cell", fcb->name, fcb->mapset),
 		      0666);
-	    close(cell_fd);
+	    if (close(cell_fd) != 0)
+		G_warning(_("Unable to close the 'cell' file"));
+
 	    strcpy(CELL_DIR, "fcell");
 	}
 	else {
 	    /* remove fcell/name file */
 	    G__file_name(path, "fcell", fcb->name, fcb->mapset);
-	    remove(path);
+
+	    if (remove(path) != 0)
+		G_warning(_("Unable to delete prior 'fcell' file"));
+
 	    /* remove cell_misc/name/f_format */
 	    G__file_name_misc(path, "cell_misc", FORMAT_FILE, fcb->name,
 			      fcb->mapset);
-	    remove(path);
+	    if (remove(path) != 0)
+		G_warning(_("Unable to delete the %s file"), FORMAT_FILE);
+
 	    strcpy(CELL_DIR, "cell");
-	    close(fd);
+
+	    if (close(fd) != 0) /* doesn't this happen again in a few lines? */
+		G_warning(_("Unable to close file"));
 	}
     }				/* ok */
     /* NOW CLOSE THE FILE DESCRIPTOR */
 
-    close(fd);
+    if (close(fd) != 0)
+	G_warning(_("Unable to close file"));;
+
     /* remember open_mode */
     open_mode = fcb->open_mode;
     fcb->open_mode = -1;
@@ -295,14 +314,18 @@ static int close_new(int fd, int ok)
     stat = 1;
     if (ok && (fcb->temp_name != NULL)) {
 	G__file_name(path, CELL_DIR, fcb->name, fcb->mapset);
-	remove(path);
+
+	if (remove(path) != 0)
+	    G_warning(_("Unable to delete the prior 'cell' file"));
+
 	if (rename(fcb->temp_name, path)) {
-	    G_warning(_("closecell: can't move %s\nto cell file %s"),
+	    G_warning(_("closecell: can't move [%s] to cell file [%s]"),
 		      fcb->temp_name, path);
 	    stat = -1;
 	}
 	else {
-	    remove(fcb->temp_name);
+	    if (remove(fcb->temp_name) != 0)
+		G_warning(_("Unable to remove the temporary 'cell' file"));
 	}
     }
 
@@ -352,13 +375,14 @@ static int close_new(int fd, int ok)
 	     */
 	    G_quant_round(&fcb->quant);
 	    if (G_write_quant(fcb->name, fcb->mapset, &fcb->quant) < 0)
-		G_warning(_("unable to write quant file!"));
+		G_warning(_("Unable to write quant file!"));
 	}
 	else {
 	    /* remove cell_misc/name/f_quant */
 	    G__file_name_misc(path, "cell_misc", QUANT_FILE, fcb->name,
 			      fcb->mapset);
-	    remove(path);
+	    if (remove(path) != 0)
+		G_warning(_("Unable to remove the %s file"), QUANT_FILE);
 	}
 
 	/* create empty cats file */
