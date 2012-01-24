@@ -1650,7 +1650,7 @@ class ElementSelect(wx.Choice):
         @param parent parent window
         """
         super(ElementSelect, self).__init__(parent, id, size = size, 
-                                            style = wx.CB_READONLY, **kwargs)
+                                            **kwargs)
         self.SetName("ElementSelect")
         
         task = gtask.parse_interface('g.list')
