@@ -257,6 +257,7 @@ if [ `echo "$PREFIX" | grep -c ' '` -gt 0 ] ; then
     g.message -w "The specified install path: [$PREFIX] contains a space. $GLOOM"
 fi
 if [ `echo "$TMPDIR" | grep -c ' '` -gt 0 ] ; then
+    # a problem because $MAPSET/.tmp/ is used as the compile dir
     g.message -w "The path to your GIS data: [`g.gisenv GISDBASE`] may contain a space. $GLOOM"
 fi
 
@@ -287,6 +288,7 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    exit 0
 fi
 
+g.message message=""
 g.message -d "svn co [$SVNURL_ADDONS]/[$MODULECLASS]/[$MODULE]"
 
 cd "$TMPDIR"
