@@ -144,6 +144,7 @@ mv $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h \
     $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h.mingw
 cp mswindows/osgeo4w/config.h.switch $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h
 cp mswindows/osgeo4w/config.h.vc $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass
+mkdir -p $OSGEO4W_ROOT_MSYS/etc/preremove
 sed -e "s#@VERSION@#$VERSION#g" -e "s#@osgeo4w@#$OSGEO4W_ROOT#g" \
     mswindows/osgeo4w/grass.bat.tmpl >$OSGEO4W_ROOT_MSYS/bin/${GRASS_EXECUTABLE}.bat
 sed -e "s#@VERSION@#$VERSION#g" -e "s#@OSGEO4W_ROOT_MSYS@#$OSGEO4W_ROOT_MSYS#g" -e "s#@POSTFIX@#$MAJOR$MINOR#g" \
@@ -154,12 +155,6 @@ sed -e "s#@VERSION@#$VERSION#g" -e "s#@GRASS_EXECUTABLE@#$GRASS_EXECUTABLE#g" \
     mswindows/osgeo4w/postinstall.bat >$OSGEO4W_ROOT_MSYS/etc/postinstall/${GRASS_EXECUTABLE}.bat 
 sed -e "s#@VERSION@#$VERSION#g" -e "s#@GRASS_EXECUTABLE@#$GRASS_EXECUTABLE#g" \
     mswindows/osgeo4w/preremove.bat >$OSGEO4W_ROOT_MSYS/etc/preremove/${GRASS_EXECUTABLE}.bat 
-
-if [ -f /c/mingw/bin/libgnurx-0.dll ]; then
-    cp /c/mingw/bin/libgnurx-0.dll $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/bin 
-    cp /c/mingw/bin/libiconv-2.dll $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/bin 
-    cp /c/mingw/bin/libintl-8.dll $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/bin
-fi
 
 if [ -n "$PACKAGE" ]; then
     log building vc libraries 
@@ -187,9 +182,9 @@ if [ -n "$PACKAGE" ]; then
 	apps/grass/grass-$VERSION \
 	bin/${GRASS_EXECUTABLE}.bat.tmpl \
 	bin/${GRASS_EXECUTABLE}.tmpl \
-	bin/libintl3.dll \
-	bin/libiconv2.dll \
-	bin/regex2.dll \
+	apps/msys/bin/libintl3.dll \
+	apps/msys/bin/libiconv2.dll \
+	apps/msys/bin/regex2.dll \
 	etc/postinstall/${GRASS_EXECUTABLE}.bat \
 	etc/preremove/${GRASS_EXECUTABLE}.bat
     
