@@ -38,9 +38,9 @@ SetCompressorDictSize 64
 	!define GRASS_COMMAND "grass65"
 	!define GRASS_BASE "GRASS 6.5"
 !else
-	!define VERSION_NUMBER "6.5.SVN"
+	!define VERSION_NUMBER "6.5.svn"
 	!define GRASS_COMMAND "grass65svn"
-	!define GRASS_BASE "GRASS 6.5.SVN"
+	!define GRASS_BASE "GRASS 6.5.svn"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
