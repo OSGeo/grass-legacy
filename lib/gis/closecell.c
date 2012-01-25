@@ -1,4 +1,3 @@
-
 /***********************************************************************
  *
  *   G_close_cell(fd)
@@ -229,14 +228,14 @@ static int close_new(int fd, int ok)
 	    }
 	    else {
 		if (remove(fcb->null_temp_name) != 0)
-		    G_warning(_("Unable to remove the temporary null-cells file"));
+		    G_warning(_("Unable to delete the temporary null-cells file"));
 	    }
 	}
 	else {
 	    if (remove(fcb->null_temp_name) != 0)
-		G_warning(_("Unable to remove the temporary null-cells file"));
+		G_warning(_("Unable to delete the temporary null-cells file"));
 	    if (remove(path) != 0)
-		G_warning(_("Unable to remove the null-cells file"));
+		G_warning(_("Unable to delete the null-cells file"));
 	}			/* null_cur_row > 0 */
 
 	if (fcb->open_mode == OPEN_NEW_COMPRESSED) {	/* auto compression */
@@ -315,7 +314,7 @@ static int close_new(int fd, int ok)
 	}
 	else {
 	    if (remove(fcb->temp_name) != 0)
-		G_warning(_("Unable to remove the temporary 'cell' file"));
+		G_warning(_("Unable to delete the temporary 'cell' file"));
 	}
     }
 
@@ -372,7 +371,7 @@ static int close_new(int fd, int ok)
 	    G__file_name_misc(path, "cell_misc", QUANT_FILE, fcb->name,
 			      fcb->mapset);
 	    if (remove(path) != 0)
-		G_warning(_("Unable to remove the %s file"), QUANT_FILE);
+		G_warning(_("Unable to delete the %s file"), QUANT_FILE);
 	}
 
 	/* create empty cats file */
@@ -417,7 +416,7 @@ int G__write_fp_format(int fd)
     int stat;
 
     if (fcb->map_type == CELL_TYPE) {
-	G_warning(_("unable to write f_format file for CELL maps"));
+	G_warning(_("Unable to write f_format file for CELL maps"));
 	return 0;
     }
     format_kv = G_create_key_value();
