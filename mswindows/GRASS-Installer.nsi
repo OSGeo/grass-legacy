@@ -36,11 +36,11 @@ SetCompressorDictSize 64
 !if ${INSTALLER_TYPE} == "Release"
 	!define VERSION_NUMBER "6.4.2"
 	!define GRASS_COMMAND "grass64"
-	!define GRASS_BASE "GRASS 6.4"
+	!define GRASS_BASE "GRASS 6.4.2"
 !else
-	!define VERSION_NUMBER "6.4.SVN"
+	!define VERSION_NUMBER "6.4.2svn"
 	!define GRASS_COMMAND "grass64svn"
-	!define GRASS_BASE "GRASS 6.4.SVN"
+	!define GRASS_BASE "GRASS 6.4.2svn"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
