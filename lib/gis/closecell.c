@@ -284,13 +284,10 @@ static int close_new(int fd, int ok)
 		G_warning(_("Unable to delete the %s file"), FORMAT_FILE);
 
 	    strcpy(CELL_DIR, "cell");
-
-	    if (close(fd) != 0) /* doesn't this happen again in a few lines? */
-		G_warning(_("Unable to close file"));
 	}
-    }				/* ok */
-    /* NOW CLOSE THE FILE DESCRIPTOR */
+    }		/* if(ok) */
 
+    /* NOW CLOSE THE FILE DESCRIPTOR */
     if (close(fd) != 0)
 	G_warning(_("Unable to close file"));
 
