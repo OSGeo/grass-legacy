@@ -223,10 +223,10 @@ int vect_to_rast(char *vector_map, char *raster_map, int field, char *column,
     update_labels(raster_map, vector_map, field, labelcolumn, use, value,
 		  column);
 
-    G_message(_("Converted areas: %d of %d"), nareas, nareas_all);
-    G_message(_("Converted points/lines: %d of %d"), nlines, nplines_all);
-    
-    G_done_msg(" ");
-    
+    if (nareas_all > 0)
+	G_message(_("Converted areas: %d of %d"), nareas, nareas_all);
+    if (nplines_all > 0)
+	G_message(_("Converted points/lines: %d of %d"), nlines, nplines_all);
+
     return 0;
 }
