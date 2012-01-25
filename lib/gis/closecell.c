@@ -105,6 +105,7 @@ int G_unopen_cell(int fd)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
+    G_debug(5, "G_unopen_cell()");
     if (fd < 0 || fd >= G__.fileinfo_count || fcb->open_mode <= 0)
 	return -1;
     if (fcb->open_mode == OPEN_OLD)
@@ -302,6 +303,7 @@ static int close_new(int fd, int ok)
      */
     stat = 1;
     if (ok && (fcb->temp_name != NULL)) {
+	G_debug(5, "Moving temporary cell map into main mapset...");
 	G__file_name(path, CELL_DIR, fcb->name, fcb->mapset);
 
 	if (remove(path) != 0)
