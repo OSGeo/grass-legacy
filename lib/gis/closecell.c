@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <grass/gis.h>
@@ -306,8 +307,10 @@ static int close_new(int fd, int ok)
 	G_debug(5, "Moving temporary cell map into main mapset...");
 	G__file_name(path, CELL_DIR, fcb->name, fcb->mapset);
 
-	if (remove(path) != 0)
+	if (remove(path) != 0) {
+	    perror(path);
 	    G_warning(_("Unable to delete the prior 'cell' file"));
+	}
 
 	if (rename(fcb->temp_name, path)) {
 	    G_warning(_("closecell: can't move [%s] to cell file [%s]"),
