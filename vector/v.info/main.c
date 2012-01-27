@@ -298,12 +298,14 @@ int main(int argc, char *argv[])
 	    }
 
 	    printline("");
+	    /* this differs from r.info in that proj info IS taken from the map here, not the location settings */
+	    /* Vect_get_proj_name() and _zone() are typically unset?! */
 	    if (G_projection() == PROJECTION_UTM)
 		sprintf(line, _("        Projection: %s (zone %d)"),
-			G_database_projection_name(), G_zone());
+			Vect_get_proj_name(&Map), Vect_get_zone(&Map));
 	    else
 		sprintf(line, _("        Projection: %s"),
-			G_database_projection_name());
+			Vect_get_proj_name(&Map));
 	    printline(line);
 
 	    Vect_get_map_box(&Map, &box);
