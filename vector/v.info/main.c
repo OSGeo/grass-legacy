@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     dbTable *table;
     int field, num_dblinks, ncols, col;
     char tmp1[100], tmp2[100];
+    int utm_zone = -1;
 
     G_gisinit(argv[0]);
 
@@ -298,12 +299,24 @@ int main(int argc, char *argv[])
 	    }
 
 	    printline("");
-	    if (G_projection() == PROJECTION_UTM)
-		sprintf(line, _("        Projection: %s (zone %d)"),
-			G_database_projection_name(), G_zone());
+	    /* this differs from r.info in that proj info IS taken from the map here, not the location settings */
+	    /* Vect_get_proj_name() and _zone() are typically unset?! */
+	    if (G_projection() == PROJECTION_UTM) {
+		utm_zone = Vect_get_zone(&Map);
+		if (utm_zone < 0 || utm_zone > 60)
+		    strcpy(tmp1, _("invalid"));
+		else if (utm_zone == 0)
+		    strcpy(tmp1, _("unspecified"));
+		else
+		    sprintf(tmp1, "%d", utm_zone);
+
+		sprintf(line, "        %s: %s (%s %s)",
+		    _("Projection"), Vect_get_proj_name(&Map),
+		    _("zone"), tmp1);
+	    }
 	    else
 		sprintf(line, _("        Projection: %s"),
-			G_database_projection_name());
+			Vect_get_proj_name(&Map));
 	    printline(line);
 
 	    Vect_get_map_box(&Map, &box);
