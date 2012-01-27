@@ -549,7 +549,7 @@ int Ninitdata(Tcl_Interp *interp,	/* Current interpreter. */
 
     argc = Ngetargs(interp, &cmd, &argv0, &argv);
 
-    G_gisinit(argv0);
+    G_gisinit("nviz");
 
     GS_libinit();
 
