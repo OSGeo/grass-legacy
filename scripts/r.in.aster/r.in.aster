@@ -50,9 +50,9 @@
 #%end
 
 
-if  [ -z "$GISBASE" ] ; then
+if [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+    exit 1
 fi
 
 # save command line
@@ -65,11 +65,24 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
+#### check if we have gdalwarp
+if [ ! -x "`which gdalwarp`" ] ; then
+    g.message -e "gdalwarp required, please install the GDAL utilities first"
+    exit 1
+fi
+
+# It's impossible to reproject from an arbitrary XY location
+proj_code=`g.region -p | grep '^projection:' | cut -f2 -d' '`
+if [ "$proj_code" -eq 0 ] ; then
+    g.message -e "This module needs to be run in a projected location"
+    exit 1
+fi
+
+
 #initialize datasets for L1A and L1B
 
-if [ "$GIS_OPT_PROCTYPE" = "L1A" ]
-then
-	case $GIS_OPT_BAND in
+if [ "$GIS_OPT_PROCTYPE" = "L1A" ] ; then
+	case "$GIS_OPT_BAND" in
 		1)
 		dataset="VNIR_Band1:ImageData" ;;
 		2)
@@ -100,10 +113,14 @@ then
 		dataset="TIR_Band13:ImageData" ;;
 		14)
 		dataset="TIR_Band14:ImageData" ;;
+		*)
+		g.message -e "Unsupported band [$GIS_OPT_BAND]"
+		exit 1 ;;
 	esac
-	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_INPUT\"":"$dataset
-elif [ "$GIS_OPT_PROCTYPE" = "L1B" ] 
-then
+
+	srcfile="HDF4_EOS:EOS_SWATH:\"$GIS_OPT_INPUT\":$dataset"
+
+elif [ "$GIS_OPT_PROCTYPE" = "L1B" ] ; then
 	case $GIS_OPT_BAND in
 		1)
 		dataset="VNIR_Swath:ImageData1" ;;
@@ -135,40 +152,41 @@ then
 		dataset="TIR_Swath:ImageData13" ;;
 		14)
 		dataset="TIR_Swath:ImageData14" ;;
+		*)
+		g.message -e "Unsupported band [$GIS_OPT_BAND]"
+		exit 1 ;;
 	esac
-	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_INPUT\"":"$dataset
-elif [ "$GIS_OPT_PROCTYPE" = "DEM" ] 
-then
-	srcfile="$GIS_OPT_INPUT"
+
+	srcfile="HDF4_EOS:EOS_SWATH:\"$GIS_OPT_INPUT\":$dataset"
+
+elif [ "$GIS_OPT_PROCTYPE" = "DEM" ] ; then
+    srcfile="$GIS_OPT_INPUT"
 fi
 
-tempfile=`g.tempfile $$`.tif
+tempfile="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$tempfile" ] ; then
+    g.message -e "Unable to create temporary file"
+    exit 1
+fi
 
-#run gdalwarp with selected options (must be in $PATH)
-#to translate aster image to geotiff
+# run gdalwarp with selected options (must be in $PATH)
+#   to translate aster image to geotiff
 g.message "Georeferencing aster image ..."
-proj=`g.proj -jf`
-echo $proj | grep 'XY location' > /dev/null
-if [ $? -eq 0 ] ; then
-  g.message -e "This module needs to be run in a projected location (found: $proj)"
-  exit 1
-fi
 
-g.message -d message="gdalwarp -t srs $proj $srcfile $tempfile"
+g.message -d message="gdalwarp -t srs $proj \"$srcfile\" \"$tempfile.tif\""
 
-gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
+gdalwarp -t_srs "`g.proj -jf`" "$srcfile" "$tempfile.tif"
 
 #import geotiff to GRASS
 g.message "Importing into GRASS ..."
 
-r.in.gdal input="$tempfile" output="$GIS_OPT_OUTPUT"
+r.in.gdal input="$tempfile.tif" output="$GIS_OPT_OUTPUT"
 
 #cleanup
 g.message "Cleaning up ..."
-rm -f "$tempfile"
+rm -f "$tempfile" "$tempfile.tif"
 
 # write cmd history:
-r.support "$GIS_OPT_OUTPUT" history="${CMDLINE}"
+r.support map="$GIS_OPT_OUTPUT" history="$CMDLINE"
 
 g.message "Done."
-
