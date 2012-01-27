@@ -190,9 +190,12 @@ static int close_new(int fd, int ok)
 	G__file_name_misc(path, "cell_misc", NULL_FILE, fcb->name,
 			  G_mapset());
 
-	if (remove(path) != 0)
-	    G_warning(_("Unable to delete prior null-cells file"));
-	    /* should this be fatal? how to print human readable equiv of errno? */
+	if (access(path, F_OK) == 0) {
+	    if (remove(path) != 0) {
+		perror(path);
+		G_warning(_("Unable to delete prior null-cells file"));
+	    }
+	}
 
 	if (fcb->null_cur_row > 0) {
 	    /* if temporary NULL file exists, write it into cell_misc/name/null */
@@ -221,7 +224,6 @@ static int close_new(int fd, int ok)
 	    }
 	    if (close(null_fd) != 0)
 		G_warning(_("Unable to close the null-cells file"));
-		/* should this be fatal? how to print human readable equiv of errno? */
 
 	    if (rename(fcb->null_temp_name, path)) {
 		G_warning(_("closecell: can't move [%s] to null-cells file [%s]"),
@@ -233,12 +235,17 @@ static int close_new(int fd, int ok)
 		    G_warning(_("Unable to delete the temporary null-cells file"));
 	    }
 	}
-	else {
-	    if (remove(fcb->null_temp_name) != 0)
-		G_warning(_("Unable to delete the temporary null-cells file"));
-	    if (remove(path) != 0)
-		G_warning(_("Unable to delete the null-cells file"));
-	}			/* null_cur_row > 0 */
+	else { /* no NULL data encountered */
+	    if (access(fcb->null_temp_name, F_OK) == 0) {
+		if (remove(fcb->null_temp_name) != 0)
+		    G_warning(_("Unable to delete the empty temporary null-cells file"));
+	    }
+	    if (access(path, F_OK) == 0) {
+		if (remove(path) != 0)  /* duplicate? */
+		    G_warning(_("Unable to delete the prior null-cells file"));
+	    }
+	}		/* null_cur_row > 0 */
+
 
 	if (fcb->open_mode == OPEN_NEW_COMPRESSED) {	/* auto compression */
 	    fcb->row_ptr[fcb->cellhd.rows] = lseek(fd, 0L, SEEK_CUR);
@@ -265,17 +272,22 @@ static int close_new(int fd, int ok)
 	    strcpy(CELL_DIR, "fcell");
 	}
 	else {
-	    /* remove fcell/name file */
+	    /* it's a CELL map, so remove fcell/name file if it exists */
 	    G__file_name(path, "fcell", fcb->name, fcb->mapset);
 
-	    if (remove(path) != 0)
-		G_warning(_("Unable to delete prior 'fcell' file"));
+	    if (access(path, F_OK) == 0) {
+		if (remove(path) != 0)
+		    G_warning(_("Unable to delete prior 'fcell' file"));
+	    }
 
 	    /* remove cell_misc/name/f_format */
 	    G__file_name_misc(path, "cell_misc", FORMAT_FILE, fcb->name,
 			      fcb->mapset);
-	    if (remove(path) != 0)
-		G_warning(_("Unable to delete the %s file"), FORMAT_FILE);
+
+	    if (access(path, F_OK) == 0) {
+		if (remove(path) != 0)
+		    G_warning(_("Unable to delete the prior %s file"), FORMAT_FILE);
+	    }
 
 	    strcpy(CELL_DIR, "cell");
 	}
@@ -307,9 +319,11 @@ static int close_new(int fd, int ok)
 	G_debug(5, "Moving temporary cell map into main mapset...");
 	G__file_name(path, CELL_DIR, fcb->name, fcb->mapset);
 
-	if (remove(path) != 0) {
-	    perror(path);
-	    G_warning(_("Unable to delete the prior 'cell' file"));
+	if (access(path, F_OK) == 0) {
+	    if (remove(path) != 0) {
+		perror(path);
+		G_warning(_("Unable to delete the prior 'cell' file"));
+	    }
 	}
 
 	if (rename(fcb->temp_name, path)) {
