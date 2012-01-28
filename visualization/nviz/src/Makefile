@@ -3,6 +3,8 @@
 
 MODULE_TOPDIR = ../../..
 
+PACKAGE ="grassmods"
+
 PGM = nviz
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
