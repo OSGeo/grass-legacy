@@ -1168,13 +1168,15 @@ class VectorColorTable(ColorTable):
         if self.inmap and not self.CheckMapset():
             # currently v.colors need the map to be in current mapset
             if self.version7 and self.attributeType == 'color':
-                message = _("Selected map <%s> is not in current mapset <%s>. "
+                message = _("Selected map <%(map)s> is not in current mapset <%(mapset)s>. "
                             "Color rules cannot be edited.") % \
-                            (self.inmap, grass.gisenv()['MAPSET'])
+                            { 'map' : self.inmap,
+                              'mapset' : grass.gisenv()['MAPSET'] }
             else:
-                message = _("Selected map <%s> is not in current mapset <%s>. "
+                message = _("Selected map <%(map)s> is not in current mapset <%(mapset)s>. "
                             "Attribute table cannot be edited.") % \
-                            (self.inmap, grass.gisenv()['MAPSET'])
+                            { 'map' : self.inmap,
+                              'mapset' : grass.gisenv()['MAPSET'] }
             wx.CallAfter(GMessage, parent = self, message = message)
             self.DisableClearAll()
             return
@@ -1445,9 +1447,11 @@ class VectorColorTable(ColorTable):
         range = ''
         if self.properties['min'] or self.properties['max']:
             if ctype == float:
-                range = _("(range: %.1f to %.1f)") % (self.properties['min'], self.properties['max'])
+                range = "%s: %.1f - %.1f)" % (_("range"),
+                                              self.properties['min'], self.properties['max'])
             elif ctype == int:
-                range = _("(range: %d to %d)") % (self.properties['min'], self.properties['max'])
+                range = "%s: %d - %d)" % (_("range"),
+                                          self.properties['min'], self.properties['max'])
         if range:
             if self.colorTable:
                 self.cr_label.SetLabel(_("Enter vector attribute values or percents %s:") % range)
