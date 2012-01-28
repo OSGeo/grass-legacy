@@ -823,10 +823,6 @@ class GMFrame(wx.Frame):
                 maptree.layer_selected = layer
                 
         busy.Destroy()
-        
-        if maptree:
-            # reverse list of map layers
-            maptree.Map.ReverseListOfLayers()
             
         for mdisp in mapdisplay:
             mdisp.MapWindow2D.UpdateMap()
