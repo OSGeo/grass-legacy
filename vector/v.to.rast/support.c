@@ -305,6 +305,7 @@ int update_labels(char *rast_name, char *vector_map, int field,
 	    /* get column type */
 	    if (!label_column) {
 		G_warning(_("Label column was not specified, no labels will be written"));
+		db_close_database_shutdown_driver(Driver);
 		break;
 	    }
 	    else {
