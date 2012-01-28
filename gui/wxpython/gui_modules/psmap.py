@@ -313,7 +313,7 @@ class PsMapFrame(wx.Frame):
                 im = Image.open(event.userData['filename'])
                 if self.instruction[self.pageId]['Orientation'] == 'Landscape':
                     im = im.rotate(270)
-                print self.imgName
+                
                 im.save(self.imgName, format = 'PNG')
                 
             except IOError, e:
