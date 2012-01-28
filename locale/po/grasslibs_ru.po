@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2009-01-27 22:58-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -4912,7 +4912,7 @@ msgstr "Невозможно получить данные из таблицы <
 msgid "Unknown column type (column <%s>)"
 msgstr "Неизвестный тип поля (поле <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:110
+#: ../lib/db/dbmi_client/column.c:115
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Невозможно описать таблицу <%s>"

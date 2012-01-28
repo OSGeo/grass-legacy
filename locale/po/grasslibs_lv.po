@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2006-12-09 01:00+0200\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <grass-translations@lists.osgeo.org>\n"
@@ -4911,7 +4911,7 @@ msgstr "Neiespējami atvērt failu %s iekš %s"
 msgid "Unknown column type (column <%s>)"
 msgstr ""
 
-#: ../lib/db/dbmi_client/column.c:110
+#: ../lib/db/dbmi_client/column.c:115
 #, fuzzy, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Neiespējami atvērt failu %s iekš %s"

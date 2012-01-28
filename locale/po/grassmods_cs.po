@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2010-03-07 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -197,7 +197,7 @@ msgid "Reading file [%s]..."
 msgstr "Ètu soubor [%s] ..."
 
 #: ../visualization/xganim/main.c:366 ../doc/raster/r.example/main.c:111
-#: ../misc/m.nviz.image/surface.c:54 ../misc/m.nviz.image/surface.c:104
+#: ../misc/m.nviz.image/surface.c:54 ../misc/m.nviz.image/surface.c:110
 #: ../raster/r.bilinear/main.c:81 ../raster/r.profile/main.c:142
 #: ../raster/r.sun2/main.c:811 ../raster/r.sun2/main.c:826
 #: ../raster/r.sun2/main.c:843 ../raster/r.sun2/main.c:857
@@ -424,7 +424,7 @@ msgstr "Potichu"
 #: ../raster/r.slope.aspect/opennew.c:11 ../raster/r.bitpattern/main.c:104
 #: ../raster/r.surf.idw/main.c:112 ../raster/r.median/main.c:77
 #: ../raster/r.neighbors/main.c:197 ../raster/r.reclass/main.c:81
-#: ../raster/r.texture/main.c:231 ../raster/r.in.gdal/main.c:223
+#: ../raster/r.texture/main.c:231 ../raster/r.in.gdal/main.c:225
 #: ../raster/r.surf.gauss/main.c:77 ../raster/r.in.ascii/main.c:203
 #: ../raster/r.surf.fractal/interface.c:79 ../raster/r.average/main.c:78
 #: ../raster/r.to.rast3elev/main.c:472 ../imagery/i.zc/main.c:119
@@ -432,7 +432,7 @@ msgstr "Potichu"
 #: ../imagery/i.fft/fftmain.c:124
 #: ../imagery/i.ortho.photo/i.photo.camera/main.c:91
 #: ../general/manage/cmd/rename.c:84 ../general/manage/cmd/copy.c:88
-#: ../vector/v.kernel/main.c:312 ../vector/v.in.ogr/main.c:328
+#: ../vector/v.kernel/main.c:312 ../vector/v.in.ogr/main.c:330
 #: ../vector/v.edit/main.c:86 ../vector/v.to.rast3/main.c:69
 #: ../vector/v.surf.idw/main.c:137
 #, c-format
@@ -462,8 +462,8 @@ msgstr "Nelze èíst hlavièku souboru <%s>"
 #: ../raster/r.in.mat/main.c:430 ../raster/r.li/r.li.daemon/daemon.c:132
 #: ../raster/r.slope.aspect/opennew.c:19 ../raster/r.bitpattern/main.c:125
 #: ../raster/r.surf.idw/main.c:147 ../raster/r.resamp.interp/main.c:148
-#: ../raster/r.texture/main.c:309 ../raster/r.in.gdal/main.c:746
-#: ../raster/r.in.gdal/main.c:751 ../raster/r.in.gdal/main.c:765
+#: ../raster/r.texture/main.c:309 ../raster/r.in.gdal/main.c:757
+#: ../raster/r.in.gdal/main.c:762 ../raster/r.in.gdal/main.c:776
 #: ../raster/r.thin/io.c:168 ../raster/r.lake/main.c:229
 #: ../raster/r.lake/main.c:318 ../raster/r.in.ascii/main.c:206
 #: ../raster/r.surf.fractal/write_rast.c:58 ../raster/r.mapcalc/map.c:507
@@ -544,7 +544,7 @@ msgstr "Mùj první modul pro zpracování vektorových dat"
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.kcv/main.c:132
 #: ../vector/v.extract/main.c:193 ../vector/v.db.connect/main.c:140
 #: ../vector/v.delaunay2/main.c:117 ../vector/v.sample/main.c:152
-#: ../vector/v.distance/main.c:299 ../vector/v.to.db/parse.c:128
+#: ../vector/v.distance/main.c:303 ../vector/v.to.db/parse.c:128
 #: ../vector/v.build.polylines/main.c:139 ../vector/v.qcount/main.c:128
 #: ../vector/v.category/main.c:197 ../vector/v.buffer/main.c:365
 #: ../vector/v.surf.rst/main.c:565 ../vector/v.transform/main.c:242
@@ -626,8 +626,8 @@ msgstr "Nelze vytvoøit vektorovou mapu <%s>"
 #: ../vector/v.buffer2/main.c:328 ../vector/v.univar/main.c:176
 #: ../vector/v.out.ascii/b2a.c:38 ../vector/v.edit/select.c:506
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
-#: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:355
-#: ../vector/v.distance/main.c:391
+#: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
+#: ../vector/v.distance/main.c:395
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:114
 #: ../vector/v.reclass/main.c:121 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:46 ../vector/v.to.3d/trans2.c:45
@@ -669,7 +669,7 @@ msgstr "Nelze spustit ovladaè <%s>"
 #: ../vector/v.kcv/main.c:181 ../vector/v.extract/main.c:291
 #: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.in.ascii/in.c:317 ../vector/v.sample/main.c:207
-#: ../vector/v.distance/main.c:360 ../vector/v.distance/main.c:397
+#: ../vector/v.distance/main.c:364 ../vector/v.distance/main.c:401
 #: ../vector/v.to.db/query.c:89 ../vector/v.to.db/update.c:46
 #: ../vector/v.mkgrid/main.c:237 ../vector/v.net.flow/main.c:157
 #: ../vector/v.buffer/main.c:387 ../vector/v.surf.rst/main.c:607
@@ -2049,17 +2049,17 @@ msgstr "Soubor <%s> byl vytvoøen"
 msgid "Missing topography attribute for surface %d"
 msgstr ""
 
-#: ../misc/m.nviz.image/surface.c:124
+#: ../misc/m.nviz.image/surface.c:130
 #, fuzzy, c-format
 msgid "Color attribute not defined, using default <%s>"
 msgstr "Papír '%s' nebyl nalezen, pou¾ívám výchozí"
 
-#: ../misc/m.nviz.image/surface.c:201
+#: ../misc/m.nviz.image/surface.c:211
 #, fuzzy, c-format
 msgid "Surface id %d doesn't exist"
 msgstr "Vybraný kanál (%d) neexistuje"
 
-#: ../misc/m.nviz.image/surface.c:248 ../misc/m.nviz.image/surface.c:255
+#: ../misc/m.nviz.image/surface.c:251 ../misc/m.nviz.image/surface.c:258
 #, fuzzy, c-format
 msgid "Unable to set draw mode for surface id %d"
 msgstr "Nejsem schopen zapsat hlavièku pro %s"
@@ -2125,7 +2125,7 @@ msgstr "Vstupní chyba parzování na øádku %d"
 msgid "Supported Formats:\n"
 msgstr "Podporované formáty:\n"
 
-#: ../raster/r.external/main.c:83 ../raster/r.in.gdal/main.c:339
+#: ../raster/r.external/main.c:83 ../raster/r.in.gdal/main.c:341
 msgid ""
 "Unable to convert input raster map projection information to GRASS format "
 "for checking"
@@ -2133,13 +2133,13 @@ msgstr ""
 "Nelze pøevést informace o vstupní mapové projekci do formátu GRASSu (pro "
 "kontrolu)"
 
-#: ../raster/r.external/main.c:99 ../raster/r.in.gdal/main.c:355
-#: ../vector/v.in.ogr/main.c:509
+#: ../raster/r.external/main.c:99 ../raster/r.in.gdal/main.c:357
+#: ../vector/v.in.ogr/main.c:511
 msgid "Over-riding projection check"
 msgstr "Pøeskakuji kontrolu projekce."
 
-#: ../raster/r.external/main.c:107 ../raster/r.in.gdal/main.c:366
-#: ../vector/v.in.ogr/main.c:518
+#: ../raster/r.external/main.c:107 ../raster/r.in.gdal/main.c:367
+#: ../vector/v.in.ogr/main.c:520
 msgid ""
 "Projection of dataset does not appear to match current location.\n"
 "\n"
@@ -2147,16 +2147,16 @@ msgstr ""
 "Vypadá to, ¾e projekce datasetu neodpovídá projekci aktuální location \n"
 "\n"
 
-#: ../raster/r.external/main.c:112 ../raster/r.in.gdal/main.c:371
+#: ../raster/r.external/main.c:112 ../raster/r.in.gdal/main.c:372
 msgid "Location PROJ_INFO is:\n"
 msgstr "PROJ_INFO location je:\n"
 
-#: ../raster/r.external/main.c:123 ../raster/r.in.gdal/main.c:382
+#: ../raster/r.external/main.c:123 ../raster/r.in.gdal/main.c:383
 msgid "Dataset PROJ_INFO is:\n"
 msgstr "PROJ_INFO datasetu je:\n"
 
-#: ../raster/r.external/main.c:150 ../raster/r.in.gdal/main.c:409
-#: ../vector/v.in.ogr/main.c:534 ../vector/v.in.ogr/main.c:541
+#: ../raster/r.external/main.c:150 ../raster/r.in.gdal/main.c:410
+#: ../vector/v.in.ogr/main.c:536 ../vector/v.in.ogr/main.c:543
 msgid "Import dataset PROJ_INFO is:\n"
 msgstr "iMPORT PROJ_INFO datasetu je:\n"
 
@@ -2170,7 +2170,7 @@ msgstr ""
 "Mù¾ete pou¾ít pøepínaè -o zru¹ení této kontroly a pou¾ít definování location "
 "pro dataset.\n"
 
-#: ../raster/r.external/main.c:175 ../raster/r.in.gdal/main.c:434
+#: ../raster/r.external/main.c:175 ../raster/r.in.gdal/main.c:435
 msgid ""
 "Consider generating a new location from the input dataset using the "
 "'location' parameter.\n"
@@ -2178,8 +2178,8 @@ msgstr ""
 "Zva¾te vytvoøení nové location s parametry 'location' ze vstupního "
 "datasetu.\n"
 
-#: ../raster/r.external/main.c:180 ../raster/r.in.gdal/main.c:439
-#: ../vector/v.in.ogr/main.c:592
+#: ../raster/r.external/main.c:180 ../raster/r.in.gdal/main.c:440
+#: ../vector/v.in.ogr/main.c:594
 msgid "Projection of input dataset and current location appear to match"
 msgstr "Mapová projekce vstupního datasetu a aktuální location souhlasí."
 
@@ -2191,70 +2191,81 @@ msgstr ""
 "Vstupní mapa je pootoèená - nelze ji naimportovat. Pou¾ijte 'gdalwarp' pro "
 "její transformaci severem-nahoru."
 
-#: ../raster/r.external/main.c:300
+#: ../raster/r.external/main.c:264 ../raster/r.in.gdal/main.c:621
+#: ../vector/v.in.ogr/main.c:1201
+msgid "Default region for this location updated"
+msgstr ""
+
+#: ../raster/r.external/main.c:267 ../raster/r.in.gdal/main.c:624
+#: ../vector/v.in.ogr/main.c:1204
+#, fuzzy
+msgid "Region for the current mapset updated"
+msgstr "Skupina musí existovat v souèasném mapsetu"
+
+#: ../raster/r.external/main.c:310
 msgid "Complex types not supported"
 msgstr "KOmplexní typy nejsou podporovány"
 
-#: ../raster/r.external/main.c:315
+#: ../raster/r.external/main.c:325
 #, c-format
 msgid "Copying color table for %s"
 msgstr "Copíruji tabulku barev pro %s"
 
-#: ../raster/r.external/main.c:333
+#: ../raster/r.external/main.c:343
 #, c-format
 msgid "Setting grey color table for <%s> (full 8bit range)"
 msgstr "Nastavuji ¹edou barevnou tabulku pro <%s> (plný 8bit rozsah)"
 
-#: ../raster/r.external/main.c:339
+#: ../raster/r.external/main.c:349
 #, c-format
 msgid "Setting grey color table for <%s> (data range)"
 msgstr "Nastavuji ¹edou barevnou tabulku pro <%s> (podle rozsahu dat)"
 
-#: ../raster/r.external/main.c:353
+#: ../raster/r.external/main.c:363
 #, c-format
 msgid "Unable to create cell/%s file"
 msgstr "Nelze vytvoøit soubor cell/%s"
 
-#: ../raster/r.external/main.c:362
+#: ../raster/r.external/main.c:372
 #, c-format
 msgid "Unable to create fcell/%s file"
 msgstr "Nelze vytvoøit soubor fcell/%s"
 
-#: ../raster/r.external/main.c:394
+#: ../raster/r.external/main.c:404
 #, c-format
 msgid "Unable to create cell_misc/%s/gdal file"
 msgstr "Nelze vytvoøit soubor cell_misc/%s/gdal"
 
-#: ../raster/r.external/main.c:397
+#: ../raster/r.external/main.c:407
 #, c-format
 msgid "Error writing cell_misc/%s/gdal file"
 msgstr "Chyba pøi zápisu souboru cell_misc/%s/gdal"
 
-#: ../raster/r.external/main.c:422
+#: ../raster/r.external/main.c:432
 #, c-format
 msgid "Unable to create cell_misc/%s/f_format file"
 msgstr "Nelze vytvoøit soubor cell_misc/%s/f_format"
 
-#: ../raster/r.external/main.c:425
+#: ../raster/r.external/main.c:435
 #, c-format
 msgid "Error writing cell_misc/%s/f_format file"
 msgstr "Chyba pøi zápisu souboru cell_misc/%s/f_format"
 
-#: ../raster/r.external/main.c:440
+#: ../raster/r.external/main.c:450
 msgid "Unable to write quant file"
 msgstr "Nelze zapisovat do souboru quant"
 
-#: ../raster/r.external/main.c:473
+#: ../raster/r.external/main.c:483
 #, c-format
 msgid "Creating support files for %s"
 msgstr "Vytváøím podpùrné soubory pro %s"
 
-#: ../raster/r.external/main.c:486
+#: ../raster/r.external/main.c:496
 #, fuzzy, c-format
 msgid "Link to raster map <%s> created"
 msgstr "Rastrová mapa <%s> byla vytvoøena."
 
-#: ../raster/r.external/main.c:510 ../raster/r.in.gridatb/main.c:41
+#: ../raster/r.external/main.c:520 ../raster/r.in.gridatb/main.c:41
 #: ../raster/r.in.arc/main.c:59 ../raster/r.in.bin/main.c:234
 #: ../raster/r.in.mat/main.c:92 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.poly/main.c:29
@@ -2262,17 +2273,17 @@ msgstr "Rastrová mapa <%s> byla vytvoøena."
 msgid "raster, import"
 msgstr "rastr, import"
 
-#: ../raster/r.external/main.c:512
+#: ../raster/r.external/main.c:522
 msgid "Link GDAL supported raster file to a binary raster map layer."
 msgstr ""
 "Spojení GDAL podporovaného rastrovho souboru s binární rastrovou mapovou "
 "vrstvou"
 
-#: ../raster/r.external/main.c:515
+#: ../raster/r.external/main.c:525
 msgid "Raster file to be linked"
 msgstr "Název rastrového souboru, který má být spojen"
 
-#: ../raster/r.external/main.c:517 ../raster/r.external/main.c:527
+#: ../raster/r.external/main.c:527 ../raster/r.external/main.c:537
 #: ../raster/r.recode/main.c:54 ../raster/r.colors/main.c:181
 #: ../raster/r.in.gdal/main.c:90 ../raster/r.in.gdal/main.c:94
 #: ../raster/r.out.gdal/main.c:148 ../raster/r.out.gdal/main.c:184
@@ -2281,48 +2292,54 @@ msgstr "Název rastrového souboru, který má být spojen"
 msgid "Required"
 msgstr "Po¾adováno"
 
-#: ../raster/r.external/main.c:521
+#: ../raster/r.external/main.c:531
 msgid "Name of non-file GDAL data source"
 msgstr "Jméno datového zdroje GDAL, který není soubor"
 
-#: ../raster/r.external/main.c:533
+#: ../raster/r.external/main.c:543
 msgid "Band to select (default: all)"
 msgstr "Kanál, který má být vybrán (výchozí: v¹echny kanály)"
 
-#: ../raster/r.external/main.c:540 ../raster/r.in.arc/main.c:87
+#: ../raster/r.external/main.c:550 ../raster/r.in.arc/main.c:87
 #: ../raster/r.in.bin/main.c:277 ../raster/r.in.gdal/main.c:121
 #: ../raster/r.in.poly/main.c:44 ../raster/r.in.ascii/main.c:85
 msgid "Title for resultant raster map"
 msgstr "Titulek pro výslednou rastrovou mapu"
 
-#: ../raster/r.external/main.c:541 ../raster/r.in.gdal/main.c:122
+#: ../raster/r.external/main.c:551 ../raster/r.in.gdal/main.c:122
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../raster/r.external/main.c:546 ../raster/r.in.gdal/main.c:134
+#: ../raster/r.external/main.c:556 ../raster/r.in.gdal/main.c:134
 msgid "Override projection (use location's projection)"
 msgstr "Pøepi¹ mapovou projekci (pou¾ij map. projekci location)"
 
-#: ../raster/r.external/main.c:550 ../raster/r.in.gdal/main.c:138
+#: ../raster/r.external/main.c:560 ../raster/r.in.gdal/main.c:138
 #: ../vector/v.in.ogr/main.c:231
-msgid "Extend location extents based on new dataset"
+#, fuzzy
+msgid "Extend region extents based on new dataset"
 msgstr "Hranice location se zvìt¹í podle nového datasetu"
 
-#: ../raster/r.external/main.c:554
+#: ../raster/r.external/main.c:562 ../raster/r.in.gdal/main.c:140
+#: ../vector/v.in.ogr/main.c:233
+msgid "Also updates the default region if in the PERMANENT mapset"
+msgstr ""
+
+#: ../raster/r.external/main.c:566
 msgid "Require exact range"
 msgstr "Po¾adován pøesný rozsah"
 
-#: ../raster/r.external/main.c:558 ../raster/r.in.gdal/main.c:142
+#: ../raster/r.external/main.c:570 ../raster/r.in.gdal/main.c:144
 #: ../vector/v.in.ogr/main.c:202
 msgid "List supported formats and exit"
 msgstr "Vypi¹ podporované formáty a ukonèi se"
 
-#: ../raster/r.external/main.c:559 ../raster/r.stats/main.c:147
+#: ../raster/r.external/main.c:571 ../raster/r.stats/main.c:147
 #: ../raster/r.stats/main.c:152 ../raster/r.stats/main.c:157
 #: ../raster/r.stats/main.c:163 ../raster/r.stats/main.c:168
 #: ../raster/r.stats/main.c:173 ../raster/r.stats/main.c:178
 #: ../raster/r.stats/main.c:183 ../raster/r.sunmask/main.c:232
-#: ../raster/r.sunmask/main.c:238 ../raster/r.in.gdal/main.c:143
+#: ../raster/r.sunmask/main.c:238 ../raster/r.in.gdal/main.c:145
 #: ../raster/r.out.gdal/main.c:133 ../imagery/i.group/main.c:77
 #: ../imagery/i.group/main.c:83 ../general/g.proj/main.c:63
 #: ../general/g.proj/main.c:69 ../general/g.proj/main.c:75
@@ -2347,37 +2364,37 @@ msgstr "Vypi¹ podporované formáty a ukonèi se"
 msgid "Print"
 msgstr "Tisk"
 
-#: ../raster/r.external/main.c:583
+#: ../raster/r.external/main.c:595
 msgid "Name for input source not specified"
 msgstr "Název vstupního zdroje nebyl specifikován"
 
-#: ../raster/r.external/main.c:586
+#: ../raster/r.external/main.c:598
 msgid "input= and source= are mutually exclusive"
 msgstr "input= a source= se vzájemnì vyluèují"
 
-#: ../raster/r.external/main.c:589 ../raster/r.in.gdal/main.c:220
+#: ../raster/r.external/main.c:601 ../raster/r.in.gdal/main.c:222
 msgid "Name for output raster map not specified"
 msgstr "Název výstupní rastrové mapy nebyl specifikován"
 
-#: ../raster/r.external/main.c:611
+#: ../raster/r.external/main.c:623
 msgid "Unable to set window"
 msgstr "Nelze nastavit okno"
 
-#: ../raster/r.external/main.c:618 ../raster/r.in.gdal/main.c:445
+#: ../raster/r.external/main.c:630 ../raster/r.in.gdal/main.c:446
 msgid "Proceeding with import..."
 msgstr "Pokraèuje importování..."
 
-#: ../raster/r.external/main.c:622
+#: ../raster/r.external/main.c:634
 #, fuzzy, c-format
 msgid "Imagery group <%s> already exists and will be overwritten."
 msgstr "Rastrová mapa <%s> ji¾ existuje a bude pøepsána."
 
-#: ../raster/r.external/main.c:633 ../raster/r.in.gdal/main.c:471
+#: ../raster/r.external/main.c:645 ../raster/r.in.gdal/main.c:472
 #, c-format
 msgid "Selected band (%d) does not exist"
 msgstr "Vybraný kanál (%d) neexistuje"
 
-#: ../raster/r.external/main.c:662
+#: ../raster/r.external/main.c:674
 #, fuzzy, c-format
 msgid "Imagery group <%s> created"
 msgstr "Rastrová mapa <%s> byla vytvoøena."
@@ -5294,7 +5311,7 @@ msgid "No rules specified"
 msgstr "®ádná pravidla nebyla zadána"
 
 #: ../raster/r.recode/main.c:109 ../raster/r.circle/dist.c:155
-#: ../raster/r.composite/main.c:273 ../raster/r.in.gdal/main.c:958
+#: ../raster/r.composite/main.c:273 ../raster/r.in.gdal/main.c:969
 #: ../raster/r.surf.fractal/main.c:39
 #, c-format
 msgid "Raster map <%s> created."
@@ -6090,9 +6107,9 @@ msgid "Neither \"levels\" nor \"step\" parameter specified."
 msgstr "Nebyl zadán parametr \"levels\" ani \"step\"."
 
 #: ../raster/r.contour/main.c:196 ../vector/v.net.centrality/main.c:240
-#: ../vector/v.overlay/main.c:464 ../vector/v.in.ogr/main.c:790
+#: ../vector/v.overlay/main.c:464 ../vector/v.in.ogr/main.c:780
 #: ../vector/v.net.distance/main.c:208 ../vector/v.in.dwg/main.c:219
-#: ../vector/v.distance/main.c:818 ../vector/v.net.flow/main.c:168
+#: ../vector/v.distance/main.c:822 ../vector/v.net.flow/main.c:168
 #: ../vector/v.surf.rst/main.c:613 ../vector/v.net.timetable/main.c:103
 #: ../vector/v.convert/att.c:80 ../vector/v.net.allpairs/main.c:149
 #: ../vector/v.net.components/main.c:147 ../vector/v.to.points/main.c:295
@@ -6101,7 +6118,7 @@ msgstr "Nebyl zadán parametr \"levels\" ani \"step\"."
 msgid "Unable to create table: '%s'"
 msgstr "Nelze vytvoøit tabulku : '%s'"
 
-#: ../raster/r.contour/main.c:201 ../vector/v.in.ogr/main.c:795
+#: ../raster/r.contour/main.c:201 ../vector/v.in.ogr/main.c:785
 #: ../vector/v.in.dwg/main.c:223 ../vector/v.in.ascii/in.c:505
 #: ../vector/v.reclass/main.c:223 ../vector/v.convert/att.c:85
 #: ../vector/v.in.sites/main.c:174 ../vector/v.in.dxf/write_vect.c:225
@@ -6112,9 +6129,9 @@ msgstr "Nelze vytvoøit index pro tabulku <%s>, klíè <%s>"
 
 #: ../raster/r.contour/main.c:206 ../raster/r.to.vect/main.c:203
 #: ../vector/v.random/main.c:204 ../vector/v.overlay/main.c:474
-#: ../vector/v.in.ogr/main.c:801 ../vector/v.in.dwg/main.c:228
+#: ../vector/v.in.ogr/main.c:791 ../vector/v.in.dwg/main.c:228
 #: ../vector/v.in.ascii/in.c:395 ../vector/v.sample/main.c:223
-#: ../vector/v.distance/main.c:823 ../vector/v.mkgrid/main.c:263
+#: ../vector/v.distance/main.c:827 ../vector/v.mkgrid/main.c:263
 #: ../vector/v.reclass/main.c:228 ../vector/v.convert/att.c:90
 #: ../vector/v.in.sites/main.c:179 ../vector/v.in.dxf/write_vect.c:223
 #: ../vector/v.to.points/main.c:306
@@ -8528,13 +8545,13 @@ msgid "Mapset <%s> in input location <%s> - %s"
 msgstr "Mapset <%s> ve vstupní location <%s> - <%s>"
 
 #: ../raster/r.proj.seg/main.c:280 ../raster/r.proj/main.c:245
-#: ../raster/r.in.gdal/main.c:666 ../imagery/i.rectify/target.c:33
+#: ../raster/r.in.gdal/main.c:677 ../imagery/i.rectify/target.c:33
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
 msgid "permission denied"
 msgstr "Pøístup odepøen"
 
 #: ../raster/r.proj.seg/main.c:281 ../raster/r.proj/main.c:246
-#: ../raster/r.in.gdal/main.c:667 ../imagery/i.rectify/target.c:33
+#: ../raster/r.in.gdal/main.c:678 ../imagery/i.rectify/target.c:33
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
 msgid "not found"
 msgstr "nenalezen"
@@ -8546,8 +8563,8 @@ msgid "Checking location <%s> mapset <%s>"
 msgstr "Kontroluji location <%s>, mapset <%s>"
 
 #: ../raster/r.proj.seg/main.c:299 ../raster/r.proj/main.c:264
-#: ../raster/r.in.gdal/main.c:217 ../raster/r.out.gdal/main.c:230
-#: ../vector/v.in.ogr/main.c:272 ../vector/v.in.ogr/main.c:324
+#: ../raster/r.in.gdal/main.c:219 ../raster/r.out.gdal/main.c:230
+#: ../vector/v.in.ogr/main.c:274 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.proj/main.c:181 ../vector/v.select/main.c:90
 #, c-format
 msgid "Required parameter <%s> not set"
@@ -9626,7 +9643,7 @@ msgstr "Název vstupní rastrové mapy"
 msgid "Number of passes through the dataset"
 msgstr "Poèet prùchodù pøes dataset"
 
-#: ../raster/r.basins.fill/main.c:99 ../raster/r.in.gdal/main.c:231
+#: ../raster/r.basins.fill/main.c:99 ../raster/r.in.gdal/main.c:233
 #, c-format
 msgid "Raster map <%s> already exists"
 msgstr "Rastrová vrstva <%s> ji¾ existuje."
@@ -11434,7 +11451,7 @@ msgid "extend_lines: q back pointer not NULL!"
 msgstr "extend_lines: q back pointer není NULL!"
 
 #: ../raster/r.to.vect/util.c:156 ../raster/r.to.vect/areas_io.c:371
-#: ../vector/v.random/main.c:300 ../vector/v.in.ogr/main.c:926
+#: ../vector/v.random/main.c:300 ../vector/v.in.ogr/main.c:916
 #, c-format
 msgid "Cannot insert new row: %s"
 msgstr "Nelze vlo¾it nový øádek: %s"
@@ -11465,7 +11482,7 @@ msgstr ""
 
 #: ../raster/r.to.vect/main.c:74 ../raster/r.to.vect/main.c:81
 #: ../vector/v.in.ogr/main.c:193 ../vector/v.in.ogr/main.c:216
-#: ../vector/v.in.ogr/main.c:237 ../vector/v.digit/line.c:86
+#: ../vector/v.in.ogr/main.c:239 ../vector/v.digit/line.c:86
 #: ../vector/v.digit/attr.c:539 ../vector/v.digit/attr.c:575
 #: ../vector/v.transform/main.c:183 ../vector/v.transform/main.c:194
 #: ../vector/v.to.rast/main.c:71 ../vector/v.to.rast/main.c:77
@@ -12164,35 +12181,35 @@ msgstr ""
 msgid "Name for new location to create"
 msgstr "Název nové location, která má být vytvoøena"
 
-#: ../raster/r.in.gdal/main.c:148
+#: ../raster/r.in.gdal/main.c:150
 #, fuzzy
 msgid "Force Lat/Lon maps to fit into geographic coordinates (90N,S; 180E,W)"
 msgstr "Poèáteèní mapové souøadnice"
 
-#: ../raster/r.in.gdal/main.c:153
+#: ../raster/r.in.gdal/main.c:155
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "Ponechej èísla kanálù místo pou¾ití jmen jejich barev"
 
-#: ../raster/r.in.gdal/main.c:174
+#: ../raster/r.in.gdal/main.c:176
 msgid "You have to specify a target location different from output location"
 msgstr "Musíte zadat cílovou location rùznou od souèasné"
 
-#: ../raster/r.in.gdal/main.c:178
+#: ../raster/r.in.gdal/main.c:180
 msgid "The '-l' flag only works in Lat/Lon locations"
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:196
+#: ../raster/r.in.gdal/main.c:198
 #, fuzzy
 msgid "Available GDAL Drivers:"
 msgstr "Pou¾itelné OGR ovladaèe:"
 
-#: ../raster/r.in.gdal/main.c:228
+#: ../raster/r.in.gdal/main.c:230
 #, c-format
 msgid "Raster map <%s> already exists and will be overwritten"
 msgstr "Rastrová mapa <%s> ji¾ existuje a bude pøepsána."
 
-#: ../raster/r.in.gdal/main.c:248
+#: ../raster/r.in.gdal/main.c:250
 msgid ""
 "The polynomial rectification used in i.rectify does not work well with NOAA/"
 "AVHRR data. Try using gdalwarp with thin plate spline rectification instead. "
@@ -12202,7 +12219,7 @@ msgstr ""
 "AVHRR. Zkuste místo toho pou¾ít gdalwarp rektifikaci pomocí køivek tenkých "
 "plátù (-tps)"
 
-#: ../raster/r.in.gdal/main.c:264
+#: ../raster/r.in.gdal/main.c:266
 #, fuzzy
 msgid ""
 "Input raster map is flipped or rotated - cannot import. You may use "
@@ -12211,14 +12228,14 @@ msgstr ""
 "Vstupní mapa je pootoèená - nelze ji naimportovat. Pou¾ijte 'gdalwarp' pro "
 "její transformaci severem-nahoru."
 
-#: ../raster/r.in.gdal/main.c:306
+#: ../raster/r.in.gdal/main.c:308
 msgid ""
 "Map bounds have been constrained to geographic coordinates. You will almost "
 "certainly want to check map bounds and resolution with r.info and reset them "
 "with r.region before going any further."
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:326
+#: ../raster/r.in.gdal/main.c:328
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location."
@@ -12226,12 +12243,12 @@ msgstr ""
 "Nelze pøevést vstupní mapovou projekci do formátu GRASSu; nelze vytvoøit "
 "novou location."
 
-#: ../raster/r.in.gdal/main.c:332
+#: ../raster/r.in.gdal/main.c:334
 #, c-format
 msgid "Location <%s> created"
 msgstr "Location <%s> vytvoøena"
 
-#: ../raster/r.in.gdal/main.c:431
+#: ../raster/r.in.gdal/main.c:432
 msgid ""
 "\n"
 "You can use the -o flag to r.in.gdal to override this check and use the "
@@ -12240,62 +12257,62 @@ msgstr ""
 "\n"
 "Mù¾ete pou¾ít pøepínaè -o zru¹ení této kontroly.\n"
 
-#: ../raster/r.in.gdal/main.c:550
+#: ../raster/r.in.gdal/main.c:551
 #, c-format
 msgid "Copying %d GCPS in points file for <%s>"
 msgstr "Kopíruji %d GCPS v souboru bodù pro <%s>"
 
-#: ../raster/r.in.gdal/main.c:555
+#: ../raster/r.in.gdal/main.c:556
 msgid "GCPs have the following OpenGIS WKT Coordinate System:"
 msgstr "GCPs mají následující OpenGIS WTK souøadný systém:"
 
-#: ../raster/r.in.gdal/main.c:562
+#: ../raster/r.in.gdal/main.c:563
 msgid "Re-projecting GCPs table:"
 msgstr "Zmìna projekce GCPs tabulky:"
 
-#: ../raster/r.in.gdal/main.c:563
+#: ../raster/r.in.gdal/main.c:564
 #, c-format
 msgid "* Input projection for GCP table: %s"
 msgstr "* Vstupní projekce pro GCP tabulku: %s"
 
-#: ../raster/r.in.gdal/main.c:565
+#: ../raster/r.in.gdal/main.c:566
 #, c-format
 msgid "* Output projection for GCP table: %s"
 msgstr "á Výstupní projekce pro GCP tabulk: %s"
 
-#: ../raster/r.in.gdal/main.c:582
+#: ../raster/r.in.gdal/main.c:583
 #, c-format
 msgid "Error in pj_do_proj (can't re-projection GCP %i)"
 msgstr "Chyba v pj_do_proj (nelze reprojekovat GCP %i)"
 
-#: ../raster/r.in.gdal/main.c:641
+#: ../raster/r.in.gdal/main.c:652
 msgid "Unable to translate projection key values of input GCPs"
 msgstr "Nelze získat klíèové hodnoty mapové projekce vstupní GCPs"
 
-#: ../raster/r.in.gdal/main.c:657
+#: ../raster/r.in.gdal/main.c:668
 msgid "Unable to get projection info of target location"
 msgstr "Nelze získat info mapové projekce cílové location"
 
-#: ../raster/r.in.gdal/main.c:659
+#: ../raster/r.in.gdal/main.c:670
 msgid "Unable to get projection units of target location"
 msgstr "Nelze získat jednotky mapové projekce cílové location"
 
-#: ../raster/r.in.gdal/main.c:661
+#: ../raster/r.in.gdal/main.c:672
 msgid "Unable to get projection key values of target location"
 msgstr "Nelze získat klíèové hodnoty mapové projekce cílové location"
 
-#: ../raster/r.in.gdal/main.c:664 ../imagery/i.rectify/target.c:32
+#: ../raster/r.in.gdal/main.c:675 ../imagery/i.rectify/target.c:32
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:31
 #, c-format
 msgid "Mapset <%s> in target location <%s> - "
 msgstr "Mapset <%s> ve vstupní location <%s> - "
 
-#: ../raster/r.in.gdal/main.c:934
+#: ../raster/r.in.gdal/main.c:945
 #, c-format
 msgid "Setting grey color table for <%s> (8bit, full range)"
 msgstr "Nastavuji barevnou tabulku barev  na ¹edou pro <%s> (8bit plný rozsah)"
 
-#: ../raster/r.in.gdal/main.c:947
+#: ../raster/r.in.gdal/main.c:958
 #, c-format
 msgid "Setting grey color table for <%s> (16bit, image range)"
 msgstr ""
@@ -21882,7 +21899,7 @@ msgid "Output triangulation as a graph (lines), not areas"
 msgstr "Výstup triangulace jako graf (linie), ne plochy"
 
 #: ../vector/v.voronoi/dt_main.c:142 ../vector/v.overlay/area_area.c:68
-#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:591
+#: ../vector/v.in.ogr/main.c:1043 ../vector/v.buffer2/main.c:591
 #: ../vector/v.buffer2/main.c:683 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
@@ -22429,48 +22446,48 @@ msgstr "Pøepi¹ mapovou projekci (pou¾ij map. projekci location)"
 msgid "Limit import to the current region"
 msgstr "Limit pøi importu do souèasného regionu"
 
-#: ../vector/v.in.ogr/main.c:236
+#: ../vector/v.in.ogr/main.c:238
 msgid "Change column names to lowercase characters"
 msgstr "Zmìnit mázev sloupce na malé písmo"
 
-#: ../vector/v.in.ogr/main.c:253
+#: ../vector/v.in.ogr/main.c:255
 msgid "Available OGR Drivers:"
 msgstr "Pou¾itelné OGR ovladaèe:"
 
-#: ../vector/v.in.ogr/main.c:293
+#: ../vector/v.in.ogr/main.c:295
 #, c-format
 msgid "Unable to open data source <%s>"
 msgstr "Nelze otevøítzdroj dat <%s>"
 
-#: ../vector/v.in.ogr/main.c:301
+#: ../vector/v.in.ogr/main.c:303
 #, c-format
 msgid "Data source contains %d layers:"
 msgstr "Zdroj dat obsahuje %d vrstev:"
 
-#: ../vector/v.in.ogr/main.c:333
+#: ../vector/v.in.ogr/main.c:335
 #, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "Vektorová mapa '%s' ji¾ existuje a bude pøepsána."
 
-#: ../vector/v.in.ogr/main.c:336 ../vector/v.edit/main.c:93
+#: ../vector/v.in.ogr/main.c:338 ../vector/v.edit/main.c:93
 #, c-format
 msgid "Vector map <%s> already exists"
 msgstr "Vektorová mapa <%s> ji¾ existuje"
 
-#: ../vector/v.in.ogr/main.c:361 ../vector/v.external/main.c:128
+#: ../vector/v.in.ogr/main.c:363 ../vector/v.external/main.c:128
 #, c-format
 msgid "Layer <%s> not available"
 msgstr "Vrstva <%s> není dostupná"
 
-#: ../vector/v.in.ogr/main.c:377
+#: ../vector/v.in.ogr/main.c:379
 msgid "Select either the current region flag or the spatial option, not both"
 msgstr "Vyberte souèasné nastavení regionu nebo prostorové volby, ne oboje"
 
-#: ../vector/v.in.ogr/main.c:405
+#: ../vector/v.in.ogr/main.c:407
 msgid "4 parameters required for 'spatial' parameter"
 msgstr " 4 parametry vy¾adovány pro 'prostorový' parametr."
 
-#: ../vector/v.in.ogr/main.c:482
+#: ../vector/v.in.ogr/main.c:484
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location"
@@ -22478,7 +22495,7 @@ msgstr ""
 "Nelze pøevést vstupní mapovou projekci do formátu GRASSu; nelze vytvoøit "
 "novou location."
 
-#: ../vector/v.in.ogr/main.c:494
+#: ../vector/v.in.ogr/main.c:496
 msgid ""
 "Unable to convert input map projection information to GRASS format for "
 "checking"
@@ -22486,11 +22503,11 @@ msgstr ""
 "Nelze pøevést informace o vstupní mapové projekci do formátu GRASSu (pro "
 "kontrolu)"
 
-#: ../vector/v.in.ogr/main.c:524
+#: ../vector/v.in.ogr/main.c:526
 msgid "GRASS LOCATION PROJ_INFO is:\n"
 msgstr "GRASS LOCATION PROJ_INFO  je:\n"
 
-#: ../vector/v.in.ogr/main.c:584
+#: ../vector/v.in.ogr/main.c:586
 #, c-format
 msgid ""
 "\n"
@@ -22499,7 +22516,7 @@ msgstr ""
 "\n"
 "Mù¾ete pou¾ít pøepínaè -o pro %s a pøeskoèit toto ovìøení.\n"
 
-#: ../vector/v.in.ogr/main.c:587
+#: ../vector/v.in.ogr/main.c:589
 msgid ""
 "Consider generating a new location with 'location' parameter from input data "
 "set.\n"
@@ -22507,27 +22524,27 @@ msgstr ""
 "Zva¾te vytvoøení nové location s parametry 'location' ze vstupního "
 "datasetu.\n"
 
-#: ../vector/v.in.ogr/main.c:610
+#: ../vector/v.in.ogr/main.c:612
 #, fuzzy, c-format
 msgid "Using temporary vector <%s>"
 msgstr "Nelze vytvoøit vektorovou mapu <%s>"
 
-#: ../vector/v.in.ogr/main.c:629
+#: ../vector/v.in.ogr/main.c:631
 #, c-format
 msgid "Layer: %s"
 msgstr "Vrstva: %s"
 
-#: ../vector/v.in.ogr/main.c:693
+#: ../vector/v.in.ogr/main.c:695
 #, c-format
 msgid "Column name changed: '%s' -> '%s'"
 msgstr "Název sloupce zmìnìn: '%s' -> '%s'"
 
-#: ../vector/v.in.ogr/main.c:729
+#: ../vector/v.in.ogr/main.c:719
 #, c-format
 msgid "Writing column <%s> with fixed length %d chars (may be truncated)"
 msgstr "Zápis sloupce <%s> s pevnou délkou %d znakù (mù¾e být zkrácen)"
 
-#: ../vector/v.in.ogr/main.c:752
+#: ../vector/v.in.ogr/main.c:742
 #, c-format
 msgid ""
 "Width for column %s set to 255 (was not specified by OGR), some strings may "
@@ -22536,98 +22553,98 @@ msgstr ""
 "Délka pro sloupec '%s' nastavena na 255 (nebyla specifikována OGR), nìkteré "
 "øetìzce mohou být zkráceny!"
 
-#: ../vector/v.in.ogr/main.c:764
+#: ../vector/v.in.ogr/main.c:754
 #, c-format
 msgid "Writing column %s with fixed length %d chars (may be truncated)"
 msgstr "Zápis sloupce <%s> s pevnou délkou %d znakù (mù¾e být zkrácen)"
 
-#: ../vector/v.in.ogr/main.c:768
+#: ../vector/v.in.ogr/main.c:758
 #, c-format
 msgid "Column type not supported (%s)"
 msgstr "Typ sloupce není podporován (%s)"
 
-#: ../vector/v.in.ogr/main.c:783
+#: ../vector/v.in.ogr/main.c:773
 #, c-format
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "Nelze otevøít databázi <%s> ovladaèem <%s>"
 
-#: ../vector/v.in.ogr/main.c:820
+#: ../vector/v.in.ogr/main.c:810
 #, fuzzy, c-format
 msgid "Counting polygons for %d features..."
 msgstr "Importuji prvky mapy %d..."
 
-#: ../vector/v.in.ogr/main.c:842
+#: ../vector/v.in.ogr/main.c:832
 #, fuzzy, c-format
 msgid "Boundary splitting distance in map units: %G"
 msgstr "Vzdálenost bufferu v mapových jednotkách"
 
-#: ../vector/v.in.ogr/main.c:847
+#: ../vector/v.in.ogr/main.c:837
 #, c-format
 msgid "Importing map %d features..."
 msgstr "Importuji prvky mapy %d..."
 
-#: ../vector/v.in.ogr/main.c:942
+#: ../vector/v.in.ogr/main.c:932
 #, c-format
 msgid "%d %s without geometry"
 msgstr "%d %s bez geometrie"
 
-#: ../vector/v.in.ogr/main.c:967
+#: ../vector/v.in.ogr/main.c:957
 msgid "Cleaning polygons, result is not guaranteed!"
 msgstr "Proèi¹tìní polygonù, výsledek není zaruèen!"
 
-#: ../vector/v.in.ogr/main.c:971
+#: ../vector/v.in.ogr/main.c:961
 #, c-format
 msgid "Snap boundaries (threshold = %.3e):"
 msgstr "rozdìlit hranice (mezní hodnota =%.3e)"
 
-#: ../vector/v.in.ogr/main.c:985
+#: ../vector/v.in.ogr/main.c:975
 msgid "Break polygons:"
 msgstr "Zlom polygonù:"
 
-#: ../vector/v.in.ogr/main.c:990 ../vector/v.in.ogr/main.c:1004
+#: ../vector/v.in.ogr/main.c:980 ../vector/v.in.ogr/main.c:994
 msgid "Remove duplicates:"
 msgstr "Mazání duplicit:"
 
-#: ../vector/v.in.ogr/main.c:1000
+#: ../vector/v.in.ogr/main.c:990
 msgid "Break boundaries:"
 msgstr "Zlomit hranice:"
 
-#: ../vector/v.in.ogr/main.c:1008
+#: ../vector/v.in.ogr/main.c:998
 msgid "Clean boundaries at nodes:"
 msgstr "Vyèistit hranice na uzlech:"
 
-#: ../vector/v.in.ogr/main.c:1015
+#: ../vector/v.in.ogr/main.c:1005
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "Zlomit hranice:"
 
-#: ../vector/v.in.ogr/main.c:1020
+#: ../vector/v.in.ogr/main.c:1010
 msgid "Change boundary dangles to lines:"
 msgstr "Mìním hranice pøívìskù  na linie:"
 
-#: ../vector/v.in.ogr/main.c:1024
+#: ../vector/v.in.ogr/main.c:1014
 msgid "Change dangles to lines:"
 msgstr "Zmìnit pøívìsky na linie:"
 
-#: ../vector/v.in.ogr/main.c:1030
+#: ../vector/v.in.ogr/main.c:1020
 msgid "Change boundary bridges to lines:"
 msgstr "Mìním hranice mostù na linie:        "
 
-#: ../vector/v.in.ogr/main.c:1034
+#: ../vector/v.in.ogr/main.c:1024
 msgid "Remove bridges:"
 msgstr "Mazání mostù:"
 
-#: ../vector/v.in.ogr/main.c:1069
+#: ../vector/v.in.ogr/main.c:1059
 #, fuzzy, c-format
 msgid "Find centroids for layer: %s"
 msgstr "Výpoèet polohy støedu..."
 
-#: ../vector/v.in.ogr/main.c:1090
+#: ../vector/v.in.ogr/main.c:1080
 #, fuzzy
 msgid "Write centroids:"
 msgstr "Zapisuji centroidy ..."
 
-#: ../vector/v.in.ogr/main.c:1140
+#: ../vector/v.in.ogr/main.c:1130
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -22639,42 +22656,42 @@ msgstr ""
 "atributové tabulce. Èíslo prvkù pro tyto plochy jsou ulo¾eny jako kategorie "
 "ve vrstvì %d"
 
-#: ../vector/v.in.ogr/main.c:1150
+#: ../vector/v.in.ogr/main.c:1140
 #, fuzzy, c-format
 msgid "%d input polygons\n"
 msgstr "%d vstupních polygonù"
 
-#: ../vector/v.in.ogr/main.c:1151
+#: ../vector/v.in.ogr/main.c:1141
 #, c-format
 msgid "%d input polygons"
 msgstr "%d vstupních polygonù"
 
-#: ../vector/v.in.ogr/main.c:1154
+#: ../vector/v.in.ogr/main.c:1144
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)\n"
 msgstr "Celkem ploch: %e (%d ploch)"
 
-#: ../vector/v.in.ogr/main.c:1155
+#: ../vector/v.in.ogr/main.c:1145
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)"
 msgstr "Celkem ploch: %e (%d ploch)"
 
-#: ../vector/v.in.ogr/main.c:1158
+#: ../vector/v.in.ogr/main.c:1148
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)\n"
 msgstr "Pøekrytí plochy: %e (%d ploch)"
 
-#: ../vector/v.in.ogr/main.c:1160
+#: ../vector/v.in.ogr/main.c:1150
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)"
 msgstr "Pøekrytí plochy: %e (%d ploch)"
 
-#: ../vector/v.in.ogr/main.c:1164
+#: ../vector/v.in.ogr/main.c:1154
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)\n"
 msgstr "PPlochy bez kategorie:%e (%d ploch)"
 
-#: ../vector/v.in.ogr/main.c:1166
+#: ../vector/v.in.ogr/main.c:1156
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)"
 msgstr "PPlochy bez kategorie:%e (%d ploch)"
@@ -23262,8 +23279,8 @@ msgid "From layer number or name"
 msgstr "Èíslo dotazované vrstvy (pro naètení)"
 
 #: ../vector/v.net.distance/main.c:74 ../vector/v.net.distance/main.c:79
-#: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:122
-#: ../vector/v.distance/main.c:134 ../vector/v.distance/main.c:146
+#: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:121
+#: ../vector/v.distance/main.c:133 ../vector/v.distance/main.c:145
 msgid "From"
 msgstr "From (z_mapy)"
 
@@ -23283,8 +23300,8 @@ msgstr "Èíslo vrstvy (from)"
 
 #: ../vector/v.net.distance/main.c:90 ../vector/v.net.distance/main.c:95
 #: ../vector/v.net.distance/main.c:101 ../vector/v.net.distance/main.c:108
-#: ../vector/v.distance/main.c:127 ../vector/v.distance/main.c:141
-#: ../vector/v.distance/main.c:151 ../vector/v.distance/main.c:207
+#: ../vector/v.distance/main.c:126 ../vector/v.distance/main.c:140
+#: ../vector/v.distance/main.c:150 ../vector/v.distance/main.c:209
 msgid "To"
 msgstr "To (do_mapy)"
 
@@ -23775,8 +23792,8 @@ msgstr "Prvek má více kategorií. Bude exportována pouze první kategorie (%d)."
 msgid "Unable to select record from table <%s> (key %s, column %s)"
 msgstr "Nelze vybrat záznam z tabulky <%s> (klíè %s sloupec %s)"
 
-#: ../vector/v.out.ascii/b2a.c:227 ../vector/v.distance/main.c:373
-#: ../vector/v.distance/main.c:407 ../vector/v.reclass/main.c:137
+#: ../vector/v.out.ascii/b2a.c:227 ../vector/v.distance/main.c:377
+#: ../vector/v.distance/main.c:411 ../vector/v.reclass/main.c:137
 #: ../vector/v.to.3d/trans3.c:61 ../vector/v.to.3d/trans2.c:60
 #, c-format
 msgid "Column <%s> not found in table <%s>"
@@ -25120,7 +25137,7 @@ msgstr "Nelze kopírovat tabulku"
 msgid "Removing duplicate centroids..."
 msgstr "Odstraòuji duplicitní centroidy ..."
 
-#: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:115
+#: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:114
 #: ../vector/v.to.db/main.c:33 ../vector/v.db.select/main.c:53
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
 #: ../locale/scriptstrings/v.db.join_to_translate.c:2
@@ -25653,7 +25670,7 @@ msgstr "Nelze vytvoøit tabulku <%s>"
 msgid "Checking vector points..."
 msgstr "Kontroluji vektorové body ..."
 
-#: ../vector/v.distance/main.c:117
+#: ../vector/v.distance/main.c:116
 msgid ""
 "Finds the nearest element in vector map 'to' for elements in vector map "
 "'from'."
@@ -25661,57 +25678,57 @@ msgstr ""
 "najít nejbli¾¹í prvek ve vektorové vrstvì 'do_mapy' pro prvky ve vektorové "
 "vrstvì 'z_mapy'"
 
-#: ../vector/v.distance/main.c:121
+#: ../vector/v.distance/main.c:120
 msgid "Name of existing vector map (from)"
 msgstr "Jméno existující vektorové mapy (from)"
 
-#: ../vector/v.distance/main.c:126
+#: ../vector/v.distance/main.c:125
 msgid "Name of existing vector map (to)"
 msgstr "Jméno existující vektorové mapy (to)"
 
-#: ../vector/v.distance/main.c:133
+#: ../vector/v.distance/main.c:132
 msgid "Feature type (from)"
 msgstr "Typ prvku (from)"
 
-#: ../vector/v.distance/main.c:140
+#: ../vector/v.distance/main.c:139
 msgid "Feature type (to)"
 msgstr "Typ prvku (to)"
 
-#: ../vector/v.distance/main.c:145
+#: ../vector/v.distance/main.c:144
 msgid "Layer number (from)"
 msgstr "Èíslo vrstvy (from)"
 
-#: ../vector/v.distance/main.c:150
+#: ../vector/v.distance/main.c:149
 msgid "Layer number (to)"
 msgstr "Èíslo vrstvy (to)"
 
-#: ../vector/v.distance/main.c:156
+#: ../vector/v.distance/main.c:155
 msgid "Name for output vector map containing lines connecting nearest elements"
 msgstr ""
 "Nová vektorová mapa obsahující linie spojující linie s nejbli¾¹ímy prvky"
 
-#: ../vector/v.distance/main.c:164
+#: ../vector/v.distance/main.c:163
 msgid "Maximum distance or -1 for no limit"
 msgstr "Maximální vzdálenost nebo -1 bez limitu"
 
-#: ../vector/v.distance/main.c:171
+#: ../vector/v.distance/main.c:170
 msgid "Minimum distance or -1 for no limit"
 msgstr "Minimální vzdálenost nebo -1 bez limitu"
 
-#: ../vector/v.distance/main.c:180
+#: ../vector/v.distance/main.c:179
 msgid "Values describing the relation between two nearest features"
 msgstr "Hodnoty popisující vztahy mezi dvìma nejbli¾¹ími prvky"
 
-#: ../vector/v.distance/main.c:182
+#: ../vector/v.distance/main.c:181
+#, fuzzy
 msgid ""
 "cat;category of the nearest feature;dist;minimum distance to nearest feature;"
-"to_x;x coordinate of the nearest point on 'to' feature;to_y;y coordinate of "
-"the nearest point on 'to' feature;to_along;distance between points/centroids "
-"in 'from' map and the linear feature's start point in 'to' map, along this "
-"linear feature;to_angle;angle between the linear feature in 'to' map and the "
-"positive x axis, at the location of point/centroid in 'from' map, "
-"counterclockwise, in radians, which is between -PI and PI inclusive;to_attr;"
-"attribute of nearest feature given by to_column option"
+"to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate "
+"of the nearest point on the 'to' feature;to_along;distance to the nearest "
+"point on the 'to' feature along that linear feature;to_angle;angle along the "
+"nearest linear feature in the 'to' map, measured CCW from the +x axis, in "
+"radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature "
+"given by to_column option"
 msgstr ""
 "cat;kategorie nejlbli¾¹ího prvku;dist;minimální vzdálenost k nejbli¾¹ímu "
 "prvku;to_x;souøadnice x nejbli¾¹ího bodu na 'to' prvku;to_y;souøadnice y "
@@ -25721,140 +25738,141 @@ msgstr ""
 "radiánech, co¾ je mezi -Pí a Pí vèetnì;to_attr;attribute nejbli¾¹ího prvku "
 "daný volbou to_column"
 
-#: ../vector/v.distance/main.c:200
+#: ../vector/v.distance/main.c:202
 msgid ""
 "Column name(s) where values specified by 'upload' option will be uploaded"
 msgstr ""
 "Jméno(a) sloupcù, kde hodnoty specifikované volbou 'upload' budou ulo¾eny"
 
-#: ../vector/v.distance/main.c:201
+#: ../vector/v.distance/main.c:203
 msgid "From_map"
 msgstr "z_mapy"
 
-#: ../vector/v.distance/main.c:206
+#: ../vector/v.distance/main.c:208
 msgid "Column name of nearest feature (used with upload=to_attr)"
 msgstr "Jméno sloupce nejbli¾¹ího prvku (k pou¾ití spolu s upload=to_attr)"
 
-#: ../vector/v.distance/main.c:212
+#: ../vector/v.distance/main.c:214
 msgid "Name of table created for output when the distance to all flag is used"
 msgstr ""
 "Název tabulky vytvoøené pro výstup, pokud je udán pøepínaè -a (vzdálenost ke "
 "v¹em prvkùm)"
 
-#: ../vector/v.distance/main.c:217
+#: ../vector/v.distance/main.c:219
 msgid "Print output to stdout, don't update attribute table"
 msgstr "Vytiskni na standardní výstup, nemìò atributovou tabulku."
 
-#: ../vector/v.distance/main.c:219
+#: ../vector/v.distance/main.c:221
 msgid "First column is always category of 'from' feature called from_cat"
 msgstr "První sloupec je v¾dy kategorie prvku 'from' zavolaná from_cat"
 
-#: ../vector/v.distance/main.c:224
+#: ../vector/v.distance/main.c:226
 msgid "Calculate distances to all features within the threshold"
 msgstr "vypoèítá vzdálenost ke v¹em prvùm v mezní vzdálenosti"
 
-#: ../vector/v.distance/main.c:225
+#: ../vector/v.distance/main.c:228
+#, fuzzy
 msgid ""
-"The output is written to stdout but may be uploaded to a new table created "
-"by this module. From categories are may be multiple."
+"Output is written to stdout but may be uploaded to a new table created by "
+"this module; multiple 'upload' options may be used."
 msgstr ""
 "Výstup je zapsán na standardní výstup, ale mù¾e být ulo¾en do nové "
 "atributové tabulky vytvoøené tímto modulem. Kategorie 'from' mohou být "
 "víceèetné."
 
-#: ../vector/v.distance/main.c:276
+#: ../vector/v.distance/main.c:280
 msgid "to_column option missing"
 msgstr "volba to_column chybí"
 
-#: ../vector/v.distance/main.c:288
+#: ../vector/v.distance/main.c:292
 msgid "Too many column names"
 msgstr "Pøíli¹ mnoho názvù sloupcù"
 
-#: ../vector/v.distance/main.c:295
+#: ../vector/v.distance/main.c:299
 msgid "Not enough column names"
 msgstr "Nedostatek názvù sloupcù"
 
-#: ../vector/v.distance/main.c:302
+#: ../vector/v.distance/main.c:306
 #, c-format
 msgid "Vector map <%s> is not in user mapset and cannot be updated"
 msgstr "Vektorová mapa <%s> není v tomto mapsetu a nelze ji mìnit"
 
-#: ../vector/v.distance/main.c:383
+#: ../vector/v.distance/main.c:387
 msgid "Unable to open default database"
 msgstr "Nelze otevøít výchozí databázi"
 
-#: ../vector/v.distance/main.c:439
+#: ../vector/v.distance/main.c:443
 msgid "Incompatible column types"
 msgstr "Nekompatibilní typy sloupcù"
 
-#: ../vector/v.distance/main.c:512
+#: ../vector/v.distance/main.c:516
 msgid "Finding nearest lines..."
 msgstr "Hledám nejbli¾¹í linie..."
 
-#: ../vector/v.distance/main.c:642
+#: ../vector/v.distance/main.c:646
 msgid "Finding nearest areas..."
 msgstr "Hledám nejbli¾¹í plochy ... "
 
-#: ../vector/v.distance/main.c:714
+#: ../vector/v.distance/main.c:718
 #, c-format
 msgid "More cats found in to_layer (area=%d)"
 msgstr "Nalezeno více kategorií ve do_vrstvy (plocha=%d)"
 
-#: ../vector/v.distance/main.c:855
+#: ../vector/v.distance/main.c:859
 msgid "DATETIME type not yet supported, no attributes will be uploaded"
 msgstr "DATETIME type zatím není podporovaný, ¾ádné atributy nebudou ulo¾eny"
 
-#: ../vector/v.distance/main.c:1104
+#: ../vector/v.distance/main.c:1108
 #, c-format
 msgid "%d categories with more than 1 feature in vector map <%s>"
 msgstr "%d kategorií s více ne¾ jedním prvkem ve vektorové mapì <%s>"
 
-#: ../vector/v.distance/main.c:1107
+#: ../vector/v.distance/main.c:1111
 #, c-format
 msgid "%d categories - no nearest feature found"
 msgstr "%d kategorií - nebyl nalezen nejbli¾¹í prvek"
 
-#: ../vector/v.distance/main.c:1116
+#: ../vector/v.distance/main.c:1120
 #, c-format
 msgid "%d distances calculated"
 msgstr "%d vzdáleností spoèítáno"
 
-#: ../vector/v.distance/main.c:1117
+#: ../vector/v.distance/main.c:1121
 #, c-format
 msgid "%d records inserted"
 msgstr "vlo¾eno %d záznamù"
 
-#: ../vector/v.distance/main.c:1119
+#: ../vector/v.distance/main.c:1123
 #, c-format
 msgid "%d insert errors"
 msgstr "%d chyb pøi aktualizaci"
 
-#: ../vector/v.distance/main.c:1123
+#: ../vector/v.distance/main.c:1127
 #, c-format
 msgid "%d categories read from the map"
 msgstr "naèteno %d kategorií z mapové vrstvy"
 
-#: ../vector/v.distance/main.c:1125
+#: ../vector/v.distance/main.c:1129
 #, c-format
 msgid "%d categories exist in the table"
 msgstr "v tabulce existuje %d kategorií "
 
-#: ../vector/v.distance/main.c:1127
+#: ../vector/v.distance/main.c:1131
 #, c-format
 msgid "%d categories read from the map exist in the table"
 msgstr "%d kategorií naètených z mapové vrstvy existuje v tabulce"
 
-#: ../vector/v.distance/main.c:1130
+#: ../vector/v.distance/main.c:1134
 #, c-format
 msgid "%d categories read from the map don't exist in the table"
 msgstr "%d kategorií naètených z mapové vrstvy neexistuje v tabulce"
 
-#: ../vector/v.distance/main.c:1132 ../vector/v.what.rast/main.c:372
+#: ../vector/v.distance/main.c:1136 ../vector/v.what.rast/main.c:372
 #, c-format
 msgid "%d records updated"
 msgstr "%d záznamù aktualizováno"
 
-#: ../vector/v.distance/main.c:1134 ../vector/v.what.rast/main.c:373
+#: ../vector/v.distance/main.c:1138 ../vector/v.what.rast/main.c:373
 #, c-format
 msgid "%d update errors"
 msgstr "%d chyb pøi aktualizaci"
@@ -29569,16 +29587,16 @@ msgstr "Vynechávám plochy ..."
 msgid "Cannot select attributes for area %d"
 msgstr "Nelze vybrat atributy pro plochu %d"
 
-#: ../vector/v.extrude/main.c:260
+#: ../vector/v.extrude/main.c:258
 msgid "Extruding vector primitives..."
 msgstr "Vynechávám základní vektorové prvky ..."
 
-#: ../vector/v.extrude/main.c:293
+#: ../vector/v.extrude/main.c:291
 #, c-format
 msgid "Cannot select attributes for area #%d"
 msgstr "Nelze vybrat atributy pro oblast #%d"
 
-#: ../vector/v.extrude/main.c:311
+#: ../vector/v.extrude/main.c:309
 #, c-format
 msgid "Column <%s>: invalid data type"
 msgstr "Sloupec <%s>: neplatný typ dat."
