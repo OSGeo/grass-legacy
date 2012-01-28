@@ -143,7 +143,7 @@ class PsMapFrame(wx.Frame):
         
         # image path
         env = grass.gisenv()
-        self.imgName = os.path.join(env['GISDBASE'], env['LOCATION_NAME'], env['MAPSET'], '.tmp', 'tmpImage.png')
+        self.imgName = grass.tempfile()
         
         #canvas for preview
         self.previewCanvas = PsMapBufferedWindow(parent = self, mouse = self.mouse, cursors = self.cursors,
@@ -313,13 +313,13 @@ class PsMapFrame(wx.Frame):
                 im = Image.open(event.userData['filename'])
                 if self.instruction[self.pageId]['Orientation'] == 'Landscape':
                     im = im.rotate(270)
-                
-                im.save(self.imgName, format = 'png')
+                print self.imgName
+                im.save(self.imgName, format = 'PNG')
                 
             except IOError, e:
                 GError(parent = self,
                        message = _("Unable to generate preview. %s") % e)
-            
+                return
             
                 
             rect = self.previewCanvas.ImageRect()
