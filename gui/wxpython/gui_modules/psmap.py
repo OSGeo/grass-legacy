@@ -1418,20 +1418,24 @@ class PsMapBufferedWindow(wx.Window):
 
 
             if self.mouse['use'] == 'zoomout':
-                zoomFactor = min(rW/cW, rH/cH) 
-            if rW/rH > cW/cH:
-                yView = rect.GetY() - (rW*(cH/cW) - rH)/2
-                xView = rect.GetX()
+                zoomFactor = min(rW/cW, rH/cH)
+            try:
+                if rW/rH > cW/cH:
+                    yView = rect.GetY() - (rW*(cH/cW) - rH)/2
+                    xView = rect.GetX()
+                    
+                    if self.mouse['use'] == 'zoomout':
+                        x,y = rect.GetX() + (rW-(cW/cH)*rH)/2, rect.GetY()
+                        xView, yView = -x, -y
+                else:
+                    xView = rect.GetX() - (rH*(cW/cH) - rW)/2
+                    yView = rect.GetY()
+                    if self.mouse['use'] == 'zoomout':
+                        x,y = rect.GetX(), rect.GetY() + (rH-(cH/cW)*rW)/2
+                        xView, yView = -x, -y
+            except ZeroDivisionError:
+                xView, yView = rect.GetX(), rect.GetY()
                 
-                if self.mouse['use'] == 'zoomout':
-                    x,y = rect.GetX() + (rW-(cW/cH)*rH)/2, rect.GetY()
-                    xView, yView = -x, -y
-            else:
-                xView = rect.GetX() - (rH*(cW/cH) - rW)/2
-                yView = rect.GetY()
-                if self.mouse['use'] == 'zoomout':
-                    x,y = rect.GetX(), rect.GetY() + (rH-(cH/cW)*rW)/2
-                    xView, yView = -x, -y
         return zoomFactor, (int(xView), int(yView))
     
     
