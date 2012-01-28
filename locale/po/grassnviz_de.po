@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-05 23:24+0200\n"
+"POT-Creation-Date: 2012-01-28 10:01+0100\n"
 "PO-Revision-Date: 2012-01-24 17:44+0100\n"
 "Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
@@ -18,6 +18,1601 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
 
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
+#: ../visualization/nviz/scripts/panel_surf.tcl:671
+#: ../visualization/nviz/scripts/attPopup.tcl:45
+#: ../visualization/nviz/scripts/attPopup.tcl:46
+#: ../visualization/nviz/scripts/panel_vol.tcl:1115
+msgid "Attribute"
+msgstr "Attribut"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:80
+#: ../visualization/nviz/scripts/attPopup.tcl:88
+#, tcl-format
+msgid "Change attribute: %s"
+msgstr "Verändere Attribut: %s"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:85
+#: ../visualization/nviz/scripts/attPopup.tcl:92
+msgid "New map"
+msgstr "Neue Karte"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:89
+#: ../visualization/nviz/scripts/attPopup.tcl:97
+msgid "Remove mask"
+msgstr "Entferne Maske"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:90
+#: ../visualization/nviz/scripts/attPopup.tcl:98
+msgid "invert mask"
+msgstr "Invertiere Maske"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:98
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:107
+#: ../visualization/nviz/scripts/attPopup.tcl:106
+#: ../visualization/nviz/scripts/attPopup.tcl:115
+msgid "New constant"
+msgstr "Neue Konstante"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:99
+msgid "use volume as color"
+msgstr "Verwende Volumen als Farbe"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:114
+#: ../visualization/nviz/scripts/attPopup.tcl:122
+msgid "Curr. value: "
+msgstr "Aktueller Wert:"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:123
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:409
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:455
+#: ../visualization/nviz/scripts/script_file_tools:574
+#: ../visualization/nviz/scripts/script_file_tools:887
+#: ../visualization/nviz/scripts/fileBrowser.tcl:113
+#: ../visualization/nviz/scripts/attPopup.tcl:128
+#: ../visualization/nviz/scripts/attPopup.tcl:474
+#: ../visualization/nviz/scripts/attPopup.tcl:522
+#: ../visualization/nviz/scripts/mapBrowser.tcl:227
+#: ../visualization/nviz/scripts/script_tools:110
+msgid "Accept"
+msgstr "Annehmen"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:125
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
+#: ../visualization/nviz/scripts/script_file_tools:113
+#: ../visualization/nviz/scripts/script_file_tools:575
+#: ../visualization/nviz/scripts/script_file_tools:888
+#: ../visualization/nviz/scripts/ACS_utils.tcl:312
+#: ../visualization/nviz/scripts/ACS_utils.tcl:354
+#: ../visualization/nviz/scripts/ACS_utils.tcl:375
+#: ../visualization/nviz/scripts/ACS_utils.tcl:430
+#: ../visualization/nviz/scripts/ACS_utils.tcl:475
+#: ../visualization/nviz/scripts/ACS_utils.tcl:569
+#: ../visualization/nviz/scripts/ACS_utils.tcl:641
+#: ../visualization/nviz/scripts/fileBrowser.tcl:115
+#: ../visualization/nviz/scripts/attPopup.tcl:133
+#: ../visualization/nviz/scripts/attPopup.tcl:475
+#: ../visualization/nviz/scripts/attPopup.tcl:523
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
+#: ../visualization/nviz/scripts/mapBrowser.tcl:229
+#: ../visualization/nviz/scripts/script_get_line:19
+#: ../visualization/nviz/scripts/panel_main.tcl:112
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:173
+#: ../visualization/nviz/scripts/script_tools:111
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:172
+#: ../visualization/nviz/scripts/nviz2.2_script:924
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:275
+msgid "remove mask"
+msgstr "Entferne Maske"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:399
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:445
+#: ../visualization/nviz/scripts/attPopup.tcl:462
+#: ../visualization/nviz/scripts/attPopup.tcl:512
+msgid "Constant"
+msgstr "konstant"
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
+msgid "Enter value: "
+msgstr "Wert eingeben: "
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:449
+msgid "Use slider to select constant value :"
+msgstr "Verwende Slider, um einen konstanten Wert zu wählen :"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:27
+msgid "Resize Draw Area"
+msgstr "Ändere Größe der Zeichenfläche"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:33
+msgid "Resize Panel"
+msgstr "Größeneinstellungen"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:39
+msgid "Resize: "
+msgstr "Verändere Größe: "
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:42
+msgid "width"
+msgstr "Breite"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:43
+#: ../visualization/nviz/scripts/panel_vol.tcl:457
+#: ../visualization/nviz/scripts/panel_vol.tcl:460
+#: ../visualization/nviz/scripts/panel_vol.tcl:735
+#: ../visualization/nviz/scripts/panel_vol.tcl:738
+msgid "height"
+msgstr "Höhe"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:52
+msgid "Resize"
+msgstr "Verändere Größe"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:55
+#: ../visualization/nviz/scripts/panel_pos.tcl:95
+msgid "Refresh"
+msgstr "Erneuere Anzeige"
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:58
+#: ../visualization/nviz/scripts/panel_animation.tcl:203
+#: ../visualization/nviz/scripts/panel_fringe.tcl:82
+#: ../visualization/nviz/scripts/panel_lights.tcl:83
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:186
+#: ../visualization/nviz/scripts/panel_tst.tcl:53
+#: ../visualization/nviz/scripts/panel_legend.tcl:138
+#: ../visualization/nviz/scripts/panel_scale.tcl:94
+#: ../visualization/nviz/scripts/panel_site.tcl:114
+#: ../visualization/nviz/scripts/panel_surf.tcl:184
+#: ../visualization/nviz/scripts/panel_surf.tcl:726
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:111
+#: ../visualization/nviz/scripts/panel_arrow.tcl:93
+#: ../visualization/nviz/scripts/panel_vect.tcl:80
+#: ../visualization/nviz/scripts/panel_pos.tcl:125
+#: ../visualization/nviz/scripts/panel_label.tcl:96
+#: ../visualization/nviz/scripts/panel_rquery.tcl:88
+#: ../visualization/nviz/scripts/panel_vquery.tcl:144
+#: ../visualization/nviz/scripts/panel_color.tcl:53
+#: ../visualization/nviz/scripts/script_tools:47
+#: ../visualization/nviz/scripts/panel_vol.tcl:1170
+#: ../visualization/nviz/scripts/nviz2.2_script:819
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:69
+msgid "Close"
+msgstr "Schließen"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:100
+msgid "Simple Animation"
+msgstr "Einfache Animation"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:104
+msgid "Simple Keyframe Animation Panel"
+msgstr "Einfache Keyframe Animationseinstellungen"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:111
+msgid "Step backward frame by frame"
+msgstr "Frame by Frame-Schritte rückwärts"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:114
+msgid "Pause playback"
+msgstr "Pause beim Abspielen"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:117
+msgid "Step forward frame by frame"
+msgstr "Frame by Frame-Schritte vorwärts"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:120
+msgid "Run animation from beginning"
+msgstr "Starte Animation von Beginn"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:122
+msgid " set max frames:"
+msgstr " Stelle maximale Frame-Anzahl ein:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:136
+msgid "Key Frames"
+msgstr "Key-Frames"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:145
+msgid "Current frame:"
+msgstr "Aktueller Frame:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:148
+msgid "Selected key frame:"
+msgstr "Ausgewählter Key-Frame:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:159
+msgid "Add frame"
+msgstr "Füge einen Frame hinzu"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:161
+msgid "Clear all"
+msgstr "Alles löschen"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:170
+msgid "Show: "
+msgstr "Zeige:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:171
+msgid "path"
+msgstr "Pfad"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:173
+msgid "lines"
+msgstr "Linien"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:175
+msgid "points"
+msgstr "Punkte"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:177
+msgid "volumes"
+msgstr "Volumen"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:184
+msgid "Interpolation: "
+msgstr "Interpolierung: "
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:185
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:162
+msgid "linear"
+msgstr "linear"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:189
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:165
+msgid "spline"
+msgstr "Spline"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:200
+msgid "Run and save"
+msgstr "Starte und speichere"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:202
+msgid "Run animation and save frames"
+msgstr "Spiele Animation ab und speichere Frames"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:222
+msgid "spline tension"
+msgstr "Spline tension"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:275
+#: ../visualization/nviz/scripts/panel_tst.tcl:21
+msgid "Test"
+msgstr "Test"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:576
+#: ../visualization/nviz/scripts/panel_animation.tcl:800
+#: ../visualization/nviz/scripts/script_file_tools:111
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1908
+msgid "Verify"
+msgstr "Überprüfe"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:576
+msgid "Do you really want to delete this keyframe?"
+msgstr "Wollen sie wirklich diesen Keyframe löschen?"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:577
+#: ../visualization/nviz/scripts/panel_animation.tcl:755
+#: ../visualization/nviz/scripts/panel_animation.tcl:801
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:80
+#: ../visualization/nviz/scripts/script_file_tools:113
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:466
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:553
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1708
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
+#: ../visualization/nviz/scripts/script_get_line:18
+#: ../visualization/nviz/scripts/nviz2.2_script:924
+msgid "Ok"
+msgstr "Ok"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:577
+#: ../visualization/nviz/scripts/panel_animation.tcl:603
+#: ../visualization/nviz/scripts/panel_animation.tcl:644
+#: ../visualization/nviz/scripts/panel_animation.tcl:755
+#: ../visualization/nviz/scripts/panel_animation.tcl:801
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:497
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:505
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:577
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:678
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:873
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1007
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1872
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1925
+#: ../visualization/nviz/scripts/script_play:32
+#: ../visualization/nviz/scripts/nviz2.2_script:1054
+msgid "Dismiss"
+msgstr "Verwerfe"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:601
+#: ../visualization/nviz/scripts/panel_animation.tcl:642
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:676
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:871
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1005
+msgid "Internal Error"
+msgstr "Interner Fehler"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:602
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:872
+msgid "Internal Error - Failed to delete keyframe in GK key list"
+msgstr ""
+"Interner Fehler - Löschen des Key-Frames in GK-Key-Liste fehlgeschlagen."
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:643
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
+msgid "Internal Error - Failed to move keyframe in GK key list"
+msgstr ""
+"Interner Fehler - Verschieben des Key-Frames in GK-Key-Liste fehlgeschlagen."
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:753
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
+msgid "Replace Key"
+msgstr "Ersetze Key"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:754
+msgid "There is already a keyframe at this time, do you wish to replace it?"
+msgstr "Es ist schon ein Keyframe vorhanden, soll dieser ersetzt werden?"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:800
+msgid "Do you really want to delete all keyframes?"
+msgstr "Wollen sie wirklich alle Keyframes löschen?"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:928
+msgid "Save Animation Frames"
+msgstr "Speichere Animation"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:934
+msgid "Prefix for images: "
+msgstr "Präfix der Ausgabebilder:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:935
+msgid "Enter a prefix name for images to be created from animation frames"
+msgstr ""
+"Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:940
+msgid "Output format: "
+msgstr "Ausgabeformat:"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:941
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1712
+msgid "PPM"
+msgstr "PPM"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:942
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1713
+msgid "TIFF"
+msgstr "TIFF"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:943
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1714
+msgid "MPEG-1"
+msgstr "MPEG-1"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:948
+msgid "Rendering mode: "
+msgstr "Rendering-Modus: "
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:949
+#: ../visualization/nviz/scripts/panel_surf.tcl:143
+msgid "coarse"
+msgstr "grob"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:950
+#: ../visualization/nviz/scripts/panel_surf.tcl:153
+msgid "fine"
+msgstr "fein"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:955
+#: ../visualization/nviz/scripts/ACS_utils.tcl:312
+#: ../visualization/nviz/scripts/ACS_utils.tcl:354
+#: ../visualization/nviz/scripts/ACS_utils.tcl:375
+#: ../visualization/nviz/scripts/ACS_utils.tcl:430
+#: ../visualization/nviz/scripts/ACS_utils.tcl:475
+#: ../visualization/nviz/scripts/ACS_utils.tcl:569
+#: ../visualization/nviz/scripts/ACS_utils.tcl:641
+msgid "OK"
+msgstr "OK"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:43
+#: ../visualization/nviz/scripts/panel_main.tcl:164
+msgid "Fringe"
+msgstr "Fringe"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:45
+msgid "Fringe Panel"
+msgstr "Eingabe der Randzone"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:48
+msgid "Edges with fringe: "
+msgstr "Kanten mit Randzone:"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:51
+msgid "N&W"
+msgstr "N&W"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:54
+msgid "N&E"
+msgstr "N&E"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:57
+msgid "S&W"
+msgstr "S&W"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:60
+msgid "S&E"
+msgstr "S&E"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:68
+msgid "Elevation of fringe bottom: "
+msgstr "Untere Höhe der Randzone:"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:69
+#: ../visualization/nviz/scripts/panel_scale.tcl:60
+#: ../visualization/nviz/scripts/panel_scale.tcl:79
+#: ../visualization/nviz/scripts/panel_site.tcl:149
+#: ../visualization/nviz/scripts/panel_arrow.tcl:61
+#: ../visualization/nviz/scripts/panel_arrow.tcl:78
+#: ../visualization/nviz/scripts/panel_vect.tcl:106
+#: ../visualization/nviz/scripts/panel_label.tcl:70
+msgid "Color"
+msgstr "Farben"
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:80
+msgid "Draw Fringe"
+msgstr "Zeichne Randzone"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:25
+msgid "Lighting"
+msgstr "Beleuchtung"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:30
+msgid "Lighting Panel"
+msgstr "Einstellungen der Beleuchtung"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:43
+msgid " Light source position"
+msgstr " Position der Lichtquelle"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:58
+msgid "Follow surface viewpoint"
+msgstr "Folge Oberflächen-Standpunkt"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:60
+msgid "Show lighting model"
+msgstr "Zeige Beleuchtungs-Modell"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:66
+msgid "Light color"
+msgstr "Lichtfarbe"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:70
+msgid "Light intensity"
+msgstr "Licht-Intensität"
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:81
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:182
+#: ../visualization/nviz/scripts/panel_surf.tcl:725
+#: ../visualization/nviz/scripts/panel_rquery.tcl:64
+#: ../visualization/nviz/scripts/site_attr.tcl:483
+#: ../visualization/nviz/scripts/panel_vol.tcl:1169
+#: ../visualization/nviz/scripts/nviz2.2_script:377
+#: ../visualization/nviz/scripts/nviz2.2_script:923
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:48
+msgid "Cutting Planes"
+msgstr "Schnittebenen"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:50
+msgid "Cutting Planes Panel"
+msgstr "Einstellungen der Schnittebenen"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:60
+msgid "Active cutting plane: "
+msgstr "Aktive Schnittebene:"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:61
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:67
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:290
+#: ../visualization/nviz/scripts/panel_legend.tcl:183
+#: ../visualization/nviz/scripts/script_file_tools:567
+#: ../visualization/nviz/scripts/script_file_tools:676
+msgid "None"
+msgstr "Keine"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:68
+msgid "Plane 0"
+msgstr "Ebene 0"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:69
+msgid "Plane 1"
+msgstr "Ebene 1"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:70
+msgid "Plane 2"
+msgstr "Ebene 2"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:71
+msgid "Plane 3"
+msgstr "Ebene 3"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:72
+msgid "Plane 4"
+msgstr "Ebene 4"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:73
+msgid "Plane 5"
+msgstr "Ebene 5"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:87
+msgid "set shading"
+msgstr "Bestimme Schattierung"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:90
+msgid "top color"
+msgstr "Farbe oben"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:92
+msgid "bottom color"
+msgstr "Farbe unten"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:94
+msgid "blend"
+msgstr "Mischen"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:96
+msgid "shaded"
+msgstr "schattiert"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:98
+#: ../visualization/nviz/scripts/panel_vquery.tcl:426
+msgid "clear"
+msgstr "Lösche"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:114
+#: ../visualization/nviz/scripts/panel_surf.tcl:702
+#: ../visualization/nviz/scripts/panel_vol.tcl:1146
+msgid "X:"
+msgstr "X:"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:115
+#: ../visualization/nviz/scripts/panel_surf.tcl:703
+#: ../visualization/nviz/scripts/panel_vol.tcl:1147
+msgid "Y:"
+msgstr "Y:"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:139
+msgid "Z coord"
+msgstr "Z Koordinate"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:151
+msgid "Rotate"
+msgstr "Rotiere"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:163
+msgid "Tilt"
+msgstr "Neigung"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:184
+msgid "All Off"
+msgstr "Alles aus"
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:292
+#, tcl-format
+msgid "Plane %s"
+msgstr "Ebene %s"
+
+#: ../visualization/nviz/scripts/panel_tst.tcl:31
+msgid "Test Panel"
+msgstr "Überprüfe Einstellungen"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:63
+#: ../visualization/nviz/scripts/panel_main.tcl:156
+msgid "Legend"
+msgstr "Legende"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:65
+msgid "Legends Panel"
+msgstr "Einstellungen für Legende"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:71
+msgid "reverse legend"
+msgstr "Drehe Legende"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:73
+msgid "show values"
+msgstr "Zeige Werte"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:75
+msgid "show labels"
+msgstr "Zeige Labels"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:77
+#: ../visualization/nviz/scripts/panel_arrow.tcl:73
+#: ../visualization/nviz/scripts/panel_label.tcl:67
+msgid "Font"
+msgstr "Schriftart"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:79
+msgid "Select font family, size, and style for legend text"
+msgstr "Wähle Schriftfamilie, Größe, Stil für Legendentext"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:86
+msgid "set value range "
+msgstr "Setze Wertebereich "
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:91
+msgid "min "
+msgstr "min"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:94
+msgid " max "
+msgstr " max "
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:107
+msgid "discrete categories"
+msgstr "diskrete Kategorien"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:131
+msgid "Place legend"
+msgstr "Platziere Legende"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:133
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
+msgstr ""
+"Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, "
+"rechter Button legt gegenüberliegende Ecke fest."
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:135
+msgid "Erase legend"
+msgstr "Lösche Legende"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:137
+msgid "Erase all legends"
+msgstr "Lösche alle Legenden"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:166
+msgid "Category Values"
+msgstr "Kategoriewerte"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:169
+#: ../visualization/nviz/scripts/script_file_tools:44
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:130
+#: ../visualization/nviz/scripts/panel_vol.tcl:492
+#: ../visualization/nviz/scripts/panel_vol.tcl:860
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:170
+#: ../visualization/nviz/scripts/script_file_tools:45
+#: ../visualization/nviz/scripts/panel_site.tcl:59
+#: ../visualization/nviz/scripts/panel_surf.tcl:71
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:131
+#: ../visualization/nviz/scripts/panel_vect.tcl:70
+#: ../visualization/nviz/scripts/panel_vol.tcl:494
+#: ../visualization/nviz/scripts/panel_vol.tcl:862
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:171
+#: ../visualization/nviz/scripts/script_file_tools:54
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:172
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:171
+msgid "Done"
+msgstr "Fertig"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:220
+#: ../visualization/nviz/scripts/panel_arrow.tcl:119
+#: ../visualization/nviz/scripts/panel_label.tcl:177
+msgid "The quick brown fox jumps over the lazy dog"
+msgstr "The quick brown fox jumps over the lazy dog"
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:220
+#: ../visualization/nviz/scripts/panel_arrow.tcl:119
+#: ../visualization/nviz/scripts/panel_label.tcl:177
+msgid "Select font"
+msgstr "Schrift auswählen"
+
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:30
+msgid "Select Wire Color"
+msgstr "Wähle Gitter-Farbe"
+
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:57
+msgid "use surface color"
+msgstr "Verwende Oberflächenfarbe"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:45
+msgid "Scale bar"
+msgstr "Maßstabsleiste"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:47
+msgid "Scale Bar Panel"
+msgstr "Einstellungen der Maßstabsleiste"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:51
+msgid "Scale bar: "
+msgstr "Maßstabsleiste:"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:54
+msgid "length (in map units) "
+msgstr "Länge in Karteneinheiten"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:71
+msgid "Scale text: "
+msgstr "Maßstabstext: "
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:74
+msgid "size "
+msgstr "Größe"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:90
+msgid "Place scale"
+msgstr "Platziere Maßstab"
+
+#: ../visualization/nviz/scripts/colorPopup.tcl:17
+msgid "Choose color"
+msgstr "Wähle Farbe"
+
+#: ../visualization/nviz/scripts/script_file_tools:36
+msgid "Map Object File Sequencing"
+msgstr "Map Object File Sequencing"
+
+#: ../visualization/nviz/scripts/script_file_tools:43
+msgid "Fields:"
+msgstr "Felder:"
+
+#: ../visualization/nviz/scripts/script_file_tools:46
+msgid "State File: None"
+msgstr "Status-Datei: Nichts"
+
+#: ../visualization/nviz/scripts/script_file_tools:53
+msgid "Options:"
+msgstr "Optionen: "
+
+#: ../visualization/nviz/scripts/script_file_tools:55
+msgid "Add To Script"
+msgstr "Zu Skript hinzufügen"
+
+#: ../visualization/nviz/scripts/script_file_tools:56
+msgid "Build Script..."
+msgstr "Erstelle Skript..."
+
+#: ../visualization/nviz/scripts/script_file_tools:57
+msgid "Load Fields..."
+msgstr "Lade Felder..."
+
+#: ../visualization/nviz/scripts/script_file_tools:58
+msgid "Save Fields..."
+msgstr "Speichere Felder..."
+
+#: ../visualization/nviz/scripts/script_file_tools:75
+msgid "Frame"
+msgstr "Frame"
+
+#: ../visualization/nviz/scripts/script_file_tools:111
+msgid "Current fields have not been saved, really load new fields?"
+msgstr ""
+"Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue "
+"Felder laden?"
+
+#: ../visualization/nviz/scripts/script_file_tools:126
+#: ../visualization/nviz/scripts/nviz2.2_script:871
+#: ../visualization/nviz/scripts/nviz2.2_script:1025
+#, tcl-format
+msgid "Error while opening file: %s"
+msgstr "Fehler bei Öffnen der Datei: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:135
+#, tcl-format
+msgid "While reading state_file: %s"
+msgstr "Beim Lesen von state_file: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:142
+#, tcl-format
+msgid "While reading number of fields: %s"
+msgstr "Beim Lesen der Anzahl der Felder: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:151
+#, tcl-format
+msgid "While reading field type: %s"
+msgstr "Beim Lesen des Feldtyp: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:157
+#, tcl-format
+msgid "While reading field attribute: %s"
+msgstr "Beim Lesen der Attributfelder: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:542
+msgid "Field Type: "
+msgstr "Feldtyp"
+
+#: ../visualization/nviz/scripts/script_file_tools:543
+#: ../visualization/nviz/scripts/panel_surf.tcl:125
+#: ../visualization/nviz/scripts/panel_main.tcl:142
+msgid "Surface"
+msgstr "Oberfläche"
+
+#: ../visualization/nviz/scripts/script_file_tools:554
+msgid "Field Attribute: "
+msgstr "Feldattribut: "
+
+#: ../visualization/nviz/scripts/script_file_tools:555
+msgid "Topography"
+msgstr "Topographie"
+
+#: ../visualization/nviz/scripts/script_file_tools:566
+msgid "Use Nviz Map: "
+msgstr "Verwende Nviz-Karte: "
+
+#: ../visualization/nviz/scripts/script_file_tools:853
+#, tcl-format
+msgid "State File: %s"
+msgstr "Status-Datei: %s"
+
+#: ../visualization/nviz/scripts/script_file_tools:885
+msgid "Enter an image root name"
+msgstr "Gebe einen Bildnamen ein"
+
+#: ../visualization/nviz/scripts/ACS_utils.tcl:331
+msgid "ok"
+msgstr "OK"
+
+#: ../visualization/nviz/scripts/ACS_utils.tcl:331
+msgid "dismiss"
+msgstr "verwerfe"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:44
+msgid "Vector Points"
+msgstr "Vektorpunkte"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:51
+msgid "Vector Points Panel"
+msgstr "Einstellungen für Vektorpunkte"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:55
+#: ../visualization/nviz/scripts/panel_surf.tcl:68
+#: ../visualization/nviz/scripts/fileBrowser.tcl:119
+#: ../visualization/nviz/scripts/panel_vect.tcl:65
+#: ../visualization/nviz/scripts/panel_vol.tcl:51
+msgid "Current:"
+msgstr "Aktuell:"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:58
+#: ../visualization/nviz/scripts/panel_surf.tcl:70
+#: ../visualization/nviz/scripts/panel_vect.tcl:69
+#: ../visualization/nviz/scripts/site_attr.tcl:1271
+msgid "New"
+msgstr "Neu"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:118
+#: ../visualization/nviz/scripts/panel_surf.tcl:185
+#: ../visualization/nviz/scripts/panel_vect.tcl:82
+#: ../visualization/nviz/scripts/panel_vol.tcl:115
+msgid "DRAW CURRENT"
+msgstr "Zeichne aktuelle Einstellungen"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:133
+msgid "icon size"
+msgstr "Symbolgröße"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:153
+msgid "icon type"
+msgstr "Symboltyp"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:162
+msgid "3D points"
+msgstr "3D-Punkte"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:166
+#: ../visualization/nviz/scripts/panel_vect.tcl:113
+msgid "display on surface(s):"
+msgstr "Zeige auf den Oberflächen an:"
+
+#: ../visualization/nviz/scripts/panel_site.tcl:182
+msgid "thematic mapping for vector points"
+msgstr "Thematische Darstellung von Vektorpunkten"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:51
+msgid "Raster Surfaces"
+msgstr "Rasteroberflächen"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:58
+msgid "Surface Panel"
+msgstr "Einstellungen der Oberfläche"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:79
+msgid "Surface attributes..."
+msgstr "Oberflächenattribute..."
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:88
+msgid "Wire Color"
+msgstr "Gitternetzfarbe"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:92
+#: ../visualization/nviz/scripts/panel_pos.tcl:28
+#: ../visualization/nviz/scripts/panel_vol.tcl:82
+msgid "Position"
+msgstr "Position"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:96
+msgid "Mask zeros:"
+msgstr "Null-Werte maskieren:"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:97
+msgid "by elevation"
+msgstr "nach Höhe"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:99
+msgid "by color"
+msgstr "nach Farbe"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:109
+msgid "Draw mode..."
+msgstr "Darstellungsmodus"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:112
+msgid "Coarse"
+msgstr "grob"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:114
+msgid "Fine"
+msgstr "fein"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:116
+msgid "Both"
+msgstr "beides"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:120
+msgid "Coarse style..."
+msgstr "Grober Stil..."
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:123
+msgid "Wire"
+msgstr "Gitternetz"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:128
+#: ../visualization/nviz/scripts/panel_vol.tcl:73
+msgid "Shading..."
+msgstr "Schattierung..."
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:132
+#: ../visualization/nviz/scripts/panel_vol.tcl:76
+msgid "Flat"
+msgstr "flach"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:134
+#: ../visualization/nviz/scripts/panel_vol.tcl:78
+msgid "Gouraud"
+msgstr "Gouraud"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:141
+msgid "Resolution:"
+msgstr "Auflösung:"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:166
+msgid "Set resolution for:"
+msgstr "Setze Auflösung für:"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:167
+msgid "current surface"
+msgstr "aktuelle Oberfläche"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:169
+msgid "all surfaces"
+msgstr "alle Oberflächen"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:670
+msgid "Position Surface"
+msgstr "Position der Oberfläche"
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:701
+#: ../visualization/nviz/scripts/panel_vol.tcl:1145
+msgid "Z:"
+msgstr "Z:"
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:82
+msgid "DIRECTORIES"
+msgstr "Verzeichnisse"
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:99
+#: ../visualization/nviz/scripts/mapBrowser.tcl:168
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:118
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:119
+msgid "FILES"
+msgstr "Dateien"
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:154
+msgid "File Browser"
+msgstr "Datei-Browser"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:107
+msgid "use as color"
+msgstr "Verwende als Farbe"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:113
+msgid "Constant not supported"
+msgstr "Ein konstanter Wert wird nicht unterstützt"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:319
+msgid "Surface Color"
+msgstr "Oberflächenfarbe"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:468
+msgid "Enter value:"
+msgstr "Gebe Wert ein:"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:516
+msgid "Use slider to set value"
+msgstr "Benutze Slider, um Wert einzustellen"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:79
+msgid "Keyframe Animation"
+msgstr "Keyframe-Animation"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:80
+msgid "Keyframe Animation Panel"
+msgstr "Einstellungen für Keyframe-Animation"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:96
+msgid "Framerate :"
+msgstr "Framerate :"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:105
+msgid "File: "
+msgstr "Datei: "
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:106
+#: ../visualization/nviz/scripts/site_attr.tcl:1434
+msgid "Save"
+msgstr "Speichern"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:107
+msgid "Load"
+msgstr "Laden"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:109
+msgid "Animation: "
+msgstr "Animation: "
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:110
+msgid "Run and Save"
+msgstr "Starten und speichern"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:132
+msgid "New Key Time:"
+msgstr "Neue Key-Time:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:143
+msgid "Show Feature"
+msgstr "Zeige Objekt"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:146
+msgid "Path"
+msgstr "Pfad"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:148
+msgid "Vect Lines/Polygons"
+msgstr "Vektorlinien/-Polygone"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:150
+msgid "Vect Points"
+msgstr "Vektorpunkte"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:152
+msgid "Volume"
+msgstr "Volumen"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:154
+msgid "Labels/Legend"
+msgstr "Labels/Legende"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:159
+msgid "Interp."
+msgstr "Interpolierung"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:168
+msgid "tension"
+msgstr "Tension"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:230
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
+#: ../visualization/nviz/scripts/nviz2.2_script:414
+msgid "On"
+msgstr "an"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:447
+msgid "New Key Time"
+msgstr "Neue Key-Time"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:451
+msgid "Minute:"
+msgstr "Minute:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:452
+msgid "Second:"
+msgstr "Sekunde:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:453
+msgid "Frame:"
+msgstr "Frame:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
+msgid "KeyTime Error"
+msgstr "KeyTime-Fehler"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
+msgid "Error - All values must be at least zero."
+msgstr "Fehler - Alle Werte müssen zumindest 0 sein."
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
+msgid "Error - Frame number must be less than frame rate."
+msgstr "Fehler - Frameanzahl muss geringer als Framerate sein."
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:540
+msgid "New Frame Rate"
+msgstr "Neue Frame-Rate"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:544
+msgid "Framerate:"
+msgstr "Framerate:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
+msgid "Frame Rate Error"
+msgstr "Frame Rate-Fehler"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
+msgid "Error - Frame rate must be at least 1."
+msgstr "Fehler - Frame-Rate muss zumindest 1 sein."
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:677
+#, tcl-format
+msgid "Internal Error - Can't find channel %s for keyframe %s"
+msgstr "Interner Fehler - Kann Kanal %s für Keyframe %s nicht finden"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:856
+msgid "Delete Keys"
+msgstr "Lösche Keys"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:857
+msgid "Delete the selected keys?"
+msgstr "Selektierte Keys löschen?"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1125
+msgid "There is already a keyframe at this time, replace it?"
+msgstr "Ein Keyframe ist schon vorhanden, diesen wirklich ersetzen?"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1221
+msgid "Keyframe Attributes"
+msgstr "Keyframe-Attribute"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1699
+msgid "Enter a base name:"
+msgstr "Basisnamen eingeben:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1702
+msgid "Render:"
+msgstr "Rendern:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1703
+msgid "Wireframe"
+msgstr "Wireframe"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1705
+msgid "Full Rendering"
+msgstr "Komplette Ausgabe"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1710
+msgid "Image:"
+msgstr "Bild:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1716
+msgid "Start Frame:"
+msgstr "Start Frame:"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1718
+msgid "Off-Screen"
+msgstr "Off-Screen"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1909
+msgid "Warning - Current animation has not been saved, continue?"
+msgstr "Warnung - Aktuelle Animation wurde noch nicht gespeichert, fortfahren?"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
+#: ../visualization/nviz/scripts/script_play:30
+#: ../visualization/nviz/scripts/nviz2.2_script:1053
+msgid "File Error"
+msgstr "Datei-Fehler"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1924
+#, tcl-format
+msgid "Error - Could not open file %s for reading"
+msgstr "Fehler - Datei %s konnte nicht geöffnet werden"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+msgid "x"
+msgstr "x"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "sphere"
+msgstr "Kugel"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "diamond"
+msgstr "Raute"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "cube"
+msgstr "Würfel"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "box"
+msgstr "Box"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "gyro"
+msgstr "Kreisel"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "aster"
+msgstr "Aster"
+
+#: ../visualization/nviz/scripts/config.tcl:125
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "histogram"
+msgstr "Histogramm"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:141
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:201
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:200
+msgid "Map Browser"
+msgstr "Karten-Browser"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:150
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:104
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:105
+msgid "MAPSETS"
+msgstr "MAPSETS"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:204
+msgid "Map type:"
+msgstr "Kartentyp:"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:207
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:151
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:152
+msgid "Map Type"
+msgstr "Kartentyp"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:210
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:154
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:155
+msgid "Raster"
+msgstr "Raster"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:212
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:156
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:157
+msgid "Vector"
+msgstr "Vektor"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:214
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:158
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:159
+msgid "Site"
+msgstr "Punkt"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:216
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:160
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:161
+msgid "Surf"
+msgstr "Oberflächen"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:218
+msgid "3d.view"
+msgstr "3D-Ansicht"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:220
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:162
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:163
+msgid "Regions"
+msgstr "Region"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:222
+#: ../visualization/nviz/scripts/panel_main.tcl:158
+#: ../visualization/nviz/scripts/panel_label.tcl:60
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:164
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:165
+msgid "Labels"
+msgstr "Beschriftungen"
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:225
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:167
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:168
+msgid "Icons"
+msgstr "Icons"
+
+#: ../visualization/nviz/scripts/script_get_line:15
+#: ../visualization/nviz/scripts/nviz2.2_script:431
+msgid "Add Script Line"
+msgstr "Kommandozeile hinzufügen"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:86
+msgid "Main"
+msgstr "Hauptsächlich"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:104
+msgid "DRAW"
+msgstr "Zeichne"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:107
+msgid "Draw selected features"
+msgstr "Zeichne selektierte Objekte"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:109
+#: ../visualization/nviz/scripts/panel_rquery.tcl:66
+#: ../visualization/nviz/scripts/site_attr.tcl:1437
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:64
+msgid "Clear"
+msgstr "Löschen"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:110
+msgid "Clear NVIZ display"
+msgstr "Lösche NVIZ-Darstellungh"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:113
+msgid "Cancel current draw"
+msgstr "Aktuelle Darstellung abbrechen"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:119
+msgid "Automatically render display:"
+msgstr "Automatisches Rendern der Anzeige:"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:123
+msgid "Automatically render display after changing parameters"
+msgstr "Automatisches Rendern der Anzeige nach Änderung der Parameter"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:128
+msgid "Show features:"
+msgstr "Zeige Objekte:"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:131
+msgid "Main features..."
+msgstr "Hauptobjekte..."
+
+#: ../visualization/nviz/scripts/panel_main.tcl:136
+msgid "Decorations..."
+msgstr "Verzierungen..."
+
+#: ../visualization/nviz/scripts/panel_main.tcl:145
+msgid "Vectors"
+msgstr "Vektorkarten"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:148
+msgid "Sites"
+msgstr "Punkte"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:151
+#: ../visualization/nviz/scripts/panel_vol.tcl:40
+msgid "Volumes"
+msgstr "Volumen"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:160
+msgid "North Arrow"
+msgstr "Nordpfeil."
+
+#: ../visualization/nviz/scripts/panel_main.tcl:162
+msgid "Scale Bar"
+msgstr "Maßstabsleiste"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:175
+msgid "View method:"
+msgstr "Darstellungsmethode:"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:177
+msgid "eye"
+msgstr "Auge"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:181
+#: ../visualization/nviz/scripts/panel_main.tcl:224
+msgid "center"
+msgstr "in der Mitte"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:190
+msgid "Change view by moving eye position"
+msgstr "Ändere Blick durch Bewegen der Augenposition"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:191
+msgid "Change view by moving scene center position"
+msgstr "Ändere Blick durch Bewegen der Szenenmitte"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:192
+msgid "Click to change scene center position, scroll to zoom in and out"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:200
+msgid "Change view using mouse to control fly-through"
+msgstr "Ändere Blick mit Maus, um Fly-through zu kontrollieren"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:209
+#: ../visualization/nviz/scripts/panel_main.tcl:210
+msgid "Set vertical exaggeration"
+msgstr "Vertikaler Skalierfaktor"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:211
+#: ../visualization/nviz/scripts/panel_main.tcl:212
+msgid "Set eye height"
+msgstr "Lege Augenhöhe fest"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:217
+msgid "Look"
+msgstr "Zeige"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:218
+msgid "here"
+msgstr "hier"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:219
+msgid "Center view at point marked with mouse click"
+msgstr "Zentriere Blick mit Mausklick"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:225
+msgid "Center view at center of displayed surface"
+msgstr "Zentriere Blick im der Mitte der angezeigten Oberfläche"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:229
+msgid "top"
+msgstr "oben"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:230
+msgid "View directly from above"
+msgstr "Blick direkt von oben"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:253
+msgid "Set field of view size (degrees)"
+msgstr "Sichtfeld des Betrachters (in Grad)."
+
+#: ../visualization/nviz/scripts/panel_main.tcl:254
+msgid "Set twist angle (degrees)"
+msgstr "Drehwinkel des Betrachters (in Grad)."
+
+#: ../visualization/nviz/scripts/panel_main.tcl:257
+msgid "reset"
+msgstr "Zurücksetzen"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:259
+msgid "Reset view to default"
+msgstr "Zurücksetzen auf Standardwerte"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:522
+msgid "Set eye position"
+msgstr "Lege Augenposition fest"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:527
+msgid "Set center of view position"
+msgstr "Lege Zentrum der Blickposition fest"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:47
+msgid "North arrow"
+msgstr "Nordpfeil"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:49
+msgid "North Arrow Panel"
+msgstr "Einstellungen für Nordpfeil"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:53
+msgid "Arrow: "
+msgstr "Pfeil: "
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:56
+msgid "size (in map units) "
+msgstr "Größe (in Karteneinheiten)"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:72
+msgid "North text: "
+msgstr "Nordpfeil-Text:"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:75
+#: ../visualization/nviz/scripts/panel_label.tcl:69
+msgid "Select font family, size, and style"
+msgstr "Wähle Schriftfamilie, Größe und Stil aus"
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:89
+msgid "Place arrow"
+msgstr "Platziere Nordpfeil"
+
+#: ../visualization/nviz/scripts/script_play:31
+#, tcl-format
+msgid "Script file %s does not exist"
+msgstr "Skript-Datei %s existiert nicht"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:61
+#: ../visualization/nviz/scripts/flythrough.tcl:142
+msgid "fly"
+msgstr "fliege"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:68
+#: ../visualization/nviz/scripts/flythrough.tcl:271
+msgid "none"
+msgstr "nichts"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:71
+#: ../visualization/nviz/scripts/flythrough.tcl:150
+#: ../visualization/nviz/scripts/flythrough.tcl:272
+msgid "basic"
+msgstr "grundlegend"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:72
+#: ../visualization/nviz/scripts/flythrough.tcl:158
+msgid "simple"
+msgstr "einfach"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:73
+#: ../visualization/nviz/scripts/flythrough.tcl:166
+msgid "orbit"
+msgstr "Umlaufbahn"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:84
+msgid "Coarse Draw"
+msgstr "Grober Zeichen-Modus"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:87
+msgid "fly help"
+msgstr "Hilfe für fly"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:115
+msgid "Interactively set view position"
+msgstr "Interaktives setzen der Blickposition"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:136
+msgid "flythrough help"
+msgstr "Hilfe für flythrough"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:175
+msgid "move"
+msgstr "verschiebe"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:197
+msgid "turn"
+msgstr "Drehe"
+
+#: ../visualization/nviz/scripts/widgets.tcl:70
+msgid "E"
+msgstr "E"
+
+#: ../visualization/nviz/scripts/widgets.tcl:71
+msgid "W"
+msgstr "W"
+
+#: ../visualization/nviz/scripts/widgets.tcl:72
+msgid "N"
+msgstr "N"
+
+#: ../visualization/nviz/scripts/widgets.tcl:73
+msgid "S"
+msgstr "S"
+
+#: ../visualization/nviz/scripts/widgets.tcl:596
+msgid "None Loaded"
+msgstr "Nichts geladen"
+
 #: ../visualization/nviz/scripts/panel_vect.tcl:55
 msgid "Vector Lines/3D Polygons"
 msgstr "Vektorlinien/3D Polygone"
@@ -26,88 +1621,13 @@ msgstr "Vektorlinien/3D Polygone"
 msgid "Vector Lines Panel"
 msgstr "Einstellung der Vektorlinien"
 
-#: ../visualization/nviz/scripts/panel_vect.tcl:65
-#: ../visualization/nviz/scripts/fileBrowser.tcl:119
-#: ../visualization/nviz/scripts/panel_surf.tcl:68
-#: ../visualization/nviz/scripts/panel_vol.tcl:51
-#: ../visualization/nviz/scripts/panel_site.tcl:55
-msgid "Current:"
-msgstr "Aktuell:"
-
-#: ../visualization/nviz/scripts/panel_vect.tcl:69
-#: ../visualization/nviz/scripts/panel_surf.tcl:70
-#: ../visualization/nviz/scripts/panel_site.tcl:58
-#: ../visualization/nviz/scripts/site_attr.tcl:1271
-msgid "New"
-msgstr "Neu"
-
-#: ../visualization/nviz/scripts/panel_vect.tcl:70
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:131
-#: ../visualization/nviz/scripts/script_file_tools:45
-#: ../visualization/nviz/scripts/panel_legend.tcl:170
-#: ../visualization/nviz/scripts/panel_surf.tcl:71
-#: ../visualization/nviz/scripts/panel_vol.tcl:494
-#: ../visualization/nviz/scripts/panel_vol.tcl:862
-#: ../visualization/nviz/scripts/panel_site.tcl:59
-msgid "Delete"
-msgstr "Löschen"
-
-#: ../visualization/nviz/scripts/panel_vect.tcl:80
-#: ../visualization/nviz/scripts/panel_rquery.tcl:88
-#: ../visualization/nviz/scripts/panel_arrow.tcl:93
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:111
-#: ../visualization/nviz/scripts/script_tools:47
-#: ../visualization/nviz/scripts/panel_vquery.tcl:144
-#: ../visualization/nviz/scripts/panel_legend.tcl:138
-#: ../visualization/nviz/scripts/panel_surf.tcl:184
-#: ../visualization/nviz/scripts/panel_surf.tcl:726
-#: ../visualization/nviz/scripts/panel_resize.tcl:58
-#: ../visualization/nviz/scripts/panel_color.tcl:53
-#: ../visualization/nviz/scripts/panel_vol.tcl:1170
-#: ../visualization/nviz/scripts/panel_animation.tcl:203
-#: ../visualization/nviz/scripts/panel_tst.tcl:53
-#: ../visualization/nviz/scripts/panel_pos.tcl:125
-#: ../visualization/nviz/scripts/panel_scale.tcl:94
-#: ../visualization/nviz/scripts/nviz2.2_script:819
-#: ../visualization/nviz/scripts/panel_site.tcl:114
-#: ../visualization/nviz/scripts/panel_lights.tcl:83
-#: ../visualization/nviz/scripts/panel_label.tcl:96
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:186
-#: ../visualization/nviz/scripts/panel_sdiff.tcl:69
-#: ../visualization/nviz/scripts/panel_fringe.tcl:82
-msgid "Close"
-msgstr "Schließen"
-
-#: ../visualization/nviz/scripts/panel_vect.tcl:82
-#: ../visualization/nviz/scripts/panel_surf.tcl:185
-#: ../visualization/nviz/scripts/panel_vol.tcl:115
-#: ../visualization/nviz/scripts/panel_site.tcl:118
-msgid "DRAW CURRENT"
-msgstr "Zeichne aktuelle Einstellungen"
-
 #: ../visualization/nviz/scripts/panel_vect.tcl:95
 msgid "line width"
 msgstr "Linienbreite"
 
-#: ../visualization/nviz/scripts/panel_vect.tcl:106
-#: ../visualization/nviz/scripts/panel_arrow.tcl:61
-#: ../visualization/nviz/scripts/panel_arrow.tcl:78
-#: ../visualization/nviz/scripts/panel_scale.tcl:60
-#: ../visualization/nviz/scripts/panel_scale.tcl:79
-#: ../visualization/nviz/scripts/panel_site.tcl:149
-#: ../visualization/nviz/scripts/panel_label.tcl:70
-#: ../visualization/nviz/scripts/panel_fringe.tcl:69
-msgid "Color"
-msgstr "Farben"
-
 #: ../visualization/nviz/scripts/panel_vect.tcl:110
 msgid "display flat"
 msgstr "flache Anzeige"
-
-#: ../visualization/nviz/scripts/panel_vect.tcl:113
-#: ../visualization/nviz/scripts/panel_site.tcl:166
-msgid "display on surface(s):"
-msgstr "Zeige auf den Oberflächen an:"
 
 #: ../visualization/nviz/scripts/panel_vect.tcl:117
 msgid ""
@@ -117,128 +1637,99 @@ msgstr ""
 "Vektorhöhe\n"
 "über Oberfläche"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:98
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:99
-msgid "Remove"
-msgstr "Entferne"
+#: ../visualization/nviz/scripts/panel_pos.tcl:34
+msgid "Position Panel"
+msgstr "Einstellungen der Position"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:104
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:105
-#: ../visualization/nviz/scripts/mapBrowser.tcl:150
-msgid "MAPSETS"
-msgstr "MAPSETS"
+#: ../visualization/nviz/scripts/panel_pos.tcl:45
+msgid "From (eye):"
+msgstr "Von (Auge):"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:118
-#: ../visualization/nviz/scripts/fileBrowser.tcl:99
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:119
-#: ../visualization/nviz/scripts/mapBrowser.tcl:168
-msgid "FILES"
-msgstr "Dateien"
+#: ../visualization/nviz/scripts/panel_pos.tcl:46
+msgid "To (surface):"
+msgstr "Zur (Oberfläche):"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:148
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:149
-msgid "Map Type:"
-msgstr "Kartentyp:"
+#: ../visualization/nviz/scripts/panel_pos.tcl:49
+msgid "Range/bearing:"
+msgstr "Wertebereich/Winkel:"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:151
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:152
-#: ../visualization/nviz/scripts/mapBrowser.tcl:207
-msgid "Map Type"
-msgstr "Kartentyp"
+#: ../visualization/nviz/scripts/panel_pos.tcl:52
+msgid "East"
+msgstr "Osten"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:154
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:155
-#: ../visualization/nviz/scripts/mapBrowser.tcl:210
-msgid "Raster"
-msgstr "Raster"
+#: ../visualization/nviz/scripts/panel_pos.tcl:56
+msgid "Range"
+msgstr "Wertebereich"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:156
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:157
-#: ../visualization/nviz/scripts/mapBrowser.tcl:212
-msgid "Vector"
-msgstr "Vektor"
+#: ../visualization/nviz/scripts/panel_pos.tcl:60
+msgid "North"
+msgstr "Nord"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:158
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:159
-#: ../visualization/nviz/scripts/mapBrowser.tcl:214
-msgid "Site"
-msgstr "Punkt"
+#: ../visualization/nviz/scripts/panel_pos.tcl:64
+msgid "Bearing"
+msgstr "Winkel"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:160
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:161
-#: ../visualization/nviz/scripts/mapBrowser.tcl:216
-msgid "Surf"
-msgstr "Oberflächen"
+#: ../visualization/nviz/scripts/panel_pos.tcl:68
+#: ../visualization/nviz/scripts/nviz2.2_script:803
+msgid "Height"
+msgstr "Höhe"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:162
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:163
-#: ../visualization/nviz/scripts/mapBrowser.tcl:220
-msgid "Regions"
-msgstr "Region"
+#: ../visualization/nviz/scripts/panel_pos.tcl:72
+msgid "Elev"
+msgstr "Höhe"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:164
-#: ../visualization/nviz/scripts/panel_main.tcl:158
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:165
-#: ../visualization/nviz/scripts/mapBrowser.tcl:222
-#: ../visualization/nviz/scripts/panel_label.tcl:60
-msgid "Labels"
-msgstr "Beschriftungen"
+#: ../visualization/nviz/scripts/panel_pos.tcl:83
+msgid "Eye to surface"
+msgstr "Auge zu Oberfläche"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:167
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:168
-#: ../visualization/nviz/scripts/mapBrowser.tcl:225
-msgid "Icons"
-msgstr "Icons"
+#: ../visualization/nviz/scripts/panel_pos.tcl:84
+msgid "Surface to eye"
+msgstr "Oberfläche zu Auge"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:170
-msgid "Blank"
-msgstr "Leer"
+#: ../visualization/nviz/scripts/panel_pos.tcl:85
+msgid "Calculate"
+msgstr "Berechne"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:171
-msgid "Previous"
-msgstr "Vorherige"
+#: ../visualization/nviz/scripts/panel_pos.tcl:109
+#: ../visualization/nviz/scripts/site_attr.tcl:472
+msgid "Apply"
+msgstr "Anwenden"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:172
-#: ../visualization/nviz/scripts/script_file_tools:54
-#: ../visualization/nviz/scripts/panel_legend.tcl:171
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:171
-msgid "Done"
-msgstr "Fertig"
+#: ../visualization/nviz/scripts/panel_label.tcl:62
+msgid "Labels Panel"
+msgstr "Einstellungen der Labels"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:173
-#: ../visualization/nviz/scripts/fileBrowser.tcl:115
-#: ../visualization/nviz/scripts/ACS_utils.tcl:312
-#: ../visualization/nviz/scripts/ACS_utils.tcl:354
-#: ../visualization/nviz/scripts/ACS_utils.tcl:375
-#: ../visualization/nviz/scripts/ACS_utils.tcl:430
-#: ../visualization/nviz/scripts/ACS_utils.tcl:475
-#: ../visualization/nviz/scripts/ACS_utils.tcl:569
-#: ../visualization/nviz/scripts/ACS_utils.tcl:641
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
-#: ../visualization/nviz/scripts/script_file_tools:113
-#: ../visualization/nviz/scripts/script_file_tools:575
-#: ../visualization/nviz/scripts/script_file_tools:888
-#: ../visualization/nviz/scripts/panel_main.tcl:112
-#: ../visualization/nviz/scripts/script_tools:111
-#: ../visualization/nviz/scripts/attPopup.tcl:133
-#: ../visualization/nviz/scripts/attPopup.tcl:475
-#: ../visualization/nviz/scripts/attPopup.tcl:523
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:172
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:125
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
-#: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
-#: ../visualization/nviz/scripts/nviz2.2_script:924
-#: ../visualization/nviz/scripts/mapBrowser.tcl:229
-#: ../visualization/nviz/scripts/script_get_line:19
-msgid "Cancel"
-msgstr "Abbrechen"
+#: ../visualization/nviz/scripts/panel_label.tcl:73
+msgid "Choose font color"
+msgstr "Wähle Schriftfarbe"
 
-#: ../visualization/nviz/scripts/filemapBrowser.tcl:201
-#: ../visualization/nviz/scripts/multimapBrowser.tcl:200
-#: ../visualization/nviz/scripts/mapBrowser.tcl:141
-msgid "Map Browser"
-msgstr "Karten-Browser"
+#: ../visualization/nviz/scripts/panel_label.tcl:83
+msgid "Label text: "
+msgstr "Label-Text:"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:90
+msgid "Place label"
+msgstr "Platziere Label"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:91
+msgid "Click with mouse to place label"
+msgstr "Klicke mit Maus, um Label zu platzieren"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:92
+msgid "Erase last"
+msgstr "Lösche letzte Einstellung"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:93
+msgid "Erase most recent label placed"
+msgstr "Lösche zuletzt platziertes Label"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:94
+msgid "Erase all"
+msgstr "Lösche alles"
+
+#: ../visualization/nviz/scripts/panel_label.tcl:95
+msgid "Erase all labels"
+msgstr "Lösche alle Labels"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:41
 msgid "Send results to: (no file selected)"
@@ -257,27 +1748,9 @@ msgstr "Einstellungen für Raster-Abfrage"
 msgid "query on/off"
 msgstr "Abfrage an/aus"
 
-#: ../visualization/nviz/scripts/panel_rquery.tcl:64
-#: ../visualization/nviz/scripts/panel_surf.tcl:725
-#: ../visualization/nviz/scripts/panel_vol.tcl:1169
-#: ../visualization/nviz/scripts/nviz2.2_script:377
-#: ../visualization/nviz/scripts/nviz2.2_script:923
-#: ../visualization/nviz/scripts/panel_lights.tcl:81
-#: ../visualization/nviz/scripts/site_attr.tcl:483
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:182
-msgid "Reset"
-msgstr "Zurücksetzen"
-
 #: ../visualization/nviz/scripts/panel_rquery.tcl:65
 msgid "Reset most recent query"
 msgstr "Rücksetzen der letzten aktuellen Abfragen"
-
-#: ../visualization/nviz/scripts/panel_rquery.tcl:66
-#: ../visualization/nviz/scripts/panel_main.tcl:109
-#: ../visualization/nviz/scripts/site_attr.tcl:1437
-#: ../visualization/nviz/scripts/panel_sdiff.tcl:64
-msgid "Clear"
-msgstr "Löschen"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:67
 msgid "Clear all queries"
@@ -388,724 +1861,6 @@ msgstr "Entfernung entlang der Oberfläche: \t%15.4f\n"
 msgid "Distance along exag. surface:%15.4f\n"
 msgstr "Entfernung entlang überhöhter Oberfläche:%15.4f\n"
 
-#: ../visualization/nviz/scripts/panel_arrow.tcl:47
-msgid "North arrow"
-msgstr "Nordpfeil"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:49
-msgid "North Arrow Panel"
-msgstr "Einstellungen für Nordpfeil"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:53
-msgid "Arrow: "
-msgstr "Pfeil: "
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:56
-msgid "size (in map units) "
-msgstr "Größe (in Karteneinheiten)"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:72
-msgid "North text: "
-msgstr "Nordpfeil-Text:"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:73
-#: ../visualization/nviz/scripts/panel_legend.tcl:77
-#: ../visualization/nviz/scripts/panel_label.tcl:67
-msgid "Font"
-msgstr "Schriftart"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:75
-#: ../visualization/nviz/scripts/panel_label.tcl:69
-msgid "Select font family, size, and style"
-msgstr "Wähle Schriftfamilie, Größe und Stil aus"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:89
-msgid "Place arrow"
-msgstr "Platziere Nordpfeil"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:119
-#: ../visualization/nviz/scripts/panel_legend.tcl:220
-#: ../visualization/nviz/scripts/panel_label.tcl:177
-msgid "The quick brown fox jumps over the lazy dog"
-msgstr "The quick brown fox jumps over the lazy dog"
-
-#: ../visualization/nviz/scripts/panel_arrow.tcl:119
-#: ../visualization/nviz/scripts/panel_legend.tcl:220
-#: ../visualization/nviz/scripts/panel_label.tcl:177
-msgid "Select font"
-msgstr "Schrift auswählen"
-
-#: ../visualization/nviz/scripts/fileBrowser.tcl:82
-msgid "DIRECTORIES"
-msgstr "Verzeichnisse"
-
-#: ../visualization/nviz/scripts/fileBrowser.tcl:113
-#: ../visualization/nviz/scripts/script_file_tools:574
-#: ../visualization/nviz/scripts/script_file_tools:887
-#: ../visualization/nviz/scripts/script_tools:110
-#: ../visualization/nviz/scripts/attPopup.tcl:128
-#: ../visualization/nviz/scripts/attPopup.tcl:474
-#: ../visualization/nviz/scripts/attPopup.tcl:522
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:123
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:409
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:455
-#: ../visualization/nviz/scripts/mapBrowser.tcl:227
-msgid "Accept"
-msgstr "Annehmen"
-
-#: ../visualization/nviz/scripts/fileBrowser.tcl:154
-msgid "File Browser"
-msgstr "Datei-Browser"
-
-#: ../visualization/nviz/scripts/ACS_utils.tcl:312
-#: ../visualization/nviz/scripts/ACS_utils.tcl:354
-#: ../visualization/nviz/scripts/ACS_utils.tcl:375
-#: ../visualization/nviz/scripts/ACS_utils.tcl:430
-#: ../visualization/nviz/scripts/ACS_utils.tcl:475
-#: ../visualization/nviz/scripts/ACS_utils.tcl:569
-#: ../visualization/nviz/scripts/ACS_utils.tcl:641
-#: ../visualization/nviz/scripts/panel_animation.tcl:955
-msgid "OK"
-msgstr "OK"
-
-#: ../visualization/nviz/scripts/ACS_utils.tcl:331
-msgid "ok"
-msgstr "OK"
-
-#: ../visualization/nviz/scripts/ACS_utils.tcl:331
-msgid "dismiss"
-msgstr "verwerfe"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:61
-#: ../visualization/nviz/scripts/flythrough.tcl:142
-msgid "fly"
-msgstr "fliege"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:68
-#: ../visualization/nviz/scripts/flythrough.tcl:271
-msgid "none"
-msgstr "nichts"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:71
-#: ../visualization/nviz/scripts/flythrough.tcl:150
-#: ../visualization/nviz/scripts/flythrough.tcl:272
-msgid "basic"
-msgstr "grundlegend"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:72
-#: ../visualization/nviz/scripts/flythrough.tcl:158
-msgid "simple"
-msgstr "einfach"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:73
-#: ../visualization/nviz/scripts/flythrough.tcl:166
-msgid "orbit"
-msgstr "Umlaufbahn"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:84
-msgid "Coarse Draw"
-msgstr "Grober Zeichen-Modus"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:87
-msgid "fly help"
-msgstr "Hilfe für fly"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:115
-msgid "Interactively set view position"
-msgstr "Interaktives setzen der Blickposition"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:136
-msgid "flythrough help"
-msgstr "Hilfe für flythrough"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:175
-msgid "move"
-msgstr "verschiebe"
-
-#: ../visualization/nviz/scripts/flythrough.tcl:197
-msgid "turn"
-msgstr "Drehe"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:79
-msgid "Keyframe Animation"
-msgstr "Keyframe-Animation"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:80
-msgid "Keyframe Animation Panel"
-msgstr "Einstellungen für Keyframe-Animation"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:96
-msgid "Framerate :"
-msgstr "Framerate :"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:105
-msgid "File: "
-msgstr "Datei: "
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:106
-#: ../visualization/nviz/scripts/site_attr.tcl:1434
-msgid "Save"
-msgstr "Speichern"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:107
-msgid "Load"
-msgstr "Laden"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:109
-msgid "Animation: "
-msgstr "Animation: "
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:110
-msgid "Run and Save"
-msgstr "Starten und speichern"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:130
-#: ../visualization/nviz/scripts/script_file_tools:44
-#: ../visualization/nviz/scripts/panel_legend.tcl:169
-#: ../visualization/nviz/scripts/panel_vol.tcl:492
-#: ../visualization/nviz/scripts/panel_vol.tcl:860
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:132
-msgid "New Key Time:"
-msgstr "Neue Key-Time:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:143
-msgid "Show Feature"
-msgstr "Zeige Objekt"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:146
-msgid "Path"
-msgstr "Pfad"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:148
-msgid "Vect Lines/Polygons"
-msgstr "Vektorlinien/-Polygone"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:150
-msgid "Vect Points"
-msgstr "Vektorpunkte"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:152
-msgid "Volume"
-msgstr "Volumen"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:154
-msgid "Labels/Legend"
-msgstr "Labels/Legende"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:159
-msgid "Interp."
-msgstr "Interpolierung"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:162
-#: ../visualization/nviz/scripts/panel_animation.tcl:185
-msgid "linear"
-msgstr "linear"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:165
-#: ../visualization/nviz/scripts/panel_animation.tcl:189
-msgid "spline"
-msgstr "Spline"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:168
-msgid "tension"
-msgstr "Tension"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:230
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
-#: ../visualization/nviz/scripts/nviz2.2_script:414
-msgid "On"
-msgstr "an"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:447
-msgid "New Key Time"
-msgstr "Neue Key-Time"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:451
-msgid "Minute:"
-msgstr "Minute:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:452
-msgid "Second:"
-msgstr "Sekunde:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:453
-msgid "Frame:"
-msgstr "Frame:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:466
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:553
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1708
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
-#: ../visualization/nviz/scripts/script_file_tools:113
-#: ../visualization/nviz/scripts/wirecolorPopup.tcl:80
-#: ../visualization/nviz/scripts/panel_animation.tcl:577
-#: ../visualization/nviz/scripts/panel_animation.tcl:755
-#: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:924
-#: ../visualization/nviz/scripts/script_get_line:18
-msgid "Ok"
-msgstr "Ok"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
-msgid "KeyTime Error"
-msgstr "KeyTime-Fehler"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
-msgid "Error - All values must be at least zero."
-msgstr "Fehler - Alle Werte müssen zumindest 0 sein."
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:497
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:505
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:577
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:678
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:873
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1007
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1872
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1925
-#: ../visualization/nviz/scripts/panel_animation.tcl:577
-#: ../visualization/nviz/scripts/panel_animation.tcl:603
-#: ../visualization/nviz/scripts/panel_animation.tcl:644
-#: ../visualization/nviz/scripts/panel_animation.tcl:755
-#: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:1054
-#: ../visualization/nviz/scripts/script_play:32
-msgid "Dismiss"
-msgstr "Verwerfe"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
-msgid "Error - Frame number must be less than frame rate."
-msgstr "Fehler - Frameanzahl muss geringer als Framerate sein."
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:540
-msgid "New Frame Rate"
-msgstr "Neue Frame-Rate"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:544
-msgid "Framerate:"
-msgstr "Framerate:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
-msgid "Frame Rate Error"
-msgstr "Frame Rate-Fehler"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
-msgid "Error - Frame rate must be at least 1."
-msgstr "Fehler - Frame-Rate muss zumindest 1 sein."
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:676
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:871
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1005
-#: ../visualization/nviz/scripts/panel_animation.tcl:601
-#: ../visualization/nviz/scripts/panel_animation.tcl:642
-msgid "Internal Error"
-msgstr "Interner Fehler"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:677
-#, tcl-format
-msgid "Internal Error - Can't find channel %s for keyframe %s"
-msgstr "Interner Fehler - Kann Kanal %s für Keyframe %s nicht finden"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:856
-msgid "Delete Keys"
-msgstr "Lösche Keys"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:857
-msgid "Delete the selected keys?"
-msgstr "Selektierte Keys löschen?"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:872
-#: ../visualization/nviz/scripts/panel_animation.tcl:602
-msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr "Interner Fehler - Löschen des Key-Frames in GK-Key-Liste fehlgeschlagen."
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
-#: ../visualization/nviz/scripts/panel_animation.tcl:643
-msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr "Interner Fehler - Verschieben des Key-Frames in GK-Key-Liste fehlgeschlagen."
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
-#: ../visualization/nviz/scripts/panel_animation.tcl:753
-msgid "Replace Key"
-msgstr "Ersetze Key"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1125
-msgid "There is already a keyframe at this time, replace it?"
-msgstr "Ein Keyframe ist schon vorhanden, diesen wirklich ersetzen?"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1221
-msgid "Keyframe Attributes"
-msgstr "Keyframe-Attribute"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1699
-msgid "Enter a base name:"
-msgstr "Basisnamen eingeben:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1702
-msgid "Render:"
-msgstr "Rendern:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1703
-msgid "Wireframe"
-msgstr "Wireframe"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1705
-msgid "Full Rendering"
-msgstr "Komplette Ausgabe"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1710
-msgid "Image:"
-msgstr "Bild:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1712
-#: ../visualization/nviz/scripts/panel_animation.tcl:941
-msgid "PPM"
-msgstr "PPM"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1713
-#: ../visualization/nviz/scripts/panel_animation.tcl:942
-msgid "TIFF"
-msgstr "TIFF"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1714
-#: ../visualization/nviz/scripts/panel_animation.tcl:943
-msgid "MPEG-1"
-msgstr "MPEG-1"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1716
-msgid "Start Frame:"
-msgstr "Start Frame:"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1718
-msgid "Off-Screen"
-msgstr "Off-Screen"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1908
-#: ../visualization/nviz/scripts/script_file_tools:111
-#: ../visualization/nviz/scripts/panel_animation.tcl:576
-#: ../visualization/nviz/scripts/panel_animation.tcl:800
-msgid "Verify"
-msgstr "Überprüfe"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1909
-msgid "Warning - Current animation has not been saved, continue?"
-msgstr "Warnung - Aktuelle Animation wurde noch nicht gespeichert, fortfahren?"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
-#: ../visualization/nviz/scripts/nviz2.2_script:1053
-#: ../visualization/nviz/scripts/script_play:30
-msgid "File Error"
-msgstr "Datei-Fehler"
-
-#: ../visualization/nviz/scripts/panel_kanimator.tcl:1924
-#, tcl-format
-msgid "Error - Could not open file %s for reading"
-msgstr "Fehler - Datei %s konnte nicht geöffnet werden"
-
-#: ../visualization/nviz/scripts/script_file_tools:36
-msgid "Map Object File Sequencing"
-msgstr "Map Object File Sequencing"
-
-#: ../visualization/nviz/scripts/script_file_tools:43
-msgid "Fields:"
-msgstr "Felder:"
-
-#: ../visualization/nviz/scripts/script_file_tools:46
-msgid "State File: None"
-msgstr "Status-Datei: Nichts"
-
-#: ../visualization/nviz/scripts/script_file_tools:53
-msgid "Options:"
-msgstr "Optionen: "
-
-#: ../visualization/nviz/scripts/script_file_tools:55
-msgid "Add To Script"
-msgstr "Zu Skript hinzufügen"
-
-#: ../visualization/nviz/scripts/script_file_tools:56
-msgid "Build Script..."
-msgstr "Erstelle Skript..."
-
-#: ../visualization/nviz/scripts/script_file_tools:57
-msgid "Load Fields..."
-msgstr "Lade Felder..."
-
-#: ../visualization/nviz/scripts/script_file_tools:58
-msgid "Save Fields..."
-msgstr "Speichere Felder..."
-
-#: ../visualization/nviz/scripts/script_file_tools:75
-msgid "Frame"
-msgstr "Frame"
-
-#: ../visualization/nviz/scripts/script_file_tools:111
-msgid "Current fields have not been saved, really load new fields?"
-msgstr "Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue Felder laden?"
-
-#: ../visualization/nviz/scripts/script_file_tools:126
-#: ../visualization/nviz/scripts/nviz2.2_script:871
-#: ../visualization/nviz/scripts/nviz2.2_script:1025
-#, tcl-format
-msgid "Error while opening file: %s"
-msgstr "Fehler bei Öffnen der Datei: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:135
-#, tcl-format
-msgid "While reading state_file: %s"
-msgstr "Beim Lesen von state_file: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:142
-#, tcl-format
-msgid "While reading number of fields: %s"
-msgstr "Beim Lesen der Anzahl der Felder: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:151
-#, tcl-format
-msgid "While reading field type: %s"
-msgstr "Beim Lesen des Feldtyp: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:157
-#, tcl-format
-msgid "While reading field attribute: %s"
-msgstr "Beim Lesen der Attributfelder: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:542
-msgid "Field Type: "
-msgstr "Feldtyp"
-
-#: ../visualization/nviz/scripts/script_file_tools:543
-#: ../visualization/nviz/scripts/panel_main.tcl:142
-#: ../visualization/nviz/scripts/panel_surf.tcl:125
-msgid "Surface"
-msgstr "Oberfläche"
-
-#: ../visualization/nviz/scripts/script_file_tools:554
-msgid "Field Attribute: "
-msgstr "Feldattribut: "
-
-#: ../visualization/nviz/scripts/script_file_tools:555
-msgid "Topography"
-msgstr "Topographie"
-
-#: ../visualization/nviz/scripts/script_file_tools:566
-msgid "Use Nviz Map: "
-msgstr "Verwende Nviz-Karte: "
-
-#: ../visualization/nviz/scripts/script_file_tools:567
-#: ../visualization/nviz/scripts/script_file_tools:676
-#: ../visualization/nviz/scripts/panel_legend.tcl:183
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:61
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:67
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:290
-msgid "None"
-msgstr "Keine"
-
-#: ../visualization/nviz/scripts/script_file_tools:853
-#, tcl-format
-msgid "State File: %s"
-msgstr "Status-Datei: %s"
-
-#: ../visualization/nviz/scripts/script_file_tools:885
-msgid "Enter an image root name"
-msgstr "Gebe einen Bildnamen ein"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:86
-msgid "Main"
-msgstr "Hauptsächlich"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:104
-msgid "DRAW"
-msgstr "Zeichne"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:107
-msgid "Draw selected features"
-msgstr "Zeichne selektierte Objekte"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:110
-msgid "Clear NVIZ display"
-msgstr "Lösche NVIZ-Darstellungh"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:113
-msgid "Cancel current draw"
-msgstr "Aktuelle Darstellung abbrechen"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:119
-msgid "Automatically render display:"
-msgstr "Automatisches Rendern der Anzeige:"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:123
-msgid "Automatically render display after changing parameters"
-msgstr "Automatisches Rendern der Anzeige nach Änderung der Parameter"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:128
-msgid "Show features:"
-msgstr "Zeige Objekte:"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:131
-msgid "Main features..."
-msgstr "Hauptobjekte..."
-
-#: ../visualization/nviz/scripts/panel_main.tcl:136
-msgid "Decorations..."
-msgstr "Verzierungen..."
-
-#: ../visualization/nviz/scripts/panel_main.tcl:145
-msgid "Vectors"
-msgstr "Vektorkarten"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:148
-msgid "Sites"
-msgstr "Punkte"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:151
-#: ../visualization/nviz/scripts/panel_vol.tcl:40
-msgid "Volumes"
-msgstr "Volumen"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:156
-#: ../visualization/nviz/scripts/panel_legend.tcl:63
-msgid "Legend"
-msgstr "Legende"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:160
-msgid "North Arrow"
-msgstr "Nordpfeil."
-
-#: ../visualization/nviz/scripts/panel_main.tcl:162
-msgid "Scale Bar"
-msgstr "Maßstabsleiste"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:164
-#: ../visualization/nviz/scripts/panel_fringe.tcl:43
-msgid "Fringe"
-msgstr "Fringe"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:175
-msgid "View method:"
-msgstr "Darstellungsmethode:"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:177
-msgid "eye"
-msgstr "Auge"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:181
-#: ../visualization/nviz/scripts/panel_main.tcl:224
-msgid "center"
-msgstr "in der Mitte"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:190
-msgid "Change view by moving eye position"
-msgstr "Ändere Blick durch Bewegen der Augenposition"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:191
-msgid "Change view by moving scene center position"
-msgstr "Ändere Blick durch Bewegen der Szenenmitte"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:192
-msgid "Click to change scene center position, scroll to zoom in and out"
-msgstr ""
-
-#: ../visualization/nviz/scripts/panel_main.tcl:200
-msgid "Change view using mouse to control fly-through"
-msgstr "Ändere Blick mit Maus, um Fly-through zu kontrollieren"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:209
-#: ../visualization/nviz/scripts/panel_main.tcl:210
-msgid "Set vertical exaggeration"
-msgstr "Vertikaler Skalierfaktor"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:211
-#: ../visualization/nviz/scripts/panel_main.tcl:212
-msgid "Set eye height"
-msgstr "Lege Augenhöhe fest"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:217
-msgid "Look"
-msgstr "Zeige"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:218
-msgid "here"
-msgstr "hier"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:219
-msgid "Center view at point marked with mouse click"
-msgstr "Zentriere Blick mit Mausklick"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:225
-msgid "Center view at center of displayed surface"
-msgstr "Zentriere Blick im der Mitte der angezeigten Oberfläche"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:229
-msgid "top"
-msgstr "oben"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:230
-msgid "View directly from above"
-msgstr "Blick direkt von oben"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:253
-msgid "Set field of view size (degrees)"
-msgstr "Sichtfeld des Betrachters (in Grad)."
-
-#: ../visualization/nviz/scripts/panel_main.tcl:254
-msgid "Set twist angle (degrees)"
-msgstr "Drehwinkel des Betrachters (in Grad)."
-
-#: ../visualization/nviz/scripts/panel_main.tcl:257
-msgid "reset"
-msgstr "Zurücksetzen"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:259
-msgid "Reset view to default"
-msgstr "Zurücksetzen auf Standardwerte"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:522
-msgid "Set eye position"
-msgstr "Lege Augenposition fest"
-
-#: ../visualization/nviz/scripts/panel_main.tcl:527
-msgid "Set center of view position"
-msgstr "Lege Zentrum der Blickposition fest"
-
-#: ../visualization/nviz/scripts/script_tools:32
-msgid "Open Loop"
-msgstr "Öffene Schleife"
-
-#: ../visualization/nviz/scripts/script_tools:33
-msgid "Close Loop"
-msgstr "Schließe Schleife"
-
-#: ../visualization/nviz/scripts/script_tools:37
-msgid "Open File Seq. Loop"
-msgstr "Öffne Datei mit Schleifen-Informationen"
-
-#: ../visualization/nviz/scripts/script_tools:38
-msgid "Close File Seq. Loop"
-msgstr "Schließe Datei mit Schleifen-Informationen"
-
-#: ../visualization/nviz/scripts/script_tools:42
-msgid "File Sequence Tool"
-msgstr "File Sequence Tool"
-
-#: ../visualization/nviz/scripts/script_tools:104
-msgid "Loop Start Value"
-msgstr "Anfangswert für Schleife"
-
-#: ../visualization/nviz/scripts/script_tools:106
-msgid "Loop End Value"
-msgstr "Endwert für Schleife"
-
-#: ../visualization/nviz/scripts/script_tools:108
-msgid "Loop Increment Value"
-msgstr "Inkrement für Schleife"
-
 #: ../visualization/nviz/scripts/panel_vquery.tcl:51
 msgid "Vector Query"
 msgstr "Vektor-Abfrage"
@@ -1152,7 +1907,9 @@ msgstr "Symbolgröße X"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:130
 msgid "Choose size in multiples of default to indicate point queried"
-msgstr "Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt anzuzeigen"
+msgstr ""
+"Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt "
+"anzuzeigen"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:137
 msgid "specific icon"
@@ -1175,11 +1932,6 @@ msgstr "Vektorkarte(n) für Abfrage"
 msgid "Map: %s"
 msgstr "Karte: %s"
 
-#: ../visualization/nviz/scripts/panel_vquery.tcl:426
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:98
-msgid "clear"
-msgstr "Lösche"
-
 #: ../visualization/nviz/scripts/panel_vquery.tcl:496
 msgid "Clear Window?"
 msgstr "Lösche Fenster?"
@@ -1196,223 +1948,220 @@ msgstr "Nein"
 msgid "set icon"
 msgstr "Wähle Symbol"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:65
-msgid "Legends Panel"
-msgstr "Einstellungen für Legende"
+#: ../visualization/nviz/scripts/site_attr.tcl:411
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr ""
+"Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, "
+"dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten "
+"Wertebereich der Symbolgröße."
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:71
-msgid "reverse legend"
-msgstr "Drehe Legende"
+#: ../visualization/nviz/scripts/site_attr.tcl:422
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
+msgstr ""
+"Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke "
+"[Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:73
-msgid "show values"
-msgstr "Zeige Werte"
+#: ../visualization/nviz/scripts/site_attr.tcl:428
+#, tcl-format
+msgid "WARNING: No thematic mapping preferences set for %s!"
+msgstr "WARNUNG: Keine thematischen Einstellungen für %s!"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:75
-msgid "show labels"
-msgstr "Zeige Labels"
+#: ../visualization/nviz/scripts/site_attr.tcl:447
+#, tcl-format
+msgid "Vary point %s"
+msgstr "Ändere Punkt %s"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:79
-msgid "Select font family, size, and style for legend text"
-msgstr "Wähle Schriftfamilie, Größe, Stil für Legendentext"
+#: ../visualization/nviz/scripts/site_attr.tcl:451
+#, tcl-format
+msgid "GIS attribute: %s"
+msgstr "GIS-Attribut: %s"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:86
-msgid "set value range "
-msgstr "Setze Wertebereich "
+#: ../visualization/nviz/scripts/site_attr.tcl:460
+#, tcl-format
+msgid "Attribute type: %s"
+msgstr "Attributtyp: %s"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:91
-msgid "min "
-msgstr "min"
+#: ../visualization/nviz/scripts/site_attr.tcl:474
+msgid "Apply current thematic preferences to point display"
+msgstr "Wende aktuelle thematische Einstellungen für die Punktdarstellung an"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:94
-msgid " max "
-msgstr " max "
+#: ../visualization/nviz/scripts/site_attr.tcl:477
+msgid "Auto"
+msgstr "Auto"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:107
-msgid "discrete categories"
-msgstr "diskrete Kategorien"
+#: ../visualization/nviz/scripts/site_attr.tcl:479
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
+msgstr ""
+"Generiere automatisch eine über den Wertebereich der Attribute verteilte "
+"Farbtabelle"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:131
-msgid "Place legend"
-msgstr "Platziere Legende"
+#: ../visualization/nviz/scripts/site_attr.tcl:485
+msgid "Clear all thematic settings"
+msgstr "Setze all thematische Einstellungen auf Null"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
-msgstr "Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, rechter Button legt gegenüberliegende Ecke fest."
+#: ../visualization/nviz/scripts/site_attr.tcl:495
+msgid "Load/save theme preferences"
+msgstr "Lade/Speicher thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:135
-msgid "Erase legend"
-msgstr "Lösche Legende"
+#: ../visualization/nviz/scripts/site_attr.tcl:528
+msgid "Select thematic prefs to use"
+msgstr "Wähle thematische Einstellungen aus"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:137
-msgid "Erase all legends"
-msgstr "Lösche alle Legenden"
+#: ../visualization/nviz/scripts/site_attr.tcl:531
+msgid "current prefs"
+msgstr "Aktuelle Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_legend.tcl:166
-msgid "Category Values"
-msgstr "Kategoriewerte"
+#: ../visualization/nviz/scripts/site_attr.tcl:536
+msgid "prefs. from file"
+msgstr "Einstellungen aus Datei"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:51
-msgid "Raster Surfaces"
-msgstr "Rasteroberflächen"
+#: ../visualization/nviz/scripts/site_attr.tcl:542
+msgid "(preserves current prefs.)"
+msgstr "(erhält aktuelle Einstellungen)"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:58
-msgid "Surface Panel"
-msgstr "Einstellungen der Oberfläche"
+#: ../visualization/nviz/scripts/site_attr.tcl:553
+msgid "no prefs loaded"
+msgstr "Keine Einstellungen geladen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:79
-msgid "Surface attributes..."
-msgstr "Oberflächenattribute..."
+#: ../visualization/nviz/scripts/site_attr.tcl:558
+msgid "View loaded thematic prefs"
+msgstr "Zeige geladene thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:88
-msgid "Wire Color"
-msgstr "Gitternetzfarbe"
+#: ../visualization/nviz/scripts/site_attr.tcl:570
+msgid "Load and save prefs."
+msgstr "Lade und speichere Einstellungen."
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:92
-#: ../visualization/nviz/scripts/panel_vol.tcl:82
-#: ../visualization/nviz/scripts/panel_pos.tcl:28
-msgid "Position"
-msgstr "Position"
+#: ../visualization/nviz/scripts/site_attr.tcl:572
+msgid "Load prefs"
+msgstr "Lade Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:96
-msgid "Mask zeros:"
-msgstr "Null-Werte maskieren:"
+#: ../visualization/nviz/scripts/site_attr.tcl:574
+msgid "Replace current themes with prefs loaded from file"
+msgstr "Ersetze aktuelle Themen mit jenen Einstellungen der geladenen Datei"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:97
-msgid "by elevation"
-msgstr "nach Höhe"
+#: ../visualization/nviz/scripts/site_attr.tcl:580
+msgid "Save prefs"
+msgstr "Speichere Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:99
-msgid "by color"
-msgstr "nach Farbe"
+#: ../visualization/nviz/scripts/site_attr.tcl:582
+msgid "Copy current themes to prefs loaded from file"
+msgstr "Kopiere aktuelle Karten zu den Einstellungen "
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:109
-msgid "Draw mode..."
-msgstr "Darstellungsmodus"
+#: ../visualization/nviz/scripts/site_attr.tcl:860
+#: ../visualization/nviz/scripts/site_attr.tcl:915
+msgid "Too few values: at least 2!"
+msgstr "Zuwenig Werte: zumindest 2!"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:112
-msgid "Coarse"
-msgstr "grob"
+#: ../visualization/nviz/scripts/site_attr.tcl:1107
+#: ../visualization/nviz/scripts/site_attr.tcl:1197
+msgid "No prefs file loaded"
+msgstr "Keine Datei mit Einstellungen geladen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:114
-msgid "Fine"
-msgstr "fein"
+#: ../visualization/nviz/scripts/site_attr.tcl:1138
+msgid "No prefs"
+msgstr "Keine Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:116
-msgid "Both"
-msgstr "beides"
+#: ../visualization/nviz/scripts/site_attr.tcl:1146
+msgid "Thematic prefs and attribute have different types"
+msgstr ""
+"Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:120
-msgid "Coarse style..."
-msgstr "Grober Stil..."
+#: ../visualization/nviz/scripts/site_attr.tcl:1207
+msgid "Thematic prefs and attributes have different types"
+msgstr ""
+"Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:123
-msgid "Wire"
-msgstr "Gitternetz"
+#: ../visualization/nviz/scripts/site_attr.tcl:1408
+#, tcl-format
+msgid "WARNING: No attribute behaviour for %s!"
+msgstr "WARNUNG: Keine Attribute für %s!"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:128
-#: ../visualization/nviz/scripts/panel_vol.tcl:73
-msgid "Shading..."
-msgstr "Schattierung..."
+#: ../visualization/nviz/scripts/site_attr.tcl:1418
+#, tcl-format
+msgid "Thematic prefs file %s"
+msgstr "Thematische Einstellungen in Datei %s"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:132
-#: ../visualization/nviz/scripts/panel_vol.tcl:76
-msgid "Flat"
-msgstr "flach"
+#: ../visualization/nviz/scripts/site_attr.tcl:1422
+#, tcl-format
+msgid "Name: %s"
+msgstr "Name: %s"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:134
-#: ../visualization/nviz/scripts/panel_vol.tcl:78
-msgid "Gouraud"
-msgstr "Gouraud"
+#: ../visualization/nviz/scripts/site_attr.tcl:1430
+#, tcl-format
+msgid "Type: %s"
+msgstr "Typ: %s"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:141
-msgid "Resolution:"
-msgstr "Auflösung:"
+#: ../visualization/nviz/scripts/site_attr.tcl:1436
+msgid "Save thematic prefs in file"
+msgstr "Speichere thematische Einstellungen in Datei"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:143
-#: ../visualization/nviz/scripts/panel_animation.tcl:949
-msgid "coarse"
-msgstr "grob"
+#: ../visualization/nviz/scripts/site_attr.tcl:1439
+msgid "Clear current thematic prefs"
+msgstr "Lösche aktuelle thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:153
-#: ../visualization/nviz/scripts/panel_animation.tcl:950
-msgid "fine"
-msgstr "fein"
+#: ../visualization/nviz/scripts/site_attr.tcl:1493
+msgid "Load Thematic Prefs"
+msgstr "Lade thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:166
-msgid "Set resolution for:"
-msgstr "Setze Auflösung für:"
+#: ../visualization/nviz/scripts/site_attr.tcl:1497
+msgid "Load file"
+msgstr "Lade Datei"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:167
-msgid "current surface"
-msgstr "aktuelle Oberfläche"
+#: ../visualization/nviz/scripts/site_attr.tcl:1577
+msgid "Save thematic prefs"
+msgstr "Speichere thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:169
-msgid "all surfaces"
-msgstr "alle Oberflächen"
+#: ../visualization/nviz/scripts/site_attr.tcl:1582
+#, tcl-format
+msgid "Old LUT \"%s\" deleted"
+msgstr "Alte LUT \"%s\" gelöscht"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:670
-msgid "Position Surface"
-msgstr "Position der Oberfläche"
+#: ../visualization/nviz/scripts/site_attr.tcl:1607
+#, tcl-format
+msgid "Thematic preferences file \"%s\" saved"
+msgstr "Thematische Einstellung in Datei \"%s\" gespeichert"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:671
-#: ../visualization/nviz/scripts/attPopup.tcl:45
-#: ../visualization/nviz/scripts/attPopup.tcl:46
-#: ../visualization/nviz/scripts/panel_vol.tcl:1115
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
-msgid "Attribute"
-msgstr "Attribut"
+#: ../visualization/nviz/scripts/site_attr.tcl:1616
+msgid "Load thematic prefs"
+msgstr "Lade thematische Einstellungen"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:701
-#: ../visualization/nviz/scripts/panel_vol.tcl:1145
-msgid "Z:"
-msgstr "Z:"
+#: ../visualization/nviz/scripts/site_attr.tcl:1622
+#, tcl-format
+msgid "*** WARNING *** File \"%s\" is unavailable"
+msgstr "*** WARNUNG *** Datei \"%s\" ist nicht verfügbar"
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:702
-#: ../visualization/nviz/scripts/panel_vol.tcl:1146
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:114
-msgid "X:"
-msgstr "X:"
+#: ../visualization/nviz/scripts/site_attr.tcl:1627
+#, tcl-format
+msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
+msgstr ""
+"*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
 
-#: ../visualization/nviz/scripts/panel_surf.tcl:703
-#: ../visualization/nviz/scripts/panel_vol.tcl:1147
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:115
-msgid "Y:"
-msgstr "Y:"
+#: ../visualization/nviz/scripts/site_attr.tcl:1700
+#, tcl-format
+msgid "WARNING: Unknown Tag \"%s\" in file \"%s\""
+msgstr "WARNUNG: Unbekannte Markierung \"%s\" in Datei \"%s\""
 
-#: ../visualization/nviz/scripts/panel_resize.tcl:27
-msgid "Resize Draw Area"
-msgstr "Ändere Größe der Zeichenfläche"
+#: ../visualization/nviz/scripts/site_attr.tcl:1770
+#: ../visualization/nviz/scripts/site_attr.tcl:1852
+#, tcl-format
+msgid "WARNING: Unknown attribute %s!"
+msgstr "WARNUNG: Unbekanntes Attribut %s!"
 
-#: ../visualization/nviz/scripts/panel_resize.tcl:33
-msgid "Resize Panel"
-msgstr "Größeneinstellungen"
+#: ../visualization/nviz/scripts/site_attr.tcl:1791
+#, tcl-format
+msgid "WARNING: field %s NOT FOUND"
+msgstr "WARNUNG: Feld %s NICHT GEFUNDEN"
 
-#: ../visualization/nviz/scripts/panel_resize.tcl:39
-msgid "Resize: "
-msgstr "Verändere Größe: "
-
-#: ../visualization/nviz/scripts/panel_resize.tcl:42
-msgid "width"
-msgstr "Breite"
-
-#: ../visualization/nviz/scripts/panel_resize.tcl:43
-#: ../visualization/nviz/scripts/panel_vol.tcl:457
-#: ../visualization/nviz/scripts/panel_vol.tcl:460
-#: ../visualization/nviz/scripts/panel_vol.tcl:735
-#: ../visualization/nviz/scripts/panel_vol.tcl:738
-msgid "height"
-msgstr "Höhe"
-
-#: ../visualization/nviz/scripts/panel_resize.tcl:52
-msgid "Resize"
-msgstr "Verändere Größe"
-
-#: ../visualization/nviz/scripts/panel_resize.tcl:55
-#: ../visualization/nviz/scripts/panel_pos.tcl:95
-msgid "Refresh"
-msgstr "Erneuere Anzeige"
+#: ../visualization/nviz/scripts/site_attr.tcl:1798
+#, tcl-format
+msgid "WARNING: lut file %s NOT FOUND"
+msgstr "WARNUNG: lut-Datei %s NICHT GEFUNDEN"
 
 #: ../visualization/nviz/scripts/panel_color.tcl:38
 msgid "Background Color"
@@ -1426,69 +2175,55 @@ msgstr "Einstellungen der Hintergrundfarbe"
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:88
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:80
-#, tcl-format
-msgid "Change attribute: %s"
-msgstr "Verändere Attribut: %s"
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:98
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:99
+msgid "Remove"
+msgstr "Entferne"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:92
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:85
-msgid "New map"
-msgstr "Neue Karte"
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:148
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:149
+msgid "Map Type:"
+msgstr "Kartentyp:"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:97
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:89
-msgid "Remove mask"
-msgstr "Entferne Maske"
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:170
+msgid "Blank"
+msgstr "Leer"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:98
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:90
-msgid "invert mask"
-msgstr "Invertiere Maske"
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:171
+msgid "Previous"
+msgstr "Vorherige"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:106
-#: ../visualization/nviz/scripts/attPopup.tcl:115
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:98
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:107
-msgid "New constant"
-msgstr "Neue Konstante"
+#: ../visualization/nviz/scripts/script_tools:32
+msgid "Open Loop"
+msgstr "Öffene Schleife"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:107
-msgid "use as color"
-msgstr "Verwende als Farbe"
+#: ../visualization/nviz/scripts/script_tools:33
+msgid "Close Loop"
+msgstr "Schließe Schleife"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:113
-msgid "Constant not supported"
-msgstr "Ein konstanter Wert wird nicht unterstützt"
+#: ../visualization/nviz/scripts/script_tools:37
+msgid "Open File Seq. Loop"
+msgstr "Öffne Datei mit Schleifen-Informationen"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:122
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:114
-msgid "Curr. value: "
-msgstr "Aktueller Wert:"
+#: ../visualization/nviz/scripts/script_tools:38
+msgid "Close File Seq. Loop"
+msgstr "Schließe Datei mit Schleifen-Informationen"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:319
-msgid "Surface Color"
-msgstr "Oberflächenfarbe"
+#: ../visualization/nviz/scripts/script_tools:42
+msgid "File Sequence Tool"
+msgstr "File Sequence Tool"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:462
-#: ../visualization/nviz/scripts/attPopup.tcl:512
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:399
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:445
-msgid "Constant"
-msgstr "konstant"
+#: ../visualization/nviz/scripts/script_tools:104
+msgid "Loop Start Value"
+msgstr "Anfangswert für Schleife"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:468
-msgid "Enter value:"
-msgstr "Gebe Wert ein:"
+#: ../visualization/nviz/scripts/script_tools:106
+msgid "Loop End Value"
+msgstr "Endwert für Schleife"
 
-#: ../visualization/nviz/scripts/attPopup.tcl:516
-msgid "Use slider to set value"
-msgstr "Benutze Slider, um Wert einzustellen"
-
-#: ../visualization/nviz/scripts/colorPopup.tcl:17
-msgid "Choose color"
-msgstr "Wähle Farbe"
+#: ../visualization/nviz/scripts/script_tools:108
+msgid "Loop Increment Value"
+msgstr "Inkrement für Schleife"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:46
 msgid "Volume Panel"
@@ -1597,300 +2332,6 @@ msgstr "Bewege Iso-Oberfläche abwärts"
 msgid "Position Volume"
 msgstr "Position des Volumen"
 
-#: ../visualization/nviz/scripts/config.tcl:125
-msgid "x"
-msgstr "x"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "sphere"
-msgstr "Kugel"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "diamond"
-msgstr "Raute"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "cube"
-msgstr "Würfel"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "box"
-msgstr "Box"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "gyro"
-msgstr "Kreisel"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "aster"
-msgstr "Aster"
-
-#: ../visualization/nviz/scripts/config.tcl:125
-#: ../visualization/nviz/scripts/site_attr.tcl:77
-msgid "histogram"
-msgstr "Histogramm"
-
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:99
-msgid "use volume as color"
-msgstr "Verwende Volumen als Farbe"
-
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:275
-msgid "remove mask"
-msgstr "Entferne Maske"
-
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
-msgid "Enter value: "
-msgstr "Wert eingeben: "
-
-#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:449
-msgid "Use slider to select constant value :"
-msgstr "Verwende Slider, um einen konstanten Wert zu wählen :"
-
-#: ../visualization/nviz/scripts/wirecolorPopup.tcl:30
-msgid "Select Wire Color"
-msgstr "Wähle Gitter-Farbe"
-
-#: ../visualization/nviz/scripts/wirecolorPopup.tcl:57
-msgid "use surface color"
-msgstr "Verwende Oberflächenfarbe"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:100
-msgid "Simple Animation"
-msgstr "Einfache Animation"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:104
-msgid "Simple Keyframe Animation Panel"
-msgstr "Einfache Keyframe Animationseinstellungen"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:111
-msgid "Step backward frame by frame"
-msgstr "Frame by Frame-Schritte rückwärts"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:114
-msgid "Pause playback"
-msgstr "Pause beim Abspielen"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:117
-msgid "Step forward frame by frame"
-msgstr "Frame by Frame-Schritte vorwärts"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:120
-msgid "Run animation from beginning"
-msgstr "Starte Animation von Beginn"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:122
-msgid " set max frames:"
-msgstr " Stelle maximale Frame-Anzahl ein:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:136
-msgid "Key Frames"
-msgstr "Key-Frames"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:145
-msgid "Current frame:"
-msgstr "Aktueller Frame:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:148
-msgid "Selected key frame:"
-msgstr "Ausgewählter Key-Frame:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:159
-msgid "Add frame"
-msgstr "Füge einen Frame hinzu"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:161
-msgid "Clear all"
-msgstr "Alles löschen"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:170
-msgid "Show: "
-msgstr "Zeige:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:171
-msgid "path"
-msgstr "Pfad"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:173
-msgid "lines"
-msgstr "Linien"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:175
-msgid "points"
-msgstr "Punkte"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:177
-msgid "volumes"
-msgstr "Volumen"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:184
-msgid "Interpolation: "
-msgstr "Interpolierung: "
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:200
-msgid "Run and save"
-msgstr "Starte und speichere"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:202
-msgid "Run animation and save frames"
-msgstr "Spiele Animation ab und speichere Frames"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:222
-msgid "spline tension"
-msgstr "Spline tension"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:275
-#: ../visualization/nviz/scripts/panel_tst.tcl:21
-msgid "Test"
-msgstr "Test"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:576
-msgid "Do you really want to delete this keyframe?"
-msgstr "Wollen sie wirklich diesen Keyframe löschen?"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:754
-msgid "There is already a keyframe at this time, do you wish to replace it?"
-msgstr "Es ist schon ein Keyframe vorhanden, soll dieser ersetzt werden?"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:800
-msgid "Do you really want to delete all keyframes?"
-msgstr "Wollen sie wirklich alle Keyframes löschen?"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:928
-msgid "Save Animation Frames"
-msgstr "Speichere Animation"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:934
-msgid "Prefix for images: "
-msgstr "Präfix der Ausgabebilder:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:935
-msgid "Enter a prefix name for images to be created from animation frames"
-msgstr "Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:940
-msgid "Output format: "
-msgstr "Ausgabeformat:"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:948
-msgid "Rendering mode: "
-msgstr "Rendering-Modus: "
-
-#: ../visualization/nviz/scripts/widgets.tcl:70
-msgid "E"
-msgstr "E"
-
-#: ../visualization/nviz/scripts/widgets.tcl:71
-msgid "W"
-msgstr "W"
-
-#: ../visualization/nviz/scripts/widgets.tcl:72
-msgid "N"
-msgstr "N"
-
-#: ../visualization/nviz/scripts/widgets.tcl:73
-msgid "S"
-msgstr "S"
-
-#: ../visualization/nviz/scripts/widgets.tcl:596
-msgid "None Loaded"
-msgstr "Nichts geladen"
-
-#: ../visualization/nviz/scripts/panel_tst.tcl:31
-msgid "Test Panel"
-msgstr "Überprüfe Einstellungen"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:34
-msgid "Position Panel"
-msgstr "Einstellungen der Position"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:45
-msgid "From (eye):"
-msgstr "Von (Auge):"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:46
-msgid "To (surface):"
-msgstr "Zur (Oberfläche):"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:49
-msgid "Range/bearing:"
-msgstr "Wertebereich/Winkel:"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:52
-msgid "East"
-msgstr "Osten"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:56
-msgid "Range"
-msgstr "Wertebereich"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:60
-msgid "North"
-msgstr "Nord"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:64
-msgid "Bearing"
-msgstr "Winkel"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:68
-#: ../visualization/nviz/scripts/nviz2.2_script:803
-msgid "Height"
-msgstr "Höhe"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:72
-msgid "Elev"
-msgstr "Höhe"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:83
-msgid "Eye to surface"
-msgstr "Auge zu Oberfläche"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:84
-msgid "Surface to eye"
-msgstr "Oberfläche zu Auge"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:85
-msgid "Calculate"
-msgstr "Berechne"
-
-#: ../visualization/nviz/scripts/panel_pos.tcl:109
-#: ../visualization/nviz/scripts/site_attr.tcl:472
-msgid "Apply"
-msgstr "Anwenden"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:45
-msgid "Scale bar"
-msgstr "Maßstabsleiste"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:47
-msgid "Scale Bar Panel"
-msgstr "Einstellungen der Maßstabsleiste"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:51
-msgid "Scale bar: "
-msgstr "Maßstabsleiste:"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:54
-msgid "length (in map units) "
-msgstr "Länge in Karteneinheiten"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:71
-msgid "Scale text: "
-msgstr "Maßstabstext: "
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:74
-msgid "size "
-msgstr "Größe"
-
-#: ../visualization/nviz/scripts/panel_scale.tcl:90
-msgid "Place scale"
-msgstr "Platziere Maßstab"
-
 #: ../visualization/nviz/scripts/nviz2.2_script:197
 msgid "Show Panels"
 msgstr "Zeige Einstellungen"
@@ -1980,11 +2421,6 @@ msgstr "Öffne und starte Skript"
 msgid "Close Script"
 msgstr "Schließe Skript"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:431
-#: ../visualization/nviz/scripts/script_get_line:15
-msgid "Add Script Line"
-msgstr "Kommandozeile hinzufügen"
-
 #: ../visualization/nviz/scripts/nviz2.2_script:434
 msgid "Add Script Command"
 msgstr "Kommando hinzufügen"
@@ -2021,378 +2457,6 @@ msgstr "Zwanglos"
 msgid "Really reset Nviz?"
 msgstr "Nviz wirklich zurückstellen?"
 
-#: ../visualization/nviz/scripts/panel_site.tcl:44
-msgid "Vector Points"
-msgstr "Vektorpunkte"
-
-#: ../visualization/nviz/scripts/panel_site.tcl:51
-msgid "Vector Points Panel"
-msgstr "Einstellungen für Vektorpunkte"
-
-#: ../visualization/nviz/scripts/panel_site.tcl:133
-msgid "icon size"
-msgstr "Symbolgröße"
-
-#: ../visualization/nviz/scripts/panel_site.tcl:153
-msgid "icon type"
-msgstr "Symboltyp"
-
-#: ../visualization/nviz/scripts/panel_site.tcl:162
-msgid "3D points"
-msgstr "3D-Punkte"
-
-#: ../visualization/nviz/scripts/panel_site.tcl:182
-msgid "thematic mapping for vector points"
-msgstr "Thematische Darstellung von Vektorpunkten"
-
-#: ../visualization/nviz/scripts/mapBrowser.tcl:204
-msgid "Map type:"
-msgstr "Kartentyp:"
-
-#: ../visualization/nviz/scripts/mapBrowser.tcl:218
-msgid "3d.view"
-msgstr "3D-Ansicht"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:25
-msgid "Lighting"
-msgstr "Beleuchtung"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:30
-msgid "Lighting Panel"
-msgstr "Einstellungen der Beleuchtung"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:43
-msgid " Light source position"
-msgstr " Position der Lichtquelle"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:58
-msgid "Follow surface viewpoint"
-msgstr "Folge Oberflächen-Standpunkt"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:60
-msgid "Show lighting model"
-msgstr "Zeige Beleuchtungs-Modell"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:66
-msgid "Light color"
-msgstr "Lichtfarbe"
-
-#: ../visualization/nviz/scripts/panel_lights.tcl:70
-msgid "Light intensity"
-msgstr "Licht-Intensität"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:62
-msgid "Labels Panel"
-msgstr "Einstellungen der Labels"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:73
-msgid "Choose font color"
-msgstr "Wähle Schriftfarbe"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:83
-msgid "Label text: "
-msgstr "Label-Text:"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:90
-msgid "Place label"
-msgstr "Platziere Label"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:91
-msgid "Click with mouse to place label"
-msgstr "Klicke mit Maus, um Label zu platzieren"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:92
-msgid "Erase last"
-msgstr "Lösche letzte Einstellung"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:93
-msgid "Erase most recent label placed"
-msgstr "Lösche zuletzt platziertes Label"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:94
-msgid "Erase all"
-msgstr "Lösche alles"
-
-#: ../visualization/nviz/scripts/panel_label.tcl:95
-msgid "Erase all labels"
-msgstr "Lösche alle Labels"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
-msgstr "Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten Wertebereich der Symbolgröße."
-
-#: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
-msgstr "Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke [Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
-
-#: ../visualization/nviz/scripts/site_attr.tcl:428
-#, tcl-format
-msgid "WARNING: No thematic mapping preferences set for %s!"
-msgstr "WARNUNG: Keine thematischen Einstellungen für %s!"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:447
-#, tcl-format
-msgid "Vary point %s"
-msgstr "Ändere Punkt %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:451
-#, tcl-format
-msgid "GIS attribute: %s"
-msgstr "GIS-Attribut: %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:460
-#, tcl-format
-msgid "Attribute type: %s"
-msgstr "Attributtyp: %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:474
-msgid "Apply current thematic preferences to point display"
-msgstr "Wende aktuelle thematische Einstellungen für die Punktdarstellung an"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:477
-msgid "Auto"
-msgstr "Auto"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid "Automatically generate a color  table distributed across range of attribute values"
-msgstr "Generiere automatisch eine über den Wertebereich der Attribute verteilte Farbtabelle"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:485
-msgid "Clear all thematic settings"
-msgstr "Setze all thematische Einstellungen auf Null"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:495
-msgid "Load/save theme preferences"
-msgstr "Lade/Speicher thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:528
-msgid "Select thematic prefs to use"
-msgstr "Wähle thematische Einstellungen aus"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:531
-msgid "current prefs"
-msgstr "Aktuelle Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:536
-msgid "prefs. from file"
-msgstr "Einstellungen aus Datei"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:542
-msgid "(preserves current prefs.)"
-msgstr "(erhält aktuelle Einstellungen)"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:553
-msgid "no prefs loaded"
-msgstr "Keine Einstellungen geladen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:558
-msgid "View loaded thematic prefs"
-msgstr "Zeige geladene thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:570
-msgid "Load and save prefs."
-msgstr "Lade und speichere Einstellungen."
-
-#: ../visualization/nviz/scripts/site_attr.tcl:572
-msgid "Load prefs"
-msgstr "Lade Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:574
-msgid "Replace current themes with prefs loaded from file"
-msgstr "Ersetze aktuelle Themen mit jenen Einstellungen der geladenen Datei"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:580
-msgid "Save prefs"
-msgstr "Speichere Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:582
-msgid "Copy current themes to prefs loaded from file"
-msgstr "Kopiere aktuelle Karten zu den Einstellungen "
-
-#: ../visualization/nviz/scripts/site_attr.tcl:860
-#: ../visualization/nviz/scripts/site_attr.tcl:915
-msgid "Too few values: at least 2!"
-msgstr "Zuwenig Werte: zumindest 2!"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1107
-#: ../visualization/nviz/scripts/site_attr.tcl:1197
-msgid "No prefs file loaded"
-msgstr "Keine Datei mit Einstellungen geladen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1138
-msgid "No prefs"
-msgstr "Keine Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1146
-msgid "Thematic prefs and attribute have different types"
-msgstr "Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1207
-msgid "Thematic prefs and attributes have different types"
-msgstr "Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1408
-#, tcl-format
-msgid "WARNING: No attribute behaviour for %s!"
-msgstr "WARNUNG: Keine Attribute für %s!"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1418
-#, tcl-format
-msgid "Thematic prefs file %s"
-msgstr "Thematische Einstellungen in Datei %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1422
-#, tcl-format
-msgid "Name: %s"
-msgstr "Name: %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1430
-#, tcl-format
-msgid "Type: %s"
-msgstr "Typ: %s"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1436
-msgid "Save thematic prefs in file"
-msgstr "Speichere thematische Einstellungen in Datei"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1439
-msgid "Clear current thematic prefs"
-msgstr "Lösche aktuelle thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1493
-msgid "Load Thematic Prefs"
-msgstr "Lade thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1497
-msgid "Load file"
-msgstr "Lade Datei"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1577
-msgid "Save thematic prefs"
-msgstr "Speichere thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1582
-#, tcl-format
-msgid "Old LUT \"%s\" deleted"
-msgstr "Alte LUT \"%s\" gelöscht"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1607
-#, tcl-format
-msgid "Thematic preferences file \"%s\" saved"
-msgstr "Thematische Einstellung in Datei \"%s\" gespeichert"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1616
-msgid "Load thematic prefs"
-msgstr "Lade thematische Einstellungen"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1622
-#, tcl-format
-msgid "*** WARNING *** File \"%s\" is unavailable"
-msgstr "*** WARNUNG *** Datei \"%s\" ist nicht verfügbar"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1627
-#, tcl-format
-msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
-msgstr "*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1700
-#, tcl-format
-msgid "WARNING: Unknown Tag \"%s\" in file \"%s\""
-msgstr "WARNUNG: Unbekannte Markierung \"%s\" in Datei \"%s\""
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1770
-#: ../visualization/nviz/scripts/site_attr.tcl:1852
-#, tcl-format
-msgid "WARNING: Unknown attribute %s!"
-msgstr "WARNUNG: Unbekanntes Attribut %s!"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1791
-#, tcl-format
-msgid "WARNING: field %s NOT FOUND"
-msgstr "WARNUNG: Feld %s NICHT GEFUNDEN"
-
-#: ../visualization/nviz/scripts/site_attr.tcl:1798
-#, tcl-format
-msgid "WARNING: lut file %s NOT FOUND"
-msgstr "WARNUNG: lut-Datei %s NICHT GEFUNDEN"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:48
-msgid "Cutting Planes"
-msgstr "Schnittebenen"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:50
-msgid "Cutting Planes Panel"
-msgstr "Einstellungen der Schnittebenen"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:60
-msgid "Active cutting plane: "
-msgstr "Aktive Schnittebene:"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:68
-msgid "Plane 0"
-msgstr "Ebene 0"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:69
-msgid "Plane 1"
-msgstr "Ebene 1"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:70
-msgid "Plane 2"
-msgstr "Ebene 2"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:71
-msgid "Plane 3"
-msgstr "Ebene 3"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:72
-msgid "Plane 4"
-msgstr "Ebene 4"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:73
-msgid "Plane 5"
-msgstr "Ebene 5"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:87
-msgid "set shading"
-msgstr "Bestimme Schattierung"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:90
-msgid "top color"
-msgstr "Farbe oben"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:92
-msgid "bottom color"
-msgstr "Farbe unten"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:94
-msgid "blend"
-msgstr "Mischen"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:96
-msgid "shaded"
-msgstr "schattiert"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:139
-msgid "Z coord"
-msgstr "Z Koordinate"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:151
-msgid "Rotate"
-msgstr "Rotiere"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:163
-msgid "Tilt"
-msgstr "Neigung"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:184
-msgid "All Off"
-msgstr "Alles aus"
-
-#: ../visualization/nviz/scripts/panel_cutplane.tcl:292
-#, tcl-format
-msgid "Plane %s"
-msgstr "Ebene %s"
-
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:39
 msgid "Scaled Difference"
 msgstr "Skalierter Unterschied"
@@ -2416,43 +2480,6 @@ msgstr "Abwahl der Referenz-Oberfläche"
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:124
 msgid "None selected"
 msgstr "Keine Auswahl"
-
-#: ../visualization/nviz/scripts/script_play:31
-#, tcl-format
-msgid "Script file %s does not exist"
-msgstr "Skript-Datei %s existiert nicht"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:45
-msgid "Fringe Panel"
-msgstr "Eingabe der Randzone"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:48
-msgid "Edges with fringe: "
-msgstr "Kanten mit Randzone:"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:51
-msgid "N&W"
-msgstr "N&W"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:54
-msgid "N&E"
-msgstr "N&E"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:57
-msgid "S&W"
-msgstr "S&W"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:60
-msgid "S&E"
-msgstr "S&E"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:68
-msgid "Elevation of fringe bottom: "
-msgstr "Untere Höhe der Randzone:"
-
-#: ../visualization/nviz/scripts/panel_fringe.tcl:80
-msgid "Draw Fringe"
-msgstr "Zeichne Randzone"
 
 #~ msgid "perspective"
 #~ msgstr "Perspektive"
