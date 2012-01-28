@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -190,7 +190,7 @@ msgid "Reading file [%s]..."
 msgstr "กำลังอ่านไฟล์ [%s] ..."
 
 #: ../visualization/xganim/main.c:366 ../doc/raster/r.example/main.c:111
-#: ../misc/m.nviz.image/surface.c:54 ../misc/m.nviz.image/surface.c:104
+#: ../misc/m.nviz.image/surface.c:54 ../misc/m.nviz.image/surface.c:110
 #: ../raster/r.bilinear/main.c:81 ../raster/r.profile/main.c:142
 #: ../raster/r.sun2/main.c:811 ../raster/r.sun2/main.c:826
 #: ../raster/r.sun2/main.c:843 ../raster/r.sun2/main.c:857
@@ -417,7 +417,7 @@ msgstr "เงียบ"
 #: ../raster/r.slope.aspect/opennew.c:11 ../raster/r.bitpattern/main.c:104
 #: ../raster/r.surf.idw/main.c:112 ../raster/r.median/main.c:77
 #: ../raster/r.neighbors/main.c:197 ../raster/r.reclass/main.c:81
-#: ../raster/r.texture/main.c:231 ../raster/r.in.gdal/main.c:223
+#: ../raster/r.texture/main.c:231 ../raster/r.in.gdal/main.c:225
 #: ../raster/r.surf.gauss/main.c:77 ../raster/r.in.ascii/main.c:203
 #: ../raster/r.surf.fractal/interface.c:79 ../raster/r.average/main.c:78
 #: ../raster/r.to.rast3elev/main.c:472 ../imagery/i.zc/main.c:119
@@ -425,7 +425,7 @@ msgstr "เงียบ"
 #: ../imagery/i.fft/fftmain.c:124
 #: ../imagery/i.ortho.photo/i.photo.camera/main.c:91
 #: ../general/manage/cmd/rename.c:84 ../general/manage/cmd/copy.c:88
-#: ../vector/v.kernel/main.c:312 ../vector/v.in.ogr/main.c:328
+#: ../vector/v.kernel/main.c:312 ../vector/v.in.ogr/main.c:330
 #: ../vector/v.edit/main.c:86 ../vector/v.to.rast3/main.c:69
 #: ../vector/v.surf.idw/main.c:137
 #, c-format
@@ -455,8 +455,8 @@ msgstr "ไม่สามารถ อ่าน ส่วนหัวของ�
 #: ../raster/r.in.mat/main.c:430 ../raster/r.li/r.li.daemon/daemon.c:132
 #: ../raster/r.slope.aspect/opennew.c:19 ../raster/r.bitpattern/main.c:125
 #: ../raster/r.surf.idw/main.c:147 ../raster/r.resamp.interp/main.c:148
-#: ../raster/r.texture/main.c:309 ../raster/r.in.gdal/main.c:746
-#: ../raster/r.in.gdal/main.c:751 ../raster/r.in.gdal/main.c:765
+#: ../raster/r.texture/main.c:309 ../raster/r.in.gdal/main.c:757
+#: ../raster/r.in.gdal/main.c:762 ../raster/r.in.gdal/main.c:776
 #: ../raster/r.thin/io.c:168 ../raster/r.lake/main.c:229
 #: ../raster/r.lake/main.c:318 ../raster/r.in.ascii/main.c:206
 #: ../raster/r.surf.fractal/write_rast.c:58 ../raster/r.mapcalc/map.c:507
@@ -537,7 +537,7 @@ msgstr "My first vector module"
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.kcv/main.c:132
 #: ../vector/v.extract/main.c:193 ../vector/v.db.connect/main.c:140
 #: ../vector/v.delaunay2/main.c:117 ../vector/v.sample/main.c:152
-#: ../vector/v.distance/main.c:299 ../vector/v.to.db/parse.c:128
+#: ../vector/v.distance/main.c:303 ../vector/v.to.db/parse.c:128
 #: ../vector/v.build.polylines/main.c:139 ../vector/v.qcount/main.c:128
 #: ../vector/v.category/main.c:197 ../vector/v.buffer/main.c:365
 #: ../vector/v.surf.rst/main.c:565 ../vector/v.transform/main.c:242
@@ -620,8 +620,8 @@ msgstr "ไม่สามารถ สร้าง แผนที่เชิ�
 #: ../vector/v.buffer2/main.c:328 ../vector/v.univar/main.c:176
 #: ../vector/v.out.ascii/b2a.c:38 ../vector/v.edit/select.c:506
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
-#: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:355
-#: ../vector/v.distance/main.c:391
+#: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
+#: ../vector/v.distance/main.c:395
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:114
 #: ../vector/v.reclass/main.c:121 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:46 ../vector/v.to.3d/trans2.c:45
@@ -663,7 +663,7 @@ msgstr "ไม่สามารถ เริ่มตัวขับ  <%s> ไ�
 #: ../vector/v.kcv/main.c:181 ../vector/v.extract/main.c:291
 #: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.in.ascii/in.c:317 ../vector/v.sample/main.c:207
-#: ../vector/v.distance/main.c:360 ../vector/v.distance/main.c:397
+#: ../vector/v.distance/main.c:364 ../vector/v.distance/main.c:401
 #: ../vector/v.to.db/query.c:89 ../vector/v.to.db/update.c:46
 #: ../vector/v.mkgrid/main.c:237 ../vector/v.net.flow/main.c:157
 #: ../vector/v.buffer/main.c:387 ../vector/v.surf.rst/main.c:607
@@ -2020,17 +2020,17 @@ msgstr "ไฟล์ <%s> ถูกสร้าง"
 msgid "Missing topography attribute for surface %d"
 msgstr ""
 
-#: ../misc/m.nviz.image/surface.c:124
+#: ../misc/m.nviz.image/surface.c:130
 #, fuzzy, c-format
 msgid "Color attribute not defined, using default <%s>"
 msgstr "ไม่พบกระดาษ '%s' , ใช้ค่าตั้งต้น"
 
-#: ../misc/m.nviz.image/surface.c:201
+#: ../misc/m.nviz.image/surface.c:211
 #, fuzzy, c-format
 msgid "Surface id %d doesn't exist"
 msgstr "band ที่เลือกเลือก  (%d) ไม่มี\n"
 
-#: ../misc/m.nviz.image/surface.c:248 ../misc/m.nviz.image/surface.c:255
+#: ../misc/m.nviz.image/surface.c:251 ../misc/m.nviz.image/surface.c:258
 #, fuzzy, c-format
 msgid "Unable to set draw mode for surface id %d"
 msgstr "ไม่สามารถอ่าน ส่วนหัว สำหรับ  %s"
@@ -2095,7 +2095,7 @@ msgstr "พบข้อมูลนข้าผิดพลาดที่บร
 msgid "Supported Formats:\n"
 msgstr "รูปแบบที่รองรับ:\n"
 
-#: ../raster/r.external/main.c:83 ../raster/r.in.gdal/main.c:339
+#: ../raster/r.external/main.c:83 ../raster/r.in.gdal/main.c:341
 #, fuzzy
 msgid ""
 "Unable to convert input raster map projection information to GRASS format "
@@ -2103,13 +2103,13 @@ msgid ""
 msgstr ""
 "ไม่สามารถ แปลงข้อมูล  projection ของแผนที่ที่นำเข้า ไปสู่รูปแบบของ GRASS เพื่อตรวจสอบ"
 
-#: ../raster/r.external/main.c:99 ../raster/r.in.gdal/main.c:355
-#: ../vector/v.in.ogr/main.c:509
+#: ../raster/r.external/main.c:99 ../raster/r.in.gdal/main.c:357
+#: ../vector/v.in.ogr/main.c:511
 msgid "Over-riding projection check"
 msgstr "ยกเลิกการตรวจสอบ projection"
 
-#: ../raster/r.external/main.c:107 ../raster/r.in.gdal/main.c:366
-#: ../vector/v.in.ogr/main.c:518
+#: ../raster/r.external/main.c:107 ../raster/r.in.gdal/main.c:367
+#: ../vector/v.in.ogr/main.c:520
 msgid ""
 "Projection of dataset does not appear to match current location.\n"
 "\n"
@@ -2117,16 +2117,16 @@ msgstr ""
 "Projection ของชุดข้อมูล ไม่เข้ากับ ตำแหน่งปัจจุบัน \n"
 "\n"
 
-#: ../raster/r.external/main.c:112 ../raster/r.in.gdal/main.c:371
+#: ../raster/r.external/main.c:112 ../raster/r.in.gdal/main.c:372
 msgid "Location PROJ_INFO is:\n"
 msgstr "PROJ_INFO ของ ตำแหน่ง  คือ:\n"
 
-#: ../raster/r.external/main.c:123 ../raster/r.in.gdal/main.c:382
+#: ../raster/r.external/main.c:123 ../raster/r.in.gdal/main.c:383
 msgid "Dataset PROJ_INFO is:\n"
 msgstr "PROJ_INFO ของ ชุดข้อมูล  คือ:\n"
 
-#: ../raster/r.external/main.c:150 ../raster/r.in.gdal/main.c:409
-#: ../vector/v.in.ogr/main.c:534 ../vector/v.in.ogr/main.c:541
+#: ../raster/r.external/main.c:150 ../raster/r.in.gdal/main.c:410
+#: ../vector/v.in.ogr/main.c:536 ../vector/v.in.ogr/main.c:543
 msgid "Import dataset PROJ_INFO is:\n"
 msgstr "นำเข้า PROJ_INFO ของชุดข้อมูล  คือ:\n"
 
@@ -2141,14 +2141,14 @@ msgstr ""
 "คุณสามารถใช้  -o สำหรับ r.in.gdal เพื่อยกเลิกการตรวจสอบ และใช้ การกำหนดของ ตำแหน่ง "
 "สำหรับ ชุดข้อมูล\n"
 
-#: ../raster/r.external/main.c:175 ../raster/r.in.gdal/main.c:434
+#: ../raster/r.external/main.c:175 ../raster/r.in.gdal/main.c:435
 msgid ""
 "Consider generating a new location from the input dataset using the "
 "'location' parameter.\n"
 msgstr "สร้าง ตำแหน่งใหม่ จาก ชุดข้อมูลที่นำเข้า โดยใช้ตัวแปร 'location'\n"
 
-#: ../raster/r.external/main.c:180 ../raster/r.in.gdal/main.c:439
-#: ../vector/v.in.ogr/main.c:592
+#: ../raster/r.external/main.c:180 ../raster/r.in.gdal/main.c:440
+#: ../vector/v.in.ogr/main.c:594
 msgid "Projection of input dataset and current location appear to match"
 msgstr "Projection ของ ชุดข้อมูลที่นำเข้า และ ตำแหน่งปัจจุบัน เข้ากันได้"
 
@@ -2161,72 +2161,84 @@ msgstr ""
 "แผนที่ที่จะนำเข้า มีการหมุน - ไม่สามารถนำเข้าได้. คุณต้องใช้  'gdalwarp' "
 "tเพื่อแปลงแผนที่ให้ไปตามทิศเหนือ"
 
-#: ../raster/r.external/main.c:300
+#: ../raster/r.external/main.c:264 ../raster/r.in.gdal/main.c:621
+#: ../vector/v.in.ogr/main.c:1201
+#, fuzzy
+msgid "Default region for this location updated"
+msgstr "ข้อมูล Projection ถูกปรับปรุงแล้ว!"
+
+#: ../raster/r.external/main.c:267 ../raster/r.in.gdal/main.c:624
+#: ../vector/v.in.ogr/main.c:1204
+#, fuzzy
+msgid "Region for the current mapset updated"
+msgstr "%s มีอยู่แล้วในชุดแผนที่"
+
+#: ../raster/r.external/main.c:310
 #, fuzzy
 msgid "Complex types not supported"
 msgstr "ชนิดของ Column ไม่รองรับ"
 
-#: ../raster/r.external/main.c:315
+#: ../raster/r.external/main.c:325
 #, fuzzy, c-format
 msgid "Copying color table for %s"
 msgstr "สร้างตารางสีสำหรับ  <%s ใน %s>..."
 
-#: ../raster/r.external/main.c:333
+#: ../raster/r.external/main.c:343
 #, fuzzy, c-format
 msgid "Setting grey color table for <%s> (full 8bit range)"
 msgstr "สร้างตารางสีสำหรับ  <%s ใน %s>..."
 
-#: ../raster/r.external/main.c:339
+#: ../raster/r.external/main.c:349
 #, fuzzy, c-format
 msgid "Setting grey color table for <%s> (data range)"
 msgstr "สร้างตารางสีสำหรับ  <%s ใน %s>..."
 
-#: ../raster/r.external/main.c:353
+#: ../raster/r.external/main.c:363
 #, fuzzy, c-format
 msgid "Unable to create cell/%s file"
 msgstr "ไม่สามารถอ่าน Color ไฟล์"
 
-#: ../raster/r.external/main.c:362
+#: ../raster/r.external/main.c:372
 #, fuzzy, c-format
 msgid "Unable to create fcell/%s file"
 msgstr "ไม่สามารถสร้าง  face"
 
-#: ../raster/r.external/main.c:394
+#: ../raster/r.external/main.c:404
 #, fuzzy, c-format
 msgid "Unable to create cell_misc/%s/gdal file"
 msgstr "ไม่สามารถสร้าง ไฟล์ชั่วคราวได้"
 
-#: ../raster/r.external/main.c:397
+#: ../raster/r.external/main.c:407
 #, fuzzy, c-format
 msgid "Error writing cell_misc/%s/gdal file"
 msgstr "ข้อผิดพลาด ขณะ เขียน ไฟล์แผนที่ ผลลัพธ์!"
 
-#: ../raster/r.external/main.c:422
+#: ../raster/r.external/main.c:432
 #, fuzzy, c-format
 msgid "Unable to create cell_misc/%s/f_format file"
 msgstr "ไม่สามารถสร้าง ไฟล์ชั่วคราวได้"
 
-#: ../raster/r.external/main.c:425
+#: ../raster/r.external/main.c:435
 #, fuzzy, c-format
 msgid "Error writing cell_misc/%s/f_format file"
 msgstr "ผิดพลาด ขณะเขียน ไฟล์ segment"
 
-#: ../raster/r.external/main.c:440
+#: ../raster/r.external/main.c:450
 #, fuzzy
 msgid "Unable to write quant file"
 msgstr "ไม่สามารถเขียนไปที่ไฟล์"
 
-#: ../raster/r.external/main.c:473
+#: ../raster/r.external/main.c:483
 #, fuzzy, c-format
 msgid "Creating support files for %s"
 msgstr "สร้าง support ไฟล์สำหรับ <%s>..."
 
-#: ../raster/r.external/main.c:486
+#: ../raster/r.external/main.c:496
 #, fuzzy, c-format
 msgid "Link to raster map <%s> created"
 msgstr "แผนที่เชิงภาพ <%s> มีอยู่แล้ว"
 
-#: ../raster/r.external/main.c:510 ../raster/r.in.gridatb/main.c:41
+#: ../raster/r.external/main.c:520 ../raster/r.in.gridatb/main.c:41
 #: ../raster/r.in.arc/main.c:59 ../raster/r.in.bin/main.c:234
 #: ../raster/r.in.mat/main.c:92 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.poly/main.c:29
@@ -2234,17 +2246,17 @@ msgstr "แผนที่เชิงภาพ <%s> มีอยู่แล้
 msgid "raster, import"
 msgstr "แผนที่เชิงภาพ, การนำเข้า"
 
-#: ../raster/r.external/main.c:512
+#: ../raster/r.external/main.c:522
 #, fuzzy
 msgid "Link GDAL supported raster file to a binary raster map layer."
 msgstr "นำเข้า ไฟล์แผนที่เชิงภาพที่ GDAL รองรับ ไปเป็น ชั้นข้อมูลแผนที่เชิงภาพแบบ binary"
 
-#: ../raster/r.external/main.c:515
+#: ../raster/r.external/main.c:525
 #, fuzzy
 msgid "Raster file to be linked"
 msgstr "ไฟล์แผนที่เชิงภาพที่จะนำเข้า"
 
-#: ../raster/r.external/main.c:517 ../raster/r.external/main.c:527
+#: ../raster/r.external/main.c:527 ../raster/r.external/main.c:537
 #: ../raster/r.recode/main.c:54 ../raster/r.colors/main.c:181
 #: ../raster/r.in.gdal/main.c:90 ../raster/r.in.gdal/main.c:94
 #: ../raster/r.out.gdal/main.c:148 ../raster/r.out.gdal/main.c:184
@@ -2254,50 +2266,56 @@ msgstr "ไฟล์แผนที่เชิงภาพที่จะนำ
 msgid "Required"
 msgstr "การร้องขอ"
 
-#: ../raster/r.external/main.c:521
+#: ../raster/r.external/main.c:531
 #, fuzzy
 msgid "Name of non-file GDAL data source"
 msgstr "ชื่อของฐานข้อมูลใหม่"
 
-#: ../raster/r.external/main.c:533
+#: ../raster/r.external/main.c:543
 #, fuzzy
 msgid "Band to select (default: all)"
 msgstr "เลือก Band  (ค่าตั้งต้น: band ทั้งหมด)"
 
-#: ../raster/r.external/main.c:540 ../raster/r.in.arc/main.c:87
+#: ../raster/r.external/main.c:550 ../raster/r.in.arc/main.c:87
 #: ../raster/r.in.bin/main.c:277 ../raster/r.in.gdal/main.c:121
 #: ../raster/r.in.poly/main.c:44 ../raster/r.in.ascii/main.c:85
 msgid "Title for resultant raster map"
 msgstr "ชื่อเรื่อง ของ แผนที่เชิงภาพ ผลลัพธ์"
 
-#: ../raster/r.external/main.c:541 ../raster/r.in.gdal/main.c:122
+#: ../raster/r.external/main.c:551 ../raster/r.in.gdal/main.c:122
 msgid "Metadata"
 msgstr ""
 
-#: ../raster/r.external/main.c:546 ../raster/r.in.gdal/main.c:134
+#: ../raster/r.external/main.c:556 ../raster/r.in.gdal/main.c:134
 msgid "Override projection (use location's projection)"
 msgstr "เขียนทับ Projection (ใช้ location's projection)"
 
-#: ../raster/r.external/main.c:550 ../raster/r.in.gdal/main.c:138
+#: ../raster/r.external/main.c:560 ../raster/r.in.gdal/main.c:138
 #: ../vector/v.in.ogr/main.c:231
-msgid "Extend location extents based on new dataset"
+#, fuzzy
+msgid "Extend region extents based on new dataset"
 msgstr "ขยาย ขอบเขต ของตำแหน่ง ในชุดข้อมูลใหม่"
 
-#: ../raster/r.external/main.c:554
+#: ../raster/r.external/main.c:562 ../raster/r.in.gdal/main.c:140
+#: ../vector/v.in.ogr/main.c:233
+msgid "Also updates the default region if in the PERMANENT mapset"
+msgstr ""
+
+#: ../raster/r.external/main.c:566
 msgid "Require exact range"
 msgstr ""
 
-#: ../raster/r.external/main.c:558 ../raster/r.in.gdal/main.c:142
+#: ../raster/r.external/main.c:570 ../raster/r.in.gdal/main.c:144
 #: ../vector/v.in.ogr/main.c:202
 msgid "List supported formats and exit"
 msgstr "แสดงรายการ รูปแบบที่รองรับ และ ออก"
 
-#: ../raster/r.external/main.c:559 ../raster/r.stats/main.c:147
+#: ../raster/r.external/main.c:571 ../raster/r.stats/main.c:147
 #: ../raster/r.stats/main.c:152 ../raster/r.stats/main.c:157
 #: ../raster/r.stats/main.c:163 ../raster/r.stats/main.c:168
 #: ../raster/r.stats/main.c:173 ../raster/r.stats/main.c:178
 #: ../raster/r.stats/main.c:183 ../raster/r.sunmask/main.c:232
-#: ../raster/r.sunmask/main.c:238 ../raster/r.in.gdal/main.c:143
+#: ../raster/r.sunmask/main.c:238 ../raster/r.in.gdal/main.c:145
 #: ../raster/r.out.gdal/main.c:133 ../imagery/i.group/main.c:77
 #: ../imagery/i.group/main.c:83 ../general/g.proj/main.c:63
 #: ../general/g.proj/main.c:69 ../general/g.proj/main.c:75
@@ -2322,42 +2340,42 @@ msgstr "แสดงรายการ รูปแบบที่รองร�
 msgid "Print"
 msgstr "แสดง"
 
-#: ../raster/r.external/main.c:583
+#: ../raster/r.external/main.c:595
 #, fuzzy
 msgid "Name for input source not specified"
 msgstr "ชื่อของแผนที่เชิงภาพผลลัพธ์"
 
-#: ../raster/r.external/main.c:586
+#: ../raster/r.external/main.c:598
 #, fuzzy
 msgid "input= and source= are mutually exclusive"
 msgstr "weight= และ -c คือ mutually exclusive"
 
-#: ../raster/r.external/main.c:589 ../raster/r.in.gdal/main.c:220
+#: ../raster/r.external/main.c:601 ../raster/r.in.gdal/main.c:222
 #, fuzzy
 msgid "Name for output raster map not specified"
 msgstr "ชื่อของแผนที่เชิงภาพผลลัพธ์"
 
-#: ../raster/r.external/main.c:611
+#: ../raster/r.external/main.c:623
 #, fuzzy
 msgid "Unable to set window"
 msgstr "ไม่สามารถกำหนดขนาด"
 
-#: ../raster/r.external/main.c:618 ../raster/r.in.gdal/main.c:445
+#: ../raster/r.external/main.c:630 ../raster/r.in.gdal/main.c:446
 #, fuzzy
 msgid "Proceeding with import..."
 msgstr "กำลังเตรียม รายงาน ..."
 
-#: ../raster/r.external/main.c:622
+#: ../raster/r.external/main.c:634
 #, fuzzy, c-format
 msgid "Imagery group <%s> already exists and will be overwritten."
 msgstr "แผนที่เชิงเส้น <%s> มีอยู่แล้วและจะถูกเขียนทับ"
 
-#: ../raster/r.external/main.c:633 ../raster/r.in.gdal/main.c:471
+#: ../raster/r.external/main.c:645 ../raster/r.in.gdal/main.c:472
 #, fuzzy, c-format
 msgid "Selected band (%d) does not exist"
 msgstr "band ที่เลือกเลือก  (%d) ไม่มี\n"
 
-#: ../raster/r.external/main.c:662
+#: ../raster/r.external/main.c:674
 #, fuzzy, c-format
 msgid "Imagery group <%s> created"
 msgstr "แผนที่เชิงภาพ <%s> มีอยู่แล้ว"
@@ -5233,7 +5251,7 @@ msgid "No rules specified"
 msgstr "ไม่ได้ระบุ  rules"
 
 #: ../raster/r.recode/main.c:109 ../raster/r.circle/dist.c:155
-#: ../raster/r.composite/main.c:273 ../raster/r.in.gdal/main.c:958
+#: ../raster/r.composite/main.c:273 ../raster/r.in.gdal/main.c:969
 #: ../raster/r.surf.fractal/main.c:39
 #, fuzzy, c-format
 msgid "Raster map <%s> created."
@@ -6017,9 +6035,9 @@ msgid "Neither \"levels\" nor \"step\" parameter specified."
 msgstr "ไม่มีระบุตัวแปร \"levels\" หรือ \"step\""
 
 #: ../raster/r.contour/main.c:196 ../vector/v.net.centrality/main.c:240
-#: ../vector/v.overlay/main.c:464 ../vector/v.in.ogr/main.c:790
+#: ../vector/v.overlay/main.c:464 ../vector/v.in.ogr/main.c:780
 #: ../vector/v.net.distance/main.c:208 ../vector/v.in.dwg/main.c:219
-#: ../vector/v.distance/main.c:818 ../vector/v.net.flow/main.c:168
+#: ../vector/v.distance/main.c:822 ../vector/v.net.flow/main.c:168
 #: ../vector/v.surf.rst/main.c:613 ../vector/v.net.timetable/main.c:103
 #: ../vector/v.convert/att.c:80 ../vector/v.net.allpairs/main.c:149
 #: ../vector/v.net.components/main.c:147 ../vector/v.to.points/main.c:295
@@ -6028,7 +6046,7 @@ msgstr "ไม่มีระบุตัวแปร \"levels\" หรือ \"
 msgid "Unable to create table: '%s'"
 msgstr "ไม่สามารถสร้างตาราง: '%s'"
 
-#: ../raster/r.contour/main.c:201 ../vector/v.in.ogr/main.c:795
+#: ../raster/r.contour/main.c:201 ../vector/v.in.ogr/main.c:785
 #: ../vector/v.in.dwg/main.c:223 ../vector/v.in.ascii/in.c:505
 #: ../vector/v.reclass/main.c:223 ../vector/v.convert/att.c:85
 #: ../vector/v.in.sites/main.c:174 ../vector/v.in.dxf/write_vect.c:225
@@ -6039,9 +6057,9 @@ msgstr "ไม่สามารถสร้างดัชนีสำหรั
 
 #: ../raster/r.contour/main.c:206 ../raster/r.to.vect/main.c:203
 #: ../vector/v.random/main.c:204 ../vector/v.overlay/main.c:474
-#: ../vector/v.in.ogr/main.c:801 ../vector/v.in.dwg/main.c:228
+#: ../vector/v.in.ogr/main.c:791 ../vector/v.in.dwg/main.c:228
 #: ../vector/v.in.ascii/in.c:395 ../vector/v.sample/main.c:223
-#: ../vector/v.distance/main.c:823 ../vector/v.mkgrid/main.c:263
+#: ../vector/v.distance/main.c:827 ../vector/v.mkgrid/main.c:263
 #: ../vector/v.reclass/main.c:228 ../vector/v.convert/att.c:90
 #: ../vector/v.in.sites/main.c:179 ../vector/v.in.dxf/write_vect.c:223
 #: ../vector/v.to.points/main.c:306
@@ -8457,13 +8475,13 @@ msgid "Mapset <%s> in input location <%s> - %s"
 msgstr "ชุดแผนที่ <%s> ในตำแหน่งที่จะนำเข้า <%s> - %s"
 
 #: ../raster/r.proj.seg/main.c:280 ../raster/r.proj/main.c:245
-#: ../raster/r.in.gdal/main.c:666 ../imagery/i.rectify/target.c:33
+#: ../raster/r.in.gdal/main.c:677 ../imagery/i.rectify/target.c:33
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
 msgid "permission denied"
 msgstr "ไม่อนุญาติให้ทำ"
 
 #: ../raster/r.proj.seg/main.c:281 ../raster/r.proj/main.c:246
-#: ../raster/r.in.gdal/main.c:667 ../imagery/i.rectify/target.c:33
+#: ../raster/r.in.gdal/main.c:678 ../imagery/i.rectify/target.c:33
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
 msgid "not found"
 msgstr "ไม่พบ"
@@ -8475,8 +8493,8 @@ msgid "Checking location <%s> mapset <%s>"
 msgstr "กำลังตรวจสอบ ตำแหน่ง <%s>, ชุดแผนที่ <%s>:"
 
 #: ../raster/r.proj.seg/main.c:299 ../raster/r.proj/main.c:264
-#: ../raster/r.in.gdal/main.c:217 ../raster/r.out.gdal/main.c:230
-#: ../vector/v.in.ogr/main.c:272 ../vector/v.in.ogr/main.c:324
+#: ../raster/r.in.gdal/main.c:219 ../raster/r.out.gdal/main.c:230
+#: ../vector/v.in.ogr/main.c:274 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.proj/main.c:181 ../vector/v.select/main.c:90
 #, c-format
 msgid "Required parameter <%s> not set"
@@ -9532,7 +9550,7 @@ msgstr "ชื่อของแผนที่เชิงภาพ"
 msgid "Number of passes through the dataset"
 msgstr "จำนวนของ passes through the dataset"
 
-#: ../raster/r.basins.fill/main.c:99 ../raster/r.in.gdal/main.c:231
+#: ../raster/r.basins.fill/main.c:99 ../raster/r.in.gdal/main.c:233
 #, c-format
 msgid "Raster map <%s> already exists"
 msgstr "แผนที่เชิงภาพ <%s> มีอยู่แล้ว"
@@ -11314,7 +11332,7 @@ msgid "extend_lines: q back pointer not NULL!"
 msgstr "extend_lines: q back pointer ไม่ใช่  NULL!"
 
 #: ../raster/r.to.vect/util.c:156 ../raster/r.to.vect/areas_io.c:371
-#: ../vector/v.random/main.c:300 ../vector/v.in.ogr/main.c:926
+#: ../vector/v.random/main.c:300 ../vector/v.in.ogr/main.c:916
 #, c-format
 msgid "Cannot insert new row: %s"
 msgstr "ไม่สามารถแทรก  row: %s ใหม่ได้"
@@ -11344,7 +11362,7 @@ msgstr "ใช้ ค่าแผนที่เชิงภาพ เป็น 
 
 #: ../raster/r.to.vect/main.c:74 ../raster/r.to.vect/main.c:81
 #: ../vector/v.in.ogr/main.c:193 ../vector/v.in.ogr/main.c:216
-#: ../vector/v.in.ogr/main.c:237 ../vector/v.digit/line.c:86
+#: ../vector/v.in.ogr/main.c:239 ../vector/v.digit/line.c:86
 #: ../vector/v.digit/attr.c:539 ../vector/v.digit/attr.c:575
 #: ../vector/v.transform/main.c:183 ../vector/v.transform/main.c:194
 #: ../vector/v.to.rast/main.c:71 ../vector/v.to.rast/main.c:77
@@ -12029,42 +12047,42 @@ msgstr "ชื่อของ ตำแหน่งที่ จะอ่าน 
 msgid "Name for new location to create"
 msgstr "ชื่อของ ตำแหน่ง ใหม่ ที่จะสร้าง"
 
-#: ../raster/r.in.gdal/main.c:148
+#: ../raster/r.in.gdal/main.c:150
 #, fuzzy
 msgid "Force Lat/Lon maps to fit into geographic coordinates (90N,S; 180E,W)"
 msgstr "ตำแหน่งบนหน้าจอในหน่วย ค่าพิกัดภูมิศาสตร์"
 
-#: ../raster/r.in.gdal/main.c:153
+#: ../raster/r.in.gdal/main.c:155
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "ใช้ จำนวน band แทนที่จะใช้ ชื่อสีของ band"
 
-#: ../raster/r.in.gdal/main.c:174
+#: ../raster/r.in.gdal/main.c:176
 msgid "You have to specify a target location different from output location"
 msgstr "คุณต้องระบุตำแหน่งเป้าหมาย ให้แตกต่างจาก ตำแหน่ง ผลลัพธ์"
 
-#: ../raster/r.in.gdal/main.c:178
+#: ../raster/r.in.gdal/main.c:180
 msgid "The '-l' flag only works in Lat/Lon locations"
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:196
+#: ../raster/r.in.gdal/main.c:198
 #, fuzzy
 msgid "Available GDAL Drivers:"
 msgstr "ตัวขับ OGR ที่ใช้ได้:"
 
-#: ../raster/r.in.gdal/main.c:228
+#: ../raster/r.in.gdal/main.c:230
 #, fuzzy, c-format
 msgid "Raster map <%s> already exists and will be overwritten"
 msgstr "แผนที่เชิงเส้น <%s> มีอยู่แล้วและจะถูกเขียนทับ"
 
-#: ../raster/r.in.gdal/main.c:248
+#: ../raster/r.in.gdal/main.c:250
 msgid ""
 "The polynomial rectification used in i.rectify does not work well with NOAA/"
 "AVHRR data. Try using gdalwarp with thin plate spline rectification instead. "
 "(-tps)"
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:264
+#: ../raster/r.in.gdal/main.c:266
 #, fuzzy
 msgid ""
 "Input raster map is flipped or rotated - cannot import. You may use "
@@ -12073,14 +12091,14 @@ msgstr ""
 "แผนที่ที่จะนำเข้า มีการหมุน - ไม่สามารถนำเข้าได้. คุณต้องใช้  'gdalwarp' "
 "tเพื่อแปลงแผนที่ให้ไปตามทิศเหนือ"
 
-#: ../raster/r.in.gdal/main.c:306
+#: ../raster/r.in.gdal/main.c:308
 msgid ""
 "Map bounds have been constrained to geographic coordinates. You will almost "
 "certainly want to check map bounds and resolution with r.info and reset them "
 "with r.region before going any further."
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:326
+#: ../raster/r.in.gdal/main.c:328
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location."
@@ -12088,12 +12106,12 @@ msgstr ""
 "ไม่สามารถแปลง projection ของแผนที่ที่จะนำเข้า ไปเป็นรูปแบบ GRASS; ไม่สามารถสร้าง "
 "ตำแหน่งใหม่ได้"
 
-#: ../raster/r.in.gdal/main.c:332
+#: ../raster/r.in.gdal/main.c:334
 #, fuzzy, c-format
 msgid "Location <%s> created"
 msgstr "Location %s ถูกสร้าง!"
 
-#: ../raster/r.in.gdal/main.c:431
+#: ../raster/r.in.gdal/main.c:432
 msgid ""
 "\n"
 "You can use the -o flag to r.in.gdal to override this check and use the "
@@ -12103,67 +12121,67 @@ msgstr ""
 "คุณสามารถใช้  -o สำหรับ r.in.gdal เพื่อยกเลิกการตรวจสอบ และใช้ การกำหนดของ ตำแหน่ง "
 "สำหรับ ชุดข้อมูล\n"
 
-#: ../raster/r.in.gdal/main.c:550
+#: ../raster/r.in.gdal/main.c:551
 #, fuzzy, c-format
 msgid "Copying %d GCPS in points file for <%s>"
 msgstr "การคัดลอก %d GCPS ในไฟล์ points สำหรับ %s"
 
-#: ../raster/r.in.gdal/main.c:555
+#: ../raster/r.in.gdal/main.c:556
 msgid "GCPs have the following OpenGIS WKT Coordinate System:"
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:562
+#: ../raster/r.in.gdal/main.c:563
 #, fuzzy
 msgid "Re-projecting GCPs table:"
 msgstr "Re-projecting แผนที่เชิงเส้น ..."
 
-#: ../raster/r.in.gdal/main.c:563
+#: ../raster/r.in.gdal/main.c:564
 #, fuzzy, c-format
 msgid "* Input projection for GCP table: %s"
 msgstr "ใส่ค่าตัวแปร projection  (แบบ PROJ.4)"
 
-#: ../raster/r.in.gdal/main.c:565
+#: ../raster/r.in.gdal/main.c:566
 #, fuzzy, c-format
 msgid "* Output projection for GCP table: %s"
 msgstr "ผลลัพธ์ตัวแปร  projection  (แบบ PROJ.4)"
 
-#: ../raster/r.in.gdal/main.c:582
+#: ../raster/r.in.gdal/main.c:583
 #, fuzzy, c-format
 msgid "Error in pj_do_proj (can't re-projection GCP %i)"
 msgstr "ผิดพลาดใน pj_do_proj (ไม่สามารถถ re-projection GCP %i)\n"
 
-#: ../raster/r.in.gdal/main.c:641
+#: ../raster/r.in.gdal/main.c:652
 #, fuzzy
 msgid "Unable to translate projection key values of input GCPs"
 msgstr "ไม่สามารถอ่าน ค่า key  projection ของ แผนที่ที่จะนำเข้า"
 
-#: ../raster/r.in.gdal/main.c:657
+#: ../raster/r.in.gdal/main.c:668
 #, fuzzy
 msgid "Unable to get projection info of target location"
 msgstr "ไม่สามารถอ่าน ข้อมูลการฉายแผนที่สำหรับ ตำแหน่งปัจจุบัน"
 
-#: ../raster/r.in.gdal/main.c:659
+#: ../raster/r.in.gdal/main.c:670
 #, fuzzy
 msgid "Unable to get projection units of target location"
 msgstr "ไม่สามารถอ่าน หน่วยการฉายแผนที่สำหรับ ตำแหน่งปัจจุบัน"
 
-#: ../raster/r.in.gdal/main.c:661
+#: ../raster/r.in.gdal/main.c:672
 #, fuzzy
 msgid "Unable to get projection key values of target location"
 msgstr "ไม่สามารถอ่าน  ค่า key การฉายแผนที่ ของ ตำแหน่งปัจจุบัน"
 
-#: ../raster/r.in.gdal/main.c:664 ../imagery/i.rectify/target.c:32
+#: ../raster/r.in.gdal/main.c:675 ../imagery/i.rectify/target.c:32
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:31
 #, fuzzy, c-format
 msgid "Mapset <%s> in target location <%s> - "
 msgstr "ชุดแผนที่  [%s] ใน ตำแหน่งเป้าหมาย [%s] - "
 
-#: ../raster/r.in.gdal/main.c:934
+#: ../raster/r.in.gdal/main.c:945
 #, fuzzy, c-format
 msgid "Setting grey color table for <%s> (8bit, full range)"
 msgstr "สร้างตารางสีสำหรับ  <%s ใน %s>..."
 
-#: ../raster/r.in.gdal/main.c:947
+#: ../raster/r.in.gdal/main.c:958
 #, fuzzy, c-format
 msgid "Setting grey color table for <%s> (16bit, image range)"
 msgstr "สร้างตารางสีสำหรับ  <%s ใน %s>..."
@@ -21653,7 +21671,7 @@ msgid "Output triangulation as a graph (lines), not areas"
 msgstr "ผลลัพธ์ Triangulation แบบ graph (เส้น), ไม่ใช่ Areas"
 
 #: ../vector/v.voronoi/dt_main.c:142 ../vector/v.overlay/area_area.c:68
-#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:591
+#: ../vector/v.in.ogr/main.c:1043 ../vector/v.buffer2/main.c:591
 #: ../vector/v.buffer2/main.c:683 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
@@ -22199,66 +22217,66 @@ msgstr "ยกเลิก projection ของชุดแผนที่ (ใ�
 msgid "Limit import to the current region"
 msgstr "จำกัดการนำเข้า ภายในขอบเขตปัจจุบัน"
 
-#: ../vector/v.in.ogr/main.c:236
+#: ../vector/v.in.ogr/main.c:238
 msgid "Change column names to lowercase characters"
 msgstr "เปลี่ยนชื่อ column ไปเป็น ตัวอักษรแบบเล็ก"
 
-#: ../vector/v.in.ogr/main.c:253
+#: ../vector/v.in.ogr/main.c:255
 msgid "Available OGR Drivers:"
 msgstr "ตัวขับ OGR ที่ใช้ได้:"
 
-#: ../vector/v.in.ogr/main.c:293
+#: ../vector/v.in.ogr/main.c:295
 #, c-format
 msgid "Unable to open data source <%s>"
 msgstr "ไม่สามารถเปิดแหล่งข้อมูล <%s>"
 
-#: ../vector/v.in.ogr/main.c:301
+#: ../vector/v.in.ogr/main.c:303
 #, c-format
 msgid "Data source contains %d layers:"
 msgstr "แหล่งข้อมูล มี %d ชั้นข้อมูล:"
 
-#: ../vector/v.in.ogr/main.c:333
+#: ../vector/v.in.ogr/main.c:335
 #, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "แผนที่เชิงเส้น <%s> มีอยู่แล้วและจะถูกเขียนทับ"
 
-#: ../vector/v.in.ogr/main.c:336 ../vector/v.edit/main.c:93
+#: ../vector/v.in.ogr/main.c:338 ../vector/v.edit/main.c:93
 #, c-format
 msgid "Vector map <%s> already exists"
 msgstr "แผนที่เชิงเส้น <%s> มีอยู่แล้ว"
 
-#: ../vector/v.in.ogr/main.c:361 ../vector/v.external/main.c:128
+#: ../vector/v.in.ogr/main.c:363 ../vector/v.external/main.c:128
 #, c-format
 msgid "Layer <%s> not available"
 msgstr "ชั้นข้อมูล <%s> ไม่สามารถใช้งานได้"
 
-#: ../vector/v.in.ogr/main.c:377
+#: ../vector/v.in.ogr/main.c:379
 msgid "Select either the current region flag or the spatial option, not both"
 msgstr "เลือก ขอบเขตปัจจุบัน หรือ เงื่อนไขด้านตำแหน่ง,อันใดอันหนึ่ง"
 
-#: ../vector/v.in.ogr/main.c:405
+#: ../vector/v.in.ogr/main.c:407
 msgid "4 parameters required for 'spatial' parameter"
 msgstr "ต้องการ 4 ตัวแปร สำหรับ ตัวแปร  'spatial'"
 
-#: ../vector/v.in.ogr/main.c:482
+#: ../vector/v.in.ogr/main.c:484
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location"
 msgstr ""
 "ไม่สามารถแปลง projection ของแผนที่นำเข้า ไปเป็นแบบ  GRASS;ไม่สามารถสร้าง ตำแหน่งใหม่ได้"
 
-#: ../vector/v.in.ogr/main.c:494
+#: ../vector/v.in.ogr/main.c:496
 msgid ""
 "Unable to convert input map projection information to GRASS format for "
 "checking"
 msgstr ""
 "ไม่สามารถ แปลงข้อมูล  projection ของแผนที่ที่นำเข้า ไปสู่รูปแบบของ GRASS เพื่อตรวจสอบ"
 
-#: ../vector/v.in.ogr/main.c:524
+#: ../vector/v.in.ogr/main.c:526
 msgid "GRASS LOCATION PROJ_INFO is:\n"
 msgstr "GRASS LOCATION PROJ_INFO คือ:\n"
 
-#: ../vector/v.in.ogr/main.c:584
+#: ../vector/v.in.ogr/main.c:586
 #, c-format
 msgid ""
 "\n"
@@ -22267,34 +22285,34 @@ msgstr ""
 "\n"
 "คุณสามารถใช้ -o กับ %s เพื่อยกเลิกการตรวจสอบ projection.\n"
 
-#: ../vector/v.in.ogr/main.c:587
+#: ../vector/v.in.ogr/main.c:589
 #, fuzzy
 msgid ""
 "Consider generating a new location with 'location' parameter from input data "
 "set.\n"
 msgstr "สร้าง ตำแหน่งใหม่โดยใช้ ตัวแปร  'location' จาก ชุดแผนที่ที่นำเข้า.\n"
 
-#: ../vector/v.in.ogr/main.c:610
+#: ../vector/v.in.ogr/main.c:612
 #, fuzzy, c-format
 msgid "Using temporary vector <%s>"
 msgstr "ไม่สามารถ สร้าง แผนที่เชิงเส้น <%s>"
 
-#: ../vector/v.in.ogr/main.c:629
+#: ../vector/v.in.ogr/main.c:631
 #, c-format
 msgid "Layer: %s"
 msgstr "ชั้นข้อมูล: %s"
 
-#: ../vector/v.in.ogr/main.c:693
+#: ../vector/v.in.ogr/main.c:695
 #, c-format
 msgid "Column name changed: '%s' -> '%s'"
 msgstr "เปลี่ยนชื่อ Column: '%s' -> '%s'"
 
-#: ../vector/v.in.ogr/main.c:729
+#: ../vector/v.in.ogr/main.c:719
 #, c-format
 msgid "Writing column <%s> with fixed length %d chars (may be truncated)"
 msgstr "กำลังเขียน column <%s> ด้วยความยาวที่กำหนด %d ตัวอักษร (อาจจะตัดให้สั้นลง)"
 
-#: ../vector/v.in.ogr/main.c:752
+#: ../vector/v.in.ogr/main.c:742
 #, c-format
 msgid ""
 "Width for column %s set to 255 (was not specified by OGR), some strings may "
@@ -22303,98 +22321,98 @@ msgstr ""
 "ความกว้างสำหรับ column %s กำหนดเป็น 255 (ไม่ได้ระบุโดย OGR), "
 "บางตัวอักษรอาจจะถูกตัดให้สั้นลง!"
 
-#: ../vector/v.in.ogr/main.c:764
+#: ../vector/v.in.ogr/main.c:754
 #, c-format
 msgid "Writing column %s with fixed length %d chars (may be truncated)"
 msgstr "กำลังเขียน column %s ด้วยความยาวที่กำหนด %d ตัวอักษร (อาจจะตัดให้สั้นลง)"
 
-#: ../vector/v.in.ogr/main.c:768
+#: ../vector/v.in.ogr/main.c:758
 #, c-format
 msgid "Column type not supported (%s)"
 msgstr "ชนิดของ Column ใช้ไม่ได้  (%s)"
 
-#: ../vector/v.in.ogr/main.c:783
+#: ../vector/v.in.ogr/main.c:773
 #, fuzzy, c-format
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "ไม่สามารถเปิดฐานข้อมูล <%s> โดยตัวขับ <%s>"
 
-#: ../vector/v.in.ogr/main.c:820
+#: ../vector/v.in.ogr/main.c:810
 #, fuzzy, c-format
 msgid "Counting polygons for %d features..."
 msgstr "กำลังนำเข้าแผนที่ %d  ข้อมูล ..."
 
-#: ../vector/v.in.ogr/main.c:842
+#: ../vector/v.in.ogr/main.c:832
 #, fuzzy, c-format
 msgid "Boundary splitting distance in map units: %G"
 msgstr "ระยะ Bufferในหน่วย ของแผนที่"
 
-#: ../vector/v.in.ogr/main.c:847
+#: ../vector/v.in.ogr/main.c:837
 #, c-format
 msgid "Importing map %d features..."
 msgstr "กำลังนำเข้าแผนที่ %d  ข้อมูล ..."
 
-#: ../vector/v.in.ogr/main.c:942
+#: ../vector/v.in.ogr/main.c:932
 #, c-format
 msgid "%d %s without geometry"
 msgstr "%d %s ไม่มี geometry"
 
-#: ../vector/v.in.ogr/main.c:967
+#: ../vector/v.in.ogr/main.c:957
 msgid "Cleaning polygons, result is not guaranteed!"
 msgstr "กำลัง Clean รูปปิด, ไม่รับรองความถูกต้องของผลลัพธ์!"
 
-#: ../vector/v.in.ogr/main.c:971
+#: ../vector/v.in.ogr/main.c:961
 #, c-format
 msgid "Snap boundaries (threshold = %.3e):"
 msgstr "ดูด ขอบเขต (threshold = %.3e):"
 
-#: ../vector/v.in.ogr/main.c:985
+#: ../vector/v.in.ogr/main.c:975
 msgid "Break polygons:"
 msgstr "ตัดรูปปิด:"
 
-#: ../vector/v.in.ogr/main.c:990 ../vector/v.in.ogr/main.c:1004
+#: ../vector/v.in.ogr/main.c:980 ../vector/v.in.ogr/main.c:994
 msgid "Remove duplicates:"
 msgstr "เอาที่ซ้ำออก:"
 
-#: ../vector/v.in.ogr/main.c:1000
+#: ../vector/v.in.ogr/main.c:990
 msgid "Break boundaries:"
 msgstr "ตัด boundaries:"
 
-#: ../vector/v.in.ogr/main.c:1008
+#: ../vector/v.in.ogr/main.c:998
 msgid "Clean boundaries at nodes:"
 msgstr "Clean boundaries ที่ nodes:"
 
-#: ../vector/v.in.ogr/main.c:1015
+#: ../vector/v.in.ogr/main.c:1005
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "ตัด boundaries:"
 
-#: ../vector/v.in.ogr/main.c:1020
+#: ../vector/v.in.ogr/main.c:1010
 msgid "Change boundary dangles to lines:"
 msgstr "เปลี่ยน boundary dangles ไปเป็นเส้น:"
 
-#: ../vector/v.in.ogr/main.c:1024
+#: ../vector/v.in.ogr/main.c:1014
 msgid "Change dangles to lines:"
 msgstr "เปลี่ยน dangles ไปเป็น เส้น"
 
-#: ../vector/v.in.ogr/main.c:1030
+#: ../vector/v.in.ogr/main.c:1020
 msgid "Change boundary bridges to lines:"
 msgstr "เปลี่ยน boundary bridges ไปเป็นเส้น:"
 
-#: ../vector/v.in.ogr/main.c:1034
+#: ../vector/v.in.ogr/main.c:1024
 msgid "Remove bridges:"
 msgstr "เอา  bridges ออก:"
 
-#: ../vector/v.in.ogr/main.c:1069
+#: ../vector/v.in.ogr/main.c:1059
 #, fuzzy, c-format
 msgid "Find centroids for layer: %s"
 msgstr "กำลังคำนวน Centrality measures ..."
 
-#: ../vector/v.in.ogr/main.c:1090
+#: ../vector/v.in.ogr/main.c:1080
 #, fuzzy
 msgid "Write centroids:"
 msgstr "กำลังเขียน จุดศูนย์ถ่วง ..."
 
-#: ../vector/v.in.ogr/main.c:1140
+#: ../vector/v.in.ogr/main.c:1130
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -22405,42 +22423,42 @@ msgstr ""
 "เชื่อมมากกว่า 1 row ในตารางรายละเอียด. จำนวนข้อมูลสำหรับ areas นั้นเก็บแบบ "
 "หมวดหมู่ในชั้นข้อมูล %d"
 
-#: ../vector/v.in.ogr/main.c:1150
+#: ../vector/v.in.ogr/main.c:1140
 #, fuzzy, c-format
 msgid "%d input polygons\n"
 msgstr "%d รูปปิดที่นำเข้า"
 
-#: ../vector/v.in.ogr/main.c:1151
+#: ../vector/v.in.ogr/main.c:1141
 #, c-format
 msgid "%d input polygons"
 msgstr "%d รูปปิดที่นำเข้า"
 
-#: ../vector/v.in.ogr/main.c:1154
+#: ../vector/v.in.ogr/main.c:1144
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)\n"
 msgstr "Area ทั้งหมด: %e (%d areas)"
 
-#: ../vector/v.in.ogr/main.c:1155
+#: ../vector/v.in.ogr/main.c:1145
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)"
 msgstr "Area ทั้งหมด: %e (%d areas)"
 
-#: ../vector/v.in.ogr/main.c:1158
+#: ../vector/v.in.ogr/main.c:1148
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)\n"
 msgstr "Area ที่มีการซ้อนทับกัน: %e (%d areas)"
 
-#: ../vector/v.in.ogr/main.c:1160
+#: ../vector/v.in.ogr/main.c:1150
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)"
 msgstr "Area ที่มีการซ้อนทับกัน: %e (%d areas)"
 
-#: ../vector/v.in.ogr/main.c:1164
+#: ../vector/v.in.ogr/main.c:1154
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)\n"
 msgstr "Area ที่ไม่มีหมวดหมู่: %e (%d areas)"
 
-#: ../vector/v.in.ogr/main.c:1166
+#: ../vector/v.in.ogr/main.c:1156
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)"
 msgstr "Area ที่ไม่มีหมวดหมู่: %e (%d areas)"
@@ -23028,8 +23046,8 @@ msgid "From layer number or name"
 msgstr "จำนวนชั้นข้อมูล"
 
 #: ../vector/v.net.distance/main.c:74 ../vector/v.net.distance/main.c:79
-#: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:122
-#: ../vector/v.distance/main.c:134 ../vector/v.distance/main.c:146
+#: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:121
+#: ../vector/v.distance/main.c:133 ../vector/v.distance/main.c:145
 #, fuzzy
 msgid "From"
 msgstr "From_map"
@@ -23051,8 +23069,8 @@ msgstr "จำนวนชั้นข้อมูล"
 
 #: ../vector/v.net.distance/main.c:90 ../vector/v.net.distance/main.c:95
 #: ../vector/v.net.distance/main.c:101 ../vector/v.net.distance/main.c:108
-#: ../vector/v.distance/main.c:127 ../vector/v.distance/main.c:141
-#: ../vector/v.distance/main.c:151 ../vector/v.distance/main.c:207
+#: ../vector/v.distance/main.c:126 ../vector/v.distance/main.c:140
+#: ../vector/v.distance/main.c:150 ../vector/v.distance/main.c:209
 #, fuzzy
 msgid "To"
 msgstr "เครื่องมือ"
@@ -23541,8 +23559,8 @@ msgstr ""
 msgid "Unable to select record from table <%s> (key %s, column %s)"
 msgstr "ไม่สามารถเลือกข้อมูลจาด ตาราง LRS: %s"
 
-#: ../vector/v.out.ascii/b2a.c:227 ../vector/v.distance/main.c:373
-#: ../vector/v.distance/main.c:407 ../vector/v.reclass/main.c:137
+#: ../vector/v.out.ascii/b2a.c:227 ../vector/v.distance/main.c:377
+#: ../vector/v.distance/main.c:411 ../vector/v.reclass/main.c:137
 #: ../vector/v.to.3d/trans3.c:61 ../vector/v.to.3d/trans2.c:60
 #, c-format
 msgid "Column <%s> not found in table <%s>"
@@ -24863,7 +24881,7 @@ msgstr "ไม่สามารถคัดลอก ตาราง"
 msgid "Removing duplicate centroids..."
 msgstr "กำลังเอา จุดศูนย์ถ่วงที่ซ้ำ ออก ..."
 
-#: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:115
+#: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:114
 #: ../vector/v.to.db/main.c:33 ../vector/v.db.select/main.c:53
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
 #: ../locale/scriptstrings/v.db.join_to_translate.c:2
@@ -25384,69 +25402,69 @@ msgstr "ไม่สามารถสร้างตาราง <%s>"
 msgid "Checking vector points..."
 msgstr "กำลังตรวจสอบ จุด ..."
 
-#: ../vector/v.distance/main.c:117
+#: ../vector/v.distance/main.c:116
 msgid ""
 "Finds the nearest element in vector map 'to' for elements in vector map "
 "'from'."
 msgstr ""
 
-#: ../vector/v.distance/main.c:121
+#: ../vector/v.distance/main.c:120
 #, fuzzy
 msgid "Name of existing vector map (from)"
 msgstr "ชื่อของชั้นข้อมูลเชิงเส้น"
 
-#: ../vector/v.distance/main.c:126
+#: ../vector/v.distance/main.c:125
 #, fuzzy
 msgid "Name of existing vector map (to)"
 msgstr "ชื่อของชั้นข้อมูลเชิงเส้น"
 
-#: ../vector/v.distance/main.c:133
+#: ../vector/v.distance/main.c:132
 #, fuzzy
 msgid "Feature type (from)"
 msgstr "ชนิดของข้อมูล"
 
-#: ../vector/v.distance/main.c:140
+#: ../vector/v.distance/main.c:139
 #, fuzzy
 msgid "Feature type (to)"
 msgstr "ชนิดของข้อมูล"
 
-#: ../vector/v.distance/main.c:145
+#: ../vector/v.distance/main.c:144
 #, fuzzy
 msgid "Layer number (from)"
 msgstr "จำนวนชั้นข้อมูล"
 
-#: ../vector/v.distance/main.c:150
+#: ../vector/v.distance/main.c:149
 #, fuzzy
 msgid "Layer number (to)"
 msgstr "จำนวนชั้นข้อมูล"
 
-#: ../vector/v.distance/main.c:156
+#: ../vector/v.distance/main.c:155
 msgid "Name for output vector map containing lines connecting nearest elements"
 msgstr "ชื่อของแผนที่เชิงเส้นผลลัพธ์ ที่มีเส้นเชื่อมต่อ ระหว่างชิ้นส่วนที่ใกล้ที่สุด"
 
-#: ../vector/v.distance/main.c:164
+#: ../vector/v.distance/main.c:163
 msgid "Maximum distance or -1 for no limit"
 msgstr "ระยะที่มากที่สุด หรือ -1 สำหรับ ที่ไม่จำกัด"
 
-#: ../vector/v.distance/main.c:171
+#: ../vector/v.distance/main.c:170
 #, fuzzy
 msgid "Minimum distance or -1 for no limit"
 msgstr "ระยะที่มากที่สุด หรือ -1 สำหรับ ที่ไม่จำกัด"
 
-#: ../vector/v.distance/main.c:180
+#: ../vector/v.distance/main.c:179
 msgid "Values describing the relation between two nearest features"
 msgstr "ค่า การบรรยาย ของความสัมพันธ์ ระหว่าง 2 ข้อมูลที่อยู่ใกล้กันที่สุด"
 
-#: ../vector/v.distance/main.c:182
+#: ../vector/v.distance/main.c:181
+#, fuzzy
 msgid ""
 "cat;category of the nearest feature;dist;minimum distance to nearest feature;"
-"to_x;x coordinate of the nearest point on 'to' feature;to_y;y coordinate of "
-"the nearest point on 'to' feature;to_along;distance between points/centroids "
-"in 'from' map and the linear feature's start point in 'to' map, along this "
-"linear feature;to_angle;angle between the linear feature in 'to' map and the "
-"positive x axis, at the location of point/centroid in 'from' map, "
-"counterclockwise, in radians, which is between -PI and PI inclusive;to_attr;"
-"attribute of nearest feature given by to_column option"
+"to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate "
+"of the nearest point on the 'to' feature;to_along;distance to the nearest "
+"point on the 'to' feature along that linear feature;to_angle;angle along the "
+"nearest linear feature in the 'to' map, measured CCW from the +x axis, in "
+"radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature "
+"given by to_column option"
 msgstr ""
 "cat;หมวดหมู่ของข้อมูลที่อยู่ใกล้กันที่สุด;dist;ระยะน้อยที่สุด ถึงข้อมูลที่อยู่ใกล้ที่สุด;to_x;ค่าพิกัด x "
 "ของจุดที่อยู่ใกล้ที่สุด บน  'to' ข้อมูล;to_y;ค่าพิกัด y ของจุดที่อยู่ใกล้ที่สุด บน  'to' ข้อมูล;"
@@ -25455,139 +25473,140 @@ msgstr ""
 "ที่เป็น บวก, ที่ตำแหน่งของ จุด/จุดศูนย์ถ่วง ใน 'from' แผนที่, ตามเข็มนาฬิกา, หน่วย radians, "
 "ที่อยู่ระหว่าง -PI และ PI;to_attr;รายละะเอียด ของข้อมูลที่อยู่ใกล้ที่สุดโดยใช้เงื่อนไข to_column"
 
-#: ../vector/v.distance/main.c:200
+#: ../vector/v.distance/main.c:202
 msgid ""
 "Column name(s) where values specified by 'upload' option will be uploaded"
 msgstr "ชื่อ Column ที่ค่าระบุโดยเงื่อนไข 'upload' จะถูก upload"
 
-#: ../vector/v.distance/main.c:201
+#: ../vector/v.distance/main.c:203
 msgid "From_map"
 msgstr "From_map"
 
-#: ../vector/v.distance/main.c:206
+#: ../vector/v.distance/main.c:208
 msgid "Column name of nearest feature (used with upload=to_attr)"
 msgstr "ชื่อ Column ของข้อมูลที่ใกล้ที่สุด (ใช้กับ upload=to_attr)"
 
-#: ../vector/v.distance/main.c:212
+#: ../vector/v.distance/main.c:214
 msgid "Name of table created for output when the distance to all flag is used"
 msgstr "ชื่อของตาราง ที่สร้างสำหรับผลลัพธ์ เมื่อระยะของเงื่อนไขทั้งหมดถูกใช้"
 
-#: ../vector/v.distance/main.c:217
+#: ../vector/v.distance/main.c:219
 msgid "Print output to stdout, don't update attribute table"
 msgstr "แสดงผลลัพธ์ไปที่ stdout, อย่าปรับปรุง ตารางรายละเอียด"
 
-#: ../vector/v.distance/main.c:219
+#: ../vector/v.distance/main.c:221
 msgid "First column is always category of 'from' feature called from_cat"
 msgstr "Column แรก จะจัดหมวดหมู่ ของ  'from' ข้อมูล ที่เรียกว่า from_cat"
 
-#: ../vector/v.distance/main.c:224
+#: ../vector/v.distance/main.c:226
 msgid "Calculate distances to all features within the threshold"
 msgstr "ระยะทางที่คำนวน ถึง ข้อมูลทั้งหมด ภายใน threshold"
 
-#: ../vector/v.distance/main.c:225
+#: ../vector/v.distance/main.c:228
+#, fuzzy
 msgid ""
-"The output is written to stdout but may be uploaded to a new table created "
-"by this module. From categories are may be multiple."
+"Output is written to stdout but may be uploaded to a new table created by "
+"this module; multiple 'upload' options may be used."
 msgstr ""
 "เขียนผลลัพธ์ ไปที่ stdout แต่ อาจจะ upload ไปที่ ตารางใหม่ สร้างโดย คำสั่งนี้. From "
 "category อาจจะ มีหลาย หมวดหมู่"
 
-#: ../vector/v.distance/main.c:276
+#: ../vector/v.distance/main.c:280
 msgid "to_column option missing"
 msgstr "ขาดเงื่อนไข to_column"
 
-#: ../vector/v.distance/main.c:288
+#: ../vector/v.distance/main.c:292
 msgid "Too many column names"
 msgstr "ชื่อ  column มากเกินไป"
 
-#: ../vector/v.distance/main.c:295
+#: ../vector/v.distance/main.c:299
 msgid "Not enough column names"
 msgstr "ชื่อ  column ไม่พอ"
 
-#: ../vector/v.distance/main.c:302
+#: ../vector/v.distance/main.c:306
 #, c-format
 msgid "Vector map <%s> is not in user mapset and cannot be updated"
 msgstr "แผนที่เชิงเส้น <%s> ไม่อยู่ในชุดแผนที่ของผู้ใช้ และไม่สามารถปรับปรุงได้"
 
-#: ../vector/v.distance/main.c:383
+#: ../vector/v.distance/main.c:387
 msgid "Unable to open default database"
 msgstr "ไม่สามารถเปิด ฐานข้อมูลตั้งต้นได้"
 
-#: ../vector/v.distance/main.c:439
+#: ../vector/v.distance/main.c:443
 #, fuzzy
 msgid "Incompatible column types"
 msgstr "ชนิด Incomatible column"
 
-#: ../vector/v.distance/main.c:512
+#: ../vector/v.distance/main.c:516
 #, fuzzy
 msgid "Finding nearest lines..."
 msgstr "กำลังหา  buffer zones..."
 
-#: ../vector/v.distance/main.c:642
+#: ../vector/v.distance/main.c:646
 #, fuzzy
 msgid "Finding nearest areas..."
 msgstr "กำลังหา quadrats ..."
 
-#: ../vector/v.distance/main.c:714
+#: ../vector/v.distance/main.c:718
 #, fuzzy, c-format
 msgid "More cats found in to_layer (area=%d)"
 msgstr "Cats อื่นของ to_layer"
 
-#: ../vector/v.distance/main.c:855
+#: ../vector/v.distance/main.c:859
 msgid "DATETIME type not yet supported, no attributes will be uploaded"
 msgstr "ชนิด DATETIME ยังไม่รองรับ, ไม่มีรายละเอียดที่ถูกปรับปรุง"
 
-#: ../vector/v.distance/main.c:1104
+#: ../vector/v.distance/main.c:1108
 #, c-format
 msgid "%d categories with more than 1 feature in vector map <%s>"
 msgstr "%d หมวดหมู่ที่มีข้อมูลมากกว่า 1 ในแผนที่เชิงเส้น <%s>"
 
-#: ../vector/v.distance/main.c:1107
+#: ../vector/v.distance/main.c:1111
 #, c-format
 msgid "%d categories - no nearest feature found"
 msgstr "%d หมวดหมู่  - ไม่พบข้อมูลที่ใกล้ที่สุด"
 
-#: ../vector/v.distance/main.c:1116
+#: ../vector/v.distance/main.c:1120
 #, c-format
 msgid "%d distances calculated"
 msgstr "%d ระยะ คำนวนแล้ว"
 
-#: ../vector/v.distance/main.c:1117
+#: ../vector/v.distance/main.c:1121
 #, c-format
 msgid "%d records inserted"
 msgstr "%d ข้อมูล แทรกแล้ว"
 
-#: ../vector/v.distance/main.c:1119
+#: ../vector/v.distance/main.c:1123
 #, c-format
 msgid "%d insert errors"
 msgstr "%d ข้อผิดพลาด ในการแทรก"
 
-#: ../vector/v.distance/main.c:1123
+#: ../vector/v.distance/main.c:1127
 #, c-format
 msgid "%d categories read from the map"
 msgstr "%d หมวดหมู่ อ่านจากแผนที่"
 
-#: ../vector/v.distance/main.c:1125
+#: ../vector/v.distance/main.c:1129
 #, c-format
 msgid "%d categories exist in the table"
 msgstr "%d หมวดหมู่ มีอยู่แล้วในตาราง"
 
-#: ../vector/v.distance/main.c:1127
+#: ../vector/v.distance/main.c:1131
 #, c-format
 msgid "%d categories read from the map exist in the table"
 msgstr "%d หมวดหมู่ อ่านจากแผนที่ ที่มีอยู่ในตาราง"
 
-#: ../vector/v.distance/main.c:1130
+#: ../vector/v.distance/main.c:1134
 #, c-format
 msgid "%d categories read from the map don't exist in the table"
 msgstr "%d หมวดหมู่ อ่านจากแผนที่ ที่ไม่อยู่ในตาราง"
 
-#: ../vector/v.distance/main.c:1132 ../vector/v.what.rast/main.c:372
+#: ../vector/v.distance/main.c:1136 ../vector/v.what.rast/main.c:372
 #, c-format
 msgid "%d records updated"
 msgstr "%d ข้อมูล ปรับปรุงแล้ว"
 
-#: ../vector/v.distance/main.c:1134 ../vector/v.what.rast/main.c:373
+#: ../vector/v.distance/main.c:1138 ../vector/v.what.rast/main.c:373
 #, c-format
 msgid "%d update errors"
 msgstr "%d ปรับปรุง ผิดพลาด"
@@ -29297,17 +29316,17 @@ msgstr "Extruding areas..."
 msgid "Cannot select attributes for area %d"
 msgstr "ไม่สามารถเลือกรายละเอียด สำหรับ area %d"
 
-#: ../vector/v.extrude/main.c:260
+#: ../vector/v.extrude/main.c:258
 #, fuzzy
 msgid "Extruding vector primitives..."
 msgstr "Extruding วัตถุเชิงเส้น พื้นฐาน..."
 
-#: ../vector/v.extrude/main.c:293
+#: ../vector/v.extrude/main.c:291
 #, c-format
 msgid "Cannot select attributes for area #%d"
 msgstr "ไม่สามารถเลือกรายละเอียด สำหรับ area #%d"
 
-#: ../vector/v.extrude/main.c:311
+#: ../vector/v.extrude/main.c:309
 #, c-format
 msgid "Column <%s>: invalid data type"
 msgstr "Column <%s>: ชนิดข้อมูลไม่ถูกต้อง"

@@ -1,6 +1,6 @@
 # translation of grasstcl_de.po to deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2008, 2010, GRASS Development Team
+# Copyright (C) 2005, 2008, 2010, 2012 GRASS Development Team
 #
 # Markus Neteler <neteler itc.it>, 2006.
 # Stephan Holl <holl gdf-hannover.de>, 2006, 2007.
@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2011-05-14 22:32+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"

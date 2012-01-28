@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 23:36+0100\n"
+"POT-Creation-Date: 2012-01-28 09:39+0100\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -4906,7 +4906,7 @@ msgstr "Không thể lấy dữ liệu từ bảng <%s>"
 msgid "Unknown column type (column <%s>)"
 msgstr "Kiểu cột không biết (cột <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:110
+#: ../lib/db/dbmi_client/column.c:115
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Không thể mô tả bảng <%s>"
