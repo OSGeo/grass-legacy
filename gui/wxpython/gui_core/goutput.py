@@ -524,7 +524,14 @@ class GMConsole(wx.SplitterWindow):
                 # other GRASS commands (r|v|g|...)
                 hasParams = False
                 if command[0] != 'r.mapcalc':
-                    task = GUI(show = None).ParseCommand(command)
+                    try:
+                        task = GUI(show = None).ParseCommand(command)
+                    except GException, e:
+                        GError(parent = self,
+                               message = unicode(e),
+                               showTraceback = False)
+                        return
+                    
                     if task:
                         options = task.get_options()
                         hasParams = options['params'] and options['flags']
