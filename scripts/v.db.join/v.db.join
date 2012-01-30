@@ -5,7 +5,7 @@
 # MODULE:       v.db.join
 # AUTHOR(S):    Markus Neteler
 # PURPOSE:      Join a table to a map table
-# COPYRIGHT:    (C) 2007-2008 by Markus Neteler and the GRASS Development Team
+# COPYRIGHT:    (C) 2007-2012 by Markus Neteler and the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -123,25 +123,28 @@ COLTYPES=`db.describe -c driver="$driver" database="$database" table="$GIS_OPT_O
 
 i=1
 for col in $COLLIST ; do
-  if [ "$GIS_FLAG_C" -eq 1 ] ; then
-    if [ $col != $GIS_OPT_COLUMN ] ; then
-      v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+    if [ "$GIS_FLAG_C" -eq 1 ] && [ "$col" = "$GIS_OPT_COLUMN" ] ; then
+	continue
+    elif [ "$GIS_FLAG_A" -eq 1 ] ; then
+	col="${col}_o"
     fi
-  elif [ "$GIS_FLAG_A" -eq 1 ] ; then
-    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="${col}_o `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
-  else 
-    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" col="${col} `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
-  fi
-  if [ $? -ne 0 ] ; then
-	g.message -e "Cannot continue."
+
+    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" \
+      col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+
+    if [ $? -ne 0 ] ; then
+	g.message -e "Column creation failed. Cannot continue."
 	exit 1
-  fi
-  echo "UPDATE $maptable SET $col=(SELECT $col
-        FROM $GIS_OPT_OTABLE WHERE $GIS_OPT_OTABLE.$GIS_OPT_OCOLUMN=$maptable.$GIS_OPT_COLUMN);" | db.execute database="${database}" driver=${driver}
+    fi
+
+    echo "UPDATE $maptable SET $col=(SELECT $col
+        FROM $GIS_OPT_OTABLE WHERE $GIS_OPT_OTABLE.$GIS_OPT_OCOLUMN=$maptable.$GIS_OPT_COLUMN);" | \
+     db.execute database="$database" driver="$driver"
+
   i=`expr $i + 1`
 done
 
 # write cmd history:
-v.support "${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
+v.support "$GIS_OPT_MAP" cmdhist="$CMDLINE"
 
 exit 0
