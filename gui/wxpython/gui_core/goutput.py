@@ -503,7 +503,7 @@ class GMConsole(wx.SplitterWindow):
                     GMessage(parent = self.parent,
                              message = _("Command '%s' not yet implemented in the WxGUI. "
                                          "Try adding it as a command layer instead.") % command[0])
-                    return None
+                    return
                 
                 if layertype == 'barscale':
                     self.parent.curr_page.maptree.GetMapDisplay().OnAddBarscale(None)
@@ -546,7 +546,7 @@ class GMConsole(wx.SplitterWindow):
                                                    "Option <%(opt)s>: read from standard input is not "
                                                    "supported by wxGUI") % { 'cmd': ' '.join(command),
                                                                              'opt': p.get('name', '') })
-                                return 1
+                                return
                 else:
                     task = None
                 
@@ -557,7 +557,7 @@ class GMConsole(wx.SplitterWindow):
                         GUI(parent = self).ParseCommand(command)
                     except GException, e:
                         print >> sys.stderr, e
-                    return 0
+                    return
                 
                 # switch to 'Command output' if required
                 if switchPage:
@@ -600,8 +600,6 @@ class GMConsole(wx.SplitterWindow):
                                       onDone = onDone, onPrepare = onPrepare, userData = userData)
             self.cmdOutputTimer.Start(50)
         
-        return None
-
     def ClearHistory(self, event):
         """!Clear history of commands"""
         self.cmdOutput.SetReadOnly(False)
