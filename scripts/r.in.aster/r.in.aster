@@ -142,7 +142,7 @@ then
 	srcfile="$GIS_OPT_INPUT"
 fi
 
-tempfile=`g.tempfile $$`.tif
+tempfile="`g.tempfile $$`.tif"
 
 #run gdalwarp with selected options (must be in $PATH)
 #to translate aster image to geotiff
@@ -156,7 +156,7 @@ fi
 
 g.message -d message="gdalwarp -t srs $proj $srcfile $tempfile"
 
-gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
+gdalwarp -t_srs "`g.proj -jf`" "$srcfile" "$tempfile"
 
 #import geotiff to GRASS
 g.message "Importing into GRASS ..."
