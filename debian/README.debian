@@ -21,7 +21,7 @@
 
 # In your favorite text editor open debian/changelog and adjust the
 # version number on the top line to reflect the GRASS SVN checkout number.
-# e.g. for r50538: grass (6.4.2~rc3+svn50540-0) unstable; urgency=low
+# e.g. for r50540: grass (6.4.2~rc3+svn50540-0) unstable; urgency=low
 
   nano debian/changelog
 
