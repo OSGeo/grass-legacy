@@ -606,7 +606,7 @@ Section "GRASS" SecGRASS
 		"$INSTALL_DIR\icons\WinGRASS.ico" "" SW_SHOWNORMAL "" "Visit the WinGRASS Project Web Page"
 	!endif
 	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Uninstall GRASS.lnk" "$INSTALL_DIR\Uninstall-GRASS.exe" ""\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Uninstall GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\Uninstall-GRASS.exe" ""\
 	"$INSTALL_DIR\Uninstall-GRASS.exe" "" SW_SHOWNORMAL "" "Uninstall GRASS ${VERSION_NUMBER}"
 	
 	;Create the grass_command.bat
