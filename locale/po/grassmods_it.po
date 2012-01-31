@@ -15869,7 +15869,7 @@ msgstr "Nessun record per la categoria [%d]"
 #: ../ps/ps.map/ps_vpoints.c:180
 #, c-format
 msgid "Attribute is of invalid size [%.3f] for category [%d]"
-msgstr "L'attributo della categoria [%d] ha una dimensione errata [%.3f]"
+msgstr "L'attributo della categoria [%.3f] ha una dimensione errata [%d]"
 
 #: ../ps/ps.map/ps_vpoints.c:204 ../ps/ps.map/ps_vareas.c:106
 #: ../ps/ps.map/ps_vlines.c:123
@@ -19523,7 +19523,7 @@ msgstr ""
 #: ../general/g.proj/main.c:183
 #, c-format
 msgid "Only one of '%s', '%s', '%s' or '%s' options may be specified"
-msgstr "Solo una delle seguenti opzioni: '%s', '%s' o '%s' può essere specificata"
+msgstr "Solo una delle seguenti opzioni: '%s', '%s', '%s' o '%s' può essere specificata"
 
 #: ../general/g.proj/main.c:210
 msgid "Projection files missing"
