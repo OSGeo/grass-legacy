@@ -505,10 +505,6 @@ const char *Vect_get_proj_name(struct Map_info *Map)
     case PROJECTION_LL:
     case PROJECTION_SP:
 	return G__projection_name(n);
-    default:
-	G_debug(1, "Vect_get_proj_name(): "
-		   "Vect_get_proj() returned an invalid result (%d)", n);
-	break;
     }
 
     /* Vect_get_proj() didn't return a useful result,
