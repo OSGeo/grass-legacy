@@ -230,9 +230,11 @@ static int close_new(int fd, int ok)
 			  fcb->null_temp_name, path);
 		stat = -1;
 	    }
-	    else {
-		if (remove(fcb->null_temp_name) != 0)
-		    G_warning(_("Unable to delete the temporary null-cells file"));
+	    else { /* if the rename() was successful I'm not sure why there'd be anything left to remove() */
+		if (access(fcb->null_temp_name, F_OK) == 0) {
+		    if (remove(fcb->null_temp_name) != 0)
+			G_warning(_("Unable to delete the temporary null-cells file"));
+		}
 	    }
 	}
 	else { /* no NULL data encountered */
@@ -331,9 +333,11 @@ static int close_new(int fd, int ok)
 		      fcb->temp_name, path);
 	    stat = -1;
 	}
-	else {
-	    if (remove(fcb->temp_name) != 0)
-		G_warning(_("Unable to delete the temporary 'cell' file"));
+	else { /* if the rename() was successful I'm not sure why there'd be anything left to remove() */
+	    if (access(fcb->temp_name, F_OK) == 0) {
+		if (remove(fcb->temp_name) != 0)
+		    G_warning(_("Unable to delete the temporary 'cell' file"));
+	    }
 	}
     }
 
@@ -389,8 +393,10 @@ static int close_new(int fd, int ok)
 	    /* remove cell_misc/name/f_quant */
 	    G__file_name_misc(path, "cell_misc", QUANT_FILE, fcb->name,
 			      fcb->mapset);
-	    if (remove(path) != 0)
-		G_warning(_("Unable to delete the %s file"), QUANT_FILE);
+	    if (access(path, F_OK) == 0) {
+		if (remove(path) != 0)
+		    G_warning(_("Unable to delete the %s file"), QUANT_FILE);
+	    }
 	}
 
 	/* create empty cats file */
