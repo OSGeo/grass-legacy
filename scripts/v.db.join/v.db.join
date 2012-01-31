@@ -122,25 +122,35 @@ COLLIST=`db.describe  -c driver="$driver" database="$database" table="$GIS_OPT_O
 COLTYPES=`db.describe -c driver="$driver" database="$database" table="$GIS_OPT_OTABLE" | grep '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`
 
 i=1
-for col in $COLLIST ; do
-    if [ "$GIS_FLAG_C" -eq 1 ] && [ "$col" = "$GIS_OPT_COLUMN" ] ; then
-	continue
-    elif [ "$GIS_FLAG_A" -eq 1 ] ; then
-	col="${col}_o"
-    fi
 
-    v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" \
-      col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+echo $GIS_FLAG_C;
+echo " $GIS_OPT_OCOLUMN";
+
+for col in $COLLIST ; do
+    if [ "$GIS_FLAG_C" -eq 1 ] && [ "$col" = "$GIS_OPT_OCOLUMN" ] ; then
+        continue
+    elif [ "$GIS_FLAG_A" -eq 1 ] ; then
+        col="${col}_other"
+    fi
+    if [ "$GIS_FLAG_C" -eq 1 ] && [ "$col" = "$GIS_OPT_OCOLUMN" ] ; then
+        continue
+    else
+        v.db.addcol "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" \
+        col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+    fi
 
     if [ $? -ne 0 ] ; then
-	g.message -e "Column creation failed. Cannot continue."
-	exit 1
+        g.message -e "Column creation failed. Cannot continue."
+        exit 1
     fi
-
-    echo "UPDATE $maptable SET $col=(SELECT $col
-        FROM $GIS_OPT_OTABLE WHERE $GIS_OPT_OTABLE.$GIS_OPT_OCOLUMN=$maptable.$GIS_OPT_COLUMN);" | \
-     db.execute database="$database" driver="$driver"
-
+	
+    if [ "$GIS_FLAG_C" -eq 1 ] && [ "$col" = "$GIS_OPT_OCOLUMN" ] ; then
+    	continue
+    else
+        echo "UPDATE $maptable SET $col=(SELECT $col
+                FROM $GIS_OPT_OTABLE WHERE $GIS_OPT_OTABLE.$GIS_OPT_OCOLUMN=$maptable.$GIS_OPT_COLUMN);" | \
+        db.execute database="$database" driver="$driver"
+    fi
   i=`expr $i + 1`
 done
 
