@@ -1047,6 +1047,32 @@
         </menuitem>
 	  </items>
 	</menu>
+	<menu>
+	  <label>Map type conversions</label>
+	  <items>
+	    <menuitem>
+	      <label>Raster to vector</label>
+	      <help>Converts a raster map into a vector map layer.</help>
+	      <keywords>raster,conversion,vectorization</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.to.vect</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Raster series to volume</label>
+	      <help>Converts 2D raster map slices to one 3D raster volume map.</help>
+	      <keywords>raster,volume,conversion</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.to.rast3</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Raster 2.5D to volume</label>
+	      <help>Creates a 3D volume map based on 2D elevation and value raster maps.</help>
+	      <keywords>raster,raster3d,voxel,conversion</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.to.rast3elev</command>
+	    </menuitem>
+	  </items>
+	</menu>
 	<separator />
 	<menuitem>
 	  <label>Buffer rasters</label>
@@ -1054,6 +1080,13 @@
 	  <keywords>raster,buffer</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>r.buffer</command>
+	</menuitem>
+	<menuitem>
+	  <label>Concentric circles</label>
+	  <help>Creates a raster map containing concentric rings around a given point.</help>
+	  <keywords>raster,geometry</keywords>
+	  <handler>OnMenuCmd</handler>
+	  <command>r.circle</command>
 	</menuitem>
 	<menuitem>
 	  <label>Closest points</label>
@@ -1152,11 +1185,11 @@
 	  <label>Terrain analysis</label>
 	  <items>
 	    <menuitem>
-	      <label>Cumulative movement costs</label>
-	      <help>Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost.</help>
-	      <keywords>raster,cost surface,cumulative costs</keywords>
+	      <label>Generate contour lines</label>
+	      <help>Produces a vector map of specified contours from a raster map.</help>
+	      <keywords>raster,DEM,contours,vector</keywords>
 	      <handler>OnMenuCmd</handler>
-	      <command>r.walk</command>
+	      <command>r.contour</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Cost surface</label>
@@ -1164,6 +1197,13 @@
 	      <keywords>raster,cost surface,cumulative costs</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.cost</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Cumulative movement costs</label>
+	      <help>Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost.</help>
+	      <keywords>raster,cost surface,cumulative costs</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.walk</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Least cost route or flow</label>
@@ -1293,6 +1333,35 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
+	    <menuitem>
+	      <label>Watershed analysis</label>
+	      <help>Watershed basin analysis program.</help>
+	      <keywords>raster,hydrology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.watershed</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Watershed subbasins</label>
+	      <help>Generates watershed subbasins raster map.</help>
+	      <keywords>raster,hydrology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.basins.fill</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Watershed basin creation</label>
+	      <help>Watershed basin creation program.</help>
+	      <keywords>raster,hydrology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.water.outlet</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Groundwater modeling</label>
+	      <help>Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.</help>
+	      <keywords>raster,hydrology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.gwflow</command>
+	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>SIMWE Overland flow modeling</label>
@@ -1323,37 +1392,8 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topmodel</command>
 	    </menuitem>
-	    <separator />
-	    <menuitem>
-	      <label>Watershed subbasins</label>
-	      <help>Generates watershed subbasins raster map.</help>
-	      <keywords>raster,hydrology</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>r.basins.fill</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program.</help>
-	      <keywords>raster,hydrology</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>r.watershed</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Watershed basin creation</label>
-	      <help>Watershed basin creation program.</help>
-	      <keywords>raster,hydrology</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>r.water.outlet</command>
-	    </menuitem>
 	  </items>
 	</menu>
-    <menuitem>
-      <label>Groundwater modeling</label>
-      <help>Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.</help>
-      <keywords>raster,hydrology</keywords>
-      <handler>OnMenuCmd</handler>
-      <command>r.gwflow</command>
-    </menuitem>
 	<menu>
 	  <label>Landscape structure modeling</label>
 	  <items>
@@ -1573,13 +1613,6 @@
 	  </items>
 	</menu>
 	<separator />
-	<menuitem>
-	  <label>Concentric circles</label>
-	  <help>Creates a raster map containing concentric rings around a given point.</help>
-	  <keywords>raster,geometry</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>r.circle</command>
-	</menuitem>
 	<menu>
 	  <label>Generate random cells</label>
 	  <items>
@@ -1649,13 +1682,6 @@
 	    </menuitem>
 	  </items>
 	</menu>
-	<menuitem>
-	  <label>Generate contour lines</label>
-	  <help>Produces a vector map of specified contours from a raster map.</help>
-	  <keywords>raster,DEM,contours,vector</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>r.contour</command>
-	</menuitem>
 	<menu>
 	  <label>Interpolate surfaces</label>
 	  <items>
@@ -1871,35 +1897,6 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Create or rebuild topology</label>
-	      <help>Creates topology for GRASS vector map.</help>
-	      <keywords>vector,topology</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.build</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Rebuild topology on all vector maps</label>
-	      <help>Rebuilds topology on all vector maps in the current mapset.</help>
-	      <keywords>vector</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.build.all</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Clean vector map</label>
-	      <help>Toolset for cleaning topology of vector map.</help>
-	      <keywords>vector,topology</keywords>
-	      <handler>OnVectorCleaning</handler>
-	      <command>v.clean</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Smooth or simplify</label>
-	      <help>Vector based generalization.</help>
-	      <keywords>vector,generalization,simplification,smoothing,displacement,network generalization</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.generalize</command>
-	    </menuitem>
-	    <separator />
-	    <menuitem>
 	      <label>Convert object types</label>
 	      <help>Change the type of geometry elements.</help>
 	      <keywords>vector,geometry</keywords>
@@ -1907,35 +1904,6 @@
 	      <command>v.type_wrapper.sh</command>
 	    </menuitem>
 	    <separator />
-	    <menuitem>
-	      <label>Add centroids</label>
-	      <help>Adds missing centroids to closed boundaries.</help>
-	      <keywords>vector,centroid,area</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.centroids</command>
-	    </menuitem>
-	    <separator />
-	    <menuitem>
-	      <label>Build polylines</label>
-	      <help>Builds polylines from lines or boundaries.</help>
-	      <keywords>vector,geometry,topology</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.build.polylines</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Split lines</label>
-	      <help>Split lines to shorter segments.</help>
-	      <keywords>vector,geometry</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.split</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Split polylines</label>
-	      <help>Creates points/segments from input vector lines and positions.</help>
-	      <keywords>vector,geometry</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.segment</command>
-	    </menuitem>
 	    <menuitem>
 	      <label>Parallel lines</label>
 	      <help>Creates parallel line to input vector lines.</help>
@@ -2007,6 +1975,69 @@
 	  </items>
 	</menu>
 	<menu>
+	  <label>Topology maintenance</label>
+	  <items>
+	    <menuitem>
+	      <label>Create or rebuild topology</label>
+	      <help>Creates topology for GRASS vector map.</help>
+	      <keywords>vector,topology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.build</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Rebuild topology on all vector maps</label>
+	      <help>Rebuilds topology on all vector maps in the current mapset.</help>
+	      <keywords>vector</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.build.all</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Build polylines</label>
+	      <help>Builds polylines from lines or boundaries.</help>
+	      <keywords>vector,geometry,topology</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.build.polylines</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Split lines</label>
+	      <help>Split lines to shorter segments.</help>
+	      <keywords>vector,geometry</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.split</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Split polylines</label>
+	      <help>Creates points/segments from input vector lines and positions.</help>
+	      <keywords>vector,geometry</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.segment</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Clean vector map</label>
+	      <help>Toolset for cleaning topology of vector map.</help>
+	      <keywords>vector,topology</keywords>
+	      <handler>OnVectorCleaning</handler>
+	      <command>v.clean</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Smooth or simplify</label>
+	      <help>Vector based generalization.</help>
+	      <keywords>vector,generalization,simplification,smoothing,displacement,network generalization</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.generalize</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Add centroids</label>
+	      <help>Adds missing centroids to closed boundaries.</help>
+	      <keywords>vector,centroid,area</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.centroids</command>
+	    </menuitem>
+	  </items>
+	</menu>
+	<menu>
 	  <label>Manage colors</label>
 	  <items>
 	    <menuitem>
@@ -2025,28 +2056,77 @@
 	    </menuitem>
 	  </items>
 	</menu>
-	<separator />
-	<menuitem>
-	  <label>Query with attributes</label>
-	  <help>Selects vector objects from an existing vector map and creates a new map containing only the selected objects.</help>
-	  <keywords>vector,extract</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>v.extract</command>
-	</menuitem>
-	<menuitem>
-	  <label>Query with coordinate(s)</label>
-	  <help>Queries a vector map layer at given locations.</help>
-	  <keywords>vector,querying</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>v.what</command>
-	</menuitem>
-	<menuitem>
-	  <label>Query with another vector map</label>
-	  <help>Selects features from vector map (A) by features from other vector map (B).</help>
-	  <keywords>vector,spatial query</keywords>
-	  <handler>OnMenuCmd</handler>
-	  <command>v.select</command>
-	</menuitem>
+	<menu>
+	  <label>Query vector map</label>
+	  <items>
+	    <menuitem>
+	      <label>Query with coordinate(s)</label>
+	      <help>Queries a vector map layer at given locations.</help>
+	      <keywords>vector,querying</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.what</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Query vector attribute data</label>
+	      <help>Prints vector map attributes.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.db.select</command>
+	    </menuitem>
+	  </items>
+	 </menu>
+	<menu>
+	  <label>Feature selection</label>
+	  <items>
+	    <menuitem>
+	      <label>Query with attributes</label>
+	      <help>Selects vector objects from an existing vector map and creates a new map containing only the selected objects.</help>
+	      <keywords>vector,extract</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.extract</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Query with another vector map</label>
+	      <help>Selects features from vector map (A) by features from other vector map (B).</help>
+	      <keywords>vector,spatial query</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.select</command>
+	    </menuitem>
+	  </items>
+	 </menu>
+	 <menu>
+	  <label>Map type conversions</label>
+	  <items>
+	    <menuitem>
+	      <label>Vector to raster</label>
+	      <help>Converts (rasterize) a vector map into a raster map.</help>
+	      <keywords>vector,raster,conversion</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.to.rast</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Vector to volume</label>
+	      <help>Converts a binary GRASS vector map (only points) layer into a 3D GRASS raster map layer.</help>
+	      <keywords>vector,volume,conversion</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.to.rast3</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>2D vector to 3D vector</label>
+	      <help>Performs transformation of 2D vector features to 3D.</help>
+	      <keywords>vector,transformation,3D</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.to.3d</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Sites to vector</label>
+	      <help>Converts a GRASS site_lists file into a vector map.</help>
+	      <keywords>vector,import,sites</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.in.sites</command>
+	    </menuitem>
+	  </items>
+	</menu>
 	<separator />
 	<menuitem>
 	  <label>Buffer vectors</label>
@@ -2575,18 +2655,18 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
+	      <label>Input for supervised MLC</label>
+	      <help>Generates statistics for i.maxlik from raster map.</help>
+	      <keywords>imagery,classification,supervised,MLC</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.gensig</command>
+	    </menuitem>
+	    <menuitem>
 	      <label>Maximum likelihood classification (MLC)</label>
 	      <help>Classifies the cell spectral reflectances in imagery data.</help>
 	      <keywords>imagery,classification,MLC</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.maxlik</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Sequential maximum a posteriori classification (SMAP)</label>
-	      <help>Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation.</help>
-	      <keywords>imagery,classification,supervised,SMAP</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>i.smap</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -2596,19 +2676,20 @@
 	      <handler>OnXTerm</handler>
 	      <command>i.class</command>
 	    </menuitem>
-	    <menuitem>
-	      <label>Input for supervised MLC</label>
-	      <help>Generates statistics for i.maxlik from raster map.</help>
-	      <keywords>imagery,classification,supervised,MLC</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>i.gensig</command>
-	    </menuitem>
+	    <separator />
 	    <menuitem>
 	      <label>Input for supervised SMAP</label>
 	      <help>Generates statistics for i.smap from raster map.</help>
 	      <keywords>imagery,classification,supervised,SMAP</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.gensigset</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Sequential maximum a posteriori classification (SMAP)</label>
+	      <help>Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation.</help>
+	      <keywords>imagery,classification,supervised,SMAP</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.smap</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -2744,6 +2825,18 @@
 	      <keywords>raster3d,voxel</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r3.timestamp</command>
+	    </menuitem>
+	  </items>
+	</menu>
+	<menu>
+	  <label>Map type conversions</label>
+	  <items>
+	    <menuitem>
+	      <label>Volume to raster series</label>
+	      <help>Converts 3D raster maps to 2D raster maps</help>
+	      <keywords>raster3d,voxel</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r3.to.rast</command>
 	    </menuitem>
 	  </items>
 	</menu>
