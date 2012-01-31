@@ -844,7 +844,7 @@ msgstr ""
 #, c-format
 msgid "Unable to open signature file <%s> for subgroup <%s> of group <%s@%s>"
 msgstr ""
-"Kann die Signatur-Datei <%s> für die Untergruppe <%s> der Gruppe <%s> nicht "
+"Kann die Signatur-Datei <%s> für die Untergruppe <%s> der Gruppe <%s@%s> nicht "
 "öffnen."
 
 #: ../lib/imagery/fopen.c:23
