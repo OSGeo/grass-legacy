@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2006-12-09 01:00+0200\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <grass-translations@lists.osgeo.org>\n"
@@ -3266,7 +3266,7 @@ msgstr "Neiespējami atvērt automātisku MASK failu"
 msgid "Unable to locate symbol <%s>"
 msgstr "Neiespējami atvērt failu %s iekš %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Nevar atvērt topo failu rakstīšanai: %s\n"

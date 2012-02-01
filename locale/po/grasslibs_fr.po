@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2012-01-18 17:30+0100\n"
 "Last-Translator: Vincent BAIN <bain@toraval.fr>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -3380,7 +3380,7 @@ msgstr "Impossible d'ouvrir le masque (MASK) automatique du fichier"
 msgid "Unable to locate symbol <%s>"
 msgstr "Impossible de supprimer la table <%s>"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Allocation mémoire impossible\n"

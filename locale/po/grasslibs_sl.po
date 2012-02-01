@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <grass-translations@lists.osgeo.org>\n"
@@ -3259,7 +3259,7 @@ msgstr "Nezmo¾en odpreti avtomatièno datoteko MASK"
 msgid "Unable to locate symbol <%s>"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Ne morem odpreti datoteke topo za pisanje: %s\n"

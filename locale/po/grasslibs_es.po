@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2011-04-15 14:03+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -3453,7 +3453,7 @@ msgid "Unable to locate symbol <%s>"
 msgstr "No es posible localizar el símbolo <%s>."
 
 #
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 msgid "Unable to load GDAL library"
 msgstr "No ha sido posible cargar la librería GDAL."
 

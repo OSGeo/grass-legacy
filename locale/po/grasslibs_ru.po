@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2009-01-27 22:58-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -3287,7 +3287,7 @@ msgstr "Невозможно открыть автоматически MASK фа
 msgid "Unable to locate symbol <%s>"
 msgstr "Невозможно найти символ <%s>"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 msgid "Unable to load GDAL library"
 msgstr "Невозможно загрузить библиотеку GDAL"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2011-10-08 19:43+0200\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -350,7 +350,7 @@ msgstr "Rasterkarte <%s> konnte nicht gefunden werden."
 #: ../vector/v.sample/main.c:161 ../vector/v.what.rast/main.c:141
 #: ../vector/v.extrude/main.c:184 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.to.rast/support.c:267
-#: ../vector/v.to.rast/support.c:425
+#: ../vector/v.to.rast/support.c:426
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Kann die Rasterkarte <%s> nicht öffnen."
@@ -491,7 +491,7 @@ msgstr "Kann die Rasterkarte <%s> nicht erzeugen."
 #: ../raster/r.out.gdal/export_band.c:463 ../raster/r.lake/main.c:288
 #: ../raster/r.lake/main.c:293 ../imagery/i.gensig/get_train.c:32
 #: ../imagery/i.gensigset/get_train.c:36 ../vector/v.what.rast/main.c:271
-#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:439
+#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:440
 #, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "Kann die Rasterkarte <%s> Zeile %d nicht lesen."
@@ -29449,7 +29449,7 @@ msgstr "Name einer existierenden Rasterkarte, die abgefragt werden soll."
 msgid "Column name (will be updated by raster values)"
 msgstr "Spaltenname (die mit den Rasterwerten aktualisiert wird)."
 
-#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:314
+#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:315
 #: ../vector/v.to.rast/vect2rast.c:64
 #, c-format
 msgid "Column <%s> not found"
@@ -30679,7 +30679,7 @@ msgstr "%s ist leer"
 msgid "Unknown column <%s> in table <%s>"
 msgstr "Unbekannte Spalte <%s> in der Tabelle <%s>."
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:327
+#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
 msgid "No records selected"
 msgstr "Keine Datensätze selektiert."
 
@@ -30704,21 +30704,21 @@ msgstr ""
 "Spalte mit Beschriftungen wurde nicht angegeben. Es werden keine "
 "Beschriftungen ausgegeben."
 
-#: ../vector/v.to.rast/support.c:350
+#: ../vector/v.to.rast/support.c:351
 #, c-format
 msgid "Column type (%s) not supported"
 msgstr "Spaltentyp (%s) wird nicht unterstützt."
 
-#: ../vector/v.to.rast/support.c:430
+#: ../vector/v.to.rast/support.c:431
 msgid "Cannot allocate memory for row buffer"
 msgstr "Kann keinen Speicher für Zeilenbuffer reservieren."
 
-#: ../vector/v.to.rast/support.c:492 ../vector/v.to.rast/vect2rast.c:119
+#: ../vector/v.to.rast/support.c:493 ../vector/v.to.rast/vect2rast.c:119
 #, c-format
 msgid "Unknown use type: %d"
 msgstr "Unbekannter Verwendungs-Typ: %d"
 
-#: ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:499
 #, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "Kann die Kategorien für die Rasterkarte <%s> nicht schreiben."

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2007-05-20 10:44-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -3267,7 +3267,7 @@ msgstr "não é possível abrir automaticamente o arquivo MASK"
 msgid "Unable to locate symbol <%s>"
 msgstr "não foi possível abrir o arquivo %s em %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "não consegui calcular centróide para área %d"

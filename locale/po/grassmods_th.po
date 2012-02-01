@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -355,7 +355,7 @@ msgstr "แผนที่เชิงเส้น <%s> ไม่พบ"
 #: ../vector/v.sample/main.c:161 ../vector/v.what.rast/main.c:141
 #: ../vector/v.extrude/main.c:184 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.to.rast/support.c:267
-#: ../vector/v.to.rast/support.c:425
+#: ../vector/v.to.rast/support.c:426
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "ไม่สามารถ เปิด แผนที่เชิงภาพ <%s>"
@@ -496,7 +496,7 @@ msgstr "ไม่สามารถ สร้าง แผนที่เชิ�
 #: ../raster/r.out.gdal/export_band.c:463 ../raster/r.lake/main.c:288
 #: ../raster/r.lake/main.c:293 ../imagery/i.gensig/get_train.c:32
 #: ../imagery/i.gensigset/get_train.c:36 ../vector/v.what.rast/main.c:271
-#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:439
+#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:440
 #, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "ไม่สามารถ อ่าน แผนที่เชิงภาพ <%s> แถว %d"
@@ -29143,7 +29143,7 @@ msgstr "ชื่อของแผนที่เชิงภาพที่จ
 msgid "Column name (will be updated by raster values)"
 msgstr "ชื่อ Column  (จะถูกปรับปรุงโดยค่าของแผนที่เชิงภาพ)"
 
-#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:314
+#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:315
 #: ../vector/v.to.rast/vect2rast.c:64
 #, c-format
 msgid "Column <%s> not found"
@@ -30340,7 +30340,7 @@ msgstr "ช่วงข้อมูล ว่างเปล่า"
 msgid "Unknown column <%s> in table <%s>"
 msgstr "ไม่ทราบเงื่อนไข '%s' ในตาราง  '%s'"
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:327
+#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
 msgid "No records selected"
 msgstr "ไม่มีข้อมูลถูก"
 
@@ -30362,21 +30362,21 @@ msgstr "ข้อผิดพลาดใน Column กำหนดสี (%s) �
 msgid "Label column was not specified, no labels will be written"
 msgstr "ไม่ได้ระบุ Column แถบข้อความ,ไม่มีการเขียน แถบข้อความ"
 
-#: ../vector/v.to.rast/support.c:350
+#: ../vector/v.to.rast/support.c:351
 #, fuzzy, c-format
 msgid "Column type (%s) not supported"
 msgstr "ชนิดของ Column ไม่รองรับ"
 
-#: ../vector/v.to.rast/support.c:430
+#: ../vector/v.to.rast/support.c:431
 msgid "Cannot allocate memory for row buffer"
 msgstr "ไม่สามารถกำหนดหน่วยความจำ สำหรับ row buffer"
 
-#: ../vector/v.to.rast/support.c:492 ../vector/v.to.rast/vect2rast.c:119
+#: ../vector/v.to.rast/support.c:493 ../vector/v.to.rast/vect2rast.c:119
 #, c-format
 msgid "Unknown use type: %d"
 msgstr "ไม่ทราบชนิดที่ใช้: %d"
 
-#: ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:499
 #, fuzzy, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "ไม่สามารถเขียนหมวดหมู่สำหรับแผนที่ <%s>"

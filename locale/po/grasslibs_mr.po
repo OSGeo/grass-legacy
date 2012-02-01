@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Grass 6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2005-06-02 18:00+0530\n"
 "Last-Translator: Swapnil Hajare <dreamil@gmail.com>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -3183,7 +3183,7 @@ msgstr ""
 msgid "Unable to locate symbol <%s>"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "temp फाइल उघडता आली नाही"
