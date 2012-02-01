@@ -62,6 +62,20 @@ cat|label|id|shortname|longname
 4|BcB|4|BcB|Boneek silt loam, 2 to 6
 5|BcC|5|BcC|Boneek silt loam, 6 to 9
 ...
+
+# join soils_legend into mysoils attribute table, escape shortname column that it is a duplicate of label; it add also _o suffix for the columns contained by soils_legend table
+g.copy vect=soils,mysoils_ac
+v.db.join -ac mysoils col=label otable=soils_legend ocol=shortname
+
+# verification of join
+v.db.select mysoils_ac
+cat|label|id|longname_o
+1|Aab|||
+2|Ba|2|Barnum silt loam
+3|Bb|3|Barnum silt loam, channeled
+4|BcB|4|Boneek silt loam, 2 to 6
+5|BcC|5|Boneek silt loam, 6 to 9
+
 </pre></div>
 
 <h2>SEE ALSO</h2>
