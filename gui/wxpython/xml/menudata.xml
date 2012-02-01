@@ -1074,7 +1074,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map layer.</help>
+	      <help>Converts a raster map into a vector map.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -1357,7 +1357,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program.</help>
+	      <help>Watershed basin analysis program</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
@@ -1371,7 +1371,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Watershed basin creation program.</help>
+	      <help>Creates watershed basins.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
@@ -1380,7 +1380,7 @@
 	    <menuitem>
 	      <label>Groundwater modeling</label>
 	      <help>Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.gwflow</command>
 	    </menuitem>
@@ -1769,7 +1769,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Fill NULL cells</label>
-	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation.</help>
+	      <help>Fills no-data areas in raster maps using spline interpolation.</help>
 	      <keywords>raster,elevation,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fillnulls</command>
