@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2011-11-15 15:01+0900\n"
 "Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -3283,7 +3283,7 @@ msgstr "自動MASKファイルを開けません"
 msgid "Unable to locate symbol <%s>"
 msgstr "シンボルを検索できません <%s>"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 msgid "Unable to load GDAL library"
 msgstr "GDALライブラリを読み込めません"
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -3277,7 +3277,7 @@ msgstr "Nelze automaticky otevøít soubor MASK"
 msgid "Unable to locate symbol <%s>"
 msgstr "Nelze nalézt symbol <%s>"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 msgid "Unable to load GDAL library"
 msgstr "Nelze naèíst GDAL knihovnu"
 

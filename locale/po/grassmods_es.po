@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2011-05-17 16:53+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -358,7 +358,7 @@ msgstr "Mapa ráster <%s> no encontrado"
 #: ../vector/v.sample/main.c:161 ../vector/v.what.rast/main.c:141
 #: ../vector/v.extrude/main.c:184 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.to.rast/support.c:267
-#: ../vector/v.to.rast/support.c:425
+#: ../vector/v.to.rast/support.c:426
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -499,7 +499,7 @@ msgstr "No se puede crear el mapa ráster <%s>"
 #: ../raster/r.out.gdal/export_band.c:463 ../raster/r.lake/main.c:288
 #: ../raster/r.lake/main.c:293 ../imagery/i.gensig/get_train.c:32
 #: ../imagery/i.gensigset/get_train.c:36 ../vector/v.what.rast/main.c:271
-#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:439
+#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:440
 #, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "No se puede leer en el mapa ráster <%s> la fila %d"
@@ -29655,7 +29655,7 @@ msgstr "Nombre del mapa ráster existente a consultar"
 msgid "Column name (will be updated by raster values)"
 msgstr "Nombre de columna (se actualizará por valores ráster)"
 
-#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:314
+#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:315
 #: ../vector/v.to.rast/vect2rast.c:64
 #, c-format
 msgid "Column <%s> not found"
@@ -30871,7 +30871,7 @@ msgstr "%s está vacío"
 msgid "Unknown column <%s> in table <%s>"
 msgstr "Columna <%s> desconocida en la tabla <%s>"
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:327
+#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
 msgid "No records selected"
 msgstr "Ningún registro seleccionado"
 
@@ -30895,21 +30895,21 @@ msgstr "Error en la columna (%s) de definición de color con categoría %d"
 msgid "Label column was not specified, no labels will be written"
 msgstr "No se especificó la columna de etiquetas, no se escribirán etiquetas"
 
-#: ../vector/v.to.rast/support.c:350
+#: ../vector/v.to.rast/support.c:351
 #, c-format
 msgid "Column type (%s) not supported"
 msgstr "Tipo de columna (%s) no soportado"
 
-#: ../vector/v.to.rast/support.c:430
+#: ../vector/v.to.rast/support.c:431
 msgid "Cannot allocate memory for row buffer"
 msgstr "No se puede asignar memoria para el buffer de filas"
 
-#: ../vector/v.to.rast/support.c:492 ../vector/v.to.rast/vect2rast.c:119
+#: ../vector/v.to.rast/support.c:493 ../vector/v.to.rast/vect2rast.c:119
 #, c-format
 msgid "Unknown use type: %d"
 msgstr "Tipo de uso desconocido: %d"
 
-#: ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:499
 #, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "No se pueden escribir categorías para el mapa raster <%s>"

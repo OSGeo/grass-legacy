@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2007-06-18 22:26-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -3271,7 +3271,7 @@ msgstr "não é possível abrir automaticamente o arquivo MASK"
 msgid "Unable to locate symbol <%s>"
 msgstr "Impossível abrir arquivo %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Impossível adicionar arco"

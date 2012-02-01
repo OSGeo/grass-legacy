@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -3269,7 +3269,7 @@ msgstr "Không thể mở tập tin MASK tự động"
 msgid "Unable to locate symbol <%s>"
 msgstr "Không thể định vị biểu tượng <%s>"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:114
 msgid "Unable to load GDAL library"
 msgstr "Không thể nạp thư viện GDAL"
 

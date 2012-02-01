@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 09:39+0100\n"
+"POT-Creation-Date: 2012-02-01 08:43+0100\n"
 "PO-Revision-Date: 2007-12-13 16:33+0100\n"
 "Last-Translator: Zhang Jun <nilarcs@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -358,7 +358,7 @@ msgstr "未找到栅格图<%s>"
 #: ../vector/v.sample/main.c:161 ../vector/v.what.rast/main.c:141
 #: ../vector/v.extrude/main.c:184 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.to.rast/support.c:267
-#: ../vector/v.to.rast/support.c:425
+#: ../vector/v.to.rast/support.c:426
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "无法创建栅格地图 %s"
@@ -504,7 +504,7 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:463 ../raster/r.lake/main.c:288
 #: ../raster/r.lake/main.c:293 ../imagery/i.gensig/get_train.c:32
 #: ../imagery/i.gensigset/get_train.c:36 ../vector/v.what.rast/main.c:271
-#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:439
+#: ../vector/v.what.rast/main.c:276 ../vector/v.to.rast/support.c:440
 #, fuzzy, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "无法创建栅格地图 %s"
@@ -29404,7 +29404,7 @@ msgstr "需要查询的已有栅格地图的名称"
 msgid "Column name (will be updated by raster values)"
 msgstr ""
 
-#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:314
+#: ../vector/v.what.rast/main.c:155 ../vector/v.to.rast/support.c:315
 #: ../vector/v.to.rast/vect2rast.c:64
 #, c-format
 msgid "Column <%s> not found"
@@ -30608,7 +30608,7 @@ msgstr "数据范围是%ld至%ld\n"
 msgid "Unknown column <%s> in table <%s>"
 msgstr "未知的类型"
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:327
+#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
 #, fuzzy
 msgid "No records selected"
 msgstr "%d 条记录被更新"
@@ -30631,22 +30631,22 @@ msgstr ""
 msgid "Label column was not specified, no labels will be written"
 msgstr ""
 
-#: ../vector/v.to.rast/support.c:350
+#: ../vector/v.to.rast/support.c:351
 #, fuzzy, c-format
 msgid "Column type (%s) not supported"
 msgstr "字段类型不支持"
 
-#: ../vector/v.to.rast/support.c:430
+#: ../vector/v.to.rast/support.c:431
 #, fuzzy
 msgid "Cannot allocate memory for row buffer"
 msgstr "无法为字符串分配内存"
 
-#: ../vector/v.to.rast/support.c:492 ../vector/v.to.rast/vect2rast.c:119
+#: ../vector/v.to.rast/support.c:493 ../vector/v.to.rast/vect2rast.c:119
 #, fuzzy, c-format
 msgid "Unknown use type: %d"
 msgstr "未知的类型：%c"
 
-#: ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:499
 #, fuzzy, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "无法为色彩条读取颜色"
