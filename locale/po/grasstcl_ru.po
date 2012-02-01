@@ -105,14 +105,8 @@ msgid "Select datum transformation parameters:"
 msgstr "Выберите параметры трансформации датума:"
 
 #: ../lib/init/file_option.tcl:244 ../lib/init/epsg_option.tcl:290
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
-msgstr ""
-"Продолжить без указания параметров - если используется при создании области, "
-"другие модули GRASS будут использовать параметры по умолчанию (возможно не "
-"оптимальные) для этого датума если нужно в будущем."
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgstr "Продолжить без указания параметров - если используется при создании области, другие модули GRASS будут использовать параметры по умолчанию (возможно не оптимальные) для этого датума если нужно в будущем."
 
 #: ../lib/init/file_option.tcl:263 ../lib/init/epsg_option.tcl:309
 #: ../vector/v.digit/settings.tcl:174 ../gui/tcltk/gis.m/gm.tcl:465
@@ -143,11 +137,8 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: неверная область"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"Предупреждение: область <%s> в GISDBASE <%s> не является папкой или не "
-"существует."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "Предупреждение: область <%s> в GISDBASE <%s> не является папкой или не существует."
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -327,10 +318,7 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:589
@@ -344,9 +332,7 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: неверная база данных"
 
 #: ../lib/init/gis_set.tcl:595
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr ""
-"Предупреждение: Неправильная база данных. Поиск первой правильной папки в "
-"корневой"
+msgstr "Предупреждение: Неправильная база данных. Поиск первой правильной папки в корневой"
 
 #: ../lib/init/gis_set.tcl:642 ../lib/init/gis_set.tcl:663
 #: ../lib/init/gis_set.tcl:681 ../lib/init/gis_set.tcl:709
@@ -395,13 +381,11 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: невозможно получить пе
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 "Предупреждение: Невозможно получить переменную среды GRASS_PROJSHARE. \n"
 "Это ошибка установки GRASS. \n"
-"Установите переменную среды GRASS_PROJSHARE указывающую на папку с файлом "
-"EPSG Proj4. "
+"Установите переменную среды GRASS_PROJSHARE указывающую на папку с файлом EPSG Proj4. "
 
 #: ../lib/init/epsg_option.tcl:101
 msgid "Define location using EPSG projection codes"
@@ -459,9 +443,7 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: Область '%s' уже существ�
 
 #: ../lib/init/epsg_option.tcl:342
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr ""
-"Вы можете выбрать код EPSG (в <скобках>) и скопировать его для дальнейшего "
-"использования."
+msgstr "Вы можете выбрать код EPSG (в <скобках>) и скопировать его для дальнейшего использования."
 
 #: ../lib/init/epsg_option.tcl:379
 msgid "GUESS THAT IS NOT THE EPSG FILE"
@@ -1135,9 +1117,7 @@ msgid " or <"
 msgstr "или <"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1189,8 +1169,7 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
@@ -1493,9 +1472,7 @@ msgstr "Имя фрейма (опция):"
 #: ../gui/tcltk/gis.m/frames.tcl:135
 #, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
-msgstr ""
-"Установить границы фреймов равными 0-100 процентов начиная с нижнего левого "
-"угла дисплея"
+msgstr "Установить границы фреймов равными 0-100 процентов начиная с нижнего левого угла дисплея"
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
@@ -1519,11 +1496,8 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Растровый слой для синего или насыщенности"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr ""
-"Показать 3 растровых слоя как Красный/Зеленый/Синий или Тон/Яркость/"
-"Насыщенность"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr "Показать 3 растровых слоя как Красный/Зеленый/Синий или Тон/Яркость/Насыщенность"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
@@ -1991,8 +1965,7 @@ msgstr "Ограничить слой геометрией региона"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -3627,8 +3600,7 @@ msgstr "Показать стрелки чья ориентация основа
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:145
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr ""
-"  (по выбору, длина стрелок основана на крутизне или слое интенсивности)"
+msgstr "  (по выбору, длина стрелок основана на крутизне или слое интенсивности)"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:162
 msgid "Aspect map: "
@@ -3762,11 +3734,8 @@ msgid "chart for %s"
 msgstr "диаграмма для %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
-msgstr ""
-"Показать круговую и столбчатую диаграмму атрибутивных значений в "
-"местоположениях векторных точек"
+msgid "Display pie and bar charts of attribute values at vector object locations"
+msgstr "Показать круговую и столбчатую диаграмму атрибутивных значений в местоположениях векторных точек"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
 msgid "Vector map to chart:"
@@ -4012,20 +3981,12 @@ msgid " ignore rotation setting and draw horizontally"
 msgstr " игнорировать настройку поворота и отрисовывать горизонтально"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"Нет группы растров (REF). Нужно выбрать опцию 'создать/редактировать группу' "
-"чтобы создать группу."
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgstr "Нет группы растров (REF). Нужно выбрать опцию 'создать/редактировать группу' чтобы создать группу."
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"Нет группы векторов (VREF). Нужно выбрать опцию 'создать/редактировать "
-"группу' чтобы создать группу."
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgstr "Нет группы векторов (VREF). Нужно выбрать опцию 'создать/редактировать группу' чтобы создать группу."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -4104,9 +4065,7 @@ msgid "4. Select map"
 msgstr "4. Выбор карты"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "Выбрать не привязанный растр или вектор для создания опорных точек"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -4207,29 +4166,16 @@ msgid "Exit georectifier"
 msgstr "Выйти из режима привязки"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"Нет файла POINTS опорных точек для создания группы. Нужно создать опорные "
-"точки до привязки слоя."
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgstr "Нет файла POINTS опорных точек для создания группы. Нужно создать опорные точки до привязки слоя."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"Недостаточно опорных точек для данного метода привязки. Нужно по крайней "
-"мере 3 точки для 1-го порядка, 6 точек для 2-го и 10 для 3-го."
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgstr "Недостаточно опорных точек для данного метода привязки. Нужно по крайней мере 3 точки для 1-го порядка, 6 точек для 2-го и 10 для 3-го."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"Нет правильных опорных точек в файле GCP. Нужно создать правильные опорные "
-"точки перед привязкой слоя."
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
+msgstr "Нет правильных опорных точек в файле GCP. Нужно создать правильные опорные точки перед привязкой слоя."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -4343,8 +4289,7 @@ msgstr "Удалить слой"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr ""
-"Создать новый файл проекта (сначала очистить настройки текущего проекта)"
+msgstr "Создать новый файл проекта (сначала очистить настройки текущего проекта)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -4369,8 +4314,7 @@ msgstr "Показать масштаб и стрелку на север"
 #: ../gui/tcltk/gis.m/barscale.tcl:170
 #, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
-msgstr ""
-"Расположение масштаба: 0-100 процентов от левого верхнего угла дисплея "
+msgstr "Расположение масштаба: 0-100 процентов от левого верхнего угла дисплея "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
@@ -4519,12 +4463,8 @@ msgid "Error creating rules file"
 msgstr "Ошибка создания файла правил"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
-msgstr ""
-"Создать текстовый объект postscript (только для postscript eps, pdf, и "
-"вывода на печать)"
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgstr "Создать текстовый объект postscript (только для postscript eps, pdf, и вывода на печать)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -4572,8 +4512,7 @@ msgstr "\tпоказываемые значения"
 
 #: ../gui/tcltk/gis.m/raster.tcl:226
 msgid "\tOptional color draping. Use base map for shading,"
-msgstr ""
-"\tЦветовая драпировка (опция). Использовать базовый слой для затенения,"
+msgstr "\tЦветовая драпировка (опция). Использовать базовый слой для затенения,"
 
 #: ../gui/tcltk/gis.m/raster.tcl:231
 msgid "\tdrape map for color in color relief map or data fusion"
@@ -4796,9 +4735,7 @@ msgstr "Выберите шрифт"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:238
 msgid "Display vector maps thematically by graduate colors (all types)"
-msgstr ""
-"Показать векторные слои как тематически, используя градуированные цвета (все "
-"типы)"
+msgstr "Показать векторные слои как тематически, используя градуированные цвета (все типы)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:244
 msgid "  or by graduated sizes (points and lines)"
@@ -5074,8 +5011,7 @@ msgstr "Легенда для %s"
 
 #: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "Display legend for raster map using cat values and labels"
-msgstr ""
-"Показать легенду для растрового слоя используя значения категорий и подписи"
+msgstr "Показать легенду для растрового слоя используя значения категорий и подписи"
 
 #: ../gui/tcltk/gis.m/legend.tcl:210
 msgid "Raster map: "
@@ -5089,8 +5025,7 @@ msgstr "Расположение легенды и размер как 0-100 п�
 #: ../gui/tcltk/gis.m/legend.tcl:235
 #, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
-msgstr ""
-"    x,y нижнего левого угла (в процентах от верхнего левого угла дисплея)"
+msgstr "    x,y нижнего левого угла (в процентах от верхнего левого угла дисплея)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:246
 msgid "    legend height "
@@ -5204,8 +5139,7 @@ msgstr "Сохранить охват дисплея в регион с назв
 
 #: ../gui/tcltk/gis.m/maptool.tcl:194
 msgid "Zoom display to computational region (set with g.region)"
-msgstr ""
-"Масштабировать дисплей до расчетного региона (установить с помощью g.region)"
+msgstr "Масштабировать дисплей до расчетного региона (установить с помощью g.region)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:197
 msgid "Zoom display to default region"
@@ -5847,12 +5781,8 @@ msgid "Create color image from RGB files"
 msgstr "Создать цветное изображение из файлов RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
-msgstr ""
-"Создать 3 слоя RGB (красный, зеленый, синий) из 3 слоев HIS (тон, яркость, "
-"насыщенность)"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
+msgstr "Создать 3 слоя RGB (красный, зеленый, синий) из 3 слоев HIS (тон, яркость, насыщенность)"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
 msgid "Create raster buffers"
@@ -5892,8 +5822,7 @@ msgstr "Слой теней для позиции солнца или дата/�
 
 #: ../gui/tcltk/d.m/menu.tcl:275
 msgid "Calculate cumulative movement costs between locales"
-msgstr ""
-"Рассчитать кумулятивную стоимость перемещения между двумя местоположениями"
+msgstr "Рассчитать кумулятивную стоимость перемещения между двумя местоположениями"
 
 #: ../gui/tcltk/d.m/menu.tcl:278
 msgid "Profile analysis"
@@ -5969,9 +5898,7 @@ msgstr "Симулировать феномен анизотропного ра�
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr ""
-"Редактировать значения категорий индивидуальных ячеек для показываемого "
-"растрового слоя"
+msgstr "Редактировать значения категорий индивидуальных ячеек для показываемого растрового слоя"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Reclassify categories for areas of specified sizes"
@@ -5999,8 +5926,7 @@ msgstr "Масштабировать категории (создать новы
 
 #: ../gui/tcltk/d.m/menu.tcl:331
 msgid "Rescale categories with equalized histogram (create new map)"
-msgstr ""
-"Масштабировать категории с эквализацией гистограммы (создать новый слой)"
+msgstr "Масштабировать категории с эквализацией гистограммы (создать новый слой)"
 
 #: ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate concentric circles around points"
@@ -6187,20 +6113,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "Создать станции из исходных линий и линейную систему координат"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
-msgstr ""
-"Создать точки/сегменты из исходных линий, системы линейных координат и "
-"точек, считываемых из stdin"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
+msgstr "Создать точки/сегменты из исходных линий, системы линейных координат и точек, считываемых из stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
-msgstr ""
-"Найти ID линии и реальный километраж+сдвиг для заданных точек векторного "
-"слоя используя систему линейных координат"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgstr "Найти ID линии и реальный километраж+сдвиг для заданных точек векторного слоя используя систему линейных координат"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6276,8 +6194,7 @@ msgstr "Получить данные с растровых слоев"
 
 #: ../gui/tcltk/d.m/menu.tcl:457
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr ""
-"Рассчитать статистику для растрового слоя на который наложен векторный слой"
+msgstr "Рассчитать статистику для растрового слоя на который наложен векторный слой"
 
 #: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Partition points into test/training sets for k-fold cross validatation"
@@ -6285,8 +6202,7 @@ msgstr "Разделить точки на тестовые/тренировоч
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Transfer attribute data from queried vector map to points"
-msgstr ""
-"Перенести на точки атрибутивные данные из запрашиваемого векторного слоя"
+msgstr "Перенести на точки атрибутивные данные из запрашиваемого векторного слоя"
 
 #: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Load vector attributes to database or create reports"
@@ -6321,25 +6237,16 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Мозаицировать до 4 соседних изображений"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr ""
-"Цветовая балансировка и улучшение цветовых таблиц для многоканальных "
-"изображений для показа RGB"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr "Цветовая балансировка и улучшение цветовых таблиц для многоканальных изображений для показа RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr ""
-"Трансформировать цветное изображение HIS (Тон/Яркость/Насыщенность) в RGB "
-"(Красный/Зеленый/Синий)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr "Трансформировать цветное изображение HIS (Тон/Яркость/Насыщенность) в RGB (Красный/Зеленый/Синий)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr ""
-"Трансформировать цветное изображение RGB (Красный/Зеленый/Синий) в HIS (Тон/"
-"Яркость/Насыщенность)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr "Трансформировать цветное изображение RGB (Красный/Зеленый/Синий) в HIS (Тон/Яркость/Насыщенность)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6603,8 +6510,7 @@ msgstr "линейный масштаб вместо колонки"
 
 #: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
 msgid "place with mouse (cannot save placement with group)"
-msgstr ""
-"расположить с помощью мыши (невозможно сохранить расположение с группой)"
+msgstr "расположить с помощью мыши (невозможно сохранить расположение с группой)"
 
 #: ../gui/tcltk/d.m/dtext.tcl:101
 msgid "Text options: color"
@@ -6656,8 +6562,7 @@ msgstr "Вывести растровые и векторные слои с по
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr ""
-"     (оставьте пустым для расположения мышью; позиция не будет сохранена)"
+msgstr "     (оставьте пустым для расположения мышью; позиция не будет сохранена)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -6669,12 +6574,8 @@ msgstr "  выровнять текст с точкой"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
-msgstr ""
-"     (для координат, процентов начиная с нижнего левого угла, пиксели с "
-"верхнего левого)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
+msgstr "     (для координат, процентов начиная с нижнего левого угла, пиксели с верхнего левого)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6779,9 +6680,7 @@ msgstr "перевернуть легенду"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
+#~ msgid "Find line ID and real km+offset for given points in vector map using linear reference system"
 #~ msgstr "вектор"
 
 #, fuzzy

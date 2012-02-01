@@ -15,16 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 "X-Poedit-Language: Indonesian\n"
 "X-Poedit-Country: INDONESIA\n"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
-msgstr ""
-"Definisikan location dengan menggunakan informasi proyeksi dalam berkas "
-"bergeoreferensi"
+msgstr "Definisikan location dengan menggunakan informasi proyeksi dalam berkas bergeoreferensi"
 
 #: ../lib/init/file_option.tcl:92 ../lib/init/epsg_option.tcl:120
 msgid "Name of new location"
@@ -40,8 +37,7 @@ msgstr "Jalur ke berkas bergeoreferensi"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr ""
-"Jalur ke berkas bergeoreferensi (format harus dapat dibaca oleh GDAL/OGR)"
+msgstr "Jalur ke berkas bergeoreferensi (format harus dapat dibaca oleh GDAL/OGR)"
 
 #: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:267
 #: ../lib/init/epsg_option.tcl:133 ../lib/init/epsg_option.tcl:146
@@ -112,14 +108,8 @@ msgid "Select datum transformation parameters:"
 msgstr "Pilih parameter transformasi datum:"
 
 #: ../lib/init/file_option.tcl:244 ../lib/init/epsg_option.tcl:290
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
-msgstr ""
-"Lanjutkan tanpa menentukan parameter - jika digunakan ketika membuat sebuah "
-"lokasi, modul GRASS yang lain akan menggunakan parameter \"default\" untuk "
-"datum ini jika diperlukan"
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgstr "Lanjutkan tanpa menentukan parameter - jika digunakan ketika membuat sebuah lokasi, modul GRASS yang lain akan menggunakan parameter \"default\" untuk datum ini jika diperlukan"
 
 #: ../lib/init/file_option.tcl:263 ../lib/init/epsg_option.tcl:309
 #: ../vector/v.digit/settings.tcl:174 ../gui/tcltk/gis.m/gm.tcl:465
@@ -150,11 +140,8 @@ msgstr "PERINGATAN: location invalid"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"Peringatan: location <%s> dalam GISDBASE <%s> bukan sebuah direktori atau "
-"tidak ada."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "Peringatan: location <%s> dalam GISDBASE <%s> bukan sebuah direktori atau tidak ada."
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -334,10 +321,7 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:589
@@ -351,9 +335,7 @@ msgstr "PERINGATAN: Basisdata tidak valid"
 
 #: ../lib/init/gis_set.tcl:595
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr ""
-"PERINGATAN: Basisdata tidak valid. Temukan direktori yang benar terlebih "
-"dahulu pada direktori di atasnya"
+msgstr "PERINGATAN: Basisdata tidak valid. Temukan direktori yang benar terlebih dahulu pada direktori di atasnya"
 
 #: ../lib/init/gis_set.tcl:642 ../lib/init/gis_set.tcl:663
 #: ../lib/init/gis_set.tcl:681 ../lib/init/gis_set.tcl:709
@@ -402,8 +384,7 @@ msgstr "PERINGATAN: tidak dapat mengambil 'environmental variable'"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 "Peringatan: Tidak dapat memperoleh variabel GRASS_PROJSHARE. \n"
 "Ini adalah sebuah kesalahan instalasi GRASS. \n"
@@ -461,14 +442,11 @@ msgstr "Location sudah pernah dibuat sebelumnya!"
 #: ../lib/init/epsg_option.tcl:197
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
-msgstr ""
-"PERINGATAN: Location '%s' sudah ada: silakan gunakan nama yang lainnya."
+msgstr "PERINGATAN: Location '%s' sudah ada: silakan gunakan nama yang lainnya."
 
 #: ../lib/init/epsg_option.tcl:342
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr ""
-"Anda dapat memilih kode EPSG (dalam <kurung>) dan menyalinnya untuk "
-"digunakan nanti"
+msgstr "Anda dapat memilih kode EPSG (dalam <kurung>) dan menyalinnya untuk digunakan nanti"
 
 #: ../lib/init/epsg_option.tcl:379
 msgid "GUESS THAT IS NOT THE EPSG FILE"
@@ -1141,9 +1119,7 @@ msgid " or <"
 msgstr " atau <"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1195,8 +1171,7 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
@@ -1523,11 +1498,8 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Peta raster untuk kanal biru atau saturasi"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr ""
-"Tampilan 3 peta raster sebagai kanal Red/Green/Blue or Hue/Intensity/"
-"Saturation"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr "Tampilan 3 peta raster sebagai kanal Red/Green/Blue or Hue/Intensity/Saturation"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
@@ -1580,8 +1552,7 @@ msgstr "Sesuaikan kecerahan kanal intensitas HIS"
 #: ../gui/tcltk/gis.m/rgbhis.tcl:220 ../gui/tcltk/gis.m/raster.tcl:263
 #: ../gui/tcltk/d.m/rgbhis.tcl:147 ../gui/tcltk/d.m/raster.tcl:143
 msgid "overlay maps from other layers (transparent null value cells)"
-msgstr ""
-"tumpangsusun peta dari layer lain (sel dengan nilai null akan transparan)"
+msgstr "tumpangsusun peta dari layer lain (sel dengan nilai null akan transparan)"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:127
 #, fuzzy
@@ -1998,8 +1969,7 @@ msgstr "Batasan peta sesuai geometri region"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -3322,9 +3292,8 @@ msgid "Univariate attribute statistics"
 msgstr "Statistik atribut univariat"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:542
-#, fuzzy
 msgid "Attribute classification"
-msgstr "   Kolom atribut untuk label"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:544
 msgid "Quadrat indices"
@@ -3640,14 +3609,11 @@ msgstr "Peta kemiringan/intensitas"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:139
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr ""
-"Tampilkan simbol panah yang orientasinya berdasarkan pada peta aspect raster"
+msgstr "Tampilkan simbol panah yang orientasinya berdasarkan pada peta aspect raster"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:145
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr ""
-"(opsional, panjang simbol panah didasarkan pada peta kemiringan atau "
-"intensitas)"
+msgstr "(opsional, panjang simbol panah didasarkan pada peta kemiringan atau intensitas)"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:162
 msgid "Aspect map: "
@@ -3781,8 +3747,7 @@ msgid "chart for %s"
 msgstr "grafik untuk %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr "Tampilan grafik kue dan batang dari nilai atribut lokasi obyek vektor"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -4029,20 +3994,12 @@ msgid " ignore rotation setting and draw horizontally"
 msgstr "abaikan setting rotasi dan gambarkan secara horizontal"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"Tidak ada berkas grup raster (REF). Anda harus memilih 'create/edit group' "
-"untuk membuat sebuah berkas grup"
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgstr "Tidak ada berkas grup raster (REF). Anda harus memilih 'create/edit group' untuk membuat sebuah berkas grup"
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"Tidak ada berkas grup vektor (VREF). Anda harus memilih 'create/edit group' "
-"untuk membaut sebuah berkas grup."
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgstr "Tidak ada berkas grup vektor (VREF). Anda harus memilih 'create/edit group' untuk membaut sebuah berkas grup."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -4121,9 +4078,7 @@ msgid "4. Select map"
 msgstr "4. Pilih peta"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "Pilih raster non-georektifikasi yang ditampilkan untuk penandaan GCP "
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -4161,8 +4116,7 @@ msgstr "Orde 2"
 #: ../gui/tcltk/gis.m/georect.tcl:1020
 #, fuzzy
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
-msgstr ""
-"transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 6 GCP"
+msgstr "transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 6 GCP"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1024
 msgid "3rd order"
@@ -4170,8 +4124,7 @@ msgstr "Orde 3"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1025
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
-msgstr ""
-"transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 10 GCP"
+msgstr "transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 10 GCP"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Clip map/image to target region"
@@ -4226,30 +4179,16 @@ msgid "Exit georectifier"
 msgstr "Keluar georectifier"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"Tidak ada berkas POINT GCP untuk grup. Anda harus membuat GCP sebelum "
-"melakukan georektifikasi peta."
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgstr "Tidak ada berkas POINT GCP untuk grup. Anda harus membuat GCP sebelum melakukan georektifikasi peta."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"GCP tidak cukup untuk metoda georektifikasi yang dipilih. Anda membutuhkan "
-"paling tidak 3 titik untuk Orde 1, 6 titik untuk Orde 2 dan 10 titik untuk "
-"Orde 3."
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgstr "GCP tidak cukup untuk metoda georektifikasi yang dipilih. Anda membutuhkan paling tidak 3 titik untuk Orde 1, 6 titik untuk Orde 2 dan 10 titik untuk Orde 3."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"Tidak ada berkas GCP yang valid. Anda harus membuat titik GCP yang valid "
-"sebelum melakukan koreksi georektifikasi peta."
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
+msgstr "Tidak ada berkas GCP yang valid. Anda harus membuat titik GCP yang valid sebelum melakukan koreksi georektifikasi peta."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -4368,8 +4307,7 @@ msgstr "Hapus layer"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr ""
-"Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih dahulu)"
+msgstr "Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih dahulu)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -4543,12 +4481,8 @@ msgid "Error creating rules file"
 msgstr "Ada kesalahan dalam pembuatan berkas rules"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
-msgstr ""
-"Membuat obyek teks postscript (untuk eps, pdf dan output cetakan postscript "
-"saja)"
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgstr "Membuat obyek teks postscript (untuk eps, pdf dan output cetakan postscript saja)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -4779,9 +4713,7 @@ msgstr "Peta untuk animasi"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr ""
-"Pilih peta untuk dianimasikan dalam satu atau lebih frame (diperlukan "
-"minimal 1 frame)"
+msgstr "Pilih peta untuk dianimasikan dalam satu atau lebih frame (diperlukan minimal 1 frame)"
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -4971,14 +4903,13 @@ msgid "Graduated colors: preset color schemes"
 msgstr "Gradasi warna: atur skema warna"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "blue red"
-msgstr "Tabel"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 #, fuzzy
 msgid "red blue"
-msgstr "Tabel"
+msgstr "Buat tabel"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "green red"
@@ -5708,9 +5639,7 @@ msgstr "Simpan display ke dalam berkas citra"
 
 #: ../gui/tcltk/d.m/menu.tcl:180
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr ""
-"XWD (Simpan tampilan, dipilih dengan tetikus, ke map.xwd dalam direktori "
-"home)"
+msgstr "XWD (Simpan tampilan, dipilih dengan tetikus, ke map.xwd dalam direktori home)"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
 msgid "Save displays to multiple graphic file formats"
@@ -5746,8 +5675,7 @@ msgstr "Akses mapset yang lain dalam location saat ini"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr ""
-"Ubah sesi kerja saat ini ke dalam mapset, location atau GISDBASE yang baru"
+msgstr "Ubah sesi kerja saat ini ke dalam mapset, location atau GISDBASE yang baru"
 
 #: ../gui/tcltk/d.m/menu.tcl:197
 msgid "Modify access by other users to current mapset"
@@ -5878,12 +5806,8 @@ msgid "Create color image from RGB files"
 msgstr "Hasilkan citra warna dari berkas RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
-msgstr ""
-"Hasilkan 3 peta RGB (merah, hijau, biru) dari 3 peta HIS (hue, intensitas, "
-"saturasi)"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
+msgstr "Hasilkan 3 peta RGB (merah, hijau, biru) dari 3 peta HIS (hue, intensitas, saturasi)"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
 msgid "Create raster buffers"
@@ -5951,8 +5875,7 @@ msgstr "Fitur linear thin"
 
 #: ../gui/tcltk/d.m/menu.tcl:293
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr ""
-"'Carve' kanal sungai ke dalam peta elevasi menggunakan peta sungai vektor"
+msgstr "'Carve' kanal sungai ke dalam peta elevasi menggunakan peta sungai vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:294
 msgid "Depressionless elevation map and flowline map"
@@ -6000,8 +5923,7 @@ msgstr "Simulasikan fenoma penyebaran anisotropik"
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr ""
-"Edit nilai kategori dari sel individu untuk peta raster yang ditampilkan"
+msgstr "Edit nilai kategori dari sel individu untuk peta raster yang ditampilkan"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Reclassify categories for areas of specified sizes"
@@ -6217,20 +6139,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "Buat stationing dari garis input dan sistem referensi linear"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
-msgstr ""
-"Buat titik/segmen dari garis input, sistem referensi linear dan posisi yang "
-"dibaca dari stdin"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
+msgstr "Buat titik/segmen dari garis input, sistem referensi linear dan posisi yang dibaca dari stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
-msgstr ""
-"Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam "
-"peta vektor dengan menggunakan sistem referensi linear"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgstr "Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam peta vektor dengan menggunakan sistem referensi linear"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6306,9 +6220,7 @@ msgstr "Sampel peta raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:457
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr ""
-"Menghitung statistik untuk peta raster yang ditumpangsusunkan oleh peta "
-"vektor"
+msgstr "Menghitung statistik untuk peta raster yang ditumpangsusunkan oleh peta vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Partition points into test/training sets for k-fold cross validatation"
@@ -6324,8 +6236,7 @@ msgstr "Membuka atribut vektor ke dalam basis data atau membuat laporan"
 
 #: ../gui/tcltk/d.m/menu.tcl:468
 msgid "Report areas for vector attribute categories"
-msgstr ""
-"Laporan untuk area yang didefinisikan oleh kategori atribut dari vektor"
+msgstr "Laporan untuk area yang didefinisikan oleh kategori atribut dari vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:471
 msgid "Test normality of point distribution"
@@ -6352,24 +6263,16 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Mosaik hingga 4 citra yang berdekatan"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr ""
-"Atur warna dan perbaiki tabel warna dari citra multiband untuk tampilan RGB"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr "Atur warna dan perbaiki tabel warna dari citra multiband untuk tampilan RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr ""
-"Transformasi warna citra HIS (Hue/Intensitas/Saturasi) ke RGB (Red/Green/"
-"Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr "Transformasi warna citra HIS (Hue/Intensitas/Saturasi) ke RGB (Red/Green/Blue)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr ""
-"Transformasi warna citra RGB (Red/Green/Blue) ke HIS (Hue/Intensitas/"
-"Saturasi)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr "Transformasi warna citra RGB (Red/Green/Blue) ke HIS (Hue/Intensitas/Saturasi)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6381,9 +6284,7 @@ msgstr "Set GCP dari peta raster atau input kibor"
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr ""
-"Tentukan Titik Kontrol Tanah (GCP) dari peta vektor atau memasukkannya "
-"secara manual lewat kibor"
+msgstr "Tentukan Titik Kontrol Tanah (GCP) dari peta vektor atau memasukkannya secara manual lewat kibor"
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6687,8 +6588,7 @@ msgstr "Cetak peta raster & vektor dengan ps.map"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr ""
-"   (gunakan tetikus untuk membiarkannya kosong; posisi tidak akan disimpan"
+msgstr "   (gunakan tetikus untuk membiarkannya kosong; posisi tidak akan disimpan"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -6700,12 +6600,8 @@ msgstr "  sejajarkan teks dengan titik koordinat"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
-msgstr ""
-"    (untuk koordinat, % dimulai dari kiri bawah display, piksel dari kiri "
-"atas)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
+msgstr "    (untuk koordinat, % dimulai dari kiri bawah display, piksel dari kiri atas)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6805,13 +6701,11 @@ msgstr "balikkan legenda"
 #~ msgstr "PERINGATAN: Ada kesalahan saat membuat location baru"
 
 #~ msgid ""
-#~ "Error creating new location from georeferenced file.  g.proj returned "
-#~ "following message:\n"
+#~ "Error creating new location from georeferenced file.  g.proj returned following message:\n"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
-#~ "Ada kesalahan saat membuka location baru dari berkas bergeoreferensi. g."
-#~ "proj memberikan pesan kesalahan berikut: \n"
+#~ "Ada kesalahan saat membuka location baru dari berkas bergeoreferensi. g.proj memberikan pesan kesalahan berikut: \n"
 #~ "\n"
 #~ "%s"
 
@@ -6829,9 +6723,7 @@ msgstr "balikkan legenda"
 #~ msgstr "vektors"
 
 #, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
+#~ msgid "Find line ID and real km+offset for given points in vector map using linear reference system"
 #~ msgstr "vektors"
 
 #, fuzzy

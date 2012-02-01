@@ -108,14 +108,8 @@ msgid "Select datum transformation parameters:"
 msgstr "データム変換パラメータ選択："
 
 #: ../lib/init/file_option.tcl:244 ../lib/init/epsg_option.tcl:290
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
-msgstr ""
-"パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータム"
-"を使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用"
-"されます"
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgstr "パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータムを使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用されます"
 
 #: ../lib/init/file_option.tcl:263 ../lib/init/epsg_option.tcl:309
 #: ../vector/v.digit/settings.tcl:174 ../gui/tcltk/gis.m/gm.tcl:465
@@ -146,11 +140,8 @@ msgstr "警告: i間違った ロケーション "
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまた"
-"はディレクトリが存在しません"
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまたはディレクトリが存在しません"
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -330,13 +321,8 @@ msgid "Starting GRASS for the first time"
 msgstr "GRASSの初回実行"
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
-msgstr ""
-"GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成"
-"してください。一般には \"grassdata\"が使用されます。"
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
+msgstr "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成してください。一般には \"grassdata\"が使用されます。"
 
 #: ../lib/init/gis_set.tcl:589
 msgid "Select GIS data directory"
@@ -399,8 +385,7 @@ msgstr "警告： 環境変数を取得出来ません"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 "警告：環境変数GRASS_PROJSHAREを取得することができません \n"
 "これは、GRASSのインストール時のエラーです \n"
@@ -1125,12 +1110,8 @@ msgid " or <"
 msgstr " または < "
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
-msgstr ""
-"データベース または ロケーション名 または マップセット はからです.  致命的な"
-"エラーです. gis.mは適切な設定無くしては実行できません"
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
+msgstr "データベース または ロケーション名 または マップセット はからです.  致命的なエラーです. gis.mは適切な設定無くしては実行できません"
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1180,15 +1161,13 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 "GRASSを終了してもよろしいですか?\n"
 "\n"
 "この動作はgis.mインスタンスの全てのセッションを終了します.\n"
 "\n"
-"GRASSのコマンドラインから実行している場合は, そのコマンドが完了した後でGRASS"
-"が終了します."
+"GRASSのコマンドラインから実行している場合は, そのコマンドが完了した後でGRASSが終了します."
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 msgid "Terminate current GRASS session"
@@ -1485,7 +1464,7 @@ msgid "Frame name (optional): "
 msgstr "フレーム名 (オプション)："
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
 
@@ -1511,8 +1490,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr "青または彩度チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr "R，G，Bまたは色相/照度/彩度チャンネルとして３つのラスターを表示"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
@@ -1972,8 +1950,7 @@ msgstr "ジオメトリをマップに割り当てますか？"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -3737,8 +3714,7 @@ msgid "chart for %s"
 msgstr " %s のグラフ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -3984,20 +3960,12 @@ msgid " ignore rotation setting and draw horizontally"
 msgstr " 回転の設定を無視して水平方向に描画"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgstr "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgstr "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -4076,9 +4044,7 @@ msgid "4. Select map"
 msgstr "４．マップ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -4178,29 +4144,16 @@ msgid "Exit georectifier"
 msgstr "幾何補正"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必"
-"要があります"
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgstr "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２で"
-"は６点、第３では１０点以上必要です"
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgstr "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２では６点、第３では１０点以上必要です"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要"
-"があります"
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
+msgstr "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -4337,7 +4290,7 @@ msgid "Display scale and north arrow"
 msgstr "スケールと方位表示"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr "縮尺パーセント: 0-100% でディスプレイの左上から指定"
 
@@ -4484,12 +4437,8 @@ msgid "Error creating rules file"
 msgstr "ルールファイル作成エラー"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
-msgstr ""
-"ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント"
-"出力のみ) "
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgstr "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント出力のみ) "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -4716,8 +4665,7 @@ msgstr "アニメーションのマップ"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr ""
-"1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
+msgstr "1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -5026,12 +4974,12 @@ msgid "Raster map: "
 msgstr "ラスターマップ："
 
 #: ../gui/tcltk/gis.m/legend.tcl:229
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend placement and size as 0-100% of display"
 msgstr "ディスプレイを0-100% として凡例の配置とサイズを設定"
 
 #: ../gui/tcltk/gis.m/legend.tcl:235
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr "    左下端のXY (ディスプレイの左上端から %  ) "
 
@@ -5040,7 +4988,7 @@ msgid "    legend height "
 msgstr "    凡例 高さ  "
 
 #: ../gui/tcltk/gis.m/legend.tcl:248
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend height (% of display)"
 msgstr "凡例 高さ (ディスプレイの%  ) "
 
@@ -5049,7 +4997,7 @@ msgid "%  width"
 msgstr "%   幅"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend width (% of display)"
 msgstr "凡例の幅 (ディスプレイの%  ) "
 
@@ -5525,8 +5473,7 @@ msgstr "DXFファイル(ASCII) "
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr ""
-"GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
+msgstr "GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
@@ -5789,9 +5736,7 @@ msgid "Create color image from RGB files"
 msgstr "RGBファイルからカラー画像作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
 msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
@@ -5996,8 +5941,7 @@ msgstr "ベクトルポイントデータを用いた距離逆関数重み付補
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr ""
-"ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
+msgstr "ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
@@ -6124,20 +6068,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "入力ラインから配置測点と線型参照システム作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
-msgstr ""
-"入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照シス"
-"テム"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
+msgstr "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照システム"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
-msgstr ""
-"線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オ"
-"フセットを表示"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgstr "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オフセットを表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6256,18 +6192,15 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "4つの隣り合う画像までのモザイク "
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "RGB表示するマルチバンド画像のカラーバランスと拡張カラーテーブル"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr "HIS(色相/明度/彩度)カラーからRGB（赤/緑/青)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr "RGB（赤/緑/青)カラーからHIS(色相/明度/彩度)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
@@ -6276,13 +6209,11 @@ msgstr "画像の位置補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr ""
-"ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr ""
-"ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6597,10 +6528,8 @@ msgid "  align text with coordinate point"
 msgstr "   座標を指定しテキストの位置を補正"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
+#, fuzzy, tcl-format
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
 msgstr "     (座標は, % は画面の左下から定義,ピクセルは左上)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
@@ -6680,725 +6609,677 @@ msgid "flip legend"
 msgstr "凡例の反転"
 
 #, fuzzy
-#~ msgid "Run (in Xterm)"
-#~ msgstr "実行"
+msgid "Run (in Xterm)"
+msgstr "実行"
 
 #, fuzzy
-#~ msgid "Zoom to..."
-#~ msgstr "ズーム."
+msgid "Zoom to..."
+msgstr "ズーム."
 
 #, fuzzy
-#~ msgid "Export display to graphics file"
-#~ msgstr "エクスポート ファイル"
+msgid "Export display to graphics file"
+msgstr "エクスポート ファイル"
 
 #, fuzzy
-#~ msgid "Generalization"
-#~ msgstr "補間"
+msgid "Generalization"
+msgstr "補間"
 
 #, fuzzy
-#~ msgid "WARNING: Error creating new location"
-#~ msgstr "�������"
+msgid "WARNING: Error creating new location"
+msgstr "�������"
 
 #, fuzzy
-#~ msgid "text color"
-#~ msgstr "色"
+msgid "text color"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "Select default font for GRASS displays"
-#~ msgstr "選択 フォント"
+msgid "Select default font for GRASS displays"
+msgstr "選択 フォント"
 
 #, fuzzy
-#~ msgid "   grid & text color "
-#~ msgstr "色 "
+msgid "   grid & text color "
+msgstr "色 "
 
 #, fuzzy
-#~ msgid "  grid text font "
-#~ msgstr "色 "
+msgid "  grid text font "
+msgstr "色 "
 
 #, fuzzy
-#~ msgid "Recode using rules"
-#~ msgstr "色"
+msgid "Recode using rules"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "Convert vector lines to points"
-#~ msgstr "ベクトル"
+msgid "Convert vector lines to points"
+msgstr "ベクトル"
 
 #, fuzzy
-#~ msgid "Create stationing from input lines and a linear reference system"
-#~ msgstr "入力"
+msgid "Create stationing from input lines and a linear reference system"
+msgstr "入力"
 
 #, fuzzy
-#~ msgid "Create points and line segments along a linear reference system"
-#~ msgstr "入力"
+msgid "Create points and line segments along a linear reference system"
+msgstr "入力"
 
 #, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
-#~ msgstr "の ファイル"
+msgid "Find line ID and real km+offset for given points in vector map using linear reference system"
+msgstr "の ファイル"
 
 #, fuzzy
-#~ msgid "Select font file"
-#~ msgstr "フォント の ラベル"
+msgid "Select font file"
+msgstr "フォント の ラベル"
 
 #, fuzzy
-#~ msgid "GRASS"
-#~ msgstr "ヘルプ"
+msgid "GRASS"
+msgstr "ヘルプ"
 
 #, fuzzy
-#~ msgid "select font for text (default is GRASS romans)"
-#~ msgstr "フォント の"
+msgid "select font for text (default is GRASS romans)"
+msgstr "フォント の"
 
 #, fuzzy
-#~ msgid "SVG file"
-#~ msgstr "ファイル:"
+msgid "SVG file"
+msgstr "ファイル:"
 
 #, fuzzy
-#~ msgid ""
-#~ "Bicubic and bilinear interpolation with Tykhonov regularization from "
-#~ "vector points"
-#~ msgstr "ファイル"
+msgid "Bicubic and bilinear interpolation with Tykhonov regularization from vector points"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "Remove existing attribute table for vector map"
-#~ msgstr "ラベル ファイル の ファイル"
+msgid "Remove existing attribute table for vector map"
+msgstr "ラベル ファイル の ファイル"
 
 #, fuzzy
-#~ msgid "Create ps.map file for postscript printing"
-#~ msgstr "ファイル の ポストスクリプト"
+msgid "Create ps.map file for postscript printing"
+msgstr "ファイル の ポストスクリプト"
 
 #, fuzzy
-#~ msgid "     chart outline color:"
-#~ msgstr "色:"
+msgid "     chart outline color:"
+msgstr "色:"
 
 #, fuzzy
-#~ msgid "The file must have georeferencing information readable\n"
-#~ msgstr "ファイル"
+msgid "The file must have georeferencing information readable\n"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "   Path to georeferenced file:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ " ファイル"
+msgid ""
+"\n"
+"   Path to georeferenced file:\n"
+"\n"
+msgstr ""
+"\n"
+" ファイル"
 
 #, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Georeferenced file with projection information that can be read\n"
-#~ msgstr "ファイル"
+msgid ""
+"\n"
+"Georeferenced file with projection information that can be read\n"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "by GDAL (raster) or OGR (vector)\n"
-#~ "\n"
-#~ msgstr "ファイル ファイル"
+msgid ""
+"\n"
+"by GDAL (raster) or OGR (vector)\n"
+"\n"
+msgstr "ファイル ファイル"
 
 #, fuzzy
-#~ msgid "dxf file"
-#~ msgstr "ファイル"
+msgid "dxf file"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "html-browser"
-#~ msgstr "ブラウザのヘルプ"
+msgid "html-browser"
+msgstr "ブラウザのヘルプ"
 
 #, fuzzy
-#~ msgid "Scripting "
-#~ msgstr "スクリプトの作成/実行 "
+msgid "Scripting "
+msgstr "スクリプトの作成/実行 "
 
 #, fuzzy
-#~ msgid "About "
-#~ msgstr "GRASSについて "
+msgid "About "
+msgstr "GRASSについて "
 
 #, fuzzy
-#~ msgid "Pick"
-#~ msgstr "フォント"
+msgid "Pick"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Font family"
-#~ msgstr "フォント"
+msgid "Font family"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Weight:"
-#~ msgstr "太さ:"
+msgid "Weight:"
+msgstr "太さ:"
 
 #, fuzzy
-#~ msgid "bold"
-#~ msgstr "太字"
+msgid "bold"
+msgstr "太字"
 
 #, fuzzy
-#~ msgid "Slant:"
-#~ msgstr "字体:"
+msgid "Slant:"
+msgstr "字体:"
 
 #, fuzzy
-#~ msgid "roman"
-#~ msgstr "標準"
+msgid "roman"
+msgstr "標準"
 
 #, fuzzy
-#~ msgid "italic"
-#~ msgstr "斜体"
+msgid "italic"
+msgstr "斜体"
 
 #, fuzzy
-#~ msgid "Display dimensions"
-#~ msgstr "ガンマ"
+msgid "Display dimensions"
+msgstr "ガンマ"
 
 #, fuzzy
-#~ msgid "CELL driver WIDTH"
-#~ msgstr "セル"
+msgid "CELL driver WIDTH"
+msgstr "セル"
 
 #, fuzzy
-#~ msgid "CELL driver HEIGHT"
-#~ msgstr "セル"
+msgid "CELL driver HEIGHT"
+msgstr "セル"
 
 #, fuzzy
-#~ msgid "Cont"
-#~ msgstr "継続"
+msgid "Cont"
+msgstr "継続"
 
 #, fuzzy
-#~ msgid "Finished."
-#~ msgstr "終了."
+msgid "Finished."
+msgstr "終了."
 
 #, fuzzy
-#~ msgid "Terminated."
-#~ msgstr "終了."
+msgid "Terminated."
+msgstr "終了."
 
 #, fuzzy
-#~ msgid "output"
-#~ msgstr "出力"
+msgid "output"
+msgstr "出力"
 
 #, fuzzy
-#~ msgid "quit_window"
-#~ msgstr "TCLTKGRASSの終了"
+msgid "quit_window"
+msgstr "TCLTKGRASSの終了"
 
 #, fuzzy
-#~ msgid "CANCEL"
-#~ msgstr "キャンセル"
+msgid "CANCEL"
+msgstr "キャンセル"
 
 #, fuzzy
-#~ msgid "Scripting already running, stop first"
-#~ msgstr "スクリプトの作成/実行"
+msgid "Scripting already running, stop first"
+msgstr "スクリプトの作成/実行"
 
 #, fuzzy
-#~ msgid "Scripting not running, start first"
-#~ msgstr "スクリプトの作成/実行"
+msgid "Scripting not running, start first"
+msgstr "スクリプトの作成/実行"
 
 #, fuzzy
-#~ msgid "Script recording in progress, stop first"
-#~ msgstr "スクリプト"
+msgid "Script recording in progress, stop first"
+msgstr "スクリプト"
 
 #, fuzzy
-#~ msgid "Open recorded script file for replay"
-#~ msgstr "ファイル の"
+msgid "Open recorded script file for replay"
+msgstr "ファイル の"
 
 #, fuzzy
-#~ msgid "is empty file"
-#~ msgstr "  ��"
+msgid "is empty file"
+msgstr "  ��"
 
 #, fuzzy
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr " :"
+msgid "is not a valid tcltkgrass script:"
+msgstr " :"
 
 #, fuzzy
-#~ msgid "invalid script file:"
-#~ msgstr "ファイル:"
+msgid "invalid script file:"
+msgstr "ファイル:"
 
 #, fuzzy
-#~ msgid "Script"
-#~ msgstr "スクリプト"
+msgid "Script"
+msgstr "スクリプト"
 
 #, fuzzy
-#~ msgid "for"
-#~ msgstr "の"
+msgid "for"
+msgstr "の"
 
 #, fuzzy
-#~ msgid "first."
-#~ msgstr "を起動してください"
+msgid "first."
+msgstr "を起動してください"
 
 #, fuzzy
-#~ msgid "Configure html-browser"
-#~ msgstr "ブラウザ"
+msgid "Configure html-browser"
+msgstr "ブラウザ"
 
 #, fuzzy
-#~ msgid "html browser (netscape)"
-#~ msgstr "ブラウザ"
+msgid "html browser (netscape)"
+msgstr "ブラウザ"
 
 #, fuzzy
-#~ msgid "path or url for html manual pages"
-#~ msgstr "の"
+msgid "path or url for html manual pages"
+msgstr "の"
 
 #, fuzzy
-#~ msgid "prefix for html path or url (file:)"
-#~ msgstr "の ファイル"
+msgid "prefix for html path or url (file:)"
+msgstr "の ファイル"
 
 #, fuzzy
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "の"
+msgid "postfix for html files (.html)"
+msgstr "の"
 
 #, fuzzy
-#~ msgid "auto raise window of browser"
-#~ msgstr "ブラウザ"
+msgid "auto raise window of browser"
+msgstr "ブラウザ"
 
 #, fuzzy
-#~ msgid "open in new window instance of browser"
-#~ msgstr "ブラウザ"
+msgid "open in new window instance of browser"
+msgstr "ブラウザ"
 
 #, fuzzy
-#~ msgid "Location:"
-#~ msgstr "ロケーション"
+msgid "Location:"
+msgstr "ロケーション"
 
 #, fuzzy
-#~ msgid "About"
-#~ msgstr "GRASSについて"
+msgid "About"
+msgstr "GRASSについて"
 
 #, fuzzy
-#~ msgid "Please select location and mapset\n"
-#~ msgstr "マップセット"
+msgid "Please select location and mapset\n"
+msgstr "マップセット"
 
 #, fuzzy
-#~ msgid "Vector Panel"
-#~ msgstr "ベクトル"
+msgid "Vector Panel"
+msgstr "ベクトル"
 
 #, fuzzy
-#~ msgid "Display on surface(s):"
-#~ msgstr "ガンマ:"
+msgid "Display on surface(s):"
+msgstr "ガンマ:"
 
 #, fuzzy
-#~ msgid "Input File:"
-#~ msgstr "ファイル:"
+msgid "Input File:"
+msgstr "ファイル:"
 
 #, fuzzy
-#~ msgid "Threshold Type"
-#~ msgstr "アイコン"
+msgid "Threshold Type"
+msgstr "アイコン"
 
 #, fuzzy
-#~ msgid "Pipe to: None"
-#~ msgstr "��"
+msgid "Pipe to: None"
+msgstr "��"
 
 #, fuzzy
-#~ msgid "Query map: None"
-#~ msgstr "��"
+msgid "Query map: None"
+msgstr "��"
 
 #, fuzzy
-#~ msgid "What's Here?"
-#~ msgstr " ?"
+msgid "What's Here?"
+msgstr " ?"
 
 #, fuzzy
-#~ msgid "What's Here Panel"
-#~ msgstr " "
+msgid "What's Here Panel"
+msgstr " "
 
 #, fuzzy
-#~ msgid "sites"
-#~ msgstr "ファイル"
+msgid "sites"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "distance along surface:      "
-#~ msgstr "単位 "
+msgid "distance along surface:      "
+msgstr "単位 "
 
 #, fuzzy
-#~ msgid "Query map: "
-#~ msgstr "データ情報 "
+msgid "Query map: "
+msgstr "データ情報 "
 
 #, fuzzy
-#~ msgid "xy distance from previous:  "
-#~ msgstr "xy 単位 "
+msgid "xy distance from previous:  "
+msgstr "xy 単位 "
 
 #, fuzzy
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "xyz 単位 "
+msgid "xyz distance from previous:  "
+msgstr "xyz 単位 "
 
 #, fuzzy
-#~ msgid "Remove"
-#~ msgstr "削除"
+msgid "Remove"
+msgstr "削除"
 
 #, fuzzy
-#~ msgid "Map Type:"
-#~ msgstr "管理 アイコン:"
+msgid "Map Type:"
+msgstr "管理 アイコン:"
 
 #, fuzzy
-#~ msgid "Sites"
-#~ msgstr "サイト"
+msgid "Sites"
+msgstr "サイト"
 
 #, fuzzy
-#~ msgid "3D Sites"
-#~ msgstr "サイト"
+msgid "3D Sites"
+msgstr "サイト"
 
 #, fuzzy
-#~ msgid "show site"
-#~ msgstr "ファイル"
+msgid "show site"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "tension"
-#~ msgstr "���� ����"
+msgid "tension"
+msgstr "���� ����"
 
 #, fuzzy
-#~ msgid "There is already a keyframe at this time, do you wish to replace it?"
-#~ msgstr " ?"
+msgid "There is already a keyframe at this time, do you wish to replace it?"
+msgstr " ?"
 
 #, fuzzy
-#~ msgid "Can't create file"
-#~ msgstr "ファイル"
+msgid "Can't create file"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "None"
-#~ msgstr "��"
+msgid "None"
+msgstr "��"
 
 #, fuzzy
-#~ msgid "for keyframe"
-#~ msgstr "の"
+msgid "for keyframe"
+msgstr "の"
 
 #, fuzzy
-#~ msgid "There is already a keyframe at this time, replace it?"
-#~ msgstr " ?"
+msgid "There is already a keyframe at this time, replace it?"
+msgstr " ?"
 
 #, fuzzy
-#~ msgid "There are no keys in the current animation to save"
-#~ msgstr " "
+msgid "There are no keys in the current animation to save"
+msgstr " "
 
 #, fuzzy
-#~ msgid "Use Surface Color"
-#~ msgstr "色"
+msgid "Use Surface Color"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "File Browser"
-#~ msgstr "ファイル"
+msgid "File Browser"
+msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "Color Panel"
-#~ msgstr "色"
+msgid "Color Panel"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "Wire Color"
-#~ msgstr "色"
+msgid "Wire Color"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "New Map"
-#~ msgstr "管理"
+msgid "New Map"
+msgstr "管理"
 
 #, fuzzy
-#~ msgid "Remove Mask"
-#~ msgstr "削除"
+msgid "Remove Mask"
+msgstr "削除"
 
 #, fuzzy
-#~ msgid "color:"
-#~ msgstr "色:"
+msgid "color:"
+msgstr "色:"
 
 #, fuzzy
-#~ msgid "Surface Color"
-#~ msgstr "色"
+msgid "Surface Color"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "Font Size:"
-#~ msgstr "フォント:"
+msgid "Font Size:"
+msgstr "フォント:"
 
 #, fuzzy
-#~ msgid "Label Text"
-#~ msgstr "テキスト"
+msgid "Label Text"
+msgstr "テキスト"
 
 #, fuzzy
-#~ msgid "Current List"
-#~ msgstr "一覧"
+msgid "Current List"
+msgstr "一覧"
 
 #, fuzzy
-#~ msgid "  Label Sites  "
-#~ msgstr "サイト "
+msgid "  Label Sites  "
+msgstr "サイト "
 
 #, fuzzy
-#~ msgid "Create new mapset : "
-#~ msgstr "マップセット "
+msgid "Create new mapset : "
+msgstr "マップセット "
 
 #, fuzzy
-#~ msgid "Create Location From EPSG"
-#~ msgstr "ロケーション"
+msgid "Create Location From EPSG"
+msgstr "ロケーション"
 
 #, fuzzy
-#~ msgid "Increase font size"
-#~ msgstr "フォント"
+msgid "Increase font size"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Decrease font size"
-#~ msgstr "フォント"
+msgid "Decrease font size"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Save as HTML files..."
-#~ msgstr "保存."
+msgid "Save as HTML files..."
+msgstr "保存."
 
 #, fuzzy
-#~ msgid "Select directory to Save HTML files"
-#~ msgstr "選択 保存"
+msgid "Select directory to Save HTML files"
+msgstr "選択 保存"
 
 #, fuzzy
-#~ msgid "Can't open output file:"
-#~ msgstr "出力 ファイル:"
+msgid "Can't open output file:"
+msgstr "出力 ファイル:"
 
 #, fuzzy
-#~ msgid "Generating HTMLs...  %i of %i  \"%s\""
-#~ msgstr " "
+msgid "Generating HTMLs...  %i of %i  \"%s\""
+msgstr " "
 
 #, fuzzy
-#~ msgid "Searching in %s..."
-#~ msgstr " ."
+msgid "Searching in %s..."
+msgstr " ."
 
 #, fuzzy
-#~ msgid ""
-#~ "Error in regular expression:\n"
-#~ "\"%s\""
-#~ msgstr " "
+msgid ""
+"Error in regular expression:\n"
+"\"%s\""
+msgstr " "
 
 #, fuzzy
-#~ msgid "Select xy raster to display for georectification"
-#~ msgstr "選択 xy ファイル の"
+msgid "Select xy raster to display for georectification"
+msgstr "選択 xy ファイル の"
 
 #, fuzzy
-#~ msgid "a. Select vector"
-#~ msgstr "選択 ファイル"
+msgid "a. Select vector"
+msgstr "選択 ファイル"
 
 #, fuzzy
-#~ msgid "Create WIND3 (default 3D window) from current 2D region"
-#~ msgstr "地域"
+msgid "Create WIND3 (default 3D window) from current 2D region"
+msgstr "地域"
 
 #, fuzzy
-#~ msgid "Manage 3D region"
-#~ msgstr "地域"
+msgid "Manage 3D region"
+msgstr "地域"
 
 #, fuzzy
-#~ msgid "Modify mapset search path"
-#~ msgstr "マップセット"
+msgid "Modify mapset search path"
+msgstr "マップセット"
 
-#~ msgid "Test"
-#~ msgstr "テストモード"
+msgid "Test"
+msgstr "テストモード"
 
-#~ msgid ""
-#~ "GRASS needs a directory in which to store its data.  Create one now if "
-#~ "youhave not already done so.  A popular choice is \"grassdata\", located "
-#~ "inyour home directory."
-#~ msgstr ""
-#~ "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、"
-#~ "作成してください。一般には \"grassdata\"が使用されます。"
+msgid "GRASS needs a directory in which to store its data.  Create one now if youhave not already done so.  A popular choice is \"grassdata\", located inyour home directory."
+msgstr "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成してください。一般には \"grassdata\"が使用されます。"
 
-#~ msgid "  cell values font"
-#~ msgstr "セル値のフォント"
+msgid "  cell values font"
+msgstr "セル値のフォント"
 
-#~ msgid "Color for cell values:  "
-#~ msgstr "セル値の色："
+msgid "Color for cell values:  "
+msgstr "セル値の色："
 
-#~ msgid ""
-#~ "Cell values can only be displayed for \n"
-#~ "regions of < 10,000 cells. Map in explore mode may contain more than "
-#~ "10,000cells.\n"
-#~ "\n"
-#~ " It's suggested to constrain map to region geometry to display cell "
-#~ "values."
-#~ msgstr ""
-#~ "セル値を表示できるのは最大10,000の領域までです\n"
-#~ "エクスプローラーモードでは10,000セル以上を表示することができます\n"
-#~ "\n"
-#~ "セルの値を表示するため領域のジオメトリを制約することを提案します"
+msgid ""
+"Cell values can only be displayed for \n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000cells.\n"
+"\n"
+" It's suggested to constrain map to region geometry to display cell values."
+msgstr ""
+"セル値を表示できるのは最大10,000の領域までです\n"
+"エクスプローラーモードでは10,000セル以上を表示することができます\n"
+"\n"
+"セルの値を表示するため領域のジオメトリを制約することを提案します"
 
-#~ msgid "\tdrape map: "
-#~ msgstr "\t ドレープ マップ："
+msgid "\tdrape map: "
+msgstr "\t ドレープ マップ："
 
-#~ msgid "\tdrape map brightness adjustment\t"
-#~ msgstr "\t ドレープマップの明るさ調節\t  "
+msgid "\tdrape map brightness adjustment\t"
+msgstr "\t ドレープマップの明るさ調節\t  "
 
-#~ msgid "Raster to histogram:"
-#~ msgstr "ラスターのヒストグラム："
+msgid "Raster to histogram:"
+msgstr "ラスターのヒストグラム："
 
-#~ msgid "\t"
-#~ msgstr "\t "
+msgid "\t"
+msgstr "\t "
 
-#~ msgid "  font"
-#~ msgstr "フォント"
+msgid "  font"
+msgstr "フォント"
 
-#~ msgid "\tbackground color"
-#~ msgstr "\t 背景色"
+msgid "\tbackground color"
+msgstr "\t 背景色"
 
-#~ msgid ""
-#~ "There is no raster group file (REF). You must select the 'create/edit "
-#~ "group'option to create a group file."
-#~ msgstr ""
-#~ "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使"
-#~ "用してグループファイルを作成してください"
+msgid "There is no raster group file (REF). You must select the 'create/edit group'option to create a group file."
+msgstr "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
-#~ msgid ""
-#~ "There is no vector group file (VREF). You must select the 'create/"
-#~ "editgroup' option to create a group file."
-#~ msgstr ""
-#~ "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを"
-#~ "使用してグループファイルを作成してください"
+msgid "There is no vector group file (VREF). You must select the 'create/editgroup' option to create a group file."
+msgstr "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
-#~ msgid ""
-#~ "Select non-georectified raster or vector to display for marking "
-#~ "groundcontrol points"
-#~ msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
+msgid "Select non-georectified raster or vector to display for marking groundcontrol points"
+msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
 
-#~ msgid ""
-#~ "There is no POINTS file of ground control points for group. You must "
-#~ "createground control points before georectifying map."
-#~ msgstr ""
-#~ "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成す"
-#~ "る必要があります"
+msgid "There is no POINTS file of ground control points for group. You must createground control points before georectifying map."
+msgstr "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必要があります"
 
-#~ msgid ""
-#~ "Insufficient ground control points for georectification method. You need "
-#~ "atleast 3 points for 1st order, 6 points for 2nd order and 10 points for "
-#~ "3rdorder."
-#~ msgstr ""
-#~ "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第"
-#~ "２では６点、第３では１０点以上必要です"
+msgid "Insufficient ground control points for georectification method. You need atleast 3 points for 1st order, 6 points for 2nd order and 10 points for 3rdorder."
+msgstr "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２では６点、第３では１０点以上必要です"
 
-#~ msgid ""
-#~ "No valid ground control points in GCP file. You must create valid "
-#~ "groundcontrol points before georectifying map."
-#~ msgstr ""
-#~ "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する"
-#~ "必要があります"
+msgid "No valid ground control points in GCP file. You must create valid groundcontrol points before georectifying map."
+msgstr "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要があります"
 
-#~ msgid "Flythrough images prefix"
-#~ msgstr "フライスルー画像接頭語"
+msgid "Flythrough images prefix"
+msgstr "フライスルー画像接頭語"
 
-#~ msgid "Camera layback"
-#~ msgstr "カメラ レイバック"
+msgid "Camera layback"
+msgstr "カメラ レイバック"
 
-#~ msgid "Camera height"
-#~ msgstr "カメラ 高さ  "
+msgid "Camera height"
+msgstr "カメラ 高さ  "
 
-#~ msgid "Number of frames"
-#~ msgstr "フレーム数"
+msgid "Number of frames"
+msgstr "フレーム数"
 
-#~ msgid "Start frame"
-#~ msgstr "フレームスタート"
+msgid "Start frame"
+msgstr "フレームスタート"
 
-#~ msgid ""
-#~ "Create postscript text object (for postscript eps, pdf, and print "
-#~ "outputonly)"
-#~ msgstr ""
-#~ "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリ"
-#~ "ント出力のみ) "
+msgid "Create postscript text object (for postscript eps, pdf, and print outputonly)"
+msgstr "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント出力のみ) "
 
-#~ msgid "Text placement: x,y coordinates (from upper left)"
-#~ msgstr "テキスト位置: XY座標値 (左上から)  "
+msgid "Text placement: x,y coordinates (from upper left)"
+msgstr "テキスト位置: XY座標値 (左上から)  "
 
-#~ msgid "     align text with coordinate point "
-#~ msgstr "     テキスト座標値位置調整"
+msgid "     align text with coordinate point "
+msgstr "     テキスト座標値位置調整"
 
-#~ msgid "     text height in pixels"
-#~ msgstr "     ピクセルでのテキスト高さ"
+msgid "     text height in pixels"
+msgstr "     ピクセルでのテキスト高さ"
 
-#~ msgid "    custom breakpoints (val val ...) "
-#~ msgstr "    独自分割点 (val val ...)   "
+msgid "    custom breakpoints (val val ...) "
+msgstr "    独自分割点 (val val ...)   "
 
-#~ msgid "    query with SQL where clause  "
-#~ msgstr "    SQL where句でクエリ"
+msgid "    query with SQL where clause  "
+msgstr "    SQL where句でクエリ"
 
-#~ msgid "    legend for only these categories    "
-#~ msgstr "    カテゴリー値のみの凡例"
+msgid "    legend for only these categories    "
+msgstr "    カテゴリー値のみの凡例"
 
-#~ msgid "remove all frames  "
-#~ msgstr "全てのフレーム削除"
+msgid "remove all frames  "
+msgstr "全てのフレーム削除"
 
-#~ msgid "Frame name (optional):"
-#~ msgstr "フレーム名 (オプション)："
+msgid "Frame name (optional):"
+msgstr "フレーム名 (オプション)："
 
 #, fuzzy
-#~ msgid "Set frame borders at 0-100% from lower left corner of display"
-#~ msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
+msgid "Set frame borders at 0-100% from lower left corner of display"
+msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
 
-#~ msgid "     set borders (bottom,top,left,right):"
-#~ msgstr "     境界指定 (下,上,左,右)："
+msgid "     set borders (bottom,top,left,right):"
+msgstr "     境界指定 (下,上,左,右)："
 
-#~ msgid "\tcolumns to chart (col1,col2,...) "
-#~ msgstr "\tグラフにする列 (列1,列2,...)   "
+msgid "\tcolumns to chart (col1,col2,...) "
+msgstr "\tグラフにする列 (列1,列2,...)   "
 
-#~ msgid "Points"
-#~ msgstr "ポイント "
+msgid "Points"
+msgstr "ポイント "
 
-#~ msgid "Areas"
-#~ msgstr "エリア"
+msgid "Areas"
+msgstr "エリア"
 
-#~ msgid "Faces"
-#~ msgstr "面"
+msgid "Faces"
+msgstr "面"
 
-#~ msgid "Query vectors for display:"
-#~ msgstr "表示するベクトルの検索："
+msgid "Query vectors for display:"
+msgstr "表示するベクトルの検索："
 
-#~ msgid "Save displayed objects to new vector file"
-#~ msgstr "新しいベクトルファイルに表示オブジェクトを保存"
+msgid "Save displayed objects to new vector file"
+msgstr "新しいベクトルファイルに表示オブジェクトを保存"
 
-#~ msgid "Maps for frame 1 (required):"
-#~ msgstr " フレーム１のマップ (必須)："
+msgid "Maps for frame 1 (required):"
+msgstr " フレーム１のマップ (必須)："
 
-#~ msgid "Maps for frame 2 (optional):"
-#~ msgstr " フレーム２のマップ  (オプション)："
+msgid "Maps for frame 2 (optional):"
+msgstr " フレーム２のマップ  (オプション)："
 
-#~ msgid "Maps for frame 3 (optional):"
-#~ msgstr " フレーム３のマップ  (オプション)："
+msgid "Maps for frame 3 (optional):"
+msgstr " フレーム３のマップ  (オプション)："
 
-#~ msgid "Maps for frame 4 (optional):"
-#~ msgstr " フレーム４のマップ  (オプション)："
+msgid "Maps for frame 4 (optional):"
+msgstr " フレーム４のマップ  (オプション)："
 
-#~ msgid "Override offset, alignment, and color settings in v.labels file:"
-#~ msgstr "v.labelsファイルにオフセット,配置,および色の設定を上書き："
+msgid "Override offset, alignment, and color settings in v.labels file:"
+msgstr "v.labelsファイルにオフセット,配置,および色の設定を上書き："
 
-#~ msgid "Align label with vector object:"
-#~ msgstr "ベクトルオブジェクトのラベル整列："
+msgid "Align label with vector object:"
+msgstr "ベクトルオブジェクトのラベル整列："
 
-#~ msgid "Offset label from vector object:"
-#~ msgstr "ベクトルオブジェクトのラベルオフセット："
+msgid "Offset label from vector object:"
+msgstr "ベクトルオブジェクトのラベルオフセット："
 
-#~ msgid "Justification:"
-#~ msgstr "行揃え："
+msgid "Justification:"
+msgstr "行揃え："
 
-#~ msgid " Label line max length:"
-#~ msgstr " ラベル線最大長： "
+msgid " Label line max length:"
+msgstr " ラベル線最大長： "
 
-#~ msgid "Enclose label in box:"
-#~ msgstr "ラベルをボックスで囲む："
+msgid "Enclose label in box:"
+msgstr "ラベルをボックスで囲む："
 
-#~ msgid "Draw label background:"
-#~ msgstr "背景にラベルを描画："
+msgid "Draw label background:"
+msgstr "背景にラベルを描画："
 
-#~ msgid "Draw box outline:"
-#~ msgstr "ボックス外枠描画："
+msgid "Draw box outline:"
+msgstr "ボックス外枠描画："
 
-#~ msgid "Distance between label and enclosing box. Horizontal:"
-#~ msgstr "ラベルとボックスの水平間隔距離："
+msgid "Distance between label and enclosing box. Horizontal:"
+msgstr "ラベルとボックスの水平間隔距離："
 
-#~ msgid " Vertical:"
-#~ msgstr "鉛直："
+msgid " Vertical:"
+msgstr "鉛直："
 
-#~ msgid "Aspect map:"
-#~ msgstr "方位マップ："
+msgid "Aspect map:"
+msgstr "方位マップ："
 
-#~ msgid "Slope/intensity map:"
-#~ msgstr "傾斜/照度マップ:  "
+msgid "Slope/intensity map:"
+msgstr "傾斜/照度マップ:  "
 
-#~ msgid "HIS brightness adjustment\t"
-#~ msgstr "HIS輝度調整\t  "
+msgid "HIS brightness adjustment\t"
+msgstr "HIS輝度調整\t  "
 
-#~ msgid " thin legend by"
-#~ msgstr "小さい凡例"
+msgid " thin legend by"
+msgstr "小さい凡例"
 
-#~ msgid "line scale instead of bar scale"
-#~ msgstr "バー縮尺の変わりに線縮尺"
+msgid "line scale instead of bar scale"
+msgstr "バー縮尺の変わりに線縮尺"
 
-#~ msgid ""
-#~ "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, "
-#~ "saturation)maps"
-#~ msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation)maps"
+msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
 
-#~ msgid ""
-#~ "Create points/segments from input lines, linear reference system "
-#~ "andpositions read from stdin"
-#~ msgstr ""
-#~ "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照"
-#~ "システム"
+msgid "Create points/segments from input lines, linear reference system andpositions read from stdin"
+msgstr "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照システム"
 
-#~ msgid ""
-#~ "Find line id and real km+offset for given points in vector map using "
-#~ "linearreference system"
-#~ msgstr ""
-#~ "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離"
-#~ "（Km)オフセットを表示"
+msgid "Find line id and real km+offset for given points in vector map using linearreference system"
+msgstr "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オフセットを表示"

@@ -15,8 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 "X-Poedit-Language: Indonesian\n"
 "X-Poedit-Country: INDONESIA\n"
 
@@ -114,9 +113,7 @@ msgid "Background color:"
 msgstr "Background peta vektor"
 
 #: ../gui/wxpython/nviz/tools.py:374
-msgid ""
-"Press 'Record' button and start changing the view. It is recommended to use "
-"fly-through mode (Map Display toolbar) to achieve smooth motion."
+msgid "Press 'Record' button and start changing the view. It is recommended to use fly-through mode (Map Display toolbar) to achieve smooth motion."
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:385
@@ -185,8 +182,7 @@ msgid "File prefix:"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:472
-msgid ""
-"Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
+msgid "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:473
@@ -206,7 +202,6 @@ msgid "Constant surface"
 msgstr "Cost surface"
 
 #: ../gui/wxpython/nviz/tools.py:542 ../gui/wxpython/nviz/preferences.py:462
-#, fuzzy
 msgid "Vector"
 msgstr "Vektor"
 
@@ -221,9 +216,8 @@ msgid "Lighting"
 msgstr "Penyorotan"
 
 #: ../gui/wxpython/nviz/tools.py:588
-#, fuzzy
 msgid "Fringe"
-msgstr "Garis"
+msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:595
 #, fuzzy
@@ -831,7 +825,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/preferences.py:31
 #, fuzzy
 msgid "3D view settings"
-msgstr "Pengaturan umum"
+msgstr "Perlihatkan pengaturan "
 
 #: ../gui/wxpython/nviz/preferences.py:48
 #, fuzzy
@@ -910,9 +904,8 @@ msgid "Size:"
 msgstr "Ukuran"
 
 #: ../gui/wxpython/nviz/preferences.py:530
-#, fuzzy
 msgid "Marker:"
-msgstr "Layer"
+msgstr ""
 
 #: ../gui/wxpython/nviz/preferences.py:628
 #, fuzzy, python-format
@@ -920,11 +913,7 @@ msgid "3D view settings saved to file <%s>."
 msgstr "Pengesetan disimpan pada berkas '%s'."
 
 #: ../gui/wxpython/nviz/wxnviz.py:32 ../gui/wxpython/wxplot/profile.py:30
-msgid ""
-"This module requires the NumPy module, which could not be imported. It "
-"probably is not installed (it's not part of the standard Python "
-"distribution). See the Numeric Python site (http://numpy.scipy.org) for "
-"information on downloading source or binaries."
+msgid "This module requires the NumPy module, which could not be imported. It probably is not installed (it's not part of the standard Python distribution). See the Numeric Python site (http://numpy.scipy.org) for information on downloading source or binaries."
 msgstr ""
 
 #: ../gui/wxpython/nviz/wxnviz.py:49
@@ -950,9 +939,7 @@ msgstr "ERROR: Mapset <%s> tidak ada"
 
 #: ../gui/wxpython/nviz/mapwindow.py:505
 #, python-format
-msgid ""
-"Image is too large, your OpenGL implementation supports maximum texture size "
-"%d px."
+msgid "Image is too large, your OpenGL implementation supports maximum texture size %d px."
 msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:1012
@@ -1171,7 +1158,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/frame.py:392
 #, fuzzy
 msgid "Choose model to run"
-msgstr "Tutup dialog di akhir perintah"
+msgstr "Pilih proyeksi"
 
 #: ../gui/wxpython/lmgr/frame.py:394 ../gui/wxpython/gmodeler/frame.py:347
 #: ../gui/wxpython/gmodeler/frame.py:391
@@ -1186,9 +1173,7 @@ msgstr "Apakah Anda ingin menyimpan perubahan dalam peta vektor <%s>?"
 #: ../gui/wxpython/lmgr/frame.py:453 ../gui/wxpython/lmgr/frame.py:1710
 #, fuzzy
 msgid "Do you want to store current settings to workspace file?"
-msgstr ""
-"Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke "
-"berkas workspace?"
+msgstr "Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke berkas workspace?"
 
 #: ../gui/wxpython/lmgr/frame.py:461
 #, fuzzy, python-format
@@ -1200,13 +1185,14 @@ msgid "Selected map layer is not vector."
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:565
+#, fuzzy
 msgid "Editing is allowed only for vector maps from the current mapset."
-msgstr ""
+msgstr "Buat topologi untuk peta vektor GRASS."
 
 #: ../gui/wxpython/lmgr/frame.py:580
 #, fuzzy
 msgid "Choose script file to run"
-msgstr "Pilih berkas workspace"
+msgstr "Pilih direktori data GRASS:"
 
 #: ../gui/wxpython/lmgr/frame.py:582
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
@@ -1219,9 +1205,7 @@ msgstr "Tidak ada layer peta terpilih. Operasi digagalkan."
 
 #: ../gui/wxpython/lmgr/frame.py:600
 #, python-format
-msgid ""
-"Script <%s> is not executable. Do you want to set the permissions that "
-"allows you to run this script (note that you must be the owner of the file)?"
+msgid "Script <%s> is not executable. Do you want to set the permissions that allows you to run this script (note that you must be the owner of the file)?"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:605
@@ -1236,9 +1220,7 @@ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
 
 #: ../gui/wxpython/lmgr/frame.py:625
 #, python-format
-msgid ""
-"Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this "
-"directory to GRASS_ADDON_PATH?"
+msgid "Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this directory to GRASS_ADDON_PATH?"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:628
@@ -1276,12 +1258,8 @@ msgstr "Ubah mapset saat ini."
 
 #: ../gui/wxpython/lmgr/frame.py:768
 #, fuzzy
-msgid ""
-"Current workspace is not empty. Do you want to store current settings to "
-"workspace file?"
-msgstr ""
-"Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke "
-"berkas workspace?"
+msgid "Current workspace is not empty. Do you want to store current settings to workspace file?"
+msgstr "Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke berkas workspace?"
 
 #: ../gui/wxpython/lmgr/frame.py:771
 #, fuzzy
@@ -1301,9 +1279,7 @@ msgstr ""
 msgid ""
 "Reading workspace file <%s> failed.\n"
 "Invalid file, unable to parse XML document."
-msgstr ""
-"Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak mampu "
-"membaca dokumen XML."
+msgstr "Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak mampu membaca dokumen XML."
 
 #: ../gui/wxpython/lmgr/frame.py:837 ../gui/wxpython/lmgr/frame.py:970
 msgid "Please wait, loading workspace..."
@@ -1353,8 +1329,9 @@ msgid "GRASS GIS Map Display: %(name)s  - Location: %(loc)s"
 msgstr "GRASS GIS Map Display: "
 
 #: ../gui/wxpython/lmgr/frame.py:1316
+#, fuzzy
 msgid "Nothing to import. No WMS layer selected."
-msgstr ""
+msgstr "Tidak ada layer peta yang dipilih untuk kueri."
 
 #: ../gui/wxpython/lmgr/frame.py:1352
 msgid "Please wait, loading attribute data..."
@@ -1509,7 +1486,7 @@ msgstr "Kalkulator peta raster 3D"
 #: ../gui/wxpython/lmgr/toolbars.py:138
 #, fuzzy
 msgid "Graphical Modeler"
-msgstr "Bantuan GRASS GIS GUI"
+msgstr "Bantuan GRASS GIS"
 
 #: ../gui/wxpython/lmgr/toolbars.py:140
 #, fuzzy
@@ -2051,9 +2028,7 @@ msgid ""
 "Unable to rename mapset.\n"
 "\n"
 "Mapset <%s> already exists in location."
-msgstr ""
-"Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci "
-"tidak dapat ditemukan "
+msgstr "Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci tidak dapat ditemukan "
 
 #: ../gui/wxpython/gis_set.py:448
 #, fuzzy, python-format
@@ -2073,9 +2048,7 @@ msgid ""
 "Unable to rename location.\n"
 "\n"
 "Location <%s> already exists in GRASS database."
-msgstr ""
-"Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci "
-"tidak dapat ditemukan "
+msgstr "Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci tidak dapat ditemukan "
 
 #: ../gui/wxpython/gis_set.py:484
 #, fuzzy, python-format
@@ -2095,13 +2068,11 @@ msgstr ""
 #: ../gui/wxpython/gis_set.py:500
 #, python-format
 msgid ""
-"Do you want to continue with deleting mapset <%(mapset)s> from location <"
-"%(location)s>?\n"
+"Do you want to continue with deleting mapset <%(mapset)s> from location <%(location)s>?\n"
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
-"Apakah Anda hendak melanjutkan untuk menghapus mapset <%(mapset)s> dari "
-"location <%(location)s>?\n"
+"Apakah Anda hendak melanjutkan untuk menghapus mapset <%(mapset)s> dari location <%(location)s>?\n"
 "\n"
 "SEMUA PETA termasuk yang ada di dalam mapset akan DIHAPUS SECARA PERMANEN!"
 
@@ -2122,8 +2093,7 @@ msgid ""
 msgstr ""
 "Apakah Anda hendak melanjutkan untuk menghapus location<%s>?\n"
 "\n"
-"SEMUA PETA termasuk yang ada di dalam location ini akan DIHAPUS SECARA "
-"PERMANEN!"
+"SEMUA PETA termasuk yang ada di dalam location ini akan DIHAPUS SECARA PERMANEN!"
 
 #: ../gui/wxpython/gis_set.py:529
 msgid "Delete selected location"
@@ -2155,8 +2125,7 @@ msgid ""
 "\n"
 "Concurrent use not allowed.\n"
 "\n"
-"Do you want to try to remove .gislock (note that you need permission for "
-"this operation) and continue?"
+"Do you want to try to remove .gislock (note that you need permission for this operation) and continue?"
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:732 ../gui/wxpython/gis_set.py:744
@@ -2167,8 +2136,7 @@ msgstr ""
 msgid ""
 "ARE YOU REALLY SURE?\n"
 "\n"
-"If you really are running another GRASS session doing this could corrupt "
-"your data. Have another look in the processor manager just to be sure..."
+"If you really are running another GRASS session doing this could corrupt your data. Have another look in the processor manager just to be sure..."
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:755
@@ -2188,10 +2156,7 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:857
-msgid ""
-"GRASS needs a directory in which to store its data. Create one now if you "
-"have not already done so. A popular choice is \"grassdata\", located in your "
-"home directory."
+msgid "GRASS needs a directory in which to store its data. Create one now if you have not already done so. A popular choice is \"grassdata\", located in your home directory."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:145
@@ -2200,9 +2165,7 @@ msgstr "Menampilkan data..."
 
 #: ../gui/wxpython/dbmgr/manager.py:152
 #, python-format
-msgid ""
-"Attribute table <%s> not found. For creating the table switch to 'Manage "
-"layers' tab."
+msgid "Attribute table <%s> not found. For creating the table switch to 'Manage layers' tab."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:163
@@ -2237,25 +2200,21 @@ msgstr ""
 #: ../gui/wxpython/dbmgr/manager.py:306
 #, fuzzy, python-format
 msgid ""
-"Error loading attribute data. Record number: %(rec)d. Unable to convert "
-"value '%(val)s' in key column (%(key)s) to integer.\n"
+"Error loading attribute data. Record number: %(rec)d. Unable to convert value '%(val)s' in key column (%(key)s) to integer.\n"
 "\n"
 "Details: %(detail)s"
 msgstr ""
-"Ada kesalahan dalam memuat data atribut. Nomor rekaman: %d. Tidak dapat "
-"menampilkan nilai'%s' dalam kolom kunci  (%s) menjadi integer.\n"
+"Ada kesalahan dalam memuat data atribut. Nomor rekaman: %d. Tidak dapat menampilkan nilai'%s' dalam kolom kunci  (%s) menjadi integer.\n"
 "\n"
 "Detil: %s"
 
 #: ../gui/wxpython/dbmgr/manager.py:388
-#, fuzzy
 msgid "Sort ascending"
-msgstr "Mulai edit"
+msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:389
-#, fuzzy
 msgid "Sort descending"
-msgstr "Mulai edit"
+msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:392
 msgid "Calculate (only numeric columns)"
@@ -2306,12 +2265,8 @@ msgstr "GRASS GIS Attribute Table Manager"
 
 #: ../gui/wxpython/dbmgr/manager.py:595
 #, python-format
-msgid ""
-"Database connection for vector map <%s> is not defined in DB file. You can "
-"define new connection in 'Manage layers' tab."
-msgstr ""
-"Koneksi basisdata ke peta vektor <%s> tidak didefinisikan dalam berkas DB. "
-"Anda dapat mendefinisikan sebuah koneksi baru dalam tab 'Kelola layer'."
+msgid "Database connection for vector map <%s> is not defined in DB file. You can define new connection in 'Manage layers' tab."
+msgstr "Koneksi basisdata ke peta vektor <%s> tidak didefinisikan dalam berkas DB. Anda dapat mendefinisikan sebuah koneksi baru dalam tab 'Kelola layer'."
 
 #: ../gui/wxpython/dbmgr/manager.py:621
 msgid "Browse data"
@@ -2483,12 +2438,8 @@ msgstr "Muat-ulang"
 
 #: ../gui/wxpython/dbmgr/manager.py:1181
 #, python-format
-msgid ""
-"Selected data records (%d) will be permanently deleted from table. Do you "
-"want to delete them?"
-msgstr ""
-"Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda "
-"benar-benar ingin menghapusnya?"
+msgid "Selected data records (%d) will be permanently deleted from table. Do you want to delete them?"
+msgstr "Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda benar-benar ingin menghapusnya?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1184 ../gui/wxpython/dbmgr/manager.py:1230
 #: ../gui/wxpython/gmodeler/dialogs.py:852
@@ -2497,12 +2448,8 @@ msgstr "Hapus rekap"
 
 #: ../gui/wxpython/dbmgr/manager.py:1227
 #, python-format
-msgid ""
-"All data records (%d) will be permanently deleted from table. Do you want to "
-"delete them?"
-msgstr ""
-"Semua rekaman data (%d) akan dihapus secara permanen dari tabel. Apakah Anda "
-"benar-benar ingin menghapusnya?"
+msgid "All data records (%d) will be permanently deleted from table. Do you want to delete them?"
+msgstr "Semua rekaman data (%d) akan dihapus secara permanen dari tabel. Apakah Anda benar-benar ingin menghapusnya?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1376
 #, python-format
@@ -2543,21 +2490,13 @@ msgstr "Tidak mampu merubah kolom. Tidak ada nama kolom seperti yang diminta."
 
 #: ../gui/wxpython/dbmgr/manager.py:1616
 #, python-format
-msgid ""
-"Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
-"exists in the table <%(table)s>."
-msgstr ""
-"Tidak mampu merubah nama kolom <%(column)s> ke <%(columnTo)s>. Kolom sudah "
-"ada dalam tabel <%(table)s>."
+msgid "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already exists in the table <%(table)s>."
+msgstr "Tidak mampu merubah nama kolom <%(column)s> ke <%(columnTo)s>. Kolom sudah ada dalam tabel <%(table)s>."
 
 #: ../gui/wxpython/dbmgr/manager.py:1632
 #, python-format
-msgid ""
-"Unable to rename column. Column <%(column)s> doesn't exist in the table <"
-"%(table)s>."
-msgstr ""
-"Tidak mampu merubah nama kolom. Kolom <%(column)s> tidak ada di dalam tabel <"
-"%(table)s>."
+msgid "Unable to rename column. Column <%(column)s> doesn't exist in the table <%(table)s>."
+msgstr "Tidak mampu merubah nama kolom. Kolom <%(column)s> tidak ada di dalam tabel <%(table)s>."
 
 #: ../gui/wxpython/dbmgr/manager.py:1659
 msgid "Drop selected column"
@@ -2569,12 +2508,8 @@ msgstr "Hapus semua kolom"
 
 #: ../gui/wxpython/dbmgr/manager.py:1677
 #, fuzzy, python-format
-msgid ""
-"Selected column '%s' will PERMANENTLY removed from table. Do you want to "
-"drop the column?"
-msgstr ""
-"Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda "
-"benar-benar ingin menghapusnya?"
+msgid "Selected column '%s' will PERMANENTLY removed from table. Do you want to drop the column?"
+msgstr "Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda benar-benar ingin menghapusnya?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1680 ../gui/wxpython/dbmgr/manager.py:1717
 #, fuzzy
@@ -2587,15 +2522,11 @@ msgid ""
 "Selected columns\n"
 "%s\n"
 "will PERMANENTLY removed from table. Do you want to drop the columns?"
-msgstr ""
-"Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda "
-"benar-benar ingin menghapusnya?"
+msgstr "Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda benar-benar ingin menghapusnya?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1752
 msgid "Unable to add column to the table. No column name defined."
-msgstr ""
-"Tidak mampu menambah kolom ke dalam tabel. Tidak ada nama kolom yang "
-"diberikan."
+msgstr "Tidak mampu menambah kolom ke dalam tabel. Tidak ada nama kolom yang diberikan."
 
 #: ../gui/wxpython/dbmgr/manager.py:1773
 #, python-format
@@ -2679,12 +2610,8 @@ msgstr "Kunci"
 
 #: ../gui/wxpython/dbmgr/manager.py:2373
 #, fuzzy
-msgid ""
-"Unknown default DB connection. Please define DB connection using db.connect "
-"module."
-msgstr ""
-"Tidak dapat menentukan pengaturan koneksi basis data standar. Silakan "
-"tentukan koneksi basis data menggunakan modul db.connect."
+msgid "Unknown default DB connection. Please define DB connection using db.connect module."
+msgstr "Tidak dapat menentukan pengaturan koneksi basis data standar. Silakan tentukan koneksi basis data menggunakan modul db.connect."
 
 #: ../gui/wxpython/dbmgr/manager.py:2392
 msgid "Add layer"
@@ -2759,30 +2686,22 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2870
 msgid "Unable to create new table. Table name or key column name is missing."
-msgstr ""
-"Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci "
-"tidak dapat ditemukan "
+msgstr "Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci tidak dapat ditemukan "
 
 #: ../gui/wxpython/dbmgr/manager.py:2876
 #, fuzzy, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
-msgstr ""
-"Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci "
-"tidak dapat ditemukan "
+msgstr "Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci tidak dapat ditemukan "
 
 #: ../gui/wxpython/dbmgr/manager.py:2913
 #, fuzzy, python-format
-msgid ""
-"Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
-"exists."
-msgstr ""
-"Tidak dapat menambahkan sebuah layer baru pada peta vektor <%(vektor)s>. "
-"Layer %(layer)d sudah ada."
+msgid "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already exists."
+msgstr "Tidak dapat menambahkan sebuah layer baru pada peta vektor <%(vektor)s>. Layer %(layer)d sudah ada."
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:68
-#, python-format
+#, fuzzy, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
-msgstr ""
+msgstr "Pembuat SQL GRASS: %s"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:75
 #, fuzzy
@@ -2881,8 +2800,7 @@ msgstr "Pernyataan SQL"
 msgid ""
 "No attribute table found.\n"
 "\n"
-"Do you want to create a new attribute table and defined a link to vector map "
-"<%s>?"
+"Do you want to create a new attribute table and defined a link to vector map <%s>?"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/dialogs.py:74
@@ -2942,14 +2860,14 @@ msgid "Category"
 msgstr "Kategori"
 
 #: ../gui/wxpython/gui_core/prompt.py:393
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: flag <%(flag)s> not found in '%(module)s'"
-msgstr "ERROR: Location <%s> tidak ada"
+msgstr ""
 
 #: ../gui/wxpython/gui_core/prompt.py:396
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: option <%(param)s> not found in '%(module)s'"
-msgstr "ERROR: Location <%s> tidak ada"
+msgstr ""
 
 #: ../gui/wxpython/gui_core/prompt.py:618
 msgid "Type GRASS command and run by pressing ENTER"
@@ -2977,11 +2895,8 @@ msgstr "Terapkan perubahan untuk sesi saat ini"
 #: ../gui/wxpython/gui_core/preferences.py:86
 #: ../gui/wxpython/wxplot/dialogs.py:378 ../gui/wxpython/wxplot/dialogs.py:730
 #: ../gui/wxpython/gcp/manager.py:2368
-msgid ""
-"Apply and save changes to user settings file (default for next sessions)"
-msgstr ""
-"Terapkan dan simpan perubahan ke berkas pengaturan milik pengguna (standar "
-"untuk sesi berikutnya)"
+msgid "Apply and save changes to user settings file (default for next sessions)"
+msgstr "Terapkan dan simpan perubahan ke berkas pengaturan milik pengguna (standar untuk sesi berikutnya)"
 
 #: ../gui/wxpython/gui_core/preferences.py:89
 #: ../gui/wxpython/psmap/dialogs.py:1996 ../gui/wxpython/wxplot/dialogs.py:380
@@ -3040,7 +2955,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/preferences.py:324
 #, fuzzy
 msgid "Workspace settings"
-msgstr "Pengaturan teks"
+msgstr "Pengaturan umum"
 
 #: ../gui/wxpython/gui_core/preferences.py:332
 msgid "Suppress positioning Map Display Window(s)"
@@ -3055,12 +2970,8 @@ msgid "Save current window layout as default"
 msgstr "Simpan layout window saat ini sebagai standar"
 
 #: ../gui/wxpython/gui_core/preferences.py:358
-msgid ""
-"Save current position and size of Layer Manager window and opened Map "
-"Display window(s) and use as default for next sessions."
-msgstr ""
-"Simpan posisi dan ukuran window Layer Manager saat ini dan window Map "
-"Display yang dibuka dan gunakan sebagai standar untuk sesi berikutnya."
+msgid "Save current position and size of Layer Manager window and opened Map Display window(s) and use as default for next sessions."
+msgstr "Simpan posisi dan ukuran window Layer Manager saat ini dan window Map Display yang dibuka dan gunakan sebagai standar untuk sesi berikutnya."
 
 #: ../gui/wxpython/gui_core/preferences.py:385
 #: ../gui/wxpython/gui_core/preferences.py:528
@@ -3142,7 +3053,7 @@ msgstr "Jalankan rendering otomatis"
 #: ../gui/wxpython/gui_core/preferences.py:676
 #, fuzzy
 msgid "Enable auto-zooming to selected map layer"
-msgstr "Tidak dapat memperbesar ke peta raster <%s>"
+msgstr "Perbesaran sesuai peta terpilih "
 
 #: ../gui/wxpython/gui_core/preferences.py:689
 #, fuzzy
@@ -3278,9 +3189,7 @@ msgid "EPSG file:"
 msgstr "Kode EPSG:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1070
-msgid ""
-"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
-"directly."
+msgid "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string directly."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:1078
@@ -3352,10 +3261,7 @@ msgid ""
 "    - The current mapset is always accessible.\n"
 "    - You may only write to the current mapset.\n"
 "    - You may only write to mapsets which you own."
-msgstr ""
-"Centang mapset untuk membuatnya dapat diakses, jangan centang untuk "
-"menyembunyikannya.%Catatan: PERMANEN dan mapset saat ini akan selalu dapat "
-"diakses."
+msgstr "Centang mapset untuk membuatnya dapat diakses, jangan centang untuk menyembunyikannya.%Catatan: PERMANEN dan mapset saat ini akan selalu dapat diakses."
 
 #: ../gui/wxpython/gui_core/preferences.py:1538
 #: ../gui/wxpython/gui_core/gselect.py:346
@@ -3460,7 +3366,7 @@ msgstr "Kode proyeksi:"
 #: ../gui/wxpython/gui_core/gselect.py:1233
 #, fuzzy
 msgid "Extension:"
-msgstr "Proyeksi:"
+msgstr "Batas luar"
 
 #: ../gui/wxpython/gui_core/gselect.py:1250
 #, fuzzy
@@ -3478,14 +3384,13 @@ msgstr "ERROR: Mapset <%s> tidak ada"
 
 #: ../gui/wxpython/gui_core/gselect.py:1326
 #: ../gui/wxpython/gmodeler/preferences.py:464
-#, fuzzy
 msgid "Name:"
-msgstr "Ubah nama "
+msgstr ""
 
 #: ../gui/wxpython/gui_core/gselect.py:1327
 #, fuzzy
 msgid "Save settings"
-msgstr "Pengaturan teks"
+msgstr "Pengaturan umum"
 
 #: ../gui/wxpython/gui_core/gselect.py:1333
 msgid "Name not given, settings is not saved."
@@ -3494,7 +3399,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1345
 #, fuzzy
 msgid "Unable to save settings"
-msgstr "Tidak mampu mengeset"
+msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #: ../gui/wxpython/gui_core/toolbars.py:31
 msgid "Display map"
@@ -3588,7 +3493,7 @@ msgstr "Pilih jenis huruf"
 #: ../gui/wxpython/gui_core/toolbars.py:64
 #, fuzzy
 msgid "Show manual"
-msgstr "Steiner tree"
+msgstr "Peta bayangan "
 
 #: ../gui/wxpython/gui_core/toolbars.py:68
 #, fuzzy
@@ -3747,9 +3652,8 @@ msgstr "Garis"
 #: ../gui/wxpython/gmodeler/frame.py:1435
 #: ../gui/wxpython/gmodeler/dialogs.py:392
 #: ../gui/wxpython/gmodeler/dialogs.py:494
-#, fuzzy
 msgid "Name"
-msgstr "Ubah nama "
+msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:624 ../gui/wxpython/gui_core/ghelp.py:626
 #: ../gui/wxpython/gui_core/ghelp.py:688
@@ -3765,14 +3669,12 @@ msgid "OSGeo_ID"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:690
-#, fuzzy
 msgid "Language"
-msgstr "Kelola"
+msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:830
-#, fuzzy
 msgid "&Next"
-msgstr "&Keluar"
+msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:833
 #, fuzzy
@@ -3818,9 +3720,7 @@ msgid "Close dialog on finish"
 msgstr "Tutup dialog di akhir perintah"
 
 #: ../gui/wxpython/gui_core/forms.py:514
-msgid ""
-"Close dialog when command is successfully finished. Change this settings in "
-"Preferences dialog ('Command' tab)."
+msgid "Close dialog when command is successfully finished. Change this settings in Preferences dialog ('Command' tab)."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/forms.py:681
@@ -3956,9 +3856,7 @@ msgstr "Batalkan perintah yang sedang berjalan"
 
 #: ../gui/wxpython/gui_core/goutput.py:504
 #, python-format
-msgid ""
-"Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
-"layer instead."
+msgid "Command '%s' not yet implemented in the WxGUI. Try adding it as a command layer instead."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/goutput.py:538
@@ -3976,11 +3874,8 @@ msgstr "Simpan berkas sebagai ..."
 
 #: ../gui/wxpython/gui_core/goutput.py:765
 #, fuzzy
-msgid ""
-"Please note that the data are left in inconsistent state and may be corrupted"
-msgstr ""
-"Harap dicatat bahwa data dibiarkan dalam tahap inkonsisten dan bisa menjadi "
-"rusak"
+msgid "Please note that the data are left in inconsistent state and may be corrupted"
+msgstr "Harap dicatat bahwa data dibiarkan dalam tahap inkonsisten dan bisa menjadi rusak"
 
 #: ../gui/wxpython/gui_core/goutput.py:768
 msgid "Command aborted"
@@ -4009,7 +3904,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/dialogs.py:111
 #, fuzzy
 msgid "Type of element:"
-msgstr "Ubah nama mapset"
+msgstr "Tampilkan legenda"
 
 #: ../gui/wxpython/gui_core/dialogs.py:142
 #, fuzzy
@@ -4019,7 +3914,7 @@ msgstr "Pilih location dan mapset proyek"
 #: ../gui/wxpython/gui_core/dialogs.py:143
 #, fuzzy
 msgid "Name of GRASS location:"
-msgstr "Definisikan GRASS Location baru"
+msgstr "Nama untuk peta vektor baru:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:163
 #: ../gui/wxpython/gui_core/dialogs.py:195
@@ -4060,9 +3955,7 @@ msgstr "Tidak bisa membuat sebuah peta vektor baru <%s>."
 
 #: ../gui/wxpython/gui_core/dialogs.py:381
 #, fuzzy, python-format
-msgid ""
-"Vector map <%s> already exists in the current mapset. Do you want to "
-"overwrite it?"
+msgid "Vector map <%s> already exists in the current mapset. Do you want to overwrite it?"
 msgstr "Berkas region <%s> sudah ada. Anda ingin menimpanya?"
 
 #: ../gui/wxpython/gui_core/dialogs.py:384
@@ -4088,9 +3981,7 @@ msgid "Set size and position"
 msgstr "Bentuk garis"
 
 #: ../gui/wxpython/gui_core/dialogs.py:527
-msgid ""
-"Click and drag on the map display to set legend size and position and then "
-"press OK"
+msgid "Click and drag on the map display to set legend size and position and then press OK"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:538
@@ -4377,7 +4268,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/dialogs.py:2083
 #, fuzzy
 msgid "Image size"
-msgstr "Pengaturan halaman"
+msgstr "Tema ikon:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2130
 msgid "Template:"
@@ -4512,7 +4403,7 @@ msgstr "GRASS GIS Map Display: "
 #: ../gui/wxpython/menustrings.py:30 ../gui/wxpython/menustrings.py:55
 #, fuzzy
 msgid "Common import formats"
-msgstr "Koordinat"
+msgstr "Konversi koordinat "
 
 #: ../gui/wxpython/menustrings.py:31
 #, fuzzy
@@ -4524,12 +4415,8 @@ msgid "ASCII x,y,z point import and gridding"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:33
-msgid ""
-"Create a raster map from an assemblage of many coordinates using univariate "
-"statistics."
-msgstr ""
-"Buat sebuah peta raster dari satu himpunan koordinat dengan statistik "
-"univariat"
+msgid "Create a raster map from an assemblage of many coordinates using univariate statistics."
+msgstr "Buat sebuah peta raster dari satu himpunan koordinat dengan statistik univariat"
 
 #: ../gui/wxpython/menustrings.py:34
 msgid "ASCII grid import"
@@ -4561,12 +4448,8 @@ msgid "ESRI ASCII grid import"
 msgstr "Impor grid ESRI ASCII"
 
 #: ../gui/wxpython/menustrings.py:41
-msgid ""
-"Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
-"map layer."
-msgstr ""
-"Ubah sebuah berkas raster ESRI ARC/INFO ascii (GRID) ke dalam sebuah layer "
-"peta raster (biner)."
+msgid "Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer."
+msgstr "Ubah sebuah berkas raster ESRI ARC/INFO ascii (GRID) ke dalam sebuah layer peta raster (biner)."
 
 #: ../gui/wxpython/menustrings.py:42
 msgid "GRIDATB.FOR import"
@@ -4574,8 +4457,7 @@ msgstr "Impor GRIDATB.FOR"
 
 #: ../gui/wxpython/menustrings.py:43
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr ""
-"Impor berkas peta GRIDATB.FOR (TOPMODEL) ke dalam sebauh peta raster GRASS"
+msgstr "Impor berkas peta GRIDATB.FOR (TOPMODEL) ke dalam sebauh peta raster GRASS"
 
 #: ../gui/wxpython/menustrings.py:44
 #, fuzzy
@@ -4607,12 +4489,8 @@ msgid "Terra ASTER HDF import"
 msgstr "Impor Terra ASTER HDF"
 
 #: ../gui/wxpython/menustrings.py:51
-msgid ""
-"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-"using gdalwarp."
-msgstr ""
-"Georeferensi, rektifikasi dan impor citra Terra-ASTER dan DEM dengan "
-"gdalwarp."
+msgid "Georeference, rectify and import Terra-ASTER imagery and relative DEM's using gdalwarp."
+msgstr "Georeferensi, rektifikasi dan impor citra Terra-ASTER dan DEM dengan gdalwarp."
 
 #: ../gui/wxpython/menustrings.py:52
 msgid "WMS import"
@@ -4634,8 +4512,7 @@ msgstr "Impor titik ASCII/vektor GRASS ASCII"
 
 #: ../gui/wxpython/menustrings.py:58
 msgid "Creates a vector map from ASCII points file or ASCII vector file."
-msgstr ""
-"Buat sebuah peta vektor dari berkas titik ASCII atau berkas vektor ASCII."
+msgstr "Buat sebuah peta vektor dari berkas titik ASCII atau berkas vektor ASCII."
 
 #: ../gui/wxpython/menustrings.py:59
 #, fuzzy
@@ -4662,9 +4539,7 @@ msgstr "Impor vektor GRASS versi lama"
 
 #: ../gui/wxpython/menustrings.py:64
 #, fuzzy
-msgid ""
-"Converts all older versions of GRASS vector maps in current mapset to "
-"current format."
+msgid "Converts all older versions of GRASS vector maps in current mapset to current format."
 msgstr "Impor peta vektor GRASS versi lama."
 
 #: ../gui/wxpython/menustrings.py:65
@@ -4697,24 +4572,16 @@ msgid "Garmin GPS import"
 msgstr "Impor Garmin GPS"
 
 #: ../gui/wxpython/menustrings.py:72
-msgid ""
-"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
-"vector map."
-msgstr ""
-"Unduh waypoint, rute dan tracks dari receiver Garmin GPS ke dalam sebuah "
-"peta vektor."
+msgid "Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map."
+msgstr "Unduh waypoint, rute dan tracks dari receiver Garmin GPS ke dalam sebuah peta vektor."
 
 #: ../gui/wxpython/menustrings.py:73
 msgid "GPSBabel GPS import"
 msgstr "Impor GPSBabel GPS"
 
 #: ../gui/wxpython/menustrings.py:74
-msgid ""
-"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
-"file into a vector map."
-msgstr ""
-"Impor waypoint, route, dan track dari receiver GPS atau berkas hasil "
-"pengunduhan dari GPS ke dalam sebuah peta vektor."
+msgid "Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map."
+msgstr "Impor waypoint, route, dan track dari receiver GPS atau berkas hasil pengunduhan dari GPS ke dalam sebuah peta vektor."
 
 #: ../gui/wxpython/menustrings.py:75
 #, fuzzy
@@ -4724,21 +4591,15 @@ msgstr "Impor GEOnet"
 #: ../gui/wxpython/menustrings.py:76
 #, fuzzy
 msgid "Imports geonames.org country files into a GRASS vector points map."
-msgstr ""
-"Impor berkas US-NGA GEOnet Names Server (GNS) ke dalam sebuah peta titik "
-"vektor GRASS."
+msgstr "Impor berkas US-NGA GEOnet Names Server (GNS) ke dalam sebuah peta titik vektor GRASS."
 
 #: ../gui/wxpython/menustrings.py:77
 msgid "GEOnet import"
 msgstr "Impor GEOnet"
 
 #: ../gui/wxpython/menustrings.py:78
-msgid ""
-"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
-"points map."
-msgstr ""
-"Impor berkas US-NGA GEOnet Names Server (GNS) ke dalam sebuah peta titik "
-"vektor GRASS."
+msgid "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map."
+msgstr "Impor berkas US-NGA GEOnet Names Server (GNS) ke dalam sebuah peta titik vektor GRASS."
 
 #: ../gui/wxpython/menustrings.py:79
 #, fuzzy
@@ -4761,8 +4622,7 @@ msgstr "Impor ASCII 3D"
 
 #: ../gui/wxpython/menustrings.py:83
 #, fuzzy
-msgid ""
-"Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
+msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
 msgstr "Ubah berkas teks raster 3D ASCII ke layer peta raster 3D (biner)"
 
 #: ../gui/wxpython/menustrings.py:84
@@ -4771,12 +4631,8 @@ msgstr "Impor Vis5D"
 
 #: ../gui/wxpython/menustrings.py:85
 #, fuzzy
-msgid ""
-"Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 "
-"time step)."
-msgstr ""
-"impor berkas 3-dimensi Vis5D (yaitu berkas v5d dengan 1 variabel dan 1 "
-"tahapan waktu)"
+msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
+msgstr "impor berkas 3-dimensi Vis5D (yaitu berkas v5d dengan 1 variabel dan 1 tahapan waktu)"
 
 #: ../gui/wxpython/menustrings.py:86
 msgid "Import database table"
@@ -4797,7 +4653,7 @@ msgstr "Ekspor peta raster "
 #: ../gui/wxpython/menustrings.py:90 ../gui/wxpython/menustrings.py:121
 #, fuzzy
 msgid "Common export formats"
-msgstr "Koordinat"
+msgstr "Konversi koordinat "
 
 #: ../gui/wxpython/menustrings.py:91
 #, fuzzy
@@ -4818,11 +4674,8 @@ msgid "ASCII x,y,z points export"
 msgstr "Ekspor ASCII x,y,z"
 
 #: ../gui/wxpython/menustrings.py:95
-msgid ""
-"Export a raster map to a text file as x,y,z values based on cell centers."
-msgstr ""
-"Ekspor sebuah peta raster ke dalam sebuah berkas teks sebagai nilai x,y,z "
-"pada pusat sel."
+msgid "Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr "Ekspor sebuah peta raster ke dalam sebuah berkas teks sebagai nilai x,y,z pada pusat sel."
 
 #: ../gui/wxpython/menustrings.py:96
 msgid "ESRI ASCII grid export"
@@ -4841,9 +4694,8 @@ msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
 msgstr "Ekspor peta raster GRASS ke berkas beta GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/wxpython/menustrings.py:100
-#, fuzzy
 msgid "Matlab 2D array export"
-msgstr "Impor Matlab dan MapGen"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:101
 msgid "Exports a GRASS raster to a binary MAT-File."
@@ -4852,7 +4704,7 @@ msgstr "Ekspor raster GRASS ke MAT-File biner."
 #: ../gui/wxpython/menustrings.py:102
 #, fuzzy
 msgid "Raw binary array export"
-msgstr "Impor Matlab dan MapGen"
+msgstr "Ekspor biner"
 
 #: ../gui/wxpython/menustrings.py:103
 #, fuzzy
@@ -4882,24 +4734,16 @@ msgid "PPM export"
 msgstr "Ekspor PPM"
 
 #: ../gui/wxpython/menustrings.py:109
-msgid ""
-"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
-"the currently defined region."
-msgstr ""
-"Ubah peta raster GRASS ke dalam sebuah berkas gambar PPM dengan resolusi "
-"piksel sama seperti pada region terdefinisi."
+msgid "Converts a GRASS raster map to a PPM image file at the pixel resolution of the currently defined region."
+msgstr "Ubah peta raster GRASS ke dalam sebuah berkas gambar PPM dengan resolusi piksel sama seperti pada region terdefinisi."
 
 #: ../gui/wxpython/menustrings.py:110
 msgid "PPM from RGB export"
 msgstr "Ekspor RGB ke PPM"
 
 #: ../gui/wxpython/menustrings.py:111
-msgid ""
-"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
-"resolution of the CURRENTLY DEFINED REGION."
-msgstr ""
-"Ubah 3 layer raster GRASS (R,G,B) ke sebuah berkas gambar PPM dengan "
-"resolusi piksel dari region terdefinisi."
+msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
+msgstr "Ubah 3 layer raster GRASS (R,G,B) ke sebuah berkas gambar PPM dengan resolusi piksel dari region terdefinisi."
 
 #: ../gui/wxpython/menustrings.py:112 ../gui/wxpython/menustrings.py:129
 msgid "POV-Ray export"
@@ -4914,12 +4758,8 @@ msgid "TIFF export"
 msgstr "Ekspor TIFF"
 
 #: ../gui/wxpython/menustrings.py:115
-msgid ""
-"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
-"resolution of the currently defined region."
-msgstr ""
-"Ekspor sebuah peta raster GRASS ke dalam berkas TIFF 8/24 bit dengan "
-"resolusi piksel sesuai dengan region terdefinisi."
+msgid "Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel resolution of the currently defined region."
+msgstr "Ekspor sebuah peta raster GRASS ke dalam berkas TIFF 8/24 bit dengan resolusi piksel sesuai dengan region terdefinisi."
 
 #: ../gui/wxpython/menustrings.py:116
 msgid "VRML export"
@@ -4927,8 +4767,7 @@ msgstr "Ekspor VRML"
 
 #: ../gui/wxpython/menustrings.py:117
 msgid "Export a raster map to the Virtual Reality Modeling Language (VRML)"
-msgstr ""
-"Ekspor sebuah peta raster ke format Virtual Reality Modeling Language (VRML)"
+msgstr "Ekspor sebuah peta raster ke format Virtual Reality Modeling Language (VRML)"
 
 #: ../gui/wxpython/menustrings.py:118 ../gui/wxpython/menustrings.py:133
 #: ../gui/wxpython/menustrings.py:140
@@ -4954,8 +4793,7 @@ msgstr "Ekspor titik ASCII/vektor GRASS ASCII"
 
 #: ../gui/wxpython/menustrings.py:124
 msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
-msgstr ""
-"Ubah sebuah peta vektor GRASS biner ke dalam sebuah peta vektor GRASS ASCII."
+msgstr "Ubah sebuah peta vektor GRASS biner ke dalam sebuah peta vektor GRASS ASCII."
 
 #: ../gui/wxpython/menustrings.py:125
 msgid "DXF export"
@@ -4971,8 +4809,7 @@ msgid "Multiple GPS export formats using GPSBabel"
 msgstr "Ekspor beragam format dengan OGR"
 
 #: ../gui/wxpython/menustrings.py:128
-msgid ""
-"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgid "Exports a vector map to a GPS receiver or file format supported by GpsBabel."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:130
@@ -5027,7 +4864,7 @@ msgstr "Impor tabel basisdata"
 #: ../gui/wxpython/menustrings.py:143
 #, fuzzy
 msgid "Common export formats using OGR"
-msgstr "Koordinat"
+msgstr "Konversi koordinat "
 
 #: ../gui/wxpython/menustrings.py:144
 #, fuzzy
@@ -5037,7 +4874,7 @@ msgstr "Impor tabel atribut dalam beragam format."
 #: ../gui/wxpython/menustrings.py:145
 #, fuzzy
 msgid "Link external formats"
-msgstr "Koordinat"
+msgstr "Konversi koordinat "
 
 #: ../gui/wxpython/menustrings.py:147
 #, fuzzy
@@ -5047,8 +4884,7 @@ msgstr "Impor berkas raster GDAL ke dalam layer peta raster biner."
 #: ../gui/wxpython/menustrings.py:149
 #, fuzzy
 msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
-msgstr ""
-"Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
+msgstr "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
 
 #: ../gui/wxpython/menustrings.py:150
 msgid "Manage maps and volumes"
@@ -5060,13 +4896,8 @@ msgstr "Salin "
 
 #: ../gui/wxpython/menustrings.py:152
 #, fuzzy
-msgid ""
-"Copies available data files in the user's current mapset search path and "
-"location to the appropriate element directories under the user's current "
-"mapset."
-msgstr ""
-"Salin berkas data yang tersedia ke dalam mapset search path dan location "
-"pengguna ke dalam direktori yang sesuai di bawah mapset pengguna saat ini."
+msgid "Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset."
+msgstr "Salin berkas data yang tersedia ke dalam mapset search path dan location pengguna ke dalam direktori yang sesuai di bawah mapset pengguna saat ini."
 
 #: ../gui/wxpython/menustrings.py:153
 msgid "List"
@@ -5075,9 +4906,7 @@ msgstr "Daftar "
 #: ../gui/wxpython/menustrings.py:154
 #, fuzzy
 msgid "Lists available GRASS data base files of the user-specified data type."
-msgstr ""
-"Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke dalam "
-"output standar"
+msgstr "Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke dalam output standar"
 
 #: ../gui/wxpython/menustrings.py:155
 msgid "List filtered"
@@ -5085,17 +4914,12 @@ msgstr "Daftar tersaring "
 
 #: ../gui/wxpython/menustrings.py:156
 #, fuzzy
-msgid ""
-"Lists available GRASS data base files of the user-specified data type "
-"optionally using the search pattern."
-msgstr ""
-"Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke dalam "
-"output standar"
+msgid "Lists available GRASS data base files of the user-specified data type optionally using the search pattern."
+msgstr "Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke dalam output standar"
 
 #: ../gui/wxpython/menustrings.py:158
 msgid "Renames data base element files in the user's current mapset."
-msgstr ""
-"Ubah nama berkas elemen basis data dalam mapset saat ini milik pengguna"
+msgstr "Ubah nama berkas elemen basis data dalam mapset saat ini milik pengguna"
 
 #: ../gui/wxpython/menustrings.py:160 ../gui/wxpython/menustrings.py:162
 msgid "Removes data base element files from the user's current mapset."
@@ -5132,8 +4956,7 @@ msgstr "Raster 2.5D ke volume "
 
 #: ../gui/wxpython/menustrings.py:169
 msgid "Creates a 3D volume map based on 2D elevation and value raster maps."
-msgstr ""
-"Buat sebuah peta volume 3D menggunakan peta elevasi 2D dan nilai raster."
+msgstr "Buat sebuah peta volume 3D menggunakan peta elevasi 2D dan nilai raster."
 
 #: ../gui/wxpython/menustrings.py:170
 msgid "Vector to raster"
@@ -5142,21 +4965,15 @@ msgstr "Vektor ke raster "
 #: ../gui/wxpython/menustrings.py:171
 #, fuzzy
 msgid "Converts (rasterize) a vector map into a raster map."
-msgstr ""
-"Ubah sebuah layer peta vektor GRASS biner ke dalam sebuah layer peta raster "
-"GRASS."
+msgstr "Ubah sebuah layer peta vektor GRASS biner ke dalam sebuah layer peta raster GRASS."
 
 #: ../gui/wxpython/menustrings.py:172
 msgid "Vector to volume"
 msgstr "Vektor ke volume "
 
 #: ../gui/wxpython/menustrings.py:173
-msgid ""
-"Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
-"raster map layer."
-msgstr ""
-"Ubah sebuah layer peta vektor GRASS biner (hanya titik) ke dalam sebuah "
-"layer peta raster GRASS 3D."
+msgid "Converts a binary GRASS vector map (only points) layer into a 3D GRASS raster map layer."
+msgstr "Ubah sebuah layer peta vektor GRASS biner (hanya titik) ke dalam sebuah layer peta raster GRASS 3D."
 
 #: ../gui/wxpython/menustrings.py:174
 #, fuzzy
@@ -5201,9 +5018,8 @@ msgid "Launch Graphical modeler"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:184 ../gui/wxpython/menustrings.py:861
-#, fuzzy
 msgid "Run model"
-msgstr "Mode kategori"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:185
 msgid "Run model prepared by Graphical modeler"
@@ -5232,9 +5048,7 @@ msgid "Bearing/distance to coordinates"
 msgstr "Arah/jarak ke koordinat"
 
 #: ../gui/wxpython/menustrings.py:191
-msgid ""
-"A simple utility for converting bearing and distance measurements to "
-"coordinates and vice versa."
+msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:193
@@ -5251,7 +5065,6 @@ msgid "Launches script file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:196
-#, fuzzy
 msgid "Exit GUI"
 msgstr "Keluar GUI"
 
@@ -5334,8 +5147,7 @@ msgstr "Perlihatkan pengaturan "
 
 #: ../gui/wxpython/menustrings.py:216 ../gui/wxpython/menustrings.py:218
 msgid "Outputs and modifies the user's current GRASS variable settings."
-msgstr ""
-"Keluaran dan mofikasi pengaturan variabel GRASS dari pengguna saat ini."
+msgstr "Keluaran dan mofikasi pengaturan variabel GRASS dari pengguna saat ini."
 
 #: ../gui/wxpython/menustrings.py:217
 msgid "Change settings"
@@ -5394,13 +5206,8 @@ msgstr "Pengaturan proyeksi"
 
 #: ../gui/wxpython/menustrings.py:231
 #, fuzzy
-msgid ""
-"Converts co-ordinate system descriptions (i.e. projection information) "
-"between various formats (including GRASS format)."
-msgstr ""
-"Ubah deskripsi sistem koordinat (yaitu informasi proyeksi) antara beragam "
-"format (termasuk format GRASS). Dapat juga digunakan untuk membuat GRASS "
-"location."
+msgid "Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format)."
+msgstr "Ubah deskripsi sistem koordinat (yaitu informasi proyeksi) antara beragam format (termasuk format GRASS). Dapat juga digunakan untuk membuat GRASS location."
 
 #: ../gui/wxpython/menustrings.py:232
 #, fuzzy
@@ -5417,8 +5224,7 @@ msgstr "Konversi koordinat "
 
 #: ../gui/wxpython/menustrings.py:235
 msgid "Convert coordinates from one projection to another (cs2cs frontend)."
-msgstr ""
-"Ubah koordinat dari satu proyeksi ke proyeksi lainnya (cs2cs frontend)."
+msgstr "Ubah koordinat dari satu proyeksi ke proyeksi lainnya (cs2cs frontend)."
 
 #: ../gui/wxpython/menustrings.py:236
 msgid "Install extension from add-ons"
@@ -5453,9 +5259,7 @@ msgstr "Pilihan pengaturan"
 
 #: ../gui/wxpython/menustrings.py:243
 msgid "User GUI preferences (display font, commands, digitizer, etc.)"
-msgstr ""
-"Pilihan pengaturan GUI untuk pengguna (jenis huruf display, perintah, "
-"digitasi, dsb.)"
+msgstr "Pilihan pengaturan GUI untuk pengguna (jenis huruf display, perintah, digitasi, dsb.)"
 
 #: ../gui/wxpython/menustrings.py:244
 #, fuzzy
@@ -5471,9 +5275,7 @@ msgid "Digitize raster (requires XTerm)"
 msgstr "Digitasi raster (membutuhkan XTerm)"
 
 #: ../gui/wxpython/menustrings.py:247
-msgid ""
-"Interactive tool used to draw and save vector features on a graphics monitor "
-"using a pointing device (mouse) and save to a raster map."
+msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse) and save to a raster map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:248
@@ -5548,14 +5350,8 @@ msgid "Resample using spline tension"
 msgstr "Cuplik-ulang dengan spline tension "
 
 #: ../gui/wxpython/menustrings.py:265
-msgid ""
-"Reinterpolates and optionally computes topographic analysis from input "
-"raster map to a new raster map (possibly with different resolution) using "
-"regularized spline with tension and smoothing."
-msgstr ""
-"Interpolasi-ulang dan secara opsional menghitung analisis topografik dari "
-"input peta raster ke peta raster baru (bisa dengan resolusi yang berbeda) "
-"menggunakan regularized spline with tension dan smoothing."
+msgid "Reinterpolates and optionally computes topographic analysis from input raster map to a new raster map (possibly with different resolution) using regularized spline with tension and smoothing."
+msgstr "Interpolasi-ulang dan secara opsional menghitung analisis topografik dari input peta raster ke peta raster baru (bisa dengan resolusi yang berbeda) menggunakan regularized spline with tension dan smoothing."
 
 #: ../gui/wxpython/menustrings.py:266 ../gui/wxpython/menustrings.py:548
 msgid "Support file maintenance"
@@ -5563,8 +5359,7 @@ msgstr "Dukungan pemeliharaan berkas"
 
 #: ../gui/wxpython/menustrings.py:267
 msgid "Allows creation and/or modification of raster map layer support files."
-msgstr ""
-"Ijinkan pembuatan dan/atau modifikasi berkas dukungan layer peta raster."
+msgstr "Ijinkan pembuatan dan/atau modifikasi berkas dukungan layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:268
 msgid "Update map statistics"
@@ -5581,20 +5376,15 @@ msgstr "Proyeksi-ulang raster"
 
 #: ../gui/wxpython/menustrings.py:271
 msgid "Re-projects a raster map from one location to the current location."
-msgstr ""
-"Proyeksi-ulang sebuah peta raster dari satu location ke location saat ini."
+msgstr "Proyeksi-ulang sebuah peta raster dari satu location ke location saat ini."
 
 #: ../gui/wxpython/menustrings.py:272
 msgid "Tiling"
 msgstr "Tiling "
 
 #: ../gui/wxpython/menustrings.py:273
-msgid ""
-"Produces tilings of the source projection for use in the destination region "
-"and projection."
-msgstr ""
-"Hasilkan tilings dari proyeksi asal untuk digunakan dalam region dan "
-"proyeksi target."
+msgid "Produces tilings of the source projection for use in the destination region and projection."
+msgstr "Hasilkan tilings dari proyeksi asal untuk digunakan dalam region dan proyeksi target."
 
 #: ../gui/wxpython/menustrings.py:274 ../gui/wxpython/menustrings.py:550
 msgid "Manage colors"
@@ -5642,8 +5432,7 @@ msgstr "Campurkan 2 warna raster"
 
 #: ../gui/wxpython/menustrings.py:284
 msgid "Blends color components of two raster maps by a given ratio."
-msgstr ""
-"Campurkan komponen warna dari dua peta raster berdasarkan rasio tertentu."
+msgstr "Campurkan komponen warna dari dua peta raster berdasarkan rasio tertentu."
 
 #: ../gui/wxpython/menustrings.py:285
 msgid "Create RGB"
@@ -5651,23 +5440,16 @@ msgstr "Buat RGB "
 
 #: ../gui/wxpython/menustrings.py:286
 #, fuzzy
-msgid ""
-"Combines red, green and blue raster maps into a single composite raster map."
-msgstr ""
-"Gabungkan layer peta red, green dan blue menjadi satu layer peta komposit."
+msgid "Combines red, green and blue raster maps into a single composite raster map."
+msgstr "Gabungkan layer peta red, green dan blue menjadi satu layer peta komposit."
 
 #: ../gui/wxpython/menustrings.py:287 ../gui/wxpython/menustrings.py:685
 msgid "RGB to HIS"
 msgstr "RGB ke HIS "
 
 #: ../gui/wxpython/menustrings.py:288
-msgid ""
-"Generates red, green and blue raster map layers combining hue, intensity and "
-"saturation (HIS) values from user-specified input raster map layers."
-msgstr ""
-"Hasilkan layer peta red, green dan blue dengan menggabungkan nilai hue, "
-"intensity dan saturation (HIS) dari layer peta input raster yang ditentukan "
-"oleh pengguna."
+msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
+msgstr "Hasilkan layer peta red, green dan blue dengan menggabungkan nilai hue, intensity dan saturation (HIS) dari layer peta input raster yang ditentukan oleh pengguna."
 
 #: ../gui/wxpython/menustrings.py:289
 #, fuzzy
@@ -5698,12 +5480,8 @@ msgid "Buffer rasters"
 msgstr "Buffer raster"
 
 #: ../gui/wxpython/menustrings.py:295
-msgid ""
-"Creates a raster map layer showing buffer zones surrounding cells that "
-"contain non-NULL category values."
-msgstr ""
-"Buat sebuah layer peta raster yang memperlihatkan zona buffer di sekeliling "
-"sel yang mengandung nilai kategori non-NULL."
+msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
+msgstr "Buat sebuah layer peta raster yang memperlihatkan zona buffer di sekeliling sel yang mengandung nilai kategori non-NULL."
 
 #: ../gui/wxpython/menustrings.py:296
 msgid "Closest points"
@@ -5737,28 +5515,16 @@ msgid "Moving window"
 msgstr "Window bergerak "
 
 #: ../gui/wxpython/menustrings.py:304
-msgid ""
-"Makes each cell category value a function of the category values assigned to "
-"the cells around it, and stores new cell values in an output raster map "
-"layer."
-msgstr ""
-"Buat setiap nilai kategori sel sebuah fungsi dari nilai kategori yang "
-"ditetapkan pada sel di sekitarnya, dan simpan nilai sel baru dalam sebuah "
-"layer peta raster output."
+msgid "Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer."
+msgstr "Buat setiap nilai kategori sel sebuah fungsi dari nilai kategori yang ditetapkan pada sel di sekitarnya, dan simpan nilai sel baru dalam sebuah layer peta raster output."
 
 #: ../gui/wxpython/menustrings.py:305
 msgid "Neighborhood points"
 msgstr "Titik tetangga-terdekat "
 
 #: ../gui/wxpython/menustrings.py:306
-msgid ""
-"Makes each cell value a function of the attribute values assigned to the "
-"vector points or centroids around it, and stores new cell values in an "
-"output raster map layer."
-msgstr ""
-"Buat setiap nilai sel sebuah fungsi dari nilai atribut yang diterapkan pada "
-"titik vektor atau centroid di sekitarnya, dan menyimpan nilai sel yang baru "
-"dalam sebuah layer peta raster."
+msgid "Makes each cell value a function of the attribute values assigned to the vector points or centroids around it, and stores new cell values in an output raster map layer."
+msgstr "Buat setiap nilai sel sebuah fungsi dari nilai atribut yang diterapkan pada titik vektor atau centroid di sekitarnya, dan menyimpan nilai sel yang baru dalam sebuah layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:307
 msgid "Overlay rasters"
@@ -5769,36 +5535,24 @@ msgid "Cross product"
 msgstr "Produk gabungan "
 
 #: ../gui/wxpython/menustrings.py:309
-msgid ""
-"Creates a cross product of the category values from multiple raster map "
-"layers."
-msgstr ""
-"Buat sebuah produk gabungan nilai kategori dari banyak layer peta raster."
+msgid "Creates a cross product of the category values from multiple raster map layers."
+msgstr "Buat sebuah produk gabungan nilai kategori dari banyak layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:310
 msgid "Raster series"
 msgstr "Seri raster"
 
 #: ../gui/wxpython/menustrings.py:311
-msgid ""
-"Makes each output cell value a function of the values assigned to the "
-"corresponding cells in the input raster map layers."
-msgstr ""
-"Buat setiap nilai sel output sebuah fungsi dari nilai yang ditetapkan ke sel "
-"yang terkait dalam layer peta raster input."
+msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
+msgstr "Buat setiap nilai sel output sebuah fungsi dari nilai yang ditetapkan ke sel yang terkait dalam layer peta raster input."
 
 #: ../gui/wxpython/menustrings.py:312
 msgid "Patch raster maps"
 msgstr "Gabungkan peta raster"
 
 #: ../gui/wxpython/menustrings.py:313
-msgid ""
-"Creates a composite raster map layer by using known category values from one "
-"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr ""
-"Buat sebuah layer peta raster komposit dengan menggunakan nilai kategori "
-"yang diketahui dari satu (atau lebih) layer peta untuk mengisi area \"no data"
-"\" dari layer peta yang lain."
+msgid "Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgstr "Buat sebuah layer peta raster komposit dengan menggunakan nilai kategori yang diketahui dari satu (atau lebih) layer peta untuk mengisi area \"no data\" dari layer peta yang lain."
 
 #: ../gui/wxpython/menustrings.py:314
 msgid "Statistical overlay"
@@ -5827,11 +5581,8 @@ msgstr "Peta bayangan "
 
 #: ../gui/wxpython/menustrings.py:320
 #, fuzzy
-msgid ""
-"Calculates cast shadow areas from sun position and elevation raster map."
-msgstr ""
-"Menghitung kontras dari index kepadatan tepian terbeban pada sebuah peta "
-"raster "
+msgid "Calculates cast shadow areas from sun position and elevation raster map."
+msgstr "Menghitung kontras dari index kepadatan tepian terbeban pada sebuah peta raster "
 
 #: ../gui/wxpython/menustrings.py:321
 msgid "Terrain analysis"
@@ -5842,17 +5593,8 @@ msgid "Cumulative movement costs"
 msgstr "Biaya pergerakan kumulatif "
 
 #: ../gui/wxpython/menustrings.py:323
-msgid ""
-"Outputs a raster map layer showing the anisotropic cumulative cost of moving "
-"between different geographic locations on an input elevation raster map "
-"layer whose cell category values represent elevation combined with an input "
-"raster map layer whose cell values represent friction cost."
-msgstr ""
-"Keluaran layer peta raster yang memperlihatkan biaya kumulatif anisotropis "
-"dari pergerakan antara lokasi geografis yang berbeda pada satu input layer "
-"peta ketinggian yang mana nilai kategori selnya mewakili ketinggian hasil "
-"kombinasi dari layer peta raster input dengan nilai sel mewakili friction "
-"cost."
+msgid "Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost."
+msgstr "Keluaran layer peta raster yang memperlihatkan biaya kumulatif anisotropis dari pergerakan antara lokasi geografis yang berbeda pada satu input layer peta ketinggian yang mana nilai kategori selnya mewakili ketinggian hasil kombinasi dari layer peta raster input dengan nilai sel mewakili friction cost."
 
 #: ../gui/wxpython/menustrings.py:324
 msgid "Cost surface"
@@ -5860,14 +5602,8 @@ msgstr "Cost surface"
 
 #: ../gui/wxpython/menustrings.py:325
 #, fuzzy
-msgid ""
-"Creates a raster map showing the cumulative cost of moving between different "
-"geographic locations on an input raster map whose cell category values "
-"represent cost."
-msgstr ""
-"Keluaran sebuah layer peta raster yang memperlihatkan biaya kumulatif "
-"pergerakan antara lokasi geografis yang berbeda pada sebuah layer peta "
-"raster input yang nilai kategori selnya menggambarkan biaya."
+msgid "Creates a raster map showing the cumulative cost of moving between different geographic locations on an input raster map whose cell category values represent cost."
+msgstr "Keluaran sebuah layer peta raster yang memperlihatkan biaya kumulatif pergerakan antara lokasi geografis yang berbeda pada sebuah layer peta raster input yang nilai kategori selnya menggambarkan biaya."
 
 #: ../gui/wxpython/menustrings.py:326
 msgid "Least cost route or flow"
@@ -5876,9 +5612,7 @@ msgstr "Rute atau aliran biaya termurah "
 #: ../gui/wxpython/menustrings.py:327
 #, fuzzy
 msgid "Traces a flow through an elevation model on a raster map."
-msgstr ""
-"Menjejak sebuah aliran melalui sebuah model ketinggi dari satu layer peta "
-"raster. "
+msgstr "Menjejak sebuah aliran melalui sebuah model ketinggi dari satu layer peta raster. "
 
 #: ../gui/wxpython/menustrings.py:328
 msgid "Shaded relief"
@@ -5894,13 +5628,8 @@ msgstr "Kemiringan dan aspek "
 
 #: ../gui/wxpython/menustrings.py:331
 #, fuzzy
-msgid ""
-"Generates raster maps of slope, aspect, curvatures and partial derivatives "
-"from a elevation raster map."
-msgstr ""
-"Menghasilkan layer peta raster kemiringan, aspek, curvature dan turunan "
-"parsialnya dari satu layer peta raster nilai ketinggian. Aspek dihitung "
-"berlawanan arah jarum jam dari timur."
+msgid "Generates raster maps of slope, aspect, curvatures and partial derivatives from a elevation raster map."
+msgstr "Menghasilkan layer peta raster kemiringan, aspek, curvature dan turunan parsialnya dari satu layer peta raster nilai ketinggian. Aspek dihitung berlawanan arah jarum jam dari timur."
 
 #: ../gui/wxpython/menustrings.py:332
 msgid "Terrain parameters"
@@ -5935,9 +5664,7 @@ msgstr "Fitur terdekat"
 #: ../gui/wxpython/menustrings.py:339
 #, fuzzy
 msgid "Generates a raster map of distance to features in input raster map."
-msgstr ""
-"Hasilkan sebuah layer peta raster dengan area bersambungan yang dikembangkan "
-"dari satu sel."
+msgstr "Hasilkan sebuah layer peta raster dengan area bersambungan yang dikembangkan dari satu sel."
 
 #: ../gui/wxpython/menustrings.py:340
 msgid "Horizon angle"
@@ -5957,12 +5684,8 @@ msgstr "Clump"
 
 #: ../gui/wxpython/menustrings.py:344
 #, fuzzy
-msgid ""
-"Recategorizes data in a raster map by grouping cells that form physically "
-"discrete areas into unique categories."
-msgstr ""
-"Kategori-ulang data dalam sebuah layer peta raster dengan mengelompokkan sel "
-"yang secara fisik membentuk area diskrit ke dalam sebuah kategori unik. "
+msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
+msgstr "Kategori-ulang data dalam sebuah layer peta raster dengan mengelompokkan sel yang secara fisik membentuk area diskrit ke dalam sebuah kategori unik. "
 
 #: ../gui/wxpython/menustrings.py:345
 msgid "Grow"
@@ -5970,9 +5693,7 @@ msgstr "Kembangan "
 
 #: ../gui/wxpython/menustrings.py:346
 msgid "Generates a raster map layer with contiguous areas grown by one cell."
-msgstr ""
-"Hasilkan sebuah layer peta raster dengan area bersambungan yang dikembangkan "
-"dari satu sel."
+msgstr "Hasilkan sebuah layer peta raster dengan area bersambungan yang dikembangkan dari satu sel."
 
 #: ../gui/wxpython/menustrings.py:347
 msgid "Thin"
@@ -5981,8 +5702,7 @@ msgstr "Tipis"
 #: ../gui/wxpython/menustrings.py:348
 #, fuzzy
 msgid "Thins non-zero cells that denote linear features in a raster map."
-msgstr ""
-"Sel thin non-zero yang mewakili fitur linear dalam sebuah layer peta raster."
+msgstr "Sel thin non-zero yang mewakili fitur linear dalam sebuah layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:349
 msgid "Hydrologic modeling"
@@ -6012,12 +5732,8 @@ msgstr "Peta depressionless dan garis aliran"
 
 #: ../gui/wxpython/menustrings.py:355
 #, fuzzy
-msgid ""
-"Filters and generates a depressionless elevation map and a flow direction "
-"map from a given elevation raster map."
-msgstr ""
-"Saring dan hasilkan peta ketinggian depressionless dan sebuah peta arah "
-"aliran dari satu layer ketinggian tertentu."
+msgid "Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map."
+msgstr "Saring dan hasilkan peta ketinggian depressionless dan sebuah peta arah aliran dari satu layer ketinggian tertentu."
 
 #: ../gui/wxpython/menustrings.py:356
 msgid "Flow accumulation"
@@ -6043,8 +5759,7 @@ msgstr "Pemodelan aliran SIMWE overland"
 #: ../gui/wxpython/menustrings.py:361
 #, fuzzy
 msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)."
-msgstr ""
-"Simulasi hidrologis aliran overland dengan metoda path sampling (SIMWE)"
+msgstr "Simulasi hidrologis aliran overland dengan metoda path sampling (SIMWE)"
 
 #: ../gui/wxpython/menustrings.py:362
 msgid "SIMWE Sediment flux modeling"
@@ -6052,12 +5767,8 @@ msgstr "Pemodelan fluks sedimen SIMWE"
 
 #: ../gui/wxpython/menustrings.py:363
 #, fuzzy
-msgid ""
-"Sediment transport and erosion/deposition simulation using path sampling "
-"method (SIMWE)."
-msgstr ""
-"Transpor sedimen dan simulasi erosi/deposisi dengan metoda path sampling "
-"(SIMWE)"
+msgid "Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)."
+msgstr "Transpor sedimen dan simulasi erosi/deposisi dengan metoda path sampling (SIMWE)"
 
 #: ../gui/wxpython/menustrings.py:364
 msgid "Topographic index map"
@@ -6109,9 +5820,7 @@ msgid "Groundwater modeling"
 msgstr "Ground Control Point"
 
 #: ../gui/wxpython/menustrings.py:375
-msgid ""
-"Numerical calculation program for transient, confined and unconfined "
-"groundwater flow in two dimensions."
+msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:376
@@ -6123,9 +5832,7 @@ msgid "Set up (requires XTerm)"
 msgstr "Pengaturan (membutuhkan XTerm)"
 
 #: ../gui/wxpython/menustrings.py:378
-msgid ""
-"Interactive tool used to setup the sampling and analysis framework that will "
-"be used by the other r.le programs."
+msgid "Interactive tool used to setup the sampling and analysis framework that will be used by the other r.le programs."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:379
@@ -6133,38 +5840,24 @@ msgid "Analyze landscape"
 msgstr "Analisis lansekap"
 
 #: ../gui/wxpython/menustrings.py:380
-msgid ""
-"Contains a set of measures for attributes, diversity, texture, "
-"juxtaposition, and edge."
-msgstr ""
-"Mengandung serangkaian pengukuran untuk atribut, keragaman, tekstur, "
-"juxtaposition dan tepian."
+msgid "Contains a set of measures for attributes, diversity, texture, juxtaposition, and edge."
+msgstr "Mengandung serangkaian pengukuran untuk atribut, keragaman, tekstur, juxtaposition dan tepian."
 
 #: ../gui/wxpython/menustrings.py:381
 msgid "Analyze patches"
 msgstr "Analisis petak"
 
 #: ../gui/wxpython/menustrings.py:382
-msgid ""
-"Calculates attribute, patch size, core (interior) size, shape, fractal "
-"dimension, and perimeter measures for sets of patches in a landscape."
-msgstr ""
-"Menghitung atribut, ukuran petak, ukuran inti (interior), bentuk, dimensi "
-"fraktal dan pengkuran perimeter untuk himpunan petak dalam satu lansekap."
+msgid "Calculates attribute, patch size, core (interior) size, shape, fractal dimension, and perimeter measures for sets of patches in a landscape."
+msgstr "Menghitung atribut, ukuran petak, ukuran inti (interior), bentuk, dimensi fraktal dan pengkuran perimeter untuk himpunan petak dalam satu lansekap."
 
 #: ../gui/wxpython/menustrings.py:383 ../gui/wxpython/scripts/vkrige.py:114
 msgid "Output"
 msgstr "Output "
 
 #: ../gui/wxpython/menustrings.py:384
-msgid ""
-"Displays the boundary of each r.le patch and shows how the boundary is "
-"traced, displays the attribute, size, perimeter and shape indices for each "
-"patch and saves the data in an output file."
-msgstr ""
-"Tampilkan batas dari setiap petak r.le dan perlihatkan bagaimana batas "
-"tersebut dipindai, tampilkan juga atribut, ukuran, perimeter dan indeks "
-"bentuk dari setiap petak dan simpan data dalam sebuah berkas output."
+msgid "Displays the boundary of each r.le patch and shows how the boundary is traced, displays the attribute, size, perimeter and shape indices for each patch and saves the data in an output file."
+msgstr "Tampilkan batas dari setiap petak r.le dan perlihatkan bagaimana batas tersebut dipindai, tampilkan juga atribut, ukuran, perimeter dan indeks bentuk dari setiap petak dan simpan data dalam sebuah berkas output."
 
 #: ../gui/wxpython/menustrings.py:385
 msgid "Landscape patch analysis"
@@ -6183,11 +5876,8 @@ msgid "Edge density"
 msgstr "Kepadatan tepian "
 
 #: ../gui/wxpython/menustrings.py:389
-msgid ""
-"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
-msgstr ""
-"Menghitung indek kepadatan tepian pada peta raster, dengan algoritma 4 "
-"neighbour"
+msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+msgstr "Menghitung indek kepadatan tepian pada peta raster, dengan algoritma 4 neighbour"
 
 #: ../gui/wxpython/menustrings.py:390
 msgid "Contrast weighted edge density"
@@ -6195,21 +5885,15 @@ msgstr "Kepadatan kontras tepian terbeban "
 
 #: ../gui/wxpython/menustrings.py:391
 msgid "Calculates contrast weighted edge density index on a raster map"
-msgstr ""
-"Menghitung kontras dari index kepadatan tepian terbeban pada sebuah peta "
-"raster "
+msgstr "Menghitung kontras dari index kepadatan tepian terbeban pada sebuah peta raster "
 
 #: ../gui/wxpython/menustrings.py:392
 msgid "Patch area mean"
 msgstr "Rerata wilayah petak"
 
 #: ../gui/wxpython/menustrings.py:393
-msgid ""
-"Calculates mean patch size index on a raster map, using a 4 neighbour "
-"algorithm"
-msgstr ""
-"Menghitung rerata indeks ukuran petak pada sebuah peta raster, dengan "
-"algoritma 4 neighbour"
+msgid "Calculates mean patch size index on a raster map, using a 4 neighbour algorithm"
+msgstr "Menghitung rerata indeks ukuran petak pada sebuah peta raster, dengan algoritma 4 neighbour"
 
 #: ../gui/wxpython/menustrings.py:394
 msgid "Patch area range"
@@ -6240,22 +5924,16 @@ msgid "Patch density"
 msgstr "Kepadatan petak"
 
 #: ../gui/wxpython/menustrings.py:401
-msgid ""
-"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
-msgstr ""
-"Menghitung indeks kepadatan petak pada sebuah peta raster, dengan algoritma "
-"4 neighbour"
+msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
+msgstr "Menghitung indeks kepadatan petak pada sebuah peta raster, dengan algoritma 4 neighbour"
 
 #: ../gui/wxpython/menustrings.py:402
 msgid "Patch number"
 msgstr "Jumlah petak"
 
 #: ../gui/wxpython/menustrings.py:403
-msgid ""
-"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
-msgstr ""
-"Menghitung indeks jumlah petak pada sebuah peta raster, dengan algoritma 4 "
-"neighbour."
+msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
+msgstr "Menghitung indeks jumlah petak pada sebuah peta raster, dengan algoritma 4 neighbour."
 
 #: ../gui/wxpython/menustrings.py:404
 msgid "Dominance's diversity"
@@ -6302,37 +5980,23 @@ msgid "Rate of spread"
 msgstr "Laju persebaran "
 
 #: ../gui/wxpython/menustrings.py:416
-msgid ""
-"Generates three, or four raster map layers showing 1) the base "
-"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
-"direction of the maximum ROS, and optionally 4) the maximum potential "
-"spotting distance."
-msgstr ""
-"Menghasilkan tiga, atau empat layer peta raster yang menampilkan 1) laju "
-"persebaran dasar (perpendicular) (ROS), 2) ROS maksimum (forward), 3) arah "
-"ROS maksimum, dan secara opsional 4) jarak potensial maksimum."
+msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
+msgstr "Menghasilkan tiga, atau empat layer peta raster yang menampilkan 1) laju persebaran dasar (perpendicular) (ROS), 2) ROS maksimum (forward), 3) arah ROS maksimum, dan secara opsional 4) jarak potensial maksimum."
 
 #: ../gui/wxpython/menustrings.py:417
 msgid "Least-cost spread paths"
 msgstr "Jalur penyebaran berbasis biaya-termurah "
 
 #: ../gui/wxpython/menustrings.py:418
-msgid ""
-"Recursively traces the least cost path backwards to cells from which the "
-"cumulative cost was determined."
-msgstr ""
-"Menjejak secara berulang, jalur biaya termurah secara terbalik (backward) ke "
-"sel dimana biaya kumulatifnya telah ditentukan."
+msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
+msgstr "Menjejak secara berulang, jalur biaya termurah secara terbalik (backward) ke sel dimana biaya kumulatifnya telah ditentukan."
 
 #: ../gui/wxpython/menustrings.py:419
 msgid "Anisotropic spread simulation"
 msgstr "Simulasi penyebaran anisotropik "
 
 #: ../gui/wxpython/menustrings.py:420
-msgid ""
-"Simulates elliptically anisotropic spread on a graphics window and generates "
-"a raster map of the cumulative time of spread, given raster maps containing "
-"the rates of spread (ROS), the ROS directions and the spread origins."
+msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:421
@@ -6353,12 +6017,8 @@ msgstr "Klasifikasi-ulang berdasarkan ukuran"
 
 #: ../gui/wxpython/menustrings.py:425
 #, fuzzy
-msgid ""
-"Reclasses a raster map greater or less than user specified area size (in "
-"hectares)."
-msgstr ""
-"Klasifikasi-ulang sebuah peta raster yang lebih besar atau lebih kecil "
-"dibandingan ukuran wilayah yang ditentukan oleh pengguna (dalam hektar)"
+msgid "Reclasses a raster map greater or less than user specified area size (in hectares)."
+msgstr "Klasifikasi-ulang sebuah peta raster yang lebih besar atau lebih kecil dibandingan ukuran wilayah yang ditentukan oleh pengguna (dalam hektar)"
 
 #: ../gui/wxpython/menustrings.py:426 ../gui/wxpython/menustrings.py:620
 #, fuzzy
@@ -6373,7 +6033,7 @@ msgstr "Klasifikasi-ulang peta raster dengan rules"
 #: ../gui/wxpython/menustrings.py:428
 #, fuzzy
 msgid "Recode"
-msgstr "Render"
+msgstr "Muat-ulang"
 
 #: ../gui/wxpython/menustrings.py:429
 #, fuzzy
@@ -6393,12 +6053,8 @@ msgid "Rescale with histogram"
 msgstr "Skala-ulang dengan histogram"
 
 #: ../gui/wxpython/menustrings.py:433
-msgid ""
-"Rescales histogram equalized the range of category values in a raster map "
-"layer."
-msgstr ""
-"Skala-ulang rentang nilai kategori dengan histogram equalied dalam sebuah "
-"layer peta raster."
+msgid "Rescales histogram equalized the range of category values in a raster map layer."
+msgstr "Skala-ulang rentang nilai kategori dengan histogram equalied dalam sebuah layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:434
 msgid "Concentric circles"
@@ -6406,9 +6062,7 @@ msgstr "Lingkaran konsentrik"
 
 #: ../gui/wxpython/menustrings.py:435
 msgid "Creates a raster map containing concentric rings around a given point."
-msgstr ""
-"Membuat sebuah peta raster yang memiliki cincin konsentrik di sekitar titik "
-"tertentu."
+msgstr "Membuat sebuah peta raster yang memiliki cincin konsentrik di sekitar titik tertentu."
 
 #: ../gui/wxpython/menustrings.py:436
 msgid "Generate random cells"
@@ -6428,12 +6082,8 @@ msgstr "Sel dan titik vektor acak"
 
 #: ../gui/wxpython/menustrings.py:440
 #, fuzzy
-msgid ""
-"Creates a raster map layer and vector point map containing randomly located "
-"points."
-msgstr ""
-"Buat sebuah layer peta raster dan peta titik vektor yang memiliki titik "
-"dengan lokasi acak."
+msgid "Creates a raster map layer and vector point map containing randomly located points."
+msgstr "Buat sebuah layer peta raster dan peta titik vektor yang memiliki titik dengan lokasi acak."
 
 #: ../gui/wxpython/menustrings.py:441
 msgid "Generate surfaces"
@@ -6453,36 +6103,20 @@ msgstr "Permukaan kepadatan kernel Gaussian"
 
 #: ../gui/wxpython/menustrings.py:445
 #, fuzzy
-msgid ""
-"Generates a raster density map from vector point data using a moving kernel "
-"or optionally generates a vector density map on a vector network."
-msgstr ""
-"Hasilkan sebuah peta kepadatan raster dari data titik vektor dengan "
-"menggunakan sebuah kernel Gaussian isotropik 2D bergerak atau secara "
-"opsional menghasilkan sebuah peta kepadatan vektor pada jaringan vektor "
-"dalam sebuah kernel 1D."
+msgid "Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network."
+msgstr "Hasilkan sebuah peta kepadatan raster dari data titik vektor dengan menggunakan sebuah kernel Gaussian isotropik 2D bergerak atau secara opsional menghasilkan sebuah peta kepadatan vektor pada jaringan vektor dalam sebuah kernel 1D."
 
 #: ../gui/wxpython/menustrings.py:446
 msgid "Gaussian deviates surface"
 msgstr "Permukaan simpangan Gaussian"
 
 #: ../gui/wxpython/menustrings.py:447
-msgid ""
-"GRASS module to produce a raster map layer of gaussian deviates whose mean "
-"and standard deviation can be expressed by the user. It uses a gaussian "
-"random number generator."
-msgstr ""
-"Modul GRASS untuk menghasilkan sebuah layer peta simpangan gaussian yang "
-"rerata dan simpangan bakunya dapat ditentukan oleh pengguna. Modul ini "
-"menggunakan generator nomor acak gaussian."
+msgid "GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator."
+msgstr "Modul GRASS untuk menghasilkan sebuah layer peta simpangan gaussian yang rerata dan simpangan bakunya dapat ditentukan oleh pengguna. Modul ini menggunakan generator nomor acak gaussian."
 
 #: ../gui/wxpython/menustrings.py:449
-msgid ""
-"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
-"point."
-msgstr ""
-"Membuat peta raster dengan dip (inklinasi), aspek (azimut) dan satu titik "
-"yang ditentukan."
+msgid "Creates raster plane map given dip (inclination), aspect (azimuth) and one point."
+msgstr "Membuat peta raster dengan dip (inklinasi), aspek (azimut) dan satu titik yang ditentukan."
 
 #: ../gui/wxpython/menustrings.py:450
 msgid "Random deviates surface"
@@ -6490,12 +6124,8 @@ msgstr "Permukaan simpangan acak"
 
 #: ../gui/wxpython/menustrings.py:451
 #, fuzzy
-msgid ""
-"Produces a raster map of uniform random deviates whose range can be "
-"expressed by the user."
-msgstr ""
-"Menghasilkan sebuah layer peta raster dari simpangan acak uniform yang "
-"rentangnya dapat ditentukan oleh pengguna."
+msgid "Produces a raster map of uniform random deviates whose range can be expressed by the user."
+msgstr "Menghasilkan sebuah layer peta raster dari simpangan acak uniform yang rentangnya dapat ditentukan oleh pengguna."
 
 #: ../gui/wxpython/menustrings.py:452
 msgid "Random surface with spatial dependence"
@@ -6512,9 +6142,7 @@ msgstr "Hasilkan garis kontur"
 #: ../gui/wxpython/menustrings.py:455
 #, fuzzy
 msgid "Produces a vector map of specified contours from a raster map."
-msgstr ""
-"Hasilkan sebuah layer peta vektor kontur tertentu dari sebuah layer peta "
-"raster."
+msgstr "Hasilkan sebuah layer peta vektor kontur tertentu dari sebuah layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:456
 msgid "Interpolate surfaces"
@@ -6534,8 +6162,7 @@ msgstr "Bilinear dan bikubik dari titik vektor"
 
 #: ../gui/wxpython/menustrings.py:460
 msgid "Bicubic or bilinear spline interpolation with Tykhonov regularization."
-msgstr ""
-"Interpolasi bikubik atau bilinear spline dengan regularisasi Thykhonov."
+msgstr "Interpolasi bikubik atau bilinear spline dengan regularisasi Thykhonov."
 
 #: ../gui/wxpython/menustrings.py:461
 msgid "IDW from raster points"
@@ -6560,12 +6187,8 @@ msgid "IDW from vector points"
 msgstr "IDW dari peta vektor"
 
 #: ../gui/wxpython/menustrings.py:466
-msgid ""
-"Surface interpolation from vector point data by Inverse Distance Squared "
-"Weighting."
-msgstr ""
-"Interpolasi permukaan dari data titik vektor dengan Inverse Distance Squared "
-"Weighting."
+msgid "Surface interpolation from vector point data by Inverse Distance Squared Weighting."
+msgstr "Interpolasi permukaan dari data titik vektor dengan Inverse Distance Squared Weighting."
 
 #: ../gui/wxpython/menustrings.py:467
 msgid "Raster contours"
@@ -6580,14 +6203,8 @@ msgid "Regularized spline tension"
 msgstr "Regularized spline tension"
 
 #: ../gui/wxpython/menustrings.py:470
-msgid ""
-"Spatial approximation and topographic analysis from given point or isoline "
-"data in vector format to floating point raster format using regularized "
-"spline with tension."
-msgstr ""
-"Perkiraan spasial dan analisis topografik dari titik tertentu atau data "
-"isoline dalam format vektor ke dalam format titik raster floating point "
-"dengan regularized spline tension."
+msgid "Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension."
+msgstr "Perkiraan spasial dan analisis topografik dari titik tertentu atau data isoline dalam format vektor ke dalam format titik raster floating point dengan regularized spline tension."
 
 #: ../gui/wxpython/menustrings.py:471
 msgid "Ordinary or block kriging"
@@ -6603,10 +6220,8 @@ msgstr "Isi sel NULL"
 
 #: ../gui/wxpython/menustrings.py:474
 #, fuzzy
-msgid ""
-"Fills no-data areas in raster maps using v.surf.rst splines interpolation."
-msgstr ""
-"Isi area dengan no-data dalam peta raster dengan interpolasi v.surf.rst"
+msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation."
+msgstr "Isi area dengan no-data dalam peta raster dengan interpolasi v.surf.rst"
 
 #: ../gui/wxpython/menustrings.py:475 ../gui/wxpython/menustrings.py:736
 msgid "Report and statistics"
@@ -6625,12 +6240,8 @@ msgid "Manage category information"
 msgstr "Kelola informasi kategori"
 
 #: ../gui/wxpython/menustrings.py:479
-msgid ""
-"Manages category values and labels associated with user-specified raster map "
-"layers."
-msgstr ""
-"Kelola nilai kategori dan label yang terkait dengan layer peta raster milik "
-"pengguna."
+msgid "Manages category values and labels associated with user-specified raster map layers."
+msgstr "Kelola nilai kategori dan label yang terkait dengan layer peta raster milik pengguna."
 
 #: ../gui/wxpython/menustrings.py:480
 msgid "General statistics"
@@ -6654,8 +6265,7 @@ msgstr "Rentang nilai kategori"
 
 #: ../gui/wxpython/menustrings.py:485
 msgid "Prints terse list of category values found in a raster map layer."
-msgstr ""
-"Cetak daftar nilai kategori yang ditemukan pada sebuah layer peta raster."
+msgstr "Cetak daftar nilai kategori yang ditemukan pada sebuah layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:486
 msgid "Sum category values"
@@ -6679,12 +6289,8 @@ msgid "Statistics for clumped cells"
 msgstr "Statistik untuk sel yang berkelompok (clumped cells)"
 
 #: ../gui/wxpython/menustrings.py:491
-msgid ""
-"Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
-"vector points map containing the calculated centroids of these clumps."
-msgstr ""
-"Hitung volume dari data \"clump\", secara (opsional) menghasilkan sebuah "
-"titik vektor GRASS dengan kandungan hitungan centroid dari clump ini."
+msgid "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS vector points map containing the calculated centroids of these clumps."
+msgstr "Hitung volume dari data \"clump\", secara (opsional) menghasilkan sebuah titik vektor GRASS dengan kandungan hitungan centroid dari clump ini."
 
 #: ../gui/wxpython/menustrings.py:492
 msgid "Total corrected area"
@@ -6695,10 +6301,8 @@ msgid "Surface area estimation for rasters."
 msgstr "Estimasi area permukaan untuk raster."
 
 #: ../gui/wxpython/menustrings.py:495
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
-msgstr ""
-"Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgstr "Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
 
 #: ../gui/wxpython/menustrings.py:496
 msgid "Sample transects"
@@ -6706,32 +6310,23 @@ msgstr "Transek cuplikan"
 
 #: ../gui/wxpython/menustrings.py:497
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr ""
-"Keluaran nilai layer peta raster berdasarkan gari yang ditentukan oleh "
-"pengguna."
+msgstr "Keluaran nilai layer peta raster berdasarkan gari yang ditentukan oleh pengguna."
 
 #: ../gui/wxpython/menustrings.py:498
 msgid "Sample transects (bearing/distance)"
 msgstr "Transek cuplikan (bearing/distance) "
 
 #: ../gui/wxpython/menustrings.py:499
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
-msgstr ""
-"Keluaran nilai layer peta raster berdasarkan garis transek yang ditentukan "
-"oleh pengguna."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
+msgstr "Keluaran nilai layer peta raster berdasarkan garis transek yang ditentukan oleh pengguna."
 
 #: ../gui/wxpython/menustrings.py:500
 msgid "Covariance/correlation"
 msgstr "Kovarians/korelasi "
 
 #: ../gui/wxpython/menustrings.py:501
-msgid ""
-"Outputs a covariance/correlation matrix for user-specified raster map layer"
-"(s)."
-msgstr ""
-"Keluaran matriks kovariansi/korelasi untuk layer peta raster yang ditentukan "
-"pengguna."
+msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
+msgstr "Keluaran matriks kovariansi/korelasi untuk layer peta raster yang ditentukan pengguna."
 
 #: ../gui/wxpython/menustrings.py:502
 msgid "Linear regression"
@@ -6747,9 +6342,7 @@ msgid "Mutual category occurrences"
 msgstr "Mutual category occurences"
 
 #: ../gui/wxpython/menustrings.py:505
-msgid ""
-"Tabulates the mutual occurrence (coincidence) of categories for two raster "
-"map layers."
+msgid "Tabulates the mutual occurrence (coincidence) of categories for two raster map layers."
 msgstr "Hitung koinsindensi kategori untuk dua layer peta raster."
 
 #: ../gui/wxpython/menustrings.py:506
@@ -6781,9 +6374,7 @@ msgid "Edit vector map (non-interactively)"
 msgstr "Pengkodean-ulang secara interaktif "
 
 #: ../gui/wxpython/menustrings.py:513
-msgid ""
-"Edits a vector map, allows adding, deleting and modifying selected vector "
-"features."
+msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:514
@@ -6801,8 +6392,9 @@ msgid "Rebuild topology on all vector maps"
 msgstr "Buat topologi untuk peta vektor GRASS."
 
 #: ../gui/wxpython/menustrings.py:517
+#, fuzzy
 msgid "Rebuilds topology on all vector maps in the current mapset."
-msgstr ""
+msgstr "Buat topologi untuk peta vektor GRASS."
 
 #: ../gui/wxpython/menustrings.py:518
 msgid "Clean vector map"
@@ -6876,12 +6468,8 @@ msgid "Dissolve boundaries"
 msgstr "Urai batas"
 
 #: ../gui/wxpython/menustrings.py:535
-msgid ""
-"Dissolves boundaries between adjacent areas sharing a common category number "
-"or attribute."
-msgstr ""
-"Urai batas antara area yang berdekatan yang memiliki nomor kategori atau "
-"atribut yang sama."
+msgid "Dissolves boundaries between adjacent areas sharing a common category number or attribute."
+msgstr "Urai batas antara area yang berdekatan yang memiliki nomor kategori atau atribut yang sama."
 
 #: ../gui/wxpython/menustrings.py:536
 msgid "Create 3D vector over raster"
@@ -6922,12 +6510,8 @@ msgid "Reposition vector map"
 msgstr "Posisi-ulang peta vektor"
 
 #: ../gui/wxpython/menustrings.py:545
-msgid ""
-"Performs an affine transformation (shift, scale and rotate, or GPCs) on "
-"vector map."
-msgstr ""
-"Melakukan sebuah transformasi affine (geser, skala dan rotasi atau GPC) pada "
-"peta vektor."
+msgid "Performs an affine transformation (shift, scale and rotate, or GPCs) on vector map."
+msgstr "Melakukan sebuah transformasi affine (geser, skala dan rotasi atau GPC) pada peta vektor."
 
 #: ../gui/wxpython/menustrings.py:546
 msgid "Reproject vector map"
@@ -6936,8 +6520,7 @@ msgstr "Proyeksi-ulang peta vektor"
 #: ../gui/wxpython/menustrings.py:547
 #, fuzzy
 msgid "Re-projects a vector map from one location to the current location."
-msgstr ""
-"Proyeksi-ulang sebuah peta raster dari satu location ke location saat ini."
+msgstr "Proyeksi-ulang sebuah peta raster dari satu location ke location saat ini."
 
 #: ../gui/wxpython/menustrings.py:549
 #, fuzzy
@@ -6945,8 +6528,7 @@ msgid "Updates vector map metadata."
 msgstr "Metadata dasar peta vektor"
 
 #: ../gui/wxpython/menustrings.py:552
-msgid ""
-"Set color rules for features in a vector using a numeric attribute column."
+msgid "Set color rules for features in a vector using a numeric attribute column."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:554
@@ -6959,12 +6541,8 @@ msgid "Attribute query"
 msgstr "Atribut"
 
 #: ../gui/wxpython/menustrings.py:556
-msgid ""
-"Selects vector objects from an existing vector map and creates a new map "
-"containing only the selected objects."
-msgstr ""
-"Pilih obyek vektor dari peta vektor yang ada dan buat sebuah peta baru yang "
-"hanya memiliki obyek terpilih saja."
+msgid "Selects vector objects from an existing vector map and creates a new map containing only the selected objects."
+msgstr "Pilih obyek vektor dari peta vektor yang ada dan buat sebuah peta baru yang hanya memiliki obyek terpilih saja."
 
 #: ../gui/wxpython/menustrings.py:557
 #, fuzzy
@@ -6973,8 +6551,7 @@ msgstr "Tumpang-susun berbasis statistik "
 
 #: ../gui/wxpython/menustrings.py:558
 #, fuzzy
-msgid ""
-"Selects features from vector map (A) by features from other vector map (B)."
+msgid "Selects features from vector map (A) by features from other vector map (B)."
 msgstr "Pilih fitur dari ainput dengan fitur dari binput"
 
 #: ../gui/wxpython/menustrings.py:559
@@ -6982,10 +6559,8 @@ msgid "Buffer vectors"
 msgstr "Buffer peta vektor"
 
 #: ../gui/wxpython/menustrings.py:560
-msgid ""
-"Creates a buffer around features of given type (areas must contain centroid)."
-msgstr ""
-"Buat sebuah buffer di sekitar fitur tertentu (area harus memiliki centroid)."
+msgid "Creates a buffer around features of given type (areas must contain centroid)."
+msgstr "Buat sebuah buffer di sekitar fitur tertentu (area harus memiliki centroid)."
 
 #: ../gui/wxpython/menustrings.py:561
 msgid "Lidar analysis"
@@ -7004,24 +6579,16 @@ msgid "Detect interiors"
 msgstr "Deteksi interior"
 
 #: ../gui/wxpython/menustrings.py:565
-msgid ""
-"Building contour determination and Region Growing algorithm for determining "
-"the building inside"
-msgstr ""
-"Pembuatan determinasi kontur dan algoritma pengembangan wilayah (Region "
-"Growing) untuk menentukan bangunan di dalamnya"
+msgid "Building contour determination and Region Growing algorithm for determining the building inside"
+msgstr "Pembuatan determinasi kontur dan algoritma pengembangan wilayah (Region Growing) untuk menentukan bangunan di dalamnya"
 
 #: ../gui/wxpython/menustrings.py:566
 msgid "Correct and reclassify objects"
 msgstr "Koreksi dan klasifikasi-ulang obyek"
 
 #: ../gui/wxpython/menustrings.py:567
-msgid ""
-"Correction of the v.lidar.growing output. It is the last of the three "
-"algorithms for LIDAR filtering."
-msgstr ""
-"Koreksi keluaran dari v.lidar.growing. Modul ini adalah yang terakhir dari "
-"tiga algoritma untuk penyarian LIDAR."
+msgid "Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering."
+msgstr "Koreksi keluaran dari v.lidar.growing. Modul ini adalah yang terakhir dari tiga algoritma untuk penyarian LIDAR."
 
 #: ../gui/wxpython/menustrings.py:568
 msgid "Linear referencing"
@@ -7048,36 +6615,24 @@ msgid "Create points/segments"
 msgstr "Buat titik/segmen"
 
 #: ../gui/wxpython/menustrings.py:574
-msgid ""
-"Creates points/segments from input lines, linear reference system and "
-"positions read from stdin or a file."
-msgstr ""
-"Buat titik/segmen dari input garis, sistem referensi linear dan posisi yang "
-"dibaca dari stdin atau sebuah berkas."
+msgid "Creates points/segments from input lines, linear reference system and positions read from stdin or a file."
+msgstr "Buat titik/segmen dari input garis, sistem referensi linear dan posisi yang dibaca dari stdin atau sebuah berkas."
 
 #: ../gui/wxpython/menustrings.py:575
 msgid "Find line id and offset"
 msgstr "Cari id garis dan offset"
 
 #: ../gui/wxpython/menustrings.py:576
-msgid ""
-"Finds line id and real km+offset for given points in vector map using linear "
-"reference system."
-msgstr ""
-"Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam "
-"peta vektor menggunakan sistem referensi linear."
+msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
+msgstr "Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam peta vektor menggunakan sistem referensi linear."
 
 #: ../gui/wxpython/menustrings.py:577
 msgid "Nearest features"
 msgstr "Fitur terdekat"
 
 #: ../gui/wxpython/menustrings.py:578
-msgid ""
-"Finds the nearest element in vector map 'to' for elements in vector map "
-"'from'."
-msgstr ""
-"Cari elemen terdekat dalam peta vektor 'to' untuk elemen dalam peta vektor "
-"'from'."
+msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
+msgstr "Cari elemen terdekat dalam peta vektor 'to' untuk elemen dalam peta vektor 'from'."
 
 #: ../gui/wxpython/menustrings.py:579
 msgid "Network analysis"
@@ -7122,9 +6677,7 @@ msgid "Shortest path for sets of features"
 msgstr "Cari jarak terdekat dalam sebuah jaringan vektor."
 
 #: ../gui/wxpython/menustrings.py:589
-msgid ""
-"Computes shortest distance via the network between the given sets of "
-"features."
+msgid "Computes shortest distance via the network between the given sets of features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:590
@@ -7194,9 +6747,7 @@ msgid "Centrality"
 msgstr "Tes kenormalan"
 
 #: ../gui/wxpython/menustrings.py:605
-msgid ""
-"Computes degree, centrality, betweeness, closeness and eigenvector "
-"centrality measures in the network."
+msgid "Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:606
@@ -7237,8 +6788,7 @@ msgstr "Gabungkan peta vektor"
 
 #: ../gui/wxpython/menustrings.py:616
 msgid "Create a new vector map layer by combining other vector map layers."
-msgstr ""
-"Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
+msgstr "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
 
 #: ../gui/wxpython/menustrings.py:617
 msgid "Change attributes"
@@ -7253,12 +6803,8 @@ msgid "Attach, delete or report vector categories to map geometry."
 msgstr "Tempel, hapus atau laporkan kategori vektor ke geometri peta."
 
 #: ../gui/wxpython/menustrings.py:621
-msgid ""
-"Changes vector category values for an existing vector map according to "
-"results of SQL queries or a value in attribute table column."
-msgstr ""
-"Ubah nilai kategori vektor dari sebuah peta vektor yang ada sesuai dengan "
-"hasil dari kueri SQL atau sebuah nilai dalam kolom tabel atribut."
+msgid "Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column."
+msgstr "Ubah nilai kategori vektor dari sebuah peta vektor yang ada sesuai dengan hasil dari kueri SQL atau sebuah nilai dalam kolom tabel atribut."
 
 #: ../gui/wxpython/menustrings.py:622
 msgid "Generate area for current region"
@@ -7285,24 +6831,16 @@ msgid "Delaunay triangles"
 msgstr "Segitiga delaunay"
 
 #: ../gui/wxpython/menustrings.py:628
-msgid ""
-"Creates a Delaunay triangulation from an input vector map containing points "
-"or centroids."
-msgstr ""
-"Buat sebuah segitiga Delaunay dari satu input peta vektor yang mengandung "
-"titik atau centroid."
+msgid "Creates a Delaunay triangulation from an input vector map containing points or centroids."
+msgstr "Buat sebuah segitiga Delaunay dari satu input peta vektor yang mengandung titik atau centroid."
 
 #: ../gui/wxpython/menustrings.py:629
 msgid "Voronoi diagram/Thiessen polygons"
 msgstr "Diagram Voronoi/Poligon Thiessen "
 
 #: ../gui/wxpython/menustrings.py:630
-msgid ""
-"Creates a Voronoi diagram from an input vector map containing points or "
-"centroids."
-msgstr ""
-"Buat sebuah diagram Voronoi dari satu input peta vektor yang mengandung "
-"titik atau centroid."
+msgid "Creates a Voronoi diagram from an input vector map containing points or centroids."
+msgstr "Buat sebuah diagram Voronoi dari satu input peta vektor yang mengandung titik atau centroid."
 
 #: ../gui/wxpython/menustrings.py:631
 msgid "Generate grid"
@@ -7321,10 +6859,8 @@ msgid "Generate from database"
 msgstr "Hasilkan dari basisdata"
 
 #: ../gui/wxpython/menustrings.py:635
-msgid ""
-"Creates new vector (points) map from database table containing coordinates."
-msgstr ""
-"Buat peta vektor baru (titik) dari tabel basisdata yang mengandung koordinat."
+msgid "Creates new vector (points) map from database table containing coordinates."
+msgstr "Buat peta vektor baru (titik) dari tabel basisdata yang mengandung koordinat."
 
 #: ../gui/wxpython/menustrings.py:636
 msgid "Generate points along lines"
@@ -7372,12 +6908,8 @@ msgstr "Perbaharui atribut area dari raster"
 
 #: ../gui/wxpython/menustrings.py:647
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from a raster map based on vector polygons "
-"and uploads statistics to new attribute columns."
-msgstr ""
-"Hitung statistik univariat dari sebuah peta raster GRASS berdasarkan poligon "
-"vektor dan unggah statistik ke dalam kolom atribut yang baru."
+msgid "Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns."
+msgstr "Hitung statistik univariat dari sebuah peta raster GRASS berdasarkan poligon vektor dan unggah statistik ke dalam kolom atribut yang baru."
 
 #: ../gui/wxpython/menustrings.py:648
 msgid "Update point attributes from areas"
@@ -7428,9 +6960,7 @@ msgstr "Metadata dasar peta vektor"
 #: ../gui/wxpython/menustrings.py:659
 #, fuzzy
 msgid "Outputs basic information about a user-specified vector map."
-msgstr ""
-"Keluaran informasi dasar tentang layer peta vektor yang spesifik (buatan "
-"pengguna)."
+msgstr "Keluaran informasi dasar tentang layer peta vektor yang spesifik (buatan pengguna)."
 
 #: ../gui/wxpython/menustrings.py:660
 #, fuzzy
@@ -7455,12 +6985,8 @@ msgid "Univariate attribute statistics for points"
 msgstr "Statistik atribut univariat"
 
 #: ../gui/wxpython/menustrings.py:665
-msgid ""
-"Calculates univariate statistics for attribute. Variance and standard "
-"deviation is calculated only for points if specified."
-msgstr ""
-"Hitung statistik univariat dari atribut. Varians dan simpangan baku dihitung "
-"hanya untuk titik, jika ditentukan."
+msgid "Calculates univariate statistics for attribute. Variance and standard deviation is calculated only for points if specified."
+msgstr "Hitung statistik univariat dari atribut. Varians dan simpangan baku dihitung hanya untuk titik, jika ditentukan."
 
 #: ../gui/wxpython/menustrings.py:666
 #, fuzzy
@@ -7469,11 +6995,8 @@ msgstr "Statistik atribut univariat"
 
 #: ../gui/wxpython/menustrings.py:667
 #, fuzzy
-msgid ""
-"Calculates univariate statistics on selected table column for a GRASS vector "
-"map."
-msgstr ""
-"Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
+msgid "Calculates univariate statistics on selected table column for a GRASS vector map."
+msgstr "Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
 
 #: ../gui/wxpython/menustrings.py:668
 msgid "Quadrat indices"
@@ -7544,15 +7067,11 @@ msgid "HIS to RGB"
 msgstr "HIS ke RGB"
 
 #: ../gui/wxpython/menustrings.py:684
-msgid ""
-"Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
-"RGB (Red-Green-Blue) color space."
+msgid "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to RGB (Red-Green-Blue) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:686
-msgid ""
-"Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
-"Intensity-Saturation) color space."
+msgid "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-Intensity-Saturation) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:687
@@ -7561,12 +7080,8 @@ msgstr "Rektifikasi citra atau raster"
 
 #: ../gui/wxpython/menustrings.py:688
 #, fuzzy
-msgid ""
-"Rectifies an image by computing a coordinate transformation for each pixel "
-"in the image based on the control points."
-msgstr ""
-"Rektifikasi sebuah citra dengan menghitung sebuah transformasi koordinat "
-"untuk setiap piksel dalam citra berdasarkan titik kontrol"
+msgid "Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points."
+msgstr "Rektifikasi sebuah citra dengan menghitung sebuah transformasi koordinat untuk setiap piksel dalam citra berdasarkan titik kontrol"
 
 #: ../gui/wxpython/menustrings.py:690
 msgid "Generate histogram of image"
@@ -7578,8 +7093,7 @@ msgstr "Respons spektral"
 
 #: ../gui/wxpython/menustrings.py:692
 #, fuzzy
-msgid ""
-"Displays spectral response at user specified locations in group or images."
+msgid "Displays spectral response at user specified locations in group or images."
 msgstr "tampilkan respon spektral pada lokasi tertentu dalam grup atau citra"
 
 #: ../gui/wxpython/menustrings.py:693
@@ -7587,11 +7101,8 @@ msgid "Brovey sharpening"
 msgstr "Penajaman citra dengan Brovey"
 
 #: ../gui/wxpython/menustrings.py:694
-msgid ""
-"Brovey transform to merge multispectral and high-res panchromatic channels"
-msgstr ""
-"Transformasi Brovey untuk menggabungkan kanal multispektral dan pankromatik "
-"resolusi tinggi"
+msgid "Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr "Transformasi Brovey untuk menggabungkan kanal multispektral dan pankromatik resolusi tinggi"
 
 #: ../gui/wxpython/menustrings.py:695
 msgid "Classify image"
@@ -7602,9 +7113,7 @@ msgid "Clustering input for unsupervised classification"
 msgstr "Input klaster untuk klasifikasi tak-terbimbing"
 
 #: ../gui/wxpython/menustrings.py:697
-msgid ""
-"Generates spectral signatures for land cover types in an image using a "
-"clustering algorithm."
+msgid "Generates spectral signatures for land cover types in an image using a clustering algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:698
@@ -7612,9 +7121,7 @@ msgid "Interactive input for supervised classification (requires Xterm)"
 msgstr "Input interaktif untuk klasifikasi terbimbing (membutuhkan XTerm)"
 
 #: ../gui/wxpython/menustrings.py:699
-msgid ""
-"Generates spectral signatures for an image by allowing the user to outline "
-"regions of interest."
+msgid "Generates spectral signatures for an image by allowing the user to outline regions of interest."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:700
@@ -7648,12 +7155,8 @@ msgid "Sequential maximum a posteriori classification (SMAP)"
 msgstr "Klasifikasi sequential maximum a posteriori (SMAP)"
 
 #: ../gui/wxpython/menustrings.py:707
-msgid ""
-"Performs contextual image classification using sequential maximum a "
-"posteriori (SMAP) estimation."
-msgstr ""
-"Melakukan klasifikasi citra kontekstual dengan perkiraan sequential maximum "
-"a posteriori (SMAP)"
+msgid "Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation."
+msgstr "Melakukan klasifikasi citra kontekstual dengan perkiraan sequential maximum a posteriori (SMAP)"
 
 #: ../gui/wxpython/menustrings.py:708
 msgid "Filter image"
@@ -7722,9 +7225,7 @@ msgid "Landsat DN to radiance/reflectance"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:724
-msgid ""
-"Calculates top-of-atmosphere radiance or reflectance and temperature for "
-"Landsat MSS/TM/ETM+."
+msgid "Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:725
@@ -7787,12 +7288,8 @@ msgid "Kappa analysis"
 msgstr "Analisis Kappa"
 
 #: ../gui/wxpython/menustrings.py:740
-msgid ""
-"Calculate error matrix and kappa parameter for accuracy assessment of "
-"classification result."
-msgstr ""
-"Menghitung matriks kesalahan dan parameter kappa untuk uji akurasi dari "
-"hasil klasifikasi."
+msgid "Calculate error matrix and kappa parameter for accuracy assessment of classification result."
+msgstr "Menghitung matriks kesalahan dan parameter kappa untuk uji akurasi dari hasil klasifikasi."
 
 #: ../gui/wxpython/menustrings.py:741
 msgid "OIF for LandSat TM"
@@ -7800,8 +7297,7 @@ msgstr "OIF untuk Landsat TM"
 
 #: ../gui/wxpython/menustrings.py:742
 msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-msgstr ""
-"Menghitung tabel Optimum-Index-Factor (OIF) untuk LANDSAT TM kanal 1-5, & 7"
+msgstr "Menghitung tabel Optimum-Index-Factor (OIF) untuk LANDSAT TM kanal 1-5, & 7"
 
 #: ../gui/wxpython/menustrings.py:743
 #, fuzzy
@@ -7852,17 +7348,11 @@ msgstr "Potongan melintang"
 
 #: ../gui/wxpython/menustrings.py:754
 #, fuzzy
-msgid ""
-"Creates cross section 2D raster map from 3D raster map based on 2D elevation "
-"map."
-msgstr ""
-"Buat potongan melintang peta raster 2D dari peta raster 3D berdasarkan peta "
-"ketinggian 2D"
+msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
+msgstr "Buat potongan melintang peta raster 2D dari peta raster 3D berdasarkan peta ketinggian 2D"
 
 #: ../gui/wxpython/menustrings.py:756
-msgid ""
-"Calculates numerically transient, confined groundwater flow in three "
-"dimensions."
+msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:757
@@ -7870,12 +7360,8 @@ msgid "Interpolate volume from points"
 msgstr "Interpolasi volume dari titik"
 
 #: ../gui/wxpython/menustrings.py:758
-msgid ""
-"Interpolates point data to a 3D raster map using regularized spline with "
-"tension (RST) algorithm."
-msgstr ""
-"Interpolasi data titik dari sebuah volume grid 3D dengan algoritma "
-"regularized spline with tension (RST)."
+msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
+msgstr "Interpolasi data titik dari sebuah volume grid 3D dengan algoritma regularized spline with tension (RST)."
 
 #: ../gui/wxpython/menustrings.py:759
 msgid "Report and Statistics"
@@ -7906,11 +7392,8 @@ msgstr "Statistik raster univariat"
 
 #: ../gui/wxpython/menustrings.py:765
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from the non-null 3d cells of a raster3d "
-"map."
-msgstr ""
-"Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
+msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
+msgstr "Menghitung statistik univariat dari sebuah peta raster dengan sel non-null."
 
 #: ../gui/wxpython/menustrings.py:766
 #, fuzzy
@@ -7963,8 +7446,7 @@ msgstr "Koneksikan"
 
 #: ../gui/wxpython/menustrings.py:778
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr ""
-"Cetak/tentukan koneksi basisdata umum untuk mapset saat ini dan keluar."
+msgstr "Cetak/tentukan koneksi basisdata umum untuk mapset saat ini dan keluar."
 
 #: ../gui/wxpython/menustrings.py:779
 msgid "Login"
@@ -8045,12 +7527,8 @@ msgstr "Tabel baru"
 
 #: ../gui/wxpython/menustrings.py:798
 #, fuzzy
-msgid ""
-"Creates and connects a new attribute table to a given layer of an existing "
-"vector map."
-msgstr ""
-"Buat dan tambah sebuah tabel atribut baru ke layer tertentu dari sebuah peta "
-"vektor yang ada."
+msgid "Creates and connects a new attribute table to a given layer of an existing vector map."
+msgstr "Buat dan tambah sebuah tabel atribut baru ke layer tertentu dari sebuah peta vektor yang ada."
 
 #: ../gui/wxpython/menustrings.py:799
 msgid "Remove table"
@@ -8059,9 +7537,7 @@ msgstr "Hapus tabel"
 #: ../gui/wxpython/menustrings.py:800
 #, fuzzy
 msgid "Removes existing attribute table of a vector map."
-msgstr ""
-"Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor "
-"tertentu."
+msgstr "Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor tertentu."
 
 #: ../gui/wxpython/menustrings.py:801
 #, fuzzy
@@ -8071,47 +7547,32 @@ msgstr "Salin tabel"
 #: ../gui/wxpython/menustrings.py:802
 #, fuzzy
 msgid "Allows to join a table to a vector map table."
-msgstr ""
-"Ijinkan untuk perubahan sebuah kolom dalam tabel atribut yang terhubung "
-"dengan satu peta vektor."
+msgstr "Ijinkan untuk perubahan sebuah kolom dalam tabel atribut yang terhubung dengan satu peta vektor."
 
 #: ../gui/wxpython/menustrings.py:803
 msgid "Add columns"
 msgstr "Tambah kolom"
 
 #: ../gui/wxpython/menustrings.py:804
-msgid ""
-"Adds one or more columns to the attribute table connected to a given vector "
-"map."
-msgstr ""
-"Tambah satu atau lebih kolom pada tabel atribut yang terhubung ke peta "
-"vektor tertentu."
+msgid "Adds one or more columns to the attribute table connected to a given vector map."
+msgstr "Tambah satu atau lebih kolom pada tabel atribut yang terhubung ke peta vektor tertentu."
 
 #: ../gui/wxpython/menustrings.py:806
 #, fuzzy
-msgid ""
-"Drops a column from the attribute table connected to a given vector map."
-msgstr ""
-"Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor "
-"tertentu."
+msgid "Drops a column from the attribute table connected to a given vector map."
+msgstr "Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor tertentu."
 
 #: ../gui/wxpython/menustrings.py:808
-msgid ""
-"Renames a column in the attribute table connected to a given vector map."
-msgstr ""
-"Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor "
-"tertentu."
+msgid "Renames a column in the attribute table connected to a given vector map."
+msgstr "Ubah nama sebuah kolom dari tabel atribut yang terhubung ke satu peta vektor tertentu."
 
 #: ../gui/wxpython/menustrings.py:809
 msgid "Change values"
 msgstr "Ubah nilai"
 
 #: ../gui/wxpython/menustrings.py:810
-msgid ""
-"Allows to update a column in the attribute table connected to a vector map."
-msgstr ""
-"Ijinkan untuk perubahan sebuah kolom dalam tabel atribut yang terhubung "
-"dengan satu peta vektor."
+msgid "Allows to update a column in the attribute table connected to a vector map."
+msgstr "Ijinkan untuk perubahan sebuah kolom dalam tabel atribut yang terhubung dengan satu peta vektor."
 
 #: ../gui/wxpython/menustrings.py:811
 #, fuzzy
@@ -8198,9 +7659,8 @@ msgid "Quit modeler"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:840
-#, fuzzy
 msgid "Close modeler window"
-msgstr "Pilih berkas kode EPSG"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:843
 #: ../gui/wxpython/gmodeler/preferences.py:28
@@ -8263,9 +7723,8 @@ msgid "Remove item"
 msgstr "Hapus tabel"
 
 #: ../gui/wxpython/menustrings.py:856
-#, fuzzy
 msgid "Remove action/data from model"
-msgstr "Hilangkan outlier dalam titik"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:857
 #: ../gui/wxpython/gmodeler/preferences.py:421
@@ -8283,18 +7742,16 @@ msgid "Delete intermediate data"
 msgstr "Hapus yang tersaring"
 
 #: ../gui/wxpython/menustrings.py:860
-#, fuzzy
 msgid "Delete intermediate data defined in the model"
-msgstr "Hapus yang tersaring"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:862
 msgid "Run entire model"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:863
-#, fuzzy
 msgid "Validate model"
-msgstr "Rentang yang valid"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:864
 msgid "Validate entire model"
@@ -8310,9 +7767,8 @@ msgid "Display the HTML man pages of Graphical modeler"
 msgstr "Tampilkan halaman manual HTML dari GRASS"
 
 #: ../gui/wxpython/menustrings.py:868
-#, fuzzy
 msgid "About Graphical Modeler"
-msgstr "Bantuan GRASS GIS GUI"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:869
 #, fuzzy
@@ -8383,7 +7839,7 @@ msgstr "Simpan berkas sebagai ..."
 #: ../gui/wxpython/psmap/frame.py:398
 #, fuzzy, python-format
 msgid "Failed to read file %s."
-msgstr "Tidak dapat membaca daftar: %s"
+msgstr "Tidak dapat membaca kode EPSG: %s"
 
 #: ../gui/wxpython/psmap/frame.py:547 ../gui/wxpython/psmap/frame.py:570
 #: ../gui/wxpython/psmap/dialogs.py:2852
@@ -8406,9 +7862,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/psmap/frame.py:920 ../gui/wxpython/gmodeler/frame.py:725
-msgid ""
-"This program is free software under the GNU General Public License(>=v2). "
-"Read the file COPYING that comes with GRASS for details."
+msgid "This program is free software under the GNU General Public License(>=v2). Read the file COPYING that comes with GRASS for details."
 msgstr ""
 
 #: ../gui/wxpython/psmap/frame.py:1163
@@ -8473,9 +7927,8 @@ msgid "Show preview"
 msgstr "Tampilkan grid"
 
 #: ../gui/wxpython/psmap/toolbars.py:73
-#, fuzzy
 msgid "Quit Cartographic Composer"
-msgstr "Bantuan GRASS GIS GUI"
+msgstr ""
 
 #: ../gui/wxpython/psmap/toolbars.py:75 ../gui/wxpython/psmap/dialogs.py:5347
 #: ../gui/wxpython/psmap/dialogs.py:5352
@@ -8568,11 +8021,11 @@ msgid "Instruction file will be loaded with following region: %s\n"
 msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:645
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Region cannot be set\n"
 "%s"
-msgstr ""
+msgstr "Resolusi Atas-Bawah"
 
 #: ../gui/wxpython/psmap/dialogs.py:776 ../gui/wxpython/psmap/dialogs.py:926
 #: ../gui/wxpython/psmap/dialogs.py:1042 ../gui/wxpython/psmap/dialogs.py:1106
@@ -8624,15 +8077,11 @@ msgstr "Tidak dapat membaca daftar: %s"
 
 #: ../gui/wxpython/psmap/dialogs.py:983 ../gui/wxpython/psmap/dialogs.py:1696
 #, python-format
-msgid ""
-"Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
-"which is required by module ps.map."
+msgid "Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
 msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:987 ../gui/wxpython/psmap/dialogs.py:1700
-msgid ""
-"Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is "
-"required by module ps.map."
+msgid "Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
 msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:1109
@@ -8754,7 +8203,7 @@ msgstr "Region tidak valid"
 #: ../gui/wxpython/psmap/dialogs.py:2090
 #, fuzzy
 msgid "Page size"
-msgstr "Pengaturan halaman"
+msgstr "Tema ikon:"
 
 #: ../gui/wxpython/psmap/dialogs.py:2092
 msgid "Margins"
@@ -8779,7 +8228,7 @@ msgstr "Bebas min."
 #: ../gui/wxpython/psmap/dialogs.py:2198
 #, fuzzy
 msgid "Map settings"
-msgstr "Pengaturan teks"
+msgstr "Pengaturan umum"
 
 #: ../gui/wxpython/psmap/dialogs.py:2204
 #, fuzzy
@@ -8932,7 +8381,7 @@ msgstr "Titik "
 #: ../gui/wxpython/psmap/dialogs.py:2929 ../gui/wxpython/psmap/dialogs.py:3295
 #, fuzzy
 msgid "lines"
-msgstr "Garis"
+msgstr "rhumbline"
 
 #: ../gui/wxpython/psmap/dialogs.py:2929
 #, fuzzy
@@ -9026,7 +8475,7 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:3371
 #, fuzzy
 msgid "Use current mask"
-msgstr "Tutup workspace saat ini"
+msgstr "Tutup berkas workspace saat ini"
 
 #: ../gui/wxpython/psmap/dialogs.py:3388 ../gui/wxpython/psmap/dialogs.py:3487
 #, fuzzy
@@ -9036,7 +8485,7 @@ msgstr "Warna"
 #: ../gui/wxpython/psmap/dialogs.py:3393 ../gui/wxpython/psmap/dialogs.py:3492
 #, fuzzy
 msgid "Outline"
-msgstr "Garis"
+msgstr "rhumbline"
 
 #: ../gui/wxpython/psmap/dialogs.py:3397 ../gui/wxpython/psmap/dialogs.py:3501
 msgid "draw outline"
@@ -9170,7 +8619,7 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:3801
 #, fuzzy
 msgid "Choose pattern file:"
-msgstr "Pilih berkas workspace"
+msgstr "Pilih direktori data GRASS:"
 
 #: ../gui/wxpython/psmap/dialogs.py:3805
 #, fuzzy
@@ -9241,7 +8690,7 @@ msgstr ""
 #: ../gui/wxpython/modules/colorrules.py:834
 #, fuzzy
 msgid "range"
-msgstr "Garis"
+msgstr "Kelola"
 
 #: ../gui/wxpython/psmap/dialogs.py:4240
 #, fuzzy
@@ -9265,7 +8714,7 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:4261
 #, fuzzy
 msgid "Label"
-msgstr "Tambahkan label"
+msgstr "Layer"
 
 #: ../gui/wxpython/psmap/dialogs.py:4280 ../gui/wxpython/psmap/dialogs.py:4586
 #, fuzzy
@@ -9323,7 +8772,7 @@ msgstr "raster"
 #: ../gui/wxpython/psmap/dialogs.py:4925
 #, fuzzy
 msgid "Color settings"
-msgstr "Pengaturan teks"
+msgstr "Pengaturan umum"
 
 #: ../gui/wxpython/psmap/dialogs.py:4931
 #, fuzzy
@@ -9539,9 +8988,8 @@ msgid " Server settings "
 msgstr "Pengaturan umum"
 
 #: ../gui/wxpython/modules/ogc_services.py:55
-#, fuzzy
 msgid "Server:"
-msgstr "Driver"
+msgstr ""
 
 #: ../gui/wxpython/modules/ogc_services.py:62
 #, fuzzy
@@ -9563,9 +9011,8 @@ msgid "Layer / Style"
 msgstr "Layer yang akan dihapus"
 
 #: ../gui/wxpython/modules/ogc_services.py:240
-#, fuzzy
 msgid "Title"
-msgstr "Berkas"
+msgstr ""
 
 #: ../gui/wxpython/modules/ogc_services.py:250
 #, fuzzy
@@ -9588,18 +9035,16 @@ msgid "mapcalc statement"
 msgstr "Pernyataan SQL"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:116
-#, fuzzy
 msgid "Operators"
-msgstr "Transparans"
+msgstr ""
 
 #: ../gui/wxpython/modules/mcalc_builder.py:118
 msgid "Operands"
 msgstr ""
 
 #: ../gui/wxpython/modules/mcalc_builder.py:120
-#, fuzzy
 msgid "Expression"
-msgstr "Proyeksi:"
+msgstr ""
 
 #: ../gui/wxpython/modules/mcalc_builder.py:132
 #, fuzzy
@@ -9735,9 +9180,8 @@ msgid "Insert existing raster map"
 msgstr "timpa berkas yang ada"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:214
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Potongan melintang"
+msgstr ""
 
 #: ../gui/wxpython/modules/mcalc_builder.py:221
 #, fuzzy
@@ -9761,9 +9205,8 @@ msgstr "Pilih berkas GRC untuk dimuat"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:481
 #: ../gui/wxpython/modules/mcalc_builder.py:502
-#, fuzzy
 msgid "Expression file (*)|*"
-msgstr "Proyeksi:"
+msgstr ""
 
 #: ../gui/wxpython/modules/mcalc_builder.py:501
 #, fuzzy
@@ -9963,12 +9406,8 @@ msgstr "Tabel warna "
 
 #: ../gui/wxpython/modules/colorrules.py:1096
 #, fuzzy, python-format
-msgid ""
-"Database connection for vector map <%s> is not defined in DB file.  Do you "
-"want to create and connect new attribute table?"
-msgstr ""
-"Koneksi basisdata ke peta vektor <%s> tidak didefinisikan dalam berkas DB. "
-"Anda dapat mendefinisikan sebuah koneksi baru dalam tab 'Kelola layer'."
+msgid "Database connection for vector map <%s> is not defined in DB file.  Do you want to create and connect new attribute table?"
+msgstr "Koneksi basisdata ke peta vektor <%s> tidak didefinisikan dalam berkas DB. Anda dapat mendefinisikan sebuah koneksi baru dalam tab 'Kelola layer'."
 
 #: ../gui/wxpython/modules/colorrules.py:1099
 #, fuzzy
@@ -9977,16 +9416,12 @@ msgstr "Koneksi vektor basisdata"
 
 #: ../gui/wxpython/modules/colorrules.py:1171
 #, fuzzy, python-format
-msgid ""
-"Selected map <%s> is not in current mapset <%s>. Color rules cannot be "
-"edited."
+msgid "Selected map <%s> is not in current mapset <%s>. Color rules cannot be edited."
 msgstr "Berkas region <%s> sudah ada. Anda ingin menimpanya?"
 
 #: ../gui/wxpython/modules/colorrules.py:1175
 #, python-format
-msgid ""
-"Selected map <%s> is not in current mapset <%s>. Attribute table cannot be "
-"edited."
+msgid "Selected map <%s> is not in current mapset <%s>. Attribute table cannot be edited."
 msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1316
@@ -10001,9 +9436,7 @@ msgstr "Silakan tunggu, sedang menampilkan data atribut ..."
 
 #: ../gui/wxpython/modules/colorrules.py:1409
 #, python-format
-msgid ""
-"Number of loaded records reached %d, displaying all the records will be time-"
-"consuming and may lead to computer freezing, do you still want to continue?"
+msgid "Number of loaded records reached %d, displaying all the records will be time-consuming and may lead to computer freezing, do you still want to continue?"
 msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1413
@@ -10126,7 +9559,7 @@ msgstr ""
 #: ../gui/wxpython/modules/extensions.py:486
 #, fuzzy
 msgid "Extension"
-msgstr "Proyeksi:"
+msgstr "Batas luar"
 
 #: ../gui/wxpython/modules/vclean.py:31 ../gui/wxpython/modules/vclean.py:113
 #, fuzzy
@@ -10215,7 +9648,7 @@ msgstr "Pilih peta vektor"
 #: ../gui/wxpython/modules/vclean.py:195
 #, fuzzy
 msgid "line"
-msgstr "Garis"
+msgstr "rhumbline"
 
 #: ../gui/wxpython/modules/vclean.py:196
 #, fuzzy
@@ -10320,8 +9753,9 @@ msgid "Executing selected cleaning operations..."
 msgstr ""
 
 #: ../gui/wxpython/modules/vclean.py:524
+#, fuzzy
 msgid "Vector cleaning command copied to clipboard"
-msgstr ""
+msgstr "Salin perintah saat ini ke clipboard"
 
 #: ../gui/wxpython/location_wizard/wizard.py:91
 msgid "Define GRASS Database and Location Name"
@@ -10350,9 +9784,7 @@ msgid "Unable to create location"
 msgstr "Tidak bisa membuat location"
 
 #: ../gui/wxpython/location_wizard/wizard.py:192
-msgid ""
-"Title of the location is limited only to one line and 256 characters. The "
-"rest of the text will be ignored."
+msgid "Title of the location is limited only to one line and 256 characters. The rest of the text will be ignored."
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:199
@@ -10573,8 +10005,7 @@ msgstr "Definisikan GRASS Location baru"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1799
 msgid "Do you want to set the default region extents and resolution now?"
-msgstr ""
-"Apakah Anda hendak menset batas dan resolusi dari region standar sekarang?"
+msgstr "Apakah Anda hendak menset batas dan resolusi dari region standar sekarang?"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1801
 #, python-format
@@ -10587,8 +10018,7 @@ msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
 "\n"
 "Details: %(err)s"
-msgstr ""
-"Tidak mampu membuat location baru. Location <%s> tidak berhasil dibuat."
+msgstr "Tidak mampu membuat location baru. Location <%s> tidak berhasil dibuat."
 
 #: ../gui/wxpython/location_wizard/wizard.py:1822
 msgid "Location wizard canceled. Location not created."
@@ -10600,9 +10030,7 @@ msgstr "Tidak mampu membuat location baru"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1948
 #, python-format
-msgid ""
-"Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
-"need to change the default GIS data directory in the GRASS startup screen."
+msgid "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will need to change the default GIS data directory in the GRASS startup screen."
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1953
@@ -10739,9 +10167,8 @@ msgid "Numeric column:"
 msgstr "Kolom kunci"
 
 #: ../gui/wxpython/scripts/vkrige.py:94
-#, fuzzy
 msgid "Kriging"
-msgstr "Tiling "
+msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:118
 #, fuzzy
@@ -10758,9 +10185,8 @@ msgid "Kriging Module"
 msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:271
-#, fuzzy
 msgid "Ready."
-msgstr "Muat-ulang"
+msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:295
 msgid "Variogram fitting"
@@ -10830,9 +10256,7 @@ msgstr "Nilai raster"
 
 #: ../gui/wxpython/wxplot/profile.py:256
 msgid "You must draw a transect to profile in the map display window."
-msgstr ""
-"Anda harus menggambar sebuah transet untuk membuat profil di dalam window "
-"map display."
+msgstr "Anda harus menggambar sebuah transet untuk membuat profil di dalam window map display."
 
 #: ../gui/wxpython/wxplot/profile.py:257
 msgid "Nothing to profile"
@@ -11067,13 +10491,11 @@ msgstr "Pilih sumber mapset:"
 
 #: ../gui/wxpython/gcp/manager.py:383
 msgid "You must select a valid location before selecting a mapset"
-msgstr ""
-"Anda harus memilih sebuah location yang valid sebelum memilih mapset tertentu"
+msgstr "Anda harus memilih sebuah location yang valid sebelum memilih mapset tertentu"
 
 #: ../gui/wxpython/gcp/manager.py:396
 msgid "You must select a valid location and mapset in order to continue"
-msgstr ""
-"Anda harus memilih sebuah location dan mapset yang valid untuk melanjutkan"
+msgstr "Anda harus memilih sebuah location dan mapset yang valid untuk melanjutkan"
 
 #: ../gui/wxpython/gcp/manager.py:415
 msgid "Select image/map group to georectify"
@@ -11102,8 +10524,7 @@ msgstr "Ekstensi untuk peta output:"
 
 #: ../gui/wxpython/gcp/manager.py:521
 msgid "You must select a valid image/map group in order to continue"
-msgstr ""
-"Anda harus memilih sebuah grup image/map yang valid untuk dapat melanjutkan"
+msgstr "Anda harus memilih sebuah grup image/map yang valid untuk dapat melanjutkan"
 
 #: ../gui/wxpython/gcp/manager.py:528
 msgid "You must enter an map name extension in order to continue"
@@ -11112,8 +10533,7 @@ msgstr "Anda harus memasukkan nama ekstensi peta untuk dapat melanjutkan"
 #: ../gui/wxpython/gcp/manager.py:594
 #, fuzzy
 msgid "Select maps to display for ground control point (GCP) creation"
-msgstr ""
-"Pilih image/peta untuk ditampilkan dalam pembuatan ground control point (GCP)"
+msgstr "Pilih image/peta untuk ditampilkan dalam pembuatan ground control point (GCP)"
 
 #: ../gui/wxpython/gcp/manager.py:602 ../gui/wxpython/gcp/manager.py:2556
 #, fuzzy
@@ -11152,9 +10572,8 @@ msgid "mapwin not defined for "
 msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1107
-#, fuzzy
 msgid "source"
-msgstr "Cost surface"
+msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1109
 msgid "target"
@@ -11197,14 +10616,12 @@ msgstr "Pembacaan berkas POINTS gagal"
 
 #: ../gui/wxpython/gcp/manager.py:1305
 msgid ""
-"Insufficient points defined and active (checked) for selected rectification "
-"method.\n"
+"Insufficient points defined and active (checked) for selected rectification method.\n"
 "3+ points needed for 1st order,\n"
 "6+ points for 2nd order, and\n"
 "10+ points for 3rd order."
 msgstr ""
-"Tidak cukup titik yang didefinisikan dan diaktifkan (dipilih) untuk metoda "
-"rektifkasi terpilih.\n"
+"Tidak cukup titik yang didefinisikan dan diaktifkan (dipilih) untuk metoda rektifkasi terpilih.\n"
 "3+ titik diperlukan untuk Orde 1,\n"
 "6+ titik diperlukan untuk Orde 2, dan\n"
 "10+ titik diperlukan untuk Orde 3."
@@ -11226,8 +10643,7 @@ msgstr "Penambahan fitur baru untuk peta vektor <%s> gagal."
 
 #: ../gui/wxpython/gcp/manager.py:1443
 #, python-format
-msgid ""
-"Vector map <%s> already exists. Change extension name and georectify again."
+msgid "Vector map <%s> already exists. Change extension name and georectify again."
 msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1453
@@ -11284,12 +10700,12 @@ msgstr ""
 #: ../gui/wxpython/gcp/manager.py:1925 ../gui/wxpython/gcp/manager.py:1942
 #, fuzzy
 msgid "source E"
-msgstr "Cost surface"
+msgstr "Nama kolom"
 
 #: ../gui/wxpython/gcp/manager.py:1926 ../gui/wxpython/gcp/manager.py:1943
 #, fuzzy
 msgid "source N"
-msgstr "Cost surface"
+msgstr "Nama kolom"
 
 #: ../gui/wxpython/gcp/manager.py:1927 ../gui/wxpython/gcp/manager.py:1944
 #, fuzzy
@@ -11336,7 +10752,7 @@ msgstr "Ground Control Point"
 #: ../gui/wxpython/gcp/manager.py:2263
 #, fuzzy
 msgid "source E:"
-msgstr "Cost surface"
+msgstr "Nama kolom"
 
 #: ../gui/wxpython/gcp/manager.py:2264
 msgid "target E:"
@@ -11345,7 +10761,7 @@ msgstr ""
 #: ../gui/wxpython/gcp/manager.py:2265
 #, fuzzy
 msgid "source N:"
-msgstr "Cost surface"
+msgstr "Nama kolom"
 
 #: ../gui/wxpython/gcp/manager.py:2266
 msgid "target N:"
@@ -11459,15 +10875,14 @@ msgstr "Daftar "
 #: ../gui/wxpython/gcp/mapdisplay.py:156
 #, fuzzy
 msgid "Source Display"
-msgstr "Hapus tampilan"
+msgstr "Tampilan"
 
 #: ../gui/wxpython/gcp/mapdisplay.py:160
 #, fuzzy
 msgid "Target Display"
-msgstr "Hapus tampilan"
+msgstr "Tampilan"
 
 #: ../gui/wxpython/gcp/mapdisplay.py:222 ../gui/wxpython/mapdisp/frame.py:377
-#, fuzzy
 msgid "Map Toolbar"
 msgstr "Map Toolbar"
 
@@ -11479,7 +10894,7 @@ msgstr "Tampilkan peta"
 #: ../gui/wxpython/gcp/mapdisplay.py:248
 #, fuzzy
 msgid "GCP Manager toolbar"
-msgstr "Map Toolbar"
+msgstr "Kelola warna"
 
 #: ../gui/wxpython/gcp/mapdisplay.py:440 ../gui/wxpython/mapdisp/frame.py:550
 #, fuzzy
@@ -11546,9 +10961,8 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:287
-#, fuzzy
 msgid "Starting 3D view mode..."
-msgstr "Rentang yang valid"
+msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:289
 #, fuzzy
@@ -11592,12 +11006,8 @@ msgstr "Tidak ada yang dapat diekstrak."
 
 #: ../gui/wxpython/mapdisp/frame.py:919
 #, python-format
-msgid ""
-"Click and drag with left mouse button to measure.%sDouble click with left "
-"button to clear."
-msgstr ""
-"Klik dan geser dengan tombol kiri tetikus untuk mengukur.%sKlik ganda dengan "
-"tombol kiri untuk membersihkan."
+msgid "Click and drag with left mouse button to measure.%sDouble click with left button to clear."
+msgstr "Klik dan geser dengan tombol kiri tetikus untuk mengukur.%sKlik ganda dengan tombol kiri untuk membersihkan."
 
 #: ../gui/wxpython/mapdisp/frame.py:925
 msgid "Measuring distance"
@@ -11716,8 +11126,7 @@ msgid "Drag with mouse to rotate 3D scene"
 msgstr "Tarik dengan tetikus untuk menggeser "
 
 #: ../gui/wxpython/mapdisp/toolbars.py:57
-msgid ""
-"Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
+msgid "Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:59
@@ -11736,15 +11145,12 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:89
 #: ../gui/wxpython/mapdisp/toolbars.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Region "
+msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:90
-msgid ""
-"Note that the wxGUI's 3D view mode is currently disabled on MS Windows "
-"(hopefully this will be fixed soon). Please keep an eye out for updated "
-"versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
+msgid "Note that the wxGUI's 3D view mode is currently disabled on MS Windows (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:98
@@ -11759,10 +11165,7 @@ msgid "Vector digitizer not available"
 msgstr "Toolbar digitasi vektor"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:107
-msgid ""
-"Note that the wxGUI's vector digitizer is currently disabled (hopefully this "
-"will be fixed soon). Please keep an eye out for updated versions of GRASS. "
-"In the meantime you can use \"v.digit\" from the Develop Vector menu."
+msgid "Note that the wxGUI's vector digitizer is currently disabled (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"v.digit\" from the Develop Vector menu."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:357
@@ -11782,15 +11185,8 @@ msgid "Show computational extent"
 msgstr "Tampilkan batas komputasi"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:392
-msgid ""
-"Show/hide computational region extent (set with g.region). Display region "
-"drawn as a blue box inside the computational region, computational region "
-"inside a display region as a red box)."
-msgstr ""
-"Tampilkan/sembunyikan batas region komputasi (tentukan dengan g.region). "
-"Region display ditampilkan sebagai sebuah kotak biru di dalam region "
-"komputasi, region komputasi di dalam region display sebagai sebuah kotak "
-"merah)."
+msgid "Show/hide computational region extent (set with g.region). Display region drawn as a blue box inside the computational region, computational region inside a display region as a red box)."
+msgstr "Tampilkan/sembunyikan batas region komputasi (tentukan dengan g.region). Region display ditampilkan sebagai sebuah kotak biru di dalam region komputasi, region komputasi di dalam region display sebagai sebuah kotak merah)."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:432
 msgid "Display mode"
@@ -11798,12 +11194,8 @@ msgstr "Mode tampilan"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:439
 #, fuzzy
-msgid ""
-"Align region extent based on display size from center point. Default value "
-"for new map displays can be set up in 'User GUI settings' dialog."
-msgstr ""
-"Batas resolusi display sesuai pengaturan region komputasi. Nilai standar "
-"untuk tampilan peta baru dapat diatur di dalam dialog 'User GUI setting'."
+msgid "Align region extent based on display size from center point. Default value for new map displays can be set up in 'User GUI settings' dialog."
+msgstr "Batas resolusi display sesuai pengaturan region komputasi. Nilai standar untuk tampilan peta baru dapat diatur di dalam dialog 'User GUI setting'."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:452
 #, fuzzy
@@ -11811,21 +11203,15 @@ msgid "Display resolution"
 msgstr "Tampilan region"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:459
-msgid ""
-"Constrain display resolution to computational region settings. Default value "
-"for new map displays can be set up in 'User GUI settings' dialog."
-msgstr ""
-"Batas resolusi display sesuai pengaturan region komputasi. Nilai standar "
-"untuk tampilan peta baru dapat diatur di dalam dialog 'User GUI setting'."
+msgid "Constrain display resolution to computational region settings. Default value for new map displays can be set up in 'User GUI settings' dialog."
+msgstr "Batas resolusi display sesuai pengaturan region komputasi. Nilai standar untuk tampilan peta baru dapat diatur di dalam dialog 'User GUI setting'."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:483
 msgid "Map scale"
 msgstr "Skala peta"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:497
-msgid ""
-"As everyone's monitors and resolutions are set differently these values are "
-"not true map scales, but should get you into the right neighborhood."
+msgid "As everyone's monitors and resolutions are set differently these values are not true map scales, but should get you into the right neighborhood."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:550
@@ -11851,9 +11237,7 @@ msgid "Use defined projection"
 msgstr "Pilih proyeksi"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:695
-msgid ""
-"Reproject coordinates displayed in the statusbar. Projection can be defined "
-"in GUI preferences dialog (tab 'Projection')"
+msgid "Reproject coordinates displayed in the statusbar. Projection can be defined in GUI preferences dialog (tab 'Projection')"
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:720
@@ -11902,7 +11286,7 @@ msgstr "Tampilan ke batas region tersimpan"
 #: ../gui/wxpython/mapdisp/mapwindow.py:1603
 #, fuzzy, python-format
 msgid "Region <%s> not found. Operation canceled."
-msgstr "Paling tidak dibutuhkan %d GCP. Operasi dibatalkan."
+msgstr "Tidak ada layer peta terpilih. Operasi digagalkan."
 
 #: ../gui/wxpython/mapdisp/mapwindow.py:1624
 #, fuzzy
@@ -11941,10 +11325,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:869
 #, python-format
-msgid ""
-"Topology for vector map <%s> is not available. Topology is required by "
-"digitizer. Do you want to rebuild topology (takes some time) and open the "
-"vector map for editing?"
+msgid "Topology for vector map <%s> is not available. Topology is required by digitizer. Do you want to rebuild topology (takes some time) and open the vector map for editing?"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:873
@@ -11957,8 +11338,7 @@ msgstr "Terapkan perubahan untuk sesi ini"
 
 #: ../gui/wxpython/vdigit/preferences.py:56
 msgid "Close dialog and save changes to user settings file"
-msgstr ""
-"Tutup dialog dan simpan perubahan ke dalam berkas pengaturan milik pengguna"
+msgstr "Tutup dialog dan simpan perubahan ke dalam berkas pengaturan milik pengguna"
 
 #: ../gui/wxpython/vdigit/preferences.py:147
 msgid "Snapping"
@@ -12001,8 +11381,7 @@ msgid "Select only features inside of selection bounding box"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:219
-msgid ""
-"By default are selected all features overlapping selection bounding box "
+msgid "By default are selected all features overlapping selection bounding box "
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:222
@@ -12117,9 +11496,7 @@ msgid "perimeter"
 msgstr "Parameter"
 
 #: ../gui/wxpython/vdigit/preferences.py:483
-msgid ""
-"Note: These settings are stored in the workspace not in the vector digitizer "
-"preferences."
+msgid "Note: These settings are stored in the workspace not in the vector digitizer preferences."
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:512
@@ -12239,8 +11616,7 @@ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
 
 #: ../gui/wxpython/vdigit/wxdigit.py:97
 #, fuzzy, python-format
-msgid ""
-"Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
+msgid "Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
 msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
 
 #: ../gui/wxpython/vdigit/wxdigit.py:105
@@ -12285,9 +11661,7 @@ msgstr "Digitasi garis baru "
 #: ../gui/wxpython/vdigit/toolbars.py:110
 #, fuzzy
 msgid "Left: new point; Ctrl+Left: undo last point; Right: close line"
-msgstr ""
-"Klik kiri: titik baru; Klik tengah: gagalkan titik terakhir; Klik kanan: "
-"tutup garis"
+msgstr "Klik kiri: titik baru; Klik tengah: gagalkan titik terakhir; Klik kanan: tutup garis"
 
 #: ../gui/wxpython/vdigit/toolbars.py:88
 msgid "Digitize new boundary"
@@ -12298,9 +11672,7 @@ msgid "Digitize new centroid"
 msgstr "Digitasi centroid baru "
 
 #: ../gui/wxpython/vdigit/toolbars.py:94
-msgid ""
-"Digitize new area (composition of boundaries without category and one "
-"centroid with category)"
+msgid "Digitize new area (composition of boundaries without category and one centroid with category)"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:97
@@ -12575,12 +11947,11 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/model.py:2217
 #, fuzzy
 msgid "Variables"
-msgstr "Volume"
+msgstr "Daftar tabel"
 
 #: ../gui/wxpython/gmodeler/frame.py:177
-#, fuzzy
 msgid "Redrawing model..."
-msgstr "Rentang yang valid"
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:212
 #, fuzzy
@@ -12590,14 +11961,11 @@ msgstr "Apakah Anda ingin menyimpan perubahan dalam peta vektor <%s>?"
 #: ../gui/wxpython/gmodeler/frame.py:214
 #, fuzzy
 msgid "Do you want to store current model settings to model file?"
-msgstr ""
-"Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke "
-"berkas workspace?"
+msgstr "Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke berkas workspace?"
 
 #: ../gui/wxpython/gmodeler/frame.py:220
-#, fuzzy
 msgid "Quit Graphical Modeler"
-msgstr "Bantuan GRASS GIS GUI"
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:281
 #, fuzzy
@@ -12621,12 +11989,8 @@ msgstr "Hapus berkas elemen basis data dari mapset saat ini milik pengguna."
 
 #: ../gui/wxpython/gmodeler/frame.py:315 ../gui/wxpython/gmodeler/frame.py:430
 #, fuzzy
-msgid ""
-"Current model is not empty. Do you want to store current settings to model "
-"file?"
-msgstr ""
-"Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke "
-"berkas workspace?"
+msgid "Current model is not empty. Do you want to store current settings to model file?"
+msgstr "Workspace tidak kosong. Apakah Anda hendak menyimpan pengaturan saat ini ke berkas workspace?"
 
 #: ../gui/wxpython/gmodeler/frame.py:318 ../gui/wxpython/gmodeler/frame.py:433
 #, fuzzy
@@ -12636,7 +12000,7 @@ msgstr "Buat mapset baru"
 #: ../gui/wxpython/gmodeler/frame.py:345
 #, fuzzy
 msgid "Choose model file"
-msgstr "Pilih berkas kode EPSG"
+msgstr "Pilih berkas workspace"
 
 #: ../gui/wxpython/gmodeler/frame.py:363
 #, python-format
@@ -12723,9 +12087,7 @@ msgstr ""
 msgid ""
 "Reading model file <%s> failed.\n"
 "Invalid file, unable to parse XML document."
-msgstr ""
-"Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak mampu "
-"membaca dokumen XML."
+msgstr "Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak mampu membaca dokumen XML."
 
 #: ../gui/wxpython/gmodeler/frame.py:828
 #, fuzzy
@@ -12755,7 +12117,7 @@ msgstr "Ground Control Point"
 #: ../gui/wxpython/gmodeler/frame.py:1208
 #, fuzzy
 msgid "Remove control point"
-msgstr "Hilangkan outlier dalam titik"
+msgstr "Pengaturan GCP"
 
 #: ../gui/wxpython/gmodeler/frame.py:1215
 msgid "Intermediate"
@@ -12787,9 +12149,8 @@ msgid "float"
 msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1301
-#, fuzzy
 msgid "string"
-msgstr "Tiling "
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1304
 #, fuzzy
@@ -12823,17 +12184,15 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/frame.py:1436
 #, fuzzy
 msgid "Command / Condition"
-msgstr "Perintah berhasil dijalankan (%d detik)"
+msgstr "Pengaturan dialog perintah"
 
 #: ../gui/wxpython/gmodeler/model.py:58
-#, fuzzy
 msgid "model"
-msgstr "Mode"
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/model.py:59
-#, fuzzy
 msgid "Script generated by wxGUI Graphical Modeler."
-msgstr "Bantuan GRASS GIS GUI"
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/model.py:388 ../gui/wxpython/gmodeler/model.py:450
 #, python-format
@@ -12926,8 +12285,9 @@ msgstr "Arah"
 
 #: ../gui/wxpython/gmodeler/preferences.py:96
 #: ../gui/wxpython/gmodeler/preferences.py:334
+#, fuzzy
 msgid "Valid:"
-msgstr ""
+msgstr "Rentang yang valid"
 
 #: ../gui/wxpython/gmodeler/preferences.py:113
 #, fuzzy
@@ -12999,9 +12359,8 @@ msgid "Name of vector map:"
 msgstr "Nama untuk peta vektor baru:"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:79
-#, fuzzy
 msgid "Name of element:"
-msgstr "Ubah nama mapset"
+msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:119
 msgid "Add new GRASS module to the model"
@@ -13034,7 +12393,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:308
 #, fuzzy, python-format
 msgid "Data: %s"
-msgstr "Deil:"
+msgstr "Basisdata"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:314
 #, fuzzy
@@ -13077,7 +12436,7 @@ msgstr "Karakteristik"
 #: ../gui/wxpython/gmodeler/dialogs.py:417
 #, fuzzy
 msgid "List of items in loop"
-msgstr "Daftar kategori"
+msgstr "Daftar duplikasi"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:420
 msgid "Series"
@@ -13107,9 +12466,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:655
 #, fuzzy, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
-msgstr ""
-"Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci "
-"tidak dapat ditemukan "
+msgstr "Tidak dapat membuat sebuah tabel baru. Nama tabel atau nama kolom kunci tidak dapat ditemukan "
 
 #: ../gui/wxpython/gmodeler/dialogs.py:684
 #, fuzzy
@@ -13123,12 +12480,8 @@ msgstr "Hapus semua"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:849
 #, fuzzy, python-format
-msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
-"to delete them?"
-msgstr ""
-"Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda "
-"benar-benar ingin menghapusnya?"
+msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
+msgstr "Rekaman data terpilih (%d) akan dihapus secara permanen dari tabel. Anda benar-benar ingin menghapusnya?"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:906
 msgid "Normalize"
@@ -13156,9 +12509,7 @@ msgstr "Tidak dapat melakukan render layer peta <%s>."
 
 #: ../gui/wxpython/core/render.py:421
 msgid "GISBASE not set. You must be in GRASS GIS to run this program."
-msgstr ""
-"GISBASE belum ditentukan. Anda harus berada di dalam GRASS GIS untuk "
-"menjalankan program ini."
+msgstr "GISBASE belum ditentukan. Anda harus berada di dalam GRASS GIS untuk menjalankan program ini."
 
 #: ../gui/wxpython/core/render.py:466
 #, python-format
@@ -13181,9 +12532,7 @@ msgid "Unable to zoom to vector map <%s>."
 msgstr "Tidak bisa membuat sebuah peta vektor baru <%s>."
 
 #: ../gui/wxpython/core/render.py:648
-msgid ""
-"Unable to get current geographic extent. Force quiting wxGUI. Please "
-"manually run g.region to fix the problem."
+msgid "Unable to get current geographic extent. Force quiting wxGUI. Please manually run g.region to fix the problem."
 msgstr ""
 
 #: ../gui/wxpython/core/render.py:931
@@ -13378,9 +12727,8 @@ msgid " row %d:"
 msgstr " baris %d:"
 
 #: ../gui/wxpython/core/gcmd.py:116
-#, fuzzy
 msgid "Reason"
-msgstr "Region "
+msgstr ""
 
 #: ../gui/wxpython/core/gcmd.py:378
 msgid "Execution failed:"
@@ -13395,6 +12743,127 @@ msgstr "Kesalahan "
 #, fuzzy, python-format
 msgid "Unable to exectute command: '%s'"
 msgstr "Tidak dapat menganalisis kesalahan perintah %s"
+
+msgid ""
+"No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
+"You can disable this message from digitization settings. Or you can create and link attribute table to the vector map using Attribute Table Manager."
+msgstr ""
+"Tidak ada tabel atribut yang ditautkan dengan peta vektor <%(vector)s>. %(msg)s\n"
+"Anda dapat menonaktifkan pesan ini dari pengesetan digitasi. Atau Anda dapat membuat dan mentautkan tabel atribut ke peta vektor dengan Attribute Table Manager."
+
+#, fuzzy
+msgid "&Abort"
+msgstr "Perintah"
+
+#, fuzzy
+msgid "Profile plot settings"
+msgstr "Pengaturan profil"
+
+#, fuzzy
+msgid "Start Graphical Modeler"
+msgstr "Bantuan GRASS GIS GUI"
+
+msgid "Binary export"
+msgstr "Ekspor biner"
+
+#, fuzzy
+msgid "Quit GRASS GIS"
+msgstr "Tentang GRASS GIS"
+
+#, fuzzy
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr "Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak mampu membaca dokumen XML."
+
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "Kalkulator Peta GRASS %s"
+
+msgid "Import raster map"
+msgstr "Impor peta raster "
+
+msgid "Import vector map"
+msgstr "Impor peta vektor "
+
+#, fuzzy
+msgid "Creates a new vectors as a read-only link to OGR layers"
+msgstr "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Konfigurasi"
+
+#, fuzzy
+msgid "Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask it"
+msgstr "Hitung area bayangan dari posisi matahari dan DEM, baik A: posisi matahari diketahui secara pasti, atau B: hari/waktu untuk menghitung posisi matahari diperoleh dari r.sunmask."
+
+msgid "Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)"
+msgstr "Pembangunan kurva kemiringan (flowline), panjang arah aliran, dan kepadatan flowline (wilayah bukit) dari sebuah model DEM"
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Hasilkan dari basisdata"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Peta raster:"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "Ada kesalahan dalam eksekusi perintah %s"
+
+#, fuzzy
+msgid "Vector digitizer error"
+msgstr "Toolbar digitasi vektor"
+
+#, fuzzy
+msgid "module"
+msgstr "Kode"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Pilih location dan mapset proyek"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Tidak dapat menghapus mapset"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Tidak dapat menghapus mapset"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Window bergerak "
+
+#, fuzzy
+msgid "help"
+msgstr "Bantuan"
+
+#, fuzzy
+msgid "Run"
+msgstr "&Jalankan"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Simpan pengaturan saat ini?"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Tutup dialog dan simpan perubahan ke dalam berkas pengaturan milik pengguna"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "Buat sebuah peta vektor dari berkas titik ASCII atau berkas vektor ASCII."
+
+msgid "Close current workspace file"
+msgstr "Tutup berkas workspace saat ini"
+
+msgid "GRASS SQL Builder: %s"
+msgstr "Pembuat SQL GRASS: %s"
 
 #, fuzzy
 #~ msgid "Starting GRASS GUI..."
@@ -13461,7 +12930,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Create new model (Ctrl+N)"
-#~ msgstr "Buat sebuah berkas workspace baru"
+#~ msgstr "Buat mapset baru"
 
 #, fuzzy
 #~ msgid "Load model from file (Ctrl+O)"
@@ -13485,7 +12954,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Add raster map"
-#~ msgstr "Peta raster:"
+#~ msgstr "Tambahkan layer peta raster"
 
 #, fuzzy
 #~ msgid "Add text"
@@ -13499,19 +12968,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Add action"
-#~ msgstr "Arah"
-
-#~ msgid ""
-#~ "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
-#~ "You can disable this message from digitization settings. Or you can "
-#~ "create and link attribute table to the vector map using Attribute Table "
-#~ "Manager."
-#~ msgstr ""
-#~ "Tidak ada tabel atribut yang ditautkan dengan peta vektor <%(vector)s>. "
-#~ "%(msg)s\n"
-#~ "Anda dapat menonaktifkan pesan ini dari pengesetan digitasi. Atau Anda "
-#~ "dapat membuat dan mentautkan tabel atribut ke peta vektor dengan "
-#~ "Attribute Table Manager."
+#~ msgstr "Tambah kolom"
 
 #, fuzzy
 #~ msgid "Georectification Toolbar"
@@ -13546,10 +13003,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Tampilan"
 
 #, fuzzy
-#~ msgid "size"
-#~ msgstr "Ukuran"
-
-#, fuzzy
 #~ msgid "(value)"
 #~ msgstr "Tetapkan nilai"
 
@@ -13567,11 +13020,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Change ID"
-#~ msgstr "Buat mapset"
-
-#, fuzzy
-#~ msgid "&Abort"
-#~ msgstr "Perintah"
+#~ msgstr "Ubah nilai"
 
 #, fuzzy
 #~ msgid " / Zoom to map"
@@ -13596,10 +13045,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #~ msgid "Profile of %s"
 #~ msgstr "Profil dari %s"
-
-#, fuzzy
-#~ msgid "Profile plot settings"
-#~ msgstr "Pengaturan profil"
 
 #~ msgid "Profile settings"
 #~ msgstr "Pengaturan profil"
@@ -13659,7 +13104,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Close current"
-#~ msgstr "Tutup workspace saat ini"
+#~ msgstr "Tutup berkas workspace saat ini"
 
 #~ msgid "Postscript plot"
 #~ msgstr "Plot postscript"
@@ -13685,9 +13130,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Perbaharui rekap yang sudah ada"
 
 #, fuzzy
-#~ msgid ""
-#~ "Color table already exists. Check out 'replace existing color table' to "
-#~ "overwrite it."
+#~ msgid "Color table already exists. Check out 'replace existing color table' to overwrite it."
 #~ msgstr "Berkas region <%s> sudah ada. Anda ingin menimpanya?"
 
 #~ msgid "Submit"
@@ -13710,7 +13153,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "GRASS GIS Graphical Modeler"
-#~ msgstr "Bantuan GRASS GIS GUI"
+#~ msgstr "Bantuan GRASS GIS"
 
 #~ msgid "Flag not found: %s"
 #~ msgstr "Flag tidak ditemukan: %s"
@@ -13754,18 +13197,12 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Menampilkan workspace"
 
 #, fuzzy
-#~ msgid "Start Graphical Modeler"
-#~ msgstr "Bantuan GRASS GIS GUI"
-
-#, fuzzy
 #~ msgid "Show help page"
-#~ msgstr "Bantuan GRASS GIS"
+#~ msgstr "Garis aliran "
 
 #, fuzzy
 #~ msgid "Lists available GIS elements of the user-specified data type."
-#~ msgstr ""
-#~ "Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke "
-#~ "dalam output standar"
+#~ msgstr "Susun berkas basis data GRASS yang tersedia dari tipe data spesifik ke dalam output standar"
 
 #, fuzzy
 #~ msgid "Select maps to display"
@@ -13805,9 +13242,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Aggregate ASCII xyz import"
 #~ msgstr "Impor agregat ASCII xyz"
 
-#~ msgid "Binary export"
-#~ msgstr "Ekspor biner"
-
 #~ msgid "Multiple export formats using OGR"
 #~ msgstr "Ekspor beragam format dengan OGR"
 
@@ -13816,23 +13250,17 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid ""
-#~ "Unable to initialize display driver of vector digitizer. See 'Command "
-#~ "output' for details.\n"
+#~ "Unable to initialize display driver of vector digitizer. See 'Command output' for details.\n"
 #~ "\n"
 #~ "Details: "
-#~ msgstr ""
-#~ "Tidak mampu menginisiasi driver display, lihat berkas README untuk "
-#~ "informasi lebih lanjut.%s%sDetil: %s (%s)"
+#~ msgstr "Tidak mampu menginisiasi driver display, lihat berkas README untuk informasi lebih lanjut.%s%sDetil: %s (%s)"
 
 #, fuzzy
 #~ msgid ""
 #~ "Unable to open vector map <%s> for editing.\n"
 #~ "\n"
-#~ "Data are probably corrupted, try to run v.build to rebuild the topology "
-#~ "(Vector->Develop vector map->Create/rebuild topology)."
-#~ msgstr ""
-#~ "Tidak bisa membuka peta vektor <%s> untuk mengedit. Data mungkin rusak, "
-#~ "coba jalankan v.build utuk membangun kembali topologi vektor."
+#~ "Data are probably corrupted, try to run v.build to rebuild the topology (Vector->Develop vector map->Create/rebuild topology)."
+#~ msgstr "Tidak bisa membuka peta vektor <%s> untuk mengedit. Data mungkin rusak, coba jalankan v.build utuk membangun kembali topologi vektor."
 
 #~ msgid "Undo failed, data corrupted."
 #~ msgstr "Undo gagal, data rusak."
@@ -13851,16 +13279,14 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Show Help"
-#~ msgstr "Bantuan GRASS GIS"
+#~ msgstr "Garis aliran "
 
 #~ msgid "&Delete layer"
 #~ msgstr "&Hapus layer"
 
 #, fuzzy
 #~ msgid "Unable to initialize display driver of vector digitizer"
-#~ msgstr ""
-#~ "Tidak mampu menginisiasi driver display, lihat berkas README untuk "
-#~ "informasi lebih lanjut.%s%sDetil: %s (%s)"
+#~ msgstr "Tidak mampu menginisiasi driver display, lihat berkas README untuk informasi lebih lanjut.%s%sDetil: %s (%s)"
 
 #~ msgid "Import GDAL supported raster file into a binary raster map layer."
 #~ msgstr "Impor berkas raster GDAL ke dalam layer peta raster biner."
@@ -13879,7 +13305,7 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #, fuzzy
 #~ msgid "Bulk link of raster data"
-#~ msgstr "Peta raster hasil kode-ulang:"
+#~ msgstr "Metadata dasar peta raster"
 
 #, fuzzy
 #~ msgid "Bulk import of vector data"
@@ -13894,11 +13320,8 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Metadata dasar peta vektor"
 
 #, fuzzy
-#~ msgid ""
-#~ "Creates multiple new pseduo-vector maps as a read-only links using OGR."
-#~ msgstr ""
-#~ "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor "
-#~ "lainnya."
+#~ msgid "Creates multiple new pseduo-vector maps as a read-only links using OGR."
+#~ msgstr "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
 
 #, fuzzy
 #~ msgid "Converts multiple DXF layers to GRASS vector maps."
@@ -13907,19 +13330,11 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Georectify raster and vector maps"
 #~ msgstr "Georektifikasi peta vektor dan raster"
 
-#, fuzzy
-#~ msgid "Quit GRASS GIS"
-#~ msgstr "Tentang GRASS GIS"
-
 #~ msgid "Reclassify interactively"
 #~ msgstr "Klasifikasi-ulang secara interaktif"
 
-#~ msgid ""
-#~ "Creates a new map layer whose category values are based upon a "
-#~ "reclassification of the categories in an existing raster map layer."
-#~ msgstr ""
-#~ "Buat sebuah layer peta baru yang nilai kategorinya ditentukan berdasarkan "
-#~ "sebuah klasifikasi-ulang dari layer peta raster yang ada."
+#~ msgid "Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer."
+#~ msgstr "Buat sebuah layer peta baru yang nilai kategorinya ditentukan berdasarkan sebuah klasifikasi-ulang dari layer peta raster yang ada."
 
 #~ msgid "Reclassify using rules file"
 #~ msgstr "Klasifikasi-ulang dengan rules file"
@@ -13928,11 +13343,8 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Pengkodean-ulang dengan rules file"
 
 #, fuzzy
-#~ msgid ""
-#~ "r.recode.file - Use ascii rules file to recode categories in raster map"
-#~ msgstr ""
-#~ "r.recode.rules - Gunakan ASCII rules file untuk melakukan pengkodean-"
-#~ "ulang dalam peta raster"
+#~ msgid "r.recode.file - Use ascii rules file to recode categories in raster map"
+#~ msgstr "r.recode.rules - Gunakan ASCII rules file untuk melakukan pengkodean-ulang dalam peta raster"
 
 #~ msgid "Allows projection conversion of vector maps."
 #~ msgstr "Ijinkan konversi proyeksi pada peta vektor."
@@ -14030,28 +13442,11 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Georectifier settings saved to file '%s'."
 #~ msgstr "Pengaturan georectifier berhasil disimpan ke dalam berkas '%s'."
 
-#, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Gagal dalam pembacaan berkas workspace <%s>. Berkas tidak valid, tidak "
-#~ "mampu membaca dokumen XML."
-
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Tidak mampu membuka berkas workspace <%s> untuk ditulis."
 
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "Kalkulator Peta GRASS %s"
-
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Tampilkan ulang penanda GCP dalam tampilan peta"
-
-#~ msgid "Import raster map"
-#~ msgstr "Impor peta raster "
 
 #, fuzzy
 #~ msgid "Multiple raster data import using GDAL"
@@ -14064,9 +13459,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #, fuzzy
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Impor beragam format dengan GDAL"
-
-#~ msgid "Import vector map"
-#~ msgstr "Impor peta vektor "
 
 #, fuzzy
 #~ msgid "Import vector data using OGR"
@@ -14083,12 +13475,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Multiple link to OGR"
 #~ msgstr "Tautkan ke OGR"
 
-#, fuzzy
-#~ msgid "Creates a new vectors as a read-only link to OGR layers"
-#~ msgstr ""
-#~ "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor "
-#~ "lainnya."
-
 #~ msgid "Import grid 3D volume"
 #~ msgstr "Impor volume grid 3D  "
 
@@ -14098,38 +13484,11 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Ekspor volume grid 3D "
 
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Konfigurasi"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Hitung area bayangan dari posisi matahari dan DEM, baik A: posisi "
-#~ "matahari diketahui secara pasti, atau B: hari/waktu untuk menghitung "
-#~ "posisi matahari diperoleh dari r.sunmask."
-
-#~ msgid ""
-#~ "Takes vector stream data, transforms it to raster and subtracts depth "
-#~ "from the output DEM."
-#~ msgstr ""
-#~ "Gunakan data sungai vektor, ubah ke dalam raster dan kurangi kedalamannya "
-#~ "dari DEM yang dihasilkan."
-
-#~ msgid ""
-#~ "Construction of slope curves (flowlines), flowpath lengths, and flowline "
-#~ "densities (upslope areas) from a raster digital elevation model (DEM)"
-#~ msgstr ""
-#~ "Pembangunan kurva kemiringan (flowline), panjang arah aliran, dan "
-#~ "kepadatan flowline (wilayah bukit) dari sebuah model DEM"
+#~ msgid "Takes vector stream data, transforms it to raster and subtracts depth from the output DEM."
+#~ msgstr "Gunakan data sungai vektor, ubah ke dalam raster dan kurangi kedalamannya dari DEM yang dihasilkan."
 
 #~ msgid "Generates a raster map layer showing watershed subbasins."
-#~ msgstr ""
-#~ "Hasilkan sebuah layer peta raster yang memperlihatkan subbasis tangkapan "
-#~ "air."
+#~ msgstr "Hasilkan sebuah layer peta raster yang memperlihatkan subbasis tangkapan air."
 
 #~ msgid "Watershed basin creation program."
 #~ msgstr "Program pembuatan watershed basin"
@@ -14142,51 +13501,17 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Cari jarak terdekat dalam sebuah jaringan vektor."
 
 #~ msgid "Uses a GRASS vector points map to produce a convex hull vector map."
-#~ msgstr ""
-#~ "Gunakan sebuah peta vektor titik GRASS untuk menghasilkan sebuah peta "
-#~ "vektor convex hull."
+#~ msgstr "Gunakan sebuah peta vektor titik GRASS untuk menghasilkan sebuah peta vektor convex hull."
 
 #~ msgid "Map calculator for volumetric map algebra"
 #~ msgstr "Kalkulator peta untuk aljabar peta volumetrik"
-
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Hasilkan dari basisdata"
-
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Peta raster:"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "Ada kesalahan dalam eksekusi perintah %s"
 
 #~ msgid "Preferences error"
 #~ msgstr "Kesalahan pengaturan"
 
 #, fuzzy
-#~ msgid "Vector digitizer error"
-#~ msgstr "Toolbar digitasi vektor"
-
-#, fuzzy
 #~ msgid "Attribute table manager error"
 #~ msgstr "Attribute Table Manager"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Kode"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Pilih location dan mapset proyek"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Tidak dapat menghapus mapset"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Tidak dapat menghapus mapset"
 
 #, fuzzy
 #~ msgid "Input directory"
@@ -14195,28 +13520,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #, fuzzy
 #~ msgid "Select file extension:"
 #~ msgstr "Pilih sumber location:"
-
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Window bergerak "
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Bantuan"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "&Jalankan"
-
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Simpan pengaturan saat ini?"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr ""
-#~ "Tutup dialog dan simpan perubahan ke dalam berkas pengaturan milik "
-#~ "pengguna"
 
 #, fuzzy
 #~ msgid "Restore default settings"
@@ -14232,11 +13535,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #, fuzzy
 #~ msgid "Link OGR layers"
 #~ msgstr "Daftar layer"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "Buat sebuah peta vektor dari berkas titik ASCII atau berkas vektor ASCII."
 
 #, fuzzy
 #~ msgid "Twist"
@@ -14318,26 +13616,19 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgstr "Workspace baru"
 
 #~ msgid "Create new workspace file (erase current workspace settings first)"
-#~ msgstr ""
-#~ "Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih "
-#~ "dahulu) "
+#~ msgstr "Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih dahulu) "
 
 #~ msgid "Open existing workspace"
 #~ msgstr "Buka workspace yang ada"
 
 #~ msgid "Load map layers from GRC file to layer tree (not fully implemented)"
-#~ msgstr ""
-#~ "Tampilkan layer peta dari berkas GRC ke dalam layer tree (belum berfungsi "
-#~ "optimal)"
+#~ msgstr "Tampilkan layer peta dari berkas GRC ke dalam layer tree (belum berfungsi optimal)"
 
 #~ msgid "Save workspace as"
 #~ msgstr "Simpan workspace sebagai"
 
 #~ msgid "Save current workspace as file"
 #~ msgstr "Simpan workspace saat ini sebagai berkas"
-
-#~ msgid "Close current workspace file"
-#~ msgstr "Tutup berkas workspace saat ini"
 
 #~ msgid "MAT-File (v.4) import"
 #~ msgstr "Impor MAT-File (v.4)"
@@ -14360,141 +13651,65 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Creates explicitly the NULL-value bitmap file."
 #~ msgstr "Buat berkas bitmap nilai-NULL secara eksplisit."
 
-#~ msgid ""
-#~ "Computes direct (beam), diffuse and reflected solar irradiation raster "
-#~ "maps for given day, latitude, surface and atmospheric conditions. Solar "
-#~ "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
-#~ "irradiance, daylight length) are saved in the map history file. "
-#~ "Alternatively, a local time can be specified to compute solar incidence "
-#~ "angle and/or irradiance raster maps. The shadowing effect of the "
-#~ "topography is optionally incorporated."
-#~ msgstr ""
-#~ "Hitung peta raster iradiasi langsung (beam), tersebar (diffuse) dan "
-#~ "terpantul (reflected) untuk hari, posisi, permukaan dan kondisi "
-#~ "atmosferik tertentu. Parameter solar (mis. waktu terbit, waktu terbenam, "
-#~ "deklinasi, iradiansi ekstra terestrial, panjang waktu siang) disimpan "
-#~ "dalam berkas catatan peta. Alternatifnya, waktu lokal dapat ditentukan "
-#~ "untuk menghitung sudut insidens matahari dan/atau peta raster irradiansi. "
-#~ "Efek bayangan akibat topografi juga secara opsional dapat dipertimbangkan."
+#~ msgid "Computes direct (beam), diffuse and reflected solar irradiation raster maps for given day, latitude, surface and atmospheric conditions. Solar parameters (e.g. sunrise, sunset times, declination, extraterrestrial irradiance, daylight length) are saved in the map history file. Alternatively, a local time can be specified to compute solar incidence angle and/or irradiance raster maps. The shadowing effect of the topography is optionally incorporated."
+#~ msgstr "Hitung peta raster iradiasi langsung (beam), tersebar (diffuse) dan terpantul (reflected) untuk hari, posisi, permukaan dan kondisi atmosferik tertentu. Parameter solar (mis. waktu terbit, waktu terbenam, deklinasi, iradiansi ekstra terestrial, panjang waktu siang) disimpan dalam berkas catatan peta. Alternatifnya, waktu lokal dapat ditentukan untuk menghitung sudut insidens matahari dan/atau peta raster irradiansi. Efek bayangan akibat topografi juga secara opsional dapat dipertimbangkan."
 
-#~ msgid ""
-#~ "Uses a multi-scale approach by taking fitting quadratic parameters to any "
-#~ "size window (via least squares)."
-#~ msgstr ""
-#~ "Gunakan pendekatan skala-ragam dengan mengambil parameter fitting "
-#~ "kuadratik  untuk window sebarang ukuran (via kuadrat terkecil)."
+#~ msgid "Uses a multi-scale approach by taking fitting quadratic parameters to any size window (via least squares)."
+#~ msgstr "Gunakan pendekatan skala-ragam dengan mengambil parameter fitting kuadratik  untuk window sebarang ukuran (via kuadrat terkecil)."
 
-#~ msgid ""
-#~ "It optionally produces raster maps to contain backlink UTM coordinates "
-#~ "for tracing spread paths."
-#~ msgstr ""
-#~ "Secara opsional menghasilkan peta raster yang mengandung koordinat UTM "
-#~ "untuk menjejak jalur persebaran."
+#~ msgid "It optionally produces raster maps to contain backlink UTM coordinates for tracing spread paths."
+#~ msgstr "Secara opsional menghasilkan peta raster yang mengandung koordinat UTM untuk menjejak jalur persebaran."
 
 #~ msgid "Reclassify raster categories interactively by entering reclass rules"
-#~ msgstr ""
-#~ "Klasifikasi-ulang kategori secara interaktif dengan memasukkan reclass "
-#~ "rules"
+#~ msgstr "Klasifikasi-ulang kategori secara interaktif dengan memasukkan reclass rules"
 
-#~ msgid ""
-#~ "Recode raster categories interactively by entering recode rules (create "
-#~ "new raster map)"
-#~ msgstr ""
-#~ "Pengkodean-ulang kategori secara interaktif dengan memasukkan recode "
-#~ "rules (membuat sebuah peta raster baru)"
+#~ msgid "Recode raster categories interactively by entering recode rules (create new raster map)"
+#~ msgstr "Pengkodean-ulang kategori secara interaktif dengan memasukkan recode rules (membuat sebuah peta raster baru)"
 
 #~ msgid "Generalization"
 #~ msgstr "Generalisasi"
 
-#~ msgid ""
-#~ "Available drivers: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,"
-#~ "VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,"
-#~ "PostgreSQL,AVCBin"
-#~ msgstr ""
-#~ "Driver yang tersedia: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,"
-#~ "DGN,VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,"
-#~ "PostgreSQL,AVCBin"
+#~ msgid "Available drivers: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,PostgreSQL,AVCBin"
+#~ msgstr "Driver yang tersedia: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,PostgreSQL,AVCBin"
 
-#~ msgid ""
-#~ "Centre node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation"
-#~ msgstr ""
-#~ "Simpul tengah harus dibuka (biaya >= 0). Biaya dari simpul tengah "
-#~ "digunakan dalam perhitungan"
+#~ msgid "Centre node must be opened (costs >= 0). Costs of centre node are used in calculation"
+#~ msgstr "Simpul tengah harus dibuka (biaya >= 0). Biaya dari simpul tengah digunakan dalam perhitungan"
 
-#~ msgid ""
-#~ "Display shortest route along network between 2 nodes (visualization only, "
-#~ "requires XTerm))"
-#~ msgstr ""
-#~ "Tampilkan rute terdekat sepanjang jaringan antara 2 simpul (hanya "
-#~ "visualisasi, membutuhkan XTerm)"
+#~ msgid "Display shortest route along network between 2 nodes (visualization only, requires XTerm))"
+#~ msgstr "Tampilkan rute terdekat sepanjang jaringan antara 2 simpul (hanya visualisasi, membutuhkan XTerm)"
 
-#~ msgid ""
-#~ "Splits net to bands between cost isolines (direction from centre). Centre "
-#~ "node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation."
-#~ msgstr ""
-#~ "Pecah jaringan menjadi kanal-kanal antara cost isolines (arah dari "
-#~ "tengah). Simpul tengah harus dibuka (biaya >= 0). Biaya di simpul tengah "
-#~ "digunakan dalam perhitungan."
+#~ msgid "Splits net to bands between cost isolines (direction from centre). Centre node must be opened (costs >= 0). Costs of centre node are used in calculation."
+#~ msgstr "Pecah jaringan menjadi kanal-kanal antara cost isolines (arah dari tengah). Simpul tengah harus dibuka (biaya >= 0). Biaya di simpul tengah digunakan dalam perhitungan."
 
-#~ msgid ""
-#~ "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic "
-#~ "algorithm is used in this module so the result may be sub optimal"
-#~ msgstr ""
-#~ "Perhatikan bahwa masalah 'Minimum Steiner Tree' adalah berupa algoritma "
-#~ "NP-hard dan heuristic, yang digunakan dalam modul ini, sehingga hasilnya "
-#~ "mungkin kurang optimal"
+#~ msgid "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic algorithm is used in this module so the result may be sub optimal"
+#~ msgstr "Perhatikan bahwa masalah 'Minimum Steiner Tree' adalah berupa algoritma NP-hard dan heuristic, yang digunakan dalam modul ini, sehingga hasilnya mungkin kurang optimal"
 
-#~ msgid ""
-#~ "Note that TSP is NP-hard, heuristic algorithm is used by this module and "
-#~ "created cycle may be sub optimal"
-#~ msgstr ""
-#~ "Perhatikan bahwa modul TSP menggunakan algoritma NP-hard dan heuristic "
-#~ "dan siklus yang dihasilkan mungkin kurang optimal "
+#~ msgid "Note that TSP is NP-hard, heuristic algorithm is used by this module and created cycle may be sub optimal"
+#~ msgstr "Perhatikan bahwa modul TSP menggunakan algoritma NP-hard dan heuristic dan siklus yang dihasilkan mungkin kurang optimal "
 
 #~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr ""
-#~ "Klasifikasi-ulang obyek vektor secara interaktif dengan memasukkan SQL "
-#~ "rules"
+#~ msgstr "Klasifikasi-ulang obyek vektor secara interaktif dengan memasukkan SQL rules"
 
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
+#~ msgid "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color transformation function."
 #~ msgstr "Fungsi transformasi warna peta raster dari HIS ke RGB."
 
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
+#~ msgid "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color transformation function"
 #~ msgstr "Fungsi transformasi warna peta raster dari RGB ke HIS"
 
 #~ msgid "Ortho Photo rectification"
 #~ msgstr "Rektifikasi ortofot"
 
-#~ msgid ""
-#~ "The resulting signature file is used as input for i.maxlik, to generate "
-#~ "an unsupervised image classification."
-#~ msgstr ""
-#~ "Berkas signature yang dihasilkan akan digunakan sebagai input untuk i."
-#~ "maxlik, untuk membuat sebuah citra klasifikasi tak-terbimbing"
+#~ msgid "The resulting signature file is used as input for i.maxlik, to generate an unsupervised image classification."
+#~ msgstr "Berkas signature yang dihasilkan akan digunakan sebagai input untuk i.maxlik, untuk membuat sebuah citra klasifikasi tak-terbimbing"
 
-#~ msgid ""
-#~ "Classification is based on the spectral signature information generated "
-#~ "by either i.cluster, i.class, or i.gensig."
-#~ msgstr ""
-#~ "Klasifikasi didasarkan pada informasi signatur spektral yang dihasilkan "
-#~ "baik oleh i.cluster, i.class maupun i.gensig."
+#~ msgid "Classification is based on the spectral signature information generated by either i.cluster, i.class, or i.gensig."
+#~ msgstr "Klasifikasi didasarkan pada informasi signatur spektral yang dihasilkan baik oleh i.cluster, i.class maupun i.gensig."
 
 #~ msgid "Interactive input for supervised classification"
 #~ msgstr "Input interaktif untuk klasifikasi terbimbing"
 
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
-#~ "'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr ""
-#~ "Salin sebuah tabel. 'from_table' (secara opsional dengan 'where') dapat "
-#~ "digunakan atau 'select', tetapi bukan 'from_table' dan 'select' pada saat "
-#~ "yang sama."
+#~ msgid "Copy a table. Either 'from_table' (optionaly with 'where') can be used or 'select' option, but not 'from_table' and 'select' at the same time."
+#~ msgstr "Salin sebuah tabel. 'from_table' (secara opsional dengan 'where') dapat digunakan atau 'select', tetapi bukan 'from_table' dan 'select' pada saat yang sama."
 
 #~ msgid "Selects data from table."
 #~ msgstr "Pilih data dari tabel."
@@ -14508,25 +13723,14 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "Vector digitizer interface:"
 #~ msgstr "Antarmuka digitasi vektor:"
 
-#~ msgid ""
-#~ "Note: User can choose from two interfaces for digitization. The simple "
-#~ "one uses v.edit command on the background. Map topology is rebuild on "
-#~ "each operation which can significantly slow-down response. The vdigit is "
-#~ "a native interface which uses v.edit functionality, but doesn't call the "
-#~ "module itself."
-#~ msgstr ""
-#~ "Catatan: Pengguna dapat memilih dari dua antarmuka untuk digitasi. Yang "
-#~ "paling simpel menggunakan perintah v.edit di background. Topologi peta "
-#~ "dibangun-ulang untuk setiap operasi yang mana akan memperlambat respons. "
-#~ "vdigit adalah antarmuka natif yang menggunakan fungsi v.edit, tetapi "
-#~ "tidak memanggil modul v.edit."
+#~ msgid "Note: User can choose from two interfaces for digitization. The simple one uses v.edit command on the background. Map topology is rebuild on each operation which can significantly slow-down response. The vdigit is a native interface which uses v.edit functionality, but doesn't call the module itself."
+#~ msgstr "Catatan: Pengguna dapat memilih dari dua antarmuka untuk digitasi. Yang paling simpel menggunakan perintah v.edit di background. Topologi peta dibangun-ulang untuk setiap operasi yang mana akan memperlambat respons. vdigit adalah antarmuka natif yang menggunakan fungsi v.edit, tetapi tidak memanggil modul v.edit."
 
 #~ msgid "Group"
 #~ msgstr "Grup"
 
 #~ msgid "Undo is not implemented in vedit component. Use vdigit instead."
-#~ msgstr ""
-#~ "Undo tidak diterapkan dalam komponen vedit. Sebaiknya gunakan vdigit."
+#~ msgstr "Undo tidak diterapkan dalam komponen vedit. Sebaiknya gunakan vdigit."
 
 #~ msgid "Click here to show database connection information"
 #~ msgstr "Klik di sini untuk menampilkan informasi koneksi basis data"
@@ -14537,9 +13741,6 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 #~ msgid "No database record available."
 #~ msgstr "Tidak ada rekap basisdata yang tersedia."
 
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "Pembuat SQL GRASS: %s"
-
 #~ msgid "Error in digitization tool"
 #~ msgstr "Kesalahan di alat digitasi"
 
@@ -14548,3 +13749,341 @@ msgstr "Tidak dapat menganalisis kesalahan perintah %s"
 
 #~ msgid "Unable to read workspace file"
 #~ msgstr "Tidak mampu membaca berkas workspace"
+
+#~ msgid "Profile text settings"
+#~ msgstr "Pengaturan teks profil"
+
+#~ msgid "Select raster map to profile"
+#~ msgstr "Pilih peta raster untuk dibuat profil"
+
+#~ msgid "Select raster map 1 (required):"
+#~ msgstr "Pilih peta raster 1 (diperlukan):"
+
+#, fuzzy
+#~ msgid "GRASS GIS Histogram of raster map"
+#~ msgstr "Buat histogram dari berkas citra atau raster"
+
+#, fuzzy
+#~ msgid ""
+#~ "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
+#~ "\n"
+#~ "New attribute table can be created by Attribute Table Manager."
+#~ msgstr ""
+#~ "Tidak ada tabel atribut yang ditautkan dengan peta vektor <%(vector)s>. %(msg)s\n"
+#~ "Anda dapat menonaktifkan pesan ini dari pengesetan digitasi. Atau Anda dapat membuat dan mentautkan tabel atribut ke peta vektor dengan Attribute Table Manager."
+
+#~ msgid "Map layer type:"
+#~ msgstr "Tipe layer peta:"
+
+#, fuzzy
+#~ msgid ""
+#~ "No layers marked for import.\n"
+#~ "Operation canceled."
+#~ msgstr "Tidak ada layer peta terpilih. Operasi digagalkan."
+
+#, fuzzy
+#~ msgid "Coarse:"
+#~ msgstr "Bentuk garis"
+
+#, fuzzy
+#~ msgid "style"
+#~ msgstr "Gaya"
+
+#, fuzzy
+#~ msgid "wire color"
+#~ msgstr "Warna garis"
+
+#, fuzzy
+#~ msgid "Fine:"
+#~ msgstr "Garis"
+
+#, fuzzy
+#~ msgid "by color"
+#~ msgstr "Y coord"
+
+#, fuzzy
+#~ msgid "width"
+#~ msgstr "Lebar:"
+
+#, fuzzy
+#~ msgid "color"
+#~ msgstr "Warna: "
+
+#, fuzzy
+#~ msgid "on surface"
+#~ msgstr "Cost surface"
+
+#, fuzzy
+#~ msgid "symbol"
+#~ msgstr "Simbolisasi"
+
+#, fuzzy
+#~ msgid "(step)"
+#~ msgstr "Tahapan"
+
+#~ msgid "At least %d GCPs required. Operation cancelled."
+#~ msgstr "Paling tidak dibutuhkan %d GCP. Operasi dibatalkan."
+
+#~ msgid "Invalid coordinate value. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Create an arbitrary non-earth coordinate system (XY)"
+#~ msgstr "Gunakan sistem koordinat XY"
+
+#, fuzzy
+#~ msgid "You must enter the name of a new map to create"
+#~ msgstr "Anda harus memasukkan nama ekstensi peta untuk dapat melanjutkan"
+
+#, fuzzy
+#~ msgid "You must enter a mapcalc statement to create a new map"
+#~ msgstr "Anda harus memasukkan nama ekstensi peta untuk dapat melanjutkan"
+
+#, fuzzy
+#~ msgid "Create new color table for vector map"
+#~ msgstr "Buat tabel warna baru menggunakan color rules"
+
+#, fuzzy
+#~ msgid "Save color table to file"
+#~ msgstr "Simpan workspace ke dalam berkas"
+
+#, fuzzy
+#~ msgid "&Clear output"
+#~ msgstr "Output perintah"
+
+#, fuzzy
+#~ msgid "&Abort cmd"
+#~ msgstr "Batalkan perintah yang sedang berjalan"
+
+#~ msgid "Abort the running command"
+#~ msgstr "Batalkan perintah yang sedang berjalan"
+
+#~ msgid "Unable to display histogram of raster map."
+#~ msgstr "Tidak mampu menampilkan histogram dari peta raster."
+
+#, fuzzy
+#~ msgid "3D View Toolbar"
+#~ msgstr "Map Toolbar"
+
+#, fuzzy
+#~ msgid "Operation cancelled."
+#~ msgstr "Tidak ada layer peta terpilih. Operasi digagalkan."
+
+#, fuzzy
+#~ msgid "Reading feature id %d failed. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Database link %d not available. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Unable to start database driver <%s>. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Unable to open database <%(db)s> by driver <%(driver)s>. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Unable to execute SQL query '%s'. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Feature id %d is marked as dead. Operation cancelled."
+#~ msgstr "Paling tidak dibutuhkan %d GCP. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Unsupported feature type %d. Operation cancelled."
+#~ msgstr "Nilai koordinat tidak valid. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
+#~ "Layer and category number must be integer.\n"
+#~ "Layer number must be greater then zero."
+#~ msgstr ""
+#~ "Tidak mampu menambahkan layer/kategori baru <%(layer)s/%(category)s>.\n"
+#~ "Layer dan kategori harus integer.\n"
+#~ "Nomor layer harus lebih besar dari nol."
+
+#~ msgid "Unable to insert new record."
+#~ msgstr "Tidak dapat memasukkan rekap baru"
+
+#~ msgid "Unable to update existing record."
+#~ msgstr "Tidak dapat memperbaharui rekaman yang ada."
+
+#, fuzzy
+#~ msgid "Close Map Display %d"
+#~ msgstr "GRASS GIS Map Display: "
+
+#, fuzzy
+#~ msgid "Script file '%s' doesn't exist. Operation cancelled."
+#~ msgstr "Paling tidak dibutuhkan %d GCP. Operasi dibatalkan."
+
+#, fuzzy
+#~ msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
+#~ msgstr "Tidak mampu membuat location baru. Location <%s> tidak berhasil dibuat."
+
+#~ msgid "No map layer selected. Operation cancelled."
+#~ msgstr "Tidak ada layer peta terpilih. Operasi digagalkan."
+
+#, fuzzy
+#~ msgid "Converts GRASS vector map to one of the supported OGR vector formats."
+#~ msgstr "Ubah ke dalam salah satu format vektor OGR."
+
+#, fuzzy
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Ubah sebuah peta raster ke dalam sebuah layer peta vektor."
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr "Hasilkan sebuah layer peta raster dengan area bersambungan yang dikembangkan dari satu sel."
+
+#, fuzzy
+#~ msgid "Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)."
+#~ msgstr "Pembangunan kurva kemiringan (flowline), panjang arah aliran, dan kepadatan flowline (wilayah bukit) dari sebuah model DEM"
+
+#, fuzzy
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Program analisis watershed basin"
+
+#~ msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+#~ msgstr "Isi area dengan no-data dalam peta raster dengan interpolasi v.surf.rst"
+
+#~ msgid "Reports statistics for raster map layers."
+#~ msgstr "Statistik laporan untuk layer peta raster."
+
+#, fuzzy
+#~ msgid "Creates parallel line to input vector lines."
+#~ msgstr "Buat garis paralel ke input garis"
+
+#, fuzzy
+#~ msgid "Topology maintenance"
+#~ msgstr "Dukungan pemeliharaan berkas"
+
+#, fuzzy
+#~ msgid "Feature selection"
+#~ msgstr "Potongan melintang"
+
+#~ msgid "Creates, edits, and lists groups and subgroups of imagery files."
+#~ msgstr "Buat, edit dan daftar grup dan subgrup dari berkas citra."
+
+#~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+#~ msgstr "Mosaik hingga 4 citra dan perluas colormap; buat peta *.mosaik"
+
+#, fuzzy
+#~ msgid "Add loop"
+#~ msgstr "Tambahkan grup layer"
+
+#~ msgid "Draw/re-draw profile"
+#~ msgstr "Gambar/gambar-ulang profil"
+
+#, fuzzy
+#~ msgid "Show/hide 3D view mode settings dialog"
+#~ msgstr "Perlihatkan pengaturan "
+
+#, fuzzy
+#~ msgid "Add vector map"
+#~ msgstr "vektor "
+
+#, fuzzy
+#~ msgid "Add map info"
+#~ msgstr "Tambahkan legenda"
+
+#, fuzzy
+#~ msgid "Add scale bar"
+#~ msgstr "Tambahkan layer"
+
+#, fuzzy
+#~ msgid "Source name"
+#~ msgstr "Nama kolom"
+
+#, fuzzy
+#~ msgid "Close all"
+#~ msgstr "Tutup dialog di akhir perintah"
+
+#, fuzzy
+#~ msgid "Duplicate attributes"
+#~ msgstr "Perbaharui atribut"
+
+#~ msgid "Quit digitizing tool"
+#~ msgstr "Keluar dari tool digitasi"
+
+#~ msgid "Analyze"
+#~ msgstr "Analisa"
+
+#, fuzzy
+#~ msgid "Unable to initialize display driver of vector digitizer. See 'Command output' for details."
+#~ msgstr "Tidak mampu menginisiasi driver display, lihat berkas README untuk informasi lebih lanjut.%s%sDetil: %s (%s)"
+
+#, fuzzy
+#~ msgid "Link multiple GDAL supported raster maps as pseudo GRASS raster map layers."
+#~ msgstr "Impor berkas raster GDAL ke dalam layer peta raster biner."
+
+#, fuzzy
+#~ msgid "Creates a new vector as a read-only link to OGR layer."
+#~ msgstr "Buat sebuah layer peta vektor dengan menggabungkan layer peta vektor lainnya."
+
+#~ msgid "Select image/map to display for ground control point (GCP) creation"
+#~ msgstr "Pilih image/peta untuk ditampilkan dalam pembuatan ground control point (GCP)"
+
+#~ msgid "You must select a valid image/map in order to continue"
+#~ msgstr "Anda harus memilih image/peta yang valid untuk dapat melanjutkan"
+
+#~ msgid "Ground Control Points"
+#~ msgstr "Ground Control Points"
+
+#~ msgid "POINTS file saved"
+#~ msgstr "Berkas POINTS berhasil disimpan"
+
+#~ msgid "Ground Control Point"
+#~ msgstr "Ground Control Point"
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "Kalkulator Peta GRASS %s"
+
+#, fuzzy
+#~ msgid "Save workspace to open file"
+#~ msgstr "Simpan workspace ke dalam berkas"
+
+#, fuzzy
+#~ msgid "Close loaded workspace"
+#~ msgstr "Tutup workspace saat ini"
+
+#~ msgid "E&xit"
+#~ msgstr "&Keluar"
+
+#~ msgid "Config"
+#~ msgstr "Konfigurasi"
+
+#~ msgid "Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask itself."
+#~ msgstr "Hitung area bayangan dari posisi matahari dan DEM, baik A: posisi matahari diketahui secara pasti, atau B: hari/waktu untuk menghitung posisi matahari diperoleh dari r.sunmask."
+
+#~ msgid "GRASS GIS GUI help"
+#~ msgstr "Bantuan GRASS GIS GUI"
+
+#~ msgid "Set ground control points (GCPs)"
+#~ msgstr "Pengaturan GCP"
+
+#~ msgid "Error in command execution %s"
+#~ msgstr "Ada kesalahan dalam eksekusi perintah %s"
+
+#~ msgid "Map calculator"
+#~ msgstr "Kalkulator peta "
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Pilih berkas workspace"
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "Perintah '%s' belum diimplementasikan."
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "Atas"
+
+#~ msgid "Save current settings?"
+#~ msgstr "Simpan pengaturan saat ini?"

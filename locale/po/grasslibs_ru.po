@@ -74,10 +74,8 @@ msgstr "Невозможно прочитать координаты линей�
 
 #: ../lib/symbol/read.c:259
 #, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr ""
-"Неправильное имя символа: '%s' (должно быть: группа/имя или группа/имя@набор)"
+msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr "Неправильное имя символа: '%s' (должно быть: группа/имя или группа/имя@набор)"
 
 #: ../lib/symbol/read.c:283
 #, c-format
@@ -112,12 +110,8 @@ msgid "Memory error in allocating timestamp"
 msgstr "Ошибка памяти при работе с временной меткой"
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
-msgid ""
-"Dev note: Adapted sites library used for vector points. (module should be "
-"updated to GRASS 6 vector library)"
-msgstr ""
-"Заметка разреботчика: Библиотека сайтов адаптированная для векторных точек. "
-"(модуль должен быть обновлен для векторной библиотеки GRASS 6)"
+msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
+msgstr "Заметка разреботчика: Библиотека сайтов адаптированная для векторных точек. (модуль должен быть обновлен для векторной библиотеки GRASS 6)"
 
 #: ../lib/sites/sites.c:372 ../lib/vector/neta/utils.c:116
 #: ../lib/vector/neta/timetables.c:133 ../lib/vector/Vlib/map.c:272
@@ -259,12 +253,8 @@ msgstr "Цвет материала: %d"
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
-msgid ""
-"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
-"advise GRASS developers of this error"
-msgstr ""
-"gsd_rot(): %c неправильная спецификация оси. Поворот игнорирован. Свяжитесь "
-"с разработчиками GRASS"
+msgid "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please advise GRASS developers of this error"
+msgstr "gsd_rot(): %c неправильная спецификация оси. Поворот игнорирован. Свяжитесь с разработчиками GRASS"
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
 #: ../lib/ogsf/gsd_img_ppm.c:53 ../lib/ogsf/gsd_img_ppm.c:96
@@ -282,9 +272,7 @@ msgstr "Попытка получить пустой стэк"
 
 #: ../lib/ogsf/gsd_surf.c:1742
 msgid "Cut-plane points mis-match between surfaces. Check resolution(s)."
-msgstr ""
-"Точки поверхностей секущие плоскость не совпадают. Проверьте разрешение"
-"(разрешения)."
+msgstr "Точки поверхностей секущие плоскость не совпадают. Проверьте разрешение(разрешения)."
 
 #: ../lib/ogsf/gsdrape.c:207
 msgid "Unable to process vector map - out of memory"
@@ -321,8 +309,7 @@ msgstr "Открыть поток MPEG <%s>..."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:306
 msgid "Unable to deduce output format from file extension: using MPEG"
-msgstr ""
-"Невозможно определить выходной формат по расширению файла: использую MPEG"
+msgstr "Невозможно определить выходной формат по расширению файла: использую MPEG"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:310
 msgid "Unable to find suitable output format"
@@ -439,8 +426,7 @@ msgstr "Чтение растрового слоя <%s>..."
 #: ../lib/ogsf/Gs3.c:647
 #, c-format
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
-msgstr ""
-"Диапазон цветовой таблицы не соответствует данным (mincol=%d, maxcol=%d"
+msgstr "Диапазон цветовой таблицы не соответствует данным (mincol=%d, maxcol=%d"
 
 #: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
@@ -470,17 +456,13 @@ msgstr "Невозможно получить строку параметров 
 
 #: ../lib/proj/convert.c:127
 #, c-format
-msgid ""
-"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
-msgstr ""
-"OGR не может обработать строку параметров в стиле PROJ.4: %s (Код ошибки OGR "
-"%d)"
+msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgstr "OGR не может обработать строку параметров в стиле PROJ.4: %s (Код ошибки OGR %d)"
 
 #: ../lib/proj/convert.c:133
 #, c-format
 msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
-msgstr ""
-"OGR не может получить строку параметров в стиле WKT (Код ошибки OGR %d)"
+msgstr "OGR не может получить строку параметров в стиле WKT (Код ошибки OGR %d)"
 
 #: ../lib/proj/convert.c:390
 msgid "No projection name! Projection parameters likely to be meaningless."
@@ -493,20 +475,13 @@ msgstr "Датум <%s> не распознан GRASS, параметры не �
 
 #: ../lib/proj/convert.c:442
 #, c-format
-msgid ""
-"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
-"want to look into this."
-msgstr ""
-"Датум <%s> распознан GRASS, но параметры не найдены. Необходимо ваше участие."
+msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You may want to look into this."
+msgstr "Датум <%s> распознан GRASS, но параметры не найдены. Необходимо ваше участие."
 
 #: ../lib/proj/convert.c:446
 #, c-format
-msgid ""
-"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
-"transform parameters unspecified."
-msgstr ""
-"Неправильный номер трансформации %d; правильный диапазон от 1 до %d. "
-"Параметры трансформации датума оставлены незаполненными."
+msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
+msgstr "Неправильный номер трансформации %d; правильный диапазон от 1 до %d. Параметры трансформации датума оставлены незаполненными."
 
 #: ../lib/proj/datum.c:251
 msgid "Unable to open temporary file"
@@ -610,8 +585,7 @@ msgstr "Тип данных используемый в выходном фай�
 
 #: ../lib/g3d/g3dparam.c:61
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr ""
-"Точность используемая в выходном файле (по умолчанию, максимальная или 0-52"
+msgstr "Точность используемая в выходном файле (по умолчанию, максимальная или 0-52"
 
 #: ../lib/g3d/g3dparam.c:71
 msgid "The compression method used in the output file"
@@ -808,9 +782,7 @@ msgstr "группа <%s> ссылается на следующие растр�
 
 #: ../lib/imagery/sigsetfile.c:41
 #, fuzzy, c-format
-msgid ""
-"Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> "
-"is not current mapset"
+msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> is not current mapset"
 msgstr "Невозможно создать файл [%s] для подгруппы [%s] или группы [%s в %s]"
 
 #: ../lib/imagery/sigsetfile.c:57
@@ -1356,9 +1328,7 @@ msgstr ""
 #: ../lib/driver/parse_ftcap.c:32
 #, c-format
 msgid "%s: Unable to read font definition file; use the default"
-msgstr ""
-"%s: Невозможно прочитать файл описания шрифта; используется описание по "
-"умолчанию"
+msgstr "%s: Невозможно прочитать файл описания шрифта; используется описание по умолчанию"
 
 #: ../lib/driver/parse_ftcap.c:38
 #, c-format
@@ -1380,11 +1350,8 @@ msgid "Monitor: get_command: Premature EOF"
 msgstr "Monitor: get_command: Premature EOF"
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid ""
-"The type of solver which should solve the symmetric linear equation system"
-msgstr ""
-"Этот тип алгоритма должен использоваться для симметричных систем линейных "
-"уравнений"
+msgid "The type of solver which should solve the symmetric linear equation system"
+msgstr "Этот тип алгоритма должен использоваться для симметричных систем линейных уравнений"
 
 #: ../lib/gpde/N_parse_options.c:71
 msgid "The type of solver which should solve the linear equation system"
@@ -1392,23 +1359,15 @@ msgstr "Этот тип алгоритма должен использовать
 
 #: ../lib/gpde/N_parse_options.c:80
 msgid "Maximum number of iteration used to solver the linear equation system"
-msgstr ""
-"Максимальное количество итераций для решения системы линейных уравнений"
+msgstr "Максимальное количество итераций для решения системы линейных уравнений"
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid ""
-"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
-msgstr ""
-"Критерий ошибки прерывания для итерационных алгоритмов (jacobi, sor, cg или "
-"bicgstab)"
+msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgstr "Критерий ошибки прерывания для итерационных алгоритмов (jacobi, sor, cg или bicgstab)"
 
 #: ../lib/gpde/N_parse_options.c:98
-msgid ""
-"The relaxation parameter used by the jacobi and sor solver for speedup or "
-"stabilizing"
-msgstr ""
-"Параметр релаксации используемый алгоритмами jacobi и sor для ускорения или "
-"стабилизации"
+msgid "The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing"
+msgstr "Параметр релаксации используемый алгоритмами jacobi и sor для ускорения или стабилизации"
 
 #: ../lib/gpde/N_parse_options.c:106
 msgid "The calculation time in seconds"
@@ -1766,12 +1725,8 @@ msgstr "%s: Ошибка в алгоритме классификации"
 
 #: ../lib/arraystats/class.c:221
 #, c-format
-msgid ""
-"There are classbreaks outside the range min-max. Number of classes reduced "
-"to %i, but using probabilities for %i classes."
-msgstr ""
-"Границы классов вне диапазона минимум-максимум. Число классов уменьшено до "
-"%i, используются вероятности для %i классов."
+msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
+msgstr "Границы классов вне диапазона минимум-максимум. Число классов уменьшено до %i, используются вероятности для %i классов."
 
 #: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
 #, c-format
@@ -1813,11 +1768,8 @@ msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
-msgid ""
-"Attempt to read line angle for the line which is not connected to the node: "
-"node %d, line %d"
-msgstr ""
-"Попытка считать угол линии, которая не соединена с узлом: узел %d, линия %d"
+msgid "Attempt to read line angle for the line which is not connected to the node: node %d, line %d"
+msgstr "Попытка считать угол линии, которая не соединена с узлом: узел %d, линия %d"
 
 #: ../lib/vector/diglib/file.c:157
 #, fuzzy
@@ -1940,9 +1892,7 @@ msgstr "Попытка удалить уже удаленный полигон"
 #: ../lib/vector/diglib/plus_area.c:394
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
-msgstr ""
-"Для полигона зарегистрирован удаленный центроид %d (баг в векторной "
-"библиотеке)"
+msgstr "Для полигона зарегистрирован удаленный центроид %d (баг в векторной библиотеке)"
 
 #: ../lib/vector/diglib/plus_area.c:418
 #, c-format
@@ -1970,8 +1920,7 @@ msgstr "Попытка восстановить нормальный объек�
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
-msgstr ""
-"Неправильное имя векторного слоя <%s>. Не должно содержать '.' или 'NULL'."
+msgstr "Неправильное имя векторного слоя <%s>. Не должно содержать '.' или 'NULL'."
 
 #: ../lib/vector/Vlib/legal_vname.c:55
 #, c-format
@@ -1985,11 +1934,8 @@ msgstr "Неправильное имя векторного слоя <%s>. Си
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, c-format
-msgid ""
-"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
-msgstr ""
-"Неправильное имя векторного слоя <%s>. Ключевое слово SQL не может быть "
-"использовано в имени."
+msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgstr "Неправильное имя векторного слоя <%s>. Ключевое слово SQL не может быть использовано в имени."
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
 #, c-format
@@ -2299,12 +2245,8 @@ msgstr "векторный слой не открыт"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, fuzzy, c-format
-msgid ""
-"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
-"vector map <%s>: %d)"
-msgstr ""
-"Vect_read_line(): линия с id %d невозможна (максимальное количество объектом "
-"в векторном слое <%s>: %d)"
+msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgstr "Vect_read_line(): линия с id %d невозможна (максимальное количество объектом в векторном слое <%s>: %d)"
 
 #: ../lib/vector/Vlib/geos.c:61
 #, fuzzy
@@ -2338,12 +2280,8 @@ msgstr "Невозможно перезаписать объект %d"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid ""
-"Vect_read_line(): feature id %d is not reasonable (max features in vector "
-"map <%s>: %d)"
-msgstr ""
-"Vect_read_line(): линия с id %d невозможна (максимальное количество объектом "
-"в векторном слое <%s>: %d)"
+msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgstr "Vect_read_line(): линия с id %d невозможна (максимальное количество объектом в векторном слое <%s>: %d)"
 
 #: ../lib/vector/Vlib/sindex.c:97
 msgid "not implemented"
@@ -2355,12 +2293,8 @@ msgid "Unable to delete item %d from spatial index"
 msgstr "Невозможно удалить запись %d из пространственного индекса"
 
 #: ../lib/vector/Vlib/sindex.c:127
-msgid ""
-"Unable to build spatial index from topology, vector map is not opened at "
-"topo level 2"
-msgstr ""
-"Невозможно построить пространственный индекс из топологии, векторный слой не "
-"открыт на втором топо уровне"
+msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
+msgstr "Невозможно построить пространственный индекс из топологии, векторный слой не открыт на втором топо уровне"
 
 #: ../lib/vector/Vlib/sindex.c:168
 msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
@@ -2394,8 +2328,7 @@ msgid "Partial build for OGR is not supported"
 msgstr "Частичные сборки OGR не поддерживаются"
 
 #: ../lib/vector/Vlib/build_ogr.c:342
-msgid ""
-"Random read is not supported by OGR for this layer, cannot build support"
+msgid "Random read is not supported by OGR for this layer, cannot build support"
 msgstr "Для этого слоя OGR не поддерживается cлучайное чтение"
 
 #: ../lib/vector/Vlib/build_ogr.c:349
@@ -2445,21 +2378,13 @@ msgstr "Регистрируются дуги..."
 
 #: ../lib/vector/Vlib/net.c:254
 #, c-format
-msgid ""
-"Database record for line %d (cat = %d, forward/both direction(s)) not found "
-"(forward/both direction(s) of line skipped)"
-msgstr ""
-"Запись в БД для линии %d (cat = %d, вперед/оба направления) не найден "
-"(вперед/оба направления линии пропущены)"
+msgid "Database record for line %d (cat = %d, forward/both direction(s)) not found (forward/both direction(s) of line skipped)"
+msgstr "Запись в БД для линии %d (cat = %d, вперед/оба направления) не найден (вперед/оба направления линии пропущены)"
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
-msgid ""
-"Database record for line %d (cat = %d, backword direction) not found"
-"(direction of line skipped)"
-msgstr ""
-"Запись в БД для линии %d (cat = %d, направление назад) не найден "
-"(направление назад пропущено)"
+msgid "Database record for line %d (cat = %d, backword direction) not found(direction of line skipped)"
+msgstr "Запись в БД для линии %d (cat = %d, направление назад) не найден (направление назад пропущено)"
 
 #: ../lib/vector/Vlib/net.c:322
 msgid "Cannot add network arc"
@@ -2575,39 +2500,23 @@ msgstr "Невозможно открыть fidx файл для векторн�
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
-msgid ""
-"Feature index format version %d.%d is not supported by this release. Try to "
-"rebuild topology or upgrade GRASS."
-msgstr ""
-"Формат объектного индекса %d.%d не поддерживается этим выпуском. Попробуйте "
-"перестроить топологию или обновить GRASS"
+msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
+msgstr "Формат объектного индекса %d.%d не поддерживается этим выпуском. Попробуйте перестроить топологию или обновить GRASS"
 
 #: ../lib/vector/Vlib/open_ogr.c:152
 #, c-format
-msgid ""
-"Your GRASS version does not fully support feature index format %d.%d of the "
-"vector. Consider to rebuild topology or upgrade GRASS."
-msgstr ""
-"Ваша версия GRASS полностью не поддерживает формат объектного индекса %d.%d "
-"вектора. Попробуйте перестроить топологию или обновить GRASS"
+msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
+msgstr "Ваша версия GRASS полностью не поддерживает формат объектного индекса %d.%d вектора. Попробуйте перестроить топологию или обновить GRASS"
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
-msgid ""
-"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
-"excess)"
-msgstr ""
-"Файлы coor векторного слоя <%s@%s> больше, чем они должны быть (на %ld "
-"байтов)"
+msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
+msgstr "Файлы coor векторного слоя <%s@%s> больше, чем они должны быть (на %ld байтов)"
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
-msgid ""
-"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
-"missing)."
-msgstr ""
-"Файлы coor векторного слоя <%s@%s> меньше, чем они должны быть (на %ld "
-"байтов)"
+msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
+msgstr "Файлы coor векторного слоя <%s@%s> меньше, чем они должны быть (на %ld байтов)"
 
 #: ../lib/vector/Vlib/open.c:100
 #, c-format
@@ -2615,21 +2524,14 @@ msgid "Programmer requested unknown open level %d"
 msgstr "Programmer requested unknown open level %d"
 
 #: ../lib/vector/Vlib/open.c:179
-msgid ""
-"Vector map which is not in the current mapset cannot be opened for update"
-msgstr ""
-"Векторный слой не находится в текущем наборе и не может быть открыт для "
-"обновления"
+msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgstr "Векторный слой не находится в текущем наборе и не может быть открыт для обновления"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
 #, c-format
-msgid ""
-"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
-"by v.build."
-msgstr ""
-"Невозможно открыть векторный слой <%s> на уровне %d. Попробуйте перестроить "
-"векторную топологию с помощью v.build."
+msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topology by v.build."
+msgstr "Невозможно открыть векторный слой <%s> на уровне %d. Попробуйте перестроить векторную топологию с помощью v.build."
 
 #: ../lib/vector/Vlib/open.c:214
 msgid "Unable to read head file"
@@ -2667,8 +2569,7 @@ msgstr "Невозможно открыть файл статистики <%s>"
 
 #: ../lib/vector/Vlib/open.c:731
 msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr ""
-"Размер файла 'coor' отличается от значения сохраненного в файле топологии"
+msgstr "Размер файла 'coor' отличается от значения сохраненного в файле топологии"
 
 #: ../lib/vector/Vlib/open.c:742
 #, c-format
@@ -2702,15 +2603,12 @@ msgstr "Vect_new_cats_struct(): Не хватает памяти"
 #: ../lib/vector/Vlib/cats.c:129
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
-msgstr ""
-"Слишком много категорий (%d), невозможно установить категорию %d (слой %d)"
+msgstr "Слишком много категорий (%d), невозможно установить категорию %d (слой %d)"
 
 #: ../lib/vector/Vlib/cats.c:407
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
-msgstr ""
-"Невозможно сконвертировать строку категории '%s' (из '%s') в диапазон "
-"категорий"
+msgstr "Невозможно сконвертировать строку категории '%s' (из '%s') в диапазон категорий"
 
 #: ../lib/vector/Vlib/graph.c:143
 msgid "Unable to add network arc"
@@ -2722,13 +2620,11 @@ msgstr "Vect_segment_intersection() не поддерживает 3D"
 
 #: ../lib/vector/Vlib/intersect.c:322
 msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
-msgstr ""
-"Ошибка Vect_segment_intersection() (коллинеарные вертикальные сегменты)"
+msgstr "Ошибка Vect_segment_intersection() (коллинеарные вертикальные сегменты)"
 
 #: ../lib/vector/Vlib/intersect.c:448
 msgid "Vect_segment_intersection() ERROR (collinear non vertical segments)"
-msgstr ""
-"Ошибка Vect_segment_intersection() (коллинеарные не вертикальные сегменты)"
+msgstr "Ошибка Vect_segment_intersection() (коллинеарные не вертикальные сегменты)"
 
 #: ../lib/vector/Vlib/intersect.c:1099 ../lib/vector/Vlib/intersect.c:1105
 #: ../lib/vector/Vlib/intersect.c:1107 ../lib/vector/Vlib/intersect.c:1155
@@ -2816,18 +2712,13 @@ msgstr "Невозможно перезаписать объект %d"
 
 #: ../lib/vector/Vlib/write.c:219
 #, c-format
-msgid ""
-"Unable to delete feature %d, vector map <%s> is not opened on topology level"
-msgstr ""
-"Невозможно удалить объект %d, векторный слой <%s> не открыт на уровне "
-"топологии"
+msgid "Unable to delete feature %d, vector map <%s> is not opened on topology level"
+msgstr "Невозможно удалить объект %d, векторный слой <%s> не открыт на уровне топологии"
 
 #: ../lib/vector/Vlib/write.c:225
 #, c-format
-msgid ""
-"Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr ""
-"Невозможно удалить объект %d, векторный слой <%s> не открыт в режиме записи"
+msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
+msgstr "Невозможно удалить объект %d, векторный слой <%s> не открыт в режиме записи"
 
 #: ../lib/vector/Vlib/write.c:239
 #, fuzzy, c-format
@@ -2836,19 +2727,13 @@ msgstr "Невозможно восстановить объект %d из ве�
 
 #: ../lib/vector/Vlib/write.c:265
 #, c-format
-msgid ""
-"Unable to restore feature %d, vector map <%s> is not opened on topology level"
-msgstr ""
-"Невозможно восстановить объект %d, векторный слой <%s> не открыт на уровне "
-"топологии"
+msgid "Unable to restore feature %d, vector map <%s> is not opened on topology level"
+msgstr "Невозможно восстановить объект %d, векторный слой <%s> не открыт на уровне топологии"
 
 #: ../lib/vector/Vlib/write.c:271
 #, c-format
-msgid ""
-"Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr ""
-"Невозможно восстановить объект %d, векторный слой <%s> не открыт в режиме "
-"записи"
+msgid "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
+msgstr "Невозможно восстановить объект %d, векторный слой <%s> не открыт в режиме записи"
 
 #: ../lib/vector/Vlib/write.c:285
 #, c-format
@@ -2902,8 +2787,7 @@ msgstr "Номер слоя должен быть 1 или больше"
 
 #: ../lib/vector/Vlib/field.c:98
 msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr ""
-"Невозможно добавить связь с базой данных, слой не открыт в режиме записи"
+msgstr "Невозможно добавить связь с базой данных, слой не открыт в режиме записи"
 
 #: ../lib/vector/Vlib/field.c:104
 msgid "Unable to add database link"
@@ -2947,12 +2831,8 @@ msgid "Unable to open OGR DBMI driver"
 msgstr "Невозможно открыть драйвер OGR DBMI"
 
 #: ../lib/vector/Vlib/field.c:551
-msgid ""
-"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
-"available in OGR DB table"
-msgstr ""
-"Все тесты FID окончены неудачно. Ни  'FID' ни 'ogc_fid' ни 'ogr_fid' ни "
-"'gid' недоступны в таблице OGR DB"
+msgid "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table"
+msgstr "Все тесты FID окончены неудачно. Ни  'FID' ни 'ogc_fid' ни 'ogr_fid' ни 'gid' недоступны в таблице OGR DB"
 
 #: ../lib/vector/Vlib/field.c:606
 #, c-format
@@ -3016,19 +2896,12 @@ msgstr "Неизвестный инструмент запроса"
 
 #: ../lib/rst/interp_float/segmen2d.c:111
 #, fuzzy
-msgid ""
-"Taking too long to find points for interpolation - please change the region "
-"to area where your points are. Continuing calculations..."
-msgstr ""
-"попытка найти точки для интерполяции заняла слишком много времени -- "
-"попробуйте изменить регион на область где точки есть. Вычисление "
-"продолжается..."
+msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
+msgstr "попытка найти точки для интерполяции заняла слишком много времени -- попробуйте изменить регион на область где точки есть. Вычисление продолжается..."
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
-msgid ""
-"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
-"cell. Z-value %f, zmin %f, zmax %f."
+msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -3103,9 +2976,7 @@ msgstr "точки %d игнорируются -- точки стоят слиш
 
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
-msgid ""
-"%d points given for interpolation (after thinning) is less than given NPMIN="
-"%d"
+msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
 msgstr "%d точек для интерполяции (после прореживания) меньше чем NPMIN=%d"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
@@ -3114,19 +2985,13 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
-msgid ""
-"Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
-"smooth connection of segments, npmin > segmax (see manual)"
+msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
-msgid ""
-"There are less than %d points for interpolation. No segmentation is "
-"necessary, to run the program faster set segmax=%d (see manual)"
-msgstr ""
-"Точек для интерполяции меньше чем %d. Сегментация не нужна, для ускорения "
-"выполнения программы установите segmax=%d (см. руководство)"
+msgid "There are less than %d points for interpolation. No segmentation is necessary, to run the program faster set segmax=%d (see manual)"
+msgstr "Точек для интерполяции меньше чем %d. Сегментация не нужна, для ускорения выполнения программы установите segmax=%d (см. руководство)"
 
 #: ../lib/rst/interp_float/vinput2d.c:355
 #, fuzzy, c-format
@@ -3342,8 +3207,7 @@ msgstr "Недостаточно места в файле истории для 
 
 #: ../lib/gis/history.c:285
 msgid "Not enough room in history file for command line (truncated)."
-msgstr ""
-"Недостаточно места в файле истории для записи командной строки (truncated)"
+msgstr "Недостаточно места в файле истории для записи командной строки (truncated)"
 
 #: ../lib/gis/put_title.c:29
 #, c-format
@@ -3414,9 +3278,7 @@ msgid "%s not set"
 msgstr "%s не установлен"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-msgid ""
-"Incompatible library version for module. You need to rebuild GRASS or "
-"untangle multiple installations."
+msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
 msgstr ""
 
 #: ../lib/gis/gisinit.c:63
@@ -3431,8 +3293,7 @@ msgstr "НАБОР %s не найден"
 
 #: ../lib/gis/gisinit.c:110
 msgid "System not initialized. Programmer forgot to call G_gisinit()."
-msgstr ""
-"Система не инициализирована. Программистов не выполнен вызов G_gisinit()."
+msgstr "Система не инициализирована. Программистов не выполнен вызов G_gisinit()."
 
 #: ../lib/gis/color_read.c:116
 #, c-format
@@ -3727,12 +3588,8 @@ msgid "Layer number"
 msgstr "Номер слоя"
 
 #: ../lib/gis/parser.c:596
-msgid ""
-"A single vector map can be connected to multiple database tables. This "
-"number determines which table to use."
-msgstr ""
-"Единственная векторная карта может быть подключена к нескольким таблицами "
-"базы данных. Это число определяет какую таблицу использовать."
+msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
+msgstr "Единственная векторная карта может быть подключена к нескольким таблицами базы данных. Это число определяет какую таблицу использовать."
 
 #: ../lib/gis/parser.c:605
 msgid "Category value"
@@ -3791,15 +3648,11 @@ msgstr "Ошибка в описаниях, опция %s в <%s> не суще�
 
 #: ../lib/gis/parser.c:925
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
-msgstr ""
-"Используйте либо флаг --quiet либо --verbose, но не оба вместе. "
-"Предполагается --verbose."
+msgstr "Используйте либо флаг --quiet либо --verbose, но не оба вместе. Предполагается --verbose."
 
 #: ../lib/gis/parser.c:939
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
-msgstr ""
-"Используйте либо флаг --quiet либо --verbose, но не оба вместе. "
-"Предполагается --quiet."
+msgstr "Используйте либо флаг --quiet либо --verbose, но не оба вместе. Предполагается --quiet."
 
 #: ../lib/gis/parser.c:970
 #, c-format
@@ -4132,11 +3985,8 @@ msgstr ""
 "неверная проекция\n"
 
 #: ../lib/gis/set_window.c:76
-msgid ""
-"G_set_window(): projection/zone differs from that of currently open raster "
-"maps"
-msgstr ""
-"G_set_window(): проекция/зона отличается от текущих открытых растровых карт"
+msgid "G_set_window(): projection/zone differs from that of currently open raster maps"
+msgstr "G_set_window(): проекция/зона отличается от текущих открытых растровых карт"
 
 #: ../lib/gis/home.c:39
 msgid "unable to determine user's home directory"
@@ -4366,8 +4216,7 @@ msgstr "%s: слой [%s] не открыт для случайной запис
 #: ../lib/gis/put_row.c:266
 #, c-format
 msgid "%s: map [%s] not open for sequential write - request ignored"
-msgstr ""
-"%s: слой [%s] не открыт для последовательной записи - запрос игнорирован"
+msgstr "%s: слой [%s] не открыт для последовательной записи - запрос игнорирован"
 
 #: ../lib/gis/put_row.c:270
 #, c-format
@@ -4552,12 +4401,8 @@ msgstr "Невозможно найти <%s@%s>"
 
 #: ../lib/gis/opencell.c:188
 #, c-format
-msgid ""
-"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
-"%s> which does not exist"
-msgstr ""
-"Невозможно открыть растровый слой <%s@%s> так как он - переклассификация "
-"растрового слоя <%s@%s> которая не существует"
+msgid "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%s> which does not exist"
+msgstr "Невозможно открыть растровый слой <%s@%s> так как он - переклассификация растрового слоя <%s@%s> которая не существует"
 
 #: ../lib/gis/opencell.c:212
 #, c-format
@@ -4566,12 +4411,8 @@ msgstr "Растровый слой <%s@%s>: формат поля в файле
 
 #: ../lib/gis/opencell.c:219
 #, c-format
-msgid ""
-"Raster map <%s@%s> is in different projection than current region. Found "
-"raster map <%s@%s>, should be <%s>."
-msgstr ""
-"Растровый слой <%s@%s> в проекции отличной от проекции текущего региона. "
-"Найден растровый слой <%s@%s>, должно быть <%s> ."
+msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
+msgstr "Растровый слой <%s@%s> в проекции отличной от проекции текущего региона. Найден растровый слой <%s@%s>, должно быть <%s> ."
 
 #: ../lib/gis/opencell.c:226
 #, c-format
@@ -4586,8 +4427,7 @@ msgstr "Растровый слой <%s@%s>: слишком много байт 
 #: ../lib/gis/opencell.c:262
 #, c-format
 msgid "map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"
-msgstr ""
-"слой <%s@%s> является связью GDAL но GRASS скомпилирован без поддержки GDAL"
+msgstr "слой <%s@%s> является связью GDAL но GRASS скомпилирован без поддержки GDAL"
 
 #: ../lib/gis/opencell.c:642
 #, c-format
@@ -4609,11 +4449,8 @@ msgid "G__open_raster_new(): no temp files available"
 msgstr "G__open_raster_new(): недоступны временные файлы"
 
 #: ../lib/gis/opencell.c:736
-msgid ""
-"Unable to write embedded null values for raster map open for random access"
-msgstr ""
-"Невозможно записать нулевые значения для слоя открытого для случайного "
-"доступа"
+msgid "Unable to write embedded null values for raster map open for random access"
+msgstr "Невозможно записать нулевые значения для слоя открытого для случайного доступа"
 
 #: ../lib/gis/opencell.c:941
 msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
@@ -4650,10 +4487,8 @@ msgid "Raster map <%s> is not xdr: byte_order: %s"
 msgstr "Растровый слой <%s> не xdr: byte_order: %s"
 
 #: ../lib/gis/opencell.c:1179
-msgid ""
-"G_set_quant_rules() can be called only for raster maps opened for reading"
-msgstr ""
-"G_set_quant_rules() может быть вызван только для растровых слоев для чтения"
+msgid "G_set_quant_rules() can be called only for raster maps opened for reading"
+msgstr "G_set_quant_rules() может быть вызван только для растровых слоев для чтения"
 
 #: ../lib/gis/sample.c:71
 msgid "Unknown interpolation type"
@@ -4906,9 +4741,7 @@ msgstr "Невозможно открыть файл заголовка для �
 #: ../lib/gis/get_cellhd.c:105
 #, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr ""
-"Это переклассификация растрового слоя <%s@%s> чей файл заголовка имеет "
-"неверный формат."
+msgstr "Это переклассификация растрового слоя <%s@%s> чей файл заголовка имеет неверный формат."
 
 #: ../lib/gis/get_cellhd.c:109
 #, c-format
@@ -4937,10 +4770,8 @@ msgstr " Окно сохранено в \"%s\" полностью за пред�
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr ""
-" Только %d%% окна сохранено в \"%s\" пересекается с текущим окном GRASS."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr " Только %d%% окна сохранено в \"%s\" пересекается с текущим окном GRASS."
 
 #: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
 #: ../lib/gis/ask_cell.c:96
@@ -5066,12 +4897,8 @@ msgstr "НАБОР не задан"
 
 #: ../lib/gis/distance.c:160
 #, c-format
-msgid ""
-"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
-"%f)(%f,%f)"
-msgstr ""
-"G_distance_point_to_line_segment: не должно быть: code=%d P=(%f,%f) S=(%f,%f)"
-"(%f,%f)"
+msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
+msgstr "G_distance_point_to_line_segment: не должно быть: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
 
 #: ../lib/gis/debug.c:74
 #, c-format
@@ -5177,34 +5004,29 @@ msgstr "Неправильное имя таблицы <%s>. Символ <%c> �
 msgid "Programmer error"
 msgstr "Возможная программная ошибка."
 
+msgid "taking too long to find points for interpolation--please change the region to area where your points are. Continuing calculations..."
+msgstr "попытка найти точки для интерполяции заняла слишком много времени -- попробуйте изменить регион на область где точки есть. Вычисление продолжается..."
+
+msgid "Reading lines from vector map ... "
+msgstr "Чтение линий из векторного слоя ..."
+
+msgid "Reading nodes from vector map ... "
+msgstr "Чтение узлов из векторного слоя ..."
+
+msgid "there are points outside specified 2D/3D region--ignored %d points"
+msgstr "есть точки вне указанного 2D/3D региона -- игнорируются %d точек"
+
+msgid "ignoring %d points -- too dense"
+msgstr "точки %d игнорируются -- точки стоят слишком часто"
+
+msgid "some points outside of region -- will ignore..."
+msgstr "некоторые точки вне региона -- будут проигнорированы"
+
 #~ msgid "Requested g3d map <%s> not found"
 #~ msgstr "Запрашиваемый g3d слой <%s> не найден"
 
 #~ msgid "Unable to open driver <%s>"
 #~ msgstr "Невозможно открыть драйвер <%s>"
-
-#~ msgid ""
-#~ "taking too long to find points for interpolation--please change the "
-#~ "region to area where your points are. Continuing calculations..."
-#~ msgstr ""
-#~ "попытка найти точки для интерполяции заняла слишком много времени -- "
-#~ "попробуйте изменить регион на область где точки есть. Вычисление "
-#~ "продолжается..."
-
-#~ msgid "Reading lines from vector map ... "
-#~ msgstr "Чтение линий из векторного слоя ..."
-
-#~ msgid "Reading nodes from vector map ... "
-#~ msgstr "Чтение узлов из векторного слоя ..."
-
-#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
-#~ msgstr "есть точки вне указанного 2D/3D региона -- игнорируются %d точек"
-
-#~ msgid "ignoring %d points -- too dense"
-#~ msgstr "точки %d игнорируются -- точки стоят слишком часто"
-
-#~ msgid "some points outside of region -- will ignore..."
-#~ msgstr "некоторые точки вне региона -- будут проигнорированы"
 
 #~ msgid "Unable to feature %d from vector map <%s>"
 #~ msgstr "Невозможно удалить объект %d из векторного слоя <%s>"
@@ -5222,13 +5044,10 @@ msgstr "Возможная программная ошибка."
 #~ msgstr "Вектор не 3D "
 
 #~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-#~ msgstr ""
-#~ "Невозможно найти столбец z <%s> (проверьте имя, например используя v.info)"
+#~ msgstr "Невозможно найти столбец z <%s> (проверьте имя, например используя v.info)"
 
 #~ msgid "Column type of z column is not supported (must be integer or double)"
-#~ msgstr ""
-#~ "Тип поля для столбца z не поддерживается (должен быть целочисленный или "
-#~ "double)"
+#~ msgstr "Тип поля для столбца z не поддерживается (должен быть целочисленный или double)"
 
 #~ msgid "Cannot read column type of smooth column"
 #~ msgstr "Невозможно прочитать тип столбца smooth"
@@ -5237,8 +5056,7 @@ msgstr "Возможная программная ошибка."
 #~ msgstr "Тип столбца smooth (дата-время) не поддерживается"
 
 #~ msgid "Column type of s column is not supported (must be integer or double)"
-#~ msgstr ""
-#~ "Тип столбца s не поддерживается (должен быть целочисленный или double)"
+#~ msgstr "Тип столбца s не поддерживается (должен быть целочисленный или double)"
 
 #~ msgid "The linear equation system is not quadratic"
 #~ msgstr "Система линейных уравнений не квадратная"
@@ -5518,3 +5336,26 @@ msgstr "Возможная программная ошибка."
 
 #~ msgid "New vertices"
 #~ msgstr "Новые узлы"
+
+#~ msgid "Unable to delete file '%s'"
+#~ msgstr "Невозможно удалить файл '%s'"
+
+#~ msgid ""
+#~ "closecell: can't move %s\n"
+#~ "to null file %s"
+#~ msgstr ""
+#~ "closecell: невозможно переместить %s\n"
+#~ "в null-файл %s"
+
+#~ msgid ""
+#~ "closecell: can't move %s\n"
+#~ "to cell file %s"
+#~ msgstr ""
+#~ "closecell: невозможно переместить %s\n"
+#~ "в cell-файл %s"
+
+#~ msgid "unable to write quant file!"
+#~ msgstr "невозможно записать quant файл!"
+
+#~ msgid "unable to write f_format file for CELL maps"
+#~ msgstr "невозможно записать файл f_format для CELL карт"

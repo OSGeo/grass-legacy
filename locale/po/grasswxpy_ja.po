@@ -13633,3 +13633,11 @@ msgstr "GCP（地上基準点）の定義"
 
 #~ msgid "All data records (%d) will permanently deleted from table. Do you want to delete them?"
 #~ msgstr "全てのレコード (%d) は、テーブルから完全に消去されます  削除してよろしいですか?"
+
+#, fuzzy
+#~ msgid "Topology maintenance"
+#~ msgstr "サポートファイルの保守 "
+
+#, fuzzy
+#~ msgid "Feature selection"
+#~ msgstr "断面図"

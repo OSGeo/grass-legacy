@@ -639,8 +639,7 @@ msgstr "Font"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:79
 msgid "Select font family, size, and style for legend text"
-msgstr ""
-"Seleziona famiglia, dimensione e stile del font per il testo della legenda"
+msgstr "Seleziona famiglia, dimensione e stile del font per il testo della legenda"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:86
 msgid "set value range "
@@ -663,12 +662,8 @@ msgid "Place legend"
 msgstr "Posizione legenda"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid ""
-"Use mouse to place legend; left button defines first corner,  right button "
-"defines opposite corner."
-msgstr ""
-"Usa il mouse per posizionare la legenda; il bottone sinistro definisce il "
-"primo angolo, il bottone destro definisce l'angolo opposto."
+msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgstr "Usa il mouse per posizionare la legenda; il bottone sinistro definisce il primo angolo, il bottone destro definisce l'angolo opposto."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -798,9 +793,7 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr ""
-"Gli attuali campi non sono stati salvati, si è sicuri di volere caricare "
-"nuovi campi?"
+msgstr "Gli attuali campi non sono stati salvati, si è sicuri di volere caricare nuovi campi?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
 #: ../visualization/nviz/scripts/nviz2.2_script:871
@@ -1943,15 +1936,11 @@ msgid "set icon"
 msgstr "imposta icona"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid ""
-"Fill 2 or more entry fields with  desired min and max values, then press "
-"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid ""
-"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
-"press [Auto] to automatically generate a color table."
+msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
@@ -1983,9 +1972,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid ""
-"Automatically generate a color  table distributed across range of attribute "
-"values"
+msgid "Automatically generate a color  table distributed across range of attribute values"
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
