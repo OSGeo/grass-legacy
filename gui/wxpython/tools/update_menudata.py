@@ -54,8 +54,8 @@ def parseModules():
             continue
         try:
             interface = gtask.parse_interface(module)
-        except IOError, e:
-            grass.error(e)
+        except:
+            grass.error(module)
             continue
         modules[interface.name] = { 'label'   : interface.label,
                                     'desc'    : interface.description,
