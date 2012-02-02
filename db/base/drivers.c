@@ -38,8 +38,7 @@ int main(int argc, char **argv)
 
     list = db_read_dbmscap();
     if (list == NULL) {
-	G_message(_("Error trying to read dbmscap file\n"));
-	exit(EXIT_FAILURE);
+	G_fatal_error(_("Error trying to read dbmscap file"));
     }
 
     for (p = list; p; p = p->next) {
@@ -67,12 +66,12 @@ static void parse_command_line(int argc, char **argv)
 
     print = G_define_flag();
     print->key = 'p';
-    print->description = _("print drivers and exit");
+    print->description = _("Print drivers and exit");
 
     /* Set description */
     module = G_define_module();
     module->keywords = _("database, attribute table");
-    module->description = _("List all database drivers.");
+    module->description = _("Lists all database drivers.");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
