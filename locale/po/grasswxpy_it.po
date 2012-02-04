@@ -2113,7 +2113,7 @@ msgstr "Collega a un vettoriale esterno"
 #: ../gui/wxpython/gui_modules/gdialogs.py:1243
 #: ../gui/wxpython/menustrings.py:54 ../gui/wxpython/icons/icon.py:215
 msgid "Import vector data"
-msgstr "Importa mappa vettore"
+msgstr "Importa mappa vettoriale"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1247
 #: ../gui/wxpython/menustrings.py:146 ../gui/wxpython/icons/icon.py:213
@@ -2123,7 +2123,7 @@ msgstr "Collega a un raster esterno"
 #: ../gui/wxpython/gui_modules/gdialogs.py:1249
 #: ../gui/wxpython/menustrings.py:29 ../gui/wxpython/icons/icon.py:211
 msgid "Import raster data"
-msgstr "Importa raster"
+msgstr "Importa mappa raster"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1254
 msgid "Add linked layers into layer tree"
@@ -2154,11 +2154,11 @@ msgid "Open %s dialog"
 msgstr "Apri finestra %s"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1283
-#, fuzzy
 msgid ""
 "No layers marked for import.\n"
 "Operation canceled."
-msgstr "Nessuna estensione selezionata da rimuove. Operazione cancellata"
+msgstr "Nessuna estensione selezionata da rimuove.\n"
+"Operazione cancellata."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1356
 msgid "Import DXF layers"
@@ -4494,9 +4494,8 @@ msgid "Vector maps settings"
 msgstr "Impostazioni vettoriali"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
-#, fuzzy, python-format
 msgid "%s properties"
-msgstr "proprietà"
+msgstr "%s proprietà"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:3029
 msgid "Data selection"
@@ -8437,7 +8436,7 @@ msgstr "Elimina filtro"
 #: ../gui/wxpython/menustrings.py:163 ../gui/wxpython/menustrings.py:290
 #: ../gui/wxpython/menustrings.py:569 ../gui/wxpython/menustrings.py:764
 msgid "Map type conversions"
-msgstr "Conversioni tipo Mappa"
+msgstr "Conversioni tipo di mappa"
 
 #: ../gui/wxpython/menustrings.py:164 ../gui/wxpython/menustrings.py:291
 msgid "Raster to vector"
@@ -10009,7 +10008,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:523
 msgid "Create 3D vector over raster"
-msgstr "Crea vettore 3D sopra il raster"
+msgstr "Crea vettore 3D sopra un raster"
 
 #: ../gui/wxpython/menustrings.py:524
 msgid "Converts vector map to 3D by sampling of elevation raster map."
@@ -10041,7 +10040,7 @@ msgstr "Crea label posizionate ottimalmente per vettori"
 
 #: ../gui/wxpython/menustrings.py:531
 msgid "Reposition vector map"
-msgstr "Riposizione vettoriale"
+msgstr "Riposizione vettori"
 
 #: ../gui/wxpython/menustrings.py:532
 msgid ""
@@ -10064,9 +10063,8 @@ msgid "Updates vector map metadata."
 msgstr "Aggiorna metadati per vettoriale"
 
 #: ../gui/wxpython/menustrings.py:537
-#, fuzzy
 msgid "Topology maintenance"
-msgstr "Gestione metadati"
+msgstr "Gestione topologia"
 
 #: ../gui/wxpython/menustrings.py:538
 msgid "Create or rebuild topology"
@@ -10160,9 +10158,8 @@ msgid "Prints vector map attributes."
 msgstr "Visualizza gli attributi del vettoriale"
 
 #: ../gui/wxpython/menustrings.py:564
-#, fuzzy
 msgid "Feature selection"
-msgstr "Selezione dati"
+msgstr "Selezione feature"
 
 #: ../gui/wxpython/menustrings.py:565
 msgid "Query with attributes"
