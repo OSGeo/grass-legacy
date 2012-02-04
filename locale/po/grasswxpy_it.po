@@ -1467,7 +1467,7 @@ msgstr "Mostra/nascondi la finestra delle impostazioni della visualizzazione 3D"
 #: ../gui/wxpython/lmgr/layertree.py:50
 #: ../gui/wxpython/gui_core/dialogs.py:1651 ../gui/wxpython/menustrings.py:29
 msgid "Import raster data"
-msgstr "Importa raster"
+msgstr "Importa mappa raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:52
 #: ../gui/wxpython/gui_core/dialogs.py:1649 ../gui/wxpython/menustrings.py:146
@@ -1482,7 +1482,7 @@ msgstr "Seleziona font di output"
 #: ../gui/wxpython/lmgr/layertree.py:56
 #: ../gui/wxpython/gui_core/dialogs.py:1645 ../gui/wxpython/menustrings.py:54
 msgid "Import vector data"
-msgstr "Importa mappa vettore"
+msgstr "Importa mappa vettoriale"
 
 #: ../gui/wxpython/lmgr/layertree.py:58
 #: ../gui/wxpython/gui_core/dialogs.py:1643 ../gui/wxpython/menustrings.py:148
@@ -4677,7 +4677,7 @@ msgstr "Elimina filtro"
 
 #: ../gui/wxpython/menustrings.py:163
 msgid "Map type conversions"
-msgstr "Conversioni tipo Mappa"
+msgstr "Conversioni tipo di mappa"
 
 #: ../gui/wxpython/menustrings.py:164
 msgid "Raster to vector"
@@ -6145,7 +6145,7 @@ msgstr "Dissolve i confini tra aree adiacenti che condividono categorie o attrib
 
 #: ../gui/wxpython/menustrings.py:536
 msgid "Create 3D vector over raster"
-msgstr "Crea vettore 3D sopra il raster"
+msgstr "Crea vettore 3D sopra un raster"
 
 #: ../gui/wxpython/menustrings.py:537
 msgid "Converts vector map to 3D by sampling of elevation raster map."
@@ -6177,7 +6177,7 @@ msgstr "Crea label posizionate ottimalmente per vettori"
 
 #: ../gui/wxpython/menustrings.py:544
 msgid "Reposition vector map"
-msgstr "Riposizione vettoriale"
+msgstr "Riposizione vettori"
 
 #: ../gui/wxpython/menustrings.py:545
 msgid "Performs an affine transformation (shift, scale and rotate, or GPCs) on vector map."
@@ -7993,9 +7993,9 @@ msgid "Vector maps settings"
 msgstr "Impostazioni vettoriali"
 
 #: ../gui/wxpython/psmap/dialogs.py:3231
-#, fuzzy, python-format
+#, python-format
 msgid "%s properties"
-msgstr "proprietà"
+msgstr "%s proprietà"
 
 #: ../gui/wxpython/psmap/dialogs.py:3282
 msgid "Data selection"
@@ -13523,11 +13523,12 @@ msgstr "Genera statistiche volumetriche per raster 3D."
 #~ msgid "Map layer type:"
 #~ msgstr "Tipologia del layer:"
 
-#, fuzzy
 #~ msgid ""
 #~ "No layers marked for import.\n"
 #~ "Operation canceled."
-#~ msgstr "Nessuna estensione selezionata da rimuove. Operazione cancellata"
+#~ msgstr ""
+#~ "Nessuna estensione selezionata da rimuove.\n"
+#~ "Operazione cancellata."
 
 #~ msgid "Look at:"
 #~ msgstr "Zoom a:"
@@ -13632,13 +13633,11 @@ msgstr "Genera statistiche volumetriche per raster 3D."
 #~ msgid "Reports statistics for raster map layers."
 #~ msgstr "Statistiche per raster"
 
-#, fuzzy
 #~ msgid "Topology maintenance"
-#~ msgstr "Gestione metadati"
+#~ msgstr "Gestione topologia"
 
-#, fuzzy
 #~ msgid "Feature selection"
-#~ msgstr "Selezione dati"
+#~ msgstr "Selezione feature"
 
 #~ msgid "Creates, edits, and lists groups and subgroups of imagery files."
 #~ msgstr "Crea, modifica e visualizza gruppi e sottogruppi di file di immagini."
