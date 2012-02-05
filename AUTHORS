@@ -63,6 +63,7 @@ GUI
  - Michael Barton <michael.barton asu edu>: wxPython, Tcl/Tk GUI lead
  - Cedrik Shock <cedricpublic at shockfamily.net>: Tcl/Tk enhancements
  - Maris Nartiss <maris.gis gmail com>: Tcl/Tk portability
+ - Anna Kratochvilova: wxPython Cartographic Composer
 
 Google Summer of Code awards:
  - Wolf Bergenheim: Mentor team lead
