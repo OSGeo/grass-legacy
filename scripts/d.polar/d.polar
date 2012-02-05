@@ -88,7 +88,7 @@ export LC_NUMERIC
 
 TEMPFILE="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
-    g.message -e "unable to create temporary files"
+    g.message -e "Unable to create temporary files"
     exit 1
 fi
 #TEMPFILE=`dirname $TEMPFILE`
