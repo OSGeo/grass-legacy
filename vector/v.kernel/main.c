@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     struct Option *in_opt, *net_opt, *out_opt;
     struct Option *stddev_opt, *dsize_opt, *segmax_opt, *netmax_opt,
 	*multip_opt, *node_opt, *kernel_opt;
-    struct Flag *flag_o, *flag_q, *flag_normalize, *flag_multiply;
+    struct Flag *flag_o, *flag_q, *flag_normalize, *flag_multiply, *flag_v;
 
     char *mapset;
     struct Map_info In, Net, Out;
@@ -196,8 +196,18 @@ int main(int argc, char **argv)
     flag_multiply->description =
 	_("In network mode, multiply the result by number of input points.");
 
+    flag_v = G_define_flag();
+    flag_v->key = 'v';
+    flag_v->description =
+	_("Verbose module output (retained for backwards compatibility)");
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+
+    /* remove for grass7 */
+    if (flag_v->answer)
+	G_set_verbose(G_verbose_max());
 
     /*read options */
     sigma = atof(stddev_opt->answer);
