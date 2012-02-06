@@ -2,21 +2,20 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2011, 2012 GRASS Development Team
 #
-# Robert Nuske <robert.nuske@nw-fva.de>, 2012.
+# Robert Nuske <robert.nuske@nw-fva.de>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-01-24 17:44+0100\n"
-"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
+"PO-Revision-Date: 2012-02-06 10:35+0100\n"
+"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
@@ -62,7 +61,7 @@ msgstr "Verwende Volumen als Farbe"
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:114
 #: ../visualization/nviz/scripts/attPopup.tcl:122
 msgid "Curr. value: "
-msgstr "Aktueller Wert:"
+msgstr "Aktueller Wert: "
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:123
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:409
@@ -116,7 +115,7 @@ msgstr "Entferne Maske"
 #: ../visualization/nviz/scripts/attPopup.tcl:462
 #: ../visualization/nviz/scripts/attPopup.tcl:512
 msgid "Constant"
-msgstr "konstant"
+msgstr "Konstante"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
 msgid "Enter value: "
@@ -128,7 +127,7 @@ msgstr "Verwende Slider, um einen konstanten Wert zu wählen :"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:27
 msgid "Resize Draw Area"
-msgstr "Ändere Größe der Zeichenfläche"
+msgstr "Zeichenfläche ändern"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:33
 msgid "Resize Panel"
@@ -201,7 +200,7 @@ msgstr "Frame by Frame-Schritte rückwärts"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:114
 msgid "Pause playback"
-msgstr "Pause beim Abspielen"
+msgstr "Abspielen pausieren"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:117
 msgid "Step forward frame by frame"
@@ -344,14 +343,12 @@ msgstr "Interner Fehler"
 #: ../visualization/nviz/scripts/panel_animation.tcl:602
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:872
 msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr ""
-"Interner Fehler - Löschen des Key-Frames in GK-Key-Liste fehlgeschlagen."
+msgstr "Interner Fehler - Löschen des Key-Frames in GK-Key-Liste fehlgeschlagen."
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:643
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
 msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr ""
-"Interner Fehler - Verschieben des Key-Frames in GK-Key-Liste fehlgeschlagen."
+msgstr "Interner Fehler - Verschieben des Key-Frames in GK-Key-Liste fehlgeschlagen."
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:753
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
@@ -376,8 +373,7 @@ msgstr "Präfix der Ausgabebilder:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:935
 msgid "Enter a prefix name for images to be created from animation frames"
-msgstr ""
-"Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
+msgstr "Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:940
 msgid "Output format: "
@@ -669,12 +665,8 @@ msgid "Place legend"
 msgstr "Platziere Legende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid ""
-"Use mouse to place legend; left button defines first corner,  right button "
-"defines opposite corner."
-msgstr ""
-"Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, "
-"rechter Button legt gegenüberliegende Ecke fest."
+msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgstr "Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, rechter Button legt gegenüberliegende Ecke fest."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -804,9 +796,7 @@ msgstr "Frame"
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr ""
-"Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue "
-"Felder laden?"
+msgstr "Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue Felder laden?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
 #: ../visualization/nviz/scripts/nviz2.2_script:873
@@ -837,7 +827,7 @@ msgstr "Beim Lesen der Attributfelder: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:542
 msgid "Field Type: "
-msgstr "Feldtyp"
+msgstr "Feldtyp: "
 
 #: ../visualization/nviz/scripts/script_file_tools:543
 #: ../visualization/nviz/scripts/panel_surf.tcl:125
@@ -1918,9 +1908,7 @@ msgstr "Symbolgröße X"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:130
 msgid "Choose size in multiples of default to indicate point queried"
-msgstr ""
-"Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt "
-"anzuzeigen"
+msgstr "Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt anzuzeigen"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:137
 msgid "specific icon"
@@ -1960,21 +1948,12 @@ msgid "set icon"
 msgstr "Wähle Symbol"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid ""
-"Fill 2 or more entry fields with  desired min and max values, then press "
-"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
-msgstr ""
-"Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, "
-"dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten "
-"Wertebereich der Symbolgröße."
+msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr "Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten Wertebereich der Symbolgröße."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid ""
-"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
-"press [Auto] to automatically generate a color table."
-msgstr ""
-"Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke "
-"[Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
+msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
+msgstr "Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke [Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
 #, tcl-format
@@ -2005,12 +1984,8 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid ""
-"Automatically generate a color  table distributed across range of attribute "
-"values"
-msgstr ""
-"Generiere automatisch eine über den Wertebereich der Attribute verteilte "
-"Farbtabelle"
+msgid "Automatically generate a color  table distributed across range of attribute values"
+msgstr "Generiere automatisch eine über den Wertebereich der Attribute verteilte Farbtabelle"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
 msgid "Clear all thematic settings"
@@ -2080,13 +2055,11 @@ msgstr "Keine Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1146
 msgid "Thematic prefs and attribute have different types"
-msgstr ""
-"Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr "Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1207
 msgid "Thematic prefs and attributes have different types"
-msgstr ""
-"Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr "Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1408
 #, tcl-format
@@ -2150,8 +2123,7 @@ msgstr "*** WARNUNG *** Datei \"%s\" ist nicht verfügbar"
 #: ../visualization/nviz/scripts/site_attr.tcl:1627
 #, tcl-format
 msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
-msgstr ""
-"*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
+msgstr "*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1700
 #, tcl-format
