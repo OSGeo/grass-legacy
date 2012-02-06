@@ -12,15 +12,14 @@ msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-01-24 20:05+0100\n"
-"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
+"PO-Revision-Date: 2012-02-06 10:44+0100\n"
+"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
 #: ../gui/wxpython/nviz/tools.py:82 ../gui/wxpython/nviz/preferences.py:55
 #: ../gui/wxpython/nviz/preferences.py:60
@@ -2344,19 +2343,19 @@ msgstr "Alle Selektierungen aufheben"
 
 #: ../gui/wxpython/dbmgr/manager.py:1135
 msgid "Highlight selected features"
-msgstr "Selektierte Feature hervorheben"
+msgstr "Selektierte Objekte hervorheben"
 
 #: ../gui/wxpython/dbmgr/manager.py:1136
 msgid "Highlight selected features and zoom"
-msgstr "Selektierte Feature hervorheben und zoomen"
+msgstr "Selektierte Objekte hervorheben und zoomen"
 
 #: ../gui/wxpython/dbmgr/manager.py:1140 ../gui/wxpython/dbmgr/manager.py:2073
 msgid "Extract selected features"
-msgstr "Selektierte Feature extrahieren"
+msgstr "Selektierte Objekte extrahieren"
 
 #: ../gui/wxpython/dbmgr/manager.py:1141
 msgid "Delete selected features"
-msgstr "Selektierte Feature löschen"
+msgstr "Selektierte Objekte löschen"
 
 #: ../gui/wxpython/dbmgr/manager.py:1149 ../gui/wxpython/dbmgr/manager.py:1664
 #: ../gui/wxpython/vdigit/dialogs.py:278
@@ -2753,7 +2752,7 @@ msgstr "&Senden"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:139 ../gui/wxpython/vdigit/dialogs.py:166
 msgid "Feature id:"
-msgstr "Feature ID:"
+msgstr "Objekt ID:"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:226
 #, fuzzy, python-format
@@ -4738,7 +4737,7 @@ msgstr "2D Vektor zu 3D Vektor"
 
 #: ../gui/wxpython/menustrings.py:175
 msgid "Performs transformation of 2D vector features to 3D."
-msgstr "Transformiert 2D Vektorfeature nach 3D."
+msgstr "Transformiert 2D Vektorobjekte nach 3D."
 
 #: ../gui/wxpython/menustrings.py:176
 msgid "Sites to vector"
@@ -5358,7 +5357,7 @@ msgstr "Extrahiert Terrainparameter von einem DEM."
 
 #: ../gui/wxpython/menustrings.py:334
 msgid "Textural features"
-msgstr "Texturelle Feature"
+msgstr "Textur-Feature"
 
 #: ../gui/wxpython/menustrings.py:335
 msgid "Generate images with textural features from a raster map."
@@ -5374,7 +5373,7 @@ msgstr "Sichtbarkeitsanalyse (Line of Sight)für Rasterkarten."
 
 #: ../gui/wxpython/menustrings.py:338
 msgid "Distance to features"
-msgstr "Distanz zum Feature"
+msgstr "Distanz zum Objekt"
 
 #: ../gui/wxpython/menustrings.py:339
 #, fuzzy
@@ -5391,7 +5390,7 @@ msgstr "Berechnung des Horizontwinkel auf Grundlage eines digitalen Höhenmodells
 
 #: ../gui/wxpython/menustrings.py:342
 msgid "Transform features"
-msgstr "Transformiere Feature"
+msgstr "Transformiere Objekte"
 
 #: ../gui/wxpython/menustrings.py:343
 msgid "Clump"
@@ -6065,7 +6064,7 @@ msgstr "Editiere Vektorkarte (nicht interaktiv)"
 
 #: ../gui/wxpython/menustrings.py:513
 msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
-msgstr "Editiert eine Vektorkarte, ermöglicht das Hinzufügen, Löschen und Ändern ausgewählter Vektor Feature."
+msgstr "Editiert eine Vektorkarte, ermöglicht das Hinzufügen, Löschen und Ändern ausgewählter Vektorobjekte."
 
 #: ../gui/wxpython/menustrings.py:514
 msgid "Create or rebuild topology"
@@ -6210,7 +6209,7 @@ msgstr "Aktualisiert Metadaten der Vektorkarte."
 
 #: ../gui/wxpython/menustrings.py:552
 msgid "Set color rules for features in a vector using a numeric attribute column."
-msgstr "Bestimme Farbregeln für Feature einer Vektorkarte unter Verwendung einer numerischen Spalte der Attributtabelle."
+msgstr "Bestimme Farbregeln für Objekte einer Vektorkarte unter Verwendung einer numerischen Spalte der Attributtabelle."
 
 #: ../gui/wxpython/menustrings.py:554
 msgid "Interactive management of vector color tables."
@@ -6232,7 +6231,7 @@ msgstr "Statistik Überlagerung"
 
 #: ../gui/wxpython/menustrings.py:558
 msgid "Selects features from vector map (A) by features from other vector map (B)."
-msgstr "Selektiert Features von einer Vektorkarte (A) durch Feature von einer Vektorkarte (B). "
+msgstr "Selektiert Objekte einer Vektorkarte (A) durch Objekte einer anderen Vektorkarte (B). "
 
 #: ../gui/wxpython/menustrings.py:559
 msgid "Buffer vectors"
@@ -6240,7 +6239,7 @@ msgstr "Vektor buffern"
 
 #: ../gui/wxpython/menustrings.py:560
 msgid "Creates a buffer around features of given type (areas must contain centroid)."
-msgstr "Erzeugt einen Buffer um die Feature mit gegebenen Typ (Flächen müssen Zentroide enthalten)."
+msgstr "Erzeugt einen Buffer um Objekte bestimmten Typs (Flächen müssen Zentroide enthalten)."
 
 #: ../gui/wxpython/menustrings.py:561
 msgid "Lidar analysis"
@@ -6308,7 +6307,7 @@ msgstr "Findet die ID der Linie und tatsächliche km+Versatz für gegebene Punkte 
 
 #: ../gui/wxpython/menustrings.py:577
 msgid "Nearest features"
-msgstr "Nächstliegendes Feature"
+msgstr "Nächstliegendes Objekt"
 
 #: ../gui/wxpython/menustrings.py:578
 msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
@@ -6592,11 +6591,11 @@ msgstr "Schreibt den Vektorwert an der Stelle der Vektorpunkte in die Tabelle."
 
 #: ../gui/wxpython/menustrings.py:650
 msgid "Update database values from vector"
-msgstr "Füllt Datenbank basierend auf Vektorfeatures"
+msgstr "Füllt Datenbank basierend auf Vektorobjekten"
 
 #: ../gui/wxpython/menustrings.py:651
 msgid "Populates database values from vector features."
-msgstr "Füllt Datenbank basierend auf Vektorfeatures."
+msgstr "Füllt Datenbank basierend auf Vektorobjekten."
 
 #: ../gui/wxpython/menustrings.py:652
 msgid "Update point attributes from raster"
@@ -10797,7 +10796,7 @@ msgstr "Snapping Schwellwert ist %(value).1f %(units)s"
 
 #: ../gui/wxpython/vdigit/preferences.py:187
 msgid "Select vector features"
-msgstr "Selektiere Vektorfeature"
+msgstr "Selektiere Vektorobjekte"
 
 #: ../gui/wxpython/vdigit/preferences.py:204
 msgid "Select threshold"
@@ -10805,11 +10804,11 @@ msgstr "Schwellwert für Selektion"
 
 #: ../gui/wxpython/vdigit/preferences.py:217
 msgid "Select only features inside of selection bounding box"
-msgstr "Selektiere nur Feature innerhalb der Auswahlbox"
+msgstr "Selektiere nur Objekte innerhalb der Auswahlbox"
 
 #: ../gui/wxpython/vdigit/preferences.py:219
 msgid "By default are selected all features overlapping selection bounding box "
-msgstr "Standard,äßig sind alle Feature selektiert die von der Auswahlbox geschnitten werden"
+msgstr "Standardmäßig sind alle Objekte selektiert die von der Auswahlbox geschnitten werden "
 
 #: ../gui/wxpython/vdigit/preferences.py:222
 msgid "Check for duplicates"
@@ -10817,7 +10816,7 @@ msgstr "Überprüfe auf Doppelte"
 
 #: ../gui/wxpython/vdigit/preferences.py:234
 msgid "Digitize line features"
-msgstr "Digitalisiere Linien-Feature"
+msgstr "Digitalisiere Linien-Objekte"
 
 #: ../gui/wxpython/vdigit/preferences.py:237
 msgid "Break lines at intersection"
@@ -10872,7 +10871,7 @@ msgstr "Selektiere Überstände (dangles)"
 
 #: ../gui/wxpython/vdigit/preferences.py:350
 msgid "Digitize new feature"
-msgstr "Digitalisiere neues Feature"
+msgstr "Digitalisiere neues Objekt"
 
 #: ../gui/wxpython/vdigit/preferences.py:355
 msgid "Add new record into table"
@@ -10905,7 +10904,7 @@ msgstr "Keine Kategorie"
 
 #: ../gui/wxpython/vdigit/preferences.py:396
 msgid "Delete existing feature(s)"
-msgstr "Lösche existierende Feature"
+msgstr "Lösche existierende Objekte"
 
 #: ../gui/wxpython/vdigit/preferences.py:401
 msgid "Delete record from table"
@@ -11108,7 +11107,7 @@ msgstr "Links: Selektieren; Ctrl+Links: Selektion aufheben; Rechts: Bestätigen"
 
 #: ../gui/wxpython/vdigit/toolbars.py:100
 msgid "Delete feature(s)"
-msgstr "Feature löschen"
+msgstr "Objekt(e) löschen"
 
 #: ../gui/wxpython/vdigit/toolbars.py:103
 msgid "Display/update attributes"
@@ -11129,7 +11128,7 @@ msgstr "Editiere Linie/Grenze"
 
 #: ../gui/wxpython/vdigit/toolbars.py:112
 msgid "Move feature(s)"
-msgstr "Verschiebe Feature"
+msgstr "Verschiebe Objekt(e)"
 
 #: ../gui/wxpython/vdigit/toolbars.py:115
 msgid "Move vertex"
@@ -11178,7 +11177,7 @@ msgstr "Kategorien kopieren"
 
 #: ../gui/wxpython/vdigit/toolbars.py:384
 msgid "Copy features from (background) vector map"
-msgstr "Kopiere Feature aus der (Hintergrund-) Vektorkarte."
+msgstr "Kopiere Objekt aus der (Hintergrund-) Vektorkarte."
 
 #: ../gui/wxpython/vdigit/toolbars.py:386
 msgid "Copy attributes"
@@ -11186,7 +11185,7 @@ msgstr "Attribute kopieren"
 
 #: ../gui/wxpython/vdigit/toolbars.py:388
 msgid "Feature type conversion"
-msgstr "Featuretyp-Konvertierungen"
+msgstr "Objekttyp-Konvertierungen"
 
 #: ../gui/wxpython/vdigit/toolbars.py:390
 msgid "Flip selected lines/boundaries"
@@ -11334,7 +11333,7 @@ msgstr "Liste der Doppelten"
 
 #: ../gui/wxpython/vdigit/dialogs.py:737
 msgid "Feature id"
-msgstr "Feature ID"
+msgstr "Objekt ID"
 
 #: ../gui/wxpython/vdigit/dialogs.py:738
 msgid "Layer (Categories)"
@@ -13615,7 +13614,7 @@ msgstr "Erzeugt Volumenstatistik für 3D-Rasterkarten."
 #~ msgstr "Keine Kartenebene selektiert. Breche die Operation ab."
 
 #~ msgid "Generates a raster map layer of distance to features in input layer."
-#~ msgstr "Erzeugt eine Rasterkarte mit Distanzen zu Featuren in der Eingabekarte."
+#~ msgstr "Erzeugt eine Rasterkarte mit Distanzen zu Objekten in der Eingabekarte."
 
 #~ msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
 #~ msgstr "Fülle Flächen ohne Daten in Rasterkarten mit Hilfe der v.surf.rst Spline-Interpolation."
@@ -13627,9 +13626,8 @@ msgstr "Erzeugt Volumenstatistik für 3D-Rasterkarten."
 #~ msgid "Topology maintenance"
 #~ msgstr "Wartung der Hilfsdateien"
 
-#, fuzzy
 #~ msgid "Feature selection"
-#~ msgstr "Datenauswahl"
+#~ msgstr "Objektauswahl"
 
 #~ msgid "Creates, edits, and lists groups and subgroups of imagery files."
 #~ msgstr "Erzeugt, editiert und listet Gruppen und Untergruppen von Bilddateien."

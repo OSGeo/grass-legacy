@@ -2,21 +2,20 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2011, 2012 GRASS Development Team
 #
-# Robert Nuske <robert.nuske@nw-fva.de>, 2012.
+# Robert Nuske <robert.nuske@nw-fva.de>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-01-24 17:44+0100\n"
-"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
+"PO-Revision-Date: 2012-02-06 10:35+0100\n"
+"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
@@ -62,7 +61,7 @@ msgstr "Verwende Volumen als Farbe"
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:114
 #: ../visualization/nviz/scripts/attPopup.tcl:122
 msgid "Curr. value: "
-msgstr "Aktueller Wert:"
+msgstr "Aktueller Wert: "
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:123
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:409
@@ -116,7 +115,7 @@ msgstr "Entferne Maske"
 #: ../visualization/nviz/scripts/attPopup.tcl:462
 #: ../visualization/nviz/scripts/attPopup.tcl:512
 msgid "Constant"
-msgstr "konstant"
+msgstr "Konstante"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
 msgid "Enter value: "
@@ -128,7 +127,7 @@ msgstr "Verwende Slider, um einen konstanten Wert zu wählen :"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:27
 msgid "Resize Draw Area"
-msgstr "Ändere Größe der Zeichenfläche"
+msgstr "Zeichenfläche ändern"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:33
 msgid "Resize Panel"
@@ -199,7 +198,7 @@ msgstr "Frame by Frame-Schritte rückwärts"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:114
 msgid "Pause playback"
-msgstr "Pause beim Abspielen"
+msgstr "Abspielen pausieren"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:117
 msgid "Step forward frame by frame"
@@ -826,7 +825,7 @@ msgstr "Beim Lesen der Attributfelder: %s"
 
 #: ../visualization/nviz/scripts/script_file_tools:542
 msgid "Field Type: "
-msgstr "Feldtyp"
+msgstr "Feldtyp: "
 
 #: ../visualization/nviz/scripts/script_file_tools:543
 #: ../visualization/nviz/scripts/panel_surf.tcl:125

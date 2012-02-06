@@ -14,15 +14,14 @@ msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-01-24 21:54+0100\n"
-"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
+"PO-Revision-Date: 2012-02-06 10:37+0100\n"
+"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
 #: ../lib/nviz/render.c:104
 msgid "Bad server connection"
@@ -115,7 +114,7 @@ msgstr "Ungültige Zeichenkette für Zeitstempel."
 
 #: ../lib/sites/sites.c:241
 msgid "Memory error in allocating timestamp"
-msgstr "Speicherfehler beim Allokieren des Zeitstempel."
+msgstr "Speicherfehler beim reservieren des Zeitstempel."
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
 msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
@@ -4007,7 +4006,7 @@ msgstr "einen Moment bitte...\n"
 #: ../lib/gis/gishelp.c:49
 #, c-format
 msgid "No help available for command [%s]\n"
-msgstr "Leider keine Hilfe für den Befehl [%s] verfügbar.\n"
+msgstr "Keine Hilfe für den Befehl [%s] verfügbar.\n"
 
 #: ../lib/gis/timestamp.c:282
 #, c-format
@@ -4089,7 +4088,7 @@ msgstr "Fehler beim Lesen der NULL-Zeile %d."
 
 #: ../lib/gis/get_row.c:1115
 msgid "Unable to realloc buffer"
-msgstr "Kann Buffer nicht wieder belegen."
+msgstr "Kann Buffer nicht wieder reservieren."
 
 #: ../lib/gis/datum.c:160
 #, c-format

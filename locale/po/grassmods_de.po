@@ -5,15 +5,15 @@
 # Markus Neteler <neteler itc.it>, 2004.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
 # Robert Nuske <rnuske gwdg.de>, 2006, 2007, 2008, 2009, 2010.
-# Robert Nuske <robert.nuske nw-fva.de>, 2011.
+# Robert Nuske <robert.nuske nw-fva.de>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2011-10-08 19:43+0200\n"
+"PO-Revision-Date: 2012-02-04 14:42+0100\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
-"Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
+"Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
@@ -2163,15 +2163,13 @@ msgstr "Die Eingabekarte wurde rotiert und kann daher nicht eingelesen werden. S
 
 #: ../raster/r.external/main.c:264 ../raster/r.in.gdal/main.c:621
 #: ../vector/v.in.ogr/main.c:1201
-#, fuzzy
 msgid "Default region for this location updated"
-msgstr "Projektionsinformationen aktualisiert!"
+msgstr " Standard-Region für die Location aktualisiert."
 
 #: ../raster/r.external/main.c:267 ../raster/r.in.gdal/main.c:624
 #: ../vector/v.in.ogr/main.c:1204
-#, fuzzy
 msgid "Region for the current mapset updated"
-msgstr "<%s> ist bereits das aktuelle Mapset."
+msgstr "Region des aktuellen Mapsets aktualisiert."
 
 #: ../raster/r.external/main.c:310
 msgid "Complex types not supported"
@@ -2291,14 +2289,13 @@ msgstr "Übersteuere die Projektion (verwende Projektion der Location)."
 
 #: ../raster/r.external/main.c:560 ../raster/r.in.gdal/main.c:138
 #: ../vector/v.in.ogr/main.c:231
-#, fuzzy
 msgid "Extend region extents based on new dataset"
-msgstr "Vergrößere die Location basierend auf dem neuen Datensatz."
+msgstr "Vergrößere die Ausdehnung der Region basierend auf neuem Datensatz."
 
 #: ../raster/r.external/main.c:562 ../raster/r.in.gdal/main.c:140
 #: ../vector/v.in.ogr/main.c:233
 msgid "Also updates the default region if in the PERMANENT mapset"
-msgstr ""
+msgstr "Aktualisiere die Standard-Region auch wenn im Mapset PERMANENT."
 
 #: ../raster/r.external/main.c:566
 msgid "Require exact range"
@@ -24681,9 +24678,8 @@ msgid "Values describing the relation between two nearest features"
 msgstr "Werte, die die Verbindung zwischen zwei nächstgelegenen Featuren beschreiben. "
 
 #: ../vector/v.distance/main.c:181
-#, fuzzy
 msgid "cat;category of the nearest feature;dist;minimum distance to nearest feature;to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate of the nearest point on the 'to' feature;to_along;distance to the nearest point on the 'to' feature along that linear feature;to_angle;angle along the nearest linear feature in the 'to' map, measured CCW from the +x axis, in radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature given by to_column option"
-msgstr "cat;Kategorie des nächsten Features;dist;Minimumdistanz zum nächsten Feature;to_x;X Koordinate des nächsten Features von 'to' Feature;to_y;Y Koordinate des nächsten Features von 'to' Feature;to_along;Distanz zwischen Punkten/Zentroiden der 'from' Karte und des Startpunktes des linearen Features der 'to' Karte, entlang diese linearen Features;to_angle;Winkel zwischen dem linearen Feature der 'to' Karte und der positiven X-Achse, an der Position des Punktes/Zentroids der 'from' Karte, gegen den Uhrzeigersinn, im Bogenmaß (zwischen -PI und PI);to_attr;Attribut des nächsten Features gegeben durch die Option to_column"
+msgstr "cat;Kategorie des nächsten Features;dist;Minimumdistanz zum nächsten Feature;to_x;X Koordinate des nächsten Punkts des 'to'-Features;to_y;Y Koordinate des nächsten Punktes des 'to'-Feature;to_along;Distanz zum nächsten Punkt des 'to'-Features entlang des linearen Features;to_angle;Winkel entlang des nächsten linearen Features der 'to'-Karte, gemessen gegen den Uhrzeigersinn von der positiven X-Achse im Bogenmaß (zwischen -Pi und Pi);to_attr;Attribut des nächsten Features gegeben durch die Option to_column"
 
 #: ../vector/v.distance/main.c:202
 msgid "Column name(s) where values specified by 'upload' option will be uploaded"
@@ -24715,9 +24711,8 @@ msgid "Calculate distances to all features within the threshold"
 msgstr "Berechne Distanzen zu allen Features innerhalb des Schwellwertes."
 
 #: ../vector/v.distance/main.c:228
-#, fuzzy
 msgid "Output is written to stdout but may be uploaded to a new table created by this module; multiple 'upload' options may be used."
-msgstr "Die Ausgabe wird nach stdout geschrieben und kann ebenfalls in eine neue Tabelle geschrieben werden, die von diesem Modul erzeugt wird. Es kann mehrere 'from' Kategorien geben."
+msgstr "Die Ausgabe wird nach stdout geschrieben und kann auch in eine neue Tabelle geschrieben werden, die von diesem Modul erzeugt wird. Es können mehrere 'upload' Optionen verwendet werden."
 
 #: ../vector/v.distance/main.c:280
 msgid "to_column option missing"
