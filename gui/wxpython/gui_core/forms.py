@@ -211,6 +211,9 @@ class UpdateThread(Thread):
                 continue
             
             name = win.GetName()
+            pBind = self.task.get_param(uid, element = 'wxId', raiseError = False)
+            if pBind:
+                pBind['value'] = ''
             
             if name == 'LayerSelect':
                 if map in cparams and not cparams[map]['layers']:
@@ -265,9 +268,7 @@ class UpdateThread(Thread):
                             self.data[win.InsertTableColumns] = { 'table'  : pTable.get('value') }
             
             elif name == 'SubGroupSelect':
-                pGroup = self.task.get_param('group', element = 'element', raiseError = False)
-                if pGroup:
-                    self.data[win.Insert] = { 'group' : pGroup.get('value', '')}
+                self.data[win.Insert] = { 'group' : p.get('value', '')}
             
             elif name == 'LocationSelect':
                 pDbase = self.task.get_param('dbase', element = 'element', raiseError = False)
@@ -1129,6 +1130,7 @@ class CmdPanel(wx.Panel):
                     selection = gselect.SubGroupSelect(parent = which_panel)
                     p['wxId'] = [ selection.GetId() ]
                     selection.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
+                    selection.Bind(wx.EVT_TEXT,     self.OnSetValue)
                     which_sizer.Add(item = selection, proportion = 0,
                                     flag = wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_CENTER_VERTICAL,
                                     border = 5)
@@ -1679,7 +1681,7 @@ class CmdPanel(wx.Panel):
         myId = event.GetId()
         me = wx.FindWindowById(myId)
         name = me.GetName()
-
+        
         found = False
         for porf in self.task.params + self.task.flags:
             if 'wxId' not in porf:
