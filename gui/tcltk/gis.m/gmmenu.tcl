@@ -337,7 +337,11 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Analyze landscape"]} {} "r.le.pixel: Analyze landscape characteristics" {} -command {execute r.le.pixel }}
 		{command {[G_msg "Analyze patches"]} {} " r.le.patch: Analyze landscape patch characteristics" {} -command {execute r.le.patch }}
-		{command {[G_msg "Output"]} {} "r.le.trace: Output landscape patch information" {} -command {execute r.le.trace }}
+		{command {[G_msg "Summary and display"]} {} "r.le.trace: Output landscape patch information" {} -command {
+			unset env(GRASS_RENDER_IMMEDIATE)
+			guarantee_xmon
+			term r.le.trace
+			set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 	}}
 	{cascad {[G_msg "Landscape patch analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.li.setup: Configure and create patch map for analysis" {} -command {execute r.li.setup }}

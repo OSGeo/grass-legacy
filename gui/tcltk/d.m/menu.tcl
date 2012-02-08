@@ -308,7 +308,7 @@ set descmenu [subst {
 		{separator}
 		{command {[G_msg "Analyze landscape characteristics"]} {} "r.le.pixel" {} -command {execute r.le.pixel }}
 		{command {[G_msg "Analyze landscape patch characteristics"]} {} " r.le.patch" {} -command {execute r.le.patch }}
-		{command {[G_msg "Output landscape patch information"]} {} "r.le.trace" {} -command {execute r.le.trace }}
+		{command {[G_msg "Output landscape patch information"]} {} "r.le.trace" {} -command {guarantee_xmon; term r.le.trace}}
 	}}
 	{cascad {[G_msg "Wildfire modeling"]} {} "" $tmenu {			
 		{command {[G_msg "Generate rate of spread (ROS) maps"]} {} "r.ros" {} -command {execute r.ros }}
