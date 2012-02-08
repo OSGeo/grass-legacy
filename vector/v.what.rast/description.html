@@ -15,7 +15,7 @@ geometry instead, use <em>v.drape</em>.
 <h2>EXAMPLES</h2>
 
 A) Reading values from raster map at position of vector points, writing these values
-   into column of vector map:
+   into a column of the attribute table connected to the vector map:
 <br>
 <div class="code"><pre>
 v.what.rast vect=pnts rast=elevation col=heights
@@ -27,20 +27,21 @@ a new attribute table. This table is then populated with values
 queried from the raster map:
 <br>
 <div class="code"><pre>
-v.db.connect -p vectpoints
-# .. no table yet.
+# create new random vector points map
+v.random pnts n=100
 
-# add new table, link to map:
-v.db.addtable vectpoints col="cat integer, myvalue integer, otherval double precision"
+# add new table, link to map
+v.db.addtable pnts col="heights double precision"
 
-# query raster map and upload values to vector table into specified column:
-v.what.rast vect=vectpoints rast=rastmap col=myvalue
+# query raster map and upload values to vector table into specified column
+g.region rast=elevation -p
+v.what.rast vect=pnts raster=elevation column=heights
 
 # verify new attribute table:
-v.db.select vectpoints
+v.db.select pnts
 
 # verify statistics of uploaded values:
-v.univar map=vectpoints col=myvalue type=point
+v.univar map=pnts column=heights type=point
 </pre></div>
 
 <h2>SEE ALSO</h2>
