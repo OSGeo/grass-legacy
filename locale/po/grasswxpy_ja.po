@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 GRASS Development Team
 #
 # Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>, 2009
-# Naoki Ueda <nao@locapoint.com>, 2010, 2012
+# Naoki Ueda <nao@locapoint.com>, 2010
 # Akira Taniguchi <taniguti@apptec.co.jp>, 2010
 # Hirotoshi Toyoda <toyoda@ex.media.osaka-cu.ac.jp>, 2010
 #
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-02-01 16:17+0900\n"
-"Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2012-02-08 19:40+0900\n"
+"Last-Translator: taniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -1033,11 +1033,11 @@ msgstr "GRASS GIS レイヤーマネージャー "
 
 #: ../gui/wxpython/lmgr/frame.py:117
 msgid "Workspace Toolbar"
-msgstr "ワークスペース "
+msgstr "ワークスペース ツールバー"
 
 #: ../gui/wxpython/lmgr/frame.py:120
 msgid "Data Toolbar"
-msgstr "マップツールバー "
+msgstr "データツールバー "
 
 #: ../gui/wxpython/lmgr/frame.py:123
 msgid "Misc Toolbar"
@@ -1049,7 +1049,7 @@ msgstr "マップツールバー "
 
 #: ../gui/wxpython/lmgr/frame.py:129
 msgid "Vector Toolbar"
-msgstr "ベクトルデジタイザーツールバー "
+msgstr "ベクトルツールバー "
 
 #: ../gui/wxpython/lmgr/frame.py:132
 #, fuzzy
@@ -2859,7 +2859,7 @@ msgstr "選択したテキストを自動的にクリップボードへコピー
 
 #: ../gui/wxpython/gui_core/preferences.py:324
 msgid "Workspace settings"
-msgstr "一般設定"
+msgstr "ワークスペース設定"
 
 #: ../gui/wxpython/gui_core/preferences.py:332
 msgid "Suppress positioning Map Display Window(s)"
@@ -4044,7 +4044,7 @@ msgstr "インポートするDXFファイルを選択"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1853
 msgid "Layer id"
-msgstr "レイヤー"
+msgstr "レイヤーID"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1854
 msgid "Layer name"
@@ -8671,23 +8671,23 @@ msgstr "条件"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:202
 msgid "Name for new 3D raster map to create"
-msgstr "新しいベクトルマップ名："
+msgstr "新しい３Dラスターマップ名："
 
 #: ../gui/wxpython/modules/mcalc_builder.py:204
 msgid "Name for new raster map to create"
-msgstr "新しいベクトルマップ名："
+msgstr "新しいラスターマップ名："
 
 #: ../gui/wxpython/modules/mcalc_builder.py:208
 msgid "Insert existing 3D raster map"
-msgstr "既存のファイルを上書き"
+msgstr "挿入する既存３Dラスターマップ名"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:210
 msgid "Insert existing raster map"
-msgstr "既存のファイルを上書き"
+msgstr "挿入する既存ラスターマップ名"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:214
 msgid "Insert mapcalc function"
-msgstr "演算関数の挿入"
+msgstr "挿入する演算関数"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:221
 msgid "Add created raster map into layer tree"
@@ -13039,6 +13039,32 @@ msgstr "GCP（地上基準点）の定義 "
 msgid "Set ground control points (GCPs)"
 msgstr "GCP（地上基準点）の定義"
 
+msgid "Unable to render overlay <%s>"
+msgstr "<%s> をレンダーオーバーレイできません"
+
+#, fuzzy
+msgid ""
+"No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
+"\n"
+"New attribute table can be created by Attribute Table Manager."
+msgstr ""
+"ベクトルマップ <%(vector)s>とリンクした属性テーブルが見つかりません%(msg)s\n"
+"このメッセージはデジタイザ設定か属性テーブルマネージャー機能を利用してベクトルマップと属性テーブルのリンク付けをする事で消すことができます"
+
+#, fuzzy
+msgid ""
+"No layers marked for import.\n"
+"Operation canceled."
+msgstr "マップレイヤーが選択されていません 処理はキャンセルされました "
+
+#, fuzzy
+msgid "Topology maintenance"
+msgstr "サポートファイルの保守 "
+
+#, fuzzy
+msgid "Feature selection"
+msgstr "断面図"
+
 #~ msgid "Hardcopy Map Output Utility is not available. You can install it by %s"
 #~ msgstr "マップコピー出力ユーティリティが存在しません.  %s でインストールして下さい"
 
@@ -13280,9 +13306,6 @@ msgstr "GCP（地上基準点）の定義"
 #~ msgid " / Zoom to map"
 #~ msgstr " / マップのズーム"
 
-#~ msgid "Unable to render overlay <%s>"
-#~ msgstr "<%s> をレンダーオーバーレイできません"
-
 #~ msgid "Attribute Table Manager"
 #~ msgstr "属性テーブルマネージャー"
 
@@ -13437,7 +13460,7 @@ msgstr "GCP（地上基準点）の定義"
 #~ msgstr "断面図テキスト設定"
 
 #~ msgid "Select raster map to profile"
-#~ msgstr "ラスターマップの断面を作成できません "
+#~ msgstr "断面図作成対象ラスターマップ"
 
 #~ msgid "Select raster map 1 (required):"
 #~ msgstr "ラスターマップ１ 選択（必須）："
@@ -13445,26 +13468,11 @@ msgstr "GCP（地上基準点）の定義"
 #~ msgid "GRASS GIS Histogram of raster map"
 #~ msgstr "画像/ラスタ－ファイルのヒストグラム作成 "
 
-#, fuzzy
-#~ msgid ""
-#~ "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
-#~ "\n"
-#~ "New attribute table can be created by Attribute Table Manager."
-#~ msgstr ""
-#~ "ベクトルマップ <%(vector)s>とリンクした属性テーブルが見つかりません%(msg)s\n"
-#~ "このメッセージはデジタイザ設定か属性テーブルマネージャー機能を利用してベクトルマップと属性テーブルのリンク付けをする事で消すことができます"
-
 #~ msgid "Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
 #~ msgstr "モジュールr.mapcalcはこのモデルでは使用できません. 代わりにr.mapcalculatorを使用してください"
 
 #~ msgid "Map layer type:"
 #~ msgstr "マップレイヤータイプ："
-
-#, fuzzy
-#~ msgid ""
-#~ "No layers marked for import.\n"
-#~ "Operation canceled."
-#~ msgstr "マップレイヤーが選択されていません 処理はキャンセルされました "
 
 #~ msgid "Look at:"
 #~ msgstr "視線: "
@@ -13633,11 +13641,3 @@ msgstr "GCP（地上基準点）の定義"
 
 #~ msgid "All data records (%d) will permanently deleted from table. Do you want to delete them?"
 #~ msgstr "全てのレコード (%d) は、テーブルから完全に消去されます  削除してよろしいですか?"
-
-#, fuzzy
-#~ msgid "Topology maintenance"
-#~ msgstr "サポートファイルの保守 "
-
-#, fuzzy
-#~ msgid "Feature selection"
-#~ msgstr "断面図"
