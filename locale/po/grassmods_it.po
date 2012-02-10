@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-01-29 21:12+0100\n"
-"Last-Translator: Marco Curreli <marcocurreli@tiscali.it>\n"
+"PO-Revision-Date: 2012-02-09 21:15+0100\n"
+"Last-Translator: \n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -2303,12 +2303,12 @@ msgstr "Sovrascrive la proiezione (usa la proiezione della location)"
 #: ../raster/r.external/main.c:560 ../raster/r.in.gdal/main.c:138
 #: ../vector/v.in.ogr/main.c:231
 msgid "Extend region extents based on new dataset"
-msgstr ""
+msgstr "Estende le dimensioni della regione basandosi sul nuovo dataset"
 
 #: ../raster/r.external/main.c:562 ../raster/r.in.gdal/main.c:140
 #: ../vector/v.in.ogr/main.c:233
 msgid "Also updates the default region if in the PERMANENT mapset"
-msgstr ""
+msgstr "Inoltre aggiorna la regione predefinita nel mapset PERMANENT"
 
 #: ../raster/r.external/main.c:566
 msgid "Require exact range"
@@ -3909,7 +3909,7 @@ msgstr "Importa file GRIDATB.FOR (TOPMODEL) in una mappa raster GRASS"
 
 #: ../raster/r.in.gridatb/main.c:47 ../raster/r.out.gridatb/main.c:57
 msgid "GRIDATB i/o map file"
-msgstr "GRIDATB file mappe i/o"
+msgstr "map file GRIDATB i/o"
 
 #: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
@@ -10923,7 +10923,7 @@ msgstr "Converte un raster in un vettore"
 #: ../vector/v.net.bridge/main.c:63
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
-msgstr ""
+msgstr "Tipo di elemento"
 
 #: ../raster/r.to.vect/main.c:68
 msgid "Smooth corners of area features"
@@ -11597,7 +11597,7 @@ msgstr "Nome della location da cui leggere la proiezione per la trasformazione d
 
 #: ../raster/r.in.gdal/main.c:128 ../vector/v.in.ogr/main.c:183
 msgid "Name for new location to create"
-msgstr "Nome della nuova locazione da creare"
+msgstr "Nome della nuova location da creare"
 
 #: ../raster/r.in.gdal/main.c:150
 msgid "Force Lat/Lon maps to fit into geographic coordinates (90N,S; 180E,W)"
@@ -16519,7 +16519,7 @@ msgstr "Selezionee"
 
 #: ../display/d.vect/main.c:107
 msgid "Layer number (if -1, all layers are displayed)"
-msgstr "Numero di layer (se -1, tutti i layer sono visualizzati)"
+msgstr "Numero del layer (se -1, tutti i layer sono visualizzati)"
 
 #: ../display/d.vect/main.c:122
 msgid "Feature color"
@@ -19514,7 +19514,7 @@ msgstr "Crea un nuovo file contenente le informazioni sulla proiezione (modifica
 
 #: ../general/g.proj/main.c:160
 msgid "Name of new location to create"
-msgstr "Nome della nuova locazione da creare"
+msgstr "Nome della nuova location da creare"
 
 #: ../general/g.proj/main.c:165
 msgid "Enable interactive prompting (for command-line use only)"
@@ -21489,7 +21489,7 @@ msgstr ""
 
 #: ../vector/v.in.ogr/main.c:221
 msgid "Override dataset projection (use location's projection)"
-msgstr "Sovrascrive la proiezione del dataset (utilizza quella della locazione)"
+msgstr "Sovrascrive la proiezione del dataset (utilizza quella della location)"
 
 #: ../vector/v.in.ogr/main.c:226
 msgid "Limit import to the current region"
@@ -29253,7 +29253,7 @@ msgstr ""
 #: ../locale/scriptstrings/v.centroids_to_translate.c:6
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
 msgid "Layer number"
-msgstr "Numero di layer"
+msgstr "Numero del layer"
 
 #: ../vector/v.out.vtk/main.c:93
 msgid "Export numeric attribute table fields as VTK scalar variables"
@@ -29497,7 +29497,7 @@ msgstr "Mostra i parametri della connessione in uso ed esce"
 
 #: ../db/base/connect.c:57
 msgid "Check connection parameters, set if uninitialized, and exit"
-msgstr ""
+msgstr "Controlla i parametri della connessione, li imposta se non sono inizializzati ed esce"
 
 #: ../db/base/connect.c:74
 msgid "Database schema"
@@ -29522,10 +29522,13 @@ msgid ""
 "driver: %s\n"
 "database: %s"
 msgstr ""
+"Driver predefinito / database impostato a:\n"
+"driver: %s\n"
+"database: %s"
 
 #: ../db/base/connect.c:148
 msgid "Default driver is not set"
-msgstr ""
+msgstr "Il driver predefinito non è impostato"
 
 #: ../db/base/connect.c:151
 msgid "Default database is not set"
@@ -29655,12 +29658,12 @@ msgstr "Nome della location"
 
 #: ../db/base/databases.c:92
 msgid "List all databases for a given driver and location."
-msgstr "Mostra tutti i database di un dato driver e locazione"
+msgstr "Mostra tutti i database di un dato driver e location"
 
 #: ../db/base/select.c:93
 #, c-format
 msgid "Test %s."
-msgstr ""
+msgstr "Test %s."
 
 #: ../db/base/select.c:93
 msgid "succeeded"
@@ -29689,7 +29692,7 @@ msgstr "Testa solo la query, non la esegue"
 
 #: ../db/base/select.c:263
 msgid "Selects data from attribute table (performs SQL query statement(s))."
-msgstr ""
+msgstr "Seleziona dati dalla tabella degli attributi (esegue una o più istruzioni SQL)"
 
 #: ../db/db.login/main.c:43
 msgid "database, connection settings"
@@ -31864,7 +31867,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:5
 msgid "Layer number. If -1, all layers are extracted."
-msgstr "Numero di layer. Se -1, tutti i layer sono estratti."
+msgstr "Numero del layer. Se -1, tutti i layer sono estratti."
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:7
 msgid "Name of column used to dissolve common boundaries"
