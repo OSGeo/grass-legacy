@@ -169,9 +169,8 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	for (lbd = 0; lbd < PARAM_LAMBDA; lbd++) {	/* For each lambda value */
 
 	    G_message(_("Begining cross validation with "
-			"lambda_i=%.4f..."), lambda[lbd]);
+			"lambda_i=%.4f ..."), lambda[lbd]);
 
-	    G_set_verbose(G_verbose_min());
 	    /*
 	       How cross correlation algorithm is done:
 	       For each cicle, only the first ndata-1 "observ" elements are considered for the 
@@ -260,7 +259,9 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 		   if (bilin) interpolation (&interp, P_BILINEAR);
 		   else interpolation (&interp, P_BICUBIC);
 		 */
+		G_set_verbose(G_verbose_min());
 		tcholSolve(N, TN, parVect, nparam_spl, BW);
+		G_set_verbose(verbosity);
 
 		/* Estimation of j-point */
 		if (bilin)
@@ -282,13 +283,8 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 
 		observ = swap(observ, j, ndata - 1);	/* Once the last value is left out, it is swap with j-value */
 
-/* commented out as it could be problematic to use global libgis variables
-   if the different x-val cases are each sent to their own thread in future */
-/*		G_set_verbose(verbosity);
-		G_clicker();
-		G_set_verbose(G_verbose_min()); */
+		G_percent(j,ndata,3);
 	    }
-	    G_set_verbose(verbosity);
 
 	    mean[lbd] = calc_mean(stat_vect.error, stat_vect.n_points);
 	    rms[lbd] =
@@ -324,11 +320,11 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	*lambda_min = lambda[lbd_min];
 #endif
 
-	G_message(_("Results into a table:"));
-	G_message(_(" lambda    | mean        | rms         |"));
+	G_message(_("Table of results:"));
+	fprintf(stdout, _("    lambda |       mean |        rms |\n"));
 	for (lbd = 0; lbd < PARAM_LAMBDA; lbd++) {
-	    G_message(_(" %-10.5f| %-12.4f| %-12.4f|"), lambda[lbd],
-		      mean[lbd], rms[lbd]);
+	    fprintf(stdout, " %9.5f | %10.4f | %10.4f |\n", lambda[lbd],
+		    mean[lbd], rms[lbd]);
 	}
 	
 	G_free_vector(mean);
