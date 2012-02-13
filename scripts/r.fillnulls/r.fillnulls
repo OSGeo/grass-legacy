@@ -103,6 +103,11 @@ exitprocedure()
       g.remove rast=MASK --quiet > /dev/null
       g.rename "$USERMASK",MASK --quiet > /dev/null
    fi
+
+   # remove temporary region
+   unset WIND_OVERRIDE
+   g.remove region="tmp_rfillnulls.$$" --quiet
+
    exit 1
 }
 # shell check for user break (signal list: trap -l)
@@ -218,6 +223,13 @@ if [ "$GIS_OPT_METHOD" = "rst" ] ; then
 
    g.message "Using RST interpolation"
 
+   ### zooming made it take slightly longer for bspline, so only use for rst
+   # setup internal region
+   g.region save="tmp_rfillnulls.$$"
+   WIND_OVERRIDE="tmp_rfillnulls.$$"
+   export WIND_OVERRIDE
+   g.region vect="$VECTTMP" align="$GIS_OPT_INPUT"
+
    eval `g.findfile element=cell file=$USERMASK`
    if [ "$file" ] ; then
       g.message "Using user mask while interpolating"
@@ -246,6 +258,9 @@ if [ "$GIS_OPT_METHOD" = "rst" ] ; then
       g.rename "$USERMASK",MASK --quiet > /dev/null
    fi
 
+   # restore real region
+   unset WIND_OVERRIDE
+   g.remove region="tmp_rfillnulls.$$" --quiet
 
 else
    g.message "Using $GIS_OPT_METHOD (v.surf.bspline) interpolation"
