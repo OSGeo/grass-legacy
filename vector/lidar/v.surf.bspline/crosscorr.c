@@ -97,13 +97,15 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	int BW, lbd_min;	/* lbd_min: index where minimun is found */
 	double mean_reg, *obs_mean;
 
-	int nrec, ctype = 0;
+	int nrec, ctype = 0, verbosity;
 	struct field_info *Fi;
 	dbDriver *driver_cats;
 
 	mean = G_alloc_vector(PARAM_LAMBDA);	/* Alloc as much mean, rms and stdev values as the total */
 	rms = G_alloc_vector(PARAM_LAMBDA);	/* number of parameter used used for cross validation */
 	stdev = G_alloc_vector(PARAM_LAMBDA);
+
+	verbosity = G_verbose(); /* store for later reset */
 
 	/* Working with attributes */
 	if (bspline_field > 0) {
@@ -159,7 +161,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	TN = G_alloc_vector(nparam_spl);	/* vector */
 	parVect = G_alloc_vector(nparam_spl);	/* Parameters vector */
 	obsVect = G_alloc_matrix(ndata, 3);	/* Observation vector */
-	Q = G_alloc_vector(ndata);	/* "a priori" var-cov matrix */
+	Q = G_alloc_vector(ndata);		/* "a priori" var-cov matrix */
 
 	obs_mean = G_alloc_vector(ndata);
 	stat_vect = alloc_Stats(ndata);
@@ -168,21 +170,22 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 
 	    G_message(_("Begining cross validation with "
 			"lambda_i=%.4f..."), lambda[lbd]);
-	    
+
+	    G_set_verbose(G_verbose_min());
 	    /*
 	       How cross correlation algorithm is done:
 	       For each cicle, only the first ndata-1 "observ" elements are considered for the 
 	       interpolation. Within every interpolation mean is calculated to lowering border 
-	       errors. The point let out will be used for an estimation. The error between the 
+	       errors. The point left out will be used for an estimation. The error between the 
 	       estimation and the observation is recorded for further statistics.
 	       At the end of the cicle, the last point, that is, the ndata-1 index, and the point 
 	       with j index are swapped.
 	     */
 	    for (j = 0; j < ndata; j++) {	/* Cross Correlation will use all ndata points */
-		double out_x, out_y, out_z;	/* This point is let out */
+		double out_x, out_y, out_z;	/* This point is left out */
 
 		for (i = 0; i < ndata; i++) {	/* Each time, only the first ndata-1 points */
-		    double dval;	/* are considered in the interpolation */
+		    double dval;		/* are considered in the interpolation */
 
 		    /* Setting obsVect vector & Q matrix */
 		    Q[i] = 1;	/* Q=I */
@@ -233,7 +236,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 		for (i = 0; i < ndata; i++)
 		    obsVect[i][2] -= mean_reg;
 
-		/* This is let out */
+		/* This is left out */
 		out_x = observ[ndata - 1].coordX;
 		out_y = observ[ndata - 1].coordY;
 		out_z = obsVect[ndata - 1][2];
@@ -277,8 +280,15 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 		G_debug(1, "CrossCorrelation: stat_vect.error[%d]  =  %lf", j,
 			stat_vect.error[j]);
 
-		observ = swap(observ, j, ndata - 1);	/* Once the last value is let out, it is swap with j-value */
+		observ = swap(observ, j, ndata - 1);	/* Once the last value is left out, it is swap with j-value */
+
+/* commented out as it could be problematic to use global libgis variables
+   if the different x-val cases are each sent to their own thread in future */
+/*		G_set_verbose(verbosity);
+		G_clicker();
+		G_set_verbose(G_verbose_min()); */
 	    }
+	    G_set_verbose(verbosity);
 
 	    mean[lbd] = calc_mean(stat_vect.error, stat_vect.n_points);
 	    rms[lbd] =
@@ -289,6 +299,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	    G_message(_("Mean = %.5lf"), mean[lbd]);
 	    G_message(_("Root Means Square (RMS) = %.5lf"),
 		      rms[lbd]);
+	    G_message("---");
 	}			/* ENDFOR each lambda value */
 
 	G_free_matrix(N);
@@ -434,7 +445,7 @@ double find_minimum(double *values, int *l_min)
 struct Point *swap(struct Point *point, int a, int b)
 {
 
-    SWAP(point[a].coordX, point[b].coordX);	/* Once the last value is let out, it is swap with j-value */
+    SWAP(point[a].coordX, point[b].coordX);	/* Once the last value is left out, it is swap with j-value */
     SWAP(point[a].coordY, point[b].coordY);
     SWAP(point[a].coordZ, point[b].coordZ);
     SWAP(point[a].cat, point[b].cat);
