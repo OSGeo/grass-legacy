@@ -36,7 +36,7 @@
 /*-------------------------------------------------------------------------------------------*/
 int cross_correlation(struct Map_info *Map, double passWE, double passNS)
     /*
-       Map: Map in which cross crorrelation will take values
+       Map: Vector map from which cross-crorrelation will take values
        passWE: spline step in West-East direction
        passNS: spline step in North-South direction
 
@@ -49,8 +49,11 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
     int nsplx, nsply, nparam_spl, ndata;
     double *mean, *rms, *stdev, rms_min, stdev_min;
 
-    /* double lambda[PARAM_LAMBDA] = { 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0 }; */	/* Fixed values (by the moment) */
-    double lambda[PARAM_LAMBDA] = { 0.01, 0.05, 0.1, 0.2, 0.3, 0.4 };	/* Fixed values (by the moment) */
+    /* double lambda[PARAM_LAMBDA] = { 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0 }; */	/* Fixed values (at the moment) */
+    double lambda[PARAM_LAMBDA] = { 0.01, 0.05, 0.1, 0.2, 0.3, 0.4 };	/* Fixed values (at the moment) */
+    /* a more exhaustive search:
+       #define PARAM_LAMBDA 11
+       double lambda[PARAM_LAMBDA] = { 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 5.0, 10.0 }; */
 
     double *TN, *Q, *parVect;	/* Interpolation and least-square vectors */
     double **N, **obsVect;	/* Interpolation and least-square matrix */
@@ -168,16 +171,17 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 
 	for (lbd = 0; lbd < PARAM_LAMBDA; lbd++) {	/* For each lambda value */
 
-	    G_message(_("Begining cross validation with "
-			"lambda_i=%.4f ..."), lambda[lbd]);
+	    G_message(_("Beginning cross validation with "
+			"lambda_i=%.4f ... (%d of %d)"), lambda[lbd],
+			lbd+1, PARAM_LAMBDA);
 
 	    /*
-	       How cross correlation algorithm is done:
-	       For each cicle, only the first ndata-1 "observ" elements are considered for the 
+	       How the cross correlation algorithm is done:
+	       For each cycle, only the first ndata-1 "observ" elements are considered for the 
 	       interpolation. Within every interpolation mean is calculated to lowering border 
 	       errors. The point left out will be used for an estimation. The error between the 
 	       estimation and the observation is recorded for further statistics.
-	       At the end of the cicle, the last point, that is, the ndata-1 index, and the point 
+	       At the end of the cycle, the last point, that is, the ndata-1 index, and the point 
 	       with j index are swapped.
 	     */
 	    for (j = 0; j < ndata; j++) {	/* Cross Correlation will use all ndata points */
@@ -276,14 +280,15 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 					     nsplx, nsply, region.west,
 					     region.south, parVect);
 
-		/*Difference between estimated and observated i-point */
+		/* Difference between estimated and observated i-point */
 		stat_vect.error[j] = out_z - stat_vect.estima[j];
 		G_debug(1, "CrossCorrelation: stat_vect.error[%d]  =  %lf", j,
 			stat_vect.error[j]);
 
-		observ = swap(observ, j, ndata - 1);	/* Once the last value is left out, it is swap with j-value */
+		/* Once the last value is left out, it is swaped with j-value */
+		observ = swap(observ, j, ndata - 1);
 
-		G_percent(j,ndata,3);
+		G_percent(j, ndata, 2);
 	    }
 
 	    mean[lbd] = calc_mean(stat_vect.error, stat_vect.n_points);
@@ -293,7 +298,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 		calc_standard_deviation(stat_vect.error, stat_vect.n_points);
 
 	    G_message(_("Mean = %.5lf"), mean[lbd]);
-	    G_message(_("Root Means Square (RMS) = %.5lf"),
+	    G_message(_("Root Mean Square (RMS) = %.5lf"),
 		      rms[lbd]);
 	    G_message("---");
 	}			/* ENDFOR each lambda value */
@@ -305,7 +310,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 	G_free_vector(parVect);
 #ifdef nodef
 	/*TODO: if the minimum lambda is wanted, the function declaration must be changed */
-	/*At this moment, consider rms only */
+	/* At this moment, consider rms only */
 	rms_min = find_minimum(rms, &lbd_min);
 	stdev_min = find_minimum(stdev, &lbd_min);
 
@@ -440,8 +445,8 @@ double find_minimum(double *values, int *l_min)
 
 struct Point *swap(struct Point *point, int a, int b)
 {
-
-    SWAP(point[a].coordX, point[b].coordX);	/* Once the last value is left out, it is swap with j-value */
+    /* Once the last value is left out, it is swaped with j-value */
+    SWAP(point[a].coordX, point[b].coordX);
     SWAP(point[a].coordY, point[b].coordY);
     SWAP(point[a].coordZ, point[b].coordZ);
     SWAP(point[a].cat, point[b].cat);
