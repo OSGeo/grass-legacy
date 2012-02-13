@@ -28,12 +28,27 @@ similar results by switching to a coarser resolution before the running of
 the module (using <em>g.region</em>) and then back to the original resolution
 afterwards.
 
-
 <h2>EXAMPLE</h2>
 
+North Carolina sample dataset example:
+
 <div class="code"><pre>
-i.landsat.rgb red=tm.3 green=tm.2 blue=tm.1
+g.region rast=lsat7_2002_10 -p
+d.rgb blue=lsat7_2002_10 green=lsat7_2002_20 red=lsat7_2002_30
+d.barscale at=55.312500,93.125000 bcolor=white tcolor=black -t
+
+i.landsat.rgb blue=lsat7_2002_10 green=lsat7_2002_20 red=lsat7_2002_30 strength=95
+d.rgb blue=lsat7_2002_10 green=lsat7_2002_20 red=lsat7_2002_30
+d.barscale at=55.312500,93.125000 bcolor=white tcolor=black -t
 </pre></div>
+
+<center>
+<img src="i_landsat_rgb_uncorrected.jpg" alt="Uncorrected RGB composite of Landsat ETM channels B/G/R"><br>
+Uncorrected RGB composite of Landsat ETM channels B/G/R
+<p>
+<img src="i_landsat_rgb_corrected.jpg" alt="Color corrected RGB composite of Landsat ETM channels B/G/R"><br>
+Color corrected RGB composite of Landsat ETM channels B/G/R
+</center>
 
 <h2>TODO</h2>
 
@@ -52,7 +67,7 @@ The <b>strength</b> option requires further refinement.
 
 <h2>AUTHORS</h2>
 
-Markus Neteler<br>
+Markus Neteler, Trento, Italy<br>
 M. Hamish Bowman, Dept. Marine Science, Otago University, New Zealand
 
 <p><i>Last changed: $Date$</i>
