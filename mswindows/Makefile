@@ -1,10 +1,11 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Other.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
+include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-EXTRA_CLEAN_FILES = GRASS-Packager.bat GRASS-Installer.bat
+EXTRA_CLEAN_FILES = GRASS-Packager.bat GRASS-Installer.nsi
 
-SUBDIRS = 
 ifneq ($(MINGW),)
 default: GRASS-Packager.bat GRASS-Installer.nsi
 endif	
