@@ -429,9 +429,6 @@ def install_extension_win():
     version = grass.version()['version'].split('.')
     grass.message(_("Downloading precompiled GRASS Addons <%s>...") % options['extension'])
     url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons" % (version[0], version[1])
-    
-    if version[2][-3:] != 'svn':
-        url += '%s.%s.%s' % (version[0], version[1], version[2])
     grass.debug("url=%s" % url, 1)
     
     try:
