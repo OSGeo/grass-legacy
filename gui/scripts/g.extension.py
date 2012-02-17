@@ -177,9 +177,14 @@ def list_available_extensions():
 
     # try to download XML metadata file first
     url = "http://grass.osgeo.org/addons/grass%s/modules.xml" % grass.version()['version'].split('.')[0]
+    grass.debug("url=%s" % url, 1)
     try:
         f = urlopen(url)
-        tree = etree.fromstring(f.read())
+        try:
+            tree = etree.fromstring(f.read())
+        except:
+            grass.fatal(_("Unable to parse '%s'") % url)
+        
         for mnode in tree.findall('task'):
             name = mnode.get('name')
             if flags['c'] or flags['g']:
@@ -424,6 +429,7 @@ def install_extension_win():
     version = grass.version()['version'].split('.')
     grass.message(_("Downloading precompiled GRASS Addons <%s>...") % options['extension'])
     url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons" % (version[0], version[1])
+    
     if version[2][-3:] != 'svn':
         url += '%s.%s.%s' % (version[0], version[1], version[2])
     grass.debug("url=%s" % url, 1)
