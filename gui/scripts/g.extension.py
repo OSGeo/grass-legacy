@@ -430,7 +430,7 @@ def install_extension_win():
     grass.message(_("Downloading precompiled GRASS Addons <%s>...") % options['extension'])
     url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons/grass-%s.%s.%s" % \
         (version[0], version[1], version[0], version[1], version[2])
-    grass.debug("url=%s" % url, 0)
+    grass.debug("url=%s" % url, 1)
     
     try:
         f = urlopen(url + '/' + options['extension'] + '.zip')
