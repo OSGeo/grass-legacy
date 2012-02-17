@@ -47,7 +47,8 @@ SUBDIRS = \
 	vector \
 	visualization \
 	man \
-	macosx
+	macosx \
+	mswindows
 
 ifeq ($(strip $(MINGW)),)
 	SUBDIRS += gem
