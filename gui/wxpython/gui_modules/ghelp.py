@@ -39,6 +39,7 @@ except ImportError:
 import wx.lib.flatnotebook as FN
 import  wx.lib.scrolledpanel as scrolled
 
+from grass.script import core as grass
 from grass.script import task as gtask
 
 import menudata
@@ -493,9 +494,7 @@ class AboutWindow(wx.Frame):
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
 
         # get version and web site
-        version, svn_gis_h_rev, svn_gis_h_date = gcmd.RunCommand('g.version',
-                                                                 flags = 'r',
-                                                                 read = True).splitlines()
+        vInfo = grass.version()
         
         infoTxt = wx.Panel(parent = panel, id = wx.ID_ANY)
         infoSizer = wx.BoxSizer(wx.VERTICAL)
@@ -510,7 +509,7 @@ class AboutWindow(wx.Frame):
                       flag = wx.ALL | wx.ALIGN_CENTER, border = 25)
         
         info = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                             label = version.replace('GRASS', 'GRASS GIS').strip() + '\n\n')
+                             label = 'GRASS GIS ' + vInfo['version'] + '\n\n')
         info.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         infoSizer.Add(item = info, proportion = 0,
                           flag = wx.BOTTOM | wx.ALIGN_CENTER, border = 15)
@@ -531,8 +530,8 @@ class AboutWindow(wx.Frame):
                           flag = wx.ALIGN_RIGHT)
         
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = svn_gis_h_rev.split(' ')[1] + ' (' +
-                                               svn_gis_h_date.split(' ')[1] + ')'),
+                                               label = vInfo['libgis_revision'] + ' (' +
+                                               vInfo['libgis_date'].split(' ')[0] + ')'),
                           pos = (2, 1),
                           flag = wx.ALIGN_LEFT)
 
