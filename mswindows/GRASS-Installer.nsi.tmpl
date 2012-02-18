@@ -688,44 +688,10 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'cd "%USERPROFILE%"'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 '%GRASS_PYTHON% "%GISBASE%\etc\grass@GRASS_VERSION_MAJOR@@GRASS_VERSION_MINOR@.py" %*'
+	FileWrite $0 '"%GISBASE%\etc\Init.bat" %*'
 	FileClose $0
 	done_create_grass_command.bat:
-	
-	;Create the grass_command_msys.bat
-	ClearErrors
-	FileOpen $0 $INSTALL_DIR\${GRASS_COMMAND}_msys.bat w
-	IfErrors done_create_grass_command_msys.bat
-	FileWrite $0 '@echo off$\r$\n'
-	FileWrite $0 'rem #########################################################################$\r$\n'
-	FileWrite $0 'rem #$\r$\n'
-	FileWrite $0 'rem # File dynamically created by NSIS installer script;$\r$\n'
-	FileWrite $0 'rem #$\r$\n'
-	FileWrite $0 'rem #########################################################################$\r$\n'
-	FileWrite $0 'rem #$\r$\n'
-	FileWrite $0 'rem # GRASS Initialization (MSYS)$\r$\n'
-	FileWrite $0 'rem #$\r$\n'
-	FileWrite $0 'rem #########################################################################$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'set GISBASE=$INSTALL_DIR$\r$\n'
-	FileWrite $0 'set GRASS_SH=%GISBASE%\msys\bin\sh.exe$\r$\n'
-	FileWrite $0 '$\r$\n'
-	${If} $R_HKLM_INSTALL_PATH != ""
-	FileWrite $0 'set PATH=$R_HKLM_INSTALL_PATH\bin;%PATH%$\r$\n'
-	FileWrite $0 '$\r$\n'
-	${EndIf}
-	${If} $R_HKCU_INSTALL_PATH != ""
-	FileWrite $0 'set PATH=$R_HKCU_INSTALL_PATH\bin;%PATH%$\r$\n'
-	FileWrite $0 '$\r$\n'
-	${EndIf}
-	FileWrite $0 'call "%GISBASE%\etc\env.bat"$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'cd "%USERPROFILE%"'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 '%GRASS_PYTHON% "%GISBASE%\etc\grass@GRASS_VERSION_MAJOR@@GRASS_VERSION_MINOR@.py" %*'
-	FileClose $0
-	done_create_grass_command_msys.bat:
-	
+		
 	;Set the UNIX_LIKE GRASS Path
 	Var /GLOBAL UNIX_LIKE_DRIVE
 	Var /GLOBAL UNIX_LIKE_GRASS_PATH
@@ -765,7 +731,7 @@ Section "GRASS" SecGRASS
 		${EndIf}
 	${EndIf}
 		
-	;create the $INSTALL_DIR\bin grass_command
+	;create the grass_command.sh
 	ClearErrors
 	FileOpen $0 $INSTALL_DIR\${GRASS_COMMAND}.sh w
 	IfErrors done_create_grass_command
@@ -820,6 +786,10 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '   export GRASS_PYTHON$\r$\n'
 	FileWrite $0 'fi$\r$\n'
 	FileWrite $0 '$\r$\n'
+	FileWrite $0 '# Set to default web browser$\r$\n'
+	FileWrite $0 'GRASS_HTML_BROWSER=explorer$\r$\n'
+	FileWrite $0 'export GRASS_HTML_BROWSER$\r$\n'
+	FileWrite $0 '$\r$\n'
 	FileWrite $0 '# Set the GRASS_PROJSHARE variable$\r$\n'
 	FileWrite $0 'GRASS_PROJSHARE="$INSTALL_DIR\proj"$\r$\n'
 	FileWrite $0 'export GRASS_PROJSHARE$\r$\n'
@@ -836,7 +806,9 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'GEOTIFF_CSV="$INSTALL_DIR\share\epsg_csv"$\r$\n'
 	FileWrite $0 'export GEOTIFF_CSV$\r$\n'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 '"$$GRASS_PYTHON $$GISBASE/etc/grass@GRASS_VERSION_MAJOR@@GRASS_VERSION_MINOR@.py" "$$@"'
+	FileWrite $0 'cd "$USERPROFILE"'
+	FileWrite $0 '$\r$\n' 
+	FileWrite $0 'exec "$$GISBASE/etc/Init.sh" "$$@"'
 	FileClose $0
 	done_create_grass_command:
 		
