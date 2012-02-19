@@ -30,23 +30,24 @@ except ImportError:
 from grass.script import core as grass
 from grass.script import task as gtask
 
-sys.path.append('gui_modules')
-import menudata
+if __name__ == "__main__":
+    sys.path.append(os.path.join(os.getenv('GISBASE'), 'etc', 'wxpython'))
+from lmgr.menudata  import ManagerData
+from core.globalvar import grassCmd
 
 def parseModules():
     """!Parse modules' interface"""
     modules = dict()
     
     # list of modules to be ignored
-    ignore =  [ 'mkftcap',
+    ignore =  [ 'g.mapsets_picker.py',
+                'v.type_wrapper.py',
                 'g.parser',
-                'r.mapcalc',
-                'r3.mapcalc',
                 'vcolors' ]
     
-    count = len(globalvar.grassCmd['all'])
+    count = len(grassCmd)
     i = 0
-    for module in globalvar.grassCmd['all']:
+    for module in grassCmd:
         i += 1
         if i % 10 == 0:
             grass.info('* %d/%d' % (i, count))
@@ -54,8 +55,8 @@ def parseModules():
             continue
         try:
             interface = gtask.parse_interface(module)
-        except:
-            grass.error(module)
+        except (StandardError, grass.ScriptError), e:
+            grass.error(module + ': ' + str(e))
             continue
         modules[interface.name] = { 'label'   : interface.label,
                                     'desc'    : interface.description,
@@ -69,7 +70,7 @@ def updateData(data, modules):
     ignore = ['v.type_wrapper.py',
               'vcolors']
     
-    menu_modules = list()    
+    menu_modules = list()
     for node in data.tree.getiterator():
         if node.tag != 'menuitem':
             continue
@@ -105,7 +106,7 @@ def updateData(data, modules):
             node.find('keywords').text = ','.join(modules[module]['keywords'])
         
         menu_modules.append(item['command'])
-    
+
     for module in modules.keys():
         if module not in menu_modules:
             grass.warning("'%s' not available from the menu" % module)
@@ -150,7 +151,7 @@ def main(argv = None):
     modules = dict()
     modules = parseModules()
     grass.info("Step 3: reading menu data...")
-    data = menudata.ManagerData()
+    data = ManagerData()
     grass.info("Step 4: updating menu data...")
     updateData(data, modules)
     
@@ -171,10 +172,5 @@ def main(argv = None):
 if __name__ == '__main__':
     if os.getenv("GISBASE") is None:
         sys.exit("You must be in GRASS GIS to run this program.")
-    
-    sys.path.append(os.path.join(os.getenv("GISBASE"), 'etc', 'wxpython', 'gui_modules'))
-    import menudata
-    import menuform
-    import globalvar
     
     sys.exit(main())
