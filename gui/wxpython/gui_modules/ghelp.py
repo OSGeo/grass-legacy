@@ -525,14 +525,24 @@ class AboutWindow(wx.Frame):
                           flag = wx.ALIGN_LEFT)
         
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('GIS Library Revision:')),
+                                               label = _('SVN Revision:')),
                           pos = (2, 0),
+                          flag = wx.ALIGN_RIGHT)
+        
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = vInfo['revision']),
+                          pos = (2, 1),
+                          flag = wx.ALIGN_LEFT)
+
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('GIS Library Revision:')),
+                          pos = (3, 0),
                           flag = wx.ALIGN_RIGHT)
         
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
                                                label = vInfo['libgis_revision'] + ' (' +
                                                vInfo['libgis_date'].split(' ')[0] + ')'),
-                          pos = (2, 1),
+                          pos = (3, 1),
                           flag = wx.ALIGN_LEFT)
 
         infoSizer.Add(item = infoGridSizer,
