@@ -1,5 +1,3 @@
-@echo off
-
 rem -----------------------------------------------------------------------------------------------------------------------
 rem Self Contained GRASS Automated Packager
 rem -----------------------------------------------------------------------------------------------------------------------
@@ -8,15 +6,18 @@ rem Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
 rem Last Update: $Id$
 rem -----------------------------------------------------------------------------------------------------------------------
 
+@echo off
+
 rem --------------------------------------------------------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
-set PACKAGE_DIR=.\GRASS-64-Package
+set PACKAGE_DIR=.\GRASS-@GRASS_VERSION_MAJOR@@GRASS_VERSION_MINOR@-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.3svn
+set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-@GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@
+set GRASS_BIN_PREFIX=%OSGEO4W_DIR%\bin
 
 set SVN_PATH=c:\Subversion
 
@@ -31,10 +32,11 @@ mkdir %PACKAGE_DIR%
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
-@echo Copy %GRASS_PREFIX% content to PACKAGE_DIR
+@echo Copy %GRASS_PREFIX% & %GRASS_BIN_PREFIX% content to PACKAGE_DIR
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
 
+rem xcopy %GRASS_BIN_PREFIX%\grass@GRASS_VERSION_MAJOR@@GRASS_VERSION_MINOR@.py %PACKAGE_DIR% /S/V/F
 xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 
 @echo.
@@ -46,10 +48,8 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy %OSGEO4W_DIR%\bin\*.dll %PACKAGE_DIR%\extralib
-del %PACKAGE_DIR%\extralib\libgrass_*6.4.0*.dll
-del %PACKAGE_DIR%\extralib\libgrass_*6.4.1*.dll
+del %PACKAGE_DIR%\extralib\libgrass_*6.4*.dll
 del %PACKAGE_DIR%\extralib\libgrass_*6.5*.dll
-del %PACKAGE_DIR%\extralib\libgrass_*7.0*.dll
 del %PACKAGE_DIR%\extralib\Qt*4.dll
 rem copy %OSGEO4W_DIR%\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
@@ -148,7 +148,6 @@ mkdir %PACKAGE_DIR%\tcl-tk\include
 mkdir %PACKAGE_DIR%\tcl-tk\lib
 mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
 mkdir %PACKAGE_DIR%\tcl-tk\lib\tk8.5
-mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8.5\encoding
 mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8\8.5
 
 xcopy %OSGEO4W_DIR%\bin\tclpip85.dll %PACKAGE_DIR%\tcl-tk\bin /S/V/F/I
@@ -167,7 +166,6 @@ copy %OSGEO4W_DIR%\include\ttkDecls.h %PACKAGE_DIR%\tcl-tk\include
 
 copy %OSGEO4W_DIR%\lib\tcl8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
 copy %OSGEO4W_DIR%\lib\tcl8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
-copy %OSGEO4W_DIR%\lib\tcl8.5\encoding\*.enc %PACKAGE_DIR%\tcl-tk\lib\tcl8.5\encoding
 
 copy %OSGEO4W_DIR%\lib\tk8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tk8.5
 copy %OSGEO4W_DIR%\lib\tk8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tk8.5
