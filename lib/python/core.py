@@ -61,9 +61,9 @@ STDOUT = subprocess.STDOUT
 class ScriptError(Exception):
     def __init__(self, msg):
         self.value = msg
-    
+        
     def __str__(self):
-        return repr(self.value)
+        return self.value
         
 raise_on_error = False # raise exception instead of calling fatal()
 debug_level = 0        # DEBUG level
@@ -710,7 +710,7 @@ def mlist_grouped(type, pattern = None, check_search_path = True):
             result[mapset] = []
     
     mapset = None
-    for line in read_command("g.mlist", flags = "m",
+    for line in read_command("g.mlist", quiet = True, flags = "m",
                              type = type, pattern = pattern).splitlines():
         try:
             name, mapset = line.split('@')
@@ -1027,8 +1027,8 @@ def version():
     @code
     print version()
 
-    {'date': '2011', 'libgis_date': '2011-04-13 13:19:03 +0200 (Wed, 13 Apr 2011)',
-    'version': '6.4.2svn', 'libgis_revision': '45934', 'revision': '47445'}
+    {'date': '2011', 'libgis_date': '2011-02-26 21:31:24 +0100 (Sat, 26 Feb 2011)',
+    'version': '6.4.3', 'libgis_revision': '45467', 'revision': '47305'}
     @endcode
     """
     data = parse_command('g.version',
