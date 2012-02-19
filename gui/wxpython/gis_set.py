@@ -1,5 +1,5 @@
 """!
-@package gis_set.py
+@package gis_set
 
 GRASS start-up screen.
 
@@ -7,9 +7,9 @@ Initialization module for wxPython GRASS GUI.
 Location/mapset management (selection, creation, etc.).
 
 Classes:
- - GRASSStartup
- - GListBox
- - StartUp
+ - gis_set::GRASSStartup
+ - gis_set::GListBox
+ - gis_set::StartUp
 
 (C) 2006-2011 by the GRASS Development Team
 
@@ -22,7 +22,6 @@ This program is free software under the GNU General Public License
 
 import os
 import sys
-import glob
 import shutil
 import copy
 import platform
@@ -32,17 +31,16 @@ import codecs
 import gettext
 gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
 
-from gui_modules import globalvar
+if __name__ == "__main__":
+    sys.path.append(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'wxpython'))
+from core import globalvar
 import wx
-import wx.html
-import wx.lib.rcsizer as rcs
-import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.scrolledpanel as scrolled
 
-from gui_modules import goutput
-from gui_modules.ghelp import HelpFrame
-from gui_modules.gcmd  import GMessage, GError
+from gui_core.ghelp import HelpFrame
+from core.gcmd      import GMessage, GError, DecodeString, RunCommand
+from core.utils     import GetListOfLocations, GetListOfMapsets
 
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
@@ -146,8 +144,7 @@ class GRASSStartup(wx.Frame):
                                      style = wx.TE_PROCESS_ENTER)
 
         # Locations
-        self.lpanel = wx.Panel(parent = self.panel, id = wx.ID_ANY)
-        self.lblocations = GListBox(parent = self.lpanel,
+        self.lblocations = GListBox(parent = self.panel,
                                     id = wx.ID_ANY, size = (180, 200),
                                     choices = self.listOfLocations)
         
@@ -155,8 +152,7 @@ class GRASSStartup(wx.Frame):
 
         # TODO: sort; but keep PERMANENT on top of list
         # Mapsets
-        self.mpanel = wx.Panel(parent = self.panel, id = wx.ID_ANY)
-        self.lbmapsets = GListBox(parent = self.mpanel,
+        self.lbmapsets = GListBox(parent = self.panel,
                                   id = wx.ID_ANY, size = (180, 200),
                                   choices = self.listOfMapsets)
         
@@ -224,9 +220,8 @@ class GRASSStartup(wx.Frame):
                                               force = True)
                 self.lblocations.EnsureVisible(self.listOfLocations.index(location))
             except ValueError:
-                print >> sys.stderr, _("ERROR: Location <%s> not found") % \
-                    (utils.UnicodeString(location))
-                
+                print >> sys.stderr, _("ERROR: Location <%s> not found") % location
+            
             # list of mapsets
             self.UpdateMapsets(os.path.join(self.gisdbase, location))
             mapset = self.GetRCValue("MAPSET")
@@ -237,89 +232,75 @@ class GRASSStartup(wx.Frame):
                     self.lbmapsets.EnsureVisible(self.listOfMapsets.index(mapset))
                 except ValueError:
                     self.lbmapsets.Clear()
-                    print >> sys.stderr, _("ERROR: Mapset <%s> not found") % \
-                        (utils.UnicodeString(mapset))
-            
+                    print >> sys.stderr, _("ERROR: Mapset <%s> not found") % mapset
+                    
     def _do_layout(self):
-        label_style = wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_HORIZONTAL
-
         sizer           = wx.BoxSizer(wx.VERTICAL)
         dbase_sizer     = wx.BoxSizer(wx.HORIZONTAL)
-        location_sizer  = wx.FlexGridSizer(rows = 1, cols = 2, vgap = 4, hgap = 4)
+        location_sizer  = wx.BoxSizer(wx.HORIZONTAL)
         select_boxsizer = wx.StaticBoxSizer(self.select_box, wx.VERTICAL)
         select_sizer    = wx.FlexGridSizer(rows = 2, cols = 2, vgap = 4, hgap = 4)
-        manage_boxsizer = wx.StaticBoxSizer(self.manage_box, wx.VERTICAL)
-        manage_sizer    = wx.BoxSizer(wx.VERTICAL)
+        select_sizer.AddGrowableRow(1)
+        select_sizer.AddGrowableCol(0)
+        select_sizer.AddGrowableCol(1)
+        manage_sizer    = wx.StaticBoxSizer(self.manage_box, wx.VERTICAL)
         btns_sizer      = wx.BoxSizer(wx.HORIZONTAL)
-
+        
         # gis data directory
         dbase_sizer.Add(item = self.ldbase, proportion = 0,
                         flag = wx.ALIGN_CENTER_VERTICAL |
                         wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                         border = 3)
-        dbase_sizer.Add(item = self.tgisdbase, proportion = 0,
-                        flag = wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
+        dbase_sizer.Add(item = self.tgisdbase, proportion = 1,
+                        flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                         border = 3)
         dbase_sizer.Add(item = self.bbrowse, proportion = 0,
-                        flag = wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
+                        flag = wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                         border = 3)
-
+        
         # select sizer
         select_sizer.Add(item = self.llocation, proportion = 0,
-                         flag = label_style | wx.ALL,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                          border = 3)
         select_sizer.Add(item = self.lmapset, proportion = 0,
-                         flag = label_style | wx.ALL,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                          border = 3)
-        select_sizer.Add(item = self.lpanel, proportion = 0,
-                         flag = wx.ADJUST_MINSIZE |
-                         wx.ALIGN_CENTER_VERTICAL |
-                         wx.ALIGN_CENTER_HORIZONTAL)
-        select_sizer.Add(item = self.mpanel, proportion = 0,
-                         flag = wx.ADJUST_MINSIZE |
-                         wx.ALIGN_CENTER_VERTICAL |
-                         wx.ALIGN_CENTER_HORIZONTAL)
-
-        select_boxsizer.Add(item = select_sizer, proportion = 0)
-
+        select_sizer.Add(item = self.lblocations, proportion = 1,
+                         flag = wx.EXPAND)
+        select_sizer.Add(item = self.lbmapsets, proportion = 1,
+                         flag = wx.EXPAND)
+        
+        select_boxsizer.Add(item = select_sizer, proportion = 1,
+                            flag = wx.EXPAND)
+        
         # define new location and mapset
         manage_sizer.Add(item = self.ldefine, proportion = 0,
-                         flag = label_style | wx.ALL,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                          border = 3)
         manage_sizer.Add(item = self.bwizard, proportion = 0,
-                         flag = label_style | wx.BOTTOM,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.BOTTOM,
                          border = 5)
         manage_sizer.Add(item = self.lcreate, proportion = 0,
-                         flag = label_style | wx.ALL,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                          border = 3)
         manage_sizer.Add(item = self.bmapset, proportion = 0,
-                         flag = label_style | wx.BOTTOM,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.BOTTOM,
                          border = 5)
         manage_sizer.Add(item = self.lmanageloc, proportion = 0,
-                         flag = label_style | wx.ALL,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                          border = 3)
         manage_sizer.Add(item = self.manageloc, proportion = 0,
-                         flag = label_style | wx.BOTTOM,
+                         flag = wx.ALIGN_CENTER_HORIZONTAL | wx.BOTTOM,
                          border = 5)
-
-        manage_boxsizer.Add(item = manage_sizer, proportion = 0)
-
+        
         # location sizer
-        location_sizer.Add(item = select_boxsizer, proportion = 0,
-                           flag = wx.ADJUST_MINSIZE |
-                           wx.ALIGN_CENTER_VERTICAL |
-                           wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.RIGHT | wx.LEFT | wx.EXPAND,
-                           border = 3) # GISDBASE setting
-        location_sizer.Add(item = manage_boxsizer, proportion = 0,
-                           flag = wx.ADJUST_MINSIZE |
-                           wx.ALIGN_TOP |
-                           wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.RIGHT | wx.EXPAND,
+        location_sizer.Add(item = select_boxsizer, proportion = 1,
+                           flag = wx.LEFT | wx.RIGHT | wx.EXPAND,
+                           border = 3) 
+        location_sizer.Add(item = manage_sizer, proportion = 0,
+                           flag = wx.RIGHT | wx.EXPAND,
                            border = 3)
-
+        
         # buttons
         btns_sizer.Add(item = self.bstart, proportion = 0,
                        flag = wx.ALIGN_CENTER_HORIZONTAL |
@@ -336,7 +317,7 @@ class GRASSStartup(wx.Frame):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL,
                        border = 5)
-
+        
         # main sizer
         sizer.Add(item = self.hbitmap,
                   proportion = 0,
@@ -356,24 +337,22 @@ class GRASSStartup(wx.Frame):
                   wx.ALIGN_CENTER_HORIZONTAL)
         sizer.Add(item = dbase_sizer, proportion = 0,
                   flag = wx.ALIGN_CENTER_HORIZONTAL |
-                  wx.RIGHT | wx.LEFT,
-                  border = 1) # GISDBASE setting
+                  wx.RIGHT | wx.LEFT | wx.EXPAND,
+                  border = 20) # GISDBASE setting
         sizer.Add(item = location_sizer, proportion = 1,
-                  flag = wx.ALIGN_CENTER_VERTICAL |
-                  wx.ALIGN_CENTER_HORIZONTAL |
-                  wx.RIGHT | wx.LEFT,
+                  flag = wx.RIGHT | wx.LEFT | wx.EXPAND,
                   border = 1)
         sizer.Add(item = btns_sizer, proportion = 0,
                   flag = wx.ALIGN_CENTER_VERTICAL |
                   wx.ALIGN_CENTER_HORIZONTAL |
                   wx.RIGHT | wx.LEFT,
                   border = 1)
-
+        
         self.panel.SetAutoLayout(True)
         self.panel.SetSizer(sizer)
         sizer.Fit(self.panel)
         sizer.SetSizeHints(self)
-
+        
         self.Layout()
 
     def _readGisRC(self):
@@ -390,7 +369,7 @@ class GRASSStartup(wx.Frame):
                 rc = open(gisrc, "r")
                 for line in rc.readlines():
                     key, val = line.split(":", 1)
-                    grassrc[key.strip()] = utils.DecodeString(val.strip())
+                    grassrc[key.strip()] = DecodeString(val.strip())
             finally:
                 rc.close()
         
@@ -406,9 +385,9 @@ class GRASSStartup(wx.Frame):
         
     def OnWizard(self, event):
         """!Location wizard started"""
-        from gui_modules import location_wizard
-        gWizard = location_wizard.LocationWizard(parent = self,
-                                                 grassdatabase = self.tgisdbase.GetValue())
+        from location_wizard.wizard import LocationWizard
+        gWizard = LocationWizard(parent = self,
+                                 grassdatabase = self.tgisdbase.GetValue())
         if gWizard.location !=  None:
             self.OnSetDatabase(event)
             self.UpdateMapsets(os.path.join(self.gisdbase, gWizard.location))
@@ -433,8 +412,8 @@ class GRASSStartup(wx.Frame):
     def RenameMapset(self):
         """!Rename selected mapset
         """
-        location = utils.UnicodeString(self.listOfLocations[self.lblocations.GetSelection()])
-        mapset   = utils.UnicodeString(self.listOfMapsets[self.lbmapsets.GetSelection()])
+        location = self.listOfLocations[self.lblocations.GetSelection()]
+        mapset   = self.listOfMapsets[self.lbmapsets.GetSelection()]
         if mapset ==  'PERMANENT':
             GMessage(parent = self,
                      message = _('Mapset <PERMANENT> is required for valid GRASS location.\n\n'
@@ -474,7 +453,7 @@ class GRASSStartup(wx.Frame):
     def RenameLocation(self):
         """!Rename selected location
         """
-        location = utils.UnicodeString(self.listOfLocations[self.lblocations.GetSelection()])
+        location = self.listOfLocations[self.lblocations.GetSelection()]
 
         dlg = wx.TextEntryDialog(parent = self,
                                  message = _('Current name: %s\n\nEnter new name:') % location,
@@ -565,7 +544,7 @@ class GRASSStartup(wx.Frame):
     def UpdateLocations(self, dbase):
         """!Update list of locations"""
         try:
-            self.listOfLocations = utils.GetListOfLocations(dbase)
+            self.listOfLocations = GetListOfLocations(dbase)
         except UnicodeEncodeError:
             wx.MessageBox(parent = self, caption = _("Error"),
                           message = _("Unable to set GRASS database. "
@@ -587,29 +566,29 @@ class GRASSStartup(wx.Frame):
         self.FormerMapsetSelection = wx.NOT_FOUND # for non-selectable item
         
         self.listOfMapsetsSelectable = list()
-        self.listOfMapsets = utils.GetListOfMapsets(self.gisdbase, location)
+        self.listOfMapsets = GetListOfMapsets(self.gisdbase, location)
         
         self.lbmapsets.Clear()
         
         # disable mapset with denied permission
         locationName = os.path.basename(location)
         
-        ret = gcmd.RunCommand('g.mapset',
-                              read = True,
-                              flags = 'l',
-                              location = locationName,
-                              gisdbase = self.gisdbase)
+        ret = RunCommand('g.mapset',
+                         read = True,
+                         flags = 'l',
+                         location = locationName,
+                         gisdbase = self.gisdbase)
             
         if ret:
             for line in ret.splitlines():
                 self.listOfMapsetsSelectable += line.split(' ')
         else:
-            gcmd.RunCommand("g.gisenv",
-                            set = "GISDBASE=%s" % self.gisdbase)
-            gcmd.RunCommand("g.gisenv",
-                            set = "LOCATION_NAME=%s" % locationName)
-            gcmd.RunCommand("g.gisenv",
-                            set = "MAPSET=PERMANENT")
+            RunCommand("g.gisenv",
+                       set = "GISDBASE=%s" % self.gisdbase)
+            RunCommand("g.gisenv",
+                       set = "LOCATION_NAME=%s" % locationName)
+            RunCommand("g.gisenv",
+                       set = "MAPSET=PERMANENT")
             # first run only
             self.listOfMapsetsSelectable = copy.copy(self.listOfMapsets)
         
@@ -711,6 +690,11 @@ class GRASSStartup(wx.Frame):
 
         if dlg.ShowModal() ==  wx.ID_OK:
             mapset = dlg.GetValue()
+            if mapset in self.listOfMapsets:
+                GMessage(parent = self,
+                         message = _("Mapset <%s> already exists.") % mapset)
+                return
+            
             try:
                 os.mkdir(os.path.join(self.gisdbase, location, mapset))
                 # copy WIND file and its permissions from PERMANENT and set permissions to u+rw,go+r
@@ -775,12 +759,12 @@ class GRASSStartup(wx.Frame):
             else:
                 return
         
-        gcmd.RunCommand("g.gisenv",
-                        set = "GISDBASE=%s" % dbase)
-        gcmd.RunCommand("g.gisenv",
-                        set = "LOCATION_NAME=%s" % location)
-        gcmd.RunCommand("g.gisenv",
-                        set = "MAPSET=%s" % mapset)
+        RunCommand("g.gisenv",
+                   set = "GISDBASE=%s" % dbase)
+        RunCommand("g.gisenv",
+                   set = "LOCATION_NAME=%s" % location)
+        RunCommand("g.gisenv",
+                   set = "MAPSET=%s" % mapset)
         
         self.Destroy()
         sys.exit(0)
@@ -881,15 +865,11 @@ class StartUp(wx.App):
         return 1
 
 if __name__ ==  "__main__":
-
     if os.getenv("GISBASE") is None:
-        print >> sys.stderr, "Failed to start GUI, GRASS GIS is not running."
-    else:
-        import gettext
-        gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
-
-        import gui_modules.gcmd as gcmd
-        import gui_modules.utils as utils
-
-        GRASSStartUp = StartUp(0)
-        GRASSStartUp.MainLoop()
+        sys.exit("Failed to start GUI, GRASS GIS is not running.")
+        
+    import gettext
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
+    
+    GRASSStartUp = StartUp(0)
+    GRASSStartUp.MainLoop()

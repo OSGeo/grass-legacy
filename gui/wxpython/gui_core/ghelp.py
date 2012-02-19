@@ -1,0 +1,908 @@
+"""!
+@package gui_core.ghelp
+
+@brief Help window
+
+Classes:
+ - ghelp::SearchModuleWindow
+ - ghelp::MenuTreeWindow
+ - ghelp::MenuTree
+ - ghelp::AboutWindow
+ - ghelp::HelpFrame
+ - ghelp::HelpWindow
+ - ghelp::HelpPanel
+
+(C) 2008-2011 by the GRASS Development Team
+
+This program is free software under the GNU General Public License
+(>=v2). Read the file COPYING that comes with GRASS for details.
+
+@author Martin Landa <landa.martin gmail.com>
+"""
+
+import os
+import sys
+import codecs
+import platform
+
+import wx
+from wx.html import HtmlWindow
+try:
+    import wx.lib.agw.customtreectrl as CT
+    from wx.lib.agw.hyperlink import HyperLinkCtrl
+except ImportError:
+    import wx.lib.customtreectrl as CT
+    from wx.lib.hyperlink import HyperLinkCtrl
+import wx.lib.flatnotebook as FN
+
+import grass.script as grass
+
+from core             import globalvar
+from core             import utils
+from lmgr.menudata    import ManagerData
+from core.gcmd        import GError, DecodeString
+from gui_core.widgets import GNotebook, StaticWrapText, ItemTree, ScrolledPanel
+
+class SearchModuleWindow(wx.Panel):
+    """!Search module window (used in MenuTreeWindow)"""
+    def __init__(self, parent, id = wx.ID_ANY, cmdPrompt = None,
+                 showChoice = True, showTip = False, **kwargs):
+        self.showTip    = showTip
+        self.showChoice = showChoice
+        self.cmdPrompt  = cmdPrompt
+        
+        wx.Panel.__init__(self, parent = parent, id = id, **kwargs)
+        
+        self._searchDict = { _('description') : 'description',
+                             _('command')     : 'command',
+                             _('keywords')    : 'keywords' }
+        
+        self.box = wx.StaticBox(parent = self, id = wx.ID_ANY,
+                                label = " %s " % _("Find module(s)"))
+        
+        self.searchBy = wx.Choice(parent = self, id = wx.ID_ANY,
+                                  choices = [_('description'),
+                                             _('keywords'),
+                                             _('command')])
+        self.searchBy.SetSelection(0)
+        
+        self.search = wx.TextCtrl(parent = self, id = wx.ID_ANY,
+                                  value = "", size = (-1, 25),
+                                  style = wx.TE_PROCESS_ENTER)
+        self.search.Bind(wx.EVT_TEXT, self.OnSearchModule)
+        
+        if self.showTip:
+            self.searchTip = StaticWrapText(parent = self, id = wx.ID_ANY,
+                                            size = (-1, 35))
+        
+        if self.showChoice:
+            self.searchChoice = wx.Choice(parent = self, id = wx.ID_ANY)
+            if self.cmdPrompt:
+                self.searchChoice.SetItems(self.cmdPrompt.GetCommandItems())
+            self.searchChoice.Bind(wx.EVT_CHOICE, self.OnSelectModule)
+        
+        self._layout()
+
+    def _layout(self):
+        """!Do layout"""
+        sizer = wx.StaticBoxSizer(self.box, wx.HORIZONTAL)
+        gridSizer = wx.GridBagSizer(hgap = 3, vgap = 3)
+        gridSizer.AddGrowableCol(1)
+        
+        gridSizer.Add(item = self.searchBy,
+                      flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
+        gridSizer.Add(item = self.search,
+                      flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (0, 1))
+        row = 1
+        if self.showTip:
+            gridSizer.Add(item = self.searchTip,
+                          flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (row, 0), span = (1, 2))
+            row += 1
+        
+        if self.showChoice:
+            gridSizer.Add(item = self.searchChoice,
+                          flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (row, 0), span = (1, 2))
+        
+        sizer.Add(item = gridSizer, proportion = 1)
+        
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def GetSelection(self):
+        """!Get selected element"""
+        selection = self.searchBy.GetStringSelection()
+        
+        return self._searchDict[selection]
+
+    def SetSelection(self, i):
+        """!Set selection element"""
+        self.searchBy.SetSelection(i)
+
+    def OnSearchModule(self, event):
+        """!Search module by keywords or description"""
+        if not self.cmdPrompt:
+            event.Skip()
+            return
+        
+        text = event.GetString()
+        if not text:
+            self.cmdPrompt.SetFilter(None)
+            mList = self.cmdPrompt.GetCommandItems()
+            self.searchChoice.SetItems(mList)
+            if self.showTip:
+                self.searchTip.SetLabel(_("%d modules found") % len(mList))
+            event.Skip()
+            return
+        
+        modules = dict()
+        iFound = 0
+        for module, data in self.cmdPrompt.moduleDesc.iteritems():
+            found = False
+            sel = self.searchBy.GetSelection()
+            if sel == 0: # -> description
+                if text in data['desc']:
+                    found = True
+            elif sel == 1: # keywords
+                if text in ','.join(data['keywords']):
+                    found = True
+            else: # command
+                if module[:len(text)] == text:
+                    found = True
+            
+            if found:
+                iFound += 1
+                try:
+                    group, name = module.split('.')
+                except ValueError:
+                    continue # TODO
+                
+                if group not in modules:
+                    modules[group] = list()
+                modules[group].append(name)
+                
+        self.cmdPrompt.SetFilter(modules)
+        self.searchChoice.SetItems(self.cmdPrompt.GetCommandItems())
+        if self.showTip:
+            self.searchTip.SetLabel(_("%d modules found") % iFound)
+        
+        event.Skip()
+        
+    def OnSelectModule(self, event):
+        """!Module selected from choice, update command prompt"""
+        cmd  = event.GetString().split(' ', 1)[0]
+        text = cmd + ' '
+        pos = len(text)
+
+        if self.cmdPrompt:
+            self.cmdPrompt.SetText(text)
+            self.cmdPrompt.SetSelectionStart(pos)
+            self.cmdPrompt.SetCurrentPos(pos)
+            self.cmdPrompt.SetFocus()
+        
+        desc = self.cmdPrompt.GetCommandDesc(cmd)
+        if self.showTip:
+            self.searchTip.SetLabel(desc)
+    
+    def Reset(self):
+        """!Reset widget"""
+        self.searchBy.SetSelection(0)
+        self.search.SetValue('')
+        if self.showTip:
+            self.searchTip.SetLabel('')
+        
+class MenuTreeWindow(wx.Panel):
+    """!Show menu tree"""
+    def __init__(self, parent, id = wx.ID_ANY, **kwargs):
+        self.parent = parent # LayerManager
+        
+        wx.Panel.__init__(self, parent = parent, id = id, **kwargs)
+        
+        self.dataBox = wx.StaticBox(parent = self, id = wx.ID_ANY,
+                                    label = " %s " % _("Menu tree (double-click to run command)"))
+        # tree
+        self.tree = MenuTree(parent = self, data = ManagerData())
+        self.tree.Load()
+
+        # search widget
+        self.search = SearchModuleWindow(parent = self, showChoice = False)
+        
+        # buttons
+        self.btnRun   = wx.Button(self, id = wx.ID_OK, label = _("&Run"))
+        self.btnRun.SetToolTipString(_("Run selected command"))
+        self.btnRun.Enable(False)
+        
+        # bindings
+        self.btnRun.Bind(wx.EVT_BUTTON,            self.OnRun)
+        self.tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated)
+        self.tree.Bind(wx.EVT_TREE_SEL_CHANGED,    self.OnItemSelected)
+        self.search.Bind(wx.EVT_TEXT_ENTER,        self.OnShowItem)
+        self.search.Bind(wx.EVT_TEXT,              self.OnUpdateStatusBar)
+        
+        self._layout()
+        
+        self.search.SetFocus()
+        
+    def _layout(self):
+        """!Do dialog layout"""
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        # body
+        dataSizer = wx.StaticBoxSizer(self.dataBox, wx.HORIZONTAL)
+        dataSizer.Add(item = self.tree, proportion =1,
+                      flag = wx.EXPAND)
+        
+        # buttons
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer.Add(item = self.btnRun, proportion = 0)
+        
+        sizer.Add(item = dataSizer, proportion = 1,
+                  flag = wx.EXPAND | wx.ALL, border = 5)
+
+        sizer.Add(item = self.search, proportion = 0,
+                  flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
+        
+        sizer.Add(item = btnSizer, proportion = 0,
+                  flag = wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT, border = 5)
+        
+        sizer.Fit(self)
+        sizer.SetSizeHints(self)
+        
+        self.SetSizer(sizer)
+        
+        self.Fit()
+        self.SetAutoLayout(True)        
+        self.Layout()
+        
+    def OnCloseWindow(self, event):
+        """!Close window"""
+        self.Destroy()
+        
+    def OnRun(self, event):
+        """!Run selected command"""
+        if not self.tree.GetSelected():
+            return # should not happen
+        
+        data = self.tree.GetPyData(self.tree.GetSelected())
+        if not data:
+            return
+
+        handler = 'self.parent.' + data['handler'].lstrip('self.')
+        if data['handler'] == 'self.OnXTerm':
+            wx.MessageBox(parent = self,
+                          message = _('You must run this command from the menu or command line',
+                                      'This command require an XTerm'),
+                          caption = _('Message'), style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+        elif data['command']:
+            eval(handler)(event = None, cmd = data['command'].split())
+        else:
+            eval(handler)(None)
+
+    def OnShowItem(self, event):
+        """!Show selected item"""
+        self.tree.OnShowItem(event)
+        if self.tree.GetSelected():
+            self.btnRun.Enable()
+        else:
+            self.btnRun.Enable(False)
+        
+    def OnItemActivated(self, event):
+        """!Item activated (double-click)"""
+        item = event.GetItem()
+        if not item or not item.IsOk():
+            return
+        
+        data = self.tree.GetPyData(item)
+        if not data or 'command' not in data:
+            return
+        
+        self.tree.itemSelected = item
+        
+        self.OnRun(None)
+        
+    def OnItemSelected(self, event):
+        """!Item selected"""
+        item = event.GetItem()
+        if not item or not item.IsOk():
+            return
+        
+        data = self.tree.GetPyData(item)
+        if not data or 'command' not in data:
+            return
+        
+        if data['command']:
+            label = data['command'] + ' -- ' + data['description']
+        else:
+            label = data['description']
+        
+        self.parent.SetStatusText(label, 0)
+        
+    def OnUpdateStatusBar(self, event):
+        """!Update statusbar text"""
+        element = self.search.GetSelection()
+        self.tree.SearchItems(element = element,
+                              value = event.GetString())
+        
+        nItems = len(self.tree.itemsMarked)
+        if event.GetString():
+            self.parent.SetStatusText(_("%d modules match") % nItems, 0)
+        else:
+            self.parent.SetStatusText("", 0)
+        
+        event.Skip()
+
+class MenuTree(ItemTree):
+    """!Menu tree class"""
+    def __init__(self, parent, data, **kwargs):
+        self.parent   = parent
+        self.menudata = data
+
+        super(MenuTree, self).__init__(parent, **kwargs)
+        
+    def Load(self, data = None):
+        """!Load menu data tree
+
+        @param data menu data (None to use self.menudata)
+        """
+        if not data:
+            data = self.menudata
+        
+        self.itemsMarked = [] # list of marked items
+        for eachMenuData in data.GetMenu():
+            for label, items in eachMenuData:
+                item = self.AppendItem(parentId = self.root,
+                                       text = label.replace('&', ''))
+                self.__AppendItems(item, items)
+        
+    def __AppendItems(self, item, data):
+        """!Append items into tree (used by Load()
+        
+        @param item tree item (parent)
+        @parent data menu data"""
+        for eachItem in data:
+            if len(eachItem) == 2:
+                if eachItem[0]:
+                    itemSub = self.AppendItem(parentId = item,
+                                    text = eachItem[0])
+                self.__AppendItems(itemSub, eachItem[1])
+            else:
+                if eachItem[0]:
+                    itemNew = self.AppendItem(parentId = item,
+                                              text = eachItem[0])
+                    
+                    data = { 'item'        : eachItem[0],
+                             'description' : eachItem[1],
+                             'handler'  : eachItem[2],
+                             'command'  : eachItem[3],
+                             'keywords' : eachItem[4] }
+                    
+                    self.SetPyData(itemNew, data)
+        
+class AboutWindow(wx.Frame):
+    """!Create custom About Window
+
+    @todo improve styling
+    """
+    def __init__(self, parent, size = (750, 450), 
+                 title = _('About GRASS GIS'), **kwargs):
+        wx.Frame.__init__(self, parent = parent, id = wx.ID_ANY, title = title, size = size, **kwargs)
+        
+        panel = wx.Panel(parent = self, id = wx.ID_ANY)
+        
+        # icon
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
+
+        # get version and web site
+        vInfo = grass.version()
+        
+        infoTxt = wx.Panel(parent = panel, id = wx.ID_ANY)
+        infoSizer = wx.BoxSizer(wx.VERTICAL)
+        infoGridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
+        infoGridSizer.AddGrowableCol(0)
+        infoGridSizer.AddGrowableCol(1)
+        logo = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass-64x64.png")
+        logoBitmap = wx.StaticBitmap(parent = infoTxt, id = wx.ID_ANY,
+                                     bitmap = wx.Bitmap(name = logo,
+                                                        type = wx.BITMAP_TYPE_PNG))
+        infoSizer.Add(item = logoBitmap, proportion = 0,
+                      flag = wx.ALL | wx.ALIGN_CENTER, border = 25)
+        
+        info = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                             label = 'GRASS GIS ' + vInfo['version'] + '\n\n')
+        info.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        info.SetForegroundColour(wx.Colour(35, 142, 35))
+        infoSizer.Add(item = info, proportion = 0,
+                      flag = wx.BOTTOM | wx.ALIGN_CENTER, border = 15)
+        
+        row = 0
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('Official GRASS site:')),
+                          pos = (row, 0),
+                          flag = wx.ALIGN_RIGHT)
+
+        infoGridSizer.Add(item = HyperLinkCtrl(parent = infoTxt, id = wx.ID_ANY,
+                                               label = 'http://grass.osgeo.org'),
+                          pos = (row, 1),
+                          flag = wx.ALIGN_LEFT)
+
+        row += 2
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('SVN Revision:')),
+                          pos = (row, 0),
+                          flag = wx.ALIGN_RIGHT)
+        
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = vInfo['revision']),
+                          pos = (row, 1),
+                          flag = wx.ALIGN_LEFT)
+        
+        row += 1
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('GIS Library Revision:')),
+                          pos = (row, 0),
+                          flag = wx.ALIGN_RIGHT)
+        
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = vInfo['libgis_revision'] + ' (' +
+                                               vInfo['libgis_date'].split(' ')[0] + ')'),
+                          pos = (row, 1),
+                          flag = wx.ALIGN_LEFT)
+
+        row += 2
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('Python:')),
+                          pos = (row, 0),
+                          flag = wx.ALIGN_RIGHT)
+        
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = platform.python_version()),
+                          pos = (row, 1),
+                          flag = wx.ALIGN_LEFT)
+
+        row += 1
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = _('wxPython:')),
+                          pos = (row, 0),
+                          flag = wx.ALIGN_RIGHT)
+        
+        infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
+                                               label = wx.__version__),
+                          pos = (row, 1),
+                          flag = wx.ALIGN_LEFT)
+        
+        infoSizer.Add(item = infoGridSizer,
+                      proportion = 1,
+                      flag = wx.EXPAND | wx.ALIGN_CENTER | wx.ALIGN_CENTER_VERTICAL)
+        
+        # create a flat notebook for displaying information about GRASS
+        aboutNotebook = GNotebook(panel, style = globalvar.FNPageStyle | FN.FNB_NO_X_BUTTON) 
+        aboutNotebook.SetTabAreaColour(globalvar.FNPageColor)
+        
+        for title, win in ((_("Info"), infoTxt),
+                           (_("Copyright"), self._pageCopyright()),
+                           (_("License"), self._pageLicense()),
+                           (_("Authors"), self._pageCredit()),
+                           (_("Contributors"), self._pageContributors()),
+                           (_("Extra contributors"), self._pageContributors(extra = True)),
+                           (_("Translators"), self._pageTranslators())):
+            aboutNotebook.AddPage(page = win, text = title)
+        wx.CallAfter(aboutNotebook.SetSelection, 0)
+        
+        # buttons
+        btnClose = wx.Button(parent = panel, id = wx.ID_CLOSE)
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer.Add(item = btnClose, proportion = 0,
+                     flag = wx.ALL | wx.ALIGN_RIGHT,
+                     border = 5)
+        # bindings
+        btnClose.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
+        
+        infoTxt.SetSizer(infoSizer)
+        infoSizer.Fit(infoTxt)
+        
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(item = aboutNotebook, proportion = 1,
+                  flag = wx.EXPAND | wx.ALL, border = 1)
+        sizer.Add(item = btnSizer, proportion = 0,
+                  flag = wx.ALL | wx.ALIGN_RIGHT, border = 1)
+        panel.SetSizer(sizer)
+        
+        self.Layout()
+        self.SetMinSize((500, 400))
+        
+    def _pageCopyright(self):
+        """Copyright information"""
+        copyfile = os.path.join(os.getenv("GISBASE"), "COPYING")
+        if os.path.exists(copyfile):
+            copyrightFile = open(copyfile, 'r')
+            copytext = copyrightFile.read()
+            copyrightFile.close()
+        else:
+            copytext = _('%s file missing') % 'COPYING'
+        
+        # put text into a scrolling panel
+        copyrightwin = ScrolledPanel(self)
+                                     
+        copyrighttxt = wx.StaticText(copyrightwin, id = wx.ID_ANY, label = copytext)
+        copyrightwin.SetAutoLayout(True)
+        copyrightwin.sizer = wx.BoxSizer(wx.VERTICAL)
+        copyrightwin.sizer.Add(item = copyrighttxt, proportion = 1,
+                               flag = wx.EXPAND | wx.ALL, border = 3)
+        copyrightwin.SetSizer(copyrightwin.sizer)
+        copyrightwin.Layout()
+        copyrightwin.SetupScrolling()
+        
+        return copyrightwin
+    
+    def _pageLicense(self):
+        """Licence about"""
+        licfile = os.path.join(os.getenv("GISBASE"), "GPL.TXT")
+        if os.path.exists(licfile):
+            licenceFile = open(licfile, 'r')
+            license = ''.join(licenceFile.readlines())
+            licenceFile.close()
+        else:
+            license = _('%s file missing') % 'GPL.TXT'
+        # put text into a scrolling panel
+        licensewin = ScrolledPanel(self)
+        licensetxt = wx.StaticText(licensewin, id = wx.ID_ANY, label = license)
+        licensewin.SetAutoLayout(True)
+        licensewin.sizer = wx.BoxSizer(wx.VERTICAL)
+        licensewin.sizer.Add(item = licensetxt, proportion = 1,
+                flag = wx.EXPAND | wx.ALL, border = 3)
+        licensewin.SetSizer(licensewin.sizer)
+        licensewin.Layout()
+        licensewin.SetupScrolling()
+        
+        return licensewin
+    
+    def _pageCredit(self):
+        """Credit about"""
+                # credits
+        authfile = os.path.join(os.getenv("GISBASE"), "AUTHORS")
+        if os.path.exists(authfile):
+            authorsFile = open(authfile, 'r')
+            authors = unicode(''.join(authorsFile.readlines()), "utf-8")
+            authorsFile.close()
+        else:
+            authors = _('%s file missing') % 'AUTHORS'
+        authorwin = ScrolledPanel(self)
+        authortxt = wx.StaticText(authorwin, id = wx.ID_ANY, label = authors)
+        authorwin.SetAutoLayout(True)
+        authorwin.SetupScrolling()
+        authorwin.sizer = wx.BoxSizer(wx.VERTICAL)
+        authorwin.sizer.Add(item = authortxt, proportion = 1,
+                flag = wx.EXPAND | wx.ALL, border = 3)
+        authorwin.SetSizer(authorwin.sizer)
+        authorwin.Layout()      
+        
+        return authorwin
+
+    def _pageContributors(self, extra = False):
+        """Contributors info"""
+        if extra:
+            contribfile = os.path.join(os.getenv("GISBASE"), "contributors_extra.csv")
+        else:
+            contribfile = os.path.join(os.getenv("GISBASE"), "contributors.csv")
+        if os.path.exists(contribfile):
+            contribFile = codecs.open(contribfile, encoding = 'utf-8', mode = 'r')
+            contribs = list()
+            errLines = list()
+            for line in contribFile.readlines()[1:]:
+                line = line.rstrip('\n')
+                try:
+                    if extra:
+                        name, email, rfc2_agreed = line.split(',')
+                    else:
+                        cvs_id, name, email, country, osgeo_id, rfc2_agreed = line.split(',')
+                except ValueError:
+                    errLines.append(line)
+                    continue
+                if extra:
+                    contribs.append((name, email))
+                else:
+                    contribs.append((name, email, country, osgeo_id))
+            
+            contribFile.close()
+            
+            if errLines:
+                GError(parent = self,
+                       message = _("Error when reading file '%s'.") % contribfile + \
+                           "\n\n" + _("Lines:") + " %s" % \
+                           os.linesep.join(map(DecodeString, errLines)))
+        else:
+            contribs = None
+        
+        contribwin = ScrolledPanel(self)
+        contribwin.SetAutoLayout(True)
+        contribwin.SetupScrolling()
+        contribwin.sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        if not contribs:
+            contribtxt = wx.StaticText(contribwin, id = wx.ID_ANY,
+                                       label = _('%s file missing') % contribfile)
+            contribwin.sizer.Add(item = contribtxt, proportion = 1,
+                                 flag = wx.EXPAND | wx.ALL, border = 3)
+        else:
+            if extra:
+                items = (_('Name'), _('E-mail'))
+            else:
+                items = (_('Name'), _('E-mail'), _('Country'), _('OSGeo_ID'))
+            contribBox = wx.FlexGridSizer(cols = len(items), vgap = 5, hgap = 5)
+            for item in items:
+                contribBox.Add(item = wx.StaticText(parent = contribwin, id = wx.ID_ANY,
+                                                    label = item))
+            for vals in sorted(contribs, key = lambda x: x[0]):
+                for item in vals:
+                    contribBox.Add(item = wx.StaticText(parent = contribwin, id = wx.ID_ANY,
+                                                        label = item))
+            contribwin.sizer.Add(item = contribBox, proportion = 1,
+                                 flag = wx.EXPAND | wx.ALL, border = 3)
+        
+        contribwin.SetSizer(contribwin.sizer)
+        contribwin.Layout()      
+        
+        return contribwin
+
+    def _pageTranslators(self):
+        """Translators info"""
+        translatorsfile = os.path.join(os.getenv("GISBASE"), "translators.csv")
+        if os.path.exists(translatorsfile):
+            translatorsFile = open(translatorsfile, 'r')
+            translators = dict()
+            errLines = list()
+            for line in translatorsFile.readlines()[1:]:
+                line = line.rstrip('\n')
+                try:
+                    name, email, languages = line.split(',')
+                except ValueError:
+                    errLines.append(line)
+                    continue
+                for language in languages.split(' '):
+                    if language not in translators:
+                        translators[language] = list()
+                    translators[language].append((name, email))
+            translatorsFile.close()
+            
+            if errLines:
+                GError(parent = self,
+                       message = _("Error when reading file '%s'.") % translatorsfile + \
+                           "\n\n" + _("Lines:") + " %s" % \
+                           os.linesep.join(map(DecodeString, errLines)))
+        else:
+            translators = None
+        
+        translatorswin = ScrolledPanel(self)
+        translatorswin.SetAutoLayout(True)
+        translatorswin.SetupScrolling()
+        translatorswin.sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        if not translators:
+            translatorstxt = wx.StaticText(translatorswin, id = wx.ID_ANY,
+                                           label = _('%s file missing') % 'translators.csv')
+            translatorswin.sizer.Add(item = translatorstxt, proportion = 1,
+                                 flag = wx.EXPAND | wx.ALL, border = 3)
+        else:
+            translatorsBox = wx.FlexGridSizer(cols = 3, vgap = 5, hgap = 5)
+            languages = translators.keys()
+            languages.sort()
+            translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                    label = _('Name')))
+            translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                    label = _('E-mail')))
+            translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                    label = _('Language')))
+            for lang in languages:
+                for translator in translators[lang]:
+                    name, email = translator
+                    translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                            label =  unicode(name, "utf-8")))
+                    translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                            label = email))
+                    translatorsBox.Add(item = wx.StaticText(parent = translatorswin, id = wx.ID_ANY,
+                                                            label = lang))
+            
+            translatorswin.sizer.Add(item = translatorsBox, proportion = 1,
+                                 flag = wx.EXPAND | wx.ALL, border = 3)
+        
+        translatorswin.SetSizer(translatorswin.sizer)
+        translatorswin.Layout()      
+        
+        return translatorswin
+    
+    def OnCloseWindow(self, event):
+        """!Close window"""
+        self.Close()
+
+class HelpFrame(wx.Frame):
+    """!GRASS Quickstart help window"""
+    def __init__(self, parent, id, title, size, file):
+        wx.Frame.__init__(self, parent = parent, id = id, title = title, size = size)
+        
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        # text
+        content = HelpPanel(parent = self)
+        content.LoadPage(file)
+        
+        sizer.Add(item = content, proportion = 1, flag = wx.EXPAND)
+        
+        self.SetAutoLayout(True)
+        self.SetSizer(sizer)
+        self.Layout()
+
+class HelpWindow(wx.html.HtmlWindow):
+    """!This panel holds the text from GRASS docs.
+    
+    GISBASE must be set in the environment to find the html docs dir.
+    The SYNOPSIS section is skipped, since this Panel is supposed to
+    be integrated into the cmdPanel and options are obvious there.
+    """
+    def __init__(self, parent, grass_command, text, skip_description,
+                 **kwargs):
+        """!If grass_command is given, the corresponding HTML help
+        file will be presented, with all links pointing to absolute
+        paths of local files.
+
+        If 'skip_description' is True, the HTML corresponding to
+        SYNOPSIS will be skipped, thus only presenting the help file
+        from the DESCRIPTION section onwards.
+
+        If 'text' is given, it must be the HTML text to be presented
+        in the Panel.
+        """
+        self.parent = parent
+        wx.InitAllImageHandlers()
+        wx.html.HtmlWindow.__init__(self, parent = parent, **kwargs)
+        
+        gisbase = os.getenv("GISBASE")
+        self.loaded = False
+        self.history = list()
+        self.historyIdx = 0
+        self.fspath = os.path.join(gisbase, "docs", "html")
+        
+        self.SetStandardFonts (size = 10)
+        self.SetBorders(10)
+        
+        if text is None:
+            if skip_description:
+                url = os.path.join(self.fspath, grass_command + ".html")
+                self.fillContentsFromFile(url,
+                                          skip_description = skip_description)
+                self.history.append(url)
+                self.loaded = True
+            else:
+                ### FIXME: calling LoadPage() is strangely time-consuming (only first call)
+                # self.LoadPage(self.fspath + grass_command + ".html")
+                self.loaded = False
+        else:
+            self.SetPage(text)
+            self.loaded = True
+        
+    def OnLinkClicked(self, linkinfo):
+        url = linkinfo.GetHref()
+        if url[:4] != 'http':
+            url = os.path.join(self.fspath, url)
+        self.history.append(url)
+        self.historyIdx += 1
+        self.parent.OnHistory()
+        
+        super(HelpWindow, self).OnLinkClicked(linkinfo)
+        
+    def fillContentsFromFile(self, htmlFile, skip_description = True):
+        """!Load content from file"""
+        aLink = re.compile(r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE)
+        imgLink = re.compile(r'(<img src="?)(.+\.[png|gif])', re.IGNORECASE)
+        try:
+            contents = []
+            skip = False
+            for l in file(htmlFile, "rb").readlines():
+                if "DESCRIPTION" in l:
+                    skip = False
+                if not skip:
+                    # do skip the options description if requested
+                    if "SYNOPSIS" in l:
+                        skip = skip_description
+                    else:
+                        # FIXME: find only first item
+                        findALink = aLink.search(l)
+                        if findALink is not None: 
+                            contents.append(aLink.sub(findALink.group(1)+
+                                                      self.fspath+findALink.group(2),l))
+                        findImgLink = imgLink.search(l)
+                        if findImgLink is not None: 
+                            contents.append(imgLink.sub(findImgLink.group(1)+
+                                                        self.fspath+findImgLink.group(2),l))
+                        
+                        if findALink is None and findImgLink is None:
+                            contents.append(l)
+            self.SetPage("".join(contents))
+            self.loaded = True
+        except: # The Manual file was not found
+            self.loaded = False
+        
+class HelpPanel(wx.Panel):
+    def __init__(self, parent, grass_command = "index", text = None,
+                 skip_description = False, **kwargs):
+        self.grass_command = grass_command
+        wx.Panel.__init__(self, parent = parent, id = wx.ID_ANY)
+        
+        self.content = HelpWindow(self, grass_command, text,
+                                  skip_description)
+        
+        self.btnNext = wx.Button(parent = self, id = wx.ID_ANY,
+                                 label = _("&Next"))
+        self.btnNext.Enable(False)
+        self.btnPrev = wx.Button(parent = self, id = wx.ID_ANY,
+                                 label = _("&Previous"))
+        self.btnPrev.Enable(False)
+        
+        self.btnNext.Bind(wx.EVT_BUTTON, self.OnNext)
+        self.btnPrev.Bind(wx.EVT_BUTTON, self.OnPrev)
+        
+        self._layout()
+
+    def _layout(self):
+        """!Do layout"""
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        btnSizer.Add(item = self.btnPrev, proportion = 0,
+                     flag = wx.ALL, border = 5)
+        btnSizer.Add(item = wx.Size(1, 1), proportion = 1)
+        btnSizer.Add(item = self.btnNext, proportion = 0,
+                     flag = wx.ALIGN_RIGHT | wx.ALL, border = 5)
+        
+        sizer.Add(item = self.content, proportion = 1,
+                  flag = wx.EXPAND)
+        sizer.Add(item = btnSizer, proportion = 0,
+                  flag = wx.EXPAND)
+        
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def LoadPage(self, path = None):
+        """!Load page"""
+        if not path:
+            path = os.path.join(self.content.fspath, self.grass_command + ".html")
+        self.content.history.append(path)
+        self.content.LoadPage(path)
+        
+    def IsFile(self):
+        """!Check if file exists"""
+        return os.path.isfile(os.path.join(self.content.fspath, self.grass_command + ".html"))
+
+    def IsLoaded(self):
+        return self.content.loaded
+
+    def OnHistory(self):
+        """!Update buttons"""
+        nH = len(self.content.history)
+        iH = self.content.historyIdx
+        if iH == nH - 1:
+            self.btnNext.Enable(False)
+        elif iH > -1:
+            self.btnNext.Enable(True)
+        if iH < 1:
+            self.btnPrev.Enable(False)
+        else:
+            self.btnPrev.Enable(True)
+
+    def OnNext(self, event):
+        """Load next page"""
+        self.content.historyIdx += 1
+        idx = self.content.historyIdx
+        path = self.content.history[idx]
+        self.content.LoadPage(path)
+        self.OnHistory()
+        
+        event.Skip()
+        
+    def OnPrev(self, event):
+        """Load previous page"""
+        self.content.historyIdx -= 1
+        idx = self.content.historyIdx
+        path = self.content.history[idx]
+        self.content.LoadPage(path)
+        self.OnHistory()
+        
+        event.Skip()

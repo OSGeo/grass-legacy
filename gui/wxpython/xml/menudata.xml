@@ -11,28 +11,33 @@
 	      <help>Create new workspace</help>
 	      <handler>OnWorkspaceNew</handler>
 	      <shortcut>Ctrl+N</shortcut>
+	      <id>ID_NEW</id>
 	    </menuitem>
 	    <menuitem>
 	      <label>Open</label>
 	      <help>Load workspace from file</help>
 	      <handler>OnWorkspaceOpen</handler>
 	      <shortcut>Ctrl+O</shortcut>
+	      <id>ID_OPEN</id>
 	    </menuitem>
 	    <menuitem>
 	      <label>Save</label>
 	      <help>Save workspace</help>
 	      <handler>OnWorkspaceSave</handler>
 	      <shortcut>Ctrl+S</shortcut>
+	      <id>ID_SAVE</id>
 	    </menuitem>
 	    <menuitem>
 	      <label>Save as</label>
 	      <help>Save workspace to file</help>
 	      <handler>OnWorkspaceSaveAs</handler>
+	      <id>ID_SAVEAS</id>
 	    </menuitem>
 	    <menuitem>
 	      <label>Close</label>
 	      <help>Close workspace file</help>
 	      <handler>OnWorkspaceClose</handler>
+	      <id>ID_CLOSE</id>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -87,7 +92,7 @@
 	  <label>Import raster data</label>
 	  <items>
 	    <menuitem>
-	      <label>Common import formats</label>
+	      <label>Common formats import</label>
 	      <help>Import raster data into a GRASS map layer using GDAL.</help>
 	      <keywords>raster,import</keywords>
 	      <handler>OnImportGdalLayers</handler>
@@ -364,7 +369,7 @@
 	    <menuitem>
 	      <label>MPEG-1 export</label>
 	      <help>Raster File Series to MPEG Conversion.</help>
-	      <keywords>raster,export</keywords>
+	      <keywords>raster,export,animation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -424,7 +429,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Common export formats</label>
-	      <help>Converts GRASS vector map to one of the supported OGR vector formats.</help>
+	      <help>Converts to one of the supported OGR vector formats.</help>
 	      <keywords>vector,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.out.ogr</command>
@@ -588,7 +593,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map layer.</help>
+	      <help>Converts a raster map into a vector map.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -706,6 +711,7 @@
 	  <help>Quit wxGUI session</help>
 	  <handler>OnCloseWindow</handler>
 	  <shortcut>Ctrl+Q</shortcut>
+	  <id>ID_EXIT</id>
 	</menuitem>
       </items>
     </menu>
@@ -759,11 +765,13 @@
 	    <menuitem>
 	      <label>Change location and mapset</label>
 	      <help>Change current location and mapset.</help>
+	      <keywords>general,location,current</keywords>
               <handler>OnChangeLocation</handler>
 	    </menuitem>
 	    <menuitem>
 	      <label>Change mapset</label>
 	      <help>Change current mapset.</help>
+	      <keywords>general,mapset,current</keywords>
               <handler>OnChangeMapset</handler>
 	    </menuitem>
 	    <separator />
@@ -787,6 +795,19 @@
 	      <keywords>general,gui</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.change.gui.sh</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Create new location</label>
+	      <help>Launches location wizard to create new GRASS location.</help>
+	      <keywords>general,location,wizard</keywords>
+              <handler>OnLocationWizard</handler>
+	    </menuitem>
+	    <menuitem>
+	      <label>Create new mapset</label>
+	      <help>Creates new mapset in the current location, changes current mapset.</help>
+	      <keywords>general,mapset,create</keywords>
+              <handler>OnCreateMapset</handler>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -859,6 +880,7 @@
 	  <label>Preferences</label>
 	  <help>User GUI preferences (display font, commands, digitizer, etc.)</help>
 	  <handler>OnPreferences</handler>
+	  <id>ID_PREFERENCES</id>
 	</menuitem>
       </items>
     </menu>
@@ -1052,7 +1074,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map layer.</help>
+	      <help>Converts a raster map into a vector map.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -1252,7 +1274,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Distance to features</label>
-	      <help>Generates a raster map layer of distance to features in input layer.</help>
+	      <help>Generates a raster map of distance to features in input raster map.</help>
 	      <keywords>raster,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.grow.distance</command>
@@ -1299,7 +1321,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
+	      <help>Generates stream channels.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
@@ -1328,14 +1350,14 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM).</help>
+	      <help>Constructs flow lines.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program.</help>
+	      <help>Watershed basin analysis program</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
@@ -1349,7 +1371,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Watershed basin creation program.</help>
+	      <help>Creates watershed basins.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
@@ -1358,7 +1380,7 @@
 	    <menuitem>
 	      <label>Groundwater modeling</label>
 	      <help>Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.gwflow</command>
 	    </menuitem>
@@ -1582,8 +1604,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reclassify</label>
-	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
-	      <keywords>raster,statistics,reclass</keywords>
+	      <help>Reclassify raster map based on category values.</help>
+	      <keywords>raster,reclassification</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
@@ -1747,7 +1769,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Fill NULL cells</label>
-	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
+	      <help>Fills no-data areas in raster maps using spline interpolation.</help>
 	      <keywords>raster,elevation,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fillnulls</command>
@@ -1803,7 +1825,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Sum area by raster map and category</label>
-	      <help>Reports statistics for raster map layers.</help>
+	      <help>Reports statistics for raster maps.</help>
 	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.report</command>
@@ -1906,7 +1928,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Parallel lines</label>
-	      <help>Creates parallel line to input vector lines.</help>
+	      <help>Create parallel line to input lines</help>
 	      <keywords>vector,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.parallel</command>
@@ -2074,19 +2096,19 @@
 	      <command>v.db.select</command>
 	    </menuitem>
 	  </items>
-	 </menu>
+	</menu>
 	<menu>
 	  <label>Feature selection</label>
 	  <items>
 	    <menuitem>
-	      <label>Query with attributes</label>
+	      <label>Attribute query</label>
 	      <help>Selects vector objects from an existing vector map and creates a new map containing only the selected objects.</help>
 	      <keywords>vector,extract</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.extract</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Query with another vector map</label>
+	      <label>Spatial query</label>
 	      <help>Selects features from vector map (A) by features from other vector map (B).</help>
 	      <keywords>vector,spatial query</keywords>
 	      <handler>OnMenuCmd</handler>
@@ -2559,9 +2581,9 @@
 	  <items>
 	    <menuitem>
 	      <label>Create/edit group</label>
-	      <help>Creates, edits, and lists groups and subgroups of imagery files.</help>
+	      <help>Creates, edits, and lists groups of imagery files.</help>
 	      <keywords>imagery,map management</keywords>
-	      <handler>OnMenuCmd</handler>
+	      <handler>OnEditImageryGroups</handler>
 	      <command>i.group</command>
 	    </menuitem>
 	    <menuitem>
@@ -2574,7 +2596,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Mosaic images</label>
-	      <help>Mosaics up to 4 images and extends colormap; creates map *.mosaic</help>
+	      <help>Mosaics up to four images, extending the color table.</help>
 	      <keywords>raster,imagery,mosaicking</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.image.mosaic</command>
@@ -2609,14 +2631,6 @@
 	</menu>
 	<separator />
 	<menuitem>
-	  <label>Ortho photo rectification (requires Xterm)</label>
-	  <help>Menu driver for the photo imagery programs.</help>
-	  <keywords>imagery,orthorectify</keywords>
-	  <handler>OnXTerm</handler>
-	  <command>i.ortho.photo</command>
-	</menuitem>
-	<separator />
-	<menuitem>
 	  <label>Rectify image or raster</label>
 	  <help>Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points.</help>
 	  <keywords>imagery,rectify</keywords>
@@ -2626,7 +2640,7 @@
 	<menuitem>
 	  <label>Histogram</label>
 	  <help>Generate histogram of image</help>
-	  <handler>DispHistogram</handler>
+	  <handler>OnHistogram</handler>
 	</menuitem>
 	<menuitem>
 	  <label>Spectral response</label>
@@ -2749,6 +2763,29 @@
 	<menu>
 	  <label>Satellite images tools</label>
 	  <items>
+	    <menuitem>
+	      <label>Landsat DN to radiance/reflectance</label>
+	      <help>Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+.</help>
+	      <keywords>imagery,landsat,top-of-atmosphere reflectance,dos-type simple atmospheric correction</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.landsat.toar</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Landsat cloud cover assessment</label>
+	      <help>Performs Landsat TM/ETM+ Automatic Cloud Cover Assessment (ACCA).</help>
+	      <keywords>imagery,landsat,acca</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.landsat.acca</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Modis quality control</label>
+	      <help>Extract quality control parameters from Modis QC layers</help>
+	      <keywords>QC,Quality Control,surface reflectance,Modis</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>i.modis.qc</command>
+	    </menuitem>
+	    <separator />
 	    <menuitem>
 	      <label>Atmospheric correction</label>
 	      <help>Performs atmospheric correction using the 6S algorithm.</help>
@@ -3101,6 +3138,7 @@
 	  <keywords>general,manual,help</keywords>
 	  <handler>RunMenuCmd</handler>
 	  <command>g.manual -i</command>
+	  <id>ID_HELP</id>
 	</menuitem>
 	<menuitem>
 	  <label>GUI help</label>
@@ -3108,12 +3146,14 @@
 	  <keywords>general,manual,help</keywords>
 	  <handler>RunMenuCmd</handler>
 	  <command>g.manual entry=wxGUI</command>
+	  <id>ID_HELP</id>
 	</menuitem>
 	<separator />
 	<menuitem>
 	  <label>About GRASS GIS</label>
 	  <help>About GRASS GIS</help>
 	  <handler>OnAboutGRASS</handler>
+	  <id>ID_ABOUT</id>
 	</menuitem>
       </items>
     </menu>
