@@ -1,10 +1,10 @@
 /*!
    \file lib/nviz/position.c
-   
+
    \brief Nviz library -- Position, focus settings
-   
+
    Based on visualization/nviz/src/position.c
-   
+
    (C) 2008, 2010 by the GRASS Development Team
    This program is free software under the GNU General Public License
    (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -20,21 +20,21 @@
 
    Set position to center of view
  */
-void Nviz_init_view(nv_data *data)
+void Nviz_init_view(nv_data * data)
 {
     GS_init_view();
     Nviz_set_focus_state(1);	/* center of view */
-    
+
     /* set default lights (1 & 2) */
     Nviz_set_light_position(data, 1, 0.68, -0.68, 0.80, 0.0);
-    Nviz_set_light_bright(data,   1, 0.8);
-    Nviz_set_light_color(data,    1, 255, 255, 255);
-    Nviz_set_light_ambient(data,  1, 0.2);
+    Nviz_set_light_bright(data, 1, 0.8);
+    Nviz_set_light_color(data, 1, 255, 255, 255);
+    Nviz_set_light_ambient(data, 1, 0.2);
     Nviz_set_light_position(data, 2, 0.0, 0.0, 1.0, 0.0);
-    Nviz_set_light_bright(data,   2, 0.5);
-    Nviz_set_light_color(data,    2, 255, 255, 255);
-    Nviz_set_light_ambient(data,  2, 0.3);
-    
+    Nviz_set_light_bright(data, 2, 0.5);
+    Nviz_set_light_color(data, 2, 255, 255, 255);
+    Nviz_set_light_ambient(data, 2, 0.3);
+
     return;
 }
 
@@ -108,4 +108,98 @@ int Nviz_set_focus_map(int type, int id)
     }
 
     return id;
+}
+
+/*!
+   \brief Get focus
+
+   \param data nviz data
+   \param x,y,z focus coordinates
+ */
+int Nviz_get_focus(nv_data * data, float *x, float *y, float *z)
+{
+    float realto[3];
+
+    /* Get current center */
+    GS_get_focus(realto);
+    *x = realto[0];
+    *y = realto[1];
+    *z = realto[2];
+    // old nviz code is more complicated and it doesn't work properly,
+    // no idea why
+
+    return 1;
+
+}
+
+/*!
+   \brief Set focus
+
+   \param data nviz data
+   \param x, y, z focus coordinates
+ */
+int Nviz_set_focus(nv_data * data, float x, float y, float z)
+{
+    float realto[3];
+
+    realto[0] = x;
+    realto[1] = y;
+    realto[2] = z;
+    GS_set_focus(realto);
+    // old nviz code is more complicated and it doesn't work properly,
+    // no idea why
+
+    return 1;
+
+}
+
+/*!
+   \brief Test focus
+
+   \param data nviz data
+ */
+int Nviz_has_focus(nv_data * data)
+{
+    float realto[3];
+
+    if (GS_get_focus(realto))
+	return 1;
+    else
+	return 0;
+}
+
+/*!
+   \brief Get xy range
+
+   \param data nviz data
+ */
+float Nviz_get_xyrange(nv_data * data)
+{
+    return data->xyrange;
+}
+
+/*!
+   \brief Get z range
+
+   \param data nviz data
+   \param min,max z range
+ */
+int Nviz_get_zrange(nv_data * data, float *min, float *max)
+{
+    GS_get_zrange_nz(min, max);
+    return 1;
+}
+
+/*!
+   \brief Get largest dimension
+
+   \param data nviz data
+ */
+float Nviz_get_longdim(nv_data * data)
+{
+    float dim;
+
+    GS_get_longdim(&dim);
+
+    return dim;
 }

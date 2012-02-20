@@ -21,16 +21,22 @@ struct GParams
 	*vpoints, *vpoint_size, *vpoint_marker, *vpoint_color, *vpoint_width, *vpoint_pos,
     /* volumes */
 	*volume, *volume_mode, *volume_shade, *volume_pos, *volume_res, *isosurf_level,
+	*isosurf_color_map, *isosurf_color_const, *isosurf_transp_map, *isosurf_transp_const,
+	*isosurf_shine_map, *isosurf_shine_const, *slice_pos, *slice, *slice_transp,
     /* misc */
 	*exag, *bgcolor,
+    /* cutting planes */
+	*cplane, *cplane_pos, *cplane_rot, *cplane_tilt, *cplane_shading,
     /* viewpoint */
-	*pos, *height, *persp, *twist,
+	*pos, *height, *persp, *twist, *focus,
     /* output */
 	*output, *format, *size,
     /* lighting */
 	*light_pos, *light_color, *light_bright, *light_ambient,
     /* fringe */
-	*fringe, *fringe_color, *fringe_elev;
+	*fringe, *fringe_color, *fringe_elev,
+    /* north arrow */
+	*north_arrow, *north_arrow_size, *north_arrow_color;
 };
 
 /* args.c */
@@ -52,6 +58,10 @@ int vpoints_set_attrb(const struct GParams *);
 /* volume.c */
 int load_rasters3d(const struct GParams *, nv_data *);
 int add_isosurfs(const struct GParams *, nv_data *);
+int add_slices(const struct GParams *, nv_data *);
+
+/* cutting planes */
+void draw_cplane(const struct GParams *, nv_data *);
 
 /* write_img.c */
 int write_img(const char *, int);

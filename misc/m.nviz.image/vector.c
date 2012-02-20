@@ -85,9 +85,9 @@ int load_vectors(const struct Option *elev_map,
 			      0.0, data);
 
 	/* set position */
-	x = atof(position->answers[i]);
-	y = atof(position->answers[i+1]);
-	z = atof(position->answers[i+2]);
+	x = atof(position->answers[i*3+0]);
+	y = atof(position->answers[i*3+1]);
+	z = atof(position->answers[i*3+2]);
 
 	if (map_obj_type == MAP_OBJ_VECT)
 	    GV_set_trans(id, x, y, z);
