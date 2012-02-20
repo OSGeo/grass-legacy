@@ -6,14 +6,19 @@
    Based on visualization/nviz/src/draw.c and
    visualization/nviz/src/togl_flythrough.c
    
-   (C) 2008, 2010 by the GRASS Development Team
+   (C) 2008, 2010-2011 by the GRASS Development Team
    This program is free software under the GNU General Public License
    (>=v2). Read the file COPYING that comes with GRASS for details.
 
    \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
+   \author Textures by Anna Kratochvilova 
  */
 
 #include <grass/nviz.h>
+
+#ifndef GL_CLAMP_TO_EDGE
+#define GL_CLAMP_TO_EDGE 0x812F
+#endif 
 
 static int sort_surfs_max(int *, int *, int *, int);
 
@@ -232,10 +237,22 @@ int Nviz_draw_all(nv_data * data)
 
     if (draw_vol)
 	Nviz_draw_all_vol(data);
-
+	
     for(i = 0; i < data->num_fringes; i++) {
 	struct fringe_data * f = data->fringe[i];
 	GS_draw_fringe(f->id, f->color, f->elev, f->where);
+    }
+
+    /* North Arrow */
+    if (data->draw_arrow) {
+	gsd_north_arrow(data->arrow->where, data->arrow->size,
+			(GLuint)NULL, data->arrow->color, data->arrow->color);
+    }
+
+    /* scale bar */
+    for (i = 0; i < data->num_scalebars; i++) {
+	struct scalebar_data *s = data->scalebar[i];
+	gsd_scalebar_v2(s->where, s->size, 0, s->color, s->color);
     }
     
     GS_done_draw();
@@ -286,4 +303,120 @@ int Nviz_draw_quick(nv_data * data, int draw_mode)
     GS_done_draw();
     
     return 1;
+}
+
+/*!
+  \brief Load image into texture
+
+  \param image_data image data 
+  \param width, height image screen size 
+  \param alpha has alpha channel 
+*/
+int Nviz_load_image(GLubyte *image_data, int width, int height, int alpha)
+{
+    unsigned int texture_id;
+    int  in_format;
+    GLenum format;
+
+    if (alpha)
+    {
+	in_format = 4;
+	format = GL_RGBA;
+    }
+    else
+    {
+	in_format = 3;
+	format = GL_RGB;
+    }
+    glGenTextures( 1, &texture_id);
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, in_format, width, height, 0,format,
+		 GL_UNSIGNED_BYTE, image_data);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); 
+
+    return texture_id;
+}
+
+/*!
+  \brief Set ortho view for drawing images
+
+  \param width, height image screen size 
+*/
+void Nviz_set_2D(int width, int height)
+{
+    glEnable(GL_BLEND); // images are transparent
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, width, 0, height, -1, 1);
+    
+    // set coordinate system from upper left corner
+    glScalef(1, -1, 1);
+    glTranslatef(0, -height, 0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
+/*!
+  \brief Draw image as texture
+
+  \param x, y image coordinates 
+  \param width, height image size 
+  \param texture_id texture id 
+*/
+void Nviz_draw_image(int x, int y, int width, int height, int texture_id)
+{
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    GS_set_draw(GSD_FRONT);
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2d(0.0,1.0);
+    glVertex2d(x, y);
+    glTexCoord2d(0.0,0.0);
+    glVertex2d(x, y + height);
+    glTexCoord2d(1.0,0.0);
+    glVertex2d(x + width, y + height);
+    glTexCoord2d(1.0,1.0);
+    glVertex2d(x + width, y);
+
+    glEnd();
+
+    GS_done_draw();
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*!
+  \brief Delete texture
+
+  \param texture_id texture id
+*/
+void Nviz_del_texture(int texture_id)
+{
+    GLuint t[1];
+
+    t[0] = texture_id;
+    glDeleteTextures(1, t);
+}
+
+/*!
+  \brief Get maximum texture size
+
+*/
+void Nviz_get_max_texture(int *size)
+{
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, size);
 }

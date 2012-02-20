@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 
     int i, ret;
     int red, grn, blu;
+    float size;
     double vp_height, z_exag;	/* calculated viewpoint height, z-exag */
     int width, height;		/* output image size */
     char *output_name;
@@ -116,6 +117,11 @@ int main(int argc, char *argv[])
 	add_isosurfs(params, &data);
     }
 
+    /* define slices for displaying volumes */
+    if (params->slice->answer) {
+	add_slices(params, &data);
+    }
+
     /* focus on loaded data */
     Nviz_set_focus_map(MAP_OBJ_UNDEFINED, -1);
 
@@ -147,6 +153,11 @@ int main(int argc, char *argv[])
 				atof(params->pos->answers[1]));
     Nviz_set_viewpoint_twist(atoi(params->twist->answer));
     Nviz_set_viewpoint_persp(atoi(params->persp->answer));
+    if (params->focus->answer) {
+    Nviz_set_focus(&data, atof(params->focus->answers[0]),
+						  atof(params->focus->answers[1]), 
+						  atof(params->focus->answers[2]));
+    }
 
     /* set lights */
     Nviz_set_light_position(&data, 1,
@@ -183,11 +194,28 @@ int main(int argc, char *argv[])
 	Nviz_new_fringe(&data, -1, Nviz_color_from_str(params->fringe_color->answer),
 			atof(params->fringe_elev->answer), nw, ne, sw, se);
     }
-    
+
+/* draw north arrow */
+    if (params->north_arrow->answer) {
+	
+	if (!params->north_arrow_size->answer)
+	    size = Nviz_get_longdim(&data) / 8.;
+	else
+	    size = atof(params->north_arrow_size->answer);
+
+	Nviz_set_arrow(&data, atoi(params->north_arrow->answers[0]),
+			      atoi(params->north_arrow->answers[1]),
+			      size, Nviz_color_from_str(params->north_arrow_color->answer));
+	Nviz_draw_arrow(&data);
+    }
+
     GS_clear(data.bgcolor);
 
+    /* cutting planes */
+    if(params->cplane->answer)
+        draw_cplane(params, &data);
+
     /* draw */
-    Nviz_draw_cplane(&data, -1, -1);
     Nviz_draw_all(&data);
 
     /* write to image */
