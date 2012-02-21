@@ -14,4 +14,4 @@ set GEOTIFF_CSV=%GISBASE%\share\epsg_csv
 set PATH=%GISBASE%\msys\bin;%PATH%
 set PATH=%GISBASE%\extrabin;%GISBASE%\extralib;%PATH%
 set PATH=%GISBASE%\tcl-tk\bin;%GISBASE%\sqlite\bin;%GISBASE%\gpsbabel;%PATH%
-set PATH=%GISBASE%\bin;%PATH%
+set PATH=%GISBASE%\bin;%GISBASE%\lib;%PATH%
