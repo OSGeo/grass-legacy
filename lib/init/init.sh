@@ -14,7 +14,7 @@
 #   	    	command line options for setting the GISDBASE, LOCATION, and/or
 #   	    	MAPSET. Finally it starts GRASS with the appropriate user
 #   	    	interface and cleans up after it is finished.
-# COPYRIGHT:    (C) 2000-2011 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000, 2010 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -239,7 +239,7 @@ if [ ! "$GRASS_GUI" ] ; then
     fi
 else
     if [ "$GRASS_GUI" = "gui" ] ; then
-	GRASS_GUI="$DEFAULT_GUI"
+    	GRASS_GUI="$DEFAULT_GUI"
     elif [ "$GRASS_GUI" = "wx" ] ; then
 	GRASS_GUI="wxpython"
     fi
@@ -731,6 +731,15 @@ if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
     exit 1
 fi
 
+# check gisenv's ADDON_PATH
+ADDON_PATH=`g.gisenv ADDON_PATH`
+if [ -n "$ADDON_PATH" ] ; then
+    GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$ADDON_PATH"
+    export GRASS_ADDON_PATH
+    PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
+    export PATH
+fi
+
 LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
 
 # Check for concurrent use
@@ -824,10 +833,10 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk | gis.m)
-       if [ "$sh" != "bash" ] && [ "$sh" != "msh" ] && [ "$sh" != "cygwin" ]; then
-               # trap is not supported by csh/tcsh and rc
-               "$GISBASE/scripts/gis.m"
-       fi;
+	if [ "$sh" != "bash" ] && [ "$sh" != "msh" ] && [ "$sh" != "cygwin" ]; then
+		# trap is not supported by csh/tcsh and rc
+		"$GISBASE/scripts/gis.m"
+	fi;
 	;;
     oldtcltk | d.m)
 	"$GISBASE/scripts/d.m"
@@ -978,7 +987,7 @@ bash|msh|cygwin)
     echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
     echo 'export GRASS_SHELL_PID=$$' >> "$bashrc" # can be used to terminate GRASS session from GUI
     if [ "$GRASS_GUI" = tcltk ] || [ "$GRASS_GUI" = gis.m ]; then
-       echo '$GISBASE/scripts/gis.m' >> "$bashrc" # Start gis.m
+    	echo '$GISBASE/scripts/gis.m' >> "$bashrc" # Start gis.m
     fi;
     echo 'trap "echo \"GUI issued an exit\"; exit" SIGQUIT' >> "$bashrc"
 
@@ -1032,11 +1041,11 @@ done
 
 # Attempt to close any open gis.m instances.
 if [ -n "$TCLTKGRASSBASE" ] && [ `ps -a | grep -c "$GRASS_WISH"` -ge 1 ] ; then
-       echo "Closing open gis.m sessions....."
-       echo 'foreach gwin [lsearch -all -inline [winfo interps] gm_tcl*] {
-               catch {send -async $gwin Gm::remoteExit $env(GIS_LOCK)}
-       }
-       exit' | "$GRASS_WISH" #>/dev/null 2>&1
+	echo "Closing open gis.m sessions....."
+	echo 'foreach gwin [lsearch -all -inline [winfo interps] gm_tcl*] {
+		catch {send -async $gwin Gm::remoteExit $env(GIS_LOCK)}
+	}
+	exit' | "$GRASS_WISH" #>/dev/null 2>&1
 fi
 
 echo "Cleaning up temporary files ..."
