@@ -11331,7 +11331,7 @@ msgstr "Chiudi la finestra del Modellizzatore"
 
 #: ../gui/wxpython/menustrings.py:862
 msgid "&Model"
-msgstr "&Modallo"
+msgstr "&Modello"
 
 #: ../gui/wxpython/menustrings.py:863
 msgid "Add action"
