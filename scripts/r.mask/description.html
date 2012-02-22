@@ -25,7 +25,7 @@ data to pass through unaltered.
 
 <p>
 To restore raster operations to normal (i.e., all cells of the current region),
-remove the MASK file by setting the <b>-r</b> remove MASK flag. In this case, a
+remove the MASK map by setting the <b>-r</b> remove MASK flag. In this case, a
 dummy value must also be given for the input parameter.
 A MASK also can be removed by using <em>g.remove</em>
 or by renaming it to any other name with <em>g.rename</em>.
@@ -35,7 +35,7 @@ or by renaming it to any other name with <em>g.rename</em>.
 
 The above method for specifying a "mask" may seem
 counterintuitive.  Areas inside the MASK are not hidden;
-areas outside the MASK will be ignored until the MASK file
+areas outside the MASK will be ignored until the MASK map
 is removed.
 <p>
 
@@ -60,19 +60,19 @@ Somewhat similar program functions to those performed by
 
 <h2>EXAMPLES</h2>
 
-Creating a raster mask, for showing only elevations of lakes:
+Creating a raster MASK, for showing only elevations of lakes:
 <div class="code"><pre>
 r.mask input=lakes
 # statistics only for elevation pixels in the lakes:
 r.univar elevation
 </pre></div>
 
-Removing a raster mask with the -r flag:
+Removing a raster MASK with the -r flag:
 <div class="code"><pre>
 r.mask -r
 </pre></div>
 
-Creating a mask from categories 3 through 6 in the North Carolina
+Creating a MASK from categories 3 through 6 in the North Carolina
 'geology_30m' raster map:
 <div class="code"><pre>
 g.region rast=geology_30m -p
