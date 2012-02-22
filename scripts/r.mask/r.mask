@@ -22,20 +22,20 @@
 #% key: input
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: Raster map to use as mask
+#% description: Raster map to use as MASK
 #% required: no
 #% guisection: Create
 #%end
 #%option
 #% key: maskcats
 #% type: string
-#% description: Category values to use for mask (format: 1 2 3 thru 7 *)
+#% description: Category values to use for MASK (format: 1 2 3 thru 7 *)
 #% answer: *
 #% guisection: Create
 #%end
 #%flag
 #% key: i
-#% description: Create inverse mask from specified 'maskcats' list
+#% description: Create inverse MASK from specified 'maskcats' list
 #% guisection: Create
 #%end
 #%flag
@@ -44,7 +44,7 @@
 #%end
 #%flag
 #% key: r
-#% description: Remove existing mask (overrides other options)
+#% description: Remove existing MASK (overrides other options)
 #% guisection: Remove
 #%end
 
@@ -108,7 +108,7 @@ if [ "$GIS_FLAG_R" -eq 1 ]; then
  		g.message $BEQUIET -w "No existing MASK to remove"
 	fi
 else
-	if [ ! $GIS_OPT_INPUT ]; then
+	if [ -z "$GIS_OPT_INPUT" ]; then
 		g.message $BEQUIET -w "No raster map for MASK provided"
 		exit 1;
 	fi
