@@ -15,8 +15,8 @@
 #############################################################################
 
 #%module
-#%  description: Creates a MASK for limiting raster operation.
-#%  keywords: raster, mask
+#% description: Creates a MASK for limiting raster operation.
+#% keywords: raster, mask
 #%end
 #%option
 #% key: input
@@ -58,7 +58,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -le 2 ] ; then
-  BEQUIET="--q"
+  BEQUIET="--quiet"
 else
   BEQUIET=""
 fi
@@ -83,10 +83,10 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 # if map is given check if existing
-if [ $GIS_OPT_INPUT ]; then
-   eval `g.findfile element=cell file=$GIS_OPT_INPUT`
-   filename="${fullname}"
-   if [ "$filename" = "" ] ; then
+if [ -n "$GIS_OPT_INPUT" ]; then
+   eval `g.findfile element=cell file="$GIS_OPT_INPUT"`
+   filename="$fullname"
+   if [ -z "$filename" ] ; then
       g.message -e "Raster map <$GIS_OPT_INPUT> not found"
       exit 1
    fi
@@ -103,39 +103,39 @@ fi
 if [ "$GIS_FLAG_R" -eq 1 ]; then
 	if test -f "`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK" ; then
  		g.remove rast=MASK
- 		g.message ${BEQUIET} "Raster MASK removed"
+ 		g.message $BEQUIET "Raster MASK removed"
  	else
- 		g.message ${BEQUIET} -w "No existing MASK to remove"
+ 		g.message $BEQUIET -w "No existing MASK to remove"
 	fi
 else
-	if [ ! $GIS_OPT_INPUT ]; then
-		g.message ${BEQUIET} -w "No raster map for MASK provided"
+	if [ -z "$GIS_OPT_INPUT" ]; then
+		g.message $BEQUIET -w "No raster map for MASK provided"
 		exit 1;
 	fi
 	if [ "$GIS_FLAG_O" -eq 1 ]; then
-		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK --o
+		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK --o
 	else 
 		# does map exist in CURRENT mapset?
-		eval `g.findfile element=cell file=MASK mapset=$MAPSET`
-		if [ "$file" ] ; then
+		eval `g.findfile element=cell file=MASK mapset="$MAPSET"`
+		if [ -n "$file" ] ; then
 		   g.message -e "MASK already found in current mapset. Delete first or overwrite"
 		   exit 1
 		fi
 
-		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK
+		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK
 	fi
 
         if [ "$GIS_FLAG_I" -eq 1 ]; then
-		g.rename --q rast=MASK,$TEMPRAST
-		r.mapcalc "MASK=if(isnull($TEMPRAST),1,null())"
-		g.remove --q rast=$TEMPRAST
-		g.message ${BEQUIET} "Inverted MASK created. All subsequent raster operations"
+		g.rename --q rast=MASK,"$TEMPRAST"
+		r.mapcalc "MASK = if(isnull($TEMPRAST),1,null())"
+		g.remove --q rast="$TEMPRAST"
+		g.message $BEQUIET "Inverted MASK created. All subsequent raster operations"
 	else
-	  g.message ${BEQUIET} "MASK created. All subsequent raster operations"
+	  g.message $BEQUIET "MASK created. All subsequent raster operations"
 	fi
-        g.message ${BEQUIET} "will be limited to MASK area"
-        g.message ${BEQUIET} "Removing or renaming raster file named MASK will"
-        g.message ${BEQUIET} "restore raster operations to normal"
+        g.message $BEQUIET "will be limited to MASK area"
+        g.message $BEQUIET "Removing or renaming raster file named MASK will"
+        g.message $BEQUIET "restore raster operations to normal"
 fi
 
 exit 0
