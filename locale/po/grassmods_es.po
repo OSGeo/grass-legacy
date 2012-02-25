@@ -20572,11 +20572,11 @@ msgstr ""
 
 #: ../general/g.mremove/main.c:66 ../general/g.mlist/main.c:128
 msgid "Use basic regular expressions instead of wildcards"
-msgstr "Usar expresiones regulares básicas en vez de comodines"
+msgstr "Usar expressiones regulares básicas en vez de comodines"
 
 #: ../general/g.mremove/main.c:71 ../general/g.mlist/main.c:134
 msgid "Use extended regular expressions instead of wildcards"
-msgstr "Usar expresiones regulares largas en vez de comodines"
+msgstr "Usar expressiones regulares largas en vez de comodines"
 
 #: ../general/g.mremove/main.c:76
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:3
@@ -23284,7 +23284,7 @@ msgstr "Realizando buffer a las áreas..."
 
 #: ../vector/v.buffer2/main.c:521
 #, fuzzy
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "Escribiendo el archivo de firma [%s] ..."
 
 #: ../vector/v.buffer2/main.c:537 ../vector/v.buffer/main.c:607
@@ -27618,7 +27618,7 @@ msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr "Iniciando validación cruzada con lambda_i=%.4f..."
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219
@@ -32398,7 +32398,7 @@ msgstr "Mostrar ayuda"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r.mapcalc expressions)"
-msgstr "Modo avanzado (introducir un conjunto de expresiones de r.mapcalc)"
+msgstr "Modo avanzado (introducir un conjunto de expressiones de r.mapcalc)"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
@@ -33111,7 +33111,7 @@ msgstr "Nombre para el volumen grid3D de salida"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r3.mapcalc expressions)"
-msgstr "Modo experto (introducir un conjunto de expresiones r3.mapcalc)"
+msgstr "Modo experto (introducir un conjunto de expressiones r3.mapcalc)"
 
 #: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
 msgid "Import GetFeature from WFS"
@@ -35410,7 +35410,7 @@ msgstr "Porcentaje para aumentar el brilloConvergencia porcentual"
 
 #, fuzzy
 #~ msgid "Apply regular expressions and wildcards to g.list"
-#~ msgstr "Aplicar expresiones regulares y comodines a g.remove"
+#~ msgstr "Aplicar expressiones regulares y comodines a g.remove"
 
 #~ msgid "Data type"
 #~ msgstr "Tipo de datos"
@@ -35424,7 +35424,7 @@ msgstr "Porcentaje para aumentar el brilloConvergencia porcentual"
 #~ msgstr "Separador de la salida (por omisión: nueva línea)"
 
 #~ msgid "Apply regular expressions and wildcards to g.remove"
-#~ msgstr "Aplicar expresiones regulares y comodines a g.remove"
+#~ msgstr "Aplicar expressiones regulares y comodines a g.remove"
 
 #~ msgid "Raster to remove"
 #~ msgstr "Ráster a eliminar"
@@ -35459,11 +35459,11 @@ msgstr "Porcentaje para aumentar el brilloConvergencia porcentual"
 
 #, fuzzy
 #~ msgid "Lists data files using basic regular expressions and wildcards."
-#~ msgstr "Aplicar expresiones regulares y comodines a g.list"
+#~ msgstr "Aplicar expressiones regulares y comodines a g.list"
 
 #, fuzzy
 #~ msgid "Removes data files using basic regular expressions and wildcards."
-#~ msgstr "Aplicar expresiones regulares y comodines a g.list"
+#~ msgstr "Aplicar expressiones regulares y comodines a g.list"
 
 #, fuzzy
 #~ msgid ""

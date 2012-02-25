@@ -22311,7 +22311,7 @@ msgstr "Alanlar çıkarılıyor..."
 
 #: ../vector/v.buffer2/main.c:521
 #, fuzzy
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "[%s] doku dosyası yazılıyor..."
 
 #: ../vector/v.buffer2/main.c:537 ../vector/v.buffer/main.c:607
@@ -26414,7 +26414,7 @@ msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219
