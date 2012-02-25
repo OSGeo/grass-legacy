@@ -412,7 +412,6 @@ def CreateNewVector(parent, cmd, title = _('Create new vector map'),
         RunCommand('db.execute',
                    quiet = True,
                    parent = parent,
-                   input = '-',
                    stdin = sql)
         
         RunCommand('v.db.connect',
