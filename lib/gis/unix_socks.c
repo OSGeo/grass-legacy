@@ -99,7 +99,7 @@ static char *_get_make_sock_path(void)
     }
 
     if ((lock = getenv("GIS_LOCK")) == NULL)
-	G_fatal_error(_("Unable to get GIS_LOCK enviroment variable value"));
+	G_fatal_error(_("Unable to get GIS_LOCK environment variable value"));
 
     len = strlen(prefix) + strlen(user) + strlen(lock) + 3;
     path = G_malloc(len);

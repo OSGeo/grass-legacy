@@ -166,7 +166,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 
 	for (lbd = 0; lbd < PARAM_LAMBDA; lbd++) {	/* For each lambda value */
 
-	    G_message(_("Begining cross validation with "
+	    G_message(_("Beginning cross validation with "
 			"lambda_i=%.4f..."), lambda[lbd]);
 	    
 	    /*

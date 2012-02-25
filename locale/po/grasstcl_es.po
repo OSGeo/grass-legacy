@@ -409,14 +409,14 @@ msgid "ERROR: unable to read GISRC"
 msgstr "ERROR: no se puede leer GISRC"
 
 #: ../lib/init/epsg_option.tcl:91
-msgid "WARNING: cant get enviromental variable"
+msgid "WARNING: cant get environmental variable"
 msgstr "AVISO: no se puede obtener variable de entorno"
 
 #: ../lib/init/epsg_option.tcl:92
 msgid ""
-"Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
+"Warning: Unable to get environmental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"Set environmental variable GRASS_PROJSHARE to point to directory with Proj4 "
 "EPSG file. "
 msgstr ""
 "Aviso: no se puede obtener la variable de entorno GRASS_PROJSHARE. \n"
@@ -5603,7 +5603,7 @@ msgstr "Listar mapas"
 
 #: ../gui/tcltk/d.m/menu.tcl:154
 msgid "List maps using expressions and 'wildcards'"
-msgstr "Listar mapas utilizando expresiones y 'carácteres'"
+msgstr "Listar mapas utilizando expressiones y 'carácteres'"
 
 #: ../gui/tcltk/d.m/menu.tcl:155
 msgid "Rename maps"
@@ -5615,7 +5615,7 @@ msgstr "Elimina rmapas"
 
 #: ../gui/tcltk/d.m/menu.tcl:157
 msgid "Remove maps using expressions and 'wildcards'"
-msgstr "Eliminar mapas utilizando expresiones y 'carácteres'"
+msgstr "Eliminar mapas utilizando expressiones y 'carácteres'"
 
 #: ../gui/tcltk/d.m/menu.tcl:160
 msgid "Raster to vector map"

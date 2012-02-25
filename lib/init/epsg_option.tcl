@@ -88,8 +88,8 @@ proc epsgOpt::epsgLocCom args {
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
 	if { [ catch { set epsgOpt::browsedepsg "$env(GRASS_PROJSHARE)/epsg" } ] } {
-		DialogGen .wrnDlg [G_msg "WARNING: cant get enviromental variable"] warning \
-		[format [G_msg "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \nThis is a GRASS installation error. \nSet enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "]] \
+		DialogGen .wrnDlg [G_msg "WARNING: cant get environmental variable"] warning \
+		[format [G_msg "Warning: Unable to get environmental variable GRASS_PROJSHARE. \nThis is a GRASS installation error. \nSet environmental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "]] \
 		0 OK;
 		return 0
 	}
