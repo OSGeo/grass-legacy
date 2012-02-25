@@ -186,7 +186,7 @@ double Vect_get_thresh(struct Map_info *);
 int Vect_get_constraint_box(struct Map_info *, BOUND_BOX *);
 
 
-/* Get map level 2 informations */
+/* Get map level 2 information */
 int Vect_level(struct Map_info *);
 int Vect_get_num_nodes(struct Map_info *);
 int Vect_get_num_primitives(struct Map_info *, int);
