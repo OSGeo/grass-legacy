@@ -8,7 +8,7 @@
  * Reads a row of raster data and converts it to red,
  * green and blue components according to the <em>colors</em> parameter.
  * This provides a convenient way to treat a raster layer as a color
- * image without having to explictly cater for each of <tt>CELL</tt>, <tt>FCELL</tt> and <tt>DCELL</tt> types
+ * image without having to explicitly cater for each of <tt>CELL</tt>, <tt>FCELL</tt> and <tt>DCELL</tt> types
  *
  *  \param fd
  *  \param row

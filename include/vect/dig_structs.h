@@ -309,7 +309,7 @@ struct Plus_head
     long Hole_offset;
 
     /* Spatial index */
-    /* Spatial index is never saved, it is built automaticaly for new and updated vectors.
+    /* Spatial index is never saved, it is built automatically for new and updated vectors.
      * It is not built for old vectors until it is needed, i.e. until Vect_select is called. 
      * or until Vect_build is called */
 

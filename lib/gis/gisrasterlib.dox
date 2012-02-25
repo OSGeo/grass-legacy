@@ -1982,7 +1982,7 @@ int G_get_raster_row_colors(int fd, int row, struct Colors *colors,
 
 <P>
 This provides a convenient way to treat a raster layer as a color
-  image without having to explictly cater for each of <TT>CELL</TT>, <TT>  FCELL</TT> and <TT>DCELL</TT> types
+  image without having to explicitly cater for each of <TT>CELL</TT>, <TT>  FCELL</TT> and <TT>DCELL</TT> types
 
 <P>
 
