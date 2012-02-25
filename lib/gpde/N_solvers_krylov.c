@@ -902,7 +902,7 @@ int check_symmetry(N_les * L)
  * \brief Compute a diagonal preconditioning matrix for krylov space solver
  *
  * \param L N_les* 
- * \pram prec int -- the preconditioner which should be choosen N_DIAGONAL_PRECONDITION, N_ROWSUM_PRECONDITION
+ * \pram prec int -- the preconditioner which should be chosen N_DIAGONAL_PRECONDITION, N_ROWSUM_PRECONDITION
  * \return M N_les* -- the preconditioning matrix
  *
  * */

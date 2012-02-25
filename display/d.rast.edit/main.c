@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 	G_fatal_error("No graphics device selected");
     /*
      * if the monitor is divided into more than one window, find which is
-     * the choosen, current one being used
+     * the chosen, current one being used
      */
 
     if (D_get_cur_wind(temp))

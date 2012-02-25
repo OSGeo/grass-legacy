@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 	if (*buf == 0)		/* exit */
 	    exit(EXIT_SUCCESS);
 
-	/* run the program choosen */
+	/* run the program chosen */
 	G_strip(buf);
 	fprintf(stderr, "<%s>\n", buf);
 	if (strcmp(buf, "1") == 0)
