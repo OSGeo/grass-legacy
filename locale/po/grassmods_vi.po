@@ -22622,7 +22622,7 @@ msgstr "Đang đệm các vùng..."
 
 #: ../vector/v.buffer2/main.c:520
 #, fuzzy
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "Đang ghi các đối tượng..."
 
 #: ../vector/v.buffer2/main.c:536 ../vector/v.buffer/main.c:649
@@ -26667,7 +26667,7 @@ msgstr "Quá nhiều đường spline (%d x %d). Hãy cân nhắc việc thay đ
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr "Bắt đầu kiểm tra chéo với lambda_i=%.4f..."
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219

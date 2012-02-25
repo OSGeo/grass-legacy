@@ -23044,7 +23044,7 @@ msgstr "Extruding areas..."
 
 #: ../vector/v.buffer2/main.c:520
 #, fuzzy
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "พื้นที่ Extracting ..."
 
 #: ../vector/v.buffer2/main.c:536 ../vector/v.buffer/main.c:649
@@ -27172,7 +27172,7 @@ msgstr "CrossCorrelation: Splines มากเกินไป (%d x %d). เป�
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, fuzzy, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr "CrossCorrelation: เริ่มต้น Cross validation ด้วย lambda_i=%.4f ...\n"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219

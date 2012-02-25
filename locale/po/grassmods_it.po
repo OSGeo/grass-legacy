@@ -22142,7 +22142,7 @@ msgid "Buffering areas..."
 msgstr "Creazione dei buffer attorno alle aree in corso ..."
 
 #: ../vector/v.buffer2/main.c:520
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "Scrittura dei buffer in corso ..."
 
 #: ../vector/v.buffer2/main.c:536 ../vector/v.buffer/main.c:649
@@ -26104,7 +26104,7 @@ msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219

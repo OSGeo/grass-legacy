@@ -4180,7 +4180,7 @@ msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value:¡ Tipo de datos incorrectos!"
 
 #: ../lib/gis/unix_socks.c:102
-msgid "Unable to get GIS_LOCK enviroment variable value"
+msgid "Unable to get GIS_LOCK environment variable value"
 msgstr "No ha sido posible recuperar el valor de la variable de entorno GIS_LOCK."
 
 #: ../lib/gis/spawn.c:385

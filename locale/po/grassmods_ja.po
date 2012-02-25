@@ -22289,7 +22289,7 @@ msgid "Buffering areas..."
 msgstr "エリアをバッファー中、、、"
 
 #: ../vector/v.buffer2/main.c:520
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "フィーチャーを書き込んでいます"
 
 #: ../vector/v.buffer2/main.c:536 ../vector/v.buffer/main.c:649
@@ -26245,7 +26245,7 @@ msgstr "スプライン (%d x %d) が多すぎます. スプラインステッ�
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr "lambda_i=%.4f で交差検定を開始しています...  "
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219

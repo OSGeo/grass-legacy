@@ -22297,7 +22297,7 @@ msgid "Buffering areas..."
 msgstr "Buffere Flächen..."
 
 #: ../vector/v.buffer2/main.c:520
-msgid "Writting buffers..."
+msgid "Writing buffers..."
 msgstr "Schreibe Buffer..."
 
 #: ../vector/v.buffer2/main.c:536 ../vector/v.buffer/main.c:649
@@ -26252,7 +26252,7 @@ msgstr "Zu viele Splines (%d x %d). Erwägen Sie die Splineschrittweite (\"sie=\"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:169
 #, c-format
-msgid "Begining cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f..."
 msgstr "Beginne die Kreuzvalidierung mit lambda_i=%.4f..."
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:219

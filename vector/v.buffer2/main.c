@@ -517,7 +517,7 @@ int main(int argc, char *argv[])
     }
 
     /* write all buffer contours */
-    G_message(_("Writting buffers..."));
+    G_message(_("Writing buffers..."));
     for (i = 1; i < buffers_count; i++) {
 	G_percent(i, buffers_count, 2);
 	Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].oPoints, BCats);

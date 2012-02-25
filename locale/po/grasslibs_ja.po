@@ -4068,7 +4068,7 @@ msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value: 間違っているデータタイプです!"
 
 #: ../lib/gis/unix_socks.c:102
-msgid "Unable to get GIS_LOCK enviroment variable value"
+msgid "Unable to get GIS_LOCK environment variable value"
 msgstr "GIS_LOCK環境変数値を取得出来ません"
 
 #: ../lib/gis/spawn.c:385
