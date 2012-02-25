@@ -35,7 +35,7 @@ void var_init(void)
     G_debug(2, "Variable = %p", Variable);
 
     /* Note: important is that VAR_CMODE is set last, because if it is CAT_MODE_NEXT 
-     *  previously set  VAR_CAT is automaticaly reset to 'next not used' for current field */
+     *  previously set  VAR_CAT is automatically reset to 'next not used' for current field */
     var_seti(VAR_CAT, 1);
     var_seti(VAR_FIELD, 1);
     var_seti(VAR_CAT_MODE, CAT_MODE_NEXT);
