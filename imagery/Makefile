@@ -8,6 +8,7 @@ SUBDIRS = \
 	i.gensigset \
 	i.group \
 	i.his.rgb \
+	i.landsat.acca \
 	i.maxlik \
 	i.rectify \
 	i.rgb.his \
