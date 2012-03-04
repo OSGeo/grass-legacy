@@ -2011,7 +2011,7 @@ static void G_gui_wx(void)
     if (!pgm_name)
 	G_fatal_error(_("Unable to determine program name"));
 
-    sprintf(script, "%s/etc/wxpython/gui_modules/menuform.py",
+    sprintf(script, "%s/etc/wxpython/gui_core/forms.py",
 	    getenv("GISBASE"));
     G_spawn(getenv("GRASS_PYTHON"), getenv("GRASS_PYTHON"), script, G_recreate_command(), NULL);
 }
