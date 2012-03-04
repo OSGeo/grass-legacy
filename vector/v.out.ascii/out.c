@@ -141,10 +141,18 @@ int main(int argc, char *argv[])
     }
 
 
-    Vect_set_open_level(1);	/* only need level I */
-    if (Vect_open_old(&Map, input->answer, "") < 0)
-	G_fatal_error(_("Unable to open vector map <%s>"),
+    /* open with topology only if needed */
+    if (format == FORMAT_ALL && where_opt->answer) {
+	if (Vect_open_old(&Map, input->answer, "") < 2) /* topology required for areas */
+	    G_warning(_("Unable to open vector map <%s> at topology level. "
+			"Areas will not be processed."),
 		      input->answer);
+    }
+    else {
+	Vect_set_open_level(1); /* topology not needed */ 
+	if (Vect_open_old(&Map, input->answer, "") < 0) 
+	    G_fatal_error(_("Unable to open vector map <%s>"), input->answer); 
+    }
     
     if (output->answer) {
 	if (ver == 4) {
