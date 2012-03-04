@@ -139,7 +139,11 @@ def GetGRASSCommands():
     if os.path.exists(os.path.join(gisbase, 'etc', 'gui', 'scripts')):
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'gui', 'scripts')
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'wxpython', 'scripts')
-        cmd = cmd + os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts'))
+        
+        pattern = "_wrapper"
+        for script in os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts')):
+            if script[-len(pattern):] != pattern: # ignore wrappers
+                cmd.append(script)
     
     # scan addons (path)
     if os.getenv('GRASS_ADDON_PATH'):
