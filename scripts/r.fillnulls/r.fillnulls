@@ -3,14 +3,15 @@
 ############################################################################
 #
 # MODULE:	r.fillnulls
-# AUTHOR(S):	Markus Neteler <neteler itc it>
+# AUTHOR(S):	Markus Neteler
 #               Updated to GRASS 5.7 by Michael Barton
 #               Updated to GRASS 6.0 by Markus Neteler
 #               Ring improvements by Hamish Bowman
+#               v.surf.bspline support by Markus Neteler
 # PURPOSE:	fills NULL (no data areas) in raster maps
 #               The script respects a user mask (MASK) if present.
 #
-# COPYRIGHT:	(C) 2001,2004-2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2001-2012 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -20,21 +21,21 @@
 
 
 #%Module
-#% description: Fills no-data areas in raster maps using v.surf.rst splines interpolation
+#% description: Fills no-data areas in raster maps using spline interpolation.
 #% keywords: raster, elevation, interpolation
 #%End
 #%option
 #% key: input
 #% gisprompt: old,cell,raster
 #% type: string
-#% description: Raster map in which to fill nulls
+#% description: Name of input raster map in which to fill nulls
 #% required : yes
 #%end
 #%option
 #% key: output
 #% gisprompt: new,cell,raster
 #% type: string
-#% description: Output raster map with nulls filled by interpolation from surrounding values
+#% description: Name for output raster map with nulls filled by interpolation
 #% required : yes
 #%end
 #%option
@@ -50,6 +51,14 @@
 #% description: Spline smoothing parameter
 #% required : no
 #% answer : 0.1
+#%end
+#%option
+#% key: method
+#% type: string
+#% description: Interpolation method
+#% options:bilinear,bicubic,rst
+#% answer:rst
+#% required:yes
 #%end
 
 if test "$GISBASE" = ""; then
@@ -94,6 +103,11 @@ exitprocedure()
       g.remove rast=MASK --quiet > /dev/null
       g.rename "$USERMASK",MASK --quiet > /dev/null
    fi
+
+   # remove temporary region
+   unset WIND_OVERRIDE
+   g.remove region="tmp_rfillnulls.$$" --quiet
+
    exit 1
 }
 # shell check for user break (signal list: trap -l)
@@ -115,14 +129,18 @@ if [ ! "$file" ] ; then
     g.message -e "<$GIS_OPT_INPUT> does not exist! Aborting."
     exit 1
 fi
+case "$GIS_OPT_METHOD" in
+  rst | bilinear | bicubic) ;;
+  *) GIS_OPT_METHOD=rst ;;
+esac
 
 #check if a MASK is already present:
 MASKTMP=mask.$$
 USERMASK="usermask_$MASKTMP"
 eval `g.findfile element=cell file=MASK`
 if [ "$file" ] ; then
- g.message "A user raster mask (MASK) is present. Saving it..."
- g.rename MASK,"$USERMASK" --quiet > /dev/null
+    g.message "A user raster mask (MASK) is present. Saving it..."
+    g.rename MASK,"$USERMASK" --quiet > /dev/null
 fi
 
 #make a mask of NULL cells
@@ -134,7 +152,7 @@ TMP1=r_fillnulls_$$
 
 g.message "Locating and isolating NULL areas..."
 #creating 0/1 map:
-r.mapcalc "$TMP1 = if(isnull($GIS_OPT_INPUT),1,null())"
+r.mapcalc "$TMP1 = if(isnull(\"$GIS_OPT_INPUT\"),1,null())"
 
 #generate a ring:
 # the buffer is set to three times the map resolution so you get nominally
@@ -147,6 +165,7 @@ eval `g.region -gm | grep res`
 # check-me: quoting ok?
 RES="`echo $nsres $ewres | awk '{printf "%f", ($1+$2) * 3. / 2.}'`"  # avg*3
 
+# maybe use r.grow here..
 r.buffer input="$TMP1" dist="$RES" out="$TMP1.buf"
 if [ $? -ne 0 ] ; then
     g.message -e "$0 abandoned. Removing temporary map, restoring user mask if needed:"
@@ -162,7 +181,11 @@ r.mapcalc "MASK = if($TMP1.buf==2,1,null())"
 # Use this outline (raster border) for interpolating the fill data:
 VECTTMP=vecttmp_fillnulls_$$
 g.message "Creating interpolation points..."
-r.to.vect input="$GIS_OPT_INPUT" output="$VECTTMP" feature=point
+
+## use the -b flag to avoid topology building on big jobs?
+## no, can't, 'g.region vect=' currently wants to see level 2
+r.to.vect -z input="$GIS_OPT_INPUT" output="$VECTTMP" feature=point
+
 if [ $? -ne 0 ] ; then
     g.message -e "$0 abandoned. Removing temporary maps, restoring user mask if needed:"
     g.remove rast=MASK,"$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
@@ -170,6 +193,8 @@ if [ $? -ne 0 ] ; then
     g.rename "$USERMASK",MASK --quiet > /dev/null
     exit 1
 fi
+# this mask not needed any more
+g.remove rast=MASK --quiet
 
 #count number of points to control segmax parameter for interpolation:
 # check-me: quoting?
@@ -185,8 +210,8 @@ if [ "$POINTSNUMBER" -lt 2 ] ; then
   #restoring user's mask, if present:
   eval `g.findfile element=cell file=$USERMASK`
   if [ "$file" ] ; then
-   g.message "Restoring user mask (MASK)..."
-   g.rename "$USERMASK",MASK --quiet > /dev/null
+    g.message "Restoring user mask (MASK)..."
+    g.rename "$USERMASK",MASK --quiet > /dev/null
   fi
   
   #cleanup
@@ -195,37 +220,70 @@ if [ "$POINTSNUMBER" -lt 2 ] ; then
   exit 1
 fi
 
-g.message "Note: The following warnings may be ignored."
 
-#remove internal MASK first -- WHY???? MN 10/2005
-g.remove MASK > /dev/null
+if [ "$GIS_OPT_METHOD" = "rst" ] ; then
 
-eval `g.findfile element=cell file=$USERMASK`
-if [ "$file" ] ; then
-  g.message "Using user mask while interpolating"
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
+   g.message "Using RST interpolation"
+
+   ### zooming made it take slightly longer for bspline, so only use for rst
+   # setup internal region
+   g.region save="tmp_rfillnulls.$$"
+   WIND_OVERRIDE="tmp_rfillnulls.$$"
+   export WIND_OVERRIDE
+   g.region vect="$VECTTMP" align="$GIS_OPT_INPUT"
+
+   eval `g.findfile element=cell file=$USERMASK`
+   if [ "$file" ] ; then
+      g.message "Using user mask while interpolating"
+      RST_CMD="v.surf.rst -z layer=0 tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
+   else
+      RST_CMD="v.surf.rst -z layer=0 tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
+   fi
+
+   g.message "Note: The following warnings may be ignored."
+
+   SEGMAX=600
+   if [ "$POINTSNUMBER" -ge "$SEGMAX" ] ; then
+      g.message "Using segmentation for interpolation..."
+      $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" #2> /dev/null
+   else
+      #if less than $SEGMAX points, use no segmentation for speedup:
+      g.message "Not using segmentation for interpolation as it's not needed..."
+      $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" segmax="$SEGMAX" #2> /dev/null
+   fi
+   g.message "Note: Above warnings may be ignored."
+
+   #restoring user's mask, if present:
+   eval `g.findfile element=cell file=$USERMASK`
+   if [ "$file" ] ; then
+      g.message "Restoring user mask (MASK)..."
+      g.rename "$USERMASK",MASK --quiet > /dev/null
+   fi
+
+   # restore real region
+   unset WIND_OVERRIDE
+   g.remove region="tmp_rfillnulls.$$" --quiet
+
 else
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
+   g.message "Using $GIS_OPT_METHOD (v.surf.bspline) interpolation"
+
+   #restoring user's mask, if present
+   # pointless for now, since v.surf.bspline ignores MASK, but someday...
+   eval `g.findfile element=cell file=$USERMASK`
+   if [ "$file" ] ; then
+      g.message "Restoring user mask (MASK)..."
+      g.rename "$USERMASK",MASK --quiet
+   fi
+
+   eval `g.region -g`
+   SIE=`echo "$ewres" | awk '{printf "%f", $1 * 3.}'`
+   SIN=`echo "$nsres" | awk '{printf "%f", $1 * 3.}'`
+
+   v.surf.bspline input="$VECTTMP" raster="${TMP1}_filled" layer=0 \
+      method="$GIS_OPT_METHOD" sie="$SIE" sin="$SIN" lambda_i=0.005
+
 fi
 
-SEGMAX=600
-if [ "$POINTSNUMBER" -ge "$SEGMAX" ] ; then
-  g.message "Using segmentation for interpolation..."
-  $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" #2> /dev/null
-else
-  #if less than $SEGMAX points, use no segmentation for speedup:
-  g.message "Using no segmentation for interpolation as not needed..."
-  $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" segmax="$SEGMAX" #2> /dev/null
-fi
-
-g.message "Note: Above warnings may be ignored."
-
-#restoring user's mask, if present:
-eval `g.findfile element=cell file=$USERMASK`
-if [ "$file" ] ; then
-   g.message "Restoring user mask (MASK)..."
-   g.rename "$USERMASK",MASK --quiet > /dev/null
-fi
 
 #patch orig and fill map
 g.message "Patching fill data into NULL areas..."
