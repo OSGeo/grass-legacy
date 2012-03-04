@@ -11,6 +11,7 @@ SUBDIRS = \
 	i.landsat.acca \
 	i.landsat.toar \
 	i.maxlik \
+	i.modis.qc \
 	i.rectify \
 	i.rgb.his \
 	i.smap \
