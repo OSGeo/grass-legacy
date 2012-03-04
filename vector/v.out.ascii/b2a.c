@@ -5,16 +5,17 @@
 #include "local_proto.h"
 
 static int srch(const void *pa, const void *pb);
+static int check_cat(const struct line_cats *, const int *, int);
 
 int bin_to_asc(FILE *ascii,
 	       FILE *att, struct Map_info *Map, int ver,
 	       int format, int dp, char *fs, int region_flag,
 	       int field, char* where, char **columns)
 {
-    int type, ctype, i, cat, proj;
+    int type, ctype, i, cat, line, left, right, found; 
     double *xptr, *yptr, *zptr, x, y;
     static struct line_pnts *Points;
-    struct line_cats *Cats;
+    struct line_cats *Cats, *ACats;
     char *xstring = NULL, *ystring = NULL, *zstring = NULL;
     struct Cell_head window;
     struct ilist *fcats;
@@ -62,9 +63,8 @@ int bin_to_asc(FILE *ascii,
     
     Points = Vect_new_line_struct();	/* init line_pnts struct */
     Cats = Vect_new_cats_struct();
+    ACats = Vect_new_cats_struct();
     fcats = Vect_new_list();
-
-    proj = Vect_get_proj(Map);
 
     /* by default, read_next_line will NOT read Dead lines */
     /* but we can override that (in Level I only) by specifying */
@@ -72,6 +72,7 @@ int bin_to_asc(FILE *ascii,
 
     Vect_rewind(Map);
 
+    line = 0;
     while (1) {
 	if (-1 == (type = Vect_read_next_line(Map, Points, Cats))) {
 	    if (columns) {
@@ -90,22 +91,30 @@ int bin_to_asc(FILE *ascii,
 	    return 0;
 	}
 
+	line++;
+	
 	if (format == FORMAT_POINT && !(type & GV_POINTS))
 	    continue;
-
-	if (cats) {
-	    /* check category */
-	    for (i = 0; i < Cats->n_cats; i++) {
-		if ((int *)bsearch((void *) &(Cats->cat[i]), cats, ncats, sizeof(int),
-				   srch)) {
-		    /* found */
-		    break;
-		}
+	
+	found = check_cat(Cats, cats, ncats);
+	if (!found && type == GV_BOUNDARY && Vect_level(Map) > 1) {
+	    Vect_get_line_areas(Map, line, &left, &right);
+	    if (left < 0) 
+		left = Vect_get_isle_area(Map, abs(left));
+	    if (left > 0) {
+		Vect_get_area_cats(Map, left, ACats);
+		found = check_cat(ACats, cats, ncats);
 	    }
-	    
-	    if (i == Cats->n_cats) 
-		continue;
+	    if (right < 0) 
+		right = Vect_get_isle_area(Map, abs(right));
+	    if (!found && right > 0) {
+		Vect_get_area_cats(Map, right, ACats);
+		found = check_cat(ACats, cats, ncats);
+	    }
 	}
+	
+	if (!found)
+	    continue;
 
 	if (ver < 5) {
 	    Vect_cat_get(Cats, 1, &cat);
@@ -300,7 +309,6 @@ int bin_to_asc(FILE *ascii,
 	    }
 	}
     }
-
     /* not reached */
 }
 
@@ -314,4 +322,25 @@ int srch(const void *pa, const void *pb)
     if (*p1 > *p2)
 	return 1;
     return 0;
+}
+
+/* check category */
+int check_cat(const struct line_cats *Cats, const int *cats, int ncats)
+{
+    int i;
+    
+    if (cats) {
+	for (i = 0; i < Cats->n_cats; i++) {
+	    if ((int *)bsearch((void *) &(Cats->cat[i]), cats, ncats, sizeof(int),
+			       srch)) {
+		/* found */
+		break;
+	    }
+	}
+	
+	if (i == Cats->n_cats)
+	    return FALSE;
+    }
+    
+    return TRUE;
 }
