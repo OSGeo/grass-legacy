@@ -9,6 +9,7 @@ SUBDIRS = \
 	i.group \
 	i.his.rgb \
 	i.landsat.acca \
+	i.landsat.toar \
 	i.maxlik \
 	i.rectify \
 	i.rgb.his \
