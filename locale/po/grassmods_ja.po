@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-02-01 16:13+0900\n"
+"PO-Revision-Date: 2012-03-05 11:56+0900\n"
 "Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
@@ -2012,7 +2012,7 @@ msgstr "3列 Matlabデータから3Dベクトルポイントマップを作成�
 
 #: ../misc/m.nviz.image/main.c:51
 msgid "Renders surfaces (raster data), 2D/3D vector data, and volumes (3D raster data) in 3D."
-msgstr ""
+msgstr "曲面（ラスターデータ）、2D/3Dベクトルデータ、体積（3Dラスターデータ）をレンダリングする"
 
 #: ../misc/m.nviz.image/main.c:134
 #, c-format
@@ -2163,15 +2163,13 @@ msgstr "入力したラスターマップは回転していて入力できませ
 
 #: ../raster/r.external/main.c:264 ../raster/r.in.gdal/main.c:621
 #: ../vector/v.in.ogr/main.c:1201
-#, fuzzy
 msgid "Default region for this location updated"
-msgstr "投影情報はアップデートされました!  "
+msgstr "このロケーションのデフォルト領域が更新されました  "
 
 #: ../raster/r.external/main.c:267 ../raster/r.in.gdal/main.c:624
 #: ../vector/v.in.ogr/main.c:1204
-#, fuzzy
 msgid "Region for the current mapset updated"
-msgstr "<%s> はすでに現存のマップセットです"
+msgstr "現在のマップセットの領域が更新されました"
 
 #: ../raster/r.external/main.c:310
 msgid "Complex types not supported"
@@ -2291,14 +2289,13 @@ msgstr "現在のロケーションの投影法を使用"
 
 #: ../raster/r.external/main.c:560 ../raster/r.in.gdal/main.c:138
 #: ../vector/v.in.ogr/main.c:231
-#, fuzzy
 msgid "Extend region extents based on new dataset"
-msgstr "データセットをもとにロケーションを拡張"
+msgstr "新しいデータセットをもとにロケーションを拡張"
 
 #: ../raster/r.external/main.c:562 ../raster/r.in.gdal/main.c:140
 #: ../vector/v.in.ogr/main.c:233
 msgid "Also updates the default region if in the PERMANENT mapset"
-msgstr ""
+msgstr "PERMANENTマップセットのデフォルト領域も更新します。"
 
 #: ../raster/r.external/main.c:566
 msgid "Require exact range"
@@ -2967,6 +2964,14 @@ msgid ""
 "USAGE for slope length determination:\n"
 "%s [-4] el=elevation_map t=swale_threshold [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
 msgstr ""
+"使用方法　盆地描画:\n"
+"%s -4 el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] ba=watershed_basin_map [se=stream_segment_map]\n"
+"\n"
+"使用方法 ARMSEDファイルの作成:\n"
+"%s [-4] el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ba=watershed_basin_map] [se=stream_segment_map] ha=half_basin_map ar=ARMSED_file_name\n"
+"\n"
+"使用方法 for スロープ長決定:\n"
+"%s [-4] el=elevation_map t=swale_threshold [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
 
 #: ../raster/r.watershed/ram/close_maps.c:30
 #: ../raster/r.watershed/ram/close_maps.c:165
@@ -7496,7 +7501,7 @@ msgstr "倍精度浮動小数点データをインポート "
 
 #: ../raster/r.in.bin/main.c:250
 msgid "Signed data (two's complement)"
-msgstr ""
+msgstr "署名済みデータ(2の補数)"
 
 #: ../raster/r.in.bin/main.c:251 ../raster/r.in.bin/main.c:256
 #: ../raster/r.in.bin/main.c:285 ../raster/r.in.bin/main.c:346
@@ -8751,7 +8756,7 @@ msgstr "拡散パスラスターマップ名"
 
 #: ../raster/r.univar2/r.univar_main.c:37
 msgid "Raster map used for zoning, must be of type CELL"
-msgstr ""
+msgstr "ゾーニングに使用されたDラスターマップはCELLタイプでなければなりません"
 
 #: ../raster/r.univar2/r.univar_main.c:42
 #: ../raster/r.univar2/r3.univar_main.c:43 ../raster/r.stats/main.c:114
@@ -8808,7 +8813,7 @@ msgstr "行 %d を読み込んでいます"
 
 #: ../raster/r.univar2/r3.univar_main.c:38
 msgid "3D Raster map used for zoning, must be of type CELL"
-msgstr "ゾーニングに使用された3Dラスターマップ, タイプCELLでなければなりません"
+msgstr "ゾーニングに使用された3DラスターマップはCELLタイプでなければなりません"
 
 #: ../raster/r.univar2/r3.univar_main.c:102
 msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
@@ -9663,7 +9668,7 @@ msgstr "投影されていないロケーションでの太陽の位置を計算
 #: ../raster/r.sunmask/g_solposition.c:88
 #, c-format
 msgid "Specified point %f, %f outside of current region, is that intended? Anyway, it will be used."
-msgstr ""
+msgstr "指定されたポイント %f, %f は現在の領域外ですが適用されました。意図的に指定されましたか？"
 
 #: ../raster/r.sunmask/g_solposition.c:98
 msgid "Unable to get projection info of current location"
@@ -12469,7 +12474,7 @@ msgstr "精度が失われます：ラスターマップ <%s> （タイプ %s）
 #: ../raster/r.out.gdal/main.c:446
 #, c-format
 msgid "Precision loss: The range of <%s> can not be accurately preserved with GDAL datatype Float32. This can be avoided by exporting to Int32 or Float64."
-msgstr ""
+msgstr "精度が失われます：レンジ <%s> GDALデータタイプ Float32では温存されません。 Int32もしくはFloat64でエクスポートすることで回避できます。"
 
 #: ../raster/r.out.gdal/main.c:454
 #, c-format
@@ -14403,7 +14408,7 @@ msgstr "多項式次数の修正 (1-3)  "
 #: ../imagery/i.rectify/main.c:118
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
 msgid "Target resolution (ignored if -c flag used)"
-msgstr ""
+msgstr "目標精度(-c フラグがあれば無視されます)"
 
 #: ../imagery/i.rectify/main.c:126
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
@@ -14454,7 +14459,7 @@ msgstr "ラスターマップ <%s> は既に存在します"
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
 #, c-format
 msgid "target LOCATION %s, MAPSET %s:"
-msgstr ""
+msgstr "目標　ロケーション %s、マップセット %s:"
 
 #: ../imagery/i.rectify/main.c:273
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
@@ -14468,7 +14473,7 @@ msgstr "オルソ補正はキャンセルされました"
 #: ../imagery/i.rectify/main.c:288
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
 msgid "Target resolution must be > 0, ignored"
-msgstr ""
+msgstr "目標精度はゼロ以上である必要があります。値は無視されました。"
 
 #: ../imagery/i.rectify/main.c:306
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:316
@@ -15533,7 +15538,7 @@ msgstr "出力するラスターマップ名（彩度）"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:36
 msgid "Calculating camera angle to local surface..."
-msgstr "centrality measures を計算しています..."
+msgstr "ローカルの地表に対するカメラアングルを計算しています..."
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:51
 #: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:43
@@ -15566,7 +15571,7 @@ msgstr "画像を使ってフォト座標変換行列へと画像をオルソ補
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:129
 msgid "Raster map with camera angle relative to ground surface"
-msgstr ""
+msgstr "地面と相対的なカメラアングル値を持つラスターマップ"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:181
 #, c-format
@@ -15619,7 +15624,7 @@ msgstr "変換方程式を作成できません\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:24
 msgid "Run OPTION 7 of i.ortho.photo again!\n"
-msgstr ""
+msgstr "i.ortho.photo のオプション7を再度実行してください\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:27
 msgid "No active Control Points!\n"
@@ -15627,14 +15632,16 @@ msgstr "作動しているコントロールポイントはありません\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:29
 msgid "Run OPTION 7 of i.ortho.photo!\n"
-msgstr ""
+msgstr "i.ortho.photo のオプション7を実行してください\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reference Point file for group [%s] in [%s] \n"
 " \n"
-msgstr "グループのコントロールポイントファイル <%s@%s> - "
+msgstr ""
+"グループ [%s]（[%s]中）の参照点ファイル \n"
+" \n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:51
 msgid "Poorly placed Reference Points!\n"
@@ -15642,7 +15649,7 @@ msgstr "不十分な制御ポイントの設置 \n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:53
 msgid "Run OPTION 5 of i.ortho.photo again!\n"
-msgstr ""
+msgstr "i.ortho.photo のオプション5を再度実行してください\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:57
 msgid "No active Reference Points!\n"
@@ -15650,7 +15657,7 @@ msgstr "作動しているコントロールポイントはありません\n"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:59
 msgid "Run OPTION 5 of i.ortho.photo!\n"
-msgstr ""
+msgstr "i.ortho.photo のオプション5を実行してください\n"
 
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:64
 msgid "Interactively select or modify the target elevation model."
@@ -15727,11 +15734,12 @@ msgid "No files in this group!"
 msgstr "このグループ内にファイルがありません!"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:61
-#, fuzzy
 msgid ""
 "\n"
 "Rectify all images in the group? "
-msgstr "グループの全ラスターマップを修正する"
+msgstr ""
+"\n"
+"グループの全ラスターマップを修正しますか？"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:71
 #, c-format
@@ -16611,7 +16619,7 @@ msgstr "表示"
 
 #: ../display/d.vect/main.c:92
 msgid "shape;Display geometry of features;cat;Display category numbers of features;topo;Display topology information (nodes, edges);dir;Display direction of linear features;attr;Display selected attribute based on 'attrcol';zcoor;Display z-coordinate of features (only for 3D vector maps)"
-msgstr ""
+msgstr "shape;フィーチャーのジオメトリを表示;cat;フィーチャーのカテゴリ数を表示;topo;トポロジー情報を表示(nodes、edges);dir;線形フィーチャーの方向を表示;attr;'attcol'で指定した属性を表示;zcoor;フィーチャーのZ軸を表示(3Dベクトルマップのみ)"
 
 #: ../display/d.vect/main.c:103 ../display/d.vect/main.c:109
 #: ../display/d.vect/main.c:112 ../display/d.vect/main.c:115
@@ -19513,11 +19521,11 @@ msgstr "マップセット許可を決定できません"
 
 #: ../general/g.access/exp_perms.c:11 ../general/g.access/exp_perms.c:29
 msgid "have"
-msgstr ""
+msgstr "所有"
 
 #: ../general/g.access/exp_perms.c:12
 msgid "read "
-msgstr ""
+msgstr "読込"
 
 #: ../general/g.access/exp_perms.c:15
 msgid "Everyone"
@@ -19525,7 +19533,7 @@ msgstr "各位"
 
 #: ../general/g.access/exp_perms.c:16
 msgid "has"
-msgstr "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
+msgstr "所有"
 
 #: ../general/g.access/exp_perms.c:19
 msgid "Only users in your group"
@@ -19546,7 +19554,7 @@ msgstr "%s %s %s %sマップセットへのアクセス %s"
 
 #: ../general/g.access/exp_perms.c:32
 msgid "will"
-msgstr ""
+msgstr "今後"
 
 #: ../general/g.access/exp_perms.c:32
 msgid "now"
@@ -20003,7 +20011,7 @@ msgstr "データータイプを出力します"
 
 #: ../general/g.mlist/main.c:144
 msgid "Print fully-qualified map names (including mapsets)"
-msgstr ""
+msgstr "（マップセットを含む）完全なマップ名を入力"
 
 #: ../general/g.mlist/main.c:149
 msgid "Pretty printing in human readable format"
@@ -20948,11 +20956,11 @@ msgstr "線分を取得できません、セグメントは一線ではありま
 
 #: ../vector/v.net.centrality/main.c:95
 msgid "vector, network, centrality measures"
-msgstr "centrality measures を計算しています..."
+msgstr "ベクトル、ネットワーク、中心性を計算しています..."
 
 #: ../vector/v.net.centrality/main.c:97
 msgid "Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network."
-msgstr ""
+msgstr "ネットワークの角度、中心性、中間性、近接性、固有ベクトル中心性を計算する"
 
 #: ../vector/v.net.centrality/main.c:115 ../vector/v.net.allpairs/main.c:73
 msgid "Name of arc forward/both direction(s) cost column"
@@ -21333,9 +21341,9 @@ msgid "Copying vector objects from vector map <%s>..."
 msgstr "ベクトルオブジェクトをベクトルマップ <%s> からコピー中、、、"
 
 #: ../vector/v.overlay/main.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "No %s features found in vector map <%s>. Verify '%s' parameter."
-msgstr "%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを確認して下さい"
+msgstr "フィーチャー %s がベクトルマップ <%s> に存在しません。'%s' パラメータを確認してください"
 
 #: ../vector/v.overlay/main.c:269
 msgid "Collecting input attributes..."
@@ -21437,7 +21445,7 @@ msgstr "最適な標準偏差を計算して終了 (マップは書き込まな�
 
 #: ../vector/v.kernel/main.c:192
 msgid "In network mode, normalize values by sum of density multiplied by length of each segment. Integral over the output map then gives 1.0 * mult"
-msgstr ""
+msgstr "ネットワークモードでは、各セグメント長を掛けた密度の合計で値を正規化します。 出力マップの総計では1.0の係数になります。"
 
 #: ../vector/v.kernel/main.c:197
 msgid "In network mode, multiply the result by number of input points."
@@ -21537,7 +21545,7 @@ msgstr "出力値中の最大値：%e"
 
 #: ../vector/v.kernel/function.c:220
 msgid "Dimension > 2 supported only by gaussian function"
-msgstr ""
+msgstr "2以上の次元はガウス関数のみでサポートされています"
 
 #: ../vector/v.in.ogr/main.c:103 ../vector/v.in.dwg/main.c:65
 #: ../vector/v.in.ascii/in.c:48 ../vector/v.in.dxf/main.c:60
@@ -23771,7 +23779,7 @@ msgstr "テーブルに許可がありません\n"
 
 #: ../vector/v.digit/c_face.c:312
 msgid "Cannot add database link to vector, link for given field probably already exists."
-msgstr "ベクターにデータベースへのリンクを付加できません。該当項目へのリンクは既に存在している可能性があります。"
+msgstr "ベクトルにデータベースへのリンクを付加できません。該当項目へのリンクは既に存在している可能性があります。"
 
 #: ../vector/v.digit/attr.c:94
 msgid "Cannot create new record."
@@ -23834,7 +23842,7 @@ msgstr "データベース接続は定義されていません<BR>"
 #: ../vector/v.digit/attr.c:553
 #, c-format
 msgid "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>"
-msgstr ""
+msgstr "ドライバ: %s<BR>データベース: %s<BR>テーブル: %s<BR>キー項目: %s<BR>"
 
 #: ../vector/v.digit/attr.c:571
 #, c-format
@@ -24670,9 +24678,8 @@ msgid "Values describing the relation between two nearest features"
 msgstr "2つの最近接のフィーチャー間の関係を記述する値"
 
 #: ../vector/v.distance/main.c:181
-#, fuzzy
 msgid "cat;category of the nearest feature;dist;minimum distance to nearest feature;to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate of the nearest point on the 'to' feature;to_along;distance to the nearest point on the 'to' feature along that linear feature;to_angle;angle along the nearest linear feature in the 'to' map, measured CCW from the +x axis, in radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature given by to_column option"
-msgstr "cat;最近接フィーチャーのカテゴリー;dist;最近接フィーチャーへの最短距離;to_x;'to' フィーチャーにおける最近接ポイントの;x 座標;to_y;'to' フィーチャーにおける最近接ポイントのy 座標;to_along; 'from' マップにおけるポイント/セントロイド間の距離と'to'マップにおける線形フィーチャーの開始点, along this linear feature;to_angle;angle between the linear feature in 'to' マップと正のx軸の間の角度, 'from' マップ, 反時計周り, ラジアン, -PI と PIの間にあるポイント/セントロイドのロケーションにおける'to' マップと正のx軸の間の角度;to_attr;to_column オプションによって与えられている最近接フィーチャーの属性"
+msgstr "cat;最近接フィーチャーのカテゴリー;dist;最近接フィーチャーへの最短距離;to_x;'to' フィーチャーにおける最近接ポイントのx 座標;to_y;'to' フィーチャーにおける最近接ポイントのy 座標;to_along;'to' フィーチャーにおける最近接ポイントへの線形フィーチャーに沿った距離;o_angle;'to' フィーチャーにおける最近接の線形フィーチャーに沿った角度。X軸プラス方向を基点に反時計回りに-πからπの間のラジアン値;to_attr;to_column オプションによって与えられている最近接フィーチャーの属性"
 
 #: ../vector/v.distance/main.c:202
 msgid "Column name(s) where values specified by 'upload' option will be uploaded"
@@ -24704,9 +24711,8 @@ msgid "Calculate distances to all features within the threshold"
 msgstr "閾値内のすべてのフィーチャーへの距離を計算します"
 
 #: ../vector/v.distance/main.c:228
-#, fuzzy
 msgid "Output is written to stdout but may be uploaded to a new table created by this module; multiple 'upload' options may be used."
-msgstr "出力はstdoutに書き込まれましたがこのモジュールによって作成された新しい表にアップロードされた可能性があります. Fromカテゴリーは重複しているかもしれません.  "
+msgstr "出力はstdoutに書き込まれましたがこのモジュールによって作成された新しい表にアップロードされた可能性があります. 複数のアップロードオプションが使われているかもしれません.  "
 
 #: ../vector/v.distance/main.c:280
 msgid "to_column option missing"
@@ -26490,9 +26496,8 @@ msgid "Wrong input format: %s"
 msgstr "不正な入力フォーマット： %s  "
 
 #: ../vector/v.net.timetable/main.c:467
-#, fuzzy
 msgid "'From' and 'To' stops are the same"
-msgstr "入力と出力で同一のロケーションは指定出来ません"
+msgstr "同一の入力と出力は指定出来ません"
 
 #: ../vector/v.net.timetable/main.c:476
 msgid "No path between the stops"
@@ -26657,7 +26662,7 @@ msgstr "ダウンロードディレクトリから既存のデータを削除"
 
 #: ../vector/v.out.ogr/main.c:168
 msgid "Skip export of GRASS category ID ('cat') attribute"
-msgstr ""
+msgstr "GRASSカテゴリID('cat'属性)のエクスポートをスキップ"
 
 #: ../vector/v.out.ogr/main.c:172
 msgid "Export features with category (labeled) only. Otherwise all features are exported"
@@ -26677,7 +26682,7 @@ msgstr "ラインをポリゴンとしてエクスポート"
 
 #: ../vector/v.out.ogr/main.c:231
 msgid "Skipping all boundaries that are not part of an area."
-msgstr ""
+msgstr "エリアの一部ではない全ての境界をスキップします"
 
 #: ../vector/v.out.ogr/main.c:250
 msgid "Volumes will be exported as sets of faces."
@@ -27014,7 +27019,7 @@ msgstr "重複； 地物が部分的または完全に重なっています"
 
 #: ../vector/v.select/args.c:58
 msgid "overlap;features partially or completely overlap;equals;features are spatially equals (using GEOS);disjoint;features do not spatially intersect (using GEOS);intersects;features spatially intersect (using GEOS);touches;features spatially touches (using GEOS);crosses;features spatially crosses (using GEOS);within;feature A is completely inside feature B (using GEOS);contains;feature B is completely inside feature A (using GEOS);overlaps;features spatially overlap (using GEOS);relate;feature A is spatially related to feature B (using GEOS, requires 'relate' option);"
-msgstr ""
+msgstr "overlap;フィーチャーが部分的あるいは全体的にオーバーラップする;equals;フィーチャーが空間的に等しい(GEOSを使用);disjoint;フィーチャーが空間的に交差（intersect）していない(GEOSを使用);intersects;フィーチャーが空間的に交差(intersect)する(GEOSを使用);touches;フィーチャーが空間的に接する(GEOSを使用);crosses;フィーチャーが空間的に交差（cross）する (GEOSを使用);within;フィーチャーAが完全にフィーチャーBの内部にある(GEOSを使用);contains;フィーチャーBが完全にフィーチャーAの内部にある(GEOSを使用);overlaps;フィーチャーが空間的にオーバーラップしている(GEOSを使用);relate;フィーチャーA は空間的にフィーチャーBと関連する(GEOSを使用, 'relate'オプションが必要);"
 
 #: ../vector/v.select/args.c:75
 msgid "Intersection Matrix Pattern used for 'relate' operator"
@@ -28629,11 +28634,11 @@ msgstr "選択したライン %s の頂点の数は %d から %d [%d%%] に減�
 
 #: ../vector/v.generalize/main.c:513
 msgid "reduced"
-msgstr ""
+msgstr "減少"
 
 #: ../vector/v.generalize/main.c:513
 msgid "changed"
-msgstr "行の変更"
+msgstr "変更"
 
 #: ../vector/v.vol.rst/main.c:204
 msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
@@ -29831,7 +29836,7 @@ msgstr "検索クエリーのテストのみ、実行しないでください"
 
 #: ../db/base/select.c:263
 msgid "Selects data from attribute table (performs SQL query statement(s))."
-msgstr ""
+msgstr "属性テーブルからデータを取得(SQLクエリーを実行します)."
 
 #: ../db/db.login/main.c:43
 msgid "database, connection settings"
@@ -37020,9 +37025,8 @@ msgstr "選択するバンド"
 #~ msgid "Name for distance output map"
 #~ msgstr "距離出力マップ名"
 
-#, fuzzy
 #~ msgid "Mismatch between metadata nodata value and actual nodata value in exported raster: specified nodata value %f gets converted to %d by selected GDAL datatype."
-#~ msgstr "エクスポートされたラスターにおけるメタデータのデータなし値と実際のデータなし値の間の不一致: 指定のデータなし値%ｆは選択されたGDALデータタイプによって%dへと変換されます"
+#~ msgstr "エクスポートされたラスターにおけるメタデータのデータなし値と実際のデータなし値の間の不一致: 指定のデータなし値 %fは選択されたGDALデータタイプによって %d へと変換されます"
 
 #~ msgid "Computing means for band %d..."
 #~ msgstr "バンドの演算手段 %d..."

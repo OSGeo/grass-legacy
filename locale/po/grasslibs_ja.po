@@ -1,6 +1,6 @@
 # translation of grasslibs_ja.po to Japanese
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005,2010 GRASS Development Team
+# Copyright (C) 2005,2010,2012 GRASS Development Team
 #
 # Shinji Masumoto <masumoto@sci.osaka-cu.ac.jp>, 2004
 # Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>, 2005
@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2011-11-15 15:01+0900\n"
-"Last-Translator: ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2012-03-05 12:14+0900\n"
+"Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -787,19 +787,19 @@ msgid "group <%s> references the following raster maps\n"
 msgstr "グループ <%s> は次のラスターマップを参照します\n"
 
 #: ../lib/imagery/sigsetfile.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> is not current mapset"
-msgstr "グループ [%s in %s] の サブグループ [%s] のファイル [%s] を作成できません"
+msgstr "署名ファイル <%s> が作成できません。 サブグループ： <%s> 、グループ： <%s> - <%s> は現在のマップセットにありません"
 
 #: ../lib/imagery/sigsetfile.c:57
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s>"
-msgstr "グループ [%s in %s] の サブグループ [%s] のファイル [%s] を作成できません"
+msgstr "署名ファイル <%s> が作成できません。 サブグループ： <%s> 、グループ： <%s>"
 
 #: ../lib/imagery/sigsetfile.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open signature file <%s> for subgroup <%s> of group <%s@%s>"
-msgstr "グループ [%s in %s] の サブグループ [%s] のファイル [%s] を開けません"
+msgstr "署名ファイル <%s> が開けません。 サブグループ： <%s> 、グループ：<%s@%s>"
 
 #: ../lib/imagery/fopen.c:23
 #, c-format
