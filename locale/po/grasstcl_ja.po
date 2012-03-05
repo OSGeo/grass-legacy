@@ -1,6 +1,6 @@
 # translation of grasstcl_ja.po to Japanese
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005,2010 GRASS Development Team
+# Copyright (C) 2005, 2010, 2012 GRASS Development Team
 # Shinji Masumoto <masumoto@sci.osaka-cu.ac.jp>, 2004
 # Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>, 2008
 # Markus Neteler <neteler@itc.it>, 2004, 2005, 2006.
@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: grasstcl_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2011-11-15 18:22+0900\n"
-"Last-Translator: ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2012-03-05 08:27+0900\n"
+"Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -108,14 +108,8 @@ msgid "Select datum transformation parameters:"
 msgstr "データム変換パラメータ選択："
 
 #: ../lib/init/file_option.tcl:244 ../lib/init/epsg_option.tcl:290
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
-msgstr ""
-"パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータム"
-"を使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用"
-"されます"
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgstr "パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータムを使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用されます"
 
 #: ../lib/init/file_option.tcl:263 ../lib/init/epsg_option.tcl:309
 #: ../vector/v.digit/settings.tcl:174 ../gui/tcltk/gis.m/gm.tcl:465
@@ -146,11 +140,8 @@ msgstr "警告: i間違った ロケーション "
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまた"
-"はディレクトリが存在しません"
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまたはディレクトリが存在しません"
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -330,13 +321,8 @@ msgid "Starting GRASS for the first time"
 msgstr "GRASSの初回実行"
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
-msgstr ""
-"GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成"
-"してください。一般には \"grassdata\"が使用されます。"
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
+msgstr "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成してください。一般には \"grassdata\"が使用されます。"
 
 #: ../lib/init/gis_set.tcl:589
 msgid "Select GIS data directory"
@@ -391,11 +377,11 @@ msgstr ""
 msgid ""
 "\n"
 "\n"
-"On MS-Windows systems failure might be caused by non-latin letter in GISRC "
-"file path.  Check that Your username doesn't contain non-latin letters.  Due "
-"to non-latin letter encoding handling in MS-Windows, it's not possible to "
-"run GRASS if username contains non-latin letters."
+"On MS-Windows systems failure might be caused by non-latin letter in GISRC file path.  Check that Your username doesn't contain non-latin letters.  Due to non-latin letter encoding handling in MS-Windows, it's not possible to run GRASS if username contains non-latin letters."
 msgstr ""
+"\n"
+"\n"
+"GISRSのファイルパス名に英数字以外が使われていると、Windowsのシステムエラーが発生する可能性があります。ユーザー名に英数字以外の文字が使われていないか確認してください。Windowsシステムで使われているマルチバイトエンコーディングの制約で、非ラテン文字のユーザー名ではGRASSを実行することができません。"
 
 #: ../lib/init/gis_set.tcl:942
 msgid "ERROR: unable to read GISRC"
@@ -409,8 +395,7 @@ msgstr "警告： 環境変数を取得出来ません"
 msgid ""
 "Warning: Unable to get environmental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set environmental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set environmental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 "警告：環境変数GRASS_PROJSHAREを取得することができません \n"
 "これは、GRASSのインストール時のエラーです \n"
@@ -1135,12 +1120,8 @@ msgid " or <"
 msgstr " または < "
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
-msgstr ""
-"データベース または ロケーション名 または マップセット はからです.  致命的な"
-"エラーです. gis.mは適切な設定無くしては実行できません"
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
+msgstr "データベース または ロケーション名 または マップセット はからです.  致命的なエラーです. gis.mは適切な設定無くしては実行できません"
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1190,15 +1171,13 @@ msgid ""
 "\n"
 "This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 "GRASSを終了してもよろしいですか?\n"
 "\n"
 "この動作はgis.mインスタンスの全てのセッションを終了します.\n"
 "\n"
-"GRASSのコマンドラインから実行している場合は, そのコマンドが完了した後でGRASS"
-"が終了します."
+"GRASSのコマンドラインから実行している場合は, そのコマンドが完了した後でGRASSが終了します."
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 msgid "Terminate current GRASS session"
@@ -1521,8 +1500,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr "青または彩度チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr "R，G，Bまたは色相/照度/彩度チャンネルとして３つのラスターを表示"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
@@ -1982,8 +1960,7 @@ msgstr "ジオメトリをマップに割り当てますか？"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -3747,8 +3724,7 @@ msgid "chart for %s"
 msgstr " %s のグラフ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -3994,20 +3970,12 @@ msgid " ignore rotation setting and draw horizontally"
 msgstr " 回転の設定を無視して水平方向に描画"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgstr "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用"
-"してグループファイルを作成してください"
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgstr "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを使用してグループファイルを作成してください"
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -4086,9 +4054,7 @@ msgid "4. Select map"
 msgstr "４．マップ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -4188,29 +4154,16 @@ msgid "Exit georectifier"
 msgstr "幾何補正"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必"
-"要があります"
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgstr "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２で"
-"は６点、第３では１０点以上必要です"
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgstr "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２では６点、第３では１０点以上必要です"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要"
-"があります"
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
+msgstr "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -4494,12 +4447,8 @@ msgid "Error creating rules file"
 msgstr "ルールファイル作成エラー"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
-msgstr ""
-"ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント"
-"出力のみ) "
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgstr "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント出力のみ) "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -4726,8 +4675,7 @@ msgstr "アニメーションのマップ"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr ""
-"1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
+msgstr "1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -5043,7 +4991,7 @@ msgstr "ディスプレイを0-100% として凡例の配置とサイズを設�
 #: ../gui/tcltk/gis.m/legend.tcl:235
 #, fuzzy, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
-msgstr "    左下端のXY (ディスプレイの左上端から %  ) "
+msgstr "    左下端のXY (％の時はディスプレイの左上端から  ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:246
 msgid "    legend height "
@@ -5535,8 +5483,7 @@ msgstr "DXFファイル(ASCII) "
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr ""
-"GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
+msgstr "GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
@@ -5799,9 +5746,7 @@ msgid "Create color image from RGB files"
 msgstr "RGBファイルからカラー画像作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
 msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
@@ -6006,8 +5951,7 @@ msgstr "ベクトルポイントデータを用いた距離逆関数重み付補
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr ""
-"ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
+msgstr "ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
@@ -6134,20 +6078,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "入力ラインから配置測点と線型参照システム作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
-msgstr ""
-"入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照シス"
-"テム"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
+msgstr "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照システム"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
-msgstr ""
-"線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オ"
-"フセットを表示"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgstr "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オフセットを表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6266,18 +6202,15 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "4つの隣り合う画像までのモザイク "
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "RGB表示するマルチバンド画像のカラーバランスと拡張カラーテーブル"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr "HIS(色相/明度/彩度)カラーからRGB（赤/緑/青)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr "RGB（赤/緑/青)カラーからHIS(色相/明度/彩度)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
@@ -6286,13 +6219,11 @@ msgstr "画像の位置補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr ""
-"ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr ""
-"ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+msgstr "ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6608,10 +6539,8 @@ msgstr "   座標を指定しテキストの位置を補正"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, fuzzy, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
-msgstr "     (座標は, % は画面の左下から定義,ピクセルは左上)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
+msgstr "     (座標： % は画面の左下から定義、ピクセルは左上から定義)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
