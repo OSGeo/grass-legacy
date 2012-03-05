@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-02-08 19:40+0900\n"
-"Last-Translator: taniguchi <taniguti@apptec.co.jp>\n"
+"PO-Revision-Date: 2012-03-05 11:25+0900\n"
+"Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -215,7 +215,7 @@ msgstr "<%(name)s>:レイヤータイプ <%(type)s>はサポートされてい�
 #: ../gui/wxpython/gui_modules/render.py:188
 #, python-format
 msgid "'%(cmd)s' failed. Details: %(det)s"
-msgstr ""
+msgstr "'%(cmd)s' が失敗しました。　詳細: %(det)s"
 
 #: ../gui/wxpython/gui_modules/render.py:287
 #, python-format
@@ -619,14 +619,15 @@ msgid "Database connection is not defined in DB file."
 msgstr "DBファイルに接続設定が定義されていません"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:71
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
 "\n"
 "New attribute table can be created by Attribute Table Manager."
 msgstr ""
 "ベクトルマップ <%(vector)s>とリンクした属性テーブルが見つかりません%(msg)s\n"
-"このメッセージはデジタイザ設定か属性テーブルマネージャー機能を利用してベクトルマップと属性テーブルのリンク付けをする事で消すことができます"
+"\n"
+"属性テーブルマネージャー機能を利用して新しい属性テーブルを作成する事ができます"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:88
 msgid "Close dialog on submit"
@@ -1071,9 +1072,8 @@ msgid "General"
 msgstr "一般"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3259
-#, fuzzy
 msgid "Item properties"
-msgstr "データプロパティ"
+msgstr "アイテムのプロパティ"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3267
 msgid "Disabled:"
@@ -1145,7 +1145,7 @@ msgstr "ベクトル:"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3530
 msgid "Loop"
-msgstr ""
+msgstr "ループ"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3630
 #: ../gui/wxpython/menustrings.py:875
@@ -1888,11 +1888,13 @@ msgid "Unable to create vector map <%s>."
 msgstr "ベクトルマップを作れません <%s>"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:363
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Invalid or empty key column.\n"
 "Unable to create vector map <%s>."
-msgstr "ベクトルマップを作れません <%s>"
+msgstr ""
+"不正もしくは空のキー項目\n"
+"ベクトルマップを作れません <%s>"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:380
 #, python-format
@@ -2095,11 +2097,12 @@ msgid "Open %s dialog"
 msgstr "ダイアログ %s オープン"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1283
-#, fuzzy
 msgid ""
 "No layers marked for import.\n"
 "Operation canceled."
-msgstr "マップレイヤーが選択されていません 処理はキャンセルされました "
+msgstr ""
+"マップレイヤーが選択されていません\n"
+"処理はキャンセルされました "
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1356
 msgid "Import DXF layers"
@@ -2163,9 +2166,9 @@ msgid "Template:"
 msgstr "テンプレート:"
 
 #: ../gui/wxpython/gui_modules/utils.py:303
-#, fuzzy, python-format
+#, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
-msgstr "新しいベクトルマップ <%s> が作成されました"
+msgstr "ベクトルマップ <%(map)s>: %(msg)s\n"
 
 #: ../gui/wxpython/gui_modules/utils.py:526
 #, python-format
@@ -4393,9 +4396,9 @@ msgid "Vector maps settings"
 msgstr "ベクトル設定"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
-#, fuzzy, python-format
+#, python-format
 msgid "%s properties"
-msgstr "プロパティ "
+msgstr "%s プロパティ "
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:3029
 msgid "Data selection"
@@ -4588,9 +4591,9 @@ msgstr "ラスターマップの選択："
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:3869
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:4555
-#, fuzzy, python-format
+#, python-format
 msgid "%(rast)s: type %(type)s"
-msgstr "%(rast): タイプ %(type)"
+msgstr "%(rast)s: タイプ %(type)s"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:3888
 msgid "Type of legend"
@@ -4981,7 +4984,6 @@ msgid "List of extensions"
 msgstr "拡張子リスト"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:805
-#, fuzzy
 msgid "Fetch full info including description and keywords"
 msgstr "説明やキーワードなど完全な情報を取得（時間がかかります）"
 
@@ -5019,29 +5021,24 @@ msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
 msgstr "GRASSアドオンのSVN（患者が）からモジュールのリストを取得中(お待ちください)..."
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1133
-#, fuzzy
 msgid "Uninstall GRASS Addons extensions"
-msgstr "拡張子リスト"
+msgstr "GRASS アドオンGRASSモジュールのアンインストール"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1142
-#, fuzzy
 msgid "List of installed extensions"
-msgstr "拡張子リスト"
+msgstr "インストールされたアドオンGRASSモジュールの一覧"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1148
-#, fuzzy
 msgid "&Uninstall"
-msgstr "インストール(&I)"
+msgstr "アンインストール(&U)"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1149
-#, fuzzy
 msgid "Uninstall selected AddOns extensions"
-msgstr "選択されたアドオンGRASSモジュールのインストール"
+msgstr "選択されたアドオンGRASSモジュールのアンインストール"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1196
-#, fuzzy
 msgid "No extension selected for removal. Operation canceled."
-msgstr "マップレイヤーが選択されていません 処理はキャンセルされました "
+msgstr "削除するアドオンGRASSモジュールが選択されていません 処理はキャンセルされました "
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1205
 #, python-format
@@ -5051,17 +5048,19 @@ msgid ""
 "\n"
 "Do you want really to remove <%(ext)s> extension?"
 msgstr ""
+"削除されるファイル一覧:\n"
+"%(files)s\n"
+"\n"
+"これらの拡張機能 <%(ext)s> を本当に削除しますか?"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1208
 #: ../gui/wxpython/menustrings.py:236
-#, fuzzy
 msgid "Remove extension"
-msgstr "頂点の削除 "
+msgstr "拡張機能の削除 "
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1233
-#, fuzzy
 msgid "Extension"
-msgstr "発光度"
+msgstr "拡張機能"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1357
 msgid "&Next"
@@ -5072,9 +5071,9 @@ msgid "&Previous"
 msgstr "前(&P)"
 
 #: ../gui/wxpython/gui_modules/wxnviz.py:31
-#, fuzzy, python-format
+#, python-format
 msgid "3D view mode: %s\n"
-msgstr "3Dビューモードツール"
+msgstr "3Dビューモード: %s\n"
 
 #: ../gui/wxpython/gui_modules/wxnviz.py:305
 #, python-format
@@ -5429,6 +5428,10 @@ msgid ""
 "\n"
 "Option <%(opt)s>: read from standard input is not supported by wxGUI"
 msgstr ""
+"次のコマンドを実行できません:\n"
+"%(cmd)s\n"
+"\n"
+"オプション <%(opt)s>: wxGUIでは標準入力からの読込はサポートされていません"
 
 #: ../gui/wxpython/gui_modules/goutput.py:625
 msgid "Save file as..."
@@ -6775,18 +6778,15 @@ msgid "Table <%s> - right-click to delete column(s)"
 msgstr "テーブル <%s> - 右クリックで列を削除"
 
 #: ../gui/wxpython/gui_modules/dbm.py:865
-#, fuzzy
 msgid "Add column"
 msgstr "列追加"
 
 #: ../gui/wxpython/gui_modules/dbm.py:873
 #: ../gui/wxpython/gui_modules/dbm.py:924
-#, fuzzy
 msgid "Column"
 msgstr "列"
 
 #: ../gui/wxpython/gui_modules/dbm.py:900
-#, fuzzy
 msgid "Length"
 msgstr "長さ"
 
@@ -7322,7 +7322,7 @@ msgid "Unable to create new mapset: %s"
 msgstr "マップセットの作成ができません： %s "
 
 #: ../gui/wxpython/gis_set.py:742
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "GRASS is already running in selected mapset <%(mapset)s>\n"
 "(file %(lock)s found).\n"
@@ -7332,7 +7332,7 @@ msgid ""
 "Do you want to try to remove .gislock (note that you need permission for this operation) and continue?"
 msgstr ""
 "GRASS　は選択されたマップセット <%(mapset)s> で既に動作しています\n"
-"(ファイル %(lock)が存在します).\n"
+"(ファイル %(lock)sが存在します).\n"
 "\n"
 "同時使用はできません。\n"
 "\n"
@@ -7348,6 +7348,9 @@ msgid ""
 "\n"
 "If you really are running another GRASS session doing this could corrupt your data. Have another look in the processor manager just to be sure..."
 msgstr ""
+"本当によろしいですか?\n"
+"\n"
+"他にGRASSのセッションが動作中であれば、データを破損する可能性があります。タスクマネージャにて再度確認してください..."
 
 #: ../gui/wxpython/gis_set.py:771
 #, python-format
@@ -7876,16 +7879,14 @@ msgid "ASCII 3D import"
 msgstr "ASCII 3Dのインポート "
 
 #: ../gui/wxpython/menustrings.py:83
-#, fuzzy
 msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
-msgstr "3D ASCII ラスターテキストファイルを 3Dラスターマップレイヤーへインポート "
+msgstr "3D ASCII ラスターテキストファイルを （バイナリ）3Dラスターマップレイヤーへインポート "
 
 #: ../gui/wxpython/menustrings.py:84
 msgid "Vis5D import"
 msgstr "Vis5Dのインポート "
 
 #: ../gui/wxpython/menustrings.py:85
-#, fuzzy
 msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
 msgstr "3D Vis5Dファイルのインポート (つまり1変数と1タイムステップを使用したv5dファイル) "
 
@@ -8083,7 +8084,6 @@ msgid "ASCII 3D export"
 msgstr "ASCII 3Dのエクスポート "
 
 #: ../gui/wxpython/menustrings.py:137
-#, fuzzy
 msgid "Converts a 3D raster map layer into an ASCII text file."
 msgstr "3D ラスターマップをASCIIテキストファイルに変換"
 
@@ -8092,14 +8092,12 @@ msgid "Vis5D export"
 msgstr "Vis5Dのエクスポート "
 
 #: ../gui/wxpython/menustrings.py:139
-#, fuzzy
 msgid "Exports GRASS 3D raster map to 3-dimensional Vis5D file."
-msgstr "GRASS 3D ラスターマップを3D Vis5D ファイルにエキスポート "
+msgstr "GRASS 3D ラスターマップを3D Vis5D ファイルにエクスポート "
 
 #: ../gui/wxpython/menustrings.py:141
-#, fuzzy
 msgid "Converts 3D raster maps into the VTK-ASCII format."
-msgstr "ラスターマップを VTK-Ascii フォーマットへ変換"
+msgstr "3Dラスターマップを VTK-Ascii フォーマットへ変換"
 
 #: ../gui/wxpython/menustrings.py:142
 msgid "Export database table"
@@ -8142,18 +8140,16 @@ msgid "List"
 msgstr "リスト "
 
 #: ../gui/wxpython/menustrings.py:154
-#, fuzzy
 msgid "Lists available GRASS data base files of the user-specified data type."
-msgstr "現在使用できるマップが出力可能な形式の一覧を表示 "
+msgstr "ユーザーが指定したデータ型の、現在使用できるGRASSデータベースファイルの一覧を表示 "
 
 #: ../gui/wxpython/menustrings.py:155
 msgid "List filtered"
 msgstr "フィルター "
 
 #: ../gui/wxpython/menustrings.py:156
-#, fuzzy
 msgid "Lists available GRASS data base files of the user-specified data type optionally using the search pattern."
-msgstr "現在使用できるマップが出力可能な形式の一覧を表示 "
+msgstr "ユーザーが検索オプションを使って指定したデータ型の、現在使用できるGRASSデータベースファイルの一覧を表示 "
 
 #: ../gui/wxpython/menustrings.py:158
 msgid "Renames data base element files in the user's current mapset."
@@ -8270,13 +8266,12 @@ msgid "nviz - Visualization and animation tool for GRASS data."
 msgstr "nviz - GRASSの視覚化＆アニメーションツール "
 
 #: ../gui/wxpython/menustrings.py:188
-#, fuzzy
 msgid "3D image rendering"
-msgstr "自動レンダリングを有効にする"
+msgstr "3Dイメージのレンダリング"
 
 #: ../gui/wxpython/menustrings.py:189
 msgid "Creates a 3D rendering of GIS data."
-msgstr ""
+msgstr "GISデータの3Dレンダリングを作成する"
 
 #: ../gui/wxpython/menustrings.py:190
 msgid "Bearing/distance to coordinates"
@@ -8440,25 +8435,23 @@ msgstr "座標を他の投影法に変換 (cs2cs使用) "
 
 #: ../gui/wxpython/menustrings.py:232
 msgid "Install extension from add-ons"
-msgstr "アドオンのエクステンションをインストール"
+msgstr "アドオンをインストール"
 
 #: ../gui/wxpython/menustrings.py:233
-#, fuzzy
 msgid "Installs new extension from GRASS AddOns SVN repository."
-msgstr "GRASSのアドオン SVNレポジトリから新しいエクステンションをインストール"
+msgstr "GRASSのアドオン SVNレポジトリから新しいアドオンをインストール"
 
 #: ../gui/wxpython/menustrings.py:234
-#, fuzzy
 msgid "Update installed extensions"
-msgstr "拡張子リスト"
+msgstr "インストールされたアドオンを更新する"
 
 #: ../gui/wxpython/menustrings.py:235
 msgid "Rebuilds all locally installed GRASS Addons extensions."
-msgstr ""
+msgstr "ローカルにインストールされた全てのGRASSアドオンをリビルドする"
 
 #: ../gui/wxpython/menustrings.py:237
 msgid "Removes installed GRASS AddOns extension."
-msgstr ""
+msgstr "インストールされたGRASSアドオンを削除する"
 
 #: ../gui/wxpython/menustrings.py:238 ../gui/wxpython/menustrings.py:860
 msgid "Preferences"
@@ -9489,7 +9482,6 @@ msgid "Linear regression"
 msgstr "線形回帰"
 
 #: ../gui/wxpython/menustrings.py:506
-#, fuzzy
 msgid "Calculates linear regression from two raster maps: y = a + b*x."
 msgstr "2つのラスターマップでの線形回帰計算: y = a + b*x"
 
@@ -9606,9 +9598,8 @@ msgid "Updates vector map metadata."
 msgstr "ベクトルマップメタデータ更新"
 
 #: ../gui/wxpython/menustrings.py:537
-#, fuzzy
 msgid "Topology maintenance"
-msgstr "サポートファイルの保守 "
+msgstr "トポロジーの保守 "
 
 #: ../gui/wxpython/menustrings.py:538
 msgid "Create or rebuild topology"
@@ -9699,9 +9690,8 @@ msgid "Prints vector map attributes."
 msgstr "ベクトルマップの属性を出力"
 
 #: ../gui/wxpython/menustrings.py:564
-#, fuzzy
 msgid "Feature selection"
-msgstr "断面図"
+msgstr "フィーチャーの選択"
 
 #: ../gui/wxpython/menustrings.py:565
 msgid "Query with attributes"
@@ -10076,7 +10066,6 @@ msgid "Uploads vector values at positions of vector points to the table."
 msgstr "ポイントの位置のベクトルの値をテーブルにアップロード"
 
 #: ../gui/wxpython/menustrings.py:669
-#, fuzzy
 msgid "Update database values from vector"
 msgstr "ベクトルのフィーチャからデータベースの値を設定"
 
@@ -10365,9 +10354,8 @@ msgid "Inverse Fast Fourier Transform (IFFT) for image processing."
 msgstr "高速フーリエ逆変換を行います "
 
 #: ../gui/wxpython/menustrings.py:743
-#, fuzzy
 msgid "Satellite images tools"
-msgstr "イメージサイズの設定"
+msgstr "衛星画像ツール"
 
 #: ../gui/wxpython/menustrings.py:744
 msgid "Atmospheric correction"
@@ -10378,17 +10366,16 @@ msgid "Performs atmospheric correction using the 6S algorithm."
 msgstr "6Sアルゴリズムを使用し大気補正を行います"
 
 #: ../gui/wxpython/menustrings.py:746
-#, fuzzy
 msgid "Topographic correction"
-msgstr "大気補正 "
+msgstr "地形的補正 "
 
 #: ../gui/wxpython/menustrings.py:747
 msgid "Computes topographic correction of reflectance."
-msgstr ""
+msgstr "反射率の地形的補正を計算する"
 
 #: ../gui/wxpython/menustrings.py:748
 msgid "Satellite images products"
-msgstr ""
+msgstr "衛星画像製品"
 
 #: ../gui/wxpython/menustrings.py:749
 msgid "Tasseled cap vegetation index"
@@ -10467,12 +10454,10 @@ msgid "Cross section"
 msgstr "断面図"
 
 #: ../gui/wxpython/menustrings.py:772
-#, fuzzy
 msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
 msgstr "2D標高マップに基づいた3Dラスターから2Dのラスター断面マップを作成"
 
 #: ../gui/wxpython/menustrings.py:774
-#, fuzzy
 msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
 msgstr "3次元の地下水の流れに限定した一時的な数値解析プログラム "
 
@@ -10501,9 +10486,8 @@ msgid "Voxel statistics"
 msgstr "3Dグリッド統計"
 
 #: ../gui/wxpython/menustrings.py:781
-#, fuzzy
 msgid "Generates volume statistics for 3D raster maps."
-msgstr "3Dラスターマップにおいて統計解析値を作成"
+msgstr "3Dラスターマップにおいてボリューム統計解析値を作成"
 
 #: ../gui/wxpython/menustrings.py:782
 msgid "Univariate statistics for volumes"
