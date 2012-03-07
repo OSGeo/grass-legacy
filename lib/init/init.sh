@@ -52,7 +52,7 @@ CMD_NAME=START_UP
 # Get the system name
 SYSTEM=`uname -s`
 case $SYSTEM in
-MINGW*)
+MINGW* | MSYS*)
 	MINGW=1
 	;;
 CYGWIN*)
