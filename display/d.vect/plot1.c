@@ -212,8 +212,12 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
     if (table_colors_flag) {
 	/* for reading RRR:GGG:BBB color strings from table */
 
-	if (rgb_column == NULL || *rgb_column == '\0')
+	if (rgb_column == NULL || *rgb_column == '\0') {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+	    
 	    G_fatal_error(_("Color definition column not specified"));
+	}
 
 	db_CatValArray_init(&cvarr_rgb);
 
@@ -223,25 +227,36 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
 	G_debug(3, "nrec_rgb (%s) = %d", rgb_column, nrec_rgb);
 
 	if (cvarr_rgb.ctype != DB_C_TYPE_STRING)
-	    G_fatal_error(_("Color definition column (%s) not a string. "
-			    "Column must be of form RRR:GGG:BBB where RGB values range 0-255."),
-			  rgb_column);
+	    G_warning(_("Color definition column ('%s') not a string. "
+			"Column must be of form 'RRR:GGG:BBB' where RGB values range 0-255. "
+			"You can use '%s' module to define color rules. "
+                       "Unable to colorize features."),
+		      rgb_column, "v.colors");
+       else {
+	   if (nrec_rgb < 0) {
+	       if (open_db)
+		   db_close_database_shutdown_driver(driver);
+	       
+	       G_fatal_error(_("Cannot select data (%s) from table"),
+			     rgb_column);
+	   }
+	   G_debug(2, "\n%d records selected from table", nrec_rgb);
 
-	if (nrec_rgb < 0)
-	    G_fatal_error(_("Cannot select data (%s) from table"),
-			  rgb_column);
-
-	G_debug(2, "\n%d records selected from table", nrec_rgb);
-
-	for (i = 0; i < cvarr_rgb.n_values; i++) {
-	    G_debug(4, "cat = %d  %s = %s", cvarr_rgb.value[i].cat,
-		    rgb_column, db_get_string(cvarr_rgb.value[i].val.s));
-	}
+	   /*
+	   for (i = 0; i < cvarr_rgb.n_values; i++) {
+	       G_debug(4, "cat = %d  %s = %s", cvarr_rgb.value[i].cat,
+		       rgb_column, db_get_string(cvarr_rgb.value[i].val.s));
+	   }
+	   */
+       }
     }
-
     if (width_column) {
-	if (*width_column == '\0')
+	if (*width_column == '\0') {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+
 	    G_fatal_error(_("Line width column not specified."));
+	}
 
 	db_CatValArray_init(&cvarr_width);
 
@@ -251,14 +266,22 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
 	G_debug(3, "nrec_width (%s) = %d", width_column, nrec_width);
 
 	if (cvarr_width.ctype != DB_C_TYPE_INT &&
-	    cvarr_width.ctype != DB_C_TYPE_DOUBLE)
+	    cvarr_width.ctype != DB_C_TYPE_DOUBLE) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+
 	    G_fatal_error(_("Line width column (%s) is not numeric."),
 			  width_column);
+	}
+	
+	if (nrec_width < 0) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
 
-	if (nrec_width < 0)
 	    G_fatal_error(_("Cannot select data (%s) from table"),
 			  width_column);
-
+	}
+	
 	G_debug(2, " %d records selected from table", nrec_width);
 
 	for (i = 0; i < cvarr_width.n_values; i++) {
@@ -271,9 +294,13 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
     }
 
     if (size_column) {
-	if (*size_column == '\0')
-	    G_fatal_error(_("Symbol size column not specified."));
+	if (*size_column == '\0') {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
 
+	    G_fatal_error(_("Symbol size column not specified."));
+	}
+	
 	db_CatValArray_init(&cvarr_size);
 
 	nrec_size = db_select_CatValArray(driver, fi->table, fi->key,
@@ -282,14 +309,22 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
 	G_debug(3, "nrec_size (%s) = %d", size_column, nrec_size);
 
 	if (cvarr_size.ctype != DB_C_TYPE_INT &&
-	    cvarr_size.ctype != DB_C_TYPE_DOUBLE)
+	    cvarr_size.ctype != DB_C_TYPE_DOUBLE) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+
 	    G_fatal_error(_("Symbol size column (%s) is not numeric."),
 			  size_column);
+	}
+	
+	if (nrec_size < 0) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
 
-	if (nrec_size < 0)
 	    G_fatal_error(_("Cannot select data (%s) from table"),
 			  size_column);
-
+	}
+	
 	G_debug(2, " %d records selected from table", nrec_size);
 
 	for (i = 0; i < cvarr_size.n_values; i++) {
@@ -302,9 +337,13 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
     }
 
     if (rot_column) {
-	if (*rot_column == '\0')
-	    G_fatal_error(_("Symbol rotation column not specified."));
+	if (*rot_column == '\0') {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
 
+	    G_fatal_error(_("Symbol rotation column not specified."));
+	}
+	
 	db_CatValArray_init(&cvarr_rot);
 
 	nrec_rot = db_select_CatValArray(driver, fi->table, fi->key,
@@ -313,14 +352,22 @@ int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
 	G_debug(3, "nrec_rot (%s) = %d", rot_column, nrec_rot);
 
 	if (cvarr_rot.ctype != DB_C_TYPE_INT &&
-	    cvarr_rot.ctype != DB_C_TYPE_DOUBLE)
+	    cvarr_rot.ctype != DB_C_TYPE_DOUBLE) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+	    
 	    G_fatal_error(_("Symbol rotation column (%s) is not numeric."),
 			  rot_column);
+	}
 
-	if (nrec_rot < 0)
+ 	if (nrec_rot < 0) {
+	    if (open_db)
+		db_close_database_shutdown_driver(driver);
+	    
 	    G_fatal_error(_("Cannot select data (%s) from table"),
 			  rot_column);
-
+	}
+	
 	G_debug(2, " %d records selected from table", nrec_rot);
 
 	for (i = 0; i < cvarr_rot.n_values; i++) {
