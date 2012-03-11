@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-02-25 19:36+0100\n"
+"PO-Revision-Date: 2012-03-09 18:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -5477,7 +5477,7 @@ msgstr "Scrittura della mappa raster di output %s in corso..."
 #: ../raster/r.walk/main.c:1400
 #, fuzzy
 msgid "Will copy input map null values into output map"
-msgstr "Copia i valori null della mappa in input sull'output"
+msgstr "Copia i valori null della mappa in input sulla mappa di output"
 
 #: ../raster/r.walk/main.c:1407
 msgid ""
@@ -21165,9 +21165,8 @@ msgid "Breaking boundaries..."
 msgstr ""
 
 #: ../vector/v.buffer2/main.c:556
-#, fuzzy
 msgid "Cleaning boundaries at nodes"
-msgstr "Cancellazione dei confini in corso..."
+msgstr ""
 
 #: ../vector/v.buffer2/main.c:577 ../vector/v.buffer2/main.c:670
 #: ../vector/v.buffer/main.c:644 ../vector/v.buffer/main.c:734
@@ -21234,47 +21233,45 @@ msgid "Finds the shortest paths from a feature 'to' to every feature 'from' and 
 msgstr ""
 
 #: ../vector/v.net.distance/main.c:73
-#, fuzzy
 msgid "From layer number or name"
-msgstr "Numero del layer da interrogare (da cui leggere)"
+msgstr "Numero o nome del layer from"
 
 #: ../vector/v.net.distance/main.c:74 ../vector/v.net.distance/main.c:79
 #: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:121
 #: ../vector/v.distance/main.c:133 ../vector/v.distance/main.c:145
 msgid "From"
-msgstr "Da"
+msgstr "From"
 
 #: ../vector/v.net.distance/main.c:78
 msgid "From category values"
-msgstr "Dai valori di categoria"
+msgstr "Valori di categoria from"
 
 #: ../vector/v.net.distance/main.c:84
 msgid "From WHERE conditions of SQL statement without 'where' keyword"
-msgstr ""
+msgstr "Condizioni WHERE (from) di un'istruzione SQL senza la parola chiave 'where'"
 
 #: ../vector/v.net.distance/main.c:89
-#, fuzzy
 msgid "To layer number or name"
-msgstr "Numero del layer (da)"
+msgstr "Numero o nome del layer (from)"
 
 #: ../vector/v.net.distance/main.c:90 ../vector/v.net.distance/main.c:95
 #: ../vector/v.net.distance/main.c:101 ../vector/v.net.distance/main.c:108
 #: ../vector/v.distance/main.c:126 ../vector/v.distance/main.c:140
 #: ../vector/v.distance/main.c:150 ../vector/v.distance/main.c:209
 msgid "To"
-msgstr "A"
+msgstr "To"
 
 #: ../vector/v.net.distance/main.c:94
 msgid "To category values"
-msgstr "Ai valori di categoria"
+msgstr "Valori di categoria to"
 
 #: ../vector/v.net.distance/main.c:100
 msgid "To WHERE conditions of SQL statement without 'where' keyword"
-msgstr ""
+msgstr "Condizioni WHERE (to) di un'istruzione SQL senza la parola chiave 'where'"
 
 #: ../vector/v.net.distance/main.c:107
 msgid "To feature type"
-msgstr "Al tipo di elemento"
+msgstr "Tipo di elemento to"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:70
 #: ../vector/v.lrs/v.lrs.where/main.c:58
@@ -21327,7 +21324,7 @@ msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:112 ../vector/v.segment/main.c:71
 msgid "Name of file containing segment rules. If not given, read from stdin."
-msgstr ""
+msgstr "Nome del file contenente le regole per i segmenti. Se non è definito, le regole vengono lette dallo stdin."
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:151
 #: ../vector/v.lrs/v.lrs.where/main.c:145
@@ -23411,11 +23408,11 @@ msgstr "Trova l'elemento più vicino nel vettoriale 'to' per gli elementi nel ve
 
 #: ../vector/v.distance/main.c:120
 msgid "Name of existing vector map (from)"
-msgstr "Nome di una mappa vettoriale esistente (da)"
+msgstr "Nome di una mappa vettoriale esistente (from)"
 
 #: ../vector/v.distance/main.c:125
 msgid "Name of existing vector map (to)"
-msgstr "Nome di una mappa vettoriale esistente (a)"
+msgstr "Nome di una mappa vettoriale esistente (to)"
 
 #: ../vector/v.distance/main.c:132
 msgid "Feature type (from)"
@@ -23447,15 +23444,16 @@ msgstr "Distanza minima o -1 per nessun limite"
 
 #: ../vector/v.distance/main.c:179
 msgid "Values describing the relation between two nearest features"
-msgstr ""
+msgstr "Valori che descrivono la relazione fra due elementi più vicini"
 
+# finire
 #: ../vector/v.distance/main.c:181
 msgid "cat;category of the nearest feature;dist;minimum distance to nearest feature;to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate of the nearest point on the 'to' feature;to_along;distance to the nearest point on the 'to' feature along that linear feature;to_angle;angle along the nearest linear feature in the 'to' map, measured CCW from the +x axis, in radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature given by to_column option"
-msgstr ""
+msgstr "cat;categoria dell'elemento più vicino;dist;distanza minima dall'elemento più vicino;to_x;coordinata x del punto più vicino sull'elemento 'to';to_y; coordinata y del punto più vicino sull'elemento 'to';to_along;distanza dal punto più vicino sull'elemento 'to' lungo lo stesso elemento lineare;to_angle;angolo lungo l'elemento lineare più vicino nella mappa 'to', misurato in senso antiorario dall'asse +x, in radianti, fra -Pi e Pi inclusi;to_attr;attributo dell'elemento più vicino dato dall'opzione to_column"
 
 #: ../vector/v.distance/main.c:202
 msgid "Column name(s) where values specified by 'upload' option will be uploaded"
-msgstr ""
+msgstr "Nome della colonna/e in cui verranno aggiornati i valori specificati dall'opzione 'upload'"
 
 #: ../vector/v.distance/main.c:203
 msgid "From_map"
@@ -23463,31 +23461,33 @@ msgstr ""
 
 #: ../vector/v.distance/main.c:208
 msgid "Column name of nearest feature (used with upload=to_attr)"
-msgstr ""
+msgstr "Nome della colonna dell'elemento più vicino (usato con upload=to_attr)"
 
+# finire
 #: ../vector/v.distance/main.c:214
 msgid "Name of table created for output when the distance to all flag is used"
-msgstr ""
+msgstr "Nome della tabella creata per l'output quando è utilizzato il flag della distanza da tutti (-a)"
 
 #: ../vector/v.distance/main.c:219
 msgid "Print output to stdout, don't update attribute table"
-msgstr ""
+msgstr "Stampa l'output sullo stdout, non aggiorna la tabella degli attributi"
 
 #: ../vector/v.distance/main.c:221
 msgid "First column is always category of 'from' feature called from_cat"
-msgstr ""
+msgstr "La prima colonna è sempre la categoria dell'elemento 'from' chiamato da from_cat"
 
+# finire
 #: ../vector/v.distance/main.c:226
 msgid "Calculate distances to all features within the threshold"
-msgstr ""
+msgstr "Calcola le distanze da tutti gli elementi entro la soglia"
 
 #: ../vector/v.distance/main.c:228
 msgid "Output is written to stdout but may be uploaded to a new table created by this module; multiple 'upload' options may be used."
-msgstr ""
+msgstr "L'output viene scritto sullo stdout, ma può essere caricato in una nuova tabella creata da questo modulo; si possono usare opzioni 'upload' multiple."
 
 #: ../vector/v.distance/main.c:280
 msgid "to_column option missing"
-msgstr ""
+msgstr "manca l'opzione to_column"
 
 #: ../vector/v.distance/main.c:292
 msgid "Too many column names"
@@ -23512,11 +23512,11 @@ msgstr "Tipi di colonna incompatibili"
 
 #: ../vector/v.distance/main.c:516
 msgid "Finding nearest lines..."
-msgstr ""
+msgstr "Ricerca delle linee più vicine in corso ..."
 
 #: ../vector/v.distance/main.c:646
 msgid "Finding nearest areas..."
-msgstr ""
+msgstr "Ricerca delle aree più vicine in corso ..."
 
 #: ../vector/v.distance/main.c:718
 #, c-format
@@ -23679,7 +23679,7 @@ msgstr "Stampa solo le istruzioni SQL"
 
 #: ../vector/v.to.db/parse.c:114
 msgid "In print mode prints totals for options: length,area,count"
-msgstr ""
+msgstr "In modalità di stampa, stampa i totali per le opzioni: length,area,count"
 
 #: ../vector/v.to.db/parse.c:153
 msgid "This option requires one column"
@@ -23695,19 +23695,19 @@ msgstr "Quest'opzione richiede almeno due colonne"
 
 #: ../vector/v.to.db/parse.c:169
 msgid "Parameter 'qcolumn' must be specified for 'option=query'"
-msgstr ""
+msgstr "Il parametro qcolumn' dev'essere specificato per 'option=query'"
 
 #: ../vector/v.to.db/parse.c:174
 msgid "The 'sides' option makes sense only for boundaries"
-msgstr ""
+msgstr "L'opzione 'sides' si usa solo per i confini"
 
 #: ../vector/v.to.db/parse.c:177
 msgid "The 'sinuous' option makes sense only for lines"
-msgstr ""
+msgstr "L'opzione 'sinuous' si usa solo per le linee"
 
 #: ../vector/v.to.db/parse.c:180
 msgid "The 'azimuth' option makes sense only for lines"
-msgstr ""
+msgstr "L'opzione 'azimuth' si usa solo per le linee"
 
 #: ../vector/v.to.db/report.c:187
 #, c-format
@@ -23762,7 +23762,7 @@ msgstr "Offset lungo l'asse minore in unità di mappa"
 
 #: ../vector/v.parallel2/main.c:82
 msgid "Side"
-msgstr ""
+msgstr "Lato"
 
 #: ../vector/v.parallel2/main.c:84
 msgid "left;Parallel line is on the left;right;Parallel line is on the right;both;Parallel lines on both sides"
