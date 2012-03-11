@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2012-03-05 11:25+0900\n"
-"Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2012-03-08 17:45+0900\n"
+"Last-Translator: taniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -6048,7 +6048,7 @@ msgstr "空のベクトルマップの作成 "
 
 #: ../gui/wxpython/menustrings.py:510
 msgid "Digitize vector map using Tcl/Tk digitizer"
-msgstr " Tcl/Tkデジタイザーを使用したベクトルマップrデジタイズ"
+msgstr " Tcl/Tkデジタイザーを使用したベクトルマップデジタイズ"
 
 #: ../gui/wxpython/menustrings.py:511
 msgid "Interactive editing and digitization of vector maps."
@@ -6765,7 +6765,7 @@ msgstr "画像分類 "
 
 #: ../gui/wxpython/menustrings.py:696
 msgid "Clustering input for unsupervised classification"
-msgstr "非監視下分類用クラスタリング入力"
+msgstr "教師無し分類用クラスタリング入力"
 
 #: ../gui/wxpython/menustrings.py:697
 msgid "Generates spectral signatures for land cover types in an image using a clustering algorithm."
@@ -6781,7 +6781,7 @@ msgstr "ユーザーが指定した輪郭線をもとにスペクトル特性を
 
 #: ../gui/wxpython/menustrings.py:700
 msgid "Input for supervised MLC"
-msgstr "最尤法による分類法監視下の入力"
+msgstr "最尤法のためのシグネチャの作成"
 
 #: ../gui/wxpython/menustrings.py:701
 msgid "Generates statistics for i.maxlik from raster map."
@@ -6789,7 +6789,7 @@ msgstr "ラスターマップからi.maxlikの統計情報を作成"
 
 #: ../gui/wxpython/menustrings.py:702
 msgid "Input for supervised SMAP"
-msgstr "逐次最大事後確率推定法監視下の入力"
+msgstr "最大事後確率推定法のためのシグネチャの作成"
 
 #: ../gui/wxpython/menustrings.py:703
 msgid "Generates statistics for i.smap from raster map."
