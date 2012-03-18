@@ -1867,12 +1867,11 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         self.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnPopupMenu) #wxMSW
         self.Bind(wx.EVT_RIGHT_UP,            self.OnPopupMenu) #wxGTK
 
-    def LoadData(self, data=None):
+    def LoadData(self, data = None):
         """!Load data into list"""
+        self.DeleteAllItems()
         if data is None:
             return
-
-        self.DeleteAllItems()
         
         for id, name, grassName in data:
             index = self.InsertStringItem(sys.maxint, str(id))
