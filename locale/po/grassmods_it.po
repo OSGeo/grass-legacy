@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-03-09 18:12+0100\n"
+"PO-Revision-Date: 2012-03-18 23:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -7152,7 +7152,7 @@ msgstr "Impostazioni"
 
 #: ../raster/r.in.bin/main.c:255
 msgid "Byte Swap the Data During Import"
-msgstr ""
+msgstr "Cambia l'ordine dei byte (byte swapping) durante l'importazione"
 
 #: ../raster/r.in.bin/main.c:260
 msgid "Get region info from GMT style header"
@@ -9123,7 +9123,7 @@ msgstr "Stampa una lista concisa dei valori delle categorie trovate nel raster."
 
 #: ../raster/r.describe/main.c:80
 msgid "Number of quantization steps"
-msgstr ""
+msgstr "Numero di livelli di quantizzazione"
 
 #: ../raster/r.describe/main.c:86
 msgid "Print the output one value per line"
@@ -11973,7 +11973,7 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:276
 #, c-format
 msgid "Driver <%s> does not support creating rasters"
-msgstr ""
+msgstr "Il driver <%s> non supporta la creazione di raster"
 
 #: ../raster/r.out.gdal/main.c:352
 #, c-format
@@ -17733,7 +17733,7 @@ msgstr "Colore di sfondo"
 #: ../vector/v.net.spanningtree/main.c:64 ../vector/v.net.allpairs/main.c:85
 #: ../vector/v.net.salesman/main.c:136 ../vector/v.net.path/main.c:102
 msgid "Use geodesic calculation for longitude-latitude locations"
-msgstr ""
+msgstr "Usa il calcolo geodetico per le location longitudine-latitudine"
 
 #: ../display/d.path/main.c:127
 msgid "Render bold lines"
@@ -17949,7 +17949,7 @@ msgstr "Non mostrare i numeri della categoria"
 
 #: ../display/d.legend/main.c:174
 msgid "Skip categories with no label"
-msgstr ""
+msgstr "Ignora le categoria senza etichetta"
 
 #: ../display/d.legend/main.c:179
 msgid "Draw smooth gradient"
@@ -19571,13 +19571,12 @@ msgid "general, settings, search path"
 msgstr "general, impostazioni, percorso di ricerca"
 
 #: ../general/g.mapsets/main.c:60
-#, fuzzy
 msgid "Modifies the user's current mapset search path."
-msgstr "Modifica il percorso di ricerca corrente dell'utente"
+msgstr "Modifica l'attuale percorso di ricerca dell'utente per i mapset."
 
 #: ../general/g.mapsets/main.c:61
 msgid "Affects the user's access to data existing under the other mapsets in the current location."
-msgstr ""
+msgstr "Influisce sull'accesso da parte dell'utente ai dati esistenti negli altri mapset nella location corrente."
 
 #: ../general/g.mapsets/main.c:69
 msgid "Name(s) of existing mapset(s)"
@@ -19605,7 +19604,7 @@ msgstr "Separatore di campo"
 
 #: ../general/g.mapsets/main.c:92
 msgid "Special characters: newline, space, comma, tab"
-msgstr ""
+msgstr "Caratteri speciali: newline, spazio, virgola, tabulazione"
 
 #: ../general/g.mapsets/main.c:97
 msgid "List all available mapsets in alphabetical order"
@@ -19613,11 +19612,11 @@ msgstr "Elenca tutti i mapset disponibili in ordine alfabetico"
 
 #: ../general/g.mapsets/main.c:102
 msgid "Print mapsets in current search path"
-msgstr ""
+msgstr "Visualizza i mapset presenti nel percorso di ricerca corrente"
 
 #: ../general/g.mapsets/main.c:107
 msgid "Show mapset selection dialog"
-msgstr ""
+msgstr "Mostra la finestra di dialogo per la selezione"
 
 #: ../general/g.mapsets/main.c:132 ../general/g.mapsets/main.c:161
 #, c-format
@@ -19655,7 +19654,7 @@ msgstr ""
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
 msgid "vector, statistics"
-msgstr ""
+msgstr "vettoriale, statistica"
 
 #: ../vector/v.random/main.c:85
 msgid "Randomly generate a 2D/3D vector points map."
@@ -19680,7 +19679,7 @@ msgstr "Massimo valore di altezza z (necessita del parametro -z o del nome di co
 
 #: ../vector/v.random/main.c:119
 msgid "Column name and type (i.e. INTEGER, DOUBLE PRECISION) for z values"
-msgstr ""
+msgstr "Nomi di colonna e tipo (i.e. INTEGER, DOUBLE PRECISION) per i valori z"
 
 #: ../vector/v.random/main.c:121
 msgid "If type is not given then DOUBLE PRECISION is used. Writes Z data to column instead of 3D vector."
@@ -19719,7 +19718,7 @@ msgstr ""
 
 #: ../vector/v.random/main.c:234
 msgid "You have created unsupported column type. This module supports only INTEGER and DOUBLE PRECISION column types."
-msgstr ""
+msgstr "Sono stati creati tipi di colonna non supportati. Questo modulo supporta solo tipi di colonna INTEGER (numeri interi) e DOUBLE PRECISION (precisione doppia)"
 
 #: ../vector/v.random/main.c:264
 msgid "Generating points..."
@@ -19727,7 +19726,7 @@ msgstr "Sto generando punti..."
 
 #: ../vector/v.net.iso/main.c:72
 msgid "Splits net by cost isolines."
-msgstr "Dividi rete dal costo delle linee."
+msgstr "Divide la rete in isolinee di costo."
 
 #: ../vector/v.net.iso/main.c:73
 msgid "vector, network, isolines"
@@ -19735,7 +19734,7 @@ msgstr "vettore, rete, isolinee"
 
 #: ../vector/v.net.iso/main.c:75
 msgid "Splits net to bands between cost isolines (direction from centre). Centre node must be opened (costs >= 0). Costs of centre node are used in calculation."
-msgstr ""
+msgstr "Divide la rete in fasce comprese fra isolinee di costo (a partire da un centro). l nodo definito come centro dev'essere aperto (costi >= 0). I costi del centro vengono utilizzati nel calcolo."
 
 #: ../vector/v.net.iso/main.c:99 ../vector/v.net.alloc/main.c:92
 msgid "Arc forward/both direction(s) cost column (number)"
@@ -19751,11 +19750,11 @@ msgstr "Colonna costo per i nodi (numero)"
 
 #: ../vector/v.net.iso/main.c:113
 msgid "Categories of centres (points on nodes) to which net will be allocated. Layer for this categories is given by nlayer option."
-msgstr ""
+msgstr "Categorie dei centri (punti o nodi) ai quali dev'essere assegnata la rete. Il layer per queste categorie è dato dall'opzione nlayer."
 
 #: ../vector/v.net.iso/main.c:122
 msgid "Costs for isolines"
-msgstr ""
+msgstr "Costi per le isolinee"
 
 #: ../vector/v.net.iso/main.c:159
 #, c-format
@@ -19821,9 +19820,8 @@ msgid "Name of arc backward direction cost column"
 msgstr "Colonna costo direzione indietro per gli archi"
 
 #: ../vector/v.net.centrality/main.c:127
-#, fuzzy
 msgid "Name of degree centrality column"
-msgstr "Nome della colonna"
+msgstr "Nome della colonna del grado di centralità (degree centrality)"
 
 #: ../vector/v.net.centrality/main.c:128 ../vector/v.net.centrality/main.c:134
 #: ../vector/v.net.centrality/main.c:140 ../vector/v.net.centrality/main.c:146
@@ -19831,33 +19829,28 @@ msgid "Columns"
 msgstr "Colonne"
 
 #: ../vector/v.net.centrality/main.c:133
-#, fuzzy
 msgid "Name of closeness centrality column"
-msgstr "Nome della colonna"
+msgstr "Nome della colonna della closeness centrality (vicinanza) "
 
 #: ../vector/v.net.centrality/main.c:139
-#, fuzzy
 msgid "Name of betweenness centrality column"
-msgstr "Nome della colonna"
+msgstr "Nome della colonna della betweenness centrality"
 
 #: ../vector/v.net.centrality/main.c:145
-#, fuzzy
 msgid "Name of eigenvector centrality column"
-msgstr "Nome della mappa vettoriale di input contenente le linee"
+msgstr "Nome della colonna della centralità per autovettore (eigenvector centrality)"
 
 #: ../vector/v.net.centrality/main.c:154
-#, fuzzy
 msgid "Maximum number of iterations to compute eigenvector centrality"
-msgstr "Numero massimo di righe per una tile nella proiezione di origine"
+msgstr "Numero massimo di iterazioni per calcolare la centralità per autovettore"
 
 #: ../vector/v.net.centrality/main.c:162
 msgid "Cummulative error tolerance for eigenvector centrality"
-msgstr ""
+msgstr "Tolleranza d'errore cumulativa per la centralità per autovettore"
 
 #: ../vector/v.net.centrality/main.c:171 ../vector/v.net.components/main.c:91
-#, fuzzy
 msgid "Add points on nodes"
-msgstr "%d punti caricati"
+msgstr "Aggiunge punti sui nodi"
 
 #: ../vector/v.net.centrality/main.c:244 ../vector/v.net.distance/main.c:212
 #: ../vector/v.digit/c_face.c:282 ../vector/v.db.connect/main.c:331
@@ -19898,7 +19891,7 @@ msgstr "Scrittura dei dati nella tabella in corso..."
 #: ../vector/v.to.points/main.c:173 ../vector/v.segment/main.c:52
 #: ../vector/v.hull/main.c:273
 msgid "vector, geometry"
-msgstr ""
+msgstr "vettoriale, geometria"
 
 #: ../vector/v.type/main.c:48
 msgid "Change the type of geometry elements."
@@ -19996,9 +19989,8 @@ msgid "Output needs topological cleaning"
 msgstr ""
 
 #: ../vector/v.voronoi/vo_main.c:447
-#, fuzzy
 msgid "Removing incorrect boundaries from output"
-msgstr "Rimuovi la mappa raster <%s> al gruppo"
+msgstr "Rimozione dei confini non corretti dall'output"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 msgid "Creates a Delaunay triangulation from an input vector map containing points or centroids."
@@ -20017,11 +20009,11 @@ msgstr ""
 #: ../vector/v.buffer2/main.c:683 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
-msgstr ""
+msgstr "Non è possibile calcolare il centroide dell'area"
 
 #: ../vector/v.voronoi/dt_main.c:149
 msgid "Cannot calculate area centroid z coordinate"
-msgstr ""
+msgstr "Non è possibile calcolare la coordinata z del centroide dell'area"
 
 #: ../vector/v.net.steiner/main.c:58
 #, c-format
@@ -20034,27 +20026,27 @@ msgstr "vettore, rete, albero di steiner"
 
 #: ../vector/v.net.steiner/main.c:347
 msgid "Create Steiner tree for the network and given terminals"
-msgstr "Crea albero di Streiner per la rete e i punti scelti"
+msgstr "Crea un albero di Steiner per la rete e i punti scelti."
 
 #: ../vector/v.net.steiner/main.c:349
 msgid "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic algorithm is used in this module so the result may be sub optimal"
-msgstr ""
+msgstr "Da notare che il problema 'Minimum Steiner Tree' è NP-hard e in questo modulo viene utilizzato un algoritmo euristico, per cui il risultato può essere sub-ottimale"
 
 #: ../vector/v.net.steiner/main.c:369
 msgid "Node layer (used for terminals)"
-msgstr ""
+msgstr "Layer dei nodi (usato per i punti terminali)"
 
 #: ../vector/v.net.steiner/main.c:375 ../vector/v.net.salesman/main.c:125
 msgid "Arcs' cost column (for both directions)"
-msgstr ""
+msgstr "Colonna dei costi per gli archi (per entrambe le direzioni)"
 
 #: ../vector/v.net.steiner/main.c:381
 msgid "Categories of points on terminals (layer is specified by nlayer)"
-msgstr ""
+msgstr "Categorie dei punti sui punti terminali (il layer è specificato da nlayer)"
 
 #: ../vector/v.net.steiner/main.c:389
 msgid "Number of steiner points (-1 for all possible)"
-msgstr "Numero di punti di steiner (-1 per tutti quelli possibili"
+msgstr "Numero di punti di steiner (-1 per tutti quelli possibili)"
 
 #: ../vector/v.net.steiner/main.c:453
 msgid "Not enough terminals (< 2)"
@@ -20328,9 +20320,9 @@ msgid "%d points outside threshold"
 msgstr "%d punti esterni ai limiti"
 
 #: ../vector/v.kernel/main.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "Automatic choice of smoothing parameter (standard deviation), maximum possible value of standard deviation is set to %f"
-msgstr "Scegli automaticamente i parametri di smoothing (deviazione standard), il massimo valore possibile della deviazione standard è stato posto pari a %f"
+msgstr "Scelta automatica dei parametri di smoothing (deviazione standard), il massimo valore possibile della deviazione standard è stato posto pari a %f"
 
 #: ../vector/v.kernel/main.c:341
 #, c-format
@@ -20788,11 +20780,11 @@ msgstr "Operazione da eseguire"
 
 #: ../vector/v.net/main.c:71
 msgid "nodes;new point is placed on each node (line end) if doesn't exist;connect;connect still unconnected points to vector network by inserting new line(s);report;print to standard output {line_category start_point_category end_point_category};nreport;print to standard output {point_category line_category[,line_category...]}"
-msgstr ""
+msgstr "nodes;viene inserito un nuovo punto, se non esiste già, su ogni nodo (fine linea); connect;connette i punti non ancora connessi alla rete vettoriale inserendo nuove linee; report;stampa sullo standard output {line_category start_point_category end_point_category}; nreport;stampa sullo standard output {point_category line_category[,line_category...]}"
 
 #: ../vector/v.net/main.c:97
 msgid "Required for operation 'connect'. Connect points in given threshold."
-msgstr ""
+msgstr "Richiesto per l'operazione 'connect'. Connette i punti entro una data soglia."
 
 #: ../vector/v.net/main.c:101
 msgid "Assign unique categories to new points"
@@ -22970,7 +22962,7 @@ msgstr ""
 
 #: ../vector/v.db.connect/main.c:103
 msgid "When printing, limit to layer specified by the layer option"
-msgstr ""
+msgstr "Limita la stampa al layer specificato dall'opzione layer"
 
 #: ../vector/v.db.connect/main.c:108
 msgid "Print types/names of table columns for specified layer and exit"
@@ -23416,19 +23408,19 @@ msgstr "Nome di una mappa vettoriale esistente (to)"
 
 #: ../vector/v.distance/main.c:132
 msgid "Feature type (from)"
-msgstr "Tipo di elemento (da)"
+msgstr "Tipo di elemento (from)"
 
 #: ../vector/v.distance/main.c:139
 msgid "Feature type (to)"
-msgstr "Tipo di elemento (a)"
+msgstr "Tipo di elemento (to)"
 
 #: ../vector/v.distance/main.c:144
 msgid "Layer number (from)"
-msgstr "Numero del layer (da)"
+msgstr "Numero del layer (from)"
 
 #: ../vector/v.distance/main.c:149
 msgid "Layer number (to)"
-msgstr "Numero del layer (a)"
+msgstr "Numero del layer (to)"
 
 #: ../vector/v.distance/main.c:155
 msgid "Name for output vector map containing lines connecting nearest elements"
@@ -23446,7 +23438,6 @@ msgstr "Distanza minima o -1 per nessun limite"
 msgid "Values describing the relation between two nearest features"
 msgstr "Valori che descrivono la relazione fra due elementi più vicini"
 
-# finire
 #: ../vector/v.distance/main.c:181
 msgid "cat;category of the nearest feature;dist;minimum distance to nearest feature;to_x;x coordinate of the nearest point on the 'to' feature;to_y;y coordinate of the nearest point on the 'to' feature;to_along;distance to the nearest point on the 'to' feature along that linear feature;to_angle;angle along the nearest linear feature in the 'to' map, measured CCW from the +x axis, in radians, between -Pi and Pi inclusive;to_attr;attribute of nearest feature given by to_column option"
 msgstr "cat;categoria dell'elemento più vicino;dist;distanza minima dall'elemento più vicino;to_x;coordinata x del punto più vicino sull'elemento 'to';to_y; coordinata y del punto più vicino sull'elemento 'to';to_along;distanza dal punto più vicino sull'elemento 'to' lungo lo stesso elemento lineare;to_angle;angolo lungo l'elemento lineare più vicino nella mappa 'to', misurato in senso antiorario dall'asse +x, in radianti, fra -Pi e Pi inclusi;to_attr;attributo dell'elemento più vicino dato dall'opzione to_column"
@@ -23463,7 +23454,6 @@ msgstr ""
 msgid "Column name of nearest feature (used with upload=to_attr)"
 msgstr "Nome della colonna dell'elemento più vicino (usato con upload=to_attr)"
 
-# finire
 #: ../vector/v.distance/main.c:214
 msgid "Name of table created for output when the distance to all flag is used"
 msgstr "Nome della tabella creata per l'output quando è utilizzato il flag della distanza da tutti (-a)"
@@ -23476,7 +23466,6 @@ msgstr "Stampa l'output sullo stdout, non aggiorna la tabella degli attributi"
 msgid "First column is always category of 'from' feature called from_cat"
 msgstr "La prima colonna è sempre la categoria dell'elemento 'from' chiamato da from_cat"
 
-# finire
 #: ../vector/v.distance/main.c:226
 msgid "Calculate distances to all features within the threshold"
 msgstr "Calcola le distanze da tutti gli elementi entro la soglia"
@@ -23613,7 +23602,7 @@ msgstr ""
 
 #: ../vector/v.to.db/main.c:34
 msgid "Populates database values from vector features."
-msgstr "Popola i valori del database da features vettoriali"
+msgstr "Popola i valori del database da elementi vettoriali"
 
 #: ../vector/v.to.db/update.c:82
 msgid "Updating database..."
@@ -25745,9 +25734,8 @@ msgid "Computes minimum spanning tree for the network."
 msgstr ""
 
 #: ../vector/v.net.spanningtree/main.c:59
-#, fuzzy
 msgid "Name of Arc cost column"
-msgstr "Nome della colonna"
+msgstr "Nome della colonna dei costi per gli archi"
 
 #: ../vector/v.out.pov/main.c:207
 #, c-format
@@ -25780,7 +25768,7 @@ msgstr "Considera anche gli elementi senza categoria"
 
 #: ../vector/v.select/main.c:52
 msgid "vector, spatial query"
-msgstr ""
+msgstr "vettoriale, interrogazioni spaziali"
 
 #: ../vector/v.select/main.c:54
 msgid "Selects features from vector map (A) by features from other vector map (B)."
@@ -26750,7 +26738,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:189
 msgid "Building topology failed"
-msgstr "Costruizione della topologia fallita"
+msgstr "Costruzione della topologia fallita"
 
 #: ../vector/v.in.dxf/main.c:195
 msgid "Failed to import DXF file!"
@@ -26845,19 +26833,19 @@ msgstr "%d categorie duplicate nel vettoriale"
 
 #: ../vector/v.net.salesman/main.c:97
 msgid "vector, network, salesman"
-msgstr "vettore, rete, salesman"
+msgstr "vettoriale, rete, salesman"
 
 #: ../vector/v.net.salesman/main.c:99
 msgid "Creates a cycle connecting given nodes (Traveling salesman problem)."
-msgstr "Crea un ciclo connettendo i nodi dati (problema del commesso viaggiatore)"
+msgstr "Crea un ciclo connettendo i nodi dati (TSP - problema del commesso viaggiatore)."
 
 #: ../vector/v.net.salesman/main.c:101
 msgid "Note that TSP is NP-hard, heuristic algorithm is used by this module and created cycle may be sub optimal"
-msgstr ""
+msgstr "Da notare che TSP è NP-hard, e in questo modulo viene utilizzato un algoritmo euristico per cui il ciclo creato può essere sub-ottimale"
 
 #: ../vector/v.net.salesman/main.c:119
 msgid "Node layer (used for cities)"
-msgstr ""
+msgstr "Layer dei nodi (usato per le città)"
 
 #: ../vector/v.net.salesman/main.c:130
 msgid "Categories of points ('cities') on nodes (layer is specified by nlayer)"
@@ -27831,23 +27819,23 @@ msgstr "Trova il percorso più breve in una rete vettoriale."
 
 #: ../vector/v.net.path/main.c:65
 msgid "Name of file containing start and end points. If not given, read from stdin"
-msgstr ""
+msgstr "Nome del file contenente i punti d'inizio e di fine. Se non sono definiti legge dallo stdin"
 
 #: ../vector/v.net.path/main.c:92
 msgid "Maximum distance to the network"
-msgstr ""
+msgstr "Distanza massima dalla rete"
 
 #: ../vector/v.net.path/main.c:93
 msgid "If start/end are given as coordinates. If start/end point is outside this threshold, the path is not found and error message is printed. To speed up the process, keep this value as low as possible."
-msgstr ""
+msgstr "Se inizio/fine sono dati come coordinate. Se il punto inizio/fine è al di fuori di questa soglia, il percorso non viene trovato e viene stampato un messaggio d'errore. Per velocizzare il processo è meglio tenere questo valore più basso possibile."
 
 #: ../vector/v.net.path/main.c:106
 msgid "Write output as original input segments, not each path as one line."
-msgstr ""
+msgstr "Disegna sull'output i segmenti originali di input, anziché rappresentare ogni  percorso con una linea."
 
 #: ../vector/v.net.connectivity/main.c:53
 msgid "vector, network, connectivity"
-msgstr ""
+msgstr "vettoriale, rete, connettività"
 
 #: ../vector/v.net.connectivity/main.c:55
 msgid "Computes vertex connectivity between two sets of nodes in the network."
@@ -28147,7 +28135,7 @@ msgstr ""
 
 #: ../vector/v.net.visibility/main.c:46
 msgid "vector, path, visibility"
-msgstr ""
+msgstr "vettoriale, percorso, visibilità"
 
 #: ../vector/v.net.visibility/main.c:47
 msgid "Visibility graph construction."
