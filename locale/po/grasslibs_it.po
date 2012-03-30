@@ -3546,7 +3546,7 @@ msgid "Feature ids"
 msgstr "Id delle feature"
 
 #: ../lib/gis/parser.c:637
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Percorso al file di input"
 
 #: ../lib/gis/parser.c:645

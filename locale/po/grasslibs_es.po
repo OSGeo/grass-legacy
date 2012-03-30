@@ -3656,7 +3656,7 @@ msgstr "Identificadores de objetos espaciales: "
 #
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Ruta del archivo de entrada."
 
 #

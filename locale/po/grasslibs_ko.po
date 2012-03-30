@@ -3536,7 +3536,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "자동 MASK파일을 열 수 없습니다"
 
 #: ../lib/gis/parser.c:645

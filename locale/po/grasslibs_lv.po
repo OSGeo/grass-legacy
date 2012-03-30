@@ -3625,7 +3625,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Atvērtā faila nosaukums %s"
 
 #: ../lib/gis/parser.c:645

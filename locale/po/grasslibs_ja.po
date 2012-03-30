@@ -3546,7 +3546,7 @@ msgid "Feature ids"
 msgstr "フィーチャ ids"
 
 #: ../lib/gis/parser.c:637
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "入力するファイル名"
 
 #: ../lib/gis/parser.c:645

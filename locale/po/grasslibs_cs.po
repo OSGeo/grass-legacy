@@ -3613,7 +3613,7 @@ msgstr "Id prvkù"
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Název vstupního souboru %s"
 
 #: ../lib/gis/parser.c:645
