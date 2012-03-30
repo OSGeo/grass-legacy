@@ -3584,7 +3584,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Ime odprte datoteke %s\n"
 
 #: ../lib/gis/parser.c:645
