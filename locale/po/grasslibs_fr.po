@@ -3502,7 +3502,7 @@ msgstr "Type(s) d'entité(s)"
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name to input file"
+msgid "Name of input file"
 msgstr "Nom du fichier en entrée"
 
 #: ../lib/gis/parser.c:645
