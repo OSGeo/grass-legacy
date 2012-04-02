@@ -47,6 +47,8 @@ SUBDIRS = \
 	r.mask \
 	r.out.gdal \
 	r.out.xyz \
+	r.pack \
+	r.unpack \
 	r.plane \
 	r.reclass.area \
 	r.shaded.relief \
