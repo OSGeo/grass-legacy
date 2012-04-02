@@ -36,6 +36,8 @@ SUBDIRS = \
 	i.tasscap \
 	m.proj \
 	p.out.vrml \
+	r.pack \
+	r.unpack \
 	r.blend \
 	r.cats \
 	r.colors.stddev \
