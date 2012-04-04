@@ -170,7 +170,9 @@ echo "
       <td valign=\"top\" bgcolor=\"$BOXCOLOR\" class="box"><h3>&nbsp;Miscellaneous</h3>
        <ul>
         <li><a href=\"misc.html\">Misc. commands manual</a></li>
+     <!-- outdated
         <li><a href=\"gem/index.html\">The GRASS Extensions Manager (GEM)</a></li>
+     -->
        </ul></td>
     </tr>
     <tr>
