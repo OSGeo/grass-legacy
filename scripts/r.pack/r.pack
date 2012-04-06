@@ -2,17 +2,17 @@
 #  r.pack   --  pack up a raster map:
 #     collect raster map elements => gzip
 #
-#   (c) 2004-2008 GRASS Development Team
+#   (c) 2004-2008, 2012 GRASS Development Team
 #   AUTHOR: Hamish Bowman, Otago University, New Zealand
 #
-#   This program is free software under the GNU General Public
-#   License (>=v2). Read the file COPYING that comes with GRASS
-#   for details.
+#   This program is free software under the GNU General Public License
+#   (>=v2). Read the file COPYING that comes with GRASS for details.
 #
 
-#%Module
-#%  description: Packs up a raster map and support files for copying.
-#%End
+#%module
+#% description: Packs up a raster map and support files for copying.
+#% keywords: raster, copying
+#%end
 #%option
 #% key: input
 #% type: string
@@ -27,7 +27,7 @@
 #% gisprompt: new_file,file,output
 #% description: Name for output file (default is input-map.pack)
 #% key_desc: name
-#% required : no
+#% required: no
 #%end
 
 
