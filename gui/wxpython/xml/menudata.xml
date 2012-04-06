@@ -170,11 +170,19 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>r.in.aster</command>
 	    </menuitem>
-	    <separator />
 	    <menuitem>
 	      <label>WMS import</label>
 	      <help>Downloads and imports data from WMS servers</help>
-	      <handler>OnImportWMS</handler>
+	      <keywords>wms</keywords><handler>OnImportWMS</handler>
+	      <command>r.in.wms</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Unpack raster map</label>
+	      <help>Unpacks a raster map packed with r.pack.</help>
+	      <keywords>raster,copying</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.unpack</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -421,6 +429,14 @@
 	      <keywords>raster,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.vtk</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Pack raster map</label>
+	      <help>Packs up a raster map and support files for copying.</help>
+	      <keywords>raster,copying</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.pack</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -2780,7 +2796,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Modis quality control</label>
-	      <help>Extract quality control parameters from Modis QC layers</help>
+	      <help>Extracts quality control parameters from Modis QC layers.</help>
 	      <keywords>QC,Quality Control,surface reflectance,Modis</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.modis.qc</command>
@@ -2950,7 +2966,7 @@
 	  <items>
 	    <menuitem>
 	      <label>List drivers</label>
-	      <help>List all database drivers.</help>
+	      <help>Lists all database drivers.</help>
 	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.drivers</command>
