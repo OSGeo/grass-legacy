@@ -170,11 +170,19 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>r.in.aster</command>
 	    </menuitem>
-	    <separator />
 	    <menuitem>
 	      <label>WMS import</label>
 	      <help>Downloads and imports data from WMS servers</help>
-	      <handler>OnImportWMS</handler>
+	      <keywords>wms</keywords><handler>OnImportWMS</handler>
+	      <command>r.in.wms</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Unpack raster map</label>
+	      <help>Unpacks a raster map packed with r.pack.</help>
+	      <keywords>raster,copying</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.unpack</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -369,7 +377,7 @@
 	    <menuitem>
 	      <label>MPEG-1 export</label>
 	      <help>Raster File Series to MPEG Conversion.</help>
-	      <keywords>raster,export,animation</keywords>
+	      <keywords>raster,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -422,6 +430,14 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.vtk</command>
 	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Pack raster map</label>
+	      <help>Packs up a raster map and support files for copying.</help>
+	      <keywords>raster,copying</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>r.pack</command>
+	    </menuitem>
 	  </items>
 	</menu>
 	<menu>
@@ -429,7 +445,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Common export formats</label>
-	      <help>Converts to one of the supported OGR vector formats.</help>
+	      <help>Converts GRASS vector map to one of the supported OGR vector formats.</help>
 	      <keywords>vector,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.out.ogr</command>
@@ -593,7 +609,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map.</help>
+	      <help>Converts a raster map into a vector map layer.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -1074,7 +1090,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map.</help>
+	      <help>Converts a raster map into a vector map layer.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -1274,7 +1290,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Distance to features</label>
-	      <help>Generates a raster map of distance to features in input raster map.</help>
+	      <help>Generates a raster map layer of distance to features in input layer.</help>
 	      <keywords>raster,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.grow.distance</command>
@@ -1321,7 +1337,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Generates stream channels.</help>
+	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
@@ -1350,14 +1366,14 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Constructs flow lines.</help>
+	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM).</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program</help>
+	      <help>Watershed basin analysis program.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
@@ -1371,7 +1387,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Creates watershed basins.</help>
+	      <help>Watershed basin creation program.</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
@@ -1380,7 +1396,7 @@
 	    <menuitem>
 	      <label>Groundwater modeling</label>
 	      <help>Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.gwflow</command>
 	    </menuitem>
@@ -1604,8 +1620,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reclassify</label>
-	      <help>Reclassify raster map based on category values.</help>
-	      <keywords>raster,reclassification</keywords>
+	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
+	      <keywords>raster,statistics,reclass</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
@@ -1825,7 +1841,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Sum area by raster map and category</label>
-	      <help>Reports statistics for raster maps.</help>
+	      <help>Reports statistics for raster map layers.</help>
 	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.report</command>
@@ -1928,7 +1944,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Parallel lines</label>
-	      <help>Create parallel line to input lines</help>
+	      <help>Creates parallel line to input vector lines.</help>
 	      <keywords>vector,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.parallel</command>
@@ -2596,7 +2612,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Mosaic images</label>
-	      <help>Mosaics up to four images, extending the color table.</help>
+	      <help>Mosaics up to 4 images and extends colormap; creates map *.mosaic</help>
 	      <keywords>raster,imagery,mosaicking</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.image.mosaic</command>
@@ -2780,7 +2796,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Modis quality control</label>
-	      <help>Extract quality control parameters from Modis QC layers</help>
+	      <help>Extracts quality control parameters from Modis QC layers.</help>
 	      <keywords>QC,Quality Control,surface reflectance,Modis</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.modis.qc</command>
@@ -2950,7 +2966,7 @@
 	  <items>
 	    <menuitem>
 	      <label>List drivers</label>
-	      <help>List all database drivers.</help>
+	      <help>Lists all database drivers.</help>
 	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.drivers</command>
