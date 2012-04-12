@@ -114,8 +114,9 @@ static void parse_command_line(int argc, char **argv)
 
     input = G_define_standard_option(G_OPT_F_INPUT);
     input->required = NO;
-    input->description = _("Name of file containing SQL statements");
+    input->label = _("Name of file containing SQL statements");
     input->guisection = _("Query");
+    input->description = _("If not given or '-' read from standard input");
     
     driver = G_define_standard_option(G_OPT_DRIVER);
     driver->options = db_list_drivers();
