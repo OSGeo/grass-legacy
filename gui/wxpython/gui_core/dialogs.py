@@ -1442,7 +1442,7 @@ class MapLayersDialog(wx.Dialog):
         cond += 'mapset=%s`' % self.mapset.GetStringSelection()
         
         return cond
-    
+
 class ImportDialog(wx.Dialog):
     """!Dialog for bulk import of various data (base class)"""
     def __init__(self, parent, itype,
@@ -1465,7 +1465,10 @@ class ImportDialog(wx.Dialog):
         #
         # list of layers
         #
-        self.list = LayersList(self.panel)
+        columns = [_('Layer id'),
+                   _('Layer name'),
+                   _('Name for GRASS map (editable)')]
+        self.list = LayersList(parent = self.panel, columns = columns)
         self.list.LoadData()
 
         self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
@@ -1493,6 +1496,8 @@ class ImportDialog(wx.Dialog):
             self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                              label = desc)
         
+        if not self.options:
+            self.optionBox.Hide()
         
         self.overwrite = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
                                      label = _("Allow output files to overwrite existing files"))
@@ -1538,12 +1543,13 @@ class ImportDialog(wx.Dialog):
                         flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
 
         # options
-        optionSizer = wx.StaticBoxSizer(self.optionBox, wx.VERTICAL)
-        for key in self.options.keys():
-            optionSizer.Add(item = self.options[key], proportion = 0)
+        if self.optionBox.IsShown():
+            optionSizer = wx.StaticBoxSizer(self.optionBox, wx.VERTICAL)
+            for key in self.options.keys():
+                optionSizer.Add(item = self.options[key], proportion = 0)
             
-        dialogSizer.Add(item = optionSizer, proportion = 0,
-                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
+            dialogSizer.Add(item = optionSizer, proportion = 0,
+                            flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
         
         dialogSizer.Add(item = self.overwrite, proportion = 0,
                         flag = wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
@@ -1581,8 +1587,8 @@ class ImportDialog(wx.Dialog):
         size = wx.Size(globalvar.DIALOG_GSELECT_SIZE[0] + 225, 550)
         self.SetMinSize(size)
         self.SetSize((size.width, size.height + 100))
-        width = self.GetSize()[0]
-        self.list.SetColumnWidth(col = 1, width = width/2 - 50)
+        # width = self.GetSize()[0]
+        # self.list.SetColumnWidth(col = 1, width = width / 2 - 50)
         self.Layout()
 
     def _getCommand(self):
@@ -1620,8 +1626,8 @@ class ImportDialog(wx.Dialog):
         if self.importType == 'gdal':
             cmd = ['d.rast',
                    'map=%s' % name]
-            if UserSettings.Get(group = 'cmd', key = 'rasterOverlay', subkey = 'enabled'):
-                cmd.append('-o')
+            if UserSettings.Get(group = 'cmd', key = 'rasterOpaque', subkey = 'enabled'):
+                cmd.append('-n')
                 
             item = maptree.AddLayer(ltype = 'raster',
                                     lname = name, lchecked = False,
@@ -1642,8 +1648,13 @@ class ImportDialog(wx.Dialog):
         pass
 
 class GdalImportDialog(ImportDialog):
-    """!Dialog for bulk import of various raster/vector data"""
     def __init__(self, parent, ogr = False, link = False):
+        """!Dialog for bulk import of various raster/vector data
+
+        @param parent parent window
+        @param ogr True for OGR (vector) otherwise GDAL (raster)
+        @param link True for linking data otherwise importing data
+        """
         self.link = link
         self.ogr  = ogr
         
@@ -1659,9 +1670,10 @@ class GdalImportDialog(ImportDialog):
                 self.SetTitle(_("Link external raster data"))
             else:
                 self.SetTitle(_("Import raster data"))
-       
-        self.dsnInput = GdalSelect(parent = self, panel = self.panel, ogr = ogr)
-
+        
+        self.dsnInput = GdalSelect(parent = self, panel = self.panel,
+                                   ogr = ogr, link = link)
+        
         if link:
             self.add.SetLabel(_("Add linked layers into layer tree"))
         else:
@@ -1690,10 +1702,18 @@ class GdalImportDialog(ImportDialog):
         """!Import/Link data (each layes as separate vector map)"""
         self.commandId = -1
         data = self.list.GetLayers()
+        dsn  = self.dsnInput.GetDsn()
+        ext  = self.dsnInput.GetFormatExt()
         
-        dsn = self.dsnInput.GetDsn()
-        ext = self.dsnInput.GetFormatExt()
-            
+        # determine data driver for PostGIS links
+        popOGR = False
+        if self.importType == 'ogr' and \
+                self.dsnInput.GetType() == 'db' and \
+                self.dsnInput.GetFormat() == 'PostgreSQL' and \
+                'GRASS_VECTOR_OGR' not in os.environ:
+            popOGR = True
+            os.environ['GRASS_VECTOR_OGR'] = '1'
+        
         for layer, output in data:
             if self.importType == 'ogr':
                 if ext and layer.rfind(ext) > -1:
@@ -1730,12 +1750,16 @@ class GdalImportDialog(ImportDialog):
                 if self.options[key].IsChecked():
                     cmd.append('-%s' % key)
             
-            if UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'):
+            if UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled') and \
+                    '--overwrite' not in cmd:
                 cmd.append('--overwrite')
             
             # run in Layer Manager
             self.parent.goutput.RunCmd(cmd, switchPage = True,
                                        onDone = self.AddLayers)
+        
+        if popOGR:
+            os.environ.pop('GRASS_VECTOR_OGR')
         
     def _getCommand(self):
         """!Get command"""
@@ -1755,8 +1779,8 @@ class GdalImportDialog(ImportDialog):
     def OnCmdDialog(self, event):
         """!Show command dialog"""
         name = self._getCommand()
-        GUI(parent = self, modal = True).ParseCommand(cmd = [name])
-                
+        GUI(parent = self, modal = False).ParseCommand(cmd = [name])
+           
 class DxfImportDialog(ImportDialog):
     """!Dialog for bulk import of DXF layers""" 
     def __init__(self, parent):
@@ -1847,22 +1871,28 @@ class DxfImportDialog(ImportDialog):
 class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
                  listmix.CheckListCtrlMixin, listmix.TextEditMixin):
     """!List of layers to be imported (dxf, shp...)"""
-    def __init__(self, parent, pos = wx.DefaultPosition,
-                 log = None):
+    def __init__(self, parent, columns, log = None):
         self.parent = parent
         
         wx.ListCtrl.__init__(self, parent, wx.ID_ANY,
                              style = wx.LC_REPORT)
         listmix.CheckListCtrlMixin.__init__(self)
         self.log = log
-
+        
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.TextEditMixin.__init__(self)
-
-        self.InsertColumn(0, _('Layer id'))
-        self.InsertColumn(1, _('Layer name'))
-        self.InsertColumn(2, _('Name for GRASS map (editable)'))
+        
+        for i in range(len(columns)):
+            self.InsertColumn(i, columns[i])
+        
+        if len(columns) == 3:
+            width = (65, 200)
+        else:
+            width = (65, 180, 110)
+        
+        for i in range(len(width)):
+            self.SetColumnWidth(col = i, width = width[i])
         
         self.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnPopupMenu) #wxMSW
         self.Bind(wx.EVT_RIGHT_UP,            self.OnPopupMenu) #wxGTK
@@ -1873,17 +1903,15 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         if data is None:
             return
         
-        for id, name, grassName in data:
-            index = self.InsertStringItem(sys.maxint, str(id))
-            self.SetStringItem(index, 1, "%s" % str(name))
-            self.SetStringItem(index, 2, "%s" % str(grassName))
+        for item in data:
+            index = self.InsertStringItem(sys.maxint, str(item[0]))
+            for i in range(1, len(item)):
+                self.SetStringItem(index, i, "%s" % str(item[i]))
         
         # check by default only on one item
         if len(data) == 1:
             self.CheckItem(index, True)
         
-        self.SetColumnWidth(col = 0, width = wx.LIST_AUTOSIZE_USEHEADER)
-
     def OnPopupMenu(self, event):
         """!Show popup menu"""
         if self.GetItemCount() < 1:
@@ -1900,7 +1928,7 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         menu = wx.Menu()
         menu.Append(self.popupDataID1, _("Select all"))
         menu.Append(self.popupDataID2, _("Deselect all"))
-
+        
         self.PopupMenu(menu)
         menu.Destroy()
 
@@ -1913,7 +1941,7 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             if item == -1:
                 break
             self.CheckItem(item, True)
-
+        
         event.Skip()
         
     def OnSelectNone(self, event):
@@ -1925,12 +1953,12 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             if item == -1:
                 break
             self.CheckItem(item, False)
-
+        
         event.Skip()
         
     def OnLeftDown(self, event):
         """!Allow editing only output name
-
+        
         Code taken from TextEditMixin class.
         """
         x, y = event.GetPosition()
@@ -1943,7 +1971,7 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         
         col = bisect(colLocs, x + self.GetScrollPos(wx.HORIZONTAL)) - 1
         
-        if col == 2:
+        if col == self.GetColumnCount() - 1:
             listmix.TextEditMixin.OnLeftDown(self, event)
         else:
             event.Skip()
@@ -1956,11 +1984,12 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             item = self.GetNextItem(item)
             if item == -1:
                 break
-            if self.IsChecked(item):
-                # layer / output name
-                data.append((self.GetItem(item, 1).GetText(),
-                             self.GetItem(item, 2).GetText()))
-
+            if not self.IsChecked(item):
+                continue
+            # layer / output name
+            data.append((self.GetItem(item, 1).GetText(),
+                         self.GetItem(item, self.GetColumnCount() - 1).GetText()))
+        
         return data
 
 class SetOpacityDialog(wx.Dialog):
