@@ -1626,17 +1626,18 @@ class ImportDialog(wx.Dialog):
         if self.importType == 'gdal':
             cmd = ['d.rast',
                    'map=%s' % name]
-            if UserSettings.Get(group = 'cmd', key = 'rasterOpaque', subkey = 'enabled'):
-                cmd.append('-n')
-                
+            if UserSettings.Get(group = 'cmd', key = 'rasterOverlay', subkey = 'enabled'):
+                cmd.append('-o')
+            
             item = maptree.AddLayer(ltype = 'raster',
                                     lname = name, lchecked = False,
-                                    lcmd = cmd)
+                                    lcmd = cmd, multiple = False)
         else:
             item = maptree.AddLayer(ltype = 'vector',
                                     lname = name, lchecked = False,
                                     lcmd = ['d.vect',
-                                            'map=%s' % name])
+                                            'map=%s' % name],
+                                    multiple = False)
         
         maptree.mapdisplay.MapWindow.ZoomToMap()
         
