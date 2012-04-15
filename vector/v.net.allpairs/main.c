@@ -4,6 +4,7 @@
  * MODULE:     v.net.allpairs
  *
  * AUTHOR(S):  Daniel Bundala
+ *             Markus Metz
  *
  * PURPOSE:    Shortest paths between all nodes
  *
