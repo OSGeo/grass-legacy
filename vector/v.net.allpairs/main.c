@@ -4,6 +4,7 @@
  * MODULE:     v.net.allpairs
  *
  * AUTHOR(S):  Daniel Bundala
+ *             Markus Metz
  *
  * PURPOSE:    Shortest paths between all nodes
  *
@@ -24,6 +25,10 @@
 #include <grass/dbmi.h>
 #include <grass/neta.h>
 
+struct _spnode {
+    int cat, node;
+};
+
 int main(int argc, char *argv[])
 {
     struct Map_info In, Out;
@@ -36,10 +41,9 @@ int main(int argc, char *argv[])
     int chcat, with_z;
     int layer, mask_type;
     struct varray *varray;
-    dglGraph_s *graph;
-    int i, j, geo, nnodes, nlines, max_cat, *cats;
-    dglInt32_t **dist;
-    char buf[2000], *output;
+    struct _spnode *spnode;
+    int i, j, geo, nnodes, npoints, nlines, max_cat;
+    char buf[2000];
 
     /* Attribute table */
     dbString sql;
@@ -159,83 +163,90 @@ int main(int argc, char *argv[])
     db_begin_transaction(driver);
 
 
-    Vect_net_build_graph(&In, mask_type, atoi(field_opt->answer), 0,
+    Vect_net_build_graph(&In, mask_type, layer, 0,
 			 afcol->answer, abcol->answer, NULL, geo, 0);
-    graph = &(In.graph);
-    nnodes = dglGet_NodeCount(graph);
-    dist = (dglInt32_t **) G_calloc(nnodes + 1, sizeof(dglInt32_t *));
-    cats = (int *)G_calloc(nnodes + 1, sizeof(int));	/*id of each node. -1 if not used */
-    output = (char *)G_calloc(nnodes + 1, sizeof(char));
+    npoints = Vect_get_num_primitives(&In, GV_POINT);
 
-    if (!dist || !cats)
+    G_debug(1, "%d npoints", npoints);
+    spnode = (struct _spnode *)G_calloc(npoints + 1, sizeof(struct _spnode));
+
+    if (!spnode)
 	G_fatal_error(_("Out of memory"));
-    for (i = 0; i <= nnodes; i++) {
-	dist[i] = (dglInt32_t *) G_calloc(nnodes + 1, sizeof(dglInt32_t));
-	if (!dist[i])
-	    G_fatal_error(_("Out of memory"));
-    }
-    NetA_allpairs(graph, dist);
 
-    for (i = 1; i <= nnodes; i++) {
-	cats[i] = -1;
-	output[i] = 0;
+    for (i = 0; i < npoints; i++) {
+	spnode[i].cat = -1;
+	spnode[i].node = -1;
     }
 
     nlines = Vect_get_num_lines(&In);
-    max_cat = 0;
+    max_cat = nnodes = 0;
     for (i = 1; i <= nlines; i++) {
+	int node, cat;
 	int type = Vect_read_line(&In, Points, Cats, i);
+
+	if (type != GV_POINT)
+	    continue;
 
 	for (j = 0; j < Cats->n_cats; j++)
 	    if (Cats->cat[j] > max_cat)
 		max_cat = Cats->cat[j];
 	if (type == GV_POINT) {
-	    int node;
-
 	    Vect_get_line_nodes(&In, i, &node, NULL);
-	    Vect_cat_get(Cats, layer, &cats[node]);
-	    if (cats[node] != -1) {
+	    Vect_cat_get(Cats, layer, &cat);
+	    if (cat != -1) {
 		Vect_write_line(&Out, GV_POINT, Points, Cats);
-		if (!chcat || varray->c[i])
-		    output[node] = 'y';
+		if (!chcat || varray->c[i]) {
+		    spnode[nnodes].cat = cat;
+		    spnode[nnodes].node = node;
+		    nnodes++;
+		}
 	    }
 	}
 
     }
     max_cat++;
-    for (i = 1; i <= nnodes; i++)
-	if (newpoints_f->answer && cats[i] == -1) {
-	    Vect_reset_cats(Cats);
-	    Vect_cat_set(Cats, 1, max_cat);
-	    cats[i] = max_cat++;
-	    NetA_add_point_on_node(&In, &Out, i, Cats);
+    if (newpoints_f->answer) {
+	G_important_message(_("New points are excluded from shortest path calculations."));
+	for (i = 0; i < npoints; i++) {
+	    if (spnode[i].cat == -1) {
+		Vect_reset_cats(Cats);
+		Vect_cat_set(Cats, 1, max_cat);
+		spnode[i].cat = max_cat++;
+		NetA_add_point_on_node(&In, &Out, i, Cats);
+	    }
 	}
+    }
     G_message(_("Writing data into the table..."));
     G_percent_reset();
-    for (i = 1; i <= nnodes; i++) {
+    for (i = 0; i < nnodes; i++) {
 	G_percent(i, nnodes, 1);
-	if (cats[i] != -1 && output[i])	/*Process only selected nodes */
-	    for (j = 1; j <= nnodes; j++)
-		if (cats[j] != -1) {
-		    sprintf(buf, "insert into %s values (%d, %d, %f)",
-			    Fi->table, cats[i], cats[j],
-			    dist[i][j] / (double)In.cost_multip);
-		    db_set_string(&sql, buf);
-		    G_debug(3, db_get_string(&sql));
 
-		    if (db_execute_immediate(driver, &sql) != DB_OK) {
-			db_close_database_shutdown_driver(driver);
-			G_fatal_error(_("Cannot insert new record: %s"),
-				      db_get_string(&sql));
-		    };
-		}
+	for (j = 0; j < nnodes; j++) {
+	    double cost;
+	    int ret;
+	    
+	    ret = Vect_net_shortest_path(&In, spnode[i].node,
+	                                 spnode[j].node, NULL, &cost);
+	    
+	    if (ret == -1)
+		cost = -1;
+
+	    sprintf(buf, "insert into %s values (%d, %d, %f)",
+		    Fi->table, spnode[i].cat, spnode[j].cat, cost);
+	    db_set_string(&sql, buf);
+	    G_debug(3, db_get_string(&sql));
+
+	    if (db_execute_immediate(driver, &sql) != DB_OK) {
+		db_close_database_shutdown_driver(driver);
+		G_fatal_error(_("Cannot insert new record: %s"),
+			      db_get_string(&sql));
+	    }
+	}
     }
+    G_percent(1, 1, 1);
+
     db_commit_transaction(driver);
     db_close_database_shutdown_driver(driver);
-
-    for (i = 0; i <= nnodes; i++)
-	G_free(dist[i]);
-    G_free(dist);
 
     Vect_copy_head_data(&In, &Out);
     Vect_hist_copy(&In, &Out);
