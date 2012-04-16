@@ -57,6 +57,10 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+if [ ! -z "$GRASS_OVERWRITE" ] ; then
+   GIS_FLAG_O=1
+fi
+
 if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -le 2 ] ; then
   BEQUIET="--quiet"
 else
