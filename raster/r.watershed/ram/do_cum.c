@@ -6,7 +6,8 @@
 int do_cum(void)
 {
     SHORT r, c, dr, dc;
-    CELL is_swale, value, valued, aspect;
+    CELL is_swale, aspect;
+    DCELL value, valued;
     int killer, threshold, count;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
