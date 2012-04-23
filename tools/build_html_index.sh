@@ -337,8 +337,11 @@ for k in $CMDLIST
 do 
   MODCLASS=`expand_module_class_name $k`
   FILENAME=$MODCLASS.html
+  MODCLASSlowcase=`echo $MODCLASS | tr '[:upper:]' '[:lower:]'`
 
   write_html_header "$FILENAME" "GRASS GIS $GRASSVERSION Reference Manual: $MODCLASS"
+  # a few pages do not have the meta page:
+  echo "Go to <a href=\"${MODCLASSlowcase}intro.html\">${MODCLASS} introduction</a><p>" | grep -v 'generalintro.html\|miscintro.html\|postscriptintro.html' >>  "$FILENAME"
   echo "Go <a href=\"index.html\">back to help overview</a><BR><BR><BR>" >>  "$FILENAME"
 
   echo "<b>$MODCLASS commands:</b>" >> "$FILENAME"
