@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-04-05 21:30+0200\n"
+"PO-Revision-Date: 2012-04-22 10:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -38,7 +38,7 @@ msgstr "nviz - Strumento per la visualizzazione e l'animazione per dati GRASS"
 
 #: ../visualization/nviz/src/nviz_init.c:60
 msgid "Name of raster map(s) for Elevation"
-msgstr ""
+msgstr "Nome della mappa/e raster per Elevazione"
 
 #: ../visualization/nviz/src/nviz_init.c:61
 #: ../visualization/nviz/src/nviz_init.c:70
@@ -48,11 +48,11 @@ msgstr "Raster"
 
 #: ../visualization/nviz/src/nviz_init.c:69
 msgid "Name of raster map(s) for Color"
-msgstr ""
+msgstr "Nome della mappa/e raster per Colore"
 
 #: ../visualization/nviz/src/nviz_init.c:78
 msgid "Name of vector lines/areas overlay map(s)"
-msgstr ""
+msgstr "Nome della mappa/e vettoriale/i di linee/aree da sovrapporre"
 
 #: ../visualization/nviz/src/nviz_init.c:79
 #: ../visualization/nviz/src/nviz_init.c:88
@@ -61,7 +61,7 @@ msgstr "Vettore"
 
 #: ../visualization/nviz/src/nviz_init.c:87
 msgid "Name of vector points overlay file(s)"
-msgstr ""
+msgstr "Nome del/dei file di punti vettoriali da sovrapporre"
 
 #: ../visualization/nviz/src/nviz_init.c:96
 msgid "Name of existing 3d raster map"
@@ -69,19 +69,19 @@ msgstr "Nome di una mappa raster 3d esistente"
 
 #: ../visualization/nviz/src/nviz_init.c:101
 msgid "Quickstart - Do not load any data"
-msgstr ""
+msgstr "Avvio veloce - Non carica nessun dato"
 
 #: ../visualization/nviz/src/nviz_init.c:106
 msgid "Exit after completing script launched from the command line"
-msgstr ""
+msgstr "Uscire dopo il completamento dello script dalla riga di comando"
 
 #: ../visualization/nviz/src/nviz_init.c:111
 msgid "Start in Demo mode (skip the \"please wait\" message)"
-msgstr ""
+msgstr "Avvio in modalità dimostrazione (salta il messaggio \"attendere\")"
 
 #: ../visualization/nviz/src/nviz_init.c:115
 msgid "Verbose module output"
-msgstr ""
+msgstr "Output verboso del modulo"
 
 #: ../visualization/nviz/src/nviz_init.c:121
 msgid "Set alternative panel path"
@@ -89,11 +89,11 @@ msgstr ""
 
 #: ../visualization/nviz/src/nviz_init.c:127
 msgid "Execute script file at startup"
-msgstr ""
+msgstr "Eseguire il file di script all'avvio"
 
 #: ../visualization/nviz/src/nviz_init.c:133
 msgid "Load previously saved state file"
-msgstr ""
+msgstr "Caricare il file dello stato precedentemente salvato"
 
 #: ../visualization/nviz/src/nviz_init.c:157 ../raster/r.cost/main.c:226
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
@@ -105,7 +105,7 @@ msgstr "Il flag '-v' è superato e in futuro verrà rimosso. Al suo posto usare 
 
 #: ../visualization/nviz/src/nviz_init.c:287
 msgid "Number of elevation files does not match number of colors files"
-msgstr ""
+msgstr "Il numero di file dell'elevazione non corrisponde al numero dei file del colori"
 
 #: ../visualization/nviz/src/nviz_init.c:298
 msgid "Loading data failed"
@@ -121,19 +121,19 @@ msgstr "Impossibile aprire il display"
 
 #: ../visualization/ximgview/main.c:82
 msgid "Unable to get window attributes"
-msgstr ""
+msgstr "Non è possibile ottenere gli attributi della finestra"
 
 #: ../visualization/ximgview/main.c:238
 msgid "Unable to open image file"
-msgstr ""
+msgstr "Non è possibile aprire il file dell'immagine"
 
 #: ../visualization/ximgview/main.c:241
 msgid "Unable to read BMP header"
-msgstr ""
+msgstr "Non è possibile leggere l'intestazione BMP"
 
 #: ../visualization/ximgview/main.c:244
 msgid "Invalid BMP header"
-msgstr ""
+msgstr "Intestazione BMP non valida"
 
 #: ../visualization/ximgview/main.c:250
 msgid "Unable to map image file"
@@ -173,7 +173,7 @@ msgstr ""
 #: ../visualization/ximgview/color.c:256
 #: ../visualization/xganim/Clr_table.c:260
 msgid "Unable to get sufficient colors."
-msgstr ""
+msgstr "Non è possibile ottenere colori sufficienti."
 
 #: ../visualization/ximgview/color.c:269
 #: ../visualization/xganim/Clr_table.c:273
@@ -431,7 +431,7 @@ msgstr "<%s> è un nome di file non valido"
 #: ../doc/raster/r.example/main.c:127
 #, c-format
 msgid "Unable to read file header of <%s>"
-msgstr ""
+msgstr "Non è possibile leggere l'intestazione del file di <%s>"
 
 #: ../doc/raster/r.example/main.c:141 ../raster3d/r3.to.rast/main.c:183
 #: ../raster/r.bilinear/main.c:104 ../raster/r.sun2/main.c:1164
@@ -714,7 +714,7 @@ msgstr "Impossibile copiare la tabella degli attributi nella mappa vettoriale <%
 
 #: ../raster3d/r3.in.v5d/main.c:191 ../raster3d/r3.in.ascii/main.c:240
 msgid "raster3d, voxel, import"
-msgstr ""
+msgstr "raster3d, voxel, importazione"
 
 #: ../raster3d/r3.in.v5d/main.c:193
 msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
@@ -755,7 +755,7 @@ msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:94
 msgid "Sources and sinks in [m^3/s]"
-msgstr ""
+msgstr "Sorgenti e pozzi in [m^3/s]"
 
 #: ../raster3d/r3.gwflow/main.c:101
 msgid "Specific yield in 1/m"
@@ -789,7 +789,7 @@ msgstr ""
 #: ../raster3d/base/r3.timestamp.main.c:43 ../raster3d/base/r3.mask.main.c:153
 #: ../raster3d/r3.to.rast/main.c:215 ../raster3d/r3.cross.rast/main.c:270
 msgid "raster3d, voxel"
-msgstr ""
+msgstr "raster3d, voxel"
 
 #: ../raster3d/r3.gwflow/main.c:171
 msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
@@ -858,7 +858,7 @@ msgstr ""
 #: ../raster3d/r3.mkdspf/main.c:127
 #, fuzzy
 msgid "Suppress progress report & min/max information"
-msgstr "Annulla le informazioni sull'andamento e sul minimo/massimo"
+msgstr "Omettere le informazioni sull'avanzamento e le informazioni sul minimo/massimo"
 
 #: ../raster3d/r3.mkdspf/main.c:131
 msgid "Use flat shading rather than gradient"
@@ -895,7 +895,7 @@ msgstr "Errore nell'apertura del file del display [%s]"
 #: ../raster3d/r3.mkdspf/main.c:216
 #, c-format
 msgid "Writing %s from %s..."
-msgstr "Sto scrivendo %s da %s..."
+msgstr "Scrittura di %s da %s in corso..."
 
 #: ../raster3d/r3.out.ascii/main.c:76
 msgid "3D raster map to be converted to ASCII"
@@ -927,7 +927,7 @@ msgstr "Usa una maschera raster 3D (se esiste) con la mappa in input"
 #: ../raster3d/r3.out.ascii/main.c:244 ../raster3d/r3.out.v5d/main.c:286
 #: ../raster3d/r3.out.vtk/main.c:376
 msgid "raster3d, voxel, export"
-msgstr ""
+msgstr "raster3d, voxel, esportazione"
 
 #: ../raster3d/r3.out.ascii/main.c:246
 msgid "Converts a 3D raster map layer into an ASCII text file."
@@ -967,11 +967,11 @@ msgstr "Aggiunta della regola: %lf - %lf"
 #: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:266
 #, c-format
 msgid "%s: illegal value spec"
-msgstr "%s: valore illegale"
+msgstr "%s: specificazione di valore non consentita"
 
 #: ../raster3d/base/r3.info.main.c:80
 msgid "Outputs basic information about a user-specified 3D raster map layer."
-msgstr ""
+msgstr "Produce informazioni di base su un tematismo raster 3D definito dall'utente."
 
 #: ../raster3d/base/r3.info.main.c:87
 msgid "Name of input 3D raster map"
@@ -1401,7 +1401,7 @@ msgstr "Impossibile aprire la mappa %s"
 
 #: ../raster3d/r3.out.vtk/main.c:118
 msgid "Specify top and bottom map"
-msgstr ""
+msgstr "Specificare la mappa superiore e inferiore"
 
 #: ../raster3d/r3.out.vtk/main.c:125
 #, c-format
@@ -1548,7 +1548,7 @@ msgstr "Superfici"
 
 #: ../misc/m.nviz.image/args.c:81
 msgid "Name for output image file (without extension)"
-msgstr ""
+msgstr "Nome per il file immagine di output (senza estensione)"
 
 #: ../misc/m.nviz.image/args.c:82 ../misc/m.nviz.image/args.c:96
 #: ../misc/m.nviz.image/args.c:106
@@ -1562,7 +1562,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:104
 msgid "Size (width, height) of output image"
-msgstr ""
+msgstr "Dimensione (larghezza, altezza) dell'immagine di output"
 
 #: ../misc/m.nviz.image/args.c:121
 msgid "Name of raster map(s) for elevation"
@@ -1610,7 +1610,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:220
 msgid "Draw mode"
-msgstr ""
+msgstr "Modalità disegno"
 
 #: ../misc/m.nviz.image/args.c:223 ../misc/m.nviz.image/args.c:234
 #: ../misc/m.nviz.image/args.c:245 ../misc/m.nviz.image/args.c:257
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:266
 msgid "Shading"
-msgstr ""
+msgstr "Ombreggiatura"
 
 #: ../misc/m.nviz.image/args.c:275
 msgid "Wire color"
@@ -1643,11 +1643,11 @@ msgstr ""
 #: ../misc/m.nviz.image/args.c:287
 #, fuzzy
 msgid "Surface position"
-msgstr "Punto di riferimento"
+msgstr "Posizione sulla superficie"
 
 #: ../misc/m.nviz.image/args.c:299
 msgid "Name of line vector overlay map(s)"
-msgstr ""
+msgstr "Nome della mappa/e di linee vettoriali da sovrapporre"
 
 #: ../misc/m.nviz.image/args.c:300 ../misc/m.nviz.image/args.c:311
 #: ../misc/m.nviz.image/args.c:322 ../misc/m.nviz.image/args.c:334
@@ -1677,7 +1677,7 @@ msgstr "Posizione delle linee vettoriali"
 
 #: ../misc/m.nviz.image/args.c:367
 msgid "Name of point vector overlay map(s)"
-msgstr ""
+msgstr "Nome della mappa/e di punti vettoriali da sovrapporre"
 
 #: ../misc/m.nviz.image/args.c:368 ../misc/m.nviz.image/args.c:379
 #: ../misc/m.nviz.image/args.c:391 ../misc/m.nviz.image/args.c:402
@@ -1687,7 +1687,7 @@ msgstr "Punti vettoriale"
 
 #: ../misc/m.nviz.image/args.c:378
 msgid "Icon size"
-msgstr " Grandezza icona"
+msgstr "Dimensione icona"
 
 #: ../misc/m.nviz.image/args.c:390
 msgid "Icon width"
@@ -1712,15 +1712,15 @@ msgstr ""
 #: ../misc/m.nviz.image/args.c:442 ../misc/m.nviz.image/args.c:453
 #: ../misc/m.nviz.image/args.c:463 ../misc/m.nviz.image/args.c:475
 msgid "Viewpoint"
-msgstr ""
+msgstr "Punto di vista"
 
 #: ../misc/m.nviz.image/args.c:452
 msgid "Viewpoint height (in map units)"
-msgstr ""
+msgstr "Altezza del punto di vista (in unità di mappa)"
 
 #: ../misc/m.nviz.image/args.c:462
 msgid "Viewpoint field of view (in degrees)"
-msgstr ""
+msgstr "Campo visivo del punto di vista (in gradi)"
 
 #: ../misc/m.nviz.image/args.c:474
 msgid "Viewpoint twist angle (in degrees)"
@@ -1733,7 +1733,7 @@ msgstr "Esagerazione verticale"
 #: ../misc/m.nviz.image/args.c:495 ../misc/m.nviz.image/args.c:530
 #: ../misc/m.nviz.image/args.c:542 ../misc/m.nviz.image/args.c:552
 msgid "Volumes"
-msgstr ""
+msgstr "Volumi"
 
 #: ../misc/m.nviz.image/args.c:505
 msgid "Volume draw mode"
@@ -1741,15 +1741,15 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:517
 msgid "Volume shading"
-msgstr ""
+msgstr "Ombreggiatura del volume"
 
 #: ../misc/m.nviz.image/args.c:529
 msgid "Volume position"
-msgstr ""
+msgstr "Posizione del volume"
 
 #: ../misc/m.nviz.image/args.c:540
 msgid "Volume resolution"
-msgstr ""
+msgstr "Risoluzione del volume"
 
 #: ../misc/m.nviz.image/args.c:551
 msgid "Isosurface level"
@@ -1762,7 +1762,7 @@ msgstr ""
 #: ../misc/m.nviz.image/args.c:567 ../misc/m.nviz.image/args.c:573
 #: ../misc/m.nviz.image/args.c:582 ../misc/m.nviz.image/args.c:592
 msgid "Lighting"
-msgstr ""
+msgstr "Illuminazione"
 
 #: ../misc/m.nviz.image/args.c:572
 msgid "Light color"
@@ -1875,7 +1875,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/main.c:201
 msgid "Unsupported output format"
-msgstr ""
+msgstr "Formato di output non supportato"
 
 #: ../misc/m.nviz.image/main.c:203 ../imagery/i.cluster/main.c:346
 #, c-format
@@ -1890,12 +1890,12 @@ msgstr ""
 #: ../misc/m.nviz.image/surface.c:130
 #, c-format
 msgid "Color attribute not defined, using default <%s>"
-msgstr ""
+msgstr "Attributo del colore non definito, verrà usato quello predefinito <%s>"
 
 #: ../misc/m.nviz.image/surface.c:211
 #, c-format
 msgid "Surface id %d doesn't exist"
-msgstr ""
+msgstr "L'id dellal superficie %d non esiste"
 
 #: ../misc/m.nviz.image/surface.c:251 ../misc/m.nviz.image/surface.c:258
 #, c-format
@@ -1907,9 +1907,8 @@ msgid "Unknown icon marker"
 msgstr ""
 
 #: ../misc/m.cogo/main.c:225
-#, fuzzy
 msgid "miscellaneous, distance"
-msgstr "N"
+msgstr "Miscellanea, distanza"
 
 #: ../misc/m.cogo/main.c:226
 msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
@@ -1921,11 +1920,11 @@ msgstr ""
 
 #: ../misc/m.cogo/main.c:232
 msgid "Lines are labelled"
-msgstr ""
+msgstr "Le linee sono etichettate"
 
 #: ../misc/m.cogo/main.c:236
 msgid "Suppress warnings"
-msgstr ""
+msgstr "Non mostrare gli avvertimenti"
 
 #: ../misc/m.cogo/main.c:241
 msgid "Convert from coordinates to bearing and distance"
@@ -1961,12 +1960,12 @@ msgstr "Formati supportati:\n"
 
 #: ../raster/r.external/main.c:83 ../raster/r.in.gdal/main.c:341
 msgid "Unable to convert input raster map projection information to GRASS format for checking"
-msgstr ""
+msgstr "Non è possibile convertire le informazioni sulla proiezione della mappa raster nel formato di GRASS per la verifica"
 
 #: ../raster/r.external/main.c:99 ../raster/r.in.gdal/main.c:357
 #: ../vector/v.in.ogr/main.c:511
 msgid "Over-riding projection check"
-msgstr ""
+msgstr "La verifica della proiezione verrà ignorata"
 
 #: ../raster/r.external/main.c:107 ../raster/r.in.gdal/main.c:367
 #: ../vector/v.in.ogr/main.c:520
@@ -2201,7 +2200,7 @@ msgstr "Si sta procedendo con l'importazione..."
 #: ../raster/r.external/main.c:634
 #, c-format
 msgid "Imagery group <%s> already exists and will be overwritten."
-msgstr ""
+msgstr "Il gruppo di immagini <%s> esite già e verrà sovrascritto."
 
 #: ../raster/r.external/main.c:645 ../raster/r.in.gdal/main.c:472
 #, c-format
@@ -2211,7 +2210,7 @@ msgstr "La banda (%d) selezionata non esiste"
 #: ../raster/r.external/main.c:674
 #, c-format
 msgid "Imagery group <%s> created"
-msgstr ""
+msgstr "Gruppo di immagini <%s> creato"
 
 #: ../raster/r.bilinear/main.c:42 ../raster/r.resamp.stats/main.c:259
 #: ../raster/r.resamp.rst/main.c:156 ../raster/r.resample/main.c:54
@@ -2251,11 +2250,11 @@ msgstr ""
 
 #: ../raster/r.mode/main.c:58
 msgid "Base map to be reclassified"
-msgstr ""
+msgstr "Mappa di base da riclassificare"
 
 #: ../raster/r.mode/main.c:65
 msgid "Coverage map"
-msgstr ""
+msgstr "Mappa di copertura"
 
 #: ../raster/r.mode/main.c:72
 msgid "Output map"
@@ -2274,7 +2273,7 @@ msgstr "%s: mappa raster di copertura non trovata"
 #: ../raster/r.mode/main.c:97
 #, c-format
 msgid "%s: base map and output map must be different"
-msgstr ""
+msgstr "%s: la mappa di base e la mappa di output devono essere differenti"
 
 #: ../raster/r.mode/main.c:101
 #, c-format
@@ -2405,7 +2404,7 @@ msgstr ""
 #: ../raster/r.profile/main.c:305
 #, c-format
 msgid "Approx. transect length [%f] m"
-msgstr ""
+msgstr "Lunghetta approssimativa del transetto [%f] m"
 
 #: ../raster/r.profile/main.c:308
 msgid "Endpoint coordinates are outside of current region settings"
@@ -2500,11 +2499,11 @@ msgstr "Nome della mappa raster di input contenente le longitudini [gradi decima
 
 #: ../raster/r.sun2/main.c:346
 msgid "Name of real-sky beam radiation coefficient input raster map [-]"
-msgstr ""
+msgstr "Nome della mappa raster di input dei coefficienti di radiazione diretta in condizioni di cielo reali [-]"
 
 #: ../raster/r.sun2/main.c:355
 msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
-msgstr ""
+msgstr "Nome della mappa raster di input dei coefficienti di radiazione diffusa in condizioni di cielo reali [-]"
 
 #: ../raster/r.sun2/main.c:363
 msgid "The horizon information input map prefix"
@@ -3127,17 +3126,20 @@ msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:352
 msgid "Type <return> if you do not have a disturbed land map layer."
-msgstr ""
+msgstr "Premere  <return> (invio) se non c'è una mappa del territorio antropizzato."
 
 #: ../raster/r.watershed/shed/com_line.c:364
 msgid ""
 "\n"
 "Type the value indicating the percent of disturbed land.  This value will"
 msgstr ""
+"\n"
+"Immettere il valore indicante la percentuale di territorio antropizzato. Questo valore"
 
+# FINIRE
 #: ../raster/r.watershed/shed/com_line.c:365
 msgid "be used for every cell in the current region."
-msgstr "da utilizzare per ogni cella nella regione corrente."
+msgstr "verrà utilizzato per ogni cella nella regione corrente."
 
 #: ../raster/r.watershed/shed/com_line.c:368
 #, c-format
@@ -3338,71 +3340,72 @@ msgstr "Programma per l'analisi dei bacini idrografici."
 
 #: ../raster/r.watershed/front/main.c:61
 msgid "Input map: elevation on which entire analysis is based"
-msgstr ""
+msgstr "Mappa di input: il modello altimetrico su cui si basa l'intera analisi"
 
 #: ../raster/r.watershed/front/main.c:66
 msgid "Input map: locations of real depressions"
-msgstr ""
+msgstr "Mappa di input: ubicazione delle depressioni reali"
 
 #: ../raster/r.watershed/front/main.c:72
 msgid "Input map: amount of overland flow per cell"
-msgstr ""
+msgstr "Mappa di input: la quantità di deflusso superficiale per cella"
 
 #: ../raster/r.watershed/front/main.c:79
 msgid "Input map or value: percent of disturbed land, for USLE"
-msgstr ""
+msgstr "Mappa di input o valore: percentuale di territorio antropizzato, per USLE"
 
 #: ../raster/r.watershed/front/main.c:88
 msgid "Input map: terrain blocking overland surface flow, for USLE"
-msgstr ""
+msgstr "Mappa di input: terreno che ostacola lo scorrimento superficiale, per USLE"
 
 #: ../raster/r.watershed/front/main.c:95
 msgid "Output map: number of cells that drain through each cell"
-msgstr ""
+msgstr "Mappa di output: numero di celle che defluiscono attraverso ciascuna cella"
 
 #: ../raster/r.watershed/front/main.c:101
 msgid "Output map: drainage direction"
-msgstr ""
+msgstr "Mappa di output: direzione di drenaggio"
 
+# FINIRE
 #: ../raster/r.watershed/front/main.c:108
 msgid "Output map: unique label for each watershed basin"
-msgstr ""
+msgstr "Mappa di output: un'etichetta univoca per ogni bacino idrografico"
 
 #: ../raster/r.watershed/front/main.c:114
 msgid "Output map: stream segments"
-msgstr ""
+msgstr "Mappa di output: segmenti dei corsi d'acqua"
 
 #: ../raster/r.watershed/front/main.c:121
 msgid "Output map: each half-basin is given a unique value"
-msgstr ""
+msgstr "Mappa di output: a ogni semibacino è assegnato un valore univoco"
 
 #: ../raster/r.watershed/front/main.c:128
 msgid "Output map: useful for visual display of results"
-msgstr ""
+msgstr "Mappa di output: utile per la visualizzazione dei risultati"
 
 #: ../raster/r.watershed/front/main.c:135
 msgid "Output map: slope length and steepness (LS) factor for USLE"
-msgstr ""
+msgstr "Mappa di output: fattore lunghezza e inclinazione del pendio (LS) per USLE"
 
 #: ../raster/r.watershed/front/main.c:141
 msgid "Output map: slope steepness (S) factor for USLE"
-msgstr ""
+msgstr "Mappa di output: fattore pendenza (S) per USLE"
 
 #: ../raster/r.watershed/front/main.c:148
 msgid "Input value: minimum size of exterior watershed basin"
-msgstr ""
+msgstr "Valore in input: dimensione minima del bacino idrografico esterno"
 
 #: ../raster/r.watershed/front/main.c:156
 msgid "Input value: maximum length of surface flow, for USLE"
-msgstr ""
+msgstr "Valore in input: lunghezza massima dello scorrimento superficiale, per USLE"
 
 #: ../raster/r.watershed/front/main.c:166
 msgid "Convergence factor for MFD (1-10)"
-msgstr ""
+msgstr "Fattore d convergenza per MFD (1-10)"
 
 #: ../raster/r.watershed/front/main.c:168
 msgid "1 = most diverging flow, 10 = most converging flow. Recommended: 5"
-msgstr ""
+msgstr "1 = flusso più divergente, 10 = flusso più convergente. Consigliato: 5"
 
 #: ../raster/r.watershed/front/main.c:175
 msgid "Maximum memory to be used with -m flag (in MB)"
@@ -3410,15 +3413,15 @@ msgstr "Memoria massima da utilizzare con la flag -m (in MB)"
 
 #: ../raster/r.watershed/front/main.c:179
 msgid "Enable MFD flow (default is SFD (D8))"
-msgstr ""
+msgstr "Abilitare flusso MDF (quello predefinito è SFD (D8))"
 
 #: ../raster/r.watershed/front/main.c:181
 msgid "SFD: single flow direction, MFD: multiple flow direction"
-msgstr ""
+msgstr "SFD: direzione di flusso singola, MFD: direzione di flusso multipla"
 
 #: ../raster/r.watershed/front/main.c:186
 msgid "Allow only horizontal and vertical flow of water"
-msgstr ""
+msgstr "Consentire solo deflussi idrici orizzontali e verticali"
 
 #: ../raster/r.watershed/front/main.c:191
 msgid "Enable disk swap memory option: Operation is slow"
@@ -3430,11 +3433,12 @@ msgstr "Necessario solo se la richiesta di memoria supera la RAM disponibile: ve
 
 #: ../raster/r.watershed/front/main.c:198
 msgid "Use positive flow accumulation even for likely underestimates"
-msgstr ""
+msgstr "Usare un'accumulazione di flusso positiva anche per le possibili sottostime"
 
+# FINIRE
 #: ../raster/r.watershed/front/main.c:200
 msgid "See manual for a detailed description of flow accumulation output"
-msgstr ""
+msgstr "Si veda il manuale per una descrizione dettagliata dell'output dell'accumulazione di flusso"
 
 #: ../raster/r.watershed/front/main.c:217
 msgid "Sorry, you must choose an output map."
@@ -3450,7 +3454,7 @@ msgstr ""
 #: ../raster/r.watershed/front/main.c:388
 #, c-format
 msgid "Subprocess failed with exit code %d"
-msgstr ""
+msgstr "Subprocesso non andato a buon fine con codice d'uscita %d"
 
 #: ../raster/r.colors.out/main.c:63
 msgid "raster, export, color table"
@@ -3795,9 +3799,9 @@ msgstr "Il file non sembra essere compresso.\n"
 
 # row%s : singolare/plurale?
 #: ../raster/r.support/modhead/modhead.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "Header indicates %d row%s in the raster map, but the actual file format indicates %d row%s"
-msgstr "L'intestazione indica %d righe%s nella mappa raster, ma il formato reale del file indica %d righe%s"
+msgstr "L'intestazione indica n. %d righe (row%s) nella mappa raster, ma il formato reale del file indica n. %d righe (row%s)"
 
 #: ../raster/r.support/modhead/modhead.c:303
 #, c-format
@@ -5028,9 +5032,8 @@ msgid "Reading %s ..."
 msgstr "Lettura di %s in corso ..."
 
 #: ../raster/r.los/main.c:82
-#, fuzzy
 msgid "raster, viewshed"
-msgstr "raster, serie"
+msgstr "raster, intervisibilità"
 
 #: ../raster/r.los/main.c:83
 msgid "Line-of-sight raster analysis program."
@@ -6996,9 +6999,8 @@ msgstr "Mappa vettoriale da sovrapporre"
 
 # vector: vettoriale
 #: ../raster/r.le/r.le.setup/sample.c:1050
-#, fuzzy
 msgid "Cannot read vector"
-msgstr "Impossibile leggere il vettore"
+msgstr "Impossibile leggere il vettoriale"
 
 #: ../raster/r.le/r.le.pixel/main.c:47
 msgid "Contains a set of measures for attributes, diversity, texture, juxtaposition, and edge."
@@ -7012,7 +7014,7 @@ msgstr ""
 #: ../raster/r.digit/get_label.c:46
 #, c-format
 msgid "Enter a label for category %ld [%s] "
-msgstr ""
+msgstr "Inserisci un'etichetta per la categoria %ld [%s] "
 
 #: ../raster/r.digit/get_label.c:68
 msgid "Look ok? "
@@ -7024,7 +7026,7 @@ msgstr ""
 
 #: ../raster/r.digit/main.c:56 ../vector/v.digit/main.c:117
 msgid "Display commands to be used for canvas backdrop (separated by ';')"
-msgstr ""
+msgstr "Mostra i comandi da usare per lo sfondo (separati da ';')"
 
 #: ../raster/r.digit/main.c:79
 msgid "No graphics device selected!"
@@ -8192,9 +8194,8 @@ msgstr ""
 #: ../raster/wildfire/r.spread/main.c:151
 #: ../raster/wildfire/r.spread/main.c:159
 #: ../raster/wildfire/r.spread/main.c:167
-#, fuzzy
 msgid "Input_maps"
-msgstr "Mappe di input"
+msgstr "Mappe in input"
 
 #: ../raster/wildfire/r.spread/main.c:118
 msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
@@ -8247,7 +8248,6 @@ msgstr ""
 #: ../raster/wildfire/r.spread/main.c:212
 #: ../raster/wildfire/r.spread/main.c:220
 #: ../raster/wildfire/r.spread/main.c:228
-#, fuzzy
 msgid "Output_maps"
 msgstr "Mappe in output"
 
@@ -8431,9 +8431,8 @@ msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d
 msgstr "Calcola le statistiche univariate per le celle 3d non nulle di un raster3d"
 
 #: ../raster/r.univar2/r3.univar_main.c:163
-#, fuzzy
 msgid "Unable to load 3D raster range"
-msgstr "Impossibile leggere la riga del raster"
+msgstr "Non è possibile caricare il campo di variazione del raster 3D"
 
 #: ../raster/r.grow.distance/main.c:132
 msgid "Generates a raster map layer of distance to features in input layer."
@@ -9009,10 +9008,11 @@ msgstr ""
 msgid "Unable to read range for map <%s>"
 msgstr "Non è possibile leggere l'intervallo per la mappa <%s>"
 
+# verificare
 #: ../raster/r.stats/cell_stats.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read raster <map %d of %d> row %d"
-msgstr "Non è possibile leggere la mapp raster <map %d of %d> riga %d"
+msgstr "Non è possibile leggere la mappa raster <mappa %d di %d> riga %d"
 
 #: ../raster/r.region/main.c:56
 msgid "Sets the boundary definitions for a raster map."
@@ -10654,9 +10654,8 @@ msgstr ""
 
 # transetto?
 #: ../raster/r.transect/main.c:54
-#, fuzzy
 msgid "raster, transect"
-msgstr "raster, transect"
+msgstr "raster, transetto"
 
 #: ../raster/r.transect/main.c:56
 msgid "Outputs raster map layer values lying along user defined transect line(s)."
@@ -11239,9 +11238,10 @@ msgstr "Mappa raster <%s> già esistente. Sarà sovrascritta"
 msgid "The polynomial rectification used in i.rectify does not work well with NOAA/AVHRR data. Try using gdalwarp with thin plate spline rectification instead. (-tps)"
 msgstr "La rettifica polinomiale usata in i.rectify non lavora bene con dati NOAA/AVHRR. Prova usando gdalwarp con la rettifica spline piana. (-tps)"
 
+# flipped
 #: ../raster/r.in.gdal/main.c:266
 msgid "Input raster map is flipped or rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up."
-msgstr "Il raster di input è ruotato - non può essere importato. Si può utilizzare 'gdalwarp' per trasformare la mappa col Nord in alto"
+msgstr "Il raster di input è capovolto  o ruotato - non può essere importato. Si può utilizzare 'gdalwarp' per trasformare la mappa col Nord in alto."
 
 #: ../raster/r.in.gdal/main.c:308
 msgid "Map bounds have been constrained to geographic coordinates. You will almost certainly want to check map bounds and resolution with r.info and reset them with r.region before going any further."
@@ -11298,22 +11298,21 @@ msgstr "Non è possibile tradurre i valori chiave di proiezione dei GCP di input
 
 # target: ?
 #: ../raster/r.in.gdal/main.c:668
-#, fuzzy
 msgid "Unable to get projection info of target location"
-msgstr "Impossibile ottenere informazioni sulla proiezione della location definita dal parametro target"
+msgstr "Impossibile ottenere informazioni sulla proiezione della location target"
 
 #: ../raster/r.in.gdal/main.c:670
 msgid "Unable to get projection units of target location"
-msgstr "Impossibile ottene le unità della proiezione della location d'origine"
+msgstr "Impossibile ottene le unità della proiezione della location target"
 
 #: ../raster/r.in.gdal/main.c:672
 msgid "Unable to get projection key values of target location"
-msgstr ""
+msgstr "Impossibile ottene i valori chiave della proiezione della location target"
 
 # target: destinazione ?
 #: ../raster/r.in.gdal/main.c:675 ../imagery/i.rectify/target.c:32
 #: ../imagery/i.ortho.photo/i.photo.rectify/target.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "Mapset <%s> in target location <%s> - "
 msgstr "Mapset <%s> nella location target <%s> - "
 
@@ -11329,7 +11328,7 @@ msgstr "Impostazione della tavola dei colori per il grigio per <%s> (16 bit, gam
 
 #: ../raster/r.horizon/main.c:179
 msgid "Horizon angle computation from a digital elevation model."
-msgstr ""
+msgstr "Calcolo dell'angolo dell'orizzonte da un modello digitale di elevazione."
 
 #: ../raster/r.horizon/main.c:181
 msgid "Computes horizon angle height from a digital elevation model. The module has two different modes of operation:  1. Computes the entire horizon around a single point whose coordinates are given with the 'coord' option. The horizon height (in radians). 2. Computes one or more raster maps of the horizon height in a single direction.  The input for this is the angle (in degrees), which is measured  counterclockwise with east=0, north=90 etc. The output is the horizon height in radians."
@@ -11802,36 +11801,38 @@ msgstr "Nessun valore non-null "
 msgid "Unable to allocate buffer for reading raster map"
 msgstr ""
 
+# FINIRE
 #: ../raster/r.out.gdal/export_band.c:186
 #, c-format
 msgid "Input raster map contains cells with NULL-value (no-data). The value %d will be used to represent no-data values in the input map. You can specify a nodata value with the %s option."
-msgstr ""
+msgstr "La mappa raster di input contiene celle con valore NULL (nessun dato). Il valore %d verrà usato per rappresentare i valori delle celle senza dati nella mappa di input. È possibile specificare un valore per le celle senza dati con l'opzione %s."
 
 #: ../raster/r.out.gdal/export_band.c:191
 #, c-format
 msgid "Input raster map contains cells with NULL-value (no-data). The value %f will be used to represent no-data values in the input map. You can specify a nodata value with the %s option."
-msgstr ""
+msgstr "La mappa raster di input contiene celle con valore NULL (nessun dato). Il valore %f verrà usato per rappresentare i valori delle celle senza dati nella mappa di input. È possibile specificare un valore per le celle senza dati con l'opzione %s."
 
 #: ../raster/r.out.gdal/export_band.c:201
 #, c-format
 msgid "The default nodata value is present in rasterband <%s> and would lead to data loss. Please specify a custom nodata value with the %s parameter."
-msgstr ""
+msgstr "Il valore predefinito per 'nessun dato' è presente nella banda raster <%s> e potrebbe causare una perdita di dati. Specificare un altro valore col parametro %s."
 
 #: ../raster/r.out.gdal/export_band.c:208
 #, c-format
 msgid "The user given nodata value %g is present in rasterband <%s> and would lead to data loss. Please specify a different nodata value with the %s parameter."
-msgstr ""
+msgstr "Il valore %g definito dall'utente per 'nessun dato' è presente nella banda raster <%s> e potrebbe causare una perdita di dati. Specificare un altro valore col parametro %s."
 
 #: ../raster/r.out.gdal/export_band.c:254
 msgid "Unable to get raster band"
-msgstr ""
+msgstr "Non è possibile ottenere la banda raster"
 
 #: ../raster/r.out.gdal/export_band.c:414
 #: ../raster/r.out.gdal/export_band.c:447
 #: ../raster/r.out.gdal/export_band.c:480
 msgid "Unable to write GDAL raster file"
-msgstr ""
+msgstr "Non è possibile scrivere il file raster GDAL"
 
+# FINIRE
 #: ../raster/r.out.gdal/export_band.c:498
 #: ../raster/r.out.gdal/export_band.c:510
 #: ../raster/r.out.gdal/export_band.c:523
@@ -11843,7 +11844,7 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:669 ../raster/r.out.gdal/main.c:681
 #: ../raster/r.out.gdal/main.c:694
 msgid "Selected GDAL datatype does not cover data range."
-msgstr ""
+msgstr "Il tipo di dati GDAL non copre il campo di variazione dei dati."
 
 #: ../raster/r.out.gdal/export_band.c:499
 #: ../raster/r.out.gdal/export_band.c:511
@@ -11853,7 +11854,7 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:670
 #, c-format
 msgid "GDAL datatype: %s, range: %d - %d"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, campo di variazione: %d - %d"
 
 #: ../raster/r.out.gdal/export_band.c:502
 #: ../raster/r.out.gdal/export_band.c:514
@@ -11869,13 +11870,13 @@ msgstr "Mappa raster <%s> intervallo:  %g - %g"
 #: ../raster/r.out.gdal/export_band.c:549 ../raster/r.out.gdal/main.c:682
 #, c-format
 msgid "GDAL datatype: %s, range: %u - %u"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, campo di variazione: %u - %u"
 
 #: ../raster/r.out.gdal/export_band.c:562
 #: ../raster/r.out.gdal/export_band.c:576 ../raster/r.out.gdal/main.c:695
 #, c-format
 msgid "GDAL datatype: %s, range: %g - %g"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, campo di variazione: %g - %g"
 
 #: ../raster/r.out.gdal/main.c:49
 #, c-format
@@ -11911,10 +11912,11 @@ msgstr "Ignora i controlli sui dati mancanti."
 msgid "Name of raster map (or group) to export"
 msgstr "Nome della mappa raster (o gruppo) da esportare"
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:154
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
-msgstr ""
+msgstr "Formato GIS da scrivere (sensibile alle maiuscole; vedi anche il flag -l)"
 
 #: ../raster/r.out.gdal/main.c:175
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
@@ -11927,12 +11929,12 @@ msgstr "Nome del file raster di output"
 
 #: ../raster/r.out.gdal/main.c:190
 msgid "Creation option(s) to pass to the output format driver"
-msgstr ""
+msgstr "Opzioni di creazione da passare al driver del formato di output"
 
 #: ../raster/r.out.gdal/main.c:192
 #: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
-msgstr ""
+msgstr "Nella forma \"NOME=VALORE\". Separare voci multiple con una virgola."
 
 #: ../raster/r.out.gdal/main.c:199
 msgid "Metadata key(s) and value(s) to include"
@@ -11940,11 +11942,12 @@ msgstr "Chiave/i e valore/i dei metadati da includere"
 
 #: ../raster/r.out.gdal/main.c:201
 msgid "In the form of \"META-TAG=VALUE\", separate multiple entries with a comma. Not supported by all output format drivers."
-msgstr ""
+msgstr "Nella forma \"META-TAG=VALORE\". Separare voci multiple con una virgola. Non supportato da tutti i driver di formato."
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:210
 msgid "Assign a specified nodata value to output bands"
-msgstr ""
+msgstr "Assegna un valore specifico per il valore 'nessun dato' alle bande di output."
 
 #: ../raster/r.out.gdal/main.c:243
 #, c-format
@@ -11959,16 +11962,17 @@ msgstr "Nessuna mappa raster nel gruppo <%s>"
 #: ../raster/r.out.gdal/main.c:261
 #, c-format
 msgid "Unable to get <%s> driver"
-msgstr ""
+msgstr "Non è possibile ottenere il driver <%s>"
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:267
 #, c-format
 msgid "Driver <%s> does not support direct writing. Using MEM driver for intermediate dataset."
-msgstr ""
+msgstr "Il driver <%s> non supporta la scrittura diretta. Si sta utilizzando il driver MEM per dataset intermedi"
 
 #: ../raster/r.out.gdal/main.c:272
 msgid "Unable to get in-memory raster driver"
-msgstr ""
+msgstr "Non è possibile ottenere il driver raster in-memory"
 
 #: ../raster/r.out.gdal/main.c:276
 #, c-format
@@ -11978,31 +11982,33 @@ msgstr "Il driver <%s> non supporta la creazione di raster"
 #: ../raster/r.out.gdal/main.c:352
 #, c-format
 msgid "Could not read data range of raster <%s>"
-msgstr ""
+msgstr "Non è possibile leggere il campo di variazione dei dati del raster <%s>"
 
 #: ../raster/r.out.gdal/main.c:409
 #, c-format
 msgid "Exporting to GDAL data type: %s"
-msgstr "Esporta al tipo di dato GDAL: %s"
+msgstr "Esportazione al tipo di dato GDAL: %s"
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:424
 msgid "Raster export would result in complete data loss, aborting."
-msgstr ""
+msgstr "L'esportazione del raster potrebbe causare la perdita completa dei dati; l'operazione verrà interrotta."
 
 #: ../raster/r.out.gdal/main.c:435
 #, c-format
 msgid "Precision loss: Raster map <%s> of type %s to be exported as %s. This can be avoided by using %s."
-msgstr ""
+msgstr "Perdita di precisione: mappa raster <%s> di tipo %s da esportare come %s. Può essere evitata usando %s."
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:446
 #, c-format
 msgid "Precision loss: The range of <%s> can not be accurately preserved with GDAL datatype Float32. This can be avoided by exporting to Int32 or Float64."
-msgstr ""
+msgstr "Perdita di precisione: il campo di variazione di <%s> non può essere preservato con accuratezza col tipo di dato GDAL Float32. Può essere evitata esportando in Int32 o Float64."
 
 #: ../raster/r.out.gdal/main.c:454
 #, c-format
 msgid "Precision loss: Float32 can not preserve the DCELL precision of raster <%s>. This can be avoided by using Float64"
-msgstr ""
+msgstr "Perdita di precisione: Float32 non può preservare la precisione DCELL del raster <%s>. Può essere evitata usando Float64"
 
 #: ../raster/r.out.gdal/main.c:482 ../raster/r.out.gdal/main.c:511
 #: ../raster/r.out.gdal/main.c:515
@@ -12011,7 +12017,7 @@ msgstr "Esportazione del raster interrotta."
 
 #: ../raster/r.out.gdal/main.c:492
 msgid "Checking GDAL data type and nodata value"
-msgstr ""
+msgstr "Controllo del tipo di dati GDAL e del valore 'nessun dato'"
 
 #: ../raster/r.out.gdal/main.c:495
 #, c-format
@@ -12045,7 +12051,7 @@ msgstr "Non è possibile impostare la proiezione"
 
 #: ../raster/r.out.gdal/main.c:580
 msgid "Exporting to GDAL raster"
-msgstr ""
+msgstr "Esportazione nel raster GDAL"
 
 #: ../raster/r.out.gdal/main.c:583
 #, c-format
@@ -12067,40 +12073,41 @@ msgstr "Impossibile creare la mappa raster <%s> usando il driver <%s>"
 #: ../raster/r.out.gdal/main.c:685
 #, c-format
 msgid "Range to be exported: %f - %f"
-msgstr ""
+msgstr "Intervallo dati da esportare: %f - %f"
 
 #: ../raster/r.out.gdal/main.c:698
 #, c-format
 msgid "Range to be exported: %g - %g"
-msgstr ""
+msgstr "Intervallo dati da esportare: %g - %g"
 
+# FINIRE
 #: ../raster/r.out.gdal/main.c:722 ../raster/r.out.gdal/main.c:735
 #: ../raster/r.out.gdal/main.c:749 ../raster/r.out.gdal/main.c:762
 #: ../raster/r.out.gdal/main.c:777
 #, c-format
 msgid "Mismatch between metadata nodata value and actual nodata value in exported raster: specified nodata value %f gets converted to %d by selected GDAL datatype."
-msgstr ""
+msgstr "Discordanza fra il valore 'nessun dato' dei metadati e quello reale nel raster esportato: il valore 'nessun dato %f specificato viene convertito a %d dal tipo di dati GDAL selezionato."
 
 #: ../raster/r.out.gdal/main.c:725 ../raster/r.out.gdal/main.c:752
 #: ../raster/r.out.gdal/main.c:780
 #, c-format
 msgid "GDAL datatype: %s, valid range: %d - %d"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, intervallo valido: %d - %d"
 
 #: ../raster/r.out.gdal/main.c:738 ../raster/r.out.gdal/main.c:765
 #, c-format
 msgid "GDAL datatype: %s, valid range: %u - %u"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, intervallo valido: %u - %u"
 
 #: ../raster/r.out.gdal/main.c:791
 #, c-format
 msgid "Mismatch between metadata nodata value and actual nodata value in exported raster: specified nodata value %g gets converted to %g by selected GDAL datatype."
-msgstr ""
+msgstr "Discordanza fra il valore 'nessun dato' dei metadati e quello reale nel raster esportato: il valore 'nessun dato %g specificato viene convertito a %g dal tipo di dati GDAL selezionato."
 
 #: ../raster/r.out.gdal/main.c:794
 #, c-format
 msgid "GDAL datatype: %s, valid range: %g - %g"
-msgstr ""
+msgstr "Tipo di dati GDAL: %s, intervallo valido: %g - %g"
 
 #: ../raster/r.lake/main.c:79
 #, c-format
@@ -12823,7 +12830,7 @@ msgstr ""
 
 #: ../imagery/i.points/main.c:96 ../imagery/i.vpoints/main.c:94
 msgid "imagery, geometry"
-msgstr ""
+msgstr "immagine, geometria"
 
 #: ../imagery/i.points/main.c:98
 msgid "Mark ground control points on image to be rectified."
@@ -12831,7 +12838,7 @@ msgstr ""
 
 #: ../imagery/i.points/main.c:105 ../imagery/i.vpoints/main.c:104
 msgid "Name of imagery group to be registered"
-msgstr ""
+msgstr "Nome del gruppo di immagini da registrare"
 
 #: ../imagery/i.points/main.c:123 ../imagery/i.class/main.c:90
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:97
@@ -13040,7 +13047,7 @@ msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
 msgid "imagery, classification, MLC"
-msgstr ""
+msgstr "immagini, classificazione, MLC"
 
 #: ../imagery/i.maxlik/main.c:65
 msgid "Classifies the cell spectral reflectances in imagery data."
@@ -13203,7 +13210,7 @@ msgstr "Nome della mappa raster da mostrare"
 
 #: ../imagery/i.class/main.c:72 ../imagery/i.cca/main.c:93
 msgid "Name of input imagery subgroup"
-msgstr ""
+msgstr "Nome del sottogruppo di immagini di input"
 
 #: ../imagery/i.class/main.c:77
 msgid "File to contain result signatures"
@@ -13307,7 +13314,7 @@ msgstr ""
 
 #: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
 msgid "imagery, map management"
-msgstr ""
+msgstr "immagini, gestione delle mappe"
 
 #: ../imagery/i.group/main.c:54
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
@@ -13316,11 +13323,11 @@ msgstr "Crea, modifica ed elenca gruppi e sottogruppi di file di immagini."
 #: ../imagery/i.group/main.c:58
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:62
 msgid "Name of imagery group"
-msgstr ""
+msgstr "Nome del gruppo di immagini"
 
 #: ../imagery/i.group/main.c:64
 msgid "Name of imagery sub-group"
-msgstr ""
+msgstr "Nome del sottogruppo di immagini"
 
 #: ../imagery/i.group/main.c:68
 msgid "Name of raster map(s) to include in group"
@@ -13483,7 +13490,7 @@ msgstr "Il sottogruppo <%s> nel gruppo <%s> non contiene mappe raster."
 
 #: ../imagery/i.his.rgb/h2rmain.c:45 ../imagery/i.rgb.his/r2hmain.c:45
 msgid "imagery, color transformation, RGB, HIS"
-msgstr ""
+msgstr "immagini, trasformazione di colore, RGB, HIS"
 
 #: ../imagery/i.his.rgb/h2rmain.c:47
 msgid "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to RGB (Red-Green-Blue) color space."
@@ -13555,7 +13562,7 @@ msgstr "Raster <%s@%s>: la zona non corrisponde alle impostazioni correnti"
 
 #: ../imagery/i.rectify/main.c:90
 msgid "imagery, rectify"
-msgstr ""
+msgstr "immagini, rettificare"
 
 #: ../imagery/i.rectify/main.c:92
 msgid "Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points."
@@ -13746,34 +13753,35 @@ msgstr "Location di destinazione <%s> non trovata"
 
 #: ../imagery/i.rectify/target.c:35
 msgid "Please run i.target for group."
-msgstr ""
+msgstr "Eseguire i.target per il gruppo"
 
+# target
 #: ../imagery/i.target/main.c:47
 msgid "Targets an imagery group to a GRASS location and mapset."
-msgstr ""
+msgstr "Destina un gruppo di immagini a una location e a un mapset di GRASS."
 
 #: ../imagery/i.target/main.c:56
 msgid "Name of imagery target location"
-msgstr ""
+msgstr "Nome della location di destinazione delle immagini"
 
 #: ../imagery/i.target/main.c:62
 msgid "Name of target mapset"
-msgstr "Nome del mapset d'origine"
+msgstr "Nome del mapset di destinazione"
 
 #: ../imagery/i.target/main.c:67
 msgid "Set current location and mapset as target for of imagery group"
-msgstr ""
+msgstr "Imposta location e mapset correnti come destinazione del gruppo di immagini"
 
 #: ../imagery/i.target/main.c:89 ../imagery/i.target/main.c:106
 #: ../imagery/i.target/main.c:115
 #, c-format
 msgid "Group <%s> targeted for location [%s], mapset [%s]"
-msgstr ""
+msgstr "Il gruppo <%s> è stato assegnato alla location [%s], mapset [%s]"
 
 #: ../imagery/i.target/main.c:92
 #, c-format
 msgid "Group <%s> has no target"
-msgstr ""
+msgstr "Il gruppo <%s> non ha destinazione"
 
 #: ../imagery/i.target/main.c:100
 msgid ""
@@ -13781,6 +13789,9 @@ msgid ""
 " OR\n"
 " manually enter the variables"
 msgstr ""
+"Usare il flag \"mapset e location correnti\" (-c)\n"
+" OPPURE\n"
+" inserire manualmente le variabili"
 
 #: ../imagery/i.vpoints/plot.c:61 ../imagery/i.vpoints/plot.c:143
 #: ../display/d.graph/do_graph.c:415
@@ -13794,7 +13805,7 @@ msgstr ""
 #: ../imagery/i.topo.corr/correction.c:100
 #, c-format
 msgid "Minnaert constant = %lf"
-msgstr ""
+msgstr "Costante di Minnaert = %lf"
 
 #: ../imagery/i.topo.corr/correction.c:105
 #, c-format
@@ -13807,12 +13818,11 @@ msgstr ""
 
 #: ../imagery/i.topo.corr/main.c:86
 msgid "imagery, terrain, topographic correction"
-msgstr ""
+msgstr "immagini, terreno, correzione topografica"
 
 #: ../imagery/i.topo.corr/main.c:94
-#, fuzzy
 msgid "Name of reflectance raster maps to be corrected topographically"
-msgstr "Nome dei raster da unire insieme"
+msgstr "Nome delle mappe raster di riflettanza da correggere topograficamente"
 
 #: ../imagery/i.topo.corr/main.c:98
 msgid "Name (flag -i) or prefix for output raster maps"
@@ -13824,45 +13834,45 @@ msgstr "Nome della mappa raster di base in input (elevazione o illuminazione)"
 
 #: ../imagery/i.topo.corr/main.c:108
 msgid "Solar zenith in degrees"
-msgstr ""
+msgstr "Zenit del sole in gradi"
 
 #: ../imagery/i.topo.corr/main.c:114
 msgid "Solar azimuth in degrees (only if flag -i)"
-msgstr ""
+msgstr "Azimut del sole in gradi (solo col flag -i)"
 
 #: ../imagery/i.topo.corr/main.c:121
 msgid "Topographic correction method"
-msgstr ""
+msgstr "Metodo di correzione topografica"
 
+# terrain model ?
 #: ../imagery/i.topo.corr/main.c:126
-#, fuzzy
 msgid "Output sun illumination terrain model"
-msgstr "Output sono gli errori dell'interpolazione "
+msgstr "Produce un modello di illuminazione del terreno"
 
 #: ../imagery/i.topo.corr/main.c:132
 msgid "Solar azimuth is necessary to calculate illumination terrain model"
-msgstr ""
+msgstr "L'azimut del sole è necessario per calcolre il modello di illuminazione del terreno"
 
 #: ../imagery/i.topo.corr/main.c:135
 msgid "Reflectance maps are necessary to make topographic correction"
-msgstr ""
+msgstr "Le mappe di riflettanza son necessarie per effettuare la correzione topografica"
 
 #: ../imagery/i.topo.corr/main.c:167
 msgid "Elevation raster map of unknown type"
-msgstr "Raster dell'elavazione di tipologia sconosciuta"
+msgstr "Raster dell'elevazione di tipologia sconosciuta"
 
 #: ../imagery/i.topo.corr/main.c:201
 msgid "Illumination model is of CELL type"
-msgstr ""
+msgstr "Il modello di illuminazione è di tipo CELL"
 
 #: ../imagery/i.topo.corr/main.c:208
 #, c-format
 msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
-msgstr "Raster della riflettanza <%s> non è DCELL - ignorato"
+msgstr "La riflettanza della mappa raster <%s> non è di tipo DCELL - ignorato"
 
 #: ../imagery/i.ifft/ifftmain.c:68 ../imagery/i.fft/fftmain.c:74
 msgid "imagery, FFT"
-msgstr ""
+msgstr "immagini, FFT"
 
 #: ../imagery/i.ifft/ifftmain.c:70
 msgid "Inverse Fast Fourier Transform (IFFT) for image processing."
@@ -14562,7 +14572,7 @@ msgstr "Calcolo delle medie per la banda %d in corso..."
 #: ../imagery/i.pca/main.c:307
 #, c-format
 msgid "Computing row %d (of %d) of covariance matrix..."
-msgstr ""
+msgstr "Calcolo della riga %d (di %d) della matrice di covarianza in corso..."
 
 #: ../imagery/i.pca/main.c:324
 msgid "Unable to allocate memory for row buffer"
@@ -14575,7 +14585,7 @@ msgstr "Impossibile allocare memoria per la riga raster"
 #: ../imagery/i.pca/main.c:395
 #, c-format
 msgid "Transforming <%s>..."
-msgstr "Sto trasformando <%s>..."
+msgstr "Trasformazione di <%s> in corso..."
 
 #: ../imagery/i.pca/main.c:414
 #, c-format
@@ -14637,7 +14647,7 @@ msgstr ""
 #: ../imagery/i.ortho.photo/i.photo.2image/main.c:54
 #: ../imagery/i.ortho.photo/i.photo.camera/main.c:55
 msgid "imagery, orthorectify"
-msgstr ""
+msgstr "immagini, ortorettificare"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:88
 msgid "Orthorectifies an image by using the image to photo coordinate transformation matrix."
@@ -14731,7 +14741,7 @@ msgstr ""
 
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:64
 msgid "Interactively select or modify the target elevation model."
-msgstr ""
+msgstr "Seleziona o modifica interattivamente il modello di elevazione di destinazione."
 
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:68
 #: ../imagery/i.ortho.photo/menu/menu.c:48
@@ -14740,15 +14750,16 @@ msgstr ""
 #: ../imagery/i.ortho.photo/i.photo.2image/main.c:60
 #: ../imagery/i.ortho.photo/i.photo.camera/main.c:61
 msgid "Name of imagery group for ortho-rectification"
-msgstr ""
+msgstr "Nome del gruppo di immagini per l'ortorettificazione"
 
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:91
 #, c-format
 msgid "Target information for group [%s] missing\n"
-msgstr ""
+msgstr "Informazione mancante per il gruppo [%s]\n"
 
+# target?
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Target location [%s] not found\n"
 msgstr "Location di destinazione [%s] non trovata\n"
 
@@ -14767,7 +14778,7 @@ msgstr "non trovato\n"
 
 #: ../imagery/i.ortho.photo/i.photo.elev/main.c:131
 msgid "Please select a target for group"
-msgstr ""
+msgstr "Selezionare una destinazione per il gruppo"
 
 #: ../imagery/i.ortho.photo/menu/menu.c:44
 msgid "Menu driver for the photo imagery programs."
@@ -14780,7 +14791,7 @@ msgstr "Il gruppo preselezionato <%s> non è stato trovato"
 
 #: ../imagery/i.ortho.photo/menu/menu.c:68
 msgid "Enter imagery group for ortho-rectification"
-msgstr ""
+msgstr "Inserire il gruppo di immagini per l'ortorettificazione"
 
 #: ../imagery/i.ortho.photo/menu/menu.c:74
 #, c-format
@@ -14796,12 +14807,12 @@ msgstr "Impossibile leggere il file REF per il gruppo [%s]"
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:50
 #, c-format
 msgid "Orthorectification cancelled"
-msgstr ""
+msgstr "Ortorettificazione annulata"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:49
 #, c-format
 msgid "No files in this group!"
-msgstr ""
+msgstr "Nessun file in questo gruppo!"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:61
 msgid ""
@@ -14817,6 +14828,8 @@ msgid ""
 "\n"
 "Rectify image <%s>? "
 msgstr ""
+"\n"
+"Rettificare l'immagine <%s>? "
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:84
 #, c-format
@@ -14824,31 +14837,37 @@ msgid ""
 "\n"
 "No images selected, orthorectification cancelled."
 msgstr ""
+"\n"
+"Nessuna immagine selezionata, ortorettificazione annullata."
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:99
 msgid "Enter an extension to be appended to rectified maps:"
-msgstr ""
+msgstr "Inserire un'estensione da aggiungere alle mappe rettificate:"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:110
 msgid ""
 "\n"
 "Choose another extension? "
 msgstr ""
+"\n"
+"Scegliere un'altra estensione? "
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:122
 msgid ""
 "\n"
 "Compute local camera angle? "
 msgstr ""
+"\n"
+"Calcorare l'angolo di ripresa locale? "
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:132
 msgid "Enter a name for the camera angle map:"
-msgstr ""
+msgstr "Inserire un nome per la mappa degli angoli di ripresa:"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:141
 #, c-format
 msgid "Map name <%s> is illegal"
-msgstr "Nome della mappa <%s> non è valido"
+msgstr "Il nome della mappa <%s> non è valido"
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:142
 msgid ""
@@ -14863,6 +14882,8 @@ msgid ""
 "\n"
 "Overwrite maps in target location/mapset? "
 msgstr ""
+"\n"
+"Sovrascrivere le mappe in location/mapset di destinazione? "
 
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:224
 #, c-format
@@ -14879,8 +14900,9 @@ msgstr " 1. vicino più prossimo\n"
 msgid " 2. bilinear\n"
 msgstr " 2. bilineare\n"
 
+# bicubica/bicubico?
 #: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:227
-#, fuzzy, c-format
+#, c-format
 msgid " 3. bicubic\n"
 msgstr " 3. bicubica\n"
 
@@ -19696,7 +19718,7 @@ msgstr "Usa la funzione drand48() invece di rand()"
 #: ../vector/v.random/main.c:136 ../vector/v.edit/args.c:216
 #: ../vector/v.in.dxf/main.c:74
 msgid "Do not build topology"
-msgstr "Non costruisce la topologia"
+msgstr "Non costruire la topologia"
 
 #: ../vector/v.random/main.c:142
 msgid "v.random can't create 3D vector and attribute table at same time"
@@ -21699,7 +21721,7 @@ msgstr "Più di un record nella tabella LR"
 
 # FINIRE
 #: ../vector/v.out.ascii/b2a.c:150
-#, fuzzy, c-format
+#, c-format
 msgid "got type %d"
 msgstr "ottenuto il tipo %d"
 
@@ -21871,7 +21893,7 @@ msgstr ""
 
 #: ../vector/v.build/main.c:55
 msgid "build;build topology;dump;write topology to stdout;sdump;write spatial index to stdout;cdump;write category index to stdout"
-msgstr ""
+msgstr "build;costruisce la topologia;dump;scrive la topologia sullo stdout;sdump; scrive l'indice spaziale sullo stdout;cdump;scrive l'indice delle categorie sullo stdout"
 
 #: ../vector/v.edit/args.c:38
 msgid "Name of vector map to edit"
@@ -21879,7 +21901,7 @@ msgstr "Nome della mappa vettoriale da modificare"
 
 #: ../vector/v.edit/args.c:54
 msgid "Tool"
-msgstr "Strumenti"
+msgstr "Strumento"
 
 #: ../vector/v.edit/args.c:55
 msgid "create;Create new (empty) vector map;add;Add new features to existing vector map;delete;Delete selected features from vector map;move;Move selected features in vector map;vertexmove;Move vertex of selected vector lines;vertexdel;Remove vertex from selected vector lines;vertexadd;Add new vertex to selected vector lines;merge;Merge selected vector lines;break;Break/split vector lines;select;Select lines and print their ID's;catadd;Set new categories to selected vector features for defined layer;catdel;Delete categories from selected vector features for defined layer;copy;Copy selected features;snap;Snap vector features in given threshold;flip;Flip direction of selected vector lines;connect;Connect two lines;zbulk;Z bulk-labeling (automated assignment of z coordinate to vector lines);chtype;Change feature type (point<->centroid, line<->boundary)"
@@ -21895,7 +21917,7 @@ msgstr "Se non è dato (o \"-\") legge dallo standard input"
 
 #: ../vector/v.edit/args.c:112
 msgid "Difference in x,y direction for moving feature or vertex"
-msgstr ""
+msgstr "Differenza nella direzione x, y per lo spostamento di un elemento o vertice"
 
 #: ../vector/v.edit/args.c:119
 msgid "Threshold distance (coords,snap,query)"
@@ -21911,11 +21933,11 @@ msgstr "Lista delle coordinate dei punti"
 
 #: ../vector/v.edit/args.c:146
 msgid "Bounding box for selecting features"
-msgstr ""
+msgstr "Limiti del riquadro per la selezione di elementi"
 
 #: ../vector/v.edit/args.c:155
 msgid "Polygon for selecting features"
-msgstr ""
+msgstr "Poligono per la selezione di elementi"
 
 #: ../vector/v.edit/args.c:165
 msgid "Query tool"
@@ -21939,15 +21961,17 @@ msgstr ""
 
 #: ../vector/v.edit/args.c:187
 msgid "no;Not apply snapping;node;Snap only to node;vertex;Allow snapping also to vertex"
-msgstr ""
+msgstr "no;Non applicare la cattura;node;Cattura solo i nodi;vertex;Abilita anche la cattura dei vertici"
 
+# FINIRE
 #: ../vector/v.edit/args.c:195
+#, fuzzy
 msgid "Starting value and step for z bulk-labeling"
-msgstr ""
+msgstr "Valore iniziale e passo per l'etichettatura di massa "
 
 #: ../vector/v.edit/args.c:196
 msgid "Pair: value,step (e.g. 1100,10)"
-msgstr ""
+msgstr "Coppia: valore, passo (p.es. 1100,10)"
 
 #: ../vector/v.edit/args.c:201 ../vector/v.extract/main.c:106
 #: ../vector/v.select/args.c:88
@@ -21956,15 +21980,15 @@ msgstr "Selezione inversa"
 
 #: ../vector/v.edit/args.c:207
 msgid "Close added boundaries (using threshold distance)"
-msgstr ""
+msgstr "Chiudere i confini aggiunti (usando la distanza di soglia)"
 
 #: ../vector/v.edit/args.c:211
 msgid "Do not expect header of input data"
-msgstr ""
+msgstr "Non attendere l'intestazione dei dati di input"
 
 #: ../vector/v.edit/args.c:221
 msgid "Modify only first found feature in bounding box"
-msgstr ""
+msgstr "Modificare solo il primo elemento trovato nel riquadro"
 
 #: ../vector/v.edit/args.c:233
 msgid "Polygon must have at least 3 coordinate pairs"
@@ -21985,7 +22009,7 @@ msgstr "Si deve specificare almeno un'opzione da %s"
 #: ../vector/v.edit/args.c:336
 #, c-format
 msgid "Tool %s requires option %s"
-msgstr ""
+msgstr "Lo strumento %s richiede l'opzione %s"
 
 #: ../vector/v.edit/snap.c:111 ../vector/v.edit/a2b.c:328
 #, c-format
@@ -21994,7 +22018,7 @@ msgstr "Impossibile riscrivere la linea %d"
 
 #: ../vector/v.edit/main.c:55
 msgid "vector, editing, geometry"
-msgstr ""
+msgstr "vettoriale, modifica, geometria"
 
 #: ../vector/v.edit/main.c:56
 msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
@@ -22012,7 +22036,7 @@ msgstr "impossibile aprire il file ASCII <%s>"
 
 #: ../vector/v.edit/main.c:98
 msgid "Creating new DB connection based on default mapset settings..."
-msgstr ""
+msgstr "Creazione di una nuova connessione al DB basata sulle impostazioni del mapset predefinito in corso..."
 
 #: ../vector/v.edit/main.c:130 ../vector/v.kcv/main.c:137
 #, c-format
@@ -22035,12 +22059,12 @@ msgstr "Selezione degli elementi in corso..."
 
 #: ../vector/v.edit/main.c:220
 msgid "No features selected, nothing to edit"
-msgstr ""
+msgstr "Nessun elemento selezionato, nulla da modificare"
 
 #: ../vector/v.edit/main.c:228
 #, c-format
 msgid "Vector map <%s> is not 3D. Tool '%s' requires 3D vector map. Please convert the vector map to 3D using e.g. %s."
-msgstr ""
+msgstr "La mappa vettoriale <%s> non è 3D. Lo strumento '%s' richiede una mappa vettoriale 3D. Convertire la mappa vettoriale in 3D, p.es. usando %s."
 
 #: ../vector/v.edit/main.c:266
 #, c-format
@@ -22052,7 +22076,7 @@ msgstr "%d elementi aggiunti"
 #: ../vector/v.edit/main.c:359
 #, c-format
 msgid "Threshold value for snapping is %.2f"
-msgstr ""
+msgstr "Il valore di soglia per la cattura è %.2f"
 
 #: ../vector/v.edit/main.c:277
 #, c-format
@@ -22117,7 +22141,7 @@ msgstr "%d elementi copiati"
 #: ../vector/v.edit/main.c:365
 #, c-format
 msgid "%d lines flipped"
-msgstr ""
+msgstr "%d linee invertite"
 
 #: ../vector/v.edit/main.c:385
 #, c-format
@@ -22154,7 +22178,7 @@ msgstr "%d di %d elementi selezionati dalla mappa vettoriale <%s>"
 
 #: ../vector/v.edit/select.c:500
 msgid "Layer must be > 0 for 'where'"
-msgstr ""
+msgstr "Layer dev'essere > 0 per 'where'"
 
 #: ../vector/v.edit/a2b.c:85 ../vector/v.edit/a2b.c:123
 #: ../vector/v.edit/a2b.c:147
@@ -22164,11 +22188,11 @@ msgstr "Errore nella lettura del file ASCII: '%s'"
 
 #: ../vector/v.edit/a2b.c:136 ../vector/v.in.ascii/a2b.c:103
 msgid "End of ASCII file reached before end of coordinates"
-msgstr ""
+msgstr "È stata raggiunta la fine del file ACII prima della fine delle coordinate"
 
 #: ../vector/v.edit/a2b.c:178
 msgid "End of ascii file reached before end of categories"
-msgstr ""
+msgstr "È stata raggiunta la fine del file ACII prima della fine delle categorie"
 
 #: ../vector/v.edit/a2b.c:189
 #, c-format
@@ -22178,12 +22202,12 @@ msgstr "Errore nella lettura delle categorie: '%s'"
 #: ../vector/v.edit/a2b.c:236
 #, c-format
 msgid "Unexpected data in vector head: '%s'"
-msgstr ""
+msgstr "Dati inattesi nell'intestazione del vettore: '%s' "
 
 #: ../vector/v.edit/a2b.c:270
 #, c-format
 msgid "Unknown keyword '%s' in vector head"
-msgstr ""
+msgstr "Parola chiave '%s' sconosciuta nell'intestazione del vettoriale"
 
 #: ../vector/v.in.dwg/main.c:66
 msgid "Converts DWG/DXF to GRASS vector map"
@@ -22195,7 +22219,7 @@ msgstr "Nome del file DWG o DXF"
 
 #: ../vector/v.in.dwg/main.c:79 ../vector/v.in.dxf/main.c:107
 msgid "List of layers to import"
-msgstr ""
+msgstr "Elenco dei tematismi da importare"
 
 #: ../vector/v.in.dwg/main.c:84 ../vector/v.in.dxf/main.c:88
 msgid "Invert selection by layers (don't import layers in list)"
@@ -22212,7 +22236,7 @@ msgstr ""
 #: ../vector/v.in.dwg/main.c:96 ../vector/v.in.dxf/main.c:82
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
-msgstr "Elenca i layer disponibili ed esce"
+msgstr "Elenca i tematismi disponibili ed esce"
 
 #: ../vector/v.in.dwg/main.c:100
 msgid "Use numeric type for attribute \"layer\""
@@ -22343,9 +22367,8 @@ msgid "Cannot update table"
 msgstr "Impossibile aggiornare la tabella"
 
 #: ../vector/v.digit/line.c:55
-#, fuzzy
 msgid "Form"
-msgstr "Formato"
+msgstr ""
 
 #: ../vector/v.digit/line.c:64
 msgid "New record was created.<BR>"
@@ -22358,7 +22381,7 @@ msgstr "Record per questa categoria già esistente .<BR>"
 #: ../vector/v.digit/line.c:138
 #, c-format
 msgid "Digitize new %s:"
-msgstr ""
+msgstr "Digitalizza nuovo %s:"
 
 #: ../vector/v.digit/line.c:140 ../vector/v.digit/line.c:224
 #: ../vector/v.digit/line.c:253
@@ -22379,17 +22402,16 @@ msgstr "Nuovo punto"
 #: ../vector/v.digit/attr.c:192 ../vector/v.digit/attr.c:302
 #: ../vector/v.digit/attr.c:398 ../vector/v.digit/attr.c:403
 #: ../vector/v.digit/attr.c:407 ../vector/v.digit/attr.c:463
-#, fuzzy
 msgid "Quit tool"
-msgstr "Strumento interrogazione"
+msgstr "Strumento di uscita"
 
 #: ../vector/v.digit/line.c:191
 msgid "Out of memory! Point not added."
-msgstr ""
+msgstr "Memoria insufficiente! Punto non aggiunto."
 
 #: ../vector/v.digit/line.c:246
 msgid "Less than 2 points for line -> nothing written"
-msgstr ""
+msgstr "La linea ha meno di 2 punti --> nessun elemento disegnato"
 
 #: ../vector/v.digit/line.c:253
 msgid "Undo last point"
@@ -22397,9 +22419,8 @@ msgstr "Annulla l'ultimo punto"
 
 #: ../vector/v.digit/line.c:253 ../vector/v.digit/line.c:337
 #: ../vector/v.digit/line.c:386
-#, fuzzy
 msgid "Close line"
-msgstr "Chiusura non riuscita."
+msgstr "Concludi la linea"
 
 #: ../vector/v.digit/line.c:337 ../vector/v.digit/line.c:386
 #: ../vector/v.digit/line.c:407
@@ -22411,13 +22432,12 @@ msgid "Undo Last Point"
 msgstr "Annulla ultimo punto"
 
 #: ../vector/v.digit/line.c:407
-#, fuzzy
 msgid "Delete line and exit"
-msgstr "Mostra le tabelle ed esce"
+msgstr "Cancella la linea ed esci"
 
 #: ../vector/v.digit/line.c:480
 msgid "Delete point, line, boundary, or centroid:"
-msgstr ""
+msgstr "Cancella punto, linea, confine o centroide:"
 
 #: ../vector/v.digit/line.c:481 ../vector/v.digit/line.c:566
 #: ../vector/v.digit/line.c:620 ../vector/v.digit/line.c:705
@@ -22438,32 +22458,32 @@ msgstr "Deseleziona"
 #: ../vector/v.digit/line.c:564 ../vector/v.digit/vertex.c:130
 #: ../vector/v.digit/vertex.c:303
 msgid "Confirm and select next"
-msgstr ""
+msgstr "Conferma e seleziona il prossimo"
 
 #: ../vector/v.digit/line.c:619
 msgid "Move point, line, boundary, or centroid:"
-msgstr ""
+msgstr "Muovi punto, linea, confine o centroide:"
 
 #: ../vector/v.digit/line.c:671 ../vector/v.digit/vertex.c:633
 msgid "New location"
-msgstr "Nuova location"
+msgstr "Nuova posizione"
 
 #: ../vector/v.digit/vertex.c:35
 msgid "Split line:"
-msgstr ""
+msgstr "Spezza la linea:"
 
 #: ../vector/v.digit/vertex.c:199
 msgid "Remove vertex:"
-msgstr ""
+msgstr "Rimuovi vertice:"
 
 #: ../vector/v.digit/vertex.c:200 ../vector/v.digit/vertex.c:220
 #: ../vector/v.digit/vertex.c:325
 msgid "Select vertex"
-msgstr ""
+msgstr "Seleziona vertice"
 
 #: ../vector/v.digit/vertex.c:372
 msgid "Add vertex:"
-msgstr ""
+msgstr "Aggiungi vertice:"
 
 #: ../vector/v.digit/vertex.c:471
 msgid "New vertex"
@@ -22471,7 +22491,7 @@ msgstr "Nuovo vertice"
 
 #: ../vector/v.digit/vertex.c:569
 msgid "Move vertex:"
-msgstr ""
+msgstr "Muovi vertice:"
 
 #: ../vector/v.digit/c_face.c:183 ../vector/v.digit/c_face.c:241
 #, c-format
@@ -22509,12 +22529,11 @@ msgstr "Impossibile creare l'indice:\n"
 #: ../vector/v.digit/c_face.c:294 ../vector/v.db.connect/main.c:336
 #, c-format
 msgid "Cannot grant privileges on table %s"
-msgstr "Permessi non sufficienti per accedere alla tabella %s"
+msgstr "Non è possibile assegnare i permessi sulla tabella %s"
 
 #: ../vector/v.digit/c_face.c:295
-#, fuzzy
 msgid "Cannot grant privileges on table:\n"
-msgstr "Permessi non sufficienti per accedere alla tabella %s"
+msgstr "Non è possibile assegnare i permessi sulla tabella:\n"
 
 #: ../vector/v.digit/c_face.c:312
 msgid "Cannot add database link to vector, link for given field probably already exists."
@@ -22548,12 +22567,11 @@ msgstr "Copia gli attributi:"
 
 #: ../vector/v.digit/attr.c:302 ../vector/v.digit/attr.c:407
 msgid "Select source object"
-msgstr ""
+msgstr "Seleziona oggetto origine"
 
 #: ../vector/v.digit/attr.c:396 ../vector/v.digit/attr.c:402
-#, fuzzy
 msgid "Select the target object"
-msgstr "Imposta il colore del testo"
+msgstr "Seleziona oggetto destinazione"
 
 #: ../vector/v.digit/attr.c:397
 msgid "Conform and select next"
@@ -22561,11 +22579,11 @@ msgstr ""
 
 #: ../vector/v.digit/attr.c:397
 msgid "Deselect Target"
-msgstr ""
+msgstr "Deseleziona Destinazione"
 
 #: ../vector/v.digit/attr.c:403
 msgid "Deselect Source"
-msgstr ""
+msgstr "Deselezione Origine"
 
 #: ../vector/v.digit/attr.c:462
 msgid "Display attributes:"
@@ -22597,7 +22615,7 @@ msgstr "Nessuna categoria"
 #: ../vector/v.digit/attr.c:668
 #, c-format
 msgid "There are no more features with category %d (layer %d) in the map, but there is record in the table. Delete this record?"
-msgstr ""
+msgstr "Non ci sono altri elementi con categoria %d (layer %d) nella mappa, ma c'è la riga nella tabella. Eliminare la riga?"
 
 #: ../vector/v.digit/attr.c:680
 #, c-format
@@ -22629,52 +22647,52 @@ msgstr "Impossibile aprire il cursore selezionato"
 #: ../vector/v.digit/generate.c:110
 #, c-format
 msgid "Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>"
-msgstr ""
+msgstr "Non è possibile aprire il cursore selezionato:<BR>'%s'<BR>sul database '%s' col driver '%s'<BR>"
 
 #: ../vector/v.digit/generate.c:121
 #, fuzzy
 msgid "Cannot fetch next record"
 msgstr "Impossibile inserire il nuovo record: %s"
 
+# di database
 #: ../vector/v.digit/generate.c:130
-#, fuzzy
 msgid "No database record"
-msgstr "Driver del database:"
+msgstr "Nessun record nel database"
 
 #: ../vector/v.digit/generate.c:223
 #, c-format
 msgid "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>"
 msgstr ""
 
+# editing ?
 #: ../vector/v.digit/main.c:104
 msgid "vector, editing, digitization"
-msgstr ""
+msgstr "vettoriale, editing, digitalizzazione"
 
 #: ../vector/v.digit/main.c:106
 msgid "Interactive editing and digitization of vector maps."
-msgstr ""
+msgstr "Modifica interattiva e digitalizzazione di mappe vettoriali."
 
 #: ../vector/v.digit/main.c:121
 msgid "Create new file if it does not exist."
-msgstr ""
+msgstr "Crea un nuovo file se non esiste."
 
 #: ../vector/v.digit/main.c:150
 msgid "New empty map created."
-msgstr ""
+msgstr "Creata una nuova mappa vuota."
 
 #: ../vector/v.digit/main.c:157
 #, c-format
 msgid "Map <%s> does not exist in current mapset. Add flag -n to create a new map."
-msgstr ""
+msgstr "La mappa <%s> non esiste nel mapset corrente. Aggiungere il flag -n per creare una nuova mappa."
 
 #: ../vector/v.digit/centre.c:56
-#, fuzzy
 msgid "Select tool"
-msgstr "Selezione"
+msgstr "Strumento di selezione"
 
 #: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
-msgstr ""
+msgstr "Regione ripristinata all'estensione originale."
 
 #: ../vector/v.digit/var.c:80 ../vector/v.digit/var.c:101
 #: ../vector/v.digit/var.c:122
@@ -22683,34 +22701,34 @@ msgid "Cannot set variable code = %d"
 msgstr "Impossibile impostare la variabile code = %d"
 
 #: ../vector/v.digit/var.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot get type of variable %s"
-msgstr "Non riesco a mostrare i database:\n"
+msgstr "Non è possibile ottenere il tipo della variabile %s"
 
 #: ../vector/v.digit/var.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot get code of variable %s"
-msgstr "Non riesco a mostrare i database:\n"
+msgstr "Non è possibile ottenere il codice della variabile %s"
 
 #: ../vector/v.digit/var.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot get name of variable %d"
-msgstr "Non riesco a mostrare i database:\n"
+msgstr "Non è possibile ottenere il nome della variabile %d"
 
 #: ../vector/v.digit/var.c:199 ../vector/v.digit/var.c:215
 #: ../vector/v.digit/var.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot get value of variable code = %d"
-msgstr "Non riesco a mostrare i database:\n"
+msgstr "Non è possibile ottenere il valore della variabile = %d"
 
 #: ../vector/v.digit/zoom.c:26
 msgid "Zoom by window"
-msgstr ""
+msgstr "Ingrandisci l'area con un riquadro"
 
 #: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
 #: ../vector/v.digit/zoom.c:75
 msgid "1. corner"
-msgstr ""
+msgstr "1. angolo"
 
 #: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
 #: ../vector/v.digit/zoom.c:75 ../vector/v.digit/zoom.c:158
@@ -22719,20 +22737,20 @@ msgstr "Uscita"
 
 #: ../vector/v.digit/zoom.c:44
 msgid "2. corner"
-msgstr ""
+msgstr "2. angolo"
 
 #: ../vector/v.digit/zoom.c:157
 msgid "Pan"
-msgstr ""
+msgstr "Sposta finestra"
 
 #: ../vector/v.digit/zoom.c:158
 msgid "New center"
 msgstr "Nuovo centro"
 
 #: ../vector/v.digit/zoom.c:247
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find window '%s'"
-msgstr "Impossibile inserire una nuova regola: %s"
+msgstr "Non è possibile trovare la finestra '%s'"
 
 #: ../vector/v.net.alloc/main.c:61
 msgid "vector, network, allocation"
@@ -24041,33 +24059,28 @@ msgid "Name for output vector map containing a minimum cut"
 msgstr "Nome della mappa vettoriale di input contenente le linee"
 
 #: ../vector/v.net.flow/main.c:77
-#, fuzzy
 msgid "Name of arc forward/both direction(s) capacity column"
-msgstr "Colonna costo direzione avanti/entrambe per gli archi"
+msgstr "Nome della colonna capacità direzione avanti/entrambe per gli archi"
 
 #: ../vector/v.net.flow/main.c:82
-#, fuzzy
 msgid "Name of arc backward direction capacity column"
-msgstr "Colonna costo direzione indietro per gli archi"
+msgstr "Nome della colonna capacità direzione indietro per gli archi"
 
 #: ../vector/v.net.flow/main.c:86
-#, fuzzy
 msgid "Source layer number or name"
-msgstr "Numero del layer da interrogare (da cui leggere)"
+msgstr "Numero del layer delle sorgenti o nome"
 
 #: ../vector/v.net.flow/main.c:91
-#, fuzzy
 msgid "Source category values"
-msgstr "Problemi nel caricamento dei valori di categoria"
+msgstr "Valori di categoria delle sorgenti"
 
 #: ../vector/v.net.flow/main.c:97
 msgid "Source WHERE conditions of SQL statement without 'where' keyword"
 msgstr ""
 
 #: ../vector/v.net.flow/main.c:102
-#, fuzzy
 msgid "Sink layer number or name"
-msgstr "Numero del layer (da)"
+msgstr "Numero del layer dei pozzi o nome"
 
 #: ../vector/v.net.flow/main.c:103 ../vector/v.net.flow/main.c:108
 #: ../vector/v.net.flow/main.c:114
@@ -24075,9 +24088,8 @@ msgid "Sink"
 msgstr ""
 
 #: ../vector/v.net.flow/main.c:107
-#, fuzzy
 msgid "Sink category values"
-msgstr "Problemi nel caricamento dei valori di categoria"
+msgstr "Valori di categoria dei pozzi"
 
 #: ../vector/v.net.flow/main.c:113
 msgid "Sink WHERE conditions of SQL statement without 'where' keyword"
@@ -24091,14 +24103,12 @@ msgid "Neither %s nor %s was given"
 msgstr ""
 
 #: ../vector/v.net.flow/main.c:199
-#, fuzzy
 msgid "No sources"
-msgstr "Origine"
+msgstr "Nessuna sorgente"
 
 #: ../vector/v.net.flow/main.c:202
-#, fuzzy
 msgid "No sinks"
-msgstr "Nessun punto di partenza"
+msgstr "Nessun pozzo"
 
 #: ../vector/v.net.flow/main.c:224
 msgid "Writing the output..."
@@ -24996,12 +25006,12 @@ msgstr "Nessun record per il punto (cat = %d)"
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:289
 #, c-format
 msgid "Mean = %.5lf"
-msgstr ""
+msgstr "Media = %.5lf"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:290
 #, c-format
 msgid "Root Means Square (RMS) = %.5lf"
-msgstr ""
+msgstr "Media quadratica (RMS) = %.5lf"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:306
 msgid "Different number of splines and lambda_i values have been taken for the cross correlation"
@@ -25023,7 +25033,7 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:319
 #, c-format
 msgid " %-10.5f| %-12.4f| %-12.4f|"
-msgstr ""
+msgstr " %-10.5f| %-12.4f| %-12.4f|"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:327
 msgid "No point lies into the current region"
@@ -25082,7 +25092,7 @@ msgstr ""
 
 #: ../vector/v.reclass/main.c:63
 msgid "vector, reclass, attributes"
-msgstr ""
+msgstr "vettoriale, riclassificazione, attributi"
 
 #: ../vector/v.reclass/main.c:65
 msgid "Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column."
@@ -25178,7 +25188,7 @@ msgstr "%d elementi riclassificati."
 
 #: ../vector/v.neighbors/main.c:48
 msgid "vector, raster, aggregation"
-msgstr ""
+msgstr "vettoriale, raster, aggregazione"
 
 #: ../vector/v.net.timetable/main.c:218
 #, c-format
@@ -26521,9 +26531,8 @@ msgid "weak;Weakly connected components;strong;Strongly connected components;"
 msgstr ""
 
 #: ../vector/v.net.components/main.c:87
-#, fuzzy
 msgid "Type of components"
-msgstr "Tipo di tavola dei colori"
+msgstr "Tipo di componenti"
 
 #: ../vector/v.to.3d/args.c:11
 msgid "Reverse transformation; 3D vector features to 2D"
@@ -27845,14 +27854,12 @@ msgid "Computes vertex connectivity between two sets of nodes in the network."
 msgstr ""
 
 #: ../vector/v.net.connectivity/main.c:66
-#, fuzzy
 msgid "Name of node capacity column"
-msgstr "Nome della colonna"
+msgstr "Nome della colonna capacità per i nodi"
 
 #: ../vector/v.net.connectivity/main.c:70
-#, fuzzy
 msgid "Set1 layer number or name"
-msgstr "Numero del layer da interrogare (da cui leggere)"
+msgstr "Numero del layer o nome di set1"
 
 #: ../vector/v.net.connectivity/main.c:71
 #: ../vector/v.net.connectivity/main.c:76
@@ -27861,18 +27868,16 @@ msgid "Set1"
 msgstr ""
 
 #: ../vector/v.net.connectivity/main.c:75
-#, fuzzy
 msgid "Set1 category values"
-msgstr "Problemi nel caricamento dei valori di categoria"
+msgstr "Valori di categoria di set1"
 
 #: ../vector/v.net.connectivity/main.c:81
 msgid "Set1 WHERE conditions of SQL statement without 'where' keyword"
 msgstr ""
 
 #: ../vector/v.net.connectivity/main.c:86
-#, fuzzy
 msgid "Set2 layer number or name"
-msgstr "Numero del layer da interrogare (da cui leggere)"
+msgstr "Numero del layer o nome di set2"
 
 #: ../vector/v.net.connectivity/main.c:87
 #: ../vector/v.net.connectivity/main.c:92
@@ -27881,9 +27886,8 @@ msgid "Set2"
 msgstr ""
 
 #: ../vector/v.net.connectivity/main.c:91
-#, fuzzy
 msgid "Set2 category values"
-msgstr "Problemi nel caricamento dei valori di categoria"
+msgstr "Valori di categoria di set2"
 
 #: ../vector/v.net.connectivity/main.c:97
 msgid "Set2 WHERE conditions of SQL statement without 'where' keyword"
@@ -28302,10 +28306,10 @@ msgstr "colonna '%s' : tipo bool (boolean) è archiviata come char(1), valori: 0
 msgid "Unable to open database: "
 msgstr "Impossibile aprire il database: "
 
+# FINIRE
 #: ../db/drivers/sqlite/db.c:110
-#, fuzzy
 msgid "SQLite database connection is still busy"
-msgstr "Connessione al database non definita"
+msgstr "La connessione al database SQLite è ancora impegnata"
 
 #: ../db/drivers/sqlite/describe.c:160
 #, c-format
@@ -30011,9 +30015,8 @@ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:2
-#, fuzzy
 msgid "miscellaneous, projection"
-msgstr "N"
+msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:3
 msgid "Input coordinate file (omit to read from stdin)"
