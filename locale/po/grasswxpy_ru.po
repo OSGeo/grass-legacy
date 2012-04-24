@@ -1751,7 +1751,7 @@ msgstr "Невозможно отобразить гистограмму рас�
 
 #: ../gui/wxpython/lmgr/layertree.py:645
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Установить непрозрачность <%s>"
 
 #: ../gui/wxpython/lmgr/layertree.py:737

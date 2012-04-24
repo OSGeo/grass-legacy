@@ -1687,7 +1687,7 @@ msgstr "Impossibile visualizzare l'istogramma della mappa raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:645
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Imposta opacità <%s>"
 
 #: ../gui/wxpython/lmgr/layertree.py:737

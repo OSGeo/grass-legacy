@@ -1780,7 +1780,7 @@ msgstr "Tidak mampu menampilkan histogram dari peta raster."
 
 #: ../gui/wxpython/lmgr/layertree.py:645
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:737

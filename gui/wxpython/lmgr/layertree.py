@@ -642,7 +642,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         current_opacity = maplayer.GetOpacity()
         
         dlg = SetOpacityDialog(self, opacity = current_opacity,
-                               title = _("Set opacity <%s>") % maplayer.GetName())
+                               title = _("Set opacity of <%s>") % maplayer.GetName())
         dlg.CentreOnParent()
 
         if dlg.ShowModal() == wx.ID_OK:

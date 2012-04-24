@@ -1791,7 +1791,7 @@ msgstr "Não é possível disponibilizar o histograma do mapa raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:645
 #, fuzzy, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Definir opacidade <%s>"
 
 #: ../gui/wxpython/lmgr/layertree.py:737

@@ -1691,7 +1691,7 @@ msgstr "ラスターマップのヒストグラムを表示できません "
 
 #: ../gui/wxpython/lmgr/layertree.py:645
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "不透明度のセット <%s> "
 
 #: ../gui/wxpython/lmgr/layertree.py:737
