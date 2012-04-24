@@ -2140,7 +2140,7 @@ msgstr "Name für GRASS Karte (editierbar)"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1560
 msgid "Set Map Layer Opacity"
-msgstr "Bestimme die Deckkraft der Kartenebene"
+msgstr "Bestimme die Transparenz der Kartenebene"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1584
 msgid "transparent"
@@ -5569,7 +5569,7 @@ msgstr "Umbenennen"
 
 #: ../gui/wxpython/gui_modules/layertree.py:288
 msgid "Change opacity level"
-msgstr "Deckkraft ändern"
+msgstr "Transparenz ändern"
 
 #: ../gui/wxpython/gui_modules/layertree.py:298
 msgid "3D view properties"
@@ -5636,8 +5636,8 @@ msgstr "Kann das Histogramm der Rasterkarte nicht anzeigen."
 
 #: ../gui/wxpython/gui_modules/layertree.py:613
 #, python-format
-msgid "Set opacity <%s>"
-msgstr "Deckkraft bestimmen <%s>"
+msgid "Set opacity of <%s>"
+msgstr "Transparenz von <%s> festlegen"
 
 #: ../gui/wxpython/gui_modules/layertree.py:705
 msgid "Layer group:"
@@ -5707,7 +5707,7 @@ msgstr "Bitte warten Sie, ich aktualisiere Daten..."
 
 #: ../gui/wxpython/gui_modules/layertree.py:1361
 msgid "opacity:"
-msgstr "Deckkraft"
+msgstr "Transparenz:"
 
 #: ../gui/wxpython/gui_modules/layertree.py:1378
 #, python-format

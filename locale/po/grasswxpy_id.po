@@ -6109,7 +6109,7 @@ msgstr "Tidak mampu menampilkan histogram dari peta raster."
 
 #: ../gui/wxpython/gui_modules/layertree.py:613
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/layertree.py:705
