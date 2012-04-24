@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = _("Create a new vector from the current region.");
+    module->description = _("Creates a vector polygon from the current region extent.");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
