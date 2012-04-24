@@ -5629,7 +5629,7 @@ msgstr "Impossible d'afficher l'histogramme de carte raster."
 
 #: ../gui/wxpython/gui_modules/layertree.py:613
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Régler l'opacité <%s>"
 
 #: ../gui/wxpython/gui_modules/layertree.py:705

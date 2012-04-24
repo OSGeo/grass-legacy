@@ -5871,7 +5871,7 @@ msgstr "Nelze zobrazit histogram rastrové mapy."
 
 #: ../gui/wxpython/gui_modules/layertree.py:613
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Nastavit prùhlednost <%s>"
 
 #: ../gui/wxpython/gui_modules/layertree.py:705

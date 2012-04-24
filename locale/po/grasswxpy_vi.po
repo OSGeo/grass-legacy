@@ -6001,7 +6001,7 @@ msgstr "Không thể hiển thị biểu đồ tần số của bản đồ rast
 
 #: ../gui/wxpython/gui_modules/layertree.py:613
 #, python-format
-msgid "Set opacity <%s>"
+msgid "Set opacity of <%s>"
 msgstr "Đặt độ mờ <%s>"
 
 #: ../gui/wxpython/gui_modules/layertree.py:705
