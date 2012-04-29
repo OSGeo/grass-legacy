@@ -1161,10 +1161,11 @@ class PyStc(stc.StyledTextCtrl):
 
     Based on StyledTextCtrl_2 from wxPython demo
     """    
-    def __init__(self, parent, id = wx.ID_ANY):
+    def __init__(self, parent, id = wx.ID_ANY, statusbar = None):
         stc.StyledTextCtrl.__init__(self, parent, id)
         
         self.parent = parent
+        self.statusbar = statusbar
         
         self.modified = False # content modified ?
         
@@ -1264,6 +1265,8 @@ class PyStc(stc.StyledTextCtrl):
         """
         if not self.modified:
             self.modified = True
+            if self.statusbar:
+                self.statusbar.SetStatusText(_('Python script contains local modifications'), 0)
         
         event.Skip()
         
