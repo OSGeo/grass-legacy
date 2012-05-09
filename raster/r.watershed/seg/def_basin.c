@@ -19,7 +19,7 @@ def_basin(int row, int col, CELL basin_num, double stream_length,
 	    for (c = col - 1, cc = 0; cc < 3; c++, cc++) {
 		if (r >= 0 && c >= 0 && r < nrows && c < ncols) {
 		    cseg_get(&asp, &value, r, c);
-		    if (value < -1)
+		    if (value < 0)
 			value = -value;
 		    if (value == drain[rr][cc]) {
 			bseg_get(&swale, &value, r, c);
