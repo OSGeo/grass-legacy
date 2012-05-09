@@ -18,7 +18,7 @@ CELL def_basin(int row, int col, CELL basin_num,
 	    for (c = col - 1, cc = 0; cc < 3; c++, cc++) {
 		if (r >= 0 && c >= 0 && r < nrows && c < ncols) {
 		    value = asp[SEG_INDEX(asp_seg, r, c)];
-		    if (value < -1)
+		    if (value < 0)
 			value = -value;
 		    if (value == drain[rr][cc]) {
 			value = FLAG_GET(swale, r, c);

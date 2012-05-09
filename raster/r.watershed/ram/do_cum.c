@@ -108,7 +108,7 @@ int do_cum_mfd(void)
     int r_nbr, c_nbr, r_max, c_max, ct_dir, np_side;
     double dx, dy;
     CELL ele, ele_nbr, aspect, is_worked;
-    double prop, max_acc;
+    double prop, max_val;
     int workedon, edge, flat;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
@@ -259,7 +259,7 @@ int do_cum_mfd(void)
 	    }
 
 	    /* set flow accumulation for neighbours */
-	    max_acc = -1;
+	    max_val = -1;
 
 	    if (mfd_cells > 1) {
 		prop = 0.0;
@@ -275,6 +275,13 @@ int do_cum_mfd(void)
 			if (is_worked == 0) {
 
 			    nbr_index = SEG_INDEX(wat_seg, r_nbr, c_nbr);
+
+			    /* get main drainage direction */
+			    if (weight[ct_dir] > max_val) {
+				max_val = weight[ct_dir];
+				r_max = r_nbr;
+				c_max = c_nbr;
+			    }
 
 			    weight[ct_dir] = weight[ct_dir] / sum_weight;
 			    /* check everything sums up to 1.0 */
@@ -294,13 +301,6 @@ int do_cum_mfd(void)
 				    valued = value * weight[ct_dir] - valued;
 			    }
 			    wat[nbr_index] = valued;
-
-			    /* get main drainage direction */
-			    if (ABS(valued) >= max_acc) {
-				max_acc = ABS(valued);
-				r_max = r_nbr;
-				c_max = c_nbr;
-			    }
 			}
 			else if (ct_dir == np_side) {
 			    /* check for consistency with A * path */
