@@ -161,9 +161,10 @@ GetData() {
    if [ "$POST_DATA_OK" -eq 1 ] ; then
       #download the File from the Server
       if [ "$USE_WGET" ] ; then
-         wget --quiet ${WGET_OPTIONS} --post-data="${STRING}" "${SERVER}" -O "${OUTPUT_FILE}"
+         wget --progress=dot:mega $WGET_OPTIONS --post-data="$STRING" \
+            "$SERVER" -O "$OUTPUT_FILE"
       else
-         curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" -d "${STRING}" "${SERVER}"
+         curl $CURL_OPTIONS -o "$OUTPUT_FILE" -d "$STRING" "$SERVER"
       fi
       if [ $? -ne 0 ] ; then
          g.message -e "Failed while downloading the data"
