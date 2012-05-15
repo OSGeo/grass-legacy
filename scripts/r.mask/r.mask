@@ -57,7 +57,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-if [ ! -z "$GRASS_OVERWRITE" ] ; then
+if [ -n "$GRASS_OVERWRITE" ] && [ "$GRASS_OVERWRITE" -eq 1 ] ; then
    GIS_FLAG_O=1
 fi
 
