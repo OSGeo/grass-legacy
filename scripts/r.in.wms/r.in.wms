@@ -389,7 +389,9 @@ listLayers() {
 	if [ -x "`which xml2`" ] ; then
 		cat "$CAPABILITIES_FILE" | xml2 | \
 		  grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
-		  sed -e "s/.*Layer\\/Name=/  LAYER: /" \
+		  sed -e 's|.*Layer/Name=|\
+\
+  LAYER: |' \
 		      -e "s/.*Layer\\/SRS=/  SRS: /" \
 		      -e "s/.*Layer\\/Title=/  Title: /" \
 		      -e "s/.*Layer\\/Abstract=/  |/" \
