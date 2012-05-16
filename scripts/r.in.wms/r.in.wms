@@ -335,8 +335,8 @@ listLayers() {
 
 	if [ "$GIS_FLAG_G" -eq 0 ] ; then
 	    if [ "$USE_WGET" ] ; then
-		wget $GIS_OPT_WGETOPTIONS --post-data="${STRING}" \
-		  "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE";
+		wget -nv $GIS_OPT_WGETOPTIONS --post-data="$STRING" \
+		  "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE"
 		message 1 "wget $GIS_OPT_WGETOPTIONS --post-data=\"${STRING}\" \"$GIS_OPT_MAPSERVER\" -O \"$CAPABILITIES_FILE\";"
 	    else
 		curl $GIS_OPT_CURLOPTIONS -o "$CAPABILITIES_FILE" \
@@ -389,9 +389,9 @@ listLayers() {
 	if [ -x "`which xml2`" ] ; then
 		cat "$CAPABILITIES_FILE" | xml2 | \
 		  grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
-		  sed -e 's/.*Layer\\/Name=/\
+		  sed -e 's|.*Layer/Name=|\
 \
-LAYER: /' \
+  LAYER: |' \
 		      -e "s/.*Layer\\/SRS=/  SRS: /" \
 		      -e "s/.*Layer\\/Title=/  Title: /" \
 		      -e "s/.*Layer\\/Abstract=/  |/" \
@@ -445,7 +445,7 @@ LAYER:/' \
 	    fi
     
         fi
-        exit 1;
+        exit 0
 }
 
 
