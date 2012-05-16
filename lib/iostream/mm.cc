@@ -256,7 +256,7 @@ MM_err MM_register::register_deallocation(size_t sz) {
 
  
 /* ************************************************************ */
-void* operator new[] (size_t sz) {
+void* operator new[] (size_t sz) throw(std::bad_alloc) {
   void *p;
   
   MM_DEBUG cout << "new: sz=" << sz << ", register " 
@@ -307,7 +307,7 @@ void* operator new[] (size_t sz) {
 
  
 /* ************************************************************ */
-void* operator new (size_t sz) {
+void* operator new (size_t sz) throw(std::bad_alloc) {
   void *p;
   
   MM_DEBUG cout << "new: sz=" << sz << ", register " 
@@ -359,7 +359,7 @@ void* operator new (size_t sz) {
 
 
 /* ---------------------------------------------------------------------- */
-void operator delete (void *ptr)  {
+void operator delete (void *ptr) throw() {
   size_t sz;
   void *p;
   
@@ -399,7 +399,7 @@ void operator delete (void *ptr)  {
 
 
 /* ---------------------------------------------------------------------- */
-void operator delete[] (void *ptr) {
+void operator delete[] (void *ptr) throw() {
   size_t sz;
   void *p;
   
