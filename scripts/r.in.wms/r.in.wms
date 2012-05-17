@@ -391,7 +391,7 @@ listLayers() {
 		  grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
 		  sed -e 's|.*Layer/Name=|\
 \
-  LAYER: |' \
+ LAYER: |' \
 		      -e "s/.*Layer\\/SRS=/  SRS: /" \
 		      -e "s/.*Layer\\/Title=/  Title: /" \
 		      -e "s/.*Layer\\/Abstract=/  |/" \
