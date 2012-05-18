@@ -15,9 +15,6 @@
  *               for details.
  *
  **************************************************************/
-#ifdef FOR_GRASS7
-#include <string.h>
-#endif
 
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -32,16 +29,10 @@ int main(int argc, char *argv[])
     int type;
     char *mapset;
     struct GModule *module;
-
-#ifdef FOR_GRASS7
-    struct Option *in_opt, *out_opt, *to_opt, *from_opt;
-    int from_type, to_type;
-#else
     int i, j;
     struct Option *in_opt, *out_opt, *type_opt;
     int types[100];		/* array of input,output types */
     int ntypes;			/* number of types (number of pairs * 2) */
-#endif
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
@@ -50,27 +41,6 @@ int main(int argc, char *argv[])
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
-#ifdef FOR_GRASS7
-    from_opt = G_define_option();
-    from_opt->type = TYPE_STRING;
-    from_opt->key = "from";
-    from_opt->key_desc = "type";
-    from_opt->options = "point,line,boundary,centroid,face,kernel";
-    from_opt->answer = "boundary";
-    from_opt->required = YES;
-    from_opt->multiple = NO;
-    from_opt->description = _("Feature type to convert from");
-
-    to_opt = G_define_option();
-    to_opt->type = TYPE_STRING;
-    to_opt->key = "to";
-    to_opt->key_desc = "type";
-    to_opt->options = "point,line,boundary,centroid,face,kernel";
-    to_opt->answer = "line";
-    to_opt->required = YES;
-    to_opt->multiple = NO;
-    to_opt->description = _("Feature type to convert to");
-#else
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options = "point,line,boundary,centroid,face,kernel";
     type_opt->answer = "line,boundary,point,centroid";
@@ -79,7 +49,6 @@ int main(int argc, char *argv[])
 	_("<input_type1>,<output_type1>,<input_type2>,<output_type2>,...\n"
 	  "\t\tExample1: line,boundary\n"
 	  "\t\tExample2: line,boundary,point,centroid");
-#endif
 
 
     G_gisinit(argv[0]);
@@ -87,60 +56,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-#ifdef FOR_GRASS7
-    if (!strcmp(from_opt->answer, to_opt->answer))
-	G_fatal_error(_("Nothing to do"));
-
-    switch (from_opt->answer[0]) {
-    case 'p':
-	from_type = GV_POINT;
-	break;
-    case 'l':
-	from_type = GV_LINE;
-	break;
-    case 'b':
-	from_type = GV_BOUNDARY;
-	break;
-    case 'c':
-	from_type = GV_CENTROID;
-	break;
-    case 'f':
-	from_type = GV_FACE;
-	break;
-    case 'k':
-	from_type = GV_KERNEL;
-	break;
-    }
-    switch (to_opt->answer[0]) {
-    case 'p':
-	to_type = GV_POINT;
-	break;
-    case 'l':
-	to_type = GV_LINE;
-	break;
-    case 'b':
-	to_type = GV_BOUNDARY;
-	break;
-    case 'c':
-	to_type = GV_CENTROID;
-	break;
-    case 'f':
-	to_type = GV_FACE;
-	break;
-    case 'k':
-	to_type = GV_KERNEL;
-	break;
-    }
-    /* check type compatibility */
-    if (((from_type & (GV_POINT | GV_CENTROID | GV_KERNEL)) &&
-	 (to_type & (GV_LINE | GV_BOUNDARY | GV_FACE))
-	) || ((from_type & (GV_LINE | GV_BOUNDARY | GV_FACE)) &&
-	      (to_type & (GV_POINT | GV_CENTROID | GV_KERNEL))
-	)
-	)
-	G_fatal_error(_("Incompatible types"));
-
-#else
     i = 0;
     j = 0;
     while (type_opt->answers[i]) {
@@ -189,7 +104,6 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Odd number of types"));
 
     ntypes = i;
-#endif
 
     Vect_check_input_output_name(in_opt->answer, out_opt->answer,
 				 GV_FATAL_EXIT);
@@ -216,17 +130,12 @@ int main(int argc, char *argv[])
     Vect_hist_command(&Out);
 
     while ((type = Vect_read_next_line(&In, Points, Cats)) > 0) {
-#ifdef FOR_GRASS7
-	if (type == from_type)
-	    type = to_type;
-#else
 	for (i = 0; i < ntypes; i += 2) {
 	    if (type == types[i]) {
 		type = types[i + 1];
 		break;
 	    }
 	}
-#endif
 	Vect_write_line(&Out, type, Points, Cats);
     }
 
