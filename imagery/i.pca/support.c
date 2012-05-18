@@ -4,7 +4,7 @@
 #include "local_proto.h"
 
 /* function prototypes */
-static void write_history(int, char *, double **, double *);
+static int write_history(int, char *, double **, double *);
 
 
 void write_support(int bands, char *outname, double **eigmat, double *eigval)
@@ -23,13 +23,14 @@ void write_support(int bands, char *outname, double **eigmat, double *eigval)
     if (G_raster_map_is_fp(outname, mapset))
 	G_mark_colors_as_fp(&colors);
 
-    G_write_colors(outname, mapset, &colors);
+    if (G_write_colors(outname, mapset, &colors) < 0)
+	G_message(_("Unable to write color table for raster map <%s>"), outname);
 
     write_history(bands, outname, eigmat, eigval);
 }
 
 
-static void write_history(int bands, char *outname, double **eigmat, double *eigval)
+static int write_history(int bands, char *outname, double **eigmat, double *eigval)
 {
     int i, j;
     static int first_map = TRUE;     /* write to stderr? */
@@ -69,10 +70,11 @@ static void write_history(int bands, char *outname, double **eigmat, double *eig
 	    fprintf(stdout, "%s\n", tmpeigen);
     }
 
+    hist.edlinecnt = i + 1;
     G_command_history(&hist);
 
     /* only write to stderr the first time (this fn runs for every output map) */
     first_map = FALSE;
 
-    G_write_history(outname, &hist);
+    return G_write_history(outname, &hist);
 }
