@@ -1,15 +1,15 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 /* function prototypes */
-static int write_history(int, char *, double **, double *);
+static void write_history(int, char *, double **, double *);
 
 
-int write_support(int bands, char *outname, double **eigmat, double *eigval)
+void write_support(int bands, char *outname, double **eigmat, double *eigval)
 {
-    char *mapset = G_mapset();
+    const char *mapset = G_mapset();
     struct Colors colors;
     struct FPRange range;
     DCELL min, max;
@@ -23,14 +23,13 @@ int write_support(int bands, char *outname, double **eigmat, double *eigval)
     if (G_raster_map_is_fp(outname, mapset))
 	G_mark_colors_as_fp(&colors);
 
-    if (G_write_colors(outname, mapset, &colors) < 0)
-	G_message(_("Unable to write color table for raster map <%s>"), outname);
+    G_write_colors(outname, mapset, &colors);
 
-    return write_history(bands, outname, eigmat, eigval);
+    write_history(bands, outname, eigmat, eigval);
 }
 
 
-static int write_history(int bands, char *outname, double **eigmat, double *eigval)
+static void write_history(int bands, char *outname, double **eigmat, double *eigval)
 {
     int i, j;
     static int first_map = TRUE;     /* write to stderr? */
@@ -52,29 +51,28 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
 	sprintf(tmpeigen, "PC%d %9.2f (", i+1, eigval[i]);
 	for (j = 0; j < bands; j++) {
 	    sprintf(tmpa, "%7.4f", eigmat[i][j]);
-	    G_strcat(tmpeigen, tmpa);
+	    strcat(tmpeigen, tmpa);
 	    if (j < (bands - 1) ){
 		sprintf(tmpa, ",");
-		G_strcat(tmpeigen, tmpa);
+		strcat(tmpeigen, tmpa);
 	    }
 	}
-	G_strcat(tmpeigen, ") ");
-
+	strcat(tmpeigen, ") ");
+	
 	sprintf(tmpa, "[%5.2f%%]", eigval[i] * 100/eigval_total);
-	G_strcat(tmpeigen, tmpa);
+	strcat(tmpeigen, tmpa);
 
 	sprintf(hist.edhist[i + 1], tmpeigen);
 
 	/* write eigen values to screen */
 	if(first_map)
-	    G_message("%s", tmpeigen);
+	    fprintf(stdout, "%s\n", tmpeigen);
     }
 
-    hist.edlinecnt = i + 1;
     G_command_history(&hist);
 
     /* only write to stderr the first time (this fn runs for every output map) */
     first_map = FALSE;
 
-    return G_write_history(outname, &hist);
+    G_write_history(outname, &hist);
 }
