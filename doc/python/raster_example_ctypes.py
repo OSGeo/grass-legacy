@@ -19,7 +19,6 @@ import os
 import sys
 
 from grass.lib.gis    import *
-from grass.lib.raster import *
 
 # check if GRASS is running or not
 if not os.environ.has_key("GISBASE"):
