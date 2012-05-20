@@ -34,7 +34,7 @@ else:
 G_gisinit('')
 
 # find map in search path
-mapset = G_find_raster2(input, '')
+mapset = G_find_cell2(input, '')
 if not mapset:
     sys.exit("Raster map <%s> not found" % input)
 
