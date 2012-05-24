@@ -88,7 +88,8 @@ int main(int argc, char **argv)
 
     opt1 = G_define_standard_option(G_OPT_R_MAP);
     opt1->required = NO;
-
+    opt1->guisection = _("Required");
+    
     opt2 = G_define_option();
     opt2->key = "grid_color";
     opt2->type = TYPE_STRING;
@@ -97,7 +98,8 @@ int main(int argc, char **argv)
     opt2->options = D_COLOR_LIST ",none";
     opt2->key_desc = "color";
     opt2->description = _("Color for drawing grid, or \"none\"");
-
+    opt2->guisection = _("Colors");
+    
     opt3 = G_define_option();
     opt3->key = "text_color";
     opt3->type = TYPE_STRING;
@@ -106,7 +108,8 @@ int main(int argc, char **argv)
     opt3->options = D_COLOR_LIST;
     opt3->key_desc = "color";
     opt3->description = _("Color for drawing text");
-
+    opt3->guisection = _("Colors");
+    
     prec = G_define_option();
     prec->key = "dp";
     prec->type = TYPE_INTEGER;
@@ -119,7 +122,8 @@ int main(int argc, char **argv)
     text_color = G_define_flag();
     text_color->key = 'f';
     text_color->description = _("Get text color from cell color value");
-
+    text_color->guisection = _("Colors");
+    
     /* Check command line */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -202,18 +206,14 @@ int main(int argc, char **argv)
     ncols = window.cols;
 
     if ((nrows > 75) || (ncols > 75)) {
-	G_warning("!!!");
-	G_message(_("Current window size:"));
-	G_message(_("rows:    %d"), nrows);
-	G_message(_("columns: %d"), ncols);
-
-	G_message(_("\nYour current window setting may be too large."
-		    " Cells displayed on your graphics window may be too"
-		    " small for cell category number to be visible."));
-	G_message(" ");
+	G_warning(_("Current region size: %d rows X %d cols\n"
+		    "Your current region setting may be too large. "
+		    "Cells displayed on your graphics window may be too "
+		    "small for cell category number to be visible."),
+		  nrows, ncols);
     }
     if ((nrows > 200) || (ncols > 200)) {
-	G_fatal_error(_("Aborting."));
+	G_fatal_error(_("Aborting (region larger then 200 rows X 200 cols is not allowed)"));
     }
 
     /* resolutions */
