@@ -111,8 +111,8 @@ driver=`v.db.connect map="$GIS_OPT_MAP" -gl fs="|" layer="$GIS_OPT_LAYER" | cut 
 # checking column types
 coltype=`v.info -c map="$GIS_OPT_MAP" layer=$GIS_OPT_LAYER --quiet | grep -w "$GIS_OPT_COLUMN" | cut -d'|' -f1`
 
-if [ -n "$GIS_OPT_QCOLUMN" ] ; then
-   if [ -n "$GIS_OPT_VALUE" ] ; then
+if [ -z "$GIS_OPT_QCOLUMN" ] ; then
+   if [ -z "$GIS_OPT_VALUE" ] ; then
       g.message -e 'Either value or qcolumn parameter have to be used'
       exit 1
    fi
