@@ -13200,7 +13200,7 @@ msgid "Failed writing output raster map row %d"
 msgstr "Chyba pøi zápisu øádku rastrové mapy %d"
 
 #: ../raster/r.lake/main.c:149
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "Vytvoøí jezero ze zadaného bodu dané hloubky"
 
 #: ../raster/r.lake/main.c:154
@@ -13220,7 +13220,7 @@ msgid "Seed point coordinates"
 msgstr "Poèáteèní mapové souøadnice"
 
 #: ../raster/r.lake/main.c:185
-msgid "Name of raster map with seed (at least 1 cell > 0)"
+msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Rastrová mapa s poèátkem (alespoò jedna buòka > 0)"
 
 #: ../raster/r.lake/main.c:193

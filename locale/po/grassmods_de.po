@@ -12177,7 +12177,7 @@ msgid "Failed writing output raster map row %d"
 msgstr "Schreiben der Zeile <%d> der Rasterkarte fehlgeschlagen."
 
 #: ../raster/r.lake/main.c:149
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "Fülle den See vom Startpunkt am definierten Level."
 
 #: ../raster/r.lake/main.c:154
@@ -12197,7 +12197,7 @@ msgid "Seed point coordinates"
 msgstr "Koordinaten der Startpunkte"
 
 #: ../raster/r.lake/main.c:185
-msgid "Name of raster map with seed (at least 1 cell > 0)"
+msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Name der Rasterkarte mit Startpunkten (mindestens eine Zelle > 0)."
 
 #: ../raster/r.lake/main.c:193

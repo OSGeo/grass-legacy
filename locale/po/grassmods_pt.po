@@ -13625,7 +13625,7 @@ msgstr "Lendo arquivo dig_att...\n"
 
 #: ../raster/r.lake/main.c:149
 #, fuzzy
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "nível"
 
 #: ../raster/r.lake/main.c:154
@@ -13650,7 +13650,7 @@ msgstr "Coordenadas do mapa"
 
 #: ../raster/r.lake/main.c:185
 #, fuzzy
-msgid "Name of raster map with seed (at least 1 cell > 0)"
+msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Varredura mapear célula"
 
 #: ../raster/r.lake/main.c:193
