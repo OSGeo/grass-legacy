@@ -13611,7 +13611,7 @@ msgstr "Lecteur du fichier raster..."
 
 #: ../raster/r.lake/main.c:149
 #, fuzzy
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "Remplit le lac à partir du germe jusqu'à un niveau donné"
 
 #: ../raster/r.lake/main.c:156
@@ -13624,7 +13624,7 @@ msgstr "Coordonnées du point germe"
 
 #: ../raster/r.lake/main.c:175
 #, fuzzy
-msgid "Name of input raster map with seed (at least 1 cell > 0)"
+msgid "Name of input raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Couche raster avec le germe (au moins 1 cellule > 0)"
 
 #: ../raster/r.lake/main.c:181

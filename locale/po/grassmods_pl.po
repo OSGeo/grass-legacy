@@ -12709,7 +12709,7 @@ msgid "Failed writing output raster map row %d"
 msgstr ""
 
 #: ../raster/r.lake/main.c:149
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "Wypełnia jeziora z wartości próbki na zadanym poziomie."
 
 #: ../raster/r.lake/main.c:156
@@ -12722,7 +12722,7 @@ msgstr "Podaj współrzędne punktu"
 
 #: ../raster/r.lake/main.c:175
 #, fuzzy
-msgid "Name of input raster map with seed (at least 1 cell > 0)"
+msgid "Name of input raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Nazwa mapy rastrowej która ma być użyta jako maska"
 
 #: ../raster/r.lake/main.c:181

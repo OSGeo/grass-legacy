@@ -12780,7 +12780,7 @@ msgid "Failed writing output raster map row %d"
 msgstr "Thất bại khi đang ghi bản đồ raster đầu ra hàng %d"
 
 #: ../raster/r.lake/main.c:149
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr "Lấp đầy hồ từ 'hạt gieo' tại mức cho trước."
 
 #: ../raster/r.lake/main.c:156
@@ -12793,7 +12793,7 @@ msgstr "Tọa độ điểm 'gieo'"
 
 #: ../raster/r.lake/main.c:175
 #, fuzzy
-msgid "Name of input raster map with seed (at least 1 cell > 0)"
+msgid "Name of input raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Bản đồ raster với 'hạt gieo' (ít nhất là 1 ô > 0)"
 
 #: ../raster/r.lake/main.c:181

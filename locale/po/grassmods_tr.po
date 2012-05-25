@@ -12681,7 +12681,7 @@ msgid "Failed writing output raster map row %d"
 msgstr "Raster harita %d satırı yazmada hata"
 
 #: ../raster/r.lake/main.c:149
-msgid "Fills lake from seed at given level."
+msgid "Fills lake at given point to given level."
 msgstr ""
 
 #: ../raster/r.lake/main.c:156
@@ -12694,7 +12694,7 @@ msgstr "Kaynak noktası koordinatları"
 
 #: ../raster/r.lake/main.c:175
 #, fuzzy
-msgid "Name of input raster map with seed (at least 1 cell > 0)"
+msgid "Name of input raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Kaynağı içeren raster haritanın adı (en az 1 hücre >0)"
 
 #: ../raster/r.lake/main.c:181
