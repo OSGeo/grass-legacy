@@ -116,6 +116,15 @@ if [ -z "$GIS_OPT_QCOLUMN" ] ; then
       g.message -e 'Either value or qcolumn parameter have to be used'
       exit 1
    fi
+fi
+if [ ! -z "$GIS_OPT_QCOLUMN" ] ; then
+   if [ ! -z "$GIS_OPT_VALUE" ] ; then
+      g.message -e 'Either value or qcolumn parameter have to be used'
+      exit 1
+   fi
+fi
+
+if [ ! -z "$GIS_OPT_QCOLUMN" ] ; then
    # special case: we copy from another column
    value="$GIS_OPT_QCOLUMN"
 else
