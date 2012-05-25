@@ -122,6 +122,8 @@ class VDigitToolbar(BaseToolbar):
             'settings'        : BaseIcons['settings'].SetLabel(_('Digitization settings')),
             'quit'            : BaseIcons['quit'].SetLabel(label = _('Quit digitizer'),
                                                            desc = _('Quit digitizer and save changes')),
+            'help'            : BaseIcons['help'].SetLabel(label = _('Vector Digitizer manual'),
+                                                           desc = _('Show Vector Digitizer manual')),
             'additionalTools' : MetaIcon(img = 'tools',
                                          label = _('Additional tools '
                                                    '(copy, flip, connect, etc.)'),
@@ -179,6 +181,8 @@ class VDigitToolbar(BaseToolbar):
                                       self.OnUndo),
                                      ("settings", icons["settings"],
                                       self.OnSettings),
+                                     ("help", icons["help"],
+                                      self.OnHelp),
                                      ("quit", icons["quit"],
                                       self.OnExit))
                                     )
@@ -373,6 +377,12 @@ class VDigitToolbar(BaseToolbar):
             self.settingsDialog = VDigitSettingsDialog(parent = self.parent, title = _("Digitization settings"),
                                                        style = wx.DEFAULT_DIALOG_STYLE)
             self.settingsDialog.Show()
+
+    def OnHelp(self, event):
+        """!Show digitizer help page in web browser"""
+        log = self.parent.GetLayerManager().GetLogWindow()
+        log.RunCmd(['g.manual',
+                    'entry=wxGUI.Vector_Digitizer'])
 
     def OnAdditionalToolMenu(self, event):
         """!Menu for additional tools"""
