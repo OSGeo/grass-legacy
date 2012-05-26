@@ -16,12 +16,14 @@ This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
 @author Martin Landa <landa.martin gmail.com>
+@author Luca Delucchi <lucadeluge gmail.com> (language choice)
 """
 
 import os
 import sys
 import copy
 import types
+import locale
 
 from core       import globalvar
 from core.gcmd  import GException, GError
@@ -48,6 +50,28 @@ class Settings:
         
         # define internal settings
         self._internalSettings() # -> self.internalSettings
+
+    def _generateLocale(self):
+        """!Generate locales
+        """
+        # collect available locales
+        self.locs = list(set(locale.locale_alias.values()))
+        self.locs.append('en_GB.UTF-8')
+        self.locs.sort()
+        
+        try:
+            loc = list(locale.getdefaultlocale())
+        except ValueError, e:
+            sys.stderr.write(_('ERROR: %s\n') % str(e))
+            return 'C'
+        
+        if loc[1] == 'UTF8':
+            loc[1] = 'UTF-8'
+        code_loc = "%s.%s" % (loc[0], loc[1])
+        if code_loc in self.locs:
+            return code_loc
+        
+        return 'C'
         
     def _defaultSettings(self):
         """!Define default settings
@@ -56,6 +80,8 @@ class Settings:
             projFile = PathJoin(os.environ["GRASS_PROJSHARE"], 'epsg')
         except KeyError:
             projFile = ''
+        
+        id_loc = self._generateLocale()
         
         self.defaultSettings = {
             #
@@ -126,6 +152,14 @@ class Settings:
                     'type' : 'grass2'
                     }, # grass2, grass, silk
                 },
+            #
+            # language
+            #
+            'language': {
+                'locale': {
+                    'lc_all' : id_loc
+                }
+            },
             #
             # display
             #
@@ -675,6 +709,8 @@ class Settings:
              _("Collapse all except current"),
              _("Collapse all"),
              _("Expand all"))
+             
+        self.internalSettings['language']['locale']['choices'] = tuple(self.locs)
         self.internalSettings['atm']['leftDbClick']['choices'] = (_('Edit selected record'),
                                                                   _('Display selected'))
         
@@ -967,10 +1003,10 @@ class Settings:
         """
         if group not in dict:
             dict[group] = {}
-        
+
         if key not in dict[group]:
             dict[group][key] = {}
-        
+
         if type(subkey) == types.ListType:
             # TODO: len(subkey) > 2
             if subkey[0] not in dict[group][key]:
