@@ -1082,8 +1082,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         view = self.view
         iview = self.iview
         if zexag and 'value' in view['z-exag']:
-            self._display.SetZExag(self.iview['z-exag']['original'] * view['z-exag']['value'])
-        
+            self._display.SetZExag(view['z-exag']['value'] / iview['z-exag']['llRatio'])
         
         self._display.SetView(view['position']['x'], view['position']['y'],
                               iview['height']['value'],
@@ -1756,18 +1755,29 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
 
     def ResetView(self):
         """!Reset to default view"""
-        self.iview['z-exag']['original'], \
+        zexagOriginal, \
             self.iview['height']['value'], \
             self.iview['height']['min'], \
             self.iview['height']['max'] = self._display.SetViewDefault()
-            
-        ## set initial z-exag value at 1X    
-        self.view['z-exag']['value'] = 1.0
         
+        ## hack for latlon projection
+        ## TODO find more precise way or better rewrite it in OGSF
+        self.iview['z-exag']['llRatio'] = 1
+        if grass.locn_is_latlong():
+            self.iview['z-exag']['llRatio'] = \
+                math.pi / 180 * 6371000 * math.cos((grass.region()['n'] + grass.region()['s']) / 2)
+
+        self.view['z-exag']['value'] = round(zexagOriginal * self.iview['z-exag']['llRatio'])
         self.view['z-exag']['min'] = UserSettings.Get(group = 'nviz', key = 'view',
-                                                      subkey = ('z-exag', 'min'))        
+                                                      subkey = ('z-exag', 'min'))
         zexagMax = UserSettings.Get(group = 'nviz', key = 'view',
-                                    subkey = ('z-exag', 'max'))        
+                                    subkey = ('z-exag', 'max'))
+        if zexagMax <= self.view['z-exag']['value']:
+            self.view['z-exag']['max'] = self.view['z-exag']['value'] * 2
+        elif self.view['z-exag']['value'] < 1: 
+            self.view['z-exag']['max'] = 10 * self.view['z-exag']['value'] 
+        else: 
+            self.view['z-exag']['max'] = zexagMax
         
         self.view['position']['x'] = UserSettings.Get(group = 'nviz', key = 'view',
                                                  subkey = ('position', 'x'))
@@ -2395,7 +2405,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         subcmd += "height=%d " % (self.iview['height']['value'])
         subcmd += "perspective=%d " % (self.view['persp']['value'])
         subcmd += "twist=%d " % (self.view['twist']['value'])
-        subcmd += "zexag=%d " % (self.view['z-exag']['value'] * self.iview['z-exag']['original'])
+        subcmd += "zexag=%f " % (self.view['z-exag']['value'] / self.iview['z-exag']['llRatio'])
         subcmd += "focus=%d,%d,%d " % (self.iview['focus']['x'],self.iview['focus']['y'],self.iview['focus']['z'])
         cmd += subcmd
         
