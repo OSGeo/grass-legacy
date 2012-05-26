@@ -23,11 +23,13 @@ This program is free software under the GNU General Public License
 @author Michael Barton (Arizona State University)
 @author Martin Landa <landa.martin gmail.com>
 @author Vaclav Petras <wenzeslaus gmail.com> (menu customization)
+@author Luca Delucchi <lucadeluge gmail.com> (language choice)
 """
 
 import os
 import sys
 import copy
+import locale
 try:
     import pwd
     havePwd = True
@@ -44,7 +46,7 @@ from grass.script import core as grass
 
 from core          import globalvar
 from core.gcmd     import RunCommand
-from core.utils    import ListOfMapsets, GetColorTables, ReadEpsgCodes
+from core.utils    import ListOfMapsets, GetColorTables, ReadEpsgCodes, GetSettingsPath
 from core.settings import UserSettings
 
 wxSettingsChanged, EVT_SETTINGS_CHANGED = NewEvent()
@@ -127,6 +129,7 @@ class PreferencesBaseDialog(wx.Dialog):
                 group, key, subkey, subkey1 = gks.split(':')
                 value = self.settings.Get(group, key, [subkey, subkey1])
             win = self.FindWindowById(self.winId[gks])
+            
             if win.GetName() in ('GetValue', 'IsChecked'):
                 value = win.SetValue(value)
             elif win.GetName() == 'GetSelection':
@@ -152,7 +155,7 @@ class PreferencesBaseDialog(wx.Dialog):
     def OnCancel(self, event):
         """!Button 'Cancel' pressed"""
         self.Close()
-        
+
     def OnSave(self, event):
         """!Button 'Save' pressed
         Posts event EVT_SETTINGS_CHANGED.
@@ -160,6 +163,9 @@ class PreferencesBaseDialog(wx.Dialog):
         if self._updateSettings():
             self.settings.SaveToFile()
             self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % self.settings.filePath)
+            lang = UserSettings.Get(group = 'language', key = 'locale', subkey = 'lc_all')
+            if lang:
+                RunCommand('g.gisenv', set = 'LANG=%s' % lang)
             event = wxSettingsChanged()
             wx.PostEvent(self, event)
             self.Close()
@@ -408,6 +414,36 @@ class PreferencesDialog(PreferencesBaseDialog):
                       pos = (row, 1))
 
         #
+        # languages
+        #
+        box   = wx.StaticBox (parent = panel, id = wx.ID_ANY, label = " %s " % _("Language settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
+        gridSizer.AddGrowableCol(0)        
+        sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
+        border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
+
+        row = 0
+        gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                         label = _("Choose language (requires to save and GRASS restart):")),
+                      flag = wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos = (row, 0))
+        locales = self.settings.Get(group = 'language', key = 'locale', 
+                                         subkey = 'choices', internal = True)
+        loc = self.settings.Get(group = 'language', key = 'locale', subkey = 'lc_all')
+        elementList = wx.Choice(parent = panel, id = wx.ID_ANY, size = (325, -1),
+                                choices = locales, name = "GetStringSelection")
+        if loc in locales:
+            elementList.SetStringSelection(loc)
+        self.winId['language:locale:lc_all'] = elementList.GetId()
+
+        gridSizer.Add(item = elementList,
+                      flag = wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos = (row, 1))
+        #
         # appearence
         #
         box   = wx.StaticBox (parent = panel, id = wx.ID_ANY, label = " %s " % _("Appearance settings"))
@@ -443,7 +479,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         #
         row += 1
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
-                                           label = _("Menu style (requires GUI restart):")),
+                                           label = _("Menu style (requires to save and GUI restart):")),
                       flag = wx.ALIGN_LEFT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 0))
@@ -588,7 +624,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer.Add(item = driver,
                       flag = wx.ALIGN_RIGHT,
                       pos = (row, 1))
-
 
         #
         # Statusbar mode
@@ -1195,7 +1230,6 @@ class PreferencesDialog(PreferencesBaseDialog):
             winCode.SetValue('')
             win.SetValue('')
         
-        
         try:
             win.SetValue(self.epsgCodeDict[code][1].replace('<>', '').strip())
         except KeyError:
@@ -1450,7 +1484,6 @@ class MapsetAccess(wx.Dialog):
                  title = _('Manage access to mapsets'),
                  size  =  (350, 400),
                  style  =  wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, **kwargs):
-        
         wx.Dialog.__init__(self, parent, id, title, size = size, style = style, **kwargs)
 
         self.all_mapsets_ordered = ListOfMapsets(get = 'ordered')
