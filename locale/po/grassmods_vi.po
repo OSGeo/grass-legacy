@@ -1972,13 +1972,13 @@ msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d)"
 
 #: ../misc/m.nviz.image/args.c:912
 #, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
-msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d"
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
+msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d)"
 
 #: ../misc/m.nviz.image/args.c:947
 #, fuzzy, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d x 3)"
-msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d)"
+msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d x 3)"
 
 #: ../misc/m.nviz.image/args.c:952 ../misc/m.nviz.image/args.c:957
 #: ../misc/m.nviz.image/args.c:968 ../misc/m.nviz.image/args.c:982
@@ -2005,7 +2005,7 @@ msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d)"
 
 #: ../misc/m.nviz.image/args.c:1045
 #, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"
 msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d, <%s> %d"
 
 #: ../misc/m.nviz.image/volume.c:42 ../misc/m.nviz.image/volume.c:125
