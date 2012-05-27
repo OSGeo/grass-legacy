@@ -1934,7 +1934,7 @@ msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d"
 
 #: ../misc/m.nviz.image/args.c:787
 #, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"
 msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d, <%s> %d"
 
 #: ../misc/m.nviz.image/volume.c:40
@@ -1959,7 +1959,7 @@ msgstr "Không thể thêm mặt đồng giá (thể tích được thiết lậ
 
 #: ../misc/m.nviz.image/volume.c:93 ../misc/m.nviz.image/volume.c:99
 #, c-format
-msgid "Unable to set isosurface (%d) attribute (%d) of volume %d"
+msgid "Unable to set isosurface (%d) attribute (%d) of volume %d)"
 msgstr ""
 "Không thể thiết lập mặt đồng giá trị (%d) thuộc tính (%d) cho thể tích %d"
 

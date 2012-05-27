@@ -1959,7 +1959,7 @@ msgstr "Número de atributos incoherente (<%s> %d: <%s> %d"
 
 #: ../misc/m.nviz.image/args.c:787
 #, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"
 msgstr "Número de atributos incoherente (<%s/%s> %d: <%s> %d, <%s> %d"
 
 #: ../misc/m.nviz.image/volume.c:40
@@ -1984,7 +1984,7 @@ msgstr "No se puede añadir isosuperficie (volumen fijado %d)"
 
 #: ../misc/m.nviz.image/volume.c:93 ../misc/m.nviz.image/volume.c:99
 #, fuzzy, c-format
-msgid "Unable to set isosurface (%d) attribute (%d) of volume %d"
+msgid "Unable to set isosurface (%d) attribute (%d) of volume %d)"
 msgstr "No se pueden seleccionar los atributos de los puntos de <%s>"
 
 #: ../misc/m.nviz.image/main.c:49
