@@ -909,7 +909,7 @@ void check_parameters(const struct GParams *params)
 
 	nconsts = opt_get_num_answers(params->res_fine);
 	if (nconsts > 0 && nconsts != nelevs)
-	    G_fatal_error(_("Inconsistent number of attributes (<%s/%s> %d: <%s> %d"),
+	    G_fatal_error(_("Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"),
 			  params->elev_map->key, params->elev_const->key,
 			  nelevs, params->res_fine->key, nconsts);
 
@@ -972,7 +972,7 @@ void check_parameters(const struct GParams *params)
     /* color */
     nconsts = opt_get_num_answers(params->vline_color);
     if (nvects > 0 && nconsts != nvects)
-	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d"),
+	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d)"),
 		      params->vlines->key, nvects, params->vline_color->key,
 		      nconsts);
 
@@ -1009,7 +1009,7 @@ void check_parameters(const struct GParams *params)
     nconsts = opt_get_num_answers(params->isosurf_transp_const);
 
     if ((nmaps + nconsts > 0) && (nisosurf != nmaps + nconsts))
-	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d, <%s> %d"),
+	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d, <%s> %d)"),
 		      params->isosurf_level->key, nisosurf, params->isosurf_transp_map->key, nmaps,
 		      params->isosurf_transp_const->key, nconsts);
 
@@ -1018,7 +1018,7 @@ void check_parameters(const struct GParams *params)
     nconsts = opt_get_num_answers(params->isosurf_shine_const);
 
     if ((nmaps + nconsts > 0) && (nisosurf != nmaps + nconsts))
-	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d, <%s> %d"),
+	G_fatal_error(_("Inconsistent number of attributes (<%s> %d: <%s> %d, <%s> %d)"),
 			params->isosurf_level->key, nisosurf, params->isosurf_shine_map->key, nmaps,
 			params->isosurf_shine_const->key, nconsts);
 
@@ -1042,7 +1042,7 @@ void print_error(int nmaps, int nconsts, int nelevs,
 		 const char *map_name, const char *const_name)
 {
     if ((nmaps + nconsts > 0) && (nelevs != nmaps + nconsts))
-	G_fatal_error(_("Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"),
+	G_fatal_error(_("Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"),
 		      elev_map, elev_const, nelevs, map_name, nmaps,
 		      const_name, nconsts);
 
