@@ -1813,7 +1813,7 @@ msgstr "Inkonsistente Attributanzahl (<%s> %d: <%s> %d."
 
 #: ../misc/m.nviz.image/args.c:787
 #, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
+msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"
 msgstr "Inkonsistente Attributanzahl (<%s/%s> %d: <%s> %d, <%s> %d."
 
 #: ../misc/m.nviz.image/volume.c:40
@@ -1838,7 +1838,7 @@ msgstr "Kann die Isofläche nicht hinzufügen (volume set %d)."
 
 #: ../misc/m.nviz.image/volume.c:93 ../misc/m.nviz.image/volume.c:99
 #, c-format
-msgid "Unable to set isosurface (%d) attribute (%d) of volume %d"
+msgid "Unable to set isosurface (%d) attribute (%d) of volume %d)"
 msgstr "Kann die Isofläche (%d) Attribut (%d) des Volumens %d nicht setzten."
 
 #: ../misc/m.nviz.image/main.c:49
