@@ -1966,10 +1966,6 @@ msgstr "Cần có ít nhất <%s> hoặc <%s>"
 #: ../misc/m.nviz.image/args.c:876 ../misc/m.nviz.image/args.c:906
 #: ../misc/m.nviz.image/args.c:918 ../misc/m.nviz.image/args.c:924
 #: ../misc/m.nviz.image/args.c:930 ../misc/m.nviz.image/args.c:936
-#, c-format
-msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
-msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d)"
-
 #: ../misc/m.nviz.image/args.c:912
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"

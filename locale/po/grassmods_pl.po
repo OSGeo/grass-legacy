@@ -6,10 +6,10 @@
 # Maciej Sieczka <msieczka "at" msieczka "dot" org>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: grassmodes_pl\n"
+"Project-Id-Version: grassmods_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-28 10:01+0100\n"
-"PO-Revision-Date: 2011-12-18 22:42+0100\n"
+"PO-Revision-Date: 2012-02-02 19:05+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "Language: pl\n"
@@ -31,9 +31,8 @@ msgid "nviz - Visualization and animation tool for GRASS data."
 msgstr "NVIZ - narzędzie do wizualizacji i animacji danych GRASS-a."
 
 #: ../visualization/nviz/src/nvizMain.c:78
-#, fuzzy
 msgid "Name of raster map(s) for Elevation"
-msgstr "Nazwa pierwszej mapy rastrowej do wymieszania"
+msgstr "Nazwa map(y) rastrowych(ej)  do wysokości"
 
 #: ../visualization/nviz/src/nvizMain.c:79
 #: ../visualization/nviz/src/nvizMain.c:88
@@ -42,9 +41,8 @@ msgid "Raster"
 msgstr "Raster"
 
 #: ../visualization/nviz/src/nvizMain.c:87
-#, fuzzy
 msgid "Name of raster map(s) for Color"
-msgstr "Nazwa mapy rastrowej"
+msgstr "Nazwa map(y) rastrowych(ej) do koloru"
 
 #: ../visualization/nviz/src/nvizMain.c:96
 #, fuzzy
@@ -1587,9 +1585,8 @@ msgid "Name of raster map(s) for color"
 msgstr "Nazwa rastra(ów) do włączenia do grupy"
 
 #: ../misc/m.nviz.image/args.c:151
-#, fuzzy
 msgid "Color value(s)"
-msgstr "Kolumna(y)"
+msgstr "Wartość(ci) koloru(ów)"
 
 #: ../misc/m.nviz.image/args.c:159
 msgid "Name of raster map(s) for mask"
@@ -1601,7 +1598,7 @@ msgstr "Nazwa mapy rastrowej, która ma być przezroczysta"
 
 #: ../misc/m.nviz.image/args.c:178
 msgid "Transparency value(s)"
-msgstr ""
+msgstr "Wartość(ci) przezroczystości"
 
 #: ../misc/m.nviz.image/args.c:186
 #, fuzzy
@@ -1730,7 +1727,7 @@ msgstr "Współrzędne mapy"
 #: ../misc/m.nviz.image/args.c:471 ../misc/m.nviz.image/args.c:483
 #: ../misc/m.nviz.image/args.c:504
 msgid "Viewpoint"
-msgstr ""
+msgstr "Punkt widoczności"
 
 #: ../misc/m.nviz.image/args.c:460
 #, fuzzy
@@ -2077,7 +2074,7 @@ msgstr "Nie można pobrać nagłówka dla %s"
 
 #: ../misc/m.nviz.image/vector.c:179
 msgid "Unknown icon marker"
-msgstr ""
+msgstr "Nieznana ikona symbolu"
 
 #: ../misc/m.cogo/main.c:225
 msgid "miscellaneous, distance"
@@ -6220,7 +6217,7 @@ msgstr ""
 #: ../raster/r.random.surface/init.c:208 ../raster/r.random.surface/init.c:217
 #, c-format
 msgid " seed is set to %d"
-msgstr ""
+msgstr "próbka jest ustawiona na %d"
 
 #: ../raster/r.random.surface/init.c:213
 #, c-format
@@ -8852,7 +8849,7 @@ msgstr ""
 #: ../raster/r.univar2/r.univar_main.c:55
 #: ../raster/r.univar2/r3.univar_main.c:56
 msgid "Special characters: space, comma, tab"
-msgstr ""
+msgstr "Znaki specjalne: spacja, przecinek, tab"
 
 #: ../raster/r.univar2/r.univar_main.c:60
 #: ../raster/r.univar2/r3.univar_main.c:61 ../vector/v.univar/main.c:103
@@ -9959,67 +9956,67 @@ msgstr "Obliczanie stopnia zacienienia z DEM..."
 #: ../raster/r.sunmask/solpos00.c:949
 #, c-format
 msgid "S_decode ==> Please fix the year: %d [1950-2050]"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić rok: %d [1950-2050]"
 
 #: ../raster/r.sunmask/solpos00.c:952
 #, c-format
 msgid "S_decode ==> Please fix the month: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić miesiąc: %d"
 
 #: ../raster/r.sunmask/solpos00.c:954
 #, c-format
 msgid "S_decode ==> Please fix the day-of-month: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić dzień miesiąca: %d"
 
 #: ../raster/r.sunmask/solpos00.c:957
 #, c-format
 msgid "S_decode ==> Please fix the day-of-year: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić dzień roku: %d"
 
 #: ../raster/r.sunmask/solpos00.c:960
 #, c-format
 msgid "S_decode ==> Please fix the hour: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić godzinę: %d"
 
 #: ../raster/r.sunmask/solpos00.c:962
 #, c-format
 msgid "S_decode ==> Please fix the minute: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić minutę: %d"
 
 #: ../raster/r.sunmask/solpos00.c:964
 #, c-format
 msgid "S_decode ==> Please fix the second: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić sekundę: %d"
 
 #: ../raster/r.sunmask/solpos00.c:966
 #, c-format
 msgid "S_decode ==> Please fix the time zone: %f"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić strefę czasową: %f"
 
 #: ../raster/r.sunmask/solpos00.c:969
 #, c-format
 msgid "S_decode ==> Please fix the interval: %d"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić interwał: %d"
 
 #: ../raster/r.sunmask/solpos00.c:972
 #, c-format
 msgid "S_decode ==> Please fix the latitude: %f"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić szerokość geograficzną: %f"
 
 #: ../raster/r.sunmask/solpos00.c:975
 #, c-format
 msgid "S_decode ==> Please fix the longitude: %f"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić długość geograficzną: %f"
 
 #: ../raster/r.sunmask/solpos00.c:978
 #, c-format
 msgid "S_decode ==> Please fix the temperature: %f"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić temperaturę: %f"
 
 #: ../raster/r.sunmask/solpos00.c:981
 #, c-format
 msgid "S_decode ==> Please fix the pressure: %f"
-msgstr ""
+msgstr "S_decode ==> Proszę ustawić ciśnienie: %f"
 
 #: ../raster/r.sunmask/solpos00.c:983
 #, c-format
@@ -15162,14 +15159,14 @@ msgid "Output raster map prefix name"
 msgstr "Prefix nazwy wyjściowego rastra"
 
 #: ../imagery/i.cca/main.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal group name <%s>"
-msgstr "Uwaga: niedozwolona nazwa pliku wyjściowego <%s>."
+msgstr "Niedozwolona nazwa grupy <%s>"
 
 #: ../imagery/i.cca/main.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal subgroup name <%s>"
-msgstr "Uwaga: niedozwolona nazwa pliku wyjściowego <%s>."
+msgstr "Niedozwolona nazwa podgrupy <%s>"
 
 #: ../imagery/i.cca/main.c:114
 #, fuzzy, c-format
@@ -18276,7 +18273,7 @@ msgstr "Ścieżka do czcionki TrueType (zawierająca nazwę pliku)"
 
 #: ../display/d.text.freetype/main.c:201
 msgid "Height of letters (in percent of available frame height)"
-msgstr "Wysokość liter (w procencie wysokości dostępnej ramki)"
+msgstr "Wysokość liter (w procentach dostępnej wysokości ramki)"
 
 #: ../display/d.text.freetype/main.c:209 ../display/d.text.new/main.c:200
 msgid "Text alignment"
@@ -23330,9 +23327,8 @@ msgid "Path to resulting ASCII file or ASCII vector name if '-o' is defined"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:66
-#, fuzzy
 msgid "Field separator (points mode)"
-msgstr ":sygnatura: punkty obwodu poza rzędem."
+msgstr "Separator pól (tryb punktowy)"
 
 #: ../vector/v.out.ascii/out.c:83
 #, fuzzy
@@ -24643,22 +24639,19 @@ msgstr "Nazwa kolumny klucza"
 
 #: ../vector/v.db.connect/main.c:73 ../vector/v.in.db/main.c:87
 msgid "Must refer to an integer column"
-msgstr ""
+msgstr "Musi odnosić się do kolumny integer"
 
 #: ../vector/v.db.connect/main.c:79
-#, fuzzy
 msgid "Field separator for shell script style output"
-msgstr "Wyświetl ustawienia bieżącego regionu (styl skryptu powłoki)"
+msgstr "Separator pól dla wyjścia w stylu skryptu shell"
 
 #: ../vector/v.db.connect/main.c:85
-#, fuzzy
 msgid "Print all map connection parameters and exit"
-msgstr "wypisz parametry bieżącego połączenia i wyjdź"
+msgstr "Wyświetl parametry bieżącego połączenia i wyjdź"
 
 #: ../vector/v.db.connect/main.c:90
-#, fuzzy
 msgid "Print all map connection parameters and exit in shell script style"
-msgstr "wypisz parametry bieżącego połączenia i wyjdź"
+msgstr "Wyświetl parametry bieżącego połączenia w stylu skryptu shell i wyjdź"
 
 #: ../vector/v.db.connect/main.c:93
 msgid "Format: layer[/layer name] table key database driver"
@@ -24666,19 +24659,19 @@ msgstr ""
 
 #: ../vector/v.db.connect/main.c:103
 msgid "When printing, limit to layer specified by the layer option"
-msgstr ""
+msgstr "Zawęź wyświetlanie do warstwy określonej w opcjach warstwy"
 
 #: ../vector/v.db.connect/main.c:108
 msgid "Print types/names of table columns for specified layer and exit"
-msgstr ""
+msgstr "Wyświetl typy/nazwy kolumn tabeli dla wskazanej warstwy i wyjdź"
 
 #: ../vector/v.db.connect/main.c:115
 msgid "Overwrite connection parameter for certain layer"
-msgstr ""
+msgstr "Nadpisz parametry połączenia dla wskazanej warstwy"
 
 #: ../vector/v.db.connect/main.c:120
 msgid "Delete connection for certain layer (not the table)"
-msgstr ""
+msgstr "Usuń połączenie wskazanej warstwy (nie tabelę)"
 
 #: ../vector/v.db.connect/main.c:153
 #, fuzzy
@@ -24931,7 +24924,7 @@ msgstr ""
 #: ../vector/v.in.ascii/in.c:445
 #, fuzzy, c-format
 msgid "Column number %d <%s> defined as double has only integer values"
-msgstr "Nazwa istniejącego pliku rastrowego"
+msgstr "Kolumna numer %d <%s> zdefiniowana jako "
 
 #: ../vector/v.in.ascii/in.c:450
 #, fuzzy, c-format
@@ -28279,16 +28272,15 @@ msgstr "Tworzy matrycę kowariancji/korelacji dla określonej przez użytkownika
 
 #: ../vector/v.info/main.c:75
 msgid "Print vector history instead of info"
-msgstr ""
+msgstr "Wyświetl historię wektora zamiast informacji"
 
 #: ../vector/v.info/main.c:81
 msgid "Print types/names of table columns for specified layer instead of info"
 msgstr ""
 
 #: ../vector/v.info/main.c:96
-#, fuzzy
 msgid "Print topology information only"
-msgstr "Wyświetl informacje topologiczne (debugging)"
+msgstr "Wyświetl tylko informacje topologiczne"
 
 #: ../vector/v.info/main.c:206
 #, c-format
@@ -28558,7 +28550,7 @@ msgstr "Znacznik wartości null"
 
 #: ../vector/v.db.select/main.c:89
 msgid "Print minimal region extent of selected vector features instead of attributes"
-msgstr ""
+msgstr "Wyświetl zakres wybranych obiektów zamiast atrybutów"
 
 #: ../vector/v.db.select/main.c:93 ../db/base/select.c:242
 msgid "Do not include column names in output"
@@ -29103,7 +29095,7 @@ msgstr ""
 
 #: ../vector/v.what/main.c:85
 msgid "Print attribute information"
-msgstr ""
+msgstr "Wyświetl informacje atrybutowe"
 
 #: ../vector/v.what/main.c:159
 #, c-format
@@ -30336,9 +30328,8 @@ msgid "Print current connection parameters and exit"
 msgstr "Wyświetl parametry bieżącego połączenia i wyjdź"
 
 #: ../db/base/connect.c:57
-#, fuzzy
 msgid "Check connection parameters, set if uninitialized, and exit"
-msgstr "Wyświetl parametry bieżącego połączenia i wyjdź"
+msgstr "Sprawdź parametry połączenia, ustaw jeśli ich brak i wyjdź"
 
 #: ../db/base/connect.c:74
 msgid "Database schema"
@@ -30411,7 +30402,7 @@ msgstr "mapa wektorowa do edycji tabeli atrybutów"
 
 #: ../db/base/execute.c:113
 msgid "Executes any SQL statement."
-msgstr "Wykonaj polecenie SQL."
+msgstr "Wykonuje polecenia SQL."
 
 #: ../db/base/execute.c:117
 msgid "Name of file containing SQL statements"
@@ -31520,7 +31511,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
 msgid "Force import of track or route data as points"
-msgstr ""
+msgstr "Wymuś import śladu jako punkty"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
 msgid "Use gardump instead of gpstrans as the download program"
@@ -31688,36 +31679,31 @@ msgstr "Nazwa bazoewj mapy rastrowej"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
 msgid "Width of display canvas"
-msgstr ""
+msgstr "Szerokość płótna mapy"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
-#, fuzzy
 msgid "Height of display canvas"
-msgstr "Tekst który ma być wyświetlony"
+msgstr "Wysokość płótna mapy"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
-#, fuzzy
 msgid "Minimum size of each cell"
-msgstr "Minimalna liczba pikseli w klasie"
+msgstr "Minimalny rozmiar dla każdej komórki"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
-#, fuzzy
 msgid "Maximum number of rows to load"
-msgstr " Maksymalna liczba kolumn: %d"
+msgstr "Maksymalna liczba wierszy do wczytania"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
-#, fuzzy
 msgid "Maximum number of columns to load"
-msgstr " Maksymalna liczba kolumn: %d"
+msgstr "Maksymalna liczba kolumn do wczytania"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
 msgid "Adds one or more columns to the attribute table connected to a given vector map."
 msgstr "Dodaje jedną lub więcej kolumn do tabeli atrybutów połączonej z zadaną mapą wektorową."
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
-#, fuzzy
 msgid "Name of vector map for which to edit attribute table"
-msgstr "Mapa rastrowa w której mają być wypełnione zera"
+msgstr "Nazwa mapy wektorowej, której tabela ma być edytowana"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
 #, fuzzy
@@ -31732,24 +31718,23 @@ msgstr "Mapa wektorowa może być podłączona do wielu tabel bazy danych. Ta li
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:6
 msgid "Name and type of the new column(s) ('name type [,name type, ...]')"
-msgstr ""
+msgstr "Nazwa i typ nowej kolumny/kolumn ('nazwa typ [,name type, ...]')"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:7
 msgid "Data types depend on database backend, but all support VARCHAR(), INT, DOUBLE PRECISION and DATE"
-msgstr ""
+msgstr "Typ danych zależny od sterownika, ale wszystkie obsługują VARCHAR(), INT, DOUBLE PRECISION and DATE"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
 msgid "Allows to update a column in the attribute table connected to a vector map."
 msgstr "Umożliwia aktualizację kolumny w tabeli atrybutów połączonej z mapą wektorową."
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:3
-#, fuzzy
 msgid "Vector map to edit the attribute table for"
-msgstr "wektor, raster, tabela atrybutów"
+msgstr "Mapa wektorowa, której tabela ma być edytowana"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:4
 msgid "Layer to which the table to be changed is connected"
-msgstr ""
+msgstr "Warstwa, do której "
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:5
 msgid "Column to update"
@@ -32175,16 +32160,15 @@ msgstr "Usuwa kolumnę z tabeli atrybutów połączonej z zadaną mapą wektorow
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
 #, fuzzy
 msgid "Vector map for which to drop attribute column"
-msgstr "Nazwa mapy rastrowej z której kopiujemy paletę kolorów"
+msgstr "Mapa wektorowa, z której wykasować kolumnę atrybutów"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
 msgid "Layer where to drop column"
-msgstr ""
+msgstr "Warstwa, z której wykasować kolumnę"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
-#, fuzzy
 msgid "Name of the column to drop"
-msgstr "Liczba kolumn"
+msgstr "Nazwa kolumny do usunięcia"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
 msgid "Removes existing attribute table of a vector map."
@@ -32192,7 +32176,7 @@ msgstr "Usuwa tabelę atrybutów mapy wektorowej."
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
 msgid "Force removal (required for actual deletion of table)"
-msgstr ""
+msgstr "Wymuś usunięcie (wymagane dla wykasowania tabeli)"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
 msgid "Vector map from which to remove attribute table"
@@ -32301,7 +32285,7 @@ msgstr "Przebudowuje topologię dla wszystkich map wektorowych w bieżącym maps
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
 msgid "Prints a graph of the correlation between data layers (in pairs)."
-msgstr ""
+msgstr "Drukuje graf korelacji między warstwami danych (parami)."
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:3
 #: ../locale/scriptstrings/d.correlate_to_translate.c:4
@@ -36163,6 +36147,9 @@ msgstr "Zamiana miejscami bajtów w nagłówku"
 msgid "Exporting raster as double values (bytes=%d)"
 msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double) (%d bajtów)"
 
+msgid "Name of raster map with seed (at least 1 cell > 0)"
+msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 komórka >0)"
+
 #, fuzzy
 #~ msgid "Name for value output map"
 #~ msgstr "Nazwa dla wynikowej mapy rastrowej "
@@ -36256,9 +36243,6 @@ msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double) 
 #~ msgstr ""
 #~ "Zbyt duża grupa. Maksymalną liczbą grupy jest %d\n"
 #~ "."
-
-#~ msgid "Name of raster map with seed (at least 1 cell > 0)"
-#~ msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 komórka >0)"
 
 #, fuzzy
 #~ msgid "Name of the water depth raster map [m]"
@@ -36484,3 +36468,6 @@ msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double) 
 
 #~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 #~ msgstr "Mozaikuje do 4 obrazów i rozciąga colormap; tworzy mapę *.mosaic."
+
+#~ msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
+#~ msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 komórka >0)"

@@ -3609,9 +3609,8 @@ msgid "&Load"
 msgstr "&Wczytaj"
 
 #: ../gui/wxpython/gui_core/forms.py:1320
-#, fuzzy
 msgid "or enter values interactively"
-msgstr "Przekoduj interaktywnie"
+msgstr "lub wprowadź wartości interaktywnie"
 
 #: ../gui/wxpython/gui_core/forms.py:1500
 #, fuzzy
@@ -6926,12 +6925,13 @@ msgid "Topographic correction"
 msgstr "Korekcja atmosferyczna"
 
 #: ../gui/wxpython/menustrings.py:732
+#, fuzzy
 msgid "Computes topographic correction of reflectance."
-msgstr ""
+msgstr "Oblicza korekcję topograficzną"
 
 #: ../gui/wxpython/menustrings.py:733
 msgid "Satellite images products"
-msgstr ""
+msgstr "Pochodne zobrazowań satelitarnych"
 
 #: ../gui/wxpython/menustrings.py:734
 msgid "Tasseled cap vegetation index"
@@ -7012,14 +7012,12 @@ msgid "Cross section"
 msgstr "Przekrój"
 
 #: ../gui/wxpython/menustrings.py:754
-#, fuzzy
 msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
-msgstr "Tworzy mapę rastrową przekroju (2D) mapy rastrowej 3D i mapy rastrowej wysokości (2D)"
+msgstr "Tworzy mapę rastrową przekroju (2D) mapy rastrowej 3D i mapy rastrowej wysokości (2D)."
 
 #: ../gui/wxpython/menustrings.py:756
-#, fuzzy
 msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
-msgstr "Vis5D pozwala na %d kolumn. Próba użycia %d kolumn"
+msgstr "Oblicza chwilowy przepływ wód podziemnych w reżimie ciśnieniowym w trzech wymiarach."
 
 #: ../gui/wxpython/menustrings.py:757
 msgid "Interpolate volume from points"
@@ -7055,8 +7053,9 @@ msgid "Univariate statistics for volumes"
 msgstr "Statystyki"
 
 #: ../gui/wxpython/menustrings.py:765
+#, fuzzy
 msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
-msgstr ""
+msgstr "Oblicza statystyki z niezerowych komurek 3D mapy rastrowej 3D."
 
 #: ../gui/wxpython/menustrings.py:766
 msgid "&Database"
@@ -9673,7 +9672,7 @@ msgstr "Dopasowanie histogramu"
 
 #: ../gui/wxpython/scripts/vkrige.py:305
 msgid "Plot/refresh variogram"
-msgstr ""
+msgstr "Rysuj/odśwież wariogram"
 
 #: ../gui/wxpython/scripts/vkrige.py:316
 msgid ":"
@@ -10022,6 +10021,8 @@ msgid ""
 "No maps in selected group <%s>.\n"
 "Please edit group or select another group."
 msgstr ""
+"Brak map w wybranej grupie <%s>.\n"
+"Edytuj grupę lub wybierz inną."
 
 #: ../gui/wxpython/gcp/manager.py:719
 msgid "Manage Ground Control Points"
@@ -10034,7 +10035,7 @@ msgstr "Co najmniej jeden %d punkt GCP jest niezbędzny. Operacja przerwana."
 
 #: ../gui/wxpython/gcp/manager.py:1037
 msgid "mapwin not defined for "
-msgstr ""
+msgstr "nie zdefiniowano mapwin dla "
 
 #: ../gui/wxpython/gcp/manager.py:1107
 msgid "source"
@@ -10068,11 +10069,11 @@ msgstr "Zbiór POINTS został zapisany dla grupy <%s>"
 
 #: ../gui/wxpython/gcp/manager.py:1201
 msgid "source mapwin not defined"
-msgstr ""
+msgstr "nie zdefiniowano źródłowego mapwin"
 
 #: ../gui/wxpython/gcp/manager.py:1206
 msgid "target mapwin not defined"
-msgstr ""
+msgstr "nie zdefiniowano docelowego mapwin"
 
 #: ../gui/wxpython/gcp/manager.py:1234
 msgid "Reading POINTS file failed"
@@ -10111,11 +10112,11 @@ msgstr "Mapa wektorowa <%s> już istnieje. Zmień nazwę rozszerzenia i spróbuj
 
 #: ../gui/wxpython/gcp/manager.py:1453
 msgid "For all vector maps georectified successfully,"
-msgstr ""
+msgstr "Dla wszystkich map wektorowych po nadaniu georeferencji "
 
 #: ../gui/wxpython/gcp/manager.py:1454
 msgid "you will need to copy any attribute tables"
-msgstr "należy skopiowac wszystkie tabele atrybutów."
+msgstr "należy skopiować wszystkie tabele atrybutów "
 
 #: ../gui/wxpython/gcp/manager.py:1455
 msgid "and reconnect them to the georectified vectors"
@@ -10138,12 +10139,16 @@ msgid ""
 "Could not calculate RMS Error.\n"
 "Possible error with g.transform."
 msgstr ""
+"Nie można obliczyć błędu RMS.\n"
+"Prawdopodobnie błąd modułu g.transform."
 
 #: ../gui/wxpython/gcp/manager.py:1728
 msgid ""
 "Could not calculate new extends.\n"
 "Possible error with g.transform."
 msgstr ""
+"Nie można obliczyć nowych zasięgów.\n"
+"Prawdopodobnie błąd modułu g.transform."
 
 #: ../gui/wxpython/gcp/manager.py:1859
 msgid "Adjust source display to target display"
@@ -13384,9 +13389,8 @@ msgstr "Vis5D pozwala na %d kolumn. Próba użycia %d kolumn"
 #~ msgid "Topology maintenance"
 #~ msgstr "Tworzenie plików dodatkowych"
 
-#, fuzzy
 #~ msgid "Feature selection"
-#~ msgstr "Wybór danych"
+#~ msgstr "Wybór obiektów"
 
 #~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 #~ msgstr "Mozaikuje do 4 obrazów i rozciąga colormap; tworzy mapę *.mosaic."
