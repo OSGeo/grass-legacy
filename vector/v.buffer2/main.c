@@ -387,11 +387,13 @@ int main(int argc, char *argv[])
     Vect_spatial_index_init(&si);
 
     /* Lines (and Points) */
-    if ((type & GV_POINTS) || (type & GV_LINES)) {
+    if (nlines > 0) {
 	int ltype;
 
-	if (nlines > 0)
-	    G_message(_("Buffering lines..."));
+	G_message(_("Buffering lines..."));
+
+	nlines = Vect_get_num_lines(&In);
+
 	for (line = 1; line <= nlines; line++) {
 	    int cat;
 
