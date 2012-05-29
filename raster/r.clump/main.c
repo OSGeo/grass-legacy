@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     opt3->key_desc = "\"string\"";
     opt3->type = TYPE_STRING;
     opt3->required = NO;
-    opt3->description = _("Title, in quotes");
+    opt3->description = _("Title for output raster map");
 
     /* please, remove before GRASS 7 released */
     q_flag = G_define_flag();
