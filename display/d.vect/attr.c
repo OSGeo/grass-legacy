@@ -54,7 +54,7 @@ int attr(struct Map_info *Map, int type, char *attrcol,
 	else if (ltype == -2)
 	    break;
 	
-	if (!(type & ltype))
+	if (!(type & ltype) && !((type & GV_AREA) && (ltype & GV_CENTROID)))
 	    continue;		/* used for both lines and labels */
 
 	R_RGB_color(lattr->color.R, lattr->color.G, lattr->color.B);

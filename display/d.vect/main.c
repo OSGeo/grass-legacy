@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 {
     char *mapset;
     int ret, level;
-    int i, stat = 0, type, area, display;
+    int i, stat = 0, type, display;
     int chcat = 0;
     int r, g, b;
     int has_color, has_fcolor;
@@ -494,32 +494,7 @@ int main(int argc, char **argv)
 	    G_warning(_("%d errors in cat option"), ret);
     }
 
-    i = 0;
-    type = 0;
-    area = FALSE;
-    while (type_opt->answers[i]) {
-	switch (type_opt->answers[i][0]) {
-	case 'p':
-	    type |= GV_POINT;
-	    break;
-	case 'l':
-	    type |= GV_LINE;
-	    break;
-	case 'b':
-	    type |= GV_BOUNDARY;
-	    break;
-	case 'f':
-	    type |= GV_FACE;
-	    break;
-	case 'c':
-	    type |= GV_CENTROID;
-	    break;
-	case 'a':
-	    area = TRUE;
-	    break;
-	}
-	i++;
-    }
+    type = Vect_option_to_types(type_opt); 
 
     i = 0;
     display = 0;
@@ -630,7 +605,7 @@ int main(int argc, char **argv)
 	if (!wcolumn_opt->answer)
 	    D_line_width(default_width);
 
-	if (area) {
+	if (type & GV_AREA) {
 	    if (level >= 2) {
 		if (display & DISP_SHAPE) {
 		    stat = darea(&Map, Clist,
@@ -655,7 +630,7 @@ int main(int argc, char **argv)
 		G_warning(_("Unable to display lines by id, topology not available"));
 	    }
 	    else {
-		stat = plot1(&Map, type, area, Clist,
+		stat = plot1(&Map, type, Clist,
 			     has_color ? &color : NULL,
 			     has_fcolor ? &fcolor : NULL, chcat, icon_opt->answer,
 			     size, sizecolumn_opt->answer, rotcolumn_opt->answer,
@@ -682,7 +657,7 @@ int main(int argc, char **argv)
 	    R_line_width(0);
 
 	if (display & DISP_CAT)
-	    stat = label(&Map, type, area, Clist, &lattr, chcat);
+	    stat = label(&Map, type, Clist, &lattr, chcat);
 
 	if (display & DISP_ATTR)
 	    stat =
@@ -693,7 +668,7 @@ int main(int argc, char **argv)
 
 	if (display & DISP_TOPO) {
 	    if (level >= 2)
-		stat = topo(&Map, type, area, &lattr);
+		stat = topo(&Map, type, &lattr);
 	    else
 		G_warning(_("Unable to display topology, not available"));
 	}
