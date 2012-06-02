@@ -84,36 +84,64 @@ def db_connection():
     s = read_command('db.connect', flags = 'p')
     return parse_key_val(s, sep = ':')
 
-def db_select(table, sql, file = False, **args):
+def db_select(sql = None, filename = None, table = None, **args):
     """!Perform SQL select statement
 
-    @param table table name
-    @param sql   SQL select statement (string or file)
-    @param file  True if sql is filename
+    Note: one of <em>sql</em>, <em>filename</em>, or <em>table</em>
+    must be provided.
+    
+    Examples:
+    
+    \code
+    grass.db_select(sql = 'SELECT cat,CAMPUS FROM busstopsall WHERE cat < 4')
+
+    (('1', 'Vet School'), ('2', 'West'), ('3', 'North'))
+    \endcode
+    
+    \code
+     grass.db_select(filename = '/path/to/sql/file')
+    \endcode
+
+    Simplyfied usage 
+    
+    \code
+    grass.db_select(table = 'busstopsall')
+    \endcode
+
+    performs <tt>SELECT cat,CAMPUS FROM busstopsall</tt>.
+
+    @param sql SQL statement to perform (or None)
+    @param filename name of file with SQL statements (or None)
+    @param table name of table to query (or None)
     @param args  see db.select arguments
     """
     fname = tempfile()
-    if not file:
-        ret = run_command('db.select', quiet = True,
-                          flags = 'c',
-                          table = table,
-                          sql = sql,
-                          output = fname,
-			  **args)
-    else: # -> sql is file
-        ret = run_command('db.select', quiet = True,
-                          flags = 'c',
-                          table = table,
-                          input = sql,
-                          output = fname,
-			  **args)
+    if sql:
+        args['sql'] = sql
+    elif filename:
+        args['input'] = filename
+    elif table:
+        args['table'] = table
+    else:
+        fatal(_("Programmer error: '%s', '%s', or '%s' must be provided") %
+              'sql', 'filename', 'table')
+    
+    if 'fs' not in args:
+        args['fs'] = '|'
+    
+    ret = run_command('db.select', quiet = True,
+                      flags = 'c',
+                      output = fname,
+                      **args)
     
     if ret != 0:
-        fatal(_("Fetching data from table <%s> failed") % table)
-        
+        fatal(_("Fetching data failed"))
+    
     ofile = open(fname)
-    result = map(lambda x: x.rstrip(os.linesep), ofile.readlines())
+    result = map(lambda x: tuple(x.rstrip(os.linesep).split(args['fs'])),
+                 ofile.readlines())
     ofile.close()
     try_remove(fname)
         
-    return result
+    return tuple(result)
+
