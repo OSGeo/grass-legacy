@@ -5,7 +5,7 @@
 #include <grass/glocale.h>
 #include "plot.h"
 
-int label(struct Map_info *Map, int type, int do_area,
+int label(struct Map_info *Map, int type,
 	  struct cat_list *Clist, LATTR * lattr, int chcat)
 {
     int i, ltype;
@@ -30,7 +30,7 @@ int label(struct Map_info *Map, int type, int do_area,
 	    return 0;
 	}
 
-	if (!(type & ltype))
+	if (!(type & ltype) && !((type & GV_AREA) && (ltype & GV_CENTROID)))
 	    continue;		/* used for both lines and labels */
 
 	R_RGB_color(lattr->color.R, lattr->color.G, lattr->color.B);

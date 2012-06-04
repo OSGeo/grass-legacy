@@ -126,7 +126,7 @@ void plot_polygon(double *xf, double *yf, int n)
 /* *************************************************************** */
 /* *************************************************************** */
 /* *************************************************************** */
-int plot1(struct Map_info *Map, int type, int area, struct cat_list *Clist,
+int plot1(struct Map_info *Map, int type, struct cat_list *Clist,
 	  const struct color_rgb *color, const struct color_rgb *fcolor,
 	  int chcat, char *symbol_name, double size, char *size_column,
 	  char *rot_column, int id_flag, int table_colors_flag,
