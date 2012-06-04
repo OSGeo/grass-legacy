@@ -5,7 +5,7 @@
 #include "plot.h"
 #include <grass/glocale.h>
 
-int topo(struct Map_info *Map, int type, int do_area, LATTR * lattr)
+int topo(struct Map_info *Map, int type, LATTR * lattr)
 {
     int i, ltype, num, el;
     double xl, yl;
