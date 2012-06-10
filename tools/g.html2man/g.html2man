@@ -281,7 +281,7 @@ print "Converting: $infile to $outfile\n";
 while (<INP>) {
   # for intro pages which lack a module NAME (for whois entry)
   if ($_ =~ s/<!-- meta page description:(.*)-->/$1/) {
-	print OUT ".SH NAME\n$page -$_\n";
+	print OUT ".SH NAME\n$page \\-$_\n";
   }
 
   s/\\/\\(rs/g;
