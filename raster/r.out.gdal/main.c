@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 	"Byte,Int16,UInt16,Int32,UInt32,Float32,Float64,CInt16,CInt32,CFloat32,CFloat64";
     type->required = NO;
 
-    output = G_define_standard_option(G_OPT_R_OUTPUT);
+    output = G_define_standard_option(G_OPT_F_OUTPUT);
     output->required = NO;
     output->gisprompt = "new_file,file,output";
     output->description = _("Name for output raster file");
