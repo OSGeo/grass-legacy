@@ -72,6 +72,12 @@
 #% key: g
 #% description: Print in shell script style
 #% End
+#%flag
+#% key: s
+#% description: Process bands serially (default: run in parallel)
+#%end
+
+
 
 if  [ -z "$GISBASE" ]
 then
@@ -102,22 +108,56 @@ temp_result2="`g.tempfile $$`"
 temp_bands="`g.tempfile $$`"
 
 # save the Stddev for TM bands
-g.message "Calculating Standard deviations for all bands:"
-g.message "band 1"
-r.univar -g "$GIS_OPT_IMAGE1" | grep stddev | cut -f2 -d= > "$temp_stddev"
-g.message "band 2"
-r.univar -g "$GIS_OPT_IMAGE2" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-g.message "band 3"
-r.univar -g "$GIS_OPT_IMAGE3" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-g.message "band 4"
-r.univar -g "$GIS_OPT_IMAGE4" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-g.message "band 5"
-r.univar -g "$GIS_OPT_IMAGE5" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-g.message "band 7"
-r.univar -g "$GIS_OPT_IMAGE7" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+g.message "Calculating Standard deviations for all bands"
+if [ 1 -eq $GIS_FLAG_S ] ; then
+   # run serially
+   g.message "band 1"
+   r.univar -g "$GIS_OPT_IMAGE1" | grep stddev | cut -f2 -d= > "$temp_stddev"
+   g.message "band 2"
+   r.univar -g "$GIS_OPT_IMAGE2" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+   g.message "band 3"
+   r.univar -g "$GIS_OPT_IMAGE3" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+   g.message "band 4"
+   r.univar -g "$GIS_OPT_IMAGE4" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+   g.message "band 5"
+   r.univar -g "$GIS_OPT_IMAGE5" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+   g.message "band 7"
+   r.univar -g "$GIS_OPT_IMAGE7" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+else
+   #run in parallel
+   if [ -z "$WORKERS" ] ; then
+      WORKERS=6
+   fi
+
+   # parallel launching: could use GNU Parallel (an advanced form of xargs), but
+   # it may not be available. so we use a more generic approach
+   # see http://www.gnu.org/software/parallel/
+   # and http://grass.osgeo.org/wiki/OpenMP#Alternatives
+
+   # poor man's multi-threading for a multi-core CPU
+   for n in 1 2 3 4 5 7 ; do
+      MODULUS=`echo "$n $WORKERS" | awk '{print $1 % $2}'`
+      MAP=`eval "echo \\$GIS_OPT_IMAGE$n"`
+      g.message -i "band $n, <$MAP>  % $MODULUS"
+      if [ "$MODULUS" -eq 0  -o "$n" -eq 7 ] ; then
+	 r.univar -g "$MAP" | grep '^stddev=' | cut -f2 -d= > "$temp_stddev.b$n"
+	 wait
+      else
+     	 r.univar -g "$MAP" | grep '^stddev=' | cut -f2 -d= > "$temp_stddev.b$n" &
+      fi
+   done
+   wait
+
+   cat "$temp_stddev.b1" "$temp_stddev.b2" "$temp_stddev.b3" \
+       "$temp_stddev.b4" "$temp_stddev.b5" "$temp_stddev.b7" \
+       > "$temp_stddev"
+
+   \rm -f "$temp_stddev".b[1-7]
+fi
 
 g.message "Calculating Correlation Matrix"
-r.covar -r map=$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2,$GIS_OPT_IMAGE3,$GIS_OPT_IMAGE4,$GIS_OPT_IMAGE5,$GIS_OPT_IMAGE7 |tail -6 > "$temp_correlation"
+r.covar -r map="$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2,$GIS_OPT_IMAGE3,$GIS_OPT_IMAGE4,$GIS_OPT_IMAGE5,$GIS_OPT_IMAGE7" \
+   | tail -6 > "$temp_correlation"
 
 # Calculate all combinations
 g.message "Calculating OIF for the 20 band combinations..."
