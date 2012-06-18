@@ -10,7 +10,7 @@
 # PURPOSE:      create pretty LANDSAT RGBs: the trick is to remove outliers 
 #               using percentiles (area under the histogram curve)
 #
-# COPYRIGHT:	(C) 2006-2008 by the GRASS Development Team
+# COPYRIGHT:	(C) 2006-2012 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -120,11 +120,14 @@ EOF
    exit 0
 fi
 
+BRI_VAR_STR=percentile_`echo "$BRIGHTNESS" | awk '{printf("%.15g", $1)}' | tr '.' '_'`
+
 if [ 0 -eq $GIS_FLAG_P ] ; then
    for i in $RED $GREEN $BLUE ; do
       g.message "Processing <$i>..."
-      MIN=`r.univar -ge $i perc=2 | grep "^percentile_" | cut -d'=' -f2`
-      MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
+      eval `r.univar -ge "$i" perc=2,"$BRIGHTNESS" | grep '^percentile_'`
+      MIN="$percentile_2"
+      eval `echo "MAX=\"\\$\$BRI_VAR_STR\""`
       g.message -d message="<$i>:  min=$MIN   max=$MAX"
       r.colors $i col=rules << EOF
 	0% black
@@ -138,8 +141,9 @@ else
    ALL_MIN=999999
    for i in $RED $GREEN $BLUE ; do
       g.message "Processing <$i>..."
-      MIN=`r.univar -ge $i perc=2  | grep "^percentile_" | cut -d'=' -f2`
-      MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
+      eval `r.univar -ge "$i" perc=2,"$BRIGHTNESS" | grep '^percentile_'`
+      MIN="$percentile_2"
+      eval `echo "MAX=\"\\$\$BRI_VAR_STR\""`
       g.message -d message="<$i>:  min=$MIN   max=$MAX"
       ALL_MAX=`echo "$MAX $ALL_MAX" | awk '{if ($1 > $2) print $1; else print $2}'`
       ALL_MIN=`echo "$MIN $ALL_MIN" | awk '{if ($1 < $2) print $1; else print $2}'` 
@@ -157,20 +161,20 @@ fi
 
 # write cmd history (only if raster maps are located in the current mapset)
 CURRENT_MAPSET=`g.gisenv MAPSET`
-RED_MAPSET=`g.findfile -n elem=cell file=$RED | grep mapset | cut -d'=' -f2`
-BLUE_MAPSET=`g.findfile -n elem=cell file=$BLUE | grep mapset | cut -d'=' -f2`
-GREEN_MAPSET=`g.findfile -n elem=cell file=$GREEN | grep mapset | cut -d'=' -f2`
+RED_MAPSET=`g.findfile -n elem=cell file="$RED" | grep mapset | cut -d'=' -f2`
+BLUE_MAPSET=`g.findfile -n elem=cell file="$BLUE" | grep mapset | cut -d'=' -f2`
+GREEN_MAPSET=`g.findfile -n elem=cell file="$GREEN" | grep mapset | cut -d'=' -f2`
 
 if [ "$BLUE_MAPSET" = "$CURRENT_MAPSET" ] ; then
-    r.support ${BLUE} history="${CMDLINE}"
+    r.support "$BLUE" history="${CMDLINE}"
 fi
 
 if [ "$GREEN_MAPSET" = "$CURRENT_MAPSET" ] ; then
-    r.support ${GREEN} history="${CMDLINE}"
+    r.support "$GREEN" history="${CMDLINE}"
 fi
 
 if [ "$RED_MAPSET" = "$CURRENT_MAPSET" ] ; then
-    r.support ${RED} history="${CMDLINE}"
+    r.support "$RED" history="${CMDLINE}"
 fi
 
 exit 0
