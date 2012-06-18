@@ -27,6 +27,11 @@ For quicker execution of this module on large images you can achieve largely
 similar results by switching to a coarser resolution before the running of
 the module (using <em>g.region</em>) and then back to the original resolution
 afterwards.
+<p>
+By default the module will process all three R,G,B bands in parallel. To
+run serially use the <b>-s</b> flag. Parallel mode requires three times the
+memory while running, but takes one third of the time to complete.
+
 
 <h2>EXAMPLE</h2>
 
