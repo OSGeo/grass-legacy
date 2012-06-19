@@ -140,7 +140,7 @@ public:
   AMI_STREAM();
   
   // An AMI stream based on a specific path name.
-  AMI_STREAM(const char *path_name, AMI_stream_type st);
+  AMI_STREAM(const char *path_name, AMI_stream_type st = AMI_READ_WRITE_STREAM);
 
   // convenience function with split path_name
   //AMI_STREAM(const char *dir_name, const char *file_name, AMI_stream_type st);
@@ -156,7 +156,7 @@ public:
   // Read and write elements.
   AMI_err read_item(T **elt);
   AMI_err write_item(const T &elt);
-  AMI_err read_array(T *data, off_t len, off_t *lenp);
+  AMI_err read_array(T *data, off_t len, off_t *lenp=NULL);
   AMI_err write_array(const T *data, off_t len);
   
   // Return the number of items in the stream.
@@ -171,8 +171,7 @@ public:
 
   // Query memory usage
   static AMI_err main_memory_usage(size_t *usage,
-			    //MM_stream_usage usage_type= MM_STREAM_USAGE_OVERHEAD);
-			    MM_stream_usage usage_type);
+			    MM_stream_usage usage_type= MM_STREAM_USAGE_OVERHEAD);
   
   void persist(persistence p);
   
@@ -248,8 +247,7 @@ AMI_STREAM<T>::AMI_STREAM() {
 /**********************************************************************/
 // An AMI stream based on a specific path name.
 template<class T>
-AMI_STREAM<T>::AMI_STREAM(const char *path_name,
-			  AMI_stream_type st = AMI_READ_WRITE_STREAM) {
+AMI_STREAM<T>::AMI_STREAM(const char *path_name, AMI_stream_type st) {
 
   access_mode = st;
 
@@ -466,8 +464,7 @@ AMI_err AMI_STREAM<T>::seek(off_t offset) {
 // Query memory usage
 template<class T>
 AMI_err
-AMI_STREAM<T>::main_memory_usage(size_t *usage,
-								 MM_stream_usage usage_type= MM_STREAM_USAGE_OVERHEAD) {
+AMI_STREAM<T>::main_memory_usage(size_t *usage, MM_stream_usage usage_type) {
   
    switch (usage_type) {
    case MM_STREAM_USAGE_OVERHEAD:
@@ -546,7 +543,7 @@ AMI_err AMI_STREAM<T>::read_item(T **elt)  {
 
 /**********************************************************************/
 template<class T>
-AMI_err AMI_STREAM<T>::read_array(T *data, off_t len, off_t *lenp=NULL) {
+AMI_err AMI_STREAM<T>::read_array(T *data, off_t len, off_t *lenp) {
   size_t nobj;
   assert(fp);
   
