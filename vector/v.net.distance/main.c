@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 {
     struct Map_info In, Out;
     static struct line_pnts *Points;
-    struct line_cats *Cats;
+    struct line_cats *Cats, *TCats;
     struct GModule *module;	/* GRASS module for parsing arguments */
     struct Option *map_in, *map_out, *abcol, *afcol;
     struct Option *catf_opt, *fieldf_opt, *wheref_opt;
@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
     struct ilist *nodest;
     int i, nnodes, nlines;
     int *dst, *nodes_to_features;
+    int from_nr;			/* 'from' features not reachable */
     dglInt32_t **prev;
     struct line_cats **on_path;
     char buf[2000];
@@ -61,8 +62,8 @@ int main(int argc, char *argv[])
     module->label = _("Computes shortest distance via the network between "
 		      "the given sets of features.");
     module->description =
-	_("Finds the shortest paths from a feature 'to' to every feature 'from' "
-	 "and various information about this realtion are uploaded to the attribute table.");
+	_("Finds the shortest paths from a point 'from' to every feature 'to' "
+	 "and various information about this relation are uploaded to the attribute table.");
 
     /* Define the different options as defined in gis.h */
     map_in = G_define_standard_option(G_OPT_V_INPUT);
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
 
     afcol = G_define_standard_option(G_OPT_COLUMN);
     afcol->key = "afcolumn";
-    afcol->required = YES;
+    afcol->required = NO;
     afcol->description = _("Arc forward/both direction(s) cost column");
 
     abcol = G_define_standard_option(G_OPT_COLUMN);
@@ -130,6 +131,7 @@ int main(int argc, char *argv[])
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
+    TCats = Vect_new_cats_struct();
 
     Vect_check_input_output_name(map_in->answer, map_out->answer,
 				 GV_FATAL_EXIT);
@@ -173,15 +175,25 @@ int main(int argc, char *argv[])
     /*initialise varrays and nodes list appropriatelly */
     flayer = atoi(fieldf_opt->answer);
     tlayer = atoi(fieldt_opt->answer);
-    NetA_initialise_varray(&In, flayer, GV_POINT, wheref_opt->answer,
-			   catf_opt->answer, &varrayf);
-    NetA_initialise_varray(&In, tlayer, mask_type, wheret_opt->answer,
-			   catt_opt->answer, &varrayt);
+
+    if (NetA_initialise_varray(&In, flayer, GV_POINT, wheref_opt->answer,
+			   catf_opt->answer, &varrayf) <= 0) {
+	G_fatal_error(_("No 'from' features selected. "
+			"Please check options '%s', '%s', '%s'."),
+			fieldf_opt->key, wheref_opt->key, catf_opt->key);
+    }
+
+    if (NetA_initialise_varray(&In, tlayer, mask_type, wheret_opt->answer,
+			   catt_opt->answer, &varrayt) <= 0) {
+	G_fatal_error(_("No 'to' features selected. "
+			"Please check options '%s', '%s', '%s'."),
+			fieldt_opt->key, wheret_opt->key, catt_opt->key);
+    }
 
     nodest = Vect_new_list();
     NetA_varray_to_nodes(&In, varrayt, nodest, nodes_to_features);
 
-    Vect_net_build_graph(&In, mask_type, 1, 0, afcol->answer, abcol->answer,
+    Vect_net_build_graph(&In, GV_LINES, 1, 0, afcol->answer, abcol->answer,
 			 NULL, geo, 0);
     graph = &(In.graph);
     NetA_distance_from_points(graph, nodest, dst, prev);
@@ -221,8 +233,8 @@ int main(int argc, char *argv[])
     Vect_hist_copy(&In, &Out);
     Vect_hist_command(&Out);
 
-
-    for (i = 1; i <= nlines; i++)
+    from_nr = 0;
+    for (i = 1; i <= nlines; i++) {
 	if (varrayf->c[i]) {
 	    int type = Vect_read_line(&In, Points, Cats, i);
 	    int node, tcat, cat;
@@ -232,7 +244,11 @@ int main(int argc, char *argv[])
 	    if (!Vect_cat_get(Cats, flayer, &cat))
 		continue;
 	    Vect_get_line_nodes(&In, i, &node, NULL);
-	    Vect_write_line(&Out, type, Points, Cats);
+	    if (dst[node] < 0) {
+		/* unreachable */
+		from_nr++;
+ 		continue;
+	    }
 	    cost = dst[node] / (double)In.cost_multip;
 	    vertex = dglGetNode(graph, node);
 	    vertex_id = node;
@@ -243,9 +259,12 @@ int main(int argc, char *argv[])
 		vertex = dglEdgeGet_Head(graph, prev[vertex_id]);
 		vertex_id = dglNodeGet_Id(graph, vertex);
 	    }
-	    Vect_read_line(&In, NULL, Cats, nodes_to_features[vertex_id]);
-	    if (!Vect_cat_get(Cats, tlayer, &tcat))
+	    G_debug(3, "read line %d, vertex id %d", nodes_to_features[vertex_id], (int)vertex_id);
+	    Vect_read_line(&In, NULL, TCats, nodes_to_features[vertex_id]);
+	    if (!Vect_cat_get(TCats, tlayer, &tcat))
 		continue;
+
+	    Vect_write_line(&Out, type, Points, Cats);
 	    sprintf(buf, "insert into %s values (%d, %d, %f)", Fi->table, cat,
 		    tcat, cost);
 
@@ -257,6 +276,7 @@ int main(int argc, char *argv[])
 			      db_get_string(&sql));
 	    };
 	}
+    }
 
     for (i = 1; i <= nlines; i++)
 	if (on_path[i]->n_cats > 0) {
@@ -279,6 +299,9 @@ int main(int argc, char *argv[])
     G_free(nodes_to_features);
     G_free(dst);
     G_free(prev);
+
+    if (from_nr)
+	G_warning(_("%d 'from' features were not reachable"), from_nr);
 
     exit(EXIT_SUCCESS);
 }
