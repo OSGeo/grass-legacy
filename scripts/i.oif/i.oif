@@ -138,7 +138,7 @@ else
    for n in 1 2 3 4 5 7 ; do
       MODULUS=`echo "$n $WORKERS" | awk '{print $1 % $2}'`
       MAP=`eval "echo \\$GIS_OPT_IMAGE$n"`
-      g.message -i "band $n, <$MAP>  % $MODULUS"
+      g.message -d "band $n, <$MAP>  % $MODULUS"
       if [ "$MODULUS" -eq 0  -o "$n" -eq 7 ] ; then
 	 r.univar -g "$MAP" | grep '^stddev=' | cut -f2 -d= > "$temp_stddev.b$n"
 	 wait
