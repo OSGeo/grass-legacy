@@ -193,6 +193,9 @@ int main(int argc, char *argv[])
     nodest = Vect_new_list();
     NetA_varray_to_nodes(&In, varrayt, nodest, nodes_to_features);
 
+    if (nodest->n_values == 0)
+	G_fatal_error(_("No 'to' features"));
+
     Vect_net_build_graph(&In, GV_LINES, 1, 0, afcol->answer, abcol->answer,
 			 NULL, geo, 0);
     graph = &(In.graph);

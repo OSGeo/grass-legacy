@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
     layer = atoi(field_opt->answer);
 
     /* Create table */
-    Fi = Vect_default_field_info(&Out, 1, NULL, GV_1TABLE);
+    Fi = Vect_default_field_info(&Out, layer, NULL, GV_1TABLE);
     Vect_map_add_dblink(&Out, 1, NULL, Fi->table, "cat", Fi->database,
 			Fi->driver);
     db_init_string(&sql);
@@ -182,15 +182,18 @@ int main(int argc, char *argv[])
 
     if (NetA_initialise_varray
 	(&In, atoi(fieldsource_opt->answer), GV_POINT,
-	 wheresource_opt->answer, catsource_opt->answer, &varray_source) == 2)
-	G_fatal_error(_("Neither %s nor %s was given"), catsource_opt->key,
-		      wheresource_opt->key);
+	 wheresource_opt->answer, catsource_opt->answer, &varray_source) <= 0) {
+	G_fatal_error(_("No source features selected. "
+			"Please check options '%s', '%s'."),
+			catsource_opt->key, wheresource_opt->key);
+    }
     if (NetA_initialise_varray
 	(&In, atoi(fieldsink_opt->answer), GV_POINT, wheresink_opt->answer,
-	 catsink_opt->answer, &varray_sink) == 2)
-	G_fatal_error(_("Neither %s nor %s was given"), catsink_opt->key,
-		      wheresink_opt->key);
-
+	 catsink_opt->answer, &varray_sink) <= 0) {
+	G_fatal_error(_("No sink features selected. "
+			"Please check options '%s', '%s'."),
+			catsink_opt->key, wheresink_opt->key);
+    }
 
     NetA_varray_to_nodes(&In, varray_source, source_list, NULL);
     NetA_varray_to_nodes(&In, varray_sink, sink_list, NULL);
@@ -228,7 +231,7 @@ int main(int argc, char *argv[])
 	int type = Vect_read_line(&In, Points, Cats, i);
 
 	Vect_write_line(&Out, type, Points, Cats);
-	if (type == GV_LINE) {
+	if (type & mask_type) {
 	    int cat;
 
 	    Vect_cat_get(Cats, layer, &cat);
