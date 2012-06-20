@@ -639,7 +639,7 @@ int main(int argc, char *argv[])
 	    z = z * zscale;
 
 	    if (zrange_opt->answer) {
-		if (z < zrange_min || z >= zrange_max) {
+		if (z < zrange_min || z > zrange_max) {
 		    G_free_tokens(tokens);
 		    continue;
 		}
