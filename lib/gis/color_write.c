@@ -20,9 +20,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <grass/gis.h>
-#define PRECISION 30
-#define THRESHOLD .0000000000000000000000000000005
-/* .5 * 10 ^(-30) */
 
 static int write_new_colors(FILE *, struct Colors *);
 static int write_rules(FILE *, struct _Color_Rule_ *, DCELL, DCELL);
@@ -249,13 +246,11 @@ static int format_min(char *str, double dval)
 {
     double dtmp;
 
-    sprintf(str, "%.*f", PRECISION, dval);
+    sprintf(str, "%.15g", dval);
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval) {		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.*f", PRECISION, dval - THRESHOLD);
-	/* because precision is probably higher than PRECISION */
-    }
+    if (dtmp != dval)		/* if  no zeros after decimal point were trimmed */
+	sprintf(str, "%.15g", dval - GRASS_EPSILON);
 
     return 0;
 }
@@ -264,13 +259,11 @@ static int format_max(char *str, double dval)
 {
     double dtmp;
 
-    sprintf(str, "%.*f", PRECISION, dval);
+    sprintf(str, "%.15g", dval);
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval) {		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.*f", PRECISION, dval + THRESHOLD);
-	/* because precision is probably higher than PRECISION */
-    }
+    if (dtmp != dval)		/* if  no zeros after decimal point were trimmed */
+	sprintf(str, "%.15g", dval + GRASS_EPSILON);
 
     return 0;
 }
