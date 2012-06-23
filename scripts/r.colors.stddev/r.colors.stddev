@@ -6,7 +6,7 @@
 #                 New Zealand
 # PURPOSE:      Set color rules based on stddev from a map's mean value.
 #
-# COPYRIGHT:    (c) 2007 Hamish Bowman, and the GRASS Development Team
+# COPYRIGHT:    (c) 2007-2012 Hamish Bowman, and the GRASS Development Team
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
 #               for details.
@@ -45,15 +45,14 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 
-eval `r.univar -g "$GIS_OPT_INPUT"`
-# $? is result of the eval not r.univar (???)
-#if [ $? -ne 0 ] ; then
-#   g.region -e "Problem running r.univar"
-#   exit 1
-#fi
-
-
 if [ $GIS_FLAG_Z -eq 0 ] ; then
+
+   eval `r.univar -g "$GIS_OPT_INPUT"`
+   # $? is result of the eval not r.univar (???)
+   #if [ $? -ne 0 ] ; then
+   #   g.message -e "Problem running r.univar"
+   #   exit 1
+   #fi
 
    MEAN_MINUS_2STDEV=`echo "$mean $stddev" | awk '{print $1 - 2*$2}'`
    MEAN_PLUS_2STDEV=`echo "$mean $stddev" | awk '{print $1 + 2*$2}'`
@@ -102,8 +101,16 @@ else
    r.mapcalc "r_col_stdev_abs_$$ = abs($GIS_OPT_INPUT)"
    eval `r.info -r "r_col_stdev_abs_$$"`
 
-   # current r.univar truncates percentage to the base integer
-   STDDEV2=`r.univar -eg "r_col_stdev_abs_$$" perc=95.4500 | grep ^percentile | cut -f2 -d=`
+   SIGMA1=68.2689
+   SIGMA2=95.4500
+   SIGMA3=99.7300
+
+   eval `r.univar -eg "r_col_stdev_abs_$$" perc="$SIGMA1,$SIGMA2,$SIGMA3" | grep '^percentile'`
+
+   STDDEV1="$percentile_68_2689"
+   STDDEV2="$percentile_95_45"
+   STDDEV3="$percentile_99_73"
+
 
    if [ $GIS_FLAG_B -eq 0 ] ; then
      # zero centered smooth blue/white/red
@@ -116,10 +123,6 @@ else
 EOF
    else
      # zero centered banded  black/red/yellow/green/yellow/red/black
-
-     # current r.univar truncates percentage to the base integer
-     STDDEV1=`r.univar -eg "r_col_stdev_abs_$$" perc=68.2689 | grep ^percentile | cut -f2 -d=`
-     STDDEV3=`r.univar -eg "r_col_stdev_abs_$$" perc=99.7300 | grep ^percentile | cut -f2 -d=`
 
      # >3 S.D. outliers colored black so they show up in d.histogram w/ white background
      r.colors "$GIS_OPT_INPUT" color=rules << EOF
