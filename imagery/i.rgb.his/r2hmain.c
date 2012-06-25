@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	G_percent(i, rows, 2);
 
 	for (band = 0; band < 3; band++)
-	    if (G_get_map_row(fd_input[band], rowbuffer[band], i) < 0)
+	    if (G_get_c_raster_row(fd_input[band], rowbuffer[band], i) < 0)
 		G_fatal_error(_("Unable to read raster map row %ld"), i);
 
 	/* process this row of the map */
