@@ -96,15 +96,21 @@
 #% description: raster output TC maps prefix
 #% required : yes
 #%end
+#%flag
+#% key: s
+#% description: Process bands serially (default: run in parallel)
+#%end
 
-if test "$GISBASE" = ""; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
+
 
 if [ $GIS_FLAG_4 -eq 1 ] ; then
     g.message "LANDSAT-4..."
@@ -113,13 +119,26 @@ if [ $GIS_FLAG_4 -eq 1 ] ; then
   	       + 0.2793 * \"$GIS_OPT_BAND2\" + 0.4743 * \"$GIS_OPT_BAND3\" \
   	       + 0.5585 * \"$GIS_OPT_BAND4\" + 0.5082 * \"$GIS_OPT_BAND5\" \
   	       + 0.1863 * \"$GIS_OPT_BAND7\"" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	# An alternate approach would be to add a BG='&' enviro var then
+	#  eval r.mapcalc "$CMD" $BG
+	# but then the $CMD string would need triple quoting vs. "just" the
+	# double quoting it needs now, and that would make the code even harder
+	# to read. Backgrounding then waiting for processes incurs a little more
+	# overhead, but for just three or four jobs the cumulative cost is small.
+	# Life's a compromise.
+	wait
+    fi
+
     g.message "Calculating second TC component $GIS_OPT_OUTPREFIX.2 ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.2\" = -0.2848 * \"$GIS_OPT_BAND1\" \
   	       - 0.2435 * \"$GIS_OPT_BAND2\" - 0.5435 * \"$GIS_OPT_BAND3\" \
   	       + 0.7243 * \"$GIS_OPT_BAND4\" + 0.0840 * \"$GIS_OPT_BAND5\" \
   	       - 0.1800 * \"$GIS_OPT_BAND7\"" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating third TC component $GIS_OPT_OUTPREFIX.3 ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.3\" = 0.1509 * \"$GIS_OPT_BAND1\" \
   	       + 0.1973 * \"$GIS_OPT_BAND2\" + 0.3279 * \"$GIS_OPT_BAND3\" \
@@ -133,19 +152,28 @@ elif [ $GIS_FLAG_5 -eq 1 ] ; then
   	       + 0.2493 * \"$GIS_OPT_BAND2\" + 0.4806 * \"$GIS_OPT_BAND3\" \
   	       + 0.5568 * \"$GIS_OPT_BAND4\" + 0.4438 * \"$GIS_OPT_BAND5\" \
   	       + 0.1706 * \"$GIS_OPT_BAND7\" + 10.3695" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating second TC component $GIS_OPT_OUTPREFIX.2 (Greenness) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.2\" = -0.2728 * \"$GIS_OPT_BAND1\" \
   	       - 0.2174 * \"$GIS_OPT_BAND2\" - 0.5508 * \"$GIS_OPT_BAND3\" \
   	       + 0.7221 * \"$GIS_OPT_BAND4\" + 0.0733 * \"$GIS_OPT_BAND5\" \
   	       - 0.1648 * \"$GIS_OPT_BAND7\" - 0.7310" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating third TC component $GIS_OPT_OUTPREFIX.3 (Wetness) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.3\" = 0.1446 * \"$GIS_OPT_BAND1\" \
   	       + 0.1761 * \"$GIS_OPT_BAND2\" + 0.3322 * \"$GIS_OPT_BAND3\" \
   	       + 0.3396 * \"$GIS_OPT_BAND4\" - 0.6210 * \"$GIS_OPT_BAND5\" \
   	       - 0.4186 * \"$GIS_OPT_BAND7\" - 3.3828" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating fourth TC component $GIS_OPT_OUTPREFIX.4. (Haze) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.4\" = 0.8461 * \"$GIS_OPT_BAND1\" \
   	       - 0.0731 * \"$GIS_OPT_BAND2\" - 0.4640 * \"$GIS_OPT_BAND3\" \
@@ -159,19 +187,28 @@ elif [ $GIS_FLAG_7 -eq 1 ] ; then
     	       + 0.3972 * \"$GIS_OPT_BAND2\" + 0.3904 * \"$GIS_OPT_BAND3\" \
    	       + 0.6966 * \"$GIS_OPT_BAND4\" + 0.2286 * \"$GIS_OPT_BAND5\" \
    	       + 0.1596 * \"$GIS_OPT_BAND7\"" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating second TC component $GIS_OPT_OUTPREFIX.2 (Greenness) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.2\" = -0.3344 * \"$GIS_OPT_BAND1\" \
     	       - 0.3544 * \"$GIS_OPT_BAND2\" - 0.4556 * \"$GIS_OPT_BAND3\" \
    	       + 0.6966 * \"$GIS_OPT_BAND4\" - 0.0242 * \"$GIS_OPT_BAND5\" \
    	       - 0.2630 *  \"$GIS_OPT_BAND7\"" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating third TC component $GIS_OPT_OUTPREFIX.3 (Wetness) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.3\" = 0.2626 * \"$GIS_OPT_BAND1\" \
     	       + 0.2141 * \"$GIS_OPT_BAND2\" + 0.0926 * \"$GIS_OPT_BAND3\" \
    	       + 0.0656 * \"$GIS_OPT_BAND4\" - 0.7629 * \"$GIS_OPT_BAND5\" \
    	       - 0.5388 * \"$GIS_OPT_BAND7\"" &
-    
+    if [ "$GIS_FLAG_S" -eq 1 ] ; then
+	wait
+    fi
+
     g.message "Calculating fourth TC component $GIS_OPT_OUTPREFIX.4. (Haze) ..."
     r.mapcalc "\"$GIS_OPT_OUTPREFIX.4\" = 0.0805 * \"$GIS_OPT_BAND1\" \
     	       - 0.0498 * \"$GIS_OPT_BAND2\" + 0.1950 * \"$GIS_OPT_BAND3\" \
