@@ -176,8 +176,12 @@ def vector_db_select(map, layer = 1, **kwargs):
     key column value. Example:
 
     \code
-    >>> print grass.vector_select('lakes')['values'][3]
+    >>> print grass.vector_db_select('lakes')['columns']
+    ['cat', 'AREA', 'PERIMETER', 'FULL_HYDRO', 'FULL_HYDR2', 'FTYPE', 'FCODE', 'NAME']
+    >>> print grass.vector_db_select('lakes')['values'][3]
     ['3', '19512.86146', '708.44683', '4', '55652', 'LAKE/POND', '39000', '']
+    >>> print grass.vector_db_select('lakes', column = 'FTYPE')['values'][3]
+    ['LAKE/POND']
     \endcode
 
     @param map map name
@@ -205,7 +209,7 @@ def vector_db_select(map, layer = 1, **kwargs):
                        **kwargs)
     
     if not ret:
-        error(_('vector_select() failed'))
+        error(_('vector_db_select() failed'))
         return { 'columns' : [], 'values' : {} }
     
     columns = []
