@@ -592,6 +592,9 @@ int main(int argc, char *argv[])
 	}
     }
 
+    /* close the GDALDataset to avoid segfault in libgdal */
+    GDALClose(hDS);
+
     /* -------------------------------------------------------------------- */
     /*      Extend current window based on dataset.                         */
     /* -------------------------------------------------------------------- */
