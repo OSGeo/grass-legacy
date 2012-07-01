@@ -3,11 +3,9 @@
      by M. Neteler 8/2005
   -->
 
-\section segmentintro Segment Library
+\author CERL
 
-
-<P>
-Authors: CERL
+\section segmentintro Introduction
 
 <P>
 Large data files which contain data in a matrix format often need to be 
@@ -37,7 +35,7 @@ may severely degrade performance. Method (2) is not much more complicated to
 code and requires no significant amount of memory to hold the data. But the 
 i/o involved will certainly degrade performance. Method (3) is a mixture of 
 (1) and (2) . Memory requirements are fixed and data is read from the data 
-file only when not already in memory. Howev er the programming is more 
+file only when not already in memory. However the programming is more 
 complex.
 
 <P>
@@ -61,9 +59,8 @@ specifying the row and column of the original matrix. Behind the scenes, the
 data is paged into memory as needed and the requested data is returned to 
 the caller.
 
-<P>
-<B>Note:</B> All routines and global variables in this library, documented 
-or undocumented, start with the prefix <B>segment_.</B> To avoid name 
+\note All routines and global variables in this library, documented
+or undocumented, start with the prefix \c segment_. To avoid name
 conflicts, programmers should not create variables or routines in their own 
 modules which use this prefix.
 
@@ -74,12 +71,14 @@ modules which use this prefix.
 The routines in the <I>Segment Library</I> are described below, more or 
 less in the order they would logically be used in a module. They use a data 
 structure called SEGMENT which is defined in the header file 
-<grass/segment.h> that must be included in any code using these 
-routines: [footnote]
+\c grass/segment.h that must be included in any code using these
+routines:
 
-\verbatim
+\code
 #include <grass/segment.h>
-\endverbatim 
+\endcode
+
+\see \ref Loading_the_Segment_Library.
 
 <P>
 The first step is to create a file which is properly formatted for use by 
@@ -88,7 +87,9 @@ the <I>Segment Library</I> routines:
 
 <P>
 int segment_format (int fd, int nrows, int ncols, int srows, int scols,
-  int len) format a segment fileThe segmentation routines require a disk file
+  int len), format a segment file
+<P>
+  The segmentation routines require a disk file
   to be used for paging segments in and out of memory. This routine formats the
   file open for write on file descriptor <B>fd</B> for use as a segment file.
   A segment file must be formatted before it can be processed by other segment
@@ -99,9 +100,9 @@ int segment_format (int fd, int nrows, int ncols, int srows, int scols,
 <P>
 The corresponding nonsegmented data matrix, which is to be transferred to the
   segment file, is <B>nrows</B> by <B>ncols.</B> The segment file is to be
-  formed of segments which are <B>srows</B> by <B>scols.</B> The data items
-  have length <B>len</B> bytes. For example, if the <I>data type is int</I>,
-  <B><I>len</I> </B><I>is sizeof(int) .</I>
+  formed of segments which are <B>srows</B> by <B>scols</B>. The data items
+  have length <B>len</B> bytes. For example, if the data type is <I>int</I>,
+  <B><I>len</I></B> is <I>sizeof(int)</I>.
 
 <P>
 Return codes are: 1 ok; else -1 could not seek or write <I>fd</I>, or -3
@@ -109,20 +110,21 @@ Return codes are: 1 ok; else -1 could not seek or write <I>fd</I>, or -3
 
 <P>
 The next step is to initialize a SEGMENT structure to be associated with a
-segment file formatted by <I>segment_format.</I>
+segment file formatted by segment_format().
 
 <P>
 int segment_init (SEGMENT *seg, int fd, int nsegs) initialize segment
-  structureInitializes the <B>seg</B> structure. The file on <B>fd</B> is
-  a segment file created by <I>segment_format</I> and must be open for
+  structure
+<P>
+  Initializes the <B>seg</B> structure. The file on <B>fd</B> is
+  a segment file created by segment_format() and must be open for
   reading and writing. The segment file configuration parameters <I>nrows,
     ncols, srows, scols</I>, and <I>len</I>, as written to the file by
   <I>segment_format</I>, are read from the file and stored in the
   <B>seg</B> structure. <B>Nsegs</B> specifies the number of segments that
   will be retained in memory. The minimum value allowed is 1.
 
-<P>
-<B>Note.</B> The size of a segment is <I>scols*srows*len</I> plus a few
+\note The size of a segment is <I>scols*srows*len</I> plus a few
   bytes for managing each segment.
 
 <P>
@@ -133,9 +135,11 @@ Then data can be written from another file to the segment file row by row:
 
 <P>
 int segment_put_row (SEGMENT *seg, char *buf, int row) write row to
-  segment fileTransfers nonsegmented matrix data, row by row, into a segment
+  segment file
+<P>
+  Transfers nonsegmented matrix data, row by row, into a segment
   file.  <B>Seg</B> is the segment structure that was configured from a call
-  to <I>segment_init.</I> <B>Buf</B> should contain <I>ncols*len</I>
+  to segment_init(). <B>Buf</B> should contain <I>ncols*len</I>
   bytes of data to be transferred to the segment file. <B>Row</B> specifies
   the row from the data matrix being transferred.
 
@@ -147,7 +151,9 @@ Then data can be read or written to the segment file randomly:
 
 <P>
 int segment_get (SEGMENT *seg, char *value, int row, int col) get value
-  from segment fileProvides random read access to the segmented data. It gets
+  from segment file
+<P>
+  Provides random read access to the segmented data. It gets
   <I>len</I> bytes of data into <B>value</B> from the segment file
   <B>seg</B> for the corresponding <B>row</B> and <B>col</B> in the
   original data matrix.
@@ -157,7 +163,9 @@ Return codes are:  1 if ok;  else -1 could not seek or read segment file.
 
 <P>
 int segment_put (SEGMENT *seg, char *value, int row, int col) put
-  value to segment fileProvides random write access to the segmented data. It
+  value to segment file
+<P>
+  Provides random write access to the segmented data. It
   copies <I>len</I> bytes of data from <B>value</B> into the segment
   structure <B>seg</B> for the corresponding <B>row</B> and <B>col</B> in
   the original data matrix.
@@ -169,18 +177,18 @@ The data is not written to disk immediately. It is stored in a memory segment
 <P>
 Return codes are: 1 if ok; else -1 could not seek or write segment file.
 
-
-
 <P>
 After random reading and writing is finished, the pending updates must be 
 flushed to disk:
 
 <P>
-int segment_flush (SEGMENT *seg) flush pending updates to diskForces
-  all pending updates generated by <I>segment_put()</I> to be written to the
+int segment_flush (SEGMENT *seg), flush pending updates to disk
+<P>
+  Forces
+  all pending updates generated by segment_put() to be written to the
   segment file <B>seg.</B> Must be called after the final segment_put() to
   force all pending updates to disk. Must also be called before the first call
-  to <I>segment_get_row.</I>
+  to segment_get_row().
 
 <P>
 Now the data in segment file can be read row by row and transferred to a normal
@@ -188,9 +196,11 @@ sequential data file:
 
 <P>
 int segment_get_row (SEGMENT *seg, char *buf, int row) read row from
-  segment fileTransfers data from a segment file, row by row, into memory
+  segment file
+<P>
+  Transfers data from a segment file, row by row, into memory
   (which can then be written to a regular matrix file) . <B>Seg</B> is the
-  segment structure that was configured from a call to <I>segment_init.</I>
+  segment structure that was configured from a call to segment_init().
   <B>Buf</B> will be filled with <I>ncols*len</I> bytes of data
   corresponding to the <B>row</B> in the data matrix.
 
@@ -201,7 +211,9 @@ Return codes are: 1 if ok; else -1 could not seek or read segment file.
 Finally, memory allocated in the SEGMENT structure is freed:
 
 <P>
-int segment_release (SEGMENT *seg) free allocated memoryReleases the
+int segment_release (SEGMENT *seg) free allocated memory
+<P>
+  Releases the
   allocated memory associated with the segment file <B>seg.</B> Does not close
   the file. Does not flush the data which may be pending from previous
   <I>segment_put()</I> calls.
@@ -216,14 +228,15 @@ The following should provide the programmer with a good idea of how to use the
 The first step is the creation and formatting of a segment file. A file is
 created, formatted and then closed:
 
-
-\verbatim 
+\code
 fd = creat (file, 0666);
 
 segment_format (fd, nrows, ncols, srows, scols, sizeof(int));
 
 close(fd);
-\endverbatim
+\
+
+
 
 <P>
 The next step is the conversion of the nonsegmented matrix data into segment
@@ -232,7 +245,7 @@ then data read row by row from the original data file and put into the segment
 file:
 
 
-\verbatim
+\code
 #include <fcntl.h>
 
 int buf[NCOLS];
@@ -240,40 +253,41 @@ int buf[NCOLS];
 SEGMENT seg;
 
 fd = open (file, O_RDWR);
-segment_init (&seg, fd, nseg)
+segment_init (&seg, fd, nseg);
 
 for (row = 0; row < nrows; row++)
 {
- <code to get original matrix data for row into buf>
- segment_put_row (&seg, buf, row);
+    // code to get original matrix data for row into buf
+
+    segment_put_row (&seg, buf, row);
 }
-\endverbatim
+\endcode
 
 
 <P>
 Of course if the intention is only to add new values rather than update existing
 values, the step which transfers data from the original matrix to the segment
 file, using segment_put_row() , could be omitted, since
-<I>segment_format</I> will fill the segment file with zeros.
+segment_format() will fill the segment file with zeros.
 
 <P>
-The data can now be accessed directly using <I>segment_get.</I> For example,
+The data can now be accessed directly using segment_get(). For example,
 to get the value at a given row and column:
 
-\verbatim
+\code
 int value;
 
 SEGMENT seg;
 
 segment_get (&seg, &value, row, col);
-\endverbatim
+\endcode
 
 <P>
-Similarly <I>segment_put()</I> can be used to change data values in the 
+Similarly segment_put() can be used to change data values in the
 segment file:
 
 
-\verbatim
+\code
 int value;
 
 SEGMENT seg;
@@ -281,16 +295,16 @@ SEGMENT seg;
 value = 10;
 
 segment_put (&seg, &value, row, col);
-\endverbatim
+\endcode
 
-<P>
-<B>WARNING:</B> It is an easy mistake to pass a value directly to 
+
+\warning It is an easy mistake to pass a value directly to
 segment_put(). The following should be avoided:
 
 
-\verbatim
-segment_put (&seg, 10, row, col); /* this will not work */
-\endverbatim
+\code
+segment_put (&seg, 10, row, col); // this will not work
+\endcode
 
 <P>
 Once the random access processing is complete, the data would be extracted 
@@ -298,31 +312,30 @@ from the segment file and written to a nonsegmented matrix data file as
 follows:
 
 
-\verbatim
+\code
 segment_flush (&seg);
 
 for (row = 0; row < nrows; row++) 
 {
     segment_get_row (&seg, buf, row);
 
-    <code to put buf into a matrix data file for row>
-
+    // code to put buf into a matrix data file for row
 }
-\endverbatim
+\endcode
 
 <P>
 Finally, the memory allocated for use by the segment routines would be 
 released and the file closed:
 
 
-\verbatim
+\code
 segment_release (&seg);
 
 close (fd);
-\endverbatim
+\endcode
 
-<P>
-<B>Note:</B> The <I>Segment Library</I> does not know the name of the 
+
+\note The <I>Segment Library</I> does not know the name of the
 segment file. It does not attempt to remove the file. If the file is only 
 temporary, the programmer should remove the file after closing it.
 
@@ -331,7 +344,11 @@ temporary, the programmer should remove the file after closing it.
 \section Loading_the_Segment_Library Loading the Segment Library
 
 <P>
-The library is loaded by specifying $(SEGMENTLIB) in the Makefile.
+The library is loaded by specifying
+\code
+$(SEGMENTLIB)
+\endcode
+in the Makefile.
 
 <P>
 See \ref Compiling_and_Installing_GRASS_Modules for a complete 
