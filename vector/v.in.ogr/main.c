@@ -318,6 +318,7 @@ int main(int argc, char *argv[])
     if (list_flag->answer) {
 	fprintf(stdout, "\n");
 	fflush(stdout);
+	OGR_DS_Destroy(Ogr_ds);
 	exit(EXIT_SUCCESS);
     }
 
@@ -1159,9 +1160,7 @@ int main(int argc, char *argv[])
 	G_message("%s", separator);
     }
 
-    /* needed?
-     * OGR_DS_Destroy( Ogr_ds );
-     */
+    OGR_DS_Destroy(Ogr_ds);
 
     /* Copy temporary vector to output vector */
     Vect_copy_map_lines(&Tmp, &Map);
