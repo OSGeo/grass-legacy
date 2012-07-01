@@ -664,6 +664,9 @@ int main(int argc, char *argv[])
 	G_free(title2);
     }
 
+    /* close the GDALDataset to avoid segfault in libgdal */
+    GDALClose(hDS);
+
     if (flag_e->answer)
 	update_default_window(&cellhd);
 
