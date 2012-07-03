@@ -50,7 +50,7 @@ int V1_open_old_ogr(struct Map_info *Map, int update)
     OGRFeatureDefnH Ogr_featuredefn;
 
     if (update) {
-	G_warning(_("OGR format cannot be updated"));
+	G_fatal_error(_("OGR format cannot be updated"));
 	return -1;
     }
 
