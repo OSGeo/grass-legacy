@@ -133,7 +133,17 @@ def mapcalc_start(exp, quiet = False, verbose = False, overwrite = False, **kwar
     t = string.Template(exp)
     e = t.substitute(**kwargs)
 
-    return start_command('r.mapcalc', expression = e,
-                        quiet = quiet,
-                        verbose = verbose,
-                        overwrite = overwrite)
+    env = os.environ.copy()
+    if quiet:
+        env['GRASS_VERBOSE'] = '0'
+    if verbose:
+        env['GRASS_VERBOSE'] = '3'
+    if overwrite:
+        env['GRASS_OVERWRITE'] = '1'
+
+    stdin = e
+    p = feed_command('r.mapcalc', env = env, **kwargs)
+    p.stdin.write(stdin)
+    p.stdin.close()
+
+    return p
