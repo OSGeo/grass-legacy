@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 {
     struct History history;
     struct GModule *module;
-    
+
     struct Cell_head cellhd;
     char *mapset;
 
@@ -37,25 +37,24 @@ int main(int argc, char *argv[])
     int infd, outfd;
     void *ptr;
     int nrows, ncols, row, col;
-    
+
     RASTER_MAP_TYPE in_data_type;
 
     struct Option *input_prefix, *output_prefix, *metfn, *sensor, *adate, *pdate, *elev,
 	*bgain, *metho, *perc, *dark, *atmo;
     char *inputname, *met, *outputname, *sensorname;
     struct Flag *msss, *frad, *l5_mtl;
-    
+
     lsat_data lsat;
     char band_in[GNAME_MAX], band_out[GNAME_MAX];
     int i, j, q, method, pixel, dn_dark[MAX_BANDS], dn_mode[MAX_BANDS];
-    int overwrite;
     double qcal, rad, ref, percent, ref_mode, rayleigh;
 
     struct Colors colors;
     struct FPRange range;
     double min, max;
     unsigned long hist[256], h_max;
-    
+
     /* initialize GIS environment */
     G_gisinit(argv[0]);
 
@@ -64,8 +63,7 @@ int main(int argc, char *argv[])
     module->description =
 	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+.");
     module->keywords = _("imagery, landsat, top-of-atmosphere reflectance, dos-type simple atmospheric correction");
-    module->overwrite = TRUE;
-    
+
     /* It defines the different parameters */
     input_prefix = G_define_option();
     input_prefix->key = "input_prefix";
@@ -112,7 +110,7 @@ int main(int argc, char *argv[])
     metho->description = _("Required only if 'metfile' not given");
     metho->answer = "uncorrected";
     metho->guisection = _("Metadata");
-    
+
     adate = G_define_option();
     adate->key = "date";
     adate->type = TYPE_STRING;
@@ -121,7 +119,7 @@ int main(int argc, char *argv[])
     adate->label = _("Image acquisition date (yyyy-mm-dd)");
     adate->description = _("Required only if 'metfile' not given");
     adate->guisection = _("Metadata");
-    
+
     elev = G_define_option();
     elev->key = "solar_elevation";
     elev->type = TYPE_DOUBLE;
@@ -176,7 +174,7 @@ int main(int argc, char *argv[])
     frad = G_define_flag();
     frad->key = 'r';
     frad->description = _("Output at-sensor radiance for all bands");
-    
+
     msss = G_define_flag();
     msss->key = 's';
     msss->description = _("Set sensor of Landsat TM4/5 to MSS");
@@ -200,11 +198,9 @@ int main(int argc, char *argv[])
     inputname = input_prefix->answer;
     outputname = output_prefix->answer;
     sensorname = sensor -> answer ? sensor->answer: "";
-    
-    overwrite = G_check_overwrite(argc, argv);
-    
+
     G_zero(&lsat, sizeof(lsat));
-    
+
     if (adate->answer != NULL) {
 	strncpy(lsat.date, adate->answer, 11);
 	lsat.date[10] = '\0';
@@ -472,21 +468,12 @@ int main(int argc, char *argv[])
 	    continue;
 	}
 
-	if (G_find_cell2(band_out, "")) {
-	    if (overwrite) {
-		G_warning(_("Raster map <%s> already exists and will be overwritten"), band_out);
-	    }
-	    else {
-		G_warning(_("Raster map <%s> exists. Skipping."), band_out);
-		continue;
-	    }
-	}
 	if ((infd = G_open_cell_old(band_in, mapset)) < 0)
 	    G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 	in_data_type = G_raster_map_type(band_in, mapset);
 	if (G_get_cellhd(band_in, mapset, &cellhd) < 0)
 	    G_fatal_error(_("Unable to read header of raster map <%s>"), band_in);
-	
+
 	/* set same size as original band raster */
 	G_set_window(&cellhd);
 
@@ -553,7 +540,7 @@ int main(int argc, char *argv[])
 	    G_put_raster_row(outfd, outrast, DCELL_TYPE);
 	}
 	G_percent(1, 1, 1);
-	
+
 	ref_mode = 0.;
 	if (method > DOS && !lsat.band[i].thermal) {
 	    ref_mode = lsat_qcal2rad(dn_mode[i], &lsat.band[i]);
@@ -630,7 +617,7 @@ int main(int argc, char *argv[])
 	sprintf(history.edhist[history.edlinecnt],
 		"-----------------------------------------------------------------");
 	history.edlinecnt++;
-	
+
 	G_command_history(&history);
 	G_write_history(band_out, &history);
 
