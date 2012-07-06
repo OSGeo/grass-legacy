@@ -37,7 +37,7 @@ Kelvin degrees.
 Radiometric calibration converts QCAL to <b>at-sensor radiance</b>, a
 radiometric quantity measured in W/(m&sup2; * sr * &micro;m) using the
 equations:
-</ul>
+<ul>
   <li> gain = (Lmax - Lmin) / (QCALmax - QCALmin)</li>
   <li> bias = Lmin - gain * QCALmin </li>
   <li> radiance = gain * QCAL + bias </li>
@@ -50,7 +50,7 @@ lowest points of the range of rescaled radiance in QCAL.
 <p>
 Then, to calculate <b>at-sensor reflectance</b> the equations are:
 
-</ul>
+<ul>
   <li> sun_radiance = [Esun * sin(e)] / (PI * d^2)</li>
   <li> reflectance = radiance / sun_radiance </li>
 </ul>
@@ -68,7 +68,7 @@ avoid these possible negative values and set the minimum possible
 values at-sensor to zero, this method corrects the radiance to output
 a corrected at-sensor values using the equations (not for thermal
 bands):
-</ul>
+<ul>
   <li> radiance = (uncorrected_radiance - Lmin) </li>
   <li> reflectance = radiance / sun_radiance </li>
 </ul>
@@ -87,7 +87,7 @@ effect of solar illumination. To output these simple <b>at-surface
 radiance</b> and <b>at-surface reflectance</b>, the equations are (not
 for thermal bands):
 
-</ul>
+<ul>
   <li> sun_radiance = TAUv * [Esun * sin(e) * TAUz + Esky] / (PI * d^2) </li>
   <li> radiance_path = radiance_dark - percent * sun_radiance </li>
   <li> radiance = (at-sensor_radiance - radiance_path) </li>
@@ -105,7 +105,7 @@ from the darkest object, i.e. DN with a least 'dark_parameter'
 
 The values are,
 
-</ul>
+<ul>
   <li>DOS1: TAUv = 1.0, TAUz = 1.0 and Esky = 0.0</li>
   <li>DOS2: TAUv = 1.0, Esky = 0.0, and TAUz = sin(e) for all bands
     with maximum wave length less than 1. (i.e. bands 4-6 MSS, 1-4 TM,
@@ -135,7 +135,7 @@ sensor.
 <p>
 Production date is not an exact value but it is necessary to apply
 correct calibration constants, which were changed in the dates:
-</ul>
+<ul>
   <li>Landsat-1 MSS: never </li>
   <li>Landsat-2 MSS: July 16, 1975</li>
   <li>Landsat-3 MSS: June 1, 1978</li>
@@ -176,7 +176,7 @@ i.landsat.toar input_prefix=L5121060_06020060714. \
 
 <h2>REFERENCES</h2>
 
-</ul>
+<ul>
   <li>Chander G., B.L. Markham and D.L. Helder, 2009: Remote Sensing of
     Environment, vol. 113</li>
   
@@ -208,9 +208,9 @@ i.landsat.toar input_prefix=L5121060_06020060714. \
 <h2>SEE ALSO</h2>
 
 <em>
-  <A href="i.atcorr.html">i.atcorr</a>,
-  <A href="r.mapcalc.html">r.mapcalc</a>,
-  <A href="r.in.gdal.html">r.in.gdal</a>
+  <a href="i.atcorr.html">i.atcorr</a>,
+  <a href="r.mapcalc.html">r.mapcalc</a>,
+  <a href="r.in.gdal.html">r.in.gdal</a>
 </em>
 
 <h2>AUTHOR</h2>
