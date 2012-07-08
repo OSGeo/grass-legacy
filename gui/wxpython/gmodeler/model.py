@@ -1990,7 +1990,7 @@ class WritePythonFile:
         self.fd.write(
 r"""#!/usr/bin/env python
 #
-############################################################################
+#%s
 #
 # MODULE:       %s
 #
@@ -2000,11 +2000,13 @@ r"""#!/usr/bin/env python
 #
 # DATE:         %s
 #
-#############################################################################
-""" % (properties['name'],
-       properties['author'],
-       properties['description'],
-       time.asctime()))
+#%s
+""" % ('#' * 79,
+       properties['name'],
+       EncodeString(properties['author']),
+       EncodeString('\n# '.join(properties['description'].splitlines())),
+       time.asctime(),
+       '#' * 79))
         
         self.fd.write(
 r"""
@@ -2100,7 +2102,7 @@ if __name__ == "__main__":
         
     def _writePythonAction(self, item, variables = []):
         """!Write model action to Python file"""
-        task = GUI(show = None).ParseCommand(cmd = item.GetLog(string = False))
+        task = GUI(show = None).ParseCommand(cmd = item.GetLog(string = False, substitute = self.model.GetVariables()))
         strcmd = "%sgrass.run_command(" % (' ' * self.indent)
         self.fd.write(strcmd + self._getPythonActionCmd(task, len(strcmd), variables) + '\n')
         
@@ -2118,7 +2120,7 @@ if __name__ == "__main__":
                     params.append('%s = True' % name)
                 else:
                     flags += name
-            
+        
         for p in opts['params']:
             name = p.get('name', None)
             value = p.get('value', None)
