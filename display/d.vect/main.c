@@ -646,7 +646,7 @@ int main(int argc, char **argv)
 	if (has_color) {
 	    R_RGB_color(color.r, color.g, color.b);
 	    if (display & DISP_DIR)
-		stat = dir(&Map, type, Clist, chcat);
+                stat = dir(&Map, type, Clist, chcat, size);
 	}
 
 	/* reset line width: Do we need to get line width from display
