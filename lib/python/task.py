@@ -437,9 +437,9 @@ def get_interface_description(cmd):
         else:
             args = [cmd, '--interface-description']
         
-        cmdout, cmderr = Popen(args, stdout = PIPE,
-                               stderr = PIPE).communicate()
-        if cmderr:
+        p = Popen(args, stdout = PIPE, stderr = PIPE)
+        cmdout, cmderr = p.communicate()
+        if p.returncode != 0:
             raise ScriptError, _("Unable to fetch interface description for command '%(cmd)s'."
                                  "\n\nDetails: %(det)s") % { 'cmd' : cmd, 'det' : decode(cmderr) }
     except OSError, e:
