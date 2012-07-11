@@ -30,7 +30,7 @@
    This structure is used for reading and writing vector lines and
    polygons.  The library routines handle all memory allocation.  If
    3 lines in memory are needed at the same time, then simply 3
-   line_pnts structures have to be used
+   line_pnts structures have to be used.
 
    \param void
 
@@ -43,9 +43,11 @@ struct line_pnts *Vect__new_line_struct(void);
    \brief Creates and initializes a struct line_pnts.
 
    This structure is used for reading and writing vector lines and
-   polygons.  The library routines handle all memory allocation.  If
-   3 lines in memory are needed at the same time, then simply 3
-   line_pnts structures have to be used
+   polygons.  The library routines handle all memory allocation.  If 3
+   lines in memory are needed at the same time, then simply 3
+   line_pnts structures have to be used.
+
+  To free allocated memory call Vect_destroy_line_struct().
 
    \param void
 
