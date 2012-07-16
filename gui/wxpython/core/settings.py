@@ -190,7 +190,9 @@ class Settings:
                     'color' : (255, 255, 255, 255),
                     },
                 'mouseWheelZoom' : {
-                    'enabled' : True,
+                    'selection' : 1,
+                    },
+                'scrollDirection' : {
                     'selection' : 0,
                     },
                 },
@@ -731,8 +733,11 @@ class Settings:
         
         self.internalSettings['display']['driver']['choices'] = ['default']
         self.internalSettings['display']['statusbarMode']['choices'] = None # set during MapFrame init
-        self.internalSettings['display']['mouseWheelZoom']['choices'] = (_('Scroll forward to zoom in'),
-                                                                         _('Scroll back to zoom in'))
+        self.internalSettings['display']['mouseWheelZoom']['choices'] = (_('Zoom and recenter'),
+                                                                         _('Zoom to mouse cursor'),
+                                                                         _('Nothing'))
+        self.internalSettings['display']['scrollDirection']['choices'] = (_('Scroll forward to zoom in'),
+                                                                          _('Scroll back to zoom in'))
 
         self.internalSettings['nviz']['view'] = {}
         self.internalSettings['nviz']['view']['twist'] = {}
