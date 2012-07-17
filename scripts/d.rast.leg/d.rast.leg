@@ -47,6 +47,10 @@
 #%  key: n
 #%  description: Omit entries with missing label
 #%end
+#%flag
+#%  key: s
+#%  description: Draw smooth gradient
+#%end
 #%option
 #% key: map
 #% type: string
@@ -98,6 +102,12 @@ fi
 
 if [ $GIS_FLAG_F -eq 1 ] ; then
   FLIP="-f"
+fi
+
+if [ $GIS_FLAG_S -eq 1 ] ; then
+  SMOOTH="-s"
+else
+  SMOOTH=""
 fi
 
 if [ ! -z "$GIS_OPT_TITLE" ] ; then
@@ -158,16 +168,16 @@ if [ -z "$GIS_OPT_NUM_OF_LINES" ] ; then
 	if [ -z "$GIS_OPT_RAST" ] ; then
 		g.message -d "No lines; own legend"
 		if test -f $HISTFILEDIR/$GIS_OPT_MAP/histogram ; then
-	  	     d.legend $FLIP -n map="$GIS_OPT_MAP" $LEG_AT
+	  	     d.legend $FLIP $SMOOTH -n map="$GIS_OPT_MAP" $LEG_AT
         	else
-	             d.legend $FLIP $OMIT map="$GIS_OPT_MAP" $LEG_AT
+	             d.legend $FLIP $SMOOTH $OMIT map="$GIS_OPT_MAP" $LEG_AT
         	fi
 	else
 		g.message -d "No lines; external legend"
 		if test -f $HISTFILEDIR/$GIS_OPT_RAST/histogram ; then
-		     d.legend $FLIP -n map="$GIS_OPT_RAST" $LEG_AT
+		     d.legend $FLIP $SMOOTH -n map="$GIS_OPT_RAST" $LEG_AT
 		else
-		     d.legend $FLIP $OMIT map="$GIS_OPT_RAST" $LEG_AT
+		     d.legend $FLIP $SMOOTH $OMIT map="$GIS_OPT_RAST" $LEG_AT
 		fi
 	fi
 
