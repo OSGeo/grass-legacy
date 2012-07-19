@@ -161,8 +161,8 @@ Contents
                          <grass-dev@lists.osgeo.org>
                        http://lists.osgeo.org/mailman/listinfo/grassuser
                          <grass-user@lists.osgeo.org>
-                       http://lists.osgeo.org/mailman/listinfo/wingrass
-                         <wingrass@lists.osgeo.org>
+                       http://lists.osgeo.org/mailman/listinfo/grass-windows
+                         <grass-windows@lists.osgeo.org>
 
    DebianGIS:          <debian-gis@lists.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
