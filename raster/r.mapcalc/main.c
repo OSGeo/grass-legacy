@@ -32,19 +32,6 @@ volatile int floating_point_exception_occurred;
 
 /****************************************************************************/
 
-static const char help_text[] =
-    "r.mapcalc - Raster map layer data calculator\n"
-    "\n"
-    "usage: r.mapcalc '<map>=<expression>'\n"
-    "\n"
-    "r.mapcalc performs arithmetic on raster map layers.\n"
-    "\n"
-    "New raster map layers can be created which are arithmetic expressions\n"
-    "involving existing raster map layers, integer or floating point constants,\n"
-    "and functions.\n" "\n" "For more information use 'g.manual r.mapcalc'\n";
-
-/****************************************************************************/
-
 static expr_list *result;
 
 /****************************************************************************/
@@ -121,7 +108,17 @@ int main(int argc, char **argv)
 
     if (argc > 1 && (strcmp(argv[1], "help") == 0 ||
 		     strcmp(argv[1], "--help") == 0)) {
-	fputs(help_text, stderr);
+	fputs(
+            _("r.mapcalc - Raster map layer data calculator\n"
+            "\n"
+            "usage: r.mapcalc '<map>=<expression>'\n"
+            "\n"
+            "r.mapcalc performs arithmetic on raster map layers.\n"
+            "\n"
+            "New raster map layers can be created which are arithmetic expressions\n"
+            "involving existing raster map layers, integer or floating point constants,\n"
+            "and functions.\n \nFor more information use 'g.manual r.mapcalc'\n"), 
+       stderr);
 	return EXIT_SUCCESS;
     }
 
