@@ -297,7 +297,7 @@ static int reinvoke_script(const struct context *ctx, const char *filename)
 	sprintf(buff, "GIS_FLAG_%c=%d", toupper(flag->key),
 		flag->answer ? 1 : 0);
 
-	G_debug(2, "set %s", buff);
+	G_debug(2, "g.parser: set %s", buff);
 	putenv(G_store(buff));
     }
 
@@ -314,7 +314,7 @@ static int reinvoke_script(const struct context *ctx, const char *filename)
 	G_asprintf(&str, "GIS_OPT_%s=%s", upper,
 		   option->answer ? option->answer : "");
 
-	G_debug(2, "set %s", str);
+	G_debug(2, "g.parser: set %s", str);
 	putenv(str);
     }
 
@@ -331,7 +331,7 @@ static int reinvoke_script(const struct context *ctx, const char *filename)
 	if (shell == NULL)
 	    shell = "sh";
 	ret = G_spawn(shell, shell, filename, "@ARGS_PARSED@", NULL);
-	G_debug(1, "ret = %d", ret);
+	G_debug(1, "g.parser: ret = %d", ret);
 	if (ret == -1) {
 	    perror("G_spawn() failed");
 	    return 1;
