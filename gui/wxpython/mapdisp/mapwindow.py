@@ -441,7 +441,7 @@ class BufferedWindow(MapWindow, wx.Window):
         
         self.Map.ChangeMapSize((width, height))
         ibuffer = wx.EmptyBitmap(max(1, width), max(1, height))
-        self.Map.Render(force = True, windres = True)
+        self.Map.Render(force = True, windres = False)
         img = self.GetImage()
         self.pdc.RemoveAll()
         self.Draw(self.pdc, img, drawid = 99)
