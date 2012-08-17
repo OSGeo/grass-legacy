@@ -76,12 +76,12 @@ void *db_realloc(void *s, int n)
 }
 
 /*!
-   \fn void *db_free (void *s)
+   \fn void db_free (void *s)
    \brief 
    \return 
    \param 
  */
-void *db_free(void *s)
+void db_free(void *s)
 {
     free(s);
 }
