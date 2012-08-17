@@ -53,7 +53,6 @@ int db_column_sqltype(dbDriver * driver, const char *tab, const char *col)
 	column = db_get_table_column(table, cl);
 	if (strcmp(db_get_column_name(column), col) == 0) {
 	    type = db_get_column_sqltype(column);
-	    type = db_get_column_sqltype(column);
 	    break;
 	}
     }
