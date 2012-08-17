@@ -1971,6 +1971,8 @@ class GCPList(wx.ListCtrl,
         self.ResizeColumns()
         self.render = True
 
+        self.EnsureVisible(self.selected)
+
     def OnCheckItem(self, index, flag):
         """!Item is checked/unchecked"""
 
@@ -2006,6 +2008,8 @@ class GCPList(wx.ListCtrl,
                           wx.LIST_STATE_SELECTED)
 
         self.ResizeColumns()
+
+        self.EnsureVisible(self.selected)
 
         return self.selected
 
