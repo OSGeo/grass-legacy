@@ -37,6 +37,7 @@ from bisect import bisect
 import wx
 import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.mixins.listctrl as listmix
+from wx.lib.newevent import NewEvent
 
 from grass.script import core as grass
 from grass.script import task as gtask
@@ -49,6 +50,8 @@ from gui_core.widgets import SingleSymbolPanel, EVT_SYMBOL_SELECTION_CHANGED
 from core.utils       import GetListOfMapsets, GetLayerNameFromCmd, GetValidLayerName
 from core.settings    import UserSettings
 from core.debug       import Debug
+
+wxApplyOpacity, EVT_APPLY_OPACITY = NewEvent()
 
 class ElementDialog(wx.Dialog):
     def __init__(self, parent, title, label, id = wx.ID_ANY,
@@ -2048,6 +2051,10 @@ class SetOpacityDialog(wx.Dialog):
 
         btnCancel = wx.Button(parent = panel, id = wx.ID_CANCEL)
         btnsizer.AddButton(btnCancel)
+
+        btnApply = wx.Button(parent = panel, id = wx.ID_APPLY)
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnsizer.AddButton(btnApply)
         btnsizer.Realize()
 
         sizer.Add(item = btnsizer, proportion = 0,
@@ -2065,6 +2072,10 @@ class SetOpacityDialog(wx.Dialog):
         # return opacity value
         opacity = float(self.value.GetValue()) / 100
         return opacity
+
+    def OnApply(self, event):
+        event = wxApplyOpacity(value = self.GetOpacity())
+        wx.PostEvent(self, event)
 
 def GetImageHandlers(image):
     """!Get list of supported image handlers"""
