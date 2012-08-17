@@ -1507,14 +1507,17 @@ class ImportDialog(wx.Dialog):
         self.overwrite.SetValue(UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'))
         
         self.add = wx.CheckBox(parent = self.panel, id = wx.ID_ANY)
+        self.closeOnFinish = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
+                                     label = _("Close dialog on finish"))
+        self.closeOnFinish.SetValue(UserSettings.Get(group = 'cmd', key = 'closeDlg', subkey = 'enabled'))
         
         #
         # buttons
         #
         # cancel
-        self.btn_cancel = wx.Button(parent = self.panel, id = wx.ID_CANCEL)
-        self.btn_cancel.SetToolTipString(_("Close dialog"))
-        self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        self.btn_close = wx.Button(parent = self.panel, id = wx.ID_CLOSE)
+        self.btn_close.SetToolTipString(_("Close dialog"))
+        self.btn_close.Bind(wx.EVT_BUTTON, self.OnClose)
         # run
         self.btn_run = wx.Button(parent = self.panel, id = wx.ID_OK, label = _("&Import"))
         self.btn_run.SetToolTipString(_("Import selected layers"))
@@ -1560,6 +1563,8 @@ class ImportDialog(wx.Dialog):
         dialogSizer.Add(item = self.add, proportion = 0,
                         flag = wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
         
+        dialogSizer.Add(item = self.closeOnFinish, proportion = 0,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
         #
         # buttons
         #
@@ -1569,7 +1574,7 @@ class ImportDialog(wx.Dialog):
                      flag = wx.RIGHT | wx.ALIGN_CENTER,
                      border = 10)
         
-        btnsizer.Add(item = self.btn_cancel, proportion = 0,
+        btnsizer.Add(item = self.btn_close, proportion = 0,
                      flag = wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER,
                      border = 10)
         
@@ -1598,7 +1603,7 @@ class ImportDialog(wx.Dialog):
         """!Get command"""
         return ''
     
-    def OnCancel(self, event = None):
+    def OnClose(self, event = None):
         """!Close dialog"""
         self.Close()
 
@@ -1769,6 +1774,9 @@ class GdalImportDialog(ImportDialog):
         
         if popOGR:
             os.environ.pop('GRASS_VECTOR_OGR')
+
+        if self.closeOnFinish.IsChecked():
+            self.Close()
         
     def _getCommand(self):
         """!Get command"""
