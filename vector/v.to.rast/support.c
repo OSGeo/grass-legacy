@@ -133,7 +133,7 @@ int update_dbcolors(char *rast_name, char *vector_map, int field,
 
     if (!attr_column)
 	attr_column = Fi->key;
-    
+
     /* get number of records in attr_column */
     if ((nrec =
 	 db_select_CatValArray(Driver, Fi->table, Fi->key, attr_column, NULL,
@@ -269,16 +269,25 @@ int update_labels(char *rast_name, char *vector_map, int field,
     switch (use) {
     case USE_ATTR:
 	{
-	    G_set_raster_cats_title("Labels", &rast_cats);
 	    int is_fp = G_raster_map_is_fp(rast_name, G_mapset());
 
+	    if (!label_column) {
+		G_verbose_message(_("Label column was not specified, no labels will be written"));
+		break;
+	    }
+
+	    G_set_raster_cats_title("Labels", &rast_cats);
+
 	    /* open vector map and database driver */
+	    Vect_set_open_level(1);
 	    Vect_open_old(&Map, vector_map, G_find_vector2(vector_map, ""));
 
 	    db_CatValArray_init(&cvarr);
 	    if (!(Fi = Vect_get_field(&Map, field)))
 		G_fatal_error(_("Database connection not defined for layer %d"),
 			      field);
+
+	    Vect_close(&Map);
 
 	    if (!
 		(Driver =
@@ -303,18 +312,9 @@ int update_labels(char *rast_name, char *vector_map, int field,
 		G_malloc(sizeof(struct My_labels_rule) * nrec);
 
 	    /* get column type */
-	    if (!label_column) {
-		G_warning(_("Label column was not specified, no labels will be written"));
-		db_close_database_shutdown_driver(Driver);
-		break;
-	    }
-	    else {
-		if ((col_type =
-		     db_column_Ctype(Driver, Fi->table,
-				     label_column)) == -1) {
-		    G_fatal_error(_("Column <%s> not found"), label_column);
-		}
-	    }
+	    if ((col_type =
+		 db_column_Ctype(Driver, Fi->table, label_column)) == -1)
+		G_fatal_error(_("Column <%s> not found"), label_column);
 
 	    /* for each attribute */
 	    for (i = 0; i < cvarr.n_values; i++) {
@@ -422,37 +422,123 @@ int update_labels(char *rast_name, char *vector_map, int field,
 
 	    mapset = G_mapset();
 
-	    if (!(fd = G_open_cell_old(rast_name, mapset)))
-		G_fatal_error(_("Unable to open raster map <%s>"), rast_name);
-
 	    map_type = G_raster_map_type(rast_name, mapset);
 
-	    if (!(rowbuf = G_allocate_raster_buf(map_type)))
-		G_fatal_error(_("Cannot allocate memory for row buffer"));
+	    if (label_column) {
 
-	    G_init_cell_stats(&stats);
-	    G_set_raster_cats_title("Categories", &rast_cats);
+		G_set_raster_cats_title("Labels", &rast_cats);
 
-	    rows = G_window_rows();
+		/* open vector map and database driver */
+		Vect_set_open_level(1);
+		Vect_open_old(&Map, vector_map, G_find_vector2(vector_map, ""));
 
-	    for (row = 0; row < rows; row++) {
-		if (G_get_raster_row(fd, rowbuf, row, map_type) < 0)
-		    G_fatal_error(_("Unable to read raster map <%s> row %d"),
-				  rast_name, row);
+		db_CatValArray_init(&cvarr);
+		if (!(Fi = Vect_get_field(&Map, field)))
+		    G_fatal_error(_("Database connection not defined for layer %d"),
+				  field);
 
-		G_update_cell_stats(rowbuf, G_window_cols(), &stats);
+		Vect_close(&Map);
+
+		if (!
+		    (Driver =
+		     db_start_driver_open_database(Fi->driver, Fi->database)))
+		    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+				  Fi->database, Fi->driver);
+
+		/* get number of records in label_column */
+		if ((nrec =
+		     db_select_CatValArray(Driver, Fi->table, Fi->key,
+					   label_column, NULL, &cvarr)) == -1)
+		    G_fatal_error(_("Unknown column <%s> in table <%s>"),
+				  label_column, Fi->table);
+
+		if (nrec < 0)
+		    G_fatal_error(_("No records selected from table <%s>"),
+				  Fi->table);
+
+		G_debug(3, "nrec = %d", nrec);
+
+		my_labels_rules =
+		    (struct My_labels_rule *)
+		    G_malloc(sizeof(struct My_labels_rule) * nrec);
+
+		/* get column type */
+		if ((col_type =
+		     db_column_Ctype(Driver, Fi->table,
+				     label_column)) == -1) {
+		    G_fatal_error(_("Column <%s> not found"), label_column);
+		}
+
+		/* close the database driver */
+		db_close_database_shutdown_driver(Driver);
+
+		/* for each attribute */
+		for (i = 0; i < cvarr.n_values; i++) {
+		    char tmp[2000];
+		    int cat = cvarr.value[i].cat;
+		    labels_n_values++;
+
+		    db_init_string(&my_labels_rules[i].label);
+
+		    /* switch the column type */
+		    switch (col_type) {
+		    case DB_C_TYPE_DOUBLE:
+			sprintf(tmp, "%lf", cvarr.value[i].val.d);
+			db_set_string(&my_labels_rules[i].label, tmp);
+			break;
+		    case DB_C_TYPE_INT:
+			sprintf(tmp, "%d", cvarr.value[i].val.i);
+			db_set_string(&my_labels_rules[i].label, tmp);
+			break;
+		    case DB_C_TYPE_STRING:
+			db_set_string(&my_labels_rules[i].label,
+				      db_get_string(cvarr.value[i].val.s));
+			break;
+		    default:
+			G_warning(_("Column type (%s) not supported"),
+				  db_sqltype_name(col_type));
+		    }
+
+		    /* add the raster category to label */
+		    my_labels_rules[i].i = cat;
+
+		    G_set_raster_cat(&(my_labels_rules[i].i),
+				 &(my_labels_rules[i].i),
+				 db_get_string(&my_labels_rules[i].label),
+				 &rast_cats, map_type);
+		}			/* for each value in database */
 	    }
+	    else {
+		if (!(fd = G_open_cell_old(rast_name, mapset)))
+		    G_fatal_error(_("Unable to open raster map <%s>"), rast_name);
 
-	    G_rewind_cell_stats(&stats);
+		if (!(rowbuf = G_allocate_raster_buf(map_type)))
+		    G_fatal_error(_("Cannot allocate memory for row buffer"));
 
-	    while (G_next_cell_stat(&n, &count, &stats)) {
-		char msg[80];
+		G_init_cell_stats(&stats);
+		G_set_raster_cats_title("Categories", &rast_cats);
 
-		sprintf(msg, "Category %d", n);
-		G_set_raster_cat(&n, &n, msg, &rast_cats, map_type);
+		rows = G_window_rows();
+
+		for (row = 0; row < rows; row++) {
+		    if (G_get_raster_row(fd, rowbuf, row, map_type) < 0)
+			G_fatal_error(_("Unable to read raster map <%s> row %d"),
+				      rast_name, row);
+
+		    G_update_cell_stats(rowbuf, G_window_cols(), &stats);
+		}
+
+		G_rewind_cell_stats(&stats);
+
+		while (G_next_cell_stat(&n, &count, &stats)) {
+		    char msg[80];
+
+		    sprintf(msg, "Category %d", n);
+		    G_set_raster_cat(&n, &n, msg, &rast_cats, map_type);
+		}
+
+		G_free(rowbuf);
 	    }
-
-	    G_free(rowbuf);
 	}
 	break;
     case USE_D:
