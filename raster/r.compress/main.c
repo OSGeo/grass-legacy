@@ -126,6 +126,10 @@ static int process(char *name, int uncompress)
 		  name, rname, rmapset);
 	return 1;
     }
+    if (G_find_file2_misc("cell_misc", "gdal", name, G_mapset())) {
+	G_warning(_("[%s] is a GDAL-linked map - can't (un)compress"), name);
+	return 1;
+    }
 
     map_type = G_raster_map_type(name, G_mapset());
 
