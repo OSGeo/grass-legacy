@@ -77,7 +77,7 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 ### setup enviro vars ###
-eval `g.gisenv get=MAPSET`
+eval `g.gisenv`
 
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
