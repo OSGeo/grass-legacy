@@ -132,6 +132,10 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	usage(0);
     
+    /* PS.map_* variables are set to 0 (not defined) and then may be
+     * reset by 'maploc'.  When script is read, main() should call
+     * reset_map_location() to reset map size to fit to paper */
+    
     G_zero(&PS, sizeof(struct PS_data));
     
     /* Print paper sizes to stdout */
@@ -187,10 +191,6 @@ int main(int argc, char *argv[])
     PS.cell_fd = -1;
     PS.do_border = TRUE;
 
-    /* PS.map_* variables are set to 0 (not defined) and then may be
-     * reset by 'maploc'.  When script is read, main() should call
-     * reset_map_location() to reset map size to fit to paper */
-    
     /* arguments */
     if (input_file->answer && strcmp(input_file->answer, "-")) {
 	inputfd = fopen(input_file->answer, "r");
@@ -244,9 +244,8 @@ int main(int argc, char *argv[])
     if (G_set_window(&PS.w) == -1)
 	G_fatal_error(_("Current region cannot be set."));
     
-    read_instructions(inputfd, &PS, copies_set, ps_copies, can_reset_scale,
-		      &sb, &do_mapinfo, &do_vlegend, &grp);
-    
+    read_instructions(copies_set, can_reset_scale);
+
     /* reset map location base on 'paper' on 'location' */
     reset_map_location();
     

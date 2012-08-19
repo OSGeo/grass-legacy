@@ -196,11 +196,6 @@ int set_paper(char *);
 void reset_map_location(void);
 void print_papers(void);
 
-/* r_instructions.c */
-void read_instructions(FILE *, struct PS_data *, int, int, int,
-		       struct scalebar *, int *, int *,
-		       struct PS_group *);
-
 /* r_border.c */
 int read_border(void);
 
@@ -215,6 +210,9 @@ int read_header(void);
 
 /* r_info.c */
 int read_info(void);
+
+/* r_instructions.c */
+void read_instructions(int, int);
 
 /* r_labels.c */
 int read_labels(char *, char *);
