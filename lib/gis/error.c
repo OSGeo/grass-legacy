@@ -149,7 +149,12 @@ void G_important_message(const char *msg, ...)
  */
 int G_fatal_error(const char *msg, ...)
 {
+    static int busy;
     va_list ap;
+
+    if (busy)
+	exit(EXIT_FAILURE);
+    busy = 1;
 
     va_start(ap, msg);
     vfprint_error(ERR, msg, ap);
