@@ -58,11 +58,11 @@ int main(int argc, char *argv[])
     BOUND_BOX box;
 
     double ztozero;
-    double trans_params[7];	// xshift, ..., xscale, ..., zrot
+    double trans_params[7];	/* xshift, ..., xscale, ..., zrot */
 
     /* columns */
     unsigned int i;
-    int idx;
+    int idx, out3d;
     char **tokens;
     char *columns_name[7];	/* xshift, yshift, zshift, xscale, yscale, zscale, zrot */
 
@@ -206,6 +206,8 @@ int main(int argc, char *argv[])
     G_strcpy(Trans.name, vnew->answer);
 
     Vect_check_input_output_name(vold->answer, vnew->answer, GV_FATAL_EXIT);
+    
+    out3d = WITHOUT_Z;
 
     /* please remove in GRASS7 */
     if (shift_flag->answer)
@@ -242,52 +244,6 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to open file with coordinates <%s>"),
 			  Coord.name);
     }
-
-    /* open vector maps */
-    if ((mapset = G_find_vector2(vold->answer, "")) == NULL)
-	G_fatal_error(_("Vector map <%s> not found"), vold->answer);
-
-    Vect_open_old(&Old, vold->answer, mapset);
-    
-    Vect_open_new(&New, vnew->answer, Vect_is_3d(&Old) || tozero_flag->answer ||
-		  strcmp(zshift->answer, "0.0") || strcmp(zscale->answer, "1.0") ||
-		  strcmp(zrot->answer, "0.0") ? WITH_Z : WITHOUT_Z);
-    
-    /* copy and set header */
-    Vect_copy_head_data(&Old, &New);
-
-    Vect_hist_copy(&Old, &New);
-    Vect_hist_command(&New);
-
-    sprintf(date, "%s", G_date());
-    sscanf(date, "%*s%s%d%*s%d", mon, &day, &yr);
-    sprintf(date, "%s %d %d", mon, day, yr);
-    Vect_set_date(&New, date);
-
-    Vect_set_person(&New, G_whoami());
-
-    sprintf(buf, "transformed from %s", vold->answer);
-    Vect_set_map_name(&New, buf);
-
-    Vect_set_scale(&New, 1);
-    Vect_set_zone(&New, 0);
-    Vect_set_thresh(&New, 0.0);
-
-    /* points file */
-    if (Coord.name[0]) {
-	create_transform_from_file(&Coord, quiet_flag->answer);
-
-	if (Coord.name[0] != '\0')
-	    fclose(Coord.fp);
-    }
-
-    Vect_get_map_box(&Old, &box);
-
-    /* z to zero */
-    if (tozero_flag->answer)
-	ztozero = 0 - box.B;
-    else
-	ztozero = 0;
 
     /* tokenize columns names */
     for (i = 0; i <= IDX_ZROT; i++) {
@@ -337,6 +293,57 @@ int main(int argc, char *argv[])
     trans_params[IDX_ZSCALE] = atof(zscale->answer);
     trans_params[IDX_ZROT] = atof(zrot->answer);
 
+    /* open vector maps */
+    if ((mapset = G_find_vector2(vold->answer, "")) == NULL)
+	G_fatal_error(_("Vector map <%s> not found"), vold->answer);
+
+    Vect_open_old(&Old, vold->answer, mapset);
+    
+    /* should output be 3D ? 
+     * note that z-scale and ztozero have no effect with input 2D */
+    if (Vect_is_3d(&Old) || trans_params[IDX_ZSHIFT] != 0. ||
+	columns_name[IDX_ZSHIFT])
+	out3d = WITH_Z;
+
+    Vect_open_new(&New, vnew->answer, out3d);
+    
+    /* copy and set header */
+    Vect_copy_head_data(&Old, &New);
+
+    Vect_hist_copy(&Old, &New);
+    Vect_hist_command(&New);
+
+    sprintf(date, "%s", G_date());
+    sscanf(date, "%*s%s%d%*s%d", mon, &day, &yr);
+    sprintf(date, "%s %d %d", mon, day, yr);
+    Vect_set_date(&New, date);
+
+    Vect_set_person(&New, G_whoami());
+
+    sprintf(buf, "transformed from %s", vold->answer);
+    Vect_set_map_name(&New, buf);
+
+    Vect_set_scale(&New, 1);
+    Vect_set_zone(&New, 0);
+    Vect_set_thresh(&New, 0.0);
+
+    /* points file */
+    if (Coord.name[0]) {
+	create_transform_from_file(&Coord, quiet_flag->answer);
+
+	if (Coord.name[0] != '\0')
+	    fclose(Coord.fp);
+    }
+
+    Vect_get_map_box(&Old, &box);
+
+    /* z to zero */
+    if (tozero_flag->answer)
+	ztozero = 0 - box.B;
+    else
+	ztozero = 0;
+
+    /* do the transformation */
     transform_digit_file(&Old, &New, Coord.name[0] ? 1 : 0,
 			 ztozero, swap_flag->answer, trans_params,
 			 table->answer, columns_name, atoi(field->answer));
