@@ -74,7 +74,7 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 	    break;
 	}
 
-	if (type == -2) {		/* EOF */
+	if (type == -2) {	/* EOF */
 	    ret = 1;
 	    break;
 	}
@@ -173,4 +173,6 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 	db_close_database_shutdown_driver(driver);
 	G_free((void *)trans_params);
     }
+    
+    return ret;
 }
