@@ -638,7 +638,7 @@ int main(int argc, char *argv[])
 	/* Add DB link */
 	if (!notab_flag->answer) {
 	    char *cat_col_name = "cat";
-	    char *table_name;
+	    char *lname;
 
 	    if (nlayers == 1) {	/* one layer only */
 		Fi = Vect_default_field_info(&Map, layer + 1, NULL,
@@ -654,13 +654,13 @@ int main(int argc, char *argv[])
 	    }
 
 	    /* replace all spaces with underscore, otherwise dbln can't be read */
-	    table_name = G_store(layer_names[layer]);
-	    G_strip(table_name);
-	    G_strchg(table_name, ' ', '_');
+	    lname = G_store(layer_names[layer]);
+	    G_strip(lname);
+	    G_strchg(lname, ' ', '_');
 
-	    Vect_map_add_dblink(&Map, layer + 1, table_name, Fi->table,
+	    Vect_map_add_dblink(&Map, layer + 1, lname, Fi->table,
 				cat_col_name, Fi->database, Fi->driver);
-	    G_free(table_name);
+	    G_free(lname);
 
 	    ncols = OGR_FD_GetFieldCount(Ogr_featuredefn);
 	    G_debug(2, "%d columns", ncols);
