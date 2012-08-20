@@ -32,7 +32,7 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 		     int shift_file, double ztozero, double *trans_params_def,
 		     char *table, char **columns, int field)
 {
-    int i, type, cat;
+    int i, type, cat, ret;
     unsigned int j;
     double *trans_params;
     double ang, x, y;
@@ -65,14 +65,19 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 	ang = PI * trans_params[IDX_ZROT] / 180;
     }
 
+    ret = 1;
     while (1) {
 	type = Vect_read_next_line(Old, Points, Cats);
 
-	if (type == -1)		/* error */
-	    return 0;
+	if (type == -1)	{	/* error */
+	    ret = 0;
+	    break;
+	}
 
-	if (type == -2)		/* EOF */
-	    return 1;
+	if (type == -2) {	/* EOF */
+	    ret = 1;
+	    break;
+	}
 
 	/* get transformation parameters */
 	if (table) {
@@ -160,4 +165,6 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 	db_close_database_shutdown_driver(driver);
 	G_free((void *)trans_params);
     }
+    
+    return ret;
 }
