@@ -103,6 +103,11 @@ int main(int argc, char *argv[])
 	G_fatal_error("Cannot open output file '%s'", out_opt->answer);
     }
 
+    if (zmod_opt->answer == NULL)
+	zmod_opt->answer = G_store("");
+    if (objmod_opt->answer == NULL)
+	objmod_opt->answer = G_store("");
+
     count = 0;
     /* Lines */
     if ((otype &
