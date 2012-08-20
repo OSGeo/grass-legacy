@@ -8,9 +8,25 @@ locations in images.
 This script needs gnuplot to be installed.
 
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
-To analyze a time series of maps, run:
+Analysis of LANDSAT TM7 channels (North Carolina dataset):
+
+<div class="code"><pre>
+g.region rast=lsat7_2002_10 -p
+d.mon x0
+d.rast lsat7_2002_40
+i.spectral -i rast=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7_2002_50,lsat7_2002_70
+</pre></div>
+
+<center>
+<img src="i_spectral.png" border=1><br>
+Spectral plot of 3 different land cover types: (1) water, (2) green vegetation, and (3) highway
+</center>
+
+
+<p>
+To analyze a time series of maps, use:
 
 <div class="code"><pre>
 d.rast map_1
