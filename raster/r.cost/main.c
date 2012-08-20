@@ -456,12 +456,13 @@ int main(int argc, char *argv[])
 			p = null_cost;
 		    }
 		    else {
-			if ( *(int *)ptr2 < 0 ) {
-			   G_warning(_("Negative cell value found at row %d. Setting negative value to null_cost value"), row);
-			} else {
-			   p = null_cost;
-			}
 			p = *(int *)ptr2;
+			if (p < 0) {
+			    G_warning(_("Negative cell value found at row %d, col %d. "
+			                "Setting negative value to null_cost value"),
+				      row, i);
+			    p = null_cost;
+			}
 		    }
 		    segment_put(&in_seg, &p, row, i);
 		    ptr2 = G_incr_void_ptr(ptr2, dsize);
@@ -473,12 +474,13 @@ int main(int argc, char *argv[])
 			p = null_cost;
 		    }
 		    else {
-			if ( *(float *)ptr2 < 0 ) {
-			   G_warning(_("Negative cell value found at row %d. Setting negative value to null_cost value"), row);
-			} else {
-			   p = null_cost;
-			}
 			p = *(float *)ptr2;
+			if (p < 0) {
+			    G_warning(_("Negative cell value found at row %d, col %d. "
+			                "Setting negative value to null_cost value"),
+				      row, i);
+			    p = null_cost;
+			}
 		    }
 		    segment_put(&in_seg, &p, row, i);
 		    ptr2 = G_incr_void_ptr(ptr2, dsize);
@@ -491,12 +493,13 @@ int main(int argc, char *argv[])
 			p = null_cost;
 		    }
 		    else {
-			if ( *(double *)ptr2 < 0 ) {
-			   G_warning(_("Negative cell value found at row %d. Setting negative value to null_cost value"), row);
-			} else {
-			   p = null_cost;
-			}
 			p = *(double *)ptr2;
+			if (p < 0) {
+			    G_warning(_("Negative cell value found at row %d, col %d. "
+			                "Setting negative value to null_cost value"),
+				      row, i);
+			    p = null_cost;
+			}
 		    }
 		    segment_put(&in_seg, &p, row, i);
 		    ptr2 = G_incr_void_ptr(ptr2, dsize);
