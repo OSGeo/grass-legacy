@@ -131,11 +131,6 @@ parse_args(int argc, char *argv[]) {
   streamdir->key        = "STREAM_DIR";
   streamdir->type       = TYPE_STRING;
   streamdir->required   = NO;
-#ifdef __MINGW32__
-  streamdir->answer     = G_convert_dirseps_from_host(G_store(getenv("TEMP")));
-#else
-  streamdir->answer     = G_store("/var/tmp/");
-#endif
   streamdir->description=
      _("Directory to hold temporary files (they can be large)");
 
@@ -179,7 +174,16 @@ parse_args(int argc, char *argv[]) {
   }
 
   opt->mem = atoi(mem->answer);
-  opt->streamdir = streamdir->answer;
+  if (!streamdir->answer) {
+    const char *tmpdir = G_tempfile();
+    
+    if (G_mkdir(tmpdir) == -1)
+	G_fatal_error(_("Unable to create temp dir"));
+    opt->streamdir = G_store(tmpdir);
+  }
+  else
+    opt->streamdir = streamdir->answer;
+
   opt->verbose = FALSE;
 
 /* please, remove before GRASS 7 released */
