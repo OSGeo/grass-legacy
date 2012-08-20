@@ -62,7 +62,7 @@ g.region rast=elevation.10m -p
 v.random random n=200
 v.db.addtable random col="el10 double precision"
 # transfer elevations to attribute table of random points map:
-v.what.rast random rast=elevation.10m col=elev
+v.what.rast random rast=elevation.10m col=el10
 v.db.select random
 
 # comparative sampling of second map, incl. differences:
