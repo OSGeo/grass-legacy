@@ -18,6 +18,7 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/version.h>
 
 /*
  * Routines for reading and writing Dig+ structures.
@@ -594,10 +595,12 @@ int dig_Rd_Plus_head(GVFILE * fp, struct Plus_head *ptr)
 	if (ptr->Back_Major > GV_TOPO_VER_MAJOR ||
 	    ptr->Back_Minor > GV_TOPO_VER_MINOR) {
 	    /* This version of GRASS lib is lower than the oldest which can read this format */
+	    G_debug(1, "Topology format version %d.%d",
+		    ptr->Version_Major, ptr->Version_Minor);
 	    G_fatal_error
-		("Topology format version %d.%d is not supported by this release."
-		 " Try to rebuild topology or upgrade GRASS.",
-		 ptr->Version_Major, ptr->Version_Minor);
+		("This version of GRASS (%d.%d) is too old to read this topology format."
+		 " Try to rebuild topology or upgrade GRASS to at least version %d.",
+		 GRASS_VERSION_MAJOR, GRASS_VERSION_MINOR, GRASS_VERSION_MAJOR + 1);
 	    return (-1);
 	}
 
