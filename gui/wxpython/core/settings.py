@@ -229,6 +229,9 @@ class Settings:
                     },
                 'encoding' : {
                     'value' : '',
+                    },
+                'fieldSeparator' : {
+                    'value' : '|', 
                     }
                 },
             #
