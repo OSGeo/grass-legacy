@@ -391,15 +391,15 @@ echo "Group $group" > "$TMP3"
 # Calculate statistics for thematic intervals
 if [ -z "$GIS_OPT_WHERE" ] ; then
   if [ "$GIS_OPT_TYPE" = "line" ] ; then
-     v.univar -e -g map=$GIS_OPT_MAP type=line column=$GIS_OPT_COLUMN > "$TMP1"
+     v.univar -e -g map=$GIS_OPT_MAP type=line column=$GIS_OPT_COLUMN layer="$GIS_OPT_LAYER" > "$TMP1"
   else
-     v.univar -e -g map=$GIS_OPT_MAP type=point,centroid column=$GIS_OPT_COLUMN > "$TMP1"
+     v.univar -e -g map=$GIS_OPT_MAP type=point,centroid column=$GIS_OPT_COLUMN layer="$GIS_OPT_LAYER" > "$TMP1"
   fi
 else
   if [ "$GIS_OPT_TYPE" = "line" ] ; then
-     v.univar -e -g map=$GIS_OPT_MAP type=line column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" > "$TMP1"
+     v.univar -e -g map=$GIS_OPT_MAP type=line column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" layer="$GIS_OPT_LAYER" > "$TMP1"
  else
-     v.univar -e -g map=$GIS_OPT_MAP type=point,centroid column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" > "$TMP1"
+     v.univar -e -g map=$GIS_OPT_MAP type=point,centroid column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" layer="$GIS_OPT_LAYER" > "$TMP1"
  fi
 fi
   
