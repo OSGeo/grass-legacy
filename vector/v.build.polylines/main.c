@@ -6,8 +6,9 @@
  *               Major rewrite by Radim Blazek, October 2002
  *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
  *               Martin Landa <landa.martin gmail.com> (cats)
+ *               Markus Metz (geometry type management, cats, attributes)
  * PURPOSE:      
- * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2012 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -89,17 +90,18 @@ int main(int argc, char **argv)
     struct Option *input;
     struct Option *output;
     struct Option *cats;
+    struct Option *type_opt;
     struct Flag *quietly;
 
     int polyline;
     int *lines_visited;
     int points_in_polyline;
     int start_line;
-    int nlines, type;
-    int write_cats;
+    int nlines;
+    int write_cats, copy_tables;
 
     char *mapset;
-    int start_type;
+    int type, ltype;
 
     /*  Initialize the GIS calls */
     G_gisinit(argv[0]);
@@ -122,6 +124,10 @@ int main(int argc, char **argv)
 			   "first;Assign category number of first line to polyline;"
 			   "multi;Assign multiple category numbers to polyline");
     cats->answer = "no";
+
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->options = "line,boundary";
+    type_opt->answer = "line,boundary";
 
     quietly = G_define_flag();
     quietly->key = 'q';
@@ -168,20 +174,29 @@ int main(int argc, char **argv)
     else
 	write_cats = MULTI_CATS;
 
+    if (type_opt->answer)
+	Vect_option_to_types(type_opt);
+    else
+	type = GV_LINES;
+
     /* Step over all lines in binary map */
     polyline = 0;
     nlines = 0;
 
+    copy_tables = (write_cats != NO_CATS);
+
     for (line = 1; line <= Vect_get_num_lines(&map); line++) {
 	Vect_reset_cats(Cats);
-	type = Vect_read_line(&map, NULL, NULL, line);
+	ltype = Vect_read_line(&map, NULL, NULL, line);
 
-	if (type & GV_LINES)
+	if ((ltype & GV_LINES) && (ltype & type))
 	    nlines++;
 	else {
 	    /* copy points to output as they are, with cats */
 	    Vect_read_line(&map, points, Cats, line);
-	    Vect_write_line(&Out, type, points, Cats);
+	    Vect_write_line(&Out, ltype, points, Cats);
+	    if (Cats->n_cats > 0)
+		copy_tables = 1;
 	    continue;
 	}
 
@@ -192,21 +207,19 @@ int main(int argc, char **argv)
 	/* Only get here if line is not previously visited */
 
 	/* Find start of this polyline */
-	start_line = walk_back(&map, line);
-	start_type = Vect_read_line(&map, NULL, NULL, start_line);
+	start_line = walk_back(&map, line, ltype);
 
-	G_debug(1, "Polyline %d: start line = %d \n", polyline, start_line);
+	G_debug(1, "Polyline %d: start line = %d", polyline, start_line);
 
 	/* Walk forward and pick up coordinates */
 	points_in_polyline =
-	    walk_forward_and_pick_up_coords(&map, start_line, points,
+	    walk_forward_and_pick_up_coords(&map, start_line, ltype, points,
 					    lines_visited, Cats, write_cats);
 
 	/* Write the line (type of the first line is used) */
-	Vect_write_line(&Out, start_type, points, Cats);
+	Vect_write_line(&Out, ltype, points, Cats);
 
-	if (type & GV_LINES)
-	    polyline++;
+	polyline++;
     }
 
     G_message(_("%d lines or boundaries found in vector map <%s@%s>"),
@@ -215,7 +228,7 @@ int main(int argc, char **argv)
 	      polyline, Vect_get_name(&Out), Vect_get_mapset(&Out));
 
     /* Copy (all linked) tables if needed */
-    if (write_cats != NO_CATS) {
+    if (copy_tables) {
         if (Vect_copy_tables(&map, &Out, 0))
             G_warning(_("Failed to copy attribute table to output map"));
     }
