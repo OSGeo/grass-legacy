@@ -708,10 +708,9 @@ class GRASSStartup(wx.Frame):
                 self.OnSelectLocation(None)
                 self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
             except StandardError, e:
-                dlg = wx.MessageDialog(parent = self, message = _("Unable to create new mapset: %s") % e,
-                                       caption = _("Error"), style = wx.OK | wx.ICON_ERROR)
-                dlg.ShowModal()
-                dlg.Destroy()
+                GError(parent = self,
+                       message = _("Unable to create new mapset: %s") % e,
+                       showTraceback = False)
                 return False
         
         self.bstart.SetFocus()
