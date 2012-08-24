@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
     RASTER_MAP_TYPE out_type;
     CELL *cell;
     DCELL *dcell;
+    int width;
     double drow, dcol;
     char buf[2000];
     struct Option *vect_opt, *rast_opt, *field_opt, *col_opt, *where_opt;
@@ -141,6 +142,10 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to open raster map <%s>"), rast_opt->answer);
 
     out_type = G_get_raster_map_type(fd);
+
+    width = 15;
+    if (out_type == FCELL_TYPE)
+	width = 7;
 
     /* TODO: Later possibly category labels */
     /* 
@@ -269,12 +274,12 @@ int main(int argc, char *argv[])
 	    if (out_type == CELL_TYPE) {
 		if (G_get_c_raster_row(fd, cell, cache[point].row) < 0)
 		    G_fatal_error(_("Unable to read raster map <%s> row %d"),
-				  cell, cache[point].row);
+				  rast_opt->answer, cache[point].row);
 	    }
 	    else {
 		if (G_get_d_raster_row(fd, dcell, cache[point].row) < 0)
 		    G_fatal_error(_("Unable to read raster map <%s> row %d"),
-				  dcell, cache[point].row);
+				  rast_opt->answer, cache[point].row);
 	    }
 	}
 	cur_row = cache[point].row;
@@ -334,7 +339,7 @@ int main(int argc, char *argv[])
 		sprintf(buf, "NULL");
 	    }
 	    else {
-		sprintf(buf, "%.10f", cache[point].dvalue);
+		sprintf(buf, "%.*g", width, cache[point].dvalue);
 	    }
 	}
 	db_append_string(&stmt, buf);
