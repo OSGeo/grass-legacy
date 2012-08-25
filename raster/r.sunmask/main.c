@@ -533,11 +533,8 @@ int main(int argc, char *argv[])
 
     /* writing history file */
     G_short_history(outname, "raster", &hist);
-    sprintf(hist.edhist[0], "%s", *argv);
-    sprintf(hist.datsrc_1, "raster elevation file %s", name);
-    /* bug: long lines are truncated */
-    sprintf(hist.datsrc_2, "%s", G_recreate_command());
-    hist.edlinecnt = 3;
+    G_snprintf(hist.datsrc_1, RECORD_LEN, "raster elevation map: %s", name);
+    G_command_history(&hist);
     G_write_history(outname, &hist);
 
     exit(EXIT_SUCCESS);
