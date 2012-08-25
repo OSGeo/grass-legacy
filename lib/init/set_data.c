@@ -53,10 +53,10 @@ static char *map_text =
 int main(int argc, char *argv[])
 {
     char version[80];
-    char gisdbase[70];
-    char location_name[41];
-    char location[1024];
-    char mapset[41];
+    char gisdbase[GPATH_MAX];
+    char location_name[GMAPSET_MAX];
+    char location[GPATH_MAX + GMAPSET_MAX];
+    char mapset[GMAPSET_MAX];
     int line;
     int yes;
     struct Cell_head window;
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 
 	line++;
 	V_line(line, "DATABASE:");
-	V_ques(gisdbase, 's', line++, 10, sizeof(gisdbase) - 1);
+	V_ques(gisdbase, 's', line++, 10, 70 - 1);
 
 	V_intrpt_ok();
 	if (!V_call())
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 	}
 #ifdef __MINGW32__
 	if (*gisdbase == '/') {
-	    char tmp[200], *p;
+	    char tmp[GPATH_MAX], *p;
 
 	    sprintf(tmp, "%s", getenv("WD"));
 	    for (p = tmp + strlen(tmp); --p >= tmp && *p == '\\';) ;
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 	if (*gisdbase != '/')
 #endif
 	{
-	    char temp[200];
+	    char temp[GPATH_MAX];
 
 	    fprintf(stderr, "DATABASE <%s> - must start with /\n", gisdbase);
 	    sprintf(temp, " '%s'", gisdbase);
