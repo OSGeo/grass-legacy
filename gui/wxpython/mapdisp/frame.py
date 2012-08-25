@@ -879,7 +879,7 @@ class MapFrame(MapFrameBase):
             if '=' in p:
                 parg,pval = p.split('=')
                 if parg == 'icon': icon = pval
-                elif parg == 'size': size = int(pval)
+                elif parg == 'size': size = float(pval)
 
         pattern = ["d.vect",
                    "map=%s" % name,
