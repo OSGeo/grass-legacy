@@ -20,9 +20,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <grass/gis.h>
-#define PRECISION 30
-#define THRESHOLD .0000000000000000000000000000005
-/* .5 * 10 ^(-30) */
 
 static int write_new_colors(FILE *, struct Colors *);
 static int write_rules(FILE *, struct _Color_Rule_ *, DCELL, DCELL);
@@ -124,7 +121,7 @@ static int write_new_colors(FILE * fd, struct Colors *colors)
     fprintf(fd, "%% %s %s\n", str1, str2);
 
     if (colors->shift) {
-	sprintf(str2, "%.10f", (double)colors->shift);
+	sprintf(str2, "%.15g", (double)colors->shift);
 	G_trim_decimal(str2);
 	fprintf(fd, "shift:%s\n", str2);
     }
@@ -172,7 +169,7 @@ static int write_rules(FILE * fd, struct _Color_Rule_ *crules, DCELL dmin, DCELL
 	if (rule->low.value == dmin)
 	    format_min(str, (double)rule->low.value);
 	else {
-	    sprintf(str, "%.10f", (double)rule->low.value);
+	    sprintf(str, "%.15g", (double)rule->low.value);
 	    G_trim_decimal(str);
 	}
 	fprintf(fd, "%s:%d", str, (int)rule->low.red);
@@ -183,7 +180,7 @@ static int write_rules(FILE * fd, struct _Color_Rule_ *crules, DCELL dmin, DCELL
 	    if (rule->high.value == dmax)
 		format_max(str, (double)rule->high.value);
 	    else {
-		sprintf(str, "%.10f", (double)rule->high.value);
+		sprintf(str, "%.15g", (double)rule->high.value);
 		G_trim_decimal(str);
 	    }
 	    fprintf(fd, " %s:%d", str, (int)rule->high.red);
@@ -249,12 +246,16 @@ static int format_min(char *str, double dval)
 {
     double dtmp;
 
-    sprintf(str, "%.*f", PRECISION, dval);
+    sprintf(str, "%.15g", dval);
+    /* Note that G_trim_decimal() does not trim e.g. 1.0000000e-20 */
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval) {		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.*f", PRECISION, dval - THRESHOLD);
-	/* because precision is probably higher than PRECISION */
+    if (dtmp != dval) {  /* if no zeros after decimal point were trimmed */
+	/* lower dval by GRASS_EPSILON fraction */
+	if (dval > 0)
+	    sprintf(str, "%.15g", dval * (1 - GRASS_EPSILON));
+	else
+	    sprintf(str, "%.15g", dval * (1 + GRASS_EPSILON));
     }
 
     return 0;
@@ -264,12 +265,16 @@ static int format_max(char *str, double dval)
 {
     double dtmp;
 
-    sprintf(str, "%.*f", PRECISION, dval);
+    sprintf(str, "%.15g", dval);
+    /* Note that G_trim_decimal() does not trim e.g. 1.0000000e-20 */
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval) {		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.*f", PRECISION, dval + THRESHOLD);
-	/* because precision is probably higher than PRECISION */
+    if (dtmp != dval) {  /* if  no zeros after decimal point were trimmed */
+	/* increase dval by by GRASS_EPSILON fraction */
+	if (dval > 0)
+	    sprintf(str, "%.15g", dval * (1 + GRASS_EPSILON));
+	else
+	    sprintf(str, "%.15g", dval * (1 - GRASS_EPSILON));
     }
 
     return 0;
