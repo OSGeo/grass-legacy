@@ -77,11 +77,12 @@ int what(int once, int terse, int colrow, char *fs, int width, int mwidth)
 
 	    if (G_get_d_raster_row(fd[i], dbuf, row) < 0)
 		show_dval(width, mwidth, name[i], mapset[i], null_dcell,
-			  "ERROR reading fcell file", terse, fs);
+			  "ERROR reading fcell file", terse, fs,
+			  map_type[i]);
 	    else
 		show_dval(width, mwidth, name[i], mapset[i], dbuf[col],
 			  G_get_d_raster_cat(&dbuf[col], &cats[i]), terse,
-			  fs);
+			  fs, map_type[i]);
 	}
     }
     while (!once);
