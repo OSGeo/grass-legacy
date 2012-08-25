@@ -8,7 +8,7 @@
 
 int put_orig_window(struct Cell_head *hd)
 {
-    char buffer[100];
+    char buffer[GNAME_MAX];
 
     /* save the window */
     sprintf(buffer, "cell_misc/%s", Cellmap_real);
