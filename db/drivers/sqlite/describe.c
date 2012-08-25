@@ -49,22 +49,46 @@ int db__driver_describe_table(dbString * table_name, dbTable ** table)
     db_append_string(&sql, db_get_string(table_name));
     db_append_string(&sql, " where oid < 0");
 
-    ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
+    /* SQLITE bug?
+     * If the database schema has changed, sqlite can prepare a statement,
+     * but sqlite can not step, the statement needs to be prepared anew again */
+    while (1) {
+	ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
 
-    if (ret != SQLITE_OK) {
-	append_error("Error in sqlite3_prepare():");
-	append_error(db_get_string(&sql));
-	append_error("\n");
-	append_error((char *)sqlite3_errmsg(sqlite));
-	report_error();
-	db_free_string(&sql);
-	return DB_FAILED;
+	if (ret != SQLITE_OK) {
+	    append_error("Error in sqlite3_prepare():");
+	    append_error(db_get_string(&sql));
+	    append_error("\n");
+	    append_error((char *)sqlite3_errmsg(sqlite));
+	    report_error();
+	    db_free_string(&sql);
+	    return DB_FAILED;
+	}
+
+	ret = sqlite3_step(statement);
+	/* get real result code */
+	ret = sqlite3_reset(statement);
+
+	if (ret == SQLITE_SCHEMA) {
+	    sqlite3_finalize(statement);
+	    /* try again */
+	}
+	else if (ret != SQLITE_OK) {
+	    append_error("Error in sqlite3_step():\n");
+	    append_error((char *)sqlite3_errmsg(sqlite));
+	    report_error();
+	    sqlite3_finalize(statement);
+	    return DB_FAILED;
+	}
+	else
+	    break;
     }
 
     db_free_string(&sql);
 
     if (describe_table(statement, table, NULL) == DB_FAILED) {
-	append_error("Cannot describe table\n");
+	append_error("Cannot describe table:\n");
+	append_error((char *)sqlite3_errmsg(sqlite));
 	report_error();
 	sqlite3_finalize(statement);
 	return DB_FAILED;
@@ -91,15 +115,22 @@ int db__driver_describe_table(dbString * table_name, dbTable ** table)
 
 int describe_table(sqlite3_stmt * statement, dbTable ** table, cursor * c)
 {
-    int i, ncols, nkcols;
+    int i, ncols, nkcols, ret;
 
     G_debug(3, "describe_table()");
 
     ncols = sqlite3_column_count(statement);
-    G_debug(3, "ncols = %d", ncols);
 
     /* Try to get first row */
-    sqlite3_step(statement);
+    ret = sqlite3_step(statement);
+    if (ret != SQLITE_DONE && ret != SQLITE_ROW) {
+	/* get real result code */
+	ret = sqlite3_reset(statement);
+	append_error("Error in sqlite3_step():\n");
+	append_error((char *)sqlite3_errmsg(sqlite));
+	report_error();
+	return DB_FAILED;
+    }
 
     /* Count columns of known type */
     nkcols = 0;
@@ -373,7 +404,8 @@ static int parse_type(const char *declared, int *length)
     if (streq(buf, "time") || streq(buf, "timetz"))
 	return DB_SQL_TYPE_TIME;
 
-    if (streq(buf, "timestamp") || streq(buf, "timestamptz"))
+    if (streq(buf, "timestamp") || streq(buf, "timestamptz") || 
+	streq(buf, "datetime"))
 	return DB_SQL_TYPE_TIMESTAMP;
 
     if (streq(buf, "interval"))
@@ -402,7 +434,7 @@ static int parse_type(const char *declared, int *length)
 	streq(word[2], "time") && streq(word[3], "zone")) {
 	if (streq(word[0], "time"))
 	    return DB_SQL_TYPE_TIME;
-	if (streq(word[0], "timestamp"))
+	if (streq(word[0], "timestamp") || streq(word[0], "datetime"))
 	    return DB_SQL_TYPE_TIMESTAMP;
     }
 
@@ -426,7 +458,8 @@ static int parse_type(const char *declared, int *length)
 	return DB_SQL_TYPE_TIME;
 
     if (sscanf(buf, "timestamp ( %d )", length) == 1 ||
-	sscanf(buf, "timestamptz ( %d )", length) == 1)
+	sscanf(buf, "timestamptz ( %d )", length) == 1 ||
+	sscanf(buf, "datetime ( %d )", length) == 1 )
 	return DB_SQL_TYPE_TIMESTAMP;
 
     if (sscanf
@@ -436,7 +469,7 @@ static int parse_type(const char *declared, int *length)
 	streq(word[2], "time") && streq(word[3], "zone")) {
 	if (streq(word[0], "time"))
 	    return DB_SQL_TYPE_TIME;
-	if (streq(word[0], "timestamp"))
+	if (streq(word[0], "timestamp") || streq(word[0], "datetime"))
 	    return DB_SQL_TYPE_TIMESTAMP;
     }
 
