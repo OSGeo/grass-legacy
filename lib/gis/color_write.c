@@ -247,10 +247,16 @@ static int format_min(char *str, double dval)
     double dtmp;
 
     sprintf(str, "%.15g", dval);
+    /* Note that G_trim_decimal() does not trim e.g. 1.0000000e-20 */
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval)		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.15g", dval - GRASS_EPSILON);
+    if (dtmp != dval) {  /* if no zeros after decimal point were trimmed */
+	/* lower dval by fraction of GRASS_EPSILON */
+	if (dval > 0)
+	    sprintf(str, "%.15g", dval * (1 - GRASS_EPSILON));
+	else
+	    sprintf(str, "%.15g", dval * (1 + GRASS_EPSILON));
+    }
 
     return 0;
 }
@@ -260,10 +266,16 @@ static int format_max(char *str, double dval)
     double dtmp;
 
     sprintf(str, "%.15g", dval);
+    /* Note that G_trim_decimal() does not trim e.g. 1.0000000e-20 */
     G_trim_decimal(str);
     sscanf(str, "%lf", &dtmp);
-    if (dtmp != dval)		/* if  no zeros after decimal point were trimmed */
-	sprintf(str, "%.15g", dval + GRASS_EPSILON);
+    if (dtmp != dval) {  /* if  no zeros after decimal point were trimmed */
+	/* increase dval by fraction of GRASS_EPSILON */
+	if (dval > 0)
+	    sprintf(str, "%.15g", dval * (1 + GRASS_EPSILON));
+	else
+	    sprintf(str, "%.15g", dval * (1 - GRASS_EPSILON));
+    }
 
     return 0;
 }
