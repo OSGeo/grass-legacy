@@ -20,11 +20,11 @@ int what(double east, double north, double maxdist, int width,
     int type;
     char east_buf[40], north_buf[40];
     double sq_meters, sqm_to_sqft, acres, hectares, sq_miles;
-    double z = 0, l = 0;
+    double z, l;
     int notty = 0;
-    int getz = 0;
+    int getz;
     struct field_info *Fi;
-    plus_t line, area = 0, centroid;
+    plus_t line, area, centroid;
     int i;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -43,8 +43,15 @@ int what(double east, double north, double maxdist, int width,
 
 
     for (i = 0; i < nvects; i++) {
+	/* init variables */
+	area = 0;
+	getz = 0;
+	z = 0;
+	l = 0;
 
 	Vect_reset_cats(Cats);
+	Vect_reset_line(Points);
+
 	/* Try to find point first and only if no one was found try lines,
 	 *  otherwise point on line could not be selected and similarly for areas */
 	line =
