@@ -4,10 +4,10 @@
  * MODULE:       r.reclass
  * AUTHOR(S):    James Westervelt, Michael Shapiro, CERL (original contributors)
  *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>,
- *               Hamish Bowman <hamish_nospam yahoo.com>, Jan-Oliver Wagner <jan intevation.de>,
+ *               Hamish Bowman <hamish_b yahoo.com>, Jan-Oliver Wagner <jan intevation.de>,
  *               Markus Neteler <neteler itc.it>
  * PURPOSE:      
- * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2006, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     struct Categories cats;
     struct FPRange range;
     DCELL min, max;
-    int fp;
+    RASTER_MAP_TYPE map_type;
     char buf[1024];
     RULE *rules, *tail;
     int any;
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     tty = isatty(fileno(srcfp));
 
     G_init_cats(0, "", &cats);
-    fp = G_raster_map_is_fp(parm.input->answer, old_mapset);
+    map_type = G_raster_map_type(parm.input->answer, old_mapset);
     G_read_fp_range(parm.input->answer, old_mapset, &range);
     G_get_fp_range_min_max(&range, &min, &max);
     rules = tail = NULL;
@@ -103,9 +103,12 @@ int main(int argc, char *argv[])
     if (tty) {
 	fprintf(stdout,
 		_("Enter rule(s), \"end\" when done, \"help\" if you need it\n"));
-	if (fp)
-	    fprintf(stdout, _("fp: Data range is %.25f to %.25f\n"),
+	if (map_type == FCELL_TYPE)
+	    fprintf(stdout, _("Data range is %.7g to %.7g\n"),
 		    (double)min, (double)max);
+	else if (map_type == DCELL_TYPE)
+	    fprintf(stdout, _("Data range is %.15g to %.15g\n"),
+                    (double)min, (double)max);
 	else
 	    fprintf(stdout, _("Data range is %ld to %ld\n"), (long)min,
 		    (long)max);
