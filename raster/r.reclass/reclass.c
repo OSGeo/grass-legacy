@@ -229,7 +229,7 @@ int reclass(char *old_name, char *old_mapset,
 	G_fatal_error(_("Cannot create reclass file of <%s>"), new_name);
 
     if (title == NULL)
-	sprintf(title = buf, "Reclass of %s in %s", new.name, new.mapset);
+	G_snprintf(title = buf, sizeof(buf), "Reclass of %s in %s", new.name, new.mapset);
 
     if ((fd = G_fopen_new("cell", new_name)) == NULL)
 	G_fatal_error(_("Cannot create raster map <%s>"), new_name);
@@ -245,7 +245,9 @@ int reclass(char *old_name, char *old_mapset,
 
     G_short_history(new_name, "reclass", &hist);
     strcpy(hist.datsrc_1, "Reclassified map based on:");
-    sprintf(hist.datsrc_2, "  Map [%s] in mapset [%s]", new.name, new.mapset);
+    G_snprintf(hist.datsrc_2, RECORD_LEN, "  Map [%s] in mapset [%s]", new.name, new.mapset);
+
+    G_command_history(&hist);
     G_write_history(new_name, &hist);
 
     new_range(new_name, &new);
