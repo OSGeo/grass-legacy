@@ -7,7 +7,7 @@ int WindowRange(char *name, char *mapset, long *min, long *max)
 {
     char inbuf[512];		/* input buffer for reading stats */
     int done = 0;
-    char stats_cmd[512];	/* string for r.stats command */
+    char stats_cmd[GPATH_MAX];	/* string for r.stats command */
     char *temp_fname;		/* temp file name */
     FILE *temp_file;		/* temp file pointer */
     long int cat;		/* a category value */
@@ -24,7 +24,7 @@ int WindowRange(char *name, char *mapset, long *min, long *max)
 
     first = 1;
     while (!done) {
-	if (fgets(inbuf, 1024, temp_file) != NULL) {
+	if (fgets(inbuf, sizeof(inbuf), temp_file) != NULL) {
 	    if (sscanf(inbuf, "%ld %ld", &cat, &stat) == 2) {
 		if (first) {
 		    *max = cat;
