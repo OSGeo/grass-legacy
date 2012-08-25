@@ -1118,8 +1118,7 @@ class BufferedWindow(MapWindow, wx.Window):
             layers = self.GetSelectedLayer(type = 'item', multi = True)
 
             self.parent.Query(self.mouse['begin'][0],self.mouse['begin'][1], layers)
-            self.UpdateMap(render = False, renderVector = False)
-            
+
         elif self.mouse["use"] in ["measure", "profile"]:
             # measure or profile
             if self.mouse["use"] == "measure":

@@ -289,6 +289,7 @@ class MapFrame(MapFrameBase):
     def OnRender(self, event):
         """!Re-render map composition (each map layer)
         """
+        # FIXME: remove qlayer code or use RemoveQueryLayer() now in mapdisp.frame
         # delete tmp map layers (queries)
         qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)
         for layer in qlayer:
