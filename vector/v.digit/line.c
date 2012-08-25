@@ -188,7 +188,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		}
 	    }
 	    if (Vect_append_point(nl->Points, x, y, 0) == -1) {
-		G_warning("%s", _("Out of memory! Point not added."));
+		G_warning(_("Out of memory! Point not added."));
 		return 0;
 	    }
 
@@ -243,7 +243,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		updated_lines_and_nodes_erase_refresh_display();
 	    }
 	    else
-		G_warning("%s", _("Less than 2 points for line -> nothing written"));
+		G_warning(_("Less than 2 points for line -> nothing written"));
 
 	    return 1;
 	}

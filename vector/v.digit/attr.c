@@ -91,7 +91,7 @@ int add_cat(int field, int cat, int newrec)
 	    G_debug(2, "Record already existed.");
 	}
 	else if (ret == -1) {
-	    G_warning("%s", _("Cannot create new record."));
+	    G_warning(_("Cannot create new record."));
 	}
     }
 
