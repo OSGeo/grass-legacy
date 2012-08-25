@@ -25,7 +25,7 @@
 int main(int argc, char *argv[])
 {
     int stat;
-    char name[64];
+    char name[GNAME_MAX];
     char *mapset;
     struct Colors pcolr;
 
@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     }
     else {
 	strncpy(name, argv[1], sizeof(name));
+	name[sizeof(name) - 1] = '\0';
 	if ((mapset = G_find_cell2(name, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), name);
     }
