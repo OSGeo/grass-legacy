@@ -7,9 +7,9 @@
 static int write_history(int, char *, double **, double *);
 
 
-int write_support(int bands, char *outname, double **eigmat, double *eigval)
+void write_support(int bands, char *outname, double **eigmat, double *eigval)
 {
-    char *mapset = G_mapset();
+    const char *mapset = G_mapset();
     struct Colors colors;
     struct FPRange range;
     DCELL min, max;
@@ -26,7 +26,7 @@ int write_support(int bands, char *outname, double **eigmat, double *eigval)
     if (G_write_colors(outname, mapset, &colors) < 0)
 	G_message(_("Unable to write color table for raster map <%s>"), outname);
 
-    return write_history(bands, outname, eigmat, eigval);
+    write_history(bands, outname, eigmat, eigval);
 }
 
 
@@ -47,27 +47,27 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
 	eigval_total += eigval[i];
 
     for (i = 0; i < bands; i++) {
-	char tmpeigen[256], tmpa[80];
+	char tmpeigen[2048], tmpa[80];  /* (bands*8)+30 instead of 2048? */
 
 	sprintf(tmpeigen, "PC%d %9.2f (", i+1, eigval[i]);
 	for (j = 0; j < bands; j++) {
 	    sprintf(tmpa, "%7.4f", eigmat[i][j]);
-	    G_strcat(tmpeigen, tmpa);
+	    strcat(tmpeigen, tmpa);
 	    if (j < (bands - 1) ){
 		sprintf(tmpa, ",");
-		G_strcat(tmpeigen, tmpa);
+		strcat(tmpeigen, tmpa);
 	    }
 	}
-	G_strcat(tmpeigen, ") ");
-
+	strcat(tmpeigen, ") ");
+	
 	sprintf(tmpa, "[%5.2f%%]", eigval[i] * 100/eigval_total);
-	G_strcat(tmpeigen, tmpa);
+	strcat(tmpeigen, tmpa);
 
 	sprintf(hist.edhist[i + 1], tmpeigen);
 
-	/* write eigen values to screen */
-	if(first_map)
-	    G_message("%s", tmpeigen);
+	/* write eigen values to stdout */
+	if (first_map)
+	    fprintf(stdout, "%s\n", tmpeigen);
     }
 
     hist.edlinecnt = i + 1;
