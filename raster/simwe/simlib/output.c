@@ -28,7 +28,7 @@ int output_data(int tt, double ft)
     char *erdep0 = NULL;
     char *mapst = NULL;
     char *type;
-    char buf[256];
+    char buf[GNAME_MAX + 10];
     int ndigit;
     FCELL dat1, dat2;
     float a1, a2;
@@ -455,8 +455,10 @@ int output_data(int tt, double ft)
 
 	    type = "raster";
 	    G_short_history(erdep0, type, &hist1);
-	    sprintf(hist1.edhist[0], "The sediment flux file is %s", flux0);
+	    G_snprintf(hist1.edhist[0], RECORD_LEN,
+		       "The sediment flux file is %s", flux0);
 	    hist1.edlinecnt = 1;
+	    G_command_history(&hist1);
 	    G_write_history(erdep0, &hist1);
 	}
 	else {
@@ -471,8 +473,10 @@ int output_data(int tt, double ft)
 
 	    type = "raster";
 	    G_short_history(erdep, type, &hist1);
-	    sprintf(hist1.edhist[0], "The sediment flux file is %s", flux);
+	    G_snprintf(hist1.edhist[0], RECORD_LEN,
+		       "The sediment flux file is %s", flux);
 	    hist1.edlinecnt = 1;
+	    G_command_history(&hist1);
 	    G_write_history(erdep, &hist1);
 	}
     }
@@ -507,8 +511,10 @@ int output_data(int tt, double ft)
 	sprintf(hist.edhist[3], "mean source (si)=%e, mean infil=%e", si0,
 		infmean);
 
-	sprintf(hist.datsrc_1, "input files: %s %s %s", elevin, dxin, dyin);
-	sprintf(hist.datsrc_2, "input files: %s %s %s", rain, infil, manin);
+	G_snprintf(hist.datsrc_1, RECORD_LEN,
+		   "input files: %s %s %s", elevin, dxin, dyin);
+	G_snprintf(hist.datsrc_2, RECORD_LEN,
+		   "input files: %s %s %s", rain, infil, manin);
 	hist.edlinecnt = 4;
 
 	G_command_history(&hist);
@@ -611,7 +617,7 @@ int output_et()
     struct Colors colors;
     const char *mapst = NULL;
 
-    /*   char buf[256]; */
+    /*   char buf[GNAME_MAX + 10]; */
     FCELL dat1, dat2;
 
     /*   float a1,a2; */
