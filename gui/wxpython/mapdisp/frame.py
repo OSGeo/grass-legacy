@@ -877,7 +877,7 @@ class MapFrame(MapFrameBase):
         vparam = self.tree.GetPyData(self.tree.layer_selected)[0]['cmd']
         for p in vparam:
             if '=' in p:
-                parg,pval = p.split('=')
+                parg,pval = p.split('=', 1)
                 if parg == 'icon': icon = pval
                 elif parg == 'size': size = float(pval)
 
