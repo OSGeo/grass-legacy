@@ -636,7 +636,7 @@ Section "GRASS" SecGRASS
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\${GRASS_BASE} GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wx"\
 	"$INSTALL_DIR\etc\gui\icons\grass.ico" "" SW_SHOWMINIMIZED "" "Launch GRASS ${VERSION_NUMBER} with wxGUI and CMD console"
 	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\${GRASS_BASE} GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND}.sh -wx"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\${GRASS_BASE} GUI with MSYS.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/${GRASS_COMMAND}.sh" "-wx"\
 	"$INSTALL_DIR\etc\gui\icons\grass_msys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with wxGUI and MSYS UNIX console"
 	
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\${GRASS_BASE} Command Line.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-text"\
