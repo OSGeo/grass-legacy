@@ -809,7 +809,7 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'GEOTIFF_CSV="$INSTALL_DIR\share\epsg_csv"$\r$\n'
 	FileWrite $0 'export GEOTIFF_CSV$\r$\n'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 'cd "$USERPROFILE"'
+	FileWrite $0 'cd "$$USERPROFILE"'
 	FileWrite $0 '$\r$\n' 
 	FileWrite $0 'exec "$$GISBASE/etc/Init.sh" "$$@"'
 	FileClose $0
