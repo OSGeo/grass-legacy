@@ -2052,13 +2052,9 @@ class LocationWizard(wx.Object):
     def OnHelp(self, event):
         """'Help' button clicked"""
         # help text in lib/init/helptext.html
+        import webbrowser
         filePath = os.path.join(os.getenv('GISBASE'), "docs", "html", "helptext.html")
-
-        helpFrame = HelpFrame(parent = None, id = wx.ID_ANY,
-                              title = _("GRASS Quickstart"),
-                              size = (640, 480),
-                              file = filePath)
-        helpFrame.Show(True)
+        webbrowser.open(filePath)
 
 
 class WizardWithHelpButton(wiz.Wizard):
