@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
     num_inputs = i;
 
     if (num_inputs < 1)
-	G_fatal_error(_("Raster map not found"));
+	G_fatal_error(_("No input raster map(s) specified"));
 
     inputs = G_malloc(num_inputs * sizeof(struct input));
 
