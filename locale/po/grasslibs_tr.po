@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2010-11-08 15:14+0200\n"
 "Last-Translator: Saban Safak <ssafak@cvm.com.tr>\n"
 "Language-Team: Türkçe <grass-translations@lists.osgeo.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr "Kötü sunucu bağlantısı"
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 msgid "Unable to create rendering context"
 msgstr ""
 
@@ -61,12 +61,12 @@ msgstr ""
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr ""
 
-#: ../lib/nviz/nviz.c:103
+#: ../lib/nviz/nviz.c:126
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "Yanlış renk (%s), \"beyaz\" varsayılan olarak kullanılıyor"
 
-#: ../lib/nviz/lights.c:174
+#: ../lib/nviz/lights.c:171
 msgid "Unable to define new light"
 msgstr ""
 
@@ -169,32 +169,32 @@ msgstr ""
 msgid "Need at least 2 keyframes for interpolation"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1193
+#: ../lib/ogsf/GS2.c:1207
 #, c-format
 msgid "no category info"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1212
+#: ../lib/ogsf/GS2.c:1226
 #, c-format
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1636
+#: ../lib/ogsf/GS2.c:1651
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
-#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
-#: ../lib/ogsf/GS2.c:1803
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1831
+#: ../lib/ogsf/GS2.c:1846
 msgid "Loading failed"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1835
+#: ../lib/ogsf/GS2.c:1850
 msgid "Error finding range"
 msgstr ""
 
@@ -240,18 +240,18 @@ msgstr ""
 msgid "Raster map <%s> not found"
 msgstr "<%s> raster haritası bulunamadı"
 
-#: ../lib/ogsf/Gp3.c:143 ../lib/vector/Vlib/map.c:68
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
 #: ../lib/vector/Vlib/map.c:84
 #, c-format
 msgid "Unable to read vector map <%s>"
 msgstr ""
 
-#: ../lib/ogsf/Gp3.c:204
+#: ../lib/ogsf/Gp3.c:206
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
 msgstr ""
 
-#: ../lib/ogsf/Gp3.c:209
+#: ../lib/ogsf/Gp3.c:211
 #, c-format
 msgid "Vector map <%s> loaded (%d points)"
 msgstr ""
@@ -336,7 +336,7 @@ msgstr "Uygun çıktı biçimi bulunamadı"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -1918,11 +1918,11 @@ msgstr "Harita yapısı başlatılamadı"
 msgid "Map structure has been closed"
 msgstr ""
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 msgid "Index out of range in"
 msgstr "İndeks aralık dışında"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr ""
 
@@ -2428,16 +2428,16 @@ msgstr ""
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2704,12 +2704,12 @@ msgstr ""
 msgid "Corrupted row in head: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Bilinmeyen projeksiyon"
 
@@ -4420,19 +4420,24 @@ msgstr "[%s deki %s] için %s veri değişim dosyası oluşturulamıyor"
 msgid "Unable to create header file for [%s]"
 msgstr "[%s] için üstbilgi dosyası oluşturulamıyor"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
 #, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgid "Current region rows: %d, cols: %d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:76
+#: ../lib/gis/alloc.c:45
 #, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:114
+#: ../lib/gis/alloc.c:85
 #, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
+msgstr ""
+
+#: ../lib/gis/alloc.c:128
+#, c-format
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
 #: ../lib/gis/open_misc.c:45
@@ -4770,7 +4775,7 @@ msgstr "<%s> tablosundan veri alınamadı"
 msgid "Unknown column type (column <%s>)"
 msgstr "Bilinmeyen sütun tipi (sütun <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:115
+#: ../lib/db/dbmi_client/column.c:114
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "<%s> tablosu tanımlanamıyor"

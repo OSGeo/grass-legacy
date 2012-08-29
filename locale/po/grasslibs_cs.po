@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -24,11 +24,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr "Špatné spojení se serverem"
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 msgid "Unable to create rendering context"
 msgstr "Nelze vytvořit obsah robrazení"
 
@@ -66,12 +66,12 @@ msgstr "Chyba při načítání 3D rastrové mapy <%s>"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): Nepodporovaný datový typ"
 
-#: ../lib/nviz/nviz.c:103
+#: ../lib/nviz/nviz.c:126
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "Nesprávná barva pro symbol: '%s', používám \"bílá\" jako výchozí"
 
-#: ../lib/nviz/lights.c:174
+#: ../lib/nviz/lights.c:171
 msgid "Unable to define new light"
 msgstr "Nelze definovat novou linii"
 
@@ -174,32 +174,32 @@ msgstr "Je poteba nejméně 3 klíčové snímky pro vytvoření křivky"
 msgid "Need at least 2 keyframes for interpolation"
 msgstr "Je poteba nejméně 3 klíčové snímky pro interpolaci"
 
-#: ../lib/ogsf/GS2.c:1193
+#: ../lib/ogsf/GS2.c:1207
 #, c-format
 msgid "no category info"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1212
+#: ../lib/ogsf/GS2.c:1226
 #, c-format
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1636
+#: ../lib/ogsf/GS2.c:1651
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "Rastrová mapa <%s> je mimo současný region. Načítání selhalo."
 
-#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
-#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
-#: ../lib/ogsf/GS2.c:1803
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr "GS_load_att_map(): Nelze alokovat paměť. Nelze načíst mapu."
 
-#: ../lib/ogsf/GS2.c:1831
+#: ../lib/ogsf/GS2.c:1846
 msgid "Loading failed"
 msgstr "Načítání selhalo"
 
-#: ../lib/ogsf/GS2.c:1835
+#: ../lib/ogsf/GS2.c:1850
 msgid "Error finding range"
 msgstr "Chyba při hledání rozsahu hodnot"
 
@@ -245,18 +245,18 @@ msgstr "Vektorová mapa <%s> načtena (%d prvků)"
 msgid "Raster map <%s> not found"
 msgstr "Rastrová mapa <%s> nebyla nalezena"
 
-#: ../lib/ogsf/Gp3.c:143 ../lib/vector/Vlib/map.c:68
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
 #: ../lib/vector/Vlib/map.c:84
 #, c-format
 msgid "Unable to read vector map <%s>"
 msgstr "Nelze číst vektorovou mapu <%s>"
 
-#: ../lib/ogsf/Gp3.c:204
+#: ../lib/ogsf/Gp3.c:206
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
 msgstr "Žádný bod z vektorové mapy <%s> nespadá do současného regionu"
 
-#: ../lib/ogsf/Gp3.c:209
+#: ../lib/ogsf/Gp3.c:211
 #, c-format
 msgid "Vector map <%s> loaded (%d points)"
 msgstr "Vektorová mapa <%s> načtena (%d bodů)"
@@ -343,7 +343,7 @@ msgstr "Nelze nelézt přijatelný výstupní formát"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -1995,11 +1995,11 @@ msgstr "Vektorová struktura nebyla nikdy inicializována"
 msgid "Map structure has been closed"
 msgstr "Struktura mapy byla uzavřena"
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 msgid "Index out of range in"
 msgstr "Index je mimo rozsah"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr "Segment je mimo linii, žádný segment nebude vytvořen"
 
@@ -2526,17 +2526,17 @@ msgstr "Pokus číst topologii pro mrtvou plochu (%d)"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "Pokus načíst topografii pro mrtvý ostrov (%d)"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "Vect_new_cats_struct(): došla paměť"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 "Příliš mnoho kategorií (%d), není možné nastavit kategorii %d (vrstva %d)"
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2812,12 +2812,12 @@ msgstr "Nelze otevřít hlavičkový soubor vektorové mapy <%s>"
 msgid "Corrupted row in head: %s"
 msgstr "Porušený řádek v hlavičce: %s"
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "Neznámé klíčové slovo %s v hlavičce vektorové mapy"
 
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Neznámá mapová projekce"
 
@@ -4546,19 +4546,24 @@ msgstr "Nelze vytvořit soubor s metadaty %s pro [%s z %s]"
 msgid "Unable to create header file for [%s]"
 msgstr "Nelze vytvořit hlavičkový soubor pro [%s]"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
 #, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgid "Current region rows: %d, cols: %d"
+msgstr ""
+
+#: ../lib/gis/alloc.c:45
+#, fuzzy, c-format
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_malloc: Nelze přidělit %lu bytů v %s:%d"
 
-#: ../lib/gis/alloc.c:76
-#, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:85
+#, fuzzy, c-format
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr "G_calloc: Nelze přidělit %lu * %lu bytů v %s:%d"
 
-#: ../lib/gis/alloc.c:114
-#, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:128
+#, fuzzy, c-format
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_realloc: Nelze alokovat %lu bytů v %s:%d"
 
 #: ../lib/gis/open_misc.c:45
@@ -4904,7 +4909,7 @@ msgstr "Nelze vybrat data z tabulky <%s>"
 msgid "Unknown column type (column <%s>)"
 msgstr "Neznámý typ sloupce (sloupec <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:115
+#: ../lib/db/dbmi_client/column.c:114
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Nelze popsat tabulku <%s>"

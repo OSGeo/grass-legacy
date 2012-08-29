@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Poedit-Country: CHINA\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr ""
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 #, fuzzy
 msgid "Unable to create rendering context"
 msgstr "不能创建新进程"
@@ -64,12 +64,12 @@ msgstr "已有栅格地图 %d"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr ""
 
-#: ../lib/nviz/nviz.c:103
+#: ../lib/nviz/nviz.c:126
 #, fuzzy, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "不正确的符号颜色：'%s'，使用默认值。"
 
-#: ../lib/nviz/lights.c:174
+#: ../lib/nviz/lights.c:171
 #, fuzzy
 msgid "Unable to define new light"
 msgstr "无法打开文件 %s 在 %s 中"
@@ -171,33 +171,33 @@ msgstr ""
 msgid "Need at least 2 keyframes for interpolation"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1193
+#: ../lib/ogsf/GS2.c:1207
 #, c-format
 msgid "no category info"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1212
+#: ../lib/ogsf/GS2.c:1226
 #, c-format
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1636
+#: ../lib/ogsf/GS2.c:1651
 #, fuzzy, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "[%s]在地图集[%s]中 - 区域[%d]与当前的范围[%d]不同"
 
-#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
-#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
-#: ../lib/ogsf/GS2.c:1803
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1831
+#: ../lib/ogsf/GS2.c:1846
 #, fuzzy
 msgid "Loading failed"
 msgstr "连接失败。\n"
 
-#: ../lib/ogsf/GS2.c:1835
+#: ../lib/ogsf/GS2.c:1850
 #, fuzzy
 msgid "Error finding range"
 msgstr "已有栅格地图 %d"
@@ -244,18 +244,18 @@ msgstr "输入矢量'%s'未找到"
 msgid "Raster map <%s> not found"
 msgstr "输入矢量'%s'未找到"
 
-#: ../lib/ogsf/Gp3.c:143 ../lib/vector/Vlib/map.c:68
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
 #: ../lib/vector/Vlib/map.c:84
 #, fuzzy, c-format
 msgid "Unable to read vector map <%s>"
 msgstr "无法将目录改变到%s"
 
-#: ../lib/ogsf/Gp3.c:204
+#: ../lib/ogsf/Gp3.c:206
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
 msgstr ""
 
-#: ../lib/ogsf/Gp3.c:209
+#: ../lib/ogsf/Gp3.c:211
 #, fuzzy, c-format
 msgid "Vector map <%s> loaded (%d points)"
 msgstr "输入矢量'%s'未找到"
@@ -348,7 +348,7 @@ msgstr "无法猜测站点格式！"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -2033,12 +2033,12 @@ msgstr "矩阵没有初始化"
 msgid "Map structure has been closed"
 msgstr ""
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 #, fuzzy
 msgid "Index out of range in"
 msgstr "双精度属性索引越界"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr ""
 
@@ -2565,17 +2565,17 @@ msgstr "无法为区域 %d 计算质心"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "无法读取[ %s 在 %s 中]的直方图"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 #, fuzzy
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "无法分配内存"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2856,12 +2856,12 @@ msgstr "无法打开矢量'%s'的历史记录"
 msgid "Corrupted row in head: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, fuzzy, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "未知矢量类型"
 
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "未知的投影"
 
@@ -4604,19 +4604,24 @@ msgstr "无法为[%s在%s中]创建 %s 元数据文件"
 msgid "Unable to create header file for [%s]"
 msgstr "无法为[%s]创建头文件"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "当前内存中的空行 %d"
+
+#: ../lib/gis/alloc.c:45
 #, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:76
+#: ../lib/gis/alloc.c:85
 #, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:114
+#: ../lib/gis/alloc.c:128
 #, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
 #: ../lib/gis/open_misc.c:45
@@ -4959,7 +4964,7 @@ msgstr "无法打开文件 %s 在 %s 中"
 msgid "Unknown column type (column <%s>)"
 msgstr "无法读取平滑字段的类型"
 
-#: ../lib/db/dbmi_client/column.c:115
+#: ../lib/db/dbmi_client/column.c:114
 #, fuzzy, c-format
 msgid "Unable to describe table <%s>"
 msgstr "无法打开文件 %s 在 %s 中"
@@ -5317,9 +5322,6 @@ msgstr ""
 
 #~ msgid "Current data row in memory %d"
 #~ msgstr "当前内存中的数据行 %d"
-
-#~ msgid "Current null row in memory %d"
-#~ msgstr "当前内存中的空行 %d"
 
 #~ msgid "nbytes per cell for current row %d"
 #~ msgstr "当前行中每个像元所占的字节数 %d"

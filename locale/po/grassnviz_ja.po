@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2012-03-05 12:15+0900\n"
 "Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -663,7 +663,9 @@ msgid "Place legend"
 msgstr "凡例位置"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
 msgstr "マウスを使って判例を配置; 左ボタンと右ボタンで対角を指定"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
@@ -1946,12 +1948,20 @@ msgid "set icon"
 msgstr "アイコン設定"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
-msgstr "2つ以上の最大値、最小値を入力し、 [Apply]を押してください。 [Auto] を押すとシンボルサイズのレンジは自動的に作成されます。"
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr ""
+"2つ以上の最大値、最小値を入力し、 [Apply]を押してください。 [Auto] を押すとシ"
+"ンボルサイズのレンジは自動的に作成されます。"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
-msgstr "2つ以上の色を入力し [適用]を押してください。[自動]を押すとカラーテーブルを自動で作成します。"
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
+msgstr ""
+"2つ以上の色を入力し [適用]を押してください。[自動]を押すとカラーテーブルを自"
+"動で作成します。"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
 #, tcl-format
@@ -1982,7 +1992,9 @@ msgid "Auto"
 msgstr "自動"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid "Automatically generate a color  table distributed across range of attribute values"
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
 msgstr "属性値のレンジからカラーテーブルを自動で生成"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
@@ -2121,7 +2133,8 @@ msgstr "*** 注意 *** ファイル \"%s\" は有りません"
 #: ../visualization/nviz/scripts/site_attr.tcl:1627
 #, tcl-format
 msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
-msgstr "*** エラー *** いくつかの主題図設定情報がファイル \"%s\" が消えてしまいました"
+msgstr ""
+"*** エラー *** いくつかの主題図設定情報がファイル \"%s\" が消えてしまいました"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1700
 #, tcl-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2012-01-30 23:55+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: GRASS Translation Team\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr "Błąd połączenia z serwerem"
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 msgid "Unable to create rendering context"
 msgstr "Nie można utworzyć kontekstu renderowania"
 
@@ -61,12 +61,12 @@ msgstr "Błąd podczas wczytywania mapy rastrowej 3D <%s>"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): nieobsługiwany typ danych"
 
-#: ../lib/nviz/nviz.c:103
+#: ../lib/nviz/nviz.c:126
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "Niewłaściwy kolor (%s). Użyto domyślnie \"white\""
 
-#: ../lib/nviz/lights.c:174
+#: ../lib/nviz/lights.c:171
 msgid "Unable to define new light"
 msgstr "Nie można zdefiniować nowego światła"
 
@@ -170,33 +170,33 @@ msgstr "'Spline' wymaga conajmniej 3 klatki kluczowe"
 msgid "Need at least 2 keyframes for interpolation"
 msgstr "Interpolacja wymaga conajmniej 2 klatek kluczowych"
 
-#: ../lib/ogsf/GS2.c:1193
+#: ../lib/ogsf/GS2.c:1207
 #, c-format
 msgid "no category info"
 msgstr "brak informacji o kategoriach"
 
-#: ../lib/ogsf/GS2.c:1212
+#: ../lib/ogsf/GS2.c:1226
 #, c-format
 msgid "no data"
 msgstr "brak danych"
 
-#: ../lib/ogsf/GS2.c:1636
+#: ../lib/ogsf/GS2.c:1651
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
 "Mapa rastrowa <%s> jest poza bieżącym regionem. Odczyt nie powiódł się."
 
-#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
-#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
-#: ../lib/ogsf/GS2.c:1803
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr "GS_load_att_map(): Brak pamięci. Nie można wczytać mapy"
 
-#: ../lib/ogsf/GS2.c:1831
+#: ../lib/ogsf/GS2.c:1846
 msgid "Loading failed"
 msgstr "Odczyt nie powiódł się"
 
-#: ../lib/ogsf/GS2.c:1835
+#: ../lib/ogsf/GS2.c:1850
 msgid "Error finding range"
 msgstr "Błąd podczas określania zakresu danych"
 
@@ -243,19 +243,19 @@ msgstr "Mapa wektorowa <%s> została wczytana (%d obiektów)"
 msgid "Raster map <%s> not found"
 msgstr "Mapa rastrowa <%s> nie została znaleziona"
 
-#: ../lib/ogsf/Gp3.c:143 ../lib/vector/Vlib/map.c:68
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
 #: ../lib/vector/Vlib/map.c:84
 #, c-format
 msgid "Unable to read vector map <%s>"
 msgstr "Nie można odczytać mapy wektorowej <%s>"
 
-#: ../lib/ogsf/Gp3.c:204
+#: ../lib/ogsf/Gp3.c:206
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
 msgstr ""
 "Żaden z punktów mapy wektorowej <%s> nie znajduje się w bieżącym regionie"
 
-#: ../lib/ogsf/Gp3.c:209
+#: ../lib/ogsf/Gp3.c:211
 #, c-format
 msgid "Vector map <%s> loaded (%d points)"
 msgstr "Wczytano mapę wektorową <%s> (%d punktów)"
@@ -346,7 +346,7 @@ msgstr "Nie można odnaleźć odpowiedniego formatu wyjściowego"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -2001,11 +2001,11 @@ msgstr "Struktura mapy nie została zainicjowana"
 msgid "Map structure has been closed"
 msgstr "Struktura mapy została zamknięta"
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 msgid "Index out of range in"
 msgstr "Indeks poza zakresem w"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr "Segment poza linią. Nie stworzono segmentu"
 
@@ -2531,16 +2531,16 @@ msgstr "Próba odczytu topologii martwego obszaru (%d)"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "Próba odczytu topologii martwej wyspy (%d)"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "Vect_new_cats_struct(): Brak pamięci"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr "Zbyt wiele kategorii (%d), nie można ustawić cat %d (warstwa %d)"
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr "Nie można zamienić ciągu kategorii '%s' (z '%s') na zakres"
@@ -2820,12 +2820,12 @@ msgstr "Nie można otworzyć pliku nagłówkowego wektora <%s>"
 msgid "Corrupted row in head: %s"
 msgstr "Uszkodzony wiersz w nagłówku: %s"
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "Nieznane słowo kluczowe %s w nagłówku wektora"
 
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Nieznane odwzorowanie"
 
@@ -4554,19 +4554,24 @@ msgstr "Nie można utworzyć pliku metadanych %s dla [%s w %s]"
 msgid "Unable to create header file for [%s]"
 msgstr "Nie można utworzyć pliku nagłówkowego dla [%s]"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
 #, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgid "Current region rows: %d, cols: %d"
+msgstr ""
+
+#: ../lib/gis/alloc.c:45
+#, fuzzy, c-format
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_malloc: nie można przydzielić %lu bajtów w %s:%d"
 
-#: ../lib/gis/alloc.c:76
-#, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:85
+#, fuzzy, c-format
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr "G_calloc: nie można przydzielić %lu * %lu bajtów w %s:%d"
 
-#: ../lib/gis/alloc.c:114
-#, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:128
+#, fuzzy, c-format
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_realloc: nie można przydzielić %lu bajtów w %s:%d"
 
 #: ../lib/gis/open_misc.c:45
@@ -4914,7 +4919,7 @@ msgstr "Nie można pobrać danych z tabeli <%s>"
 msgid "Unknown column type (column <%s>)"
 msgstr "Nieznany typ kolumny (kolumna <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:115
+#: ../lib/db/dbmi_client/column.c:114
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Nie można opisać tabeli <%s>"
