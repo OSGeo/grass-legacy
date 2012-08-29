@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 10:01+0100\n"
+"POT-Creation-Date: 2012-08-29 15:54+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Poedit-Country: CHINA\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr ""
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 #, fuzzy
 msgid "Unable to create rendering context"
 msgstr "不能创建新进程"
@@ -81,7 +81,8 @@ msgstr "无法读取符号线的坐标"
 
 #: ../lib/symbol/read.c:259
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr "不正确的符号名称： '%s' (应该是：group/name 或者 group/name@mapset)"
 
 #: ../lib/symbol/read.c:283
@@ -117,7 +118,9 @@ msgid "Memory error in allocating timestamp"
 msgstr ""
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
-msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
+msgid ""
+"Dev note: Adapted sites library used for vector points. (module should be "
+"updated to GRASS 6 vector library)"
 msgstr ""
 
 #: ../lib/sites/sites.c:372 ../lib/vector/neta/utils.c:116
@@ -264,7 +267,9 @@ msgstr ""
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
-msgid "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please advise GRASS developers of this error"
+msgid ""
+"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
+"advise GRASS developers of this error"
 msgstr ""
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
@@ -343,7 +348,7 @@ msgstr "无法猜测站点格式！"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -482,7 +487,8 @@ msgstr "无法获取PROJ.4风格的参数字符串"
 
 #: ../lib/proj/convert.c:127
 #, fuzzy, c-format
-msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgid ""
+"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
 msgstr ""
 "OGR不能解析PROJ.4类型的参数字符串：\\n\n"
 "%s\\n\n"
@@ -506,12 +512,16 @@ msgstr ""
 
 #: ../lib/proj/convert.c:442
 #, c-format
-msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You may want to look into this."
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
 msgstr ""
 
 #: ../lib/proj/convert.c:446
 #, c-format
-msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
+msgid ""
+"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
 msgstr ""
 
 #: ../lib/proj/datum.c:251
@@ -826,7 +836,9 @@ msgstr ""
 
 #: ../lib/imagery/sigsetfile.c:41
 #, fuzzy, c-format
-msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> is not current mapset"
+msgid ""
+"Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> "
+"is not current mapset"
 msgstr "无法为[%s在%s中]创建头文件"
 
 #: ../lib/imagery/sigsetfile.c:57
@@ -1397,7 +1409,8 @@ msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid "The type of solver which should solve the symmetric linear equation system"
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
 msgstr "应该解算线性对称方程式系统的解算类型"
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -1409,11 +1422,14 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr "解算线性方程式系统的最大迭代次数"
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
-msgid "The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing"
+msgid ""
+"The relaxation parameter used by the jacobi and sor solver for speedup or "
+"stabilizing"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:106
@@ -1771,24 +1787,26 @@ msgstr ""
 
 #: ../lib/arraystats/class.c:221
 #, c-format
-msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
-msgstr ""
-
-#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
-#, c-format
-msgid "'%s' must be > 0 for '%s'"
+msgid ""
+"There are classbreaks outside the range min-max. Number of classes reduced "
+"to %i, but using probabilities for %i classes."
 msgstr ""
 
 #: ../lib/vector/neta/utils.c:221
+#, c-format
+msgid "'%s' must be > 0"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:230
 msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
 msgstr ""
 
-#: ../lib/vector/neta/utils.c:225
+#: ../lib/vector/neta/utils.c:233
 #, fuzzy
 msgid "Unable to load data from database"
 msgstr "无法添加数据库链接。"
 
-#: ../lib/vector/neta/utils.c:236
+#: ../lib/vector/neta/utils.c:240
 #, fuzzy
 msgid "Problem loading category values"
 msgstr "读取栅格单元文件问题"
@@ -1814,7 +1832,9 @@ msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
-msgid "Attempt to read line angle for the line which is not connected to the node: node %d, line %d"
+msgid ""
+"Attempt to read line angle for the line which is not connected to the node: "
+"node %d, line %d"
 msgstr ""
 
 #: ../lib/vector/diglib/file.c:157
@@ -1991,7 +2011,8 @@ msgstr "非法的矢量地图名称<%s>。不允许有字符<%c>。\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgid ""
+"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
 msgstr "非法的矢量地图名称<%s>。不允许有字符<%c>。\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
@@ -2175,12 +2196,12 @@ msgstr "矩阵没有初始化"
 msgid "Map structure has been closed"
 msgstr ""
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 #, fuzzy
 msgid "Index out of range in"
 msgstr "双精度属性索引越界"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr ""
 
@@ -2315,7 +2336,9 @@ msgstr "输入矢量'%s'未找到"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, c-format
-msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+"vector map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/geos.c:61
@@ -2350,7 +2373,9 @@ msgstr "无法打开文件 %s 在 %s 中"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line(): feature id %d is not reasonable (max features in vector "
+"map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:97
@@ -2363,7 +2388,9 @@ msgid "Unable to delete item %d from spatial index"
 msgstr "无法打开文件 %s 在 %s 中"
 
 #: ../lib/vector/Vlib/sindex.c:127
-msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:168
@@ -2398,7 +2425,8 @@ msgid "Partial build for OGR is not supported"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:342
-msgid "Random read is not supported by OGR for this layer, cannot build support"
+msgid ""
+"Random read is not supported by OGR for this layer, cannot build support"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:349
@@ -2453,12 +2481,16 @@ msgstr "注册线： "
 
 #: ../lib/vector/Vlib/net.c:254
 #, c-format
-msgid "Database record for line %d (cat = %d, forward/both direction(s)) not found (forward/both direction(s) of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, forward/both direction(s)) not found "
+"(forward/both direction(s) of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
-msgid "Database record for line %d (cat = %d, backword direction) not found(direction of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, backword direction) not found"
+"(direction of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
@@ -2585,22 +2617,30 @@ msgstr "无法打开矢量'%s'的历史记录"
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
-msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:152
 #, c-format
-msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
-msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
+msgid ""
+"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
+"excess)"
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
-msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
+msgid ""
+"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
+"missing)."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:100
@@ -2610,13 +2650,16 @@ msgstr "警告，程序员请求未知的open_level\n"
 
 #: ../lib/vector/Vlib/open.c:179
 #, fuzzy
-msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
 msgstr "不在当前地图集中的地图不能被打开并更新。"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
 #, fuzzy, c-format
-msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topology by v.build."
+msgid ""
+"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
+"by v.build."
 msgstr "无法打开旧的矢量%s在级别%d上"
 
 #: ../lib/vector/Vlib/open.c:214
@@ -2685,17 +2728,17 @@ msgstr "无法为区域 %d 计算质心"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "无法读取[ %s 在 %s 中]的直方图"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 #, fuzzy
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "无法分配内存"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2805,12 +2848,14 @@ msgstr "无法打开文件 %s 在 %s 中"
 
 #: ../lib/vector/Vlib/write.c:219
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened on topology level"
 msgstr "无法删除线，地图'%s'没有在级别2上打开"
 
 #: ../lib/vector/Vlib/write.c:225
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr "无法删除线，地图'%s'没有以写模式打开"
 
 #: ../lib/vector/Vlib/write.c:239
@@ -2820,12 +2865,14 @@ msgstr "无法将目录改变到%s"
 
 #: ../lib/vector/Vlib/write.c:265
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened on topology level"
 msgstr "无法删除线，地图'%s'没有在级别2上打开"
 
 #: ../lib/vector/Vlib/write.c:271
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr "无法删除线，地图'%s'没有以写模式打开"
 
 #: ../lib/vector/Vlib/write.c:285
@@ -2931,7 +2978,9 @@ msgid "Unable to open OGR DBMI driver"
 msgstr "无法打开OGR DBMI驱动。"
 
 #: ../lib/vector/Vlib/field.c:551
-msgid "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table"
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:606
@@ -2978,12 +3027,12 @@ msgstr "无法打开矢量'%s'的历史记录"
 msgid "Corrupted row in head: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, fuzzy, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "未知矢量类型"
 
-#: ../lib/vector/Vlib/header.c:518 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:516 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "未知的投影"
 
@@ -2999,12 +3048,17 @@ msgstr "未知区域"
 
 #: ../lib/rst/interp_float/segmen2d.c:111
 #, fuzzy
-msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
-msgstr "寻找内插的点花费了太长的时间 -- 请将范围改为点所在的区域。 然后继续计算..."
+msgid ""
+"Taking too long to find points for interpolation - please change the region "
+"to area where your points are. Continuing calculations..."
+msgstr ""
+"寻找内插的点花费了太长的时间 -- 请将范围改为点所在的区域。 然后继续计算..."
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
-msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
+msgid ""
+"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
+"cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -3080,7 +3134,9 @@ msgstr "忽略 %d 个点 -- 过于密集"
 
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
-msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
+msgid ""
+"%d points given for interpolation (after thinning) is less than given NPMIN="
+"%d"
 msgstr "用于内插的(稀化后的) %d 点少于给定的 NPMIN=%d"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
@@ -3089,13 +3145,19 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
-msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
+msgid ""
+"Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
+"smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
-msgid "There are less than %d points for interpolation. No segmentation is necessary, to run the program faster set segmax=%d (see manual)"
-msgstr "用于内插的点少于 %d 个。如果不需要分段，为了让程序运行更快，请设置 segmax=%d (参阅手册)"
+msgid ""
+"There are less than %d points for interpolation. No segmentation is "
+"necessary, to run the program faster set segmax=%d (see manual)"
+msgstr ""
+"用于内插的点少于 %d 个。如果不需要分段，为了让程序运行更快，请设置 segmax=%d "
+"(参阅手册)"
 
 #: ../lib/rst/interp_float/vinput2d.c:355
 #, fuzzy, c-format
@@ -3382,7 +3444,9 @@ msgid "%s not set"
 msgstr "%s 未设置"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
+msgid ""
+"Incompatible library version for module. You need to rebuild GRASS or "
+"untangle multiple installations."
 msgstr ""
 
 #: ../lib/gis/gisinit.c:63
@@ -3424,7 +3488,7 @@ msgstr "无法打开自动掩膜文件"
 msgid "Unable to locate symbol <%s>"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:116
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "无法为区域 %d 计算质心"
@@ -3556,11 +3620,11 @@ msgstr "错误的规则 (%s): %s"
 msgid "Unable to load color rules <%s>"
 msgstr "无法将目录改变到%s"
 
-#: ../lib/gis/error.c:257
+#: ../lib/gis/error.c:262
 msgid "WARNING: "
 msgstr "警告："
 
-#: ../lib/gis/error.c:258
+#: ../lib/gis/error.c:263
 msgid "ERROR: "
 msgstr "错误："
 
@@ -3605,7 +3669,9 @@ msgstr ""
 #: ../lib/gis/parser.c:340
 #, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "SQL 语句的 WHERE 子句不使用'where'关键字。(如：income < 1000 and inhab >= 10000)"
+msgstr ""
+"SQL 语句的 WHERE 子句不使用'where'关键字。(如：income < 1000 and inhab >= "
+"10000)"
 
 #: ../lib/gis/parser.c:341
 msgid "Example: income < 1000 and inhab >= 10000"
@@ -3716,7 +3782,9 @@ msgid "Layer number"
 msgstr "图层号"
 
 #: ../lib/gis/parser.c:596
-msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
 msgstr "一个矢量地图能够连接多个数据库表。这个数字决定使用那个表。"
 
 #: ../lib/gis/parser.c:605
@@ -4118,7 +4186,9 @@ msgstr ""
 
 #: ../lib/gis/set_window.c:76
 #, fuzzy
-msgid "G_set_window(): projection/zone differs from that of currently open raster maps"
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"maps"
 msgstr "G_set_window()：投影/区域与当前打开的栅格文件不同"
 
 #: ../lib/gis/home.c:39
@@ -4274,60 +4344,60 @@ msgstr "G_set_null_value：错误的数据类型！"
 msgid "Unable to get GIS_LOCK environment variable value"
 msgstr ""
 
-#: ../lib/gis/spawn.c:385
+#: ../lib/gis/spawn.c:386
 #, c-format
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:416
+#: ../lib/gis/spawn.c:421
 #, fuzzy, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn：无法将描述符%d复制到%d"
 
-#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
+#: ../lib/gis/spawn.c:429 ../lib/gis/spawn.c:619
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn：无法打开文件%s"
 
-#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
+#: ../lib/gis/spawn.c:503 ../lib/gis/spawn.c:689
 msgid "Unable to execute command"
 msgstr "无法执行命令"
 
-#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
+#: ../lib/gis/spawn.c:528 ../lib/gis/spawn.c:536
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn：无法恢复信号 %d"
 
-#: ../lib/gis/spawn.c:557
+#: ../lib/gis/spawn.c:567
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn：无法重设信号 %d"
 
-#: ../lib/gis/spawn.c:566
+#: ../lib/gis/spawn.c:576
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn：无法忽略信号 %d"
 
-#: ../lib/gis/spawn.c:577
+#: ../lib/gis/spawn.c:587
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn：无法阻断信号 %d"
 
-#: ../lib/gis/spawn.c:585
+#: ../lib/gis/spawn.c:595
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn：无法对信号 %d 解除阻止"
 
-#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
+#: ../lib/gis/spawn.c:624 ../lib/gis/spawn.c:633
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn：无法将描述符%d复制到%d"
 
-#: ../lib/gis/spawn.c:656
+#: ../lib/gis/spawn.c:666
 msgid "Unable to create a new process"
 msgstr "不能创建新进程"
 
-#: ../lib/gis/spawn.c:671
+#: ../lib/gis/spawn.c:681
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr "无法将进入目录%s"
@@ -4535,8 +4605,11 @@ msgstr "无法找到[%s]"
 
 #: ../lib/gis/opencell.c:188
 #, fuzzy, c-format
-msgid "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%s> which does not exist"
-msgstr "无法打开[%s](在[%s]中)，因为它是[%s](在[%s]中)的一个重分类，而它并不存在。"
+msgid ""
+"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
+"%s> which does not exist"
+msgstr ""
+"无法打开[%s](在[%s]中)，因为它是[%s](在[%s]中)的一个重分类，而它并不存在。"
 
 #: ../lib/gis/opencell.c:212
 #, fuzzy, c-format
@@ -4545,7 +4618,9 @@ msgstr "[%s]在地图集[%s]中 - 头文件中的格式字段无效"
 
 #: ../lib/gis/opencell.c:219
 #, fuzzy, c-format
-msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
+msgid ""
+"Raster map <%s@%s> is in different projection than current region. Found "
+"raster map <%s@%s>, should be <%s>."
 msgstr ""
 "[%s]在地图集[%s]中 - 与当前范围的投影不同：\n"
 " 找到的地图[%s]在<%s>投影下，当前的投影应该是<%s> "
@@ -4586,7 +4661,8 @@ msgstr ""
 
 #: ../lib/gis/opencell.c:736
 #, fuzzy
-msgid "Unable to write embedded null values for raster map open for random access"
+msgid ""
+"Unable to write embedded null values for raster map open for random access"
 msgstr "以随机存取打开的地图不能写入嵌入的空值"
 
 #: ../lib/gis/opencell.c:941
@@ -4624,7 +4700,8 @@ msgid "Raster map <%s> is not xdr: byte_order: %s"
 msgstr "输入矢量'%s'未找到"
 
 #: ../lib/gis/opencell.c:1179
-msgid "G_set_quant_rules() can be called only for raster maps opened for reading"
+msgid ""
+"G_set_quant_rules() can be called only for raster maps opened for reading"
 msgstr ""
 
 #: ../lib/gis/sample.c:71
@@ -4691,17 +4768,22 @@ msgstr "无法为[%s在%s中]创建 %s 元数据文件"
 msgid "Unable to create header file for [%s]"
 msgstr "无法为[%s]创建头文件"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "当前内存中的空行 %d"
+
+#: ../lib/gis/alloc.c:45
 #, c-format
 msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:76
+#: ../lib/gis/alloc.c:85
 #, c-format
 msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:114
+#: ../lib/gis/alloc.c:128
 #, c-format
 msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
@@ -4909,7 +4991,8 @@ msgstr " \"%s\"中保存的窗口完全在当前GRASS窗口之外。"
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr "只有 %d %%的窗口(存储于\"%s\"中)与当前GRASS窗口重叠。"
 
 #: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
@@ -4958,74 +5041,74 @@ msgstr ""
 "closecell: 无法将 %s\n"
 "移动到空文件 %s"
 
-#: ../lib/gis/closecell.c:235
+#: ../lib/gis/closecell.c:236
 #, fuzzy
 msgid "Unable to delete the temporary null-cells file"
 msgstr "找不到临时空文件：%s"
 
-#: ../lib/gis/closecell.c:241
+#: ../lib/gis/closecell.c:243
 #, fuzzy
 msgid "Unable to delete the empty temporary null-cells file"
 msgstr "找不到临时空文件：%s"
 
-#: ../lib/gis/closecell.c:245
+#: ../lib/gis/closecell.c:247
 #, fuzzy
 msgid "Unable to delete the prior null-cells file"
 msgstr "无法打开临时文件"
 
-#: ../lib/gis/closecell.c:259
+#: ../lib/gis/closecell.c:261
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr "将地图 %s 写入浮点型指针类型文件错误"
 
-#: ../lib/gis/closecell.c:270
+#: ../lib/gis/closecell.c:272
 #, fuzzy
 msgid "Unable to close the 'cell' file"
 msgstr "无法打开临时文件"
 
-#: ../lib/gis/closecell.c:280
+#: ../lib/gis/closecell.c:282
 #, fuzzy
 msgid "Unable to delete prior 'fcell' file"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/closecell.c:289
+#: ../lib/gis/closecell.c:291
 #, fuzzy, c-format
 msgid "Unable to delete the prior %s file"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/closecell.c:298
+#: ../lib/gis/closecell.c:300
 #, fuzzy
 msgid "Unable to close file"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/closecell.c:325
+#: ../lib/gis/closecell.c:327
 #, fuzzy
 msgid "Unable to delete the prior 'cell' file"
 msgstr "无法打开临时文件"
 
-#: ../lib/gis/closecell.c:330
+#: ../lib/gis/closecell.c:332
 #, fuzzy, c-format
 msgid "closecell: can't move [%s] to cell file [%s]"
 msgstr ""
 "closecell: 不能将 %s\n"
 "移动到cell文件 %s"
 
-#: ../lib/gis/closecell.c:336
+#: ../lib/gis/closecell.c:339
 #, fuzzy
 msgid "Unable to delete the temporary 'cell' file"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/closecell.c:386
+#: ../lib/gis/closecell.c:390
 #, fuzzy
 msgid "Unable to write quant file!"
 msgstr "不能创建新进程"
 
-#: ../lib/gis/closecell.c:393
+#: ../lib/gis/closecell.c:398
 #, fuzzy, c-format
 msgid "Unable to delete the %s file"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/closecell.c:438
+#: ../lib/gis/closecell.c:444
 #, fuzzy
 msgid "Unable to write f_format file for CELL maps"
 msgstr "无法将CELL地图写入f_format文件"
@@ -5036,7 +5119,9 @@ msgstr "地图集未设置"
 
 #: ../lib/gis/distance.c:160
 #, c-format
-msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
+msgid ""
+"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
+"%f)(%f,%f)"
 msgstr ""
 
 #: ../lib/gis/debug.c:74
@@ -5142,31 +5227,34 @@ msgstr "非法的表格名称 <%s> 。不允许有字符 <%c> 。\n"
 msgid "Programmer error"
 msgstr ""
 
-msgid "taking too long to find points for interpolation--please change the region to area where your points are. Continuing calculations..."
-msgstr "寻找内插的点花费了太长的时间 -- 请将范围改为点所在的区域。 然后继续计算..."
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "寻找内插的点花费了太长的时间 -- 请将范围改为点所在的区域。 然后继续计算..."
 
-msgid "Reading lines from vector map ... "
-msgstr "从矢量地图中读入行 ..."
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "从矢量地图中读入行 ..."
 
-msgid "Reading nodes from vector map ... "
-msgstr "读取矢量地图上的节点..."
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "读取矢量地图上的节点..."
 
-msgid "strip exists with insufficient data"
-msgstr "去掉不合适的数据"
-
-#, fuzzy
-msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr "有点在指定的范围之外--忽略 %d 个点"
-
-msgid "ignoring %d points -- too dense"
-msgstr "忽略 %d 个点 -- 过于密集"
-
-msgid "some points outside of region -- will ignore..."
-msgstr "范围之外的点 -- 将被忽略..."
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "去掉不合适的数据"
 
 #, fuzzy
-msgid "Column type not supported"
-msgstr "不支持的 OGR 要素类型 %d"
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "有点在指定的范围之外--忽略 %d 个点"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "忽略 %d 个点 -- 过于密集"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "范围之外的点 -- 将被忽略..."
+
+#, fuzzy
+#~ msgid "Column type not supported"
+#~ msgstr "不支持的 OGR 要素类型 %d"
 
 #~ msgid "Requested g3d map <%s> not found"
 #~ msgstr "请求的g3d地图<%s>未找到"
@@ -5260,11 +5348,13 @@ msgstr "不支持的 OGR 要素类型 %d"
 #~ msgstr "无法打开临时文件"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
 #~ msgstr "无法删除线，地图'%s'没有在级别2上打开"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
 #~ msgstr "无法删除线，地图'%s'没有以写模式打开"
 
 #, fuzzy
@@ -5502,9 +5592,6 @@ msgstr "不支持的 OGR 要素类型 %d"
 #~ msgid "Current data row in memory %d"
 #~ msgstr "当前内存中的数据行 %d"
 
-#~ msgid "Current null row in memory %d"
-#~ msgstr "当前内存中的空行 %d"
-
 #~ msgid "nbytes per cell for current row %d"
 #~ msgstr "当前行中每个像元所占的字节数 %d"
 
@@ -5602,7 +5689,9 @@ msgstr "不支持的 OGR 要素类型 %d"
 #~ msgid "decimal field %i not present in sites file"
 #~ msgstr "十进制字段 %i 不在站点文件中"
 
-#~ msgid "I'm finding records that do not have a floating point attributes (fields prefixed with '%')."
+#~ msgid ""
+#~ "I'm finding records that do not have a floating point attributes (fields "
+#~ "prefixed with '%')."
 #~ msgstr "这些记录没有浮点属性(字段以'%'为前缀)."
 
 #, fuzzy

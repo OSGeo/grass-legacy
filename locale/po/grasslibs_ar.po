@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 10:01+0100\n"
+"POT-Creation-Date: 2012-08-29 15:54+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr ""
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 #, fuzzy
 msgid "Unable to create rendering context"
 msgstr "لم يتم انشاء عملية جديدة"
@@ -78,7 +78,8 @@ msgstr ""
 
 #: ../lib/symbol/read.c:259
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 
 #: ../lib/symbol/read.c:283
@@ -114,7 +115,9 @@ msgid "Memory error in allocating timestamp"
 msgstr ""
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
-msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
+msgid ""
+"Dev note: Adapted sites library used for vector points. (module should be "
+"updated to GRASS 6 vector library)"
 msgstr ""
 
 #: ../lib/sites/sites.c:372 ../lib/vector/neta/utils.c:116
@@ -260,7 +263,9 @@ msgstr ""
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
-msgid "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please advise GRASS developers of this error"
+msgid ""
+"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
+"advise GRASS developers of this error"
 msgstr ""
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
@@ -339,7 +344,7 @@ msgstr "لم يمكن تخمين التشكيل"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -476,7 +481,8 @@ msgstr ""
 
 #: ../lib/proj/convert.c:127
 #, c-format
-msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgid ""
+"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
 msgstr ""
 
 #: ../lib/proj/convert.c:133
@@ -495,12 +501,16 @@ msgstr ""
 
 #: ../lib/proj/convert.c:442
 #, c-format
-msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You may want to look into this."
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
 msgstr ""
 
 #: ../lib/proj/convert.c:446
 #, c-format
-msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
+msgid ""
+"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
 msgstr ""
 
 #: ../lib/proj/datum.c:251
@@ -813,7 +823,9 @@ msgstr ""
 
 #: ../lib/imagery/sigsetfile.c:41
 #, fuzzy, c-format
-msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> is not current mapset"
+msgid ""
+"Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> "
+"is not current mapset"
 msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
 
 #: ../lib/imagery/sigsetfile.c:57
@@ -1330,7 +1342,8 @@ msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid "The type of solver which should solve the symmetric linear equation system"
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -1342,11 +1355,14 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
-msgid "The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing"
+msgid ""
+"The relaxation parameter used by the jacobi and sor solver for speedup or "
+"stabilizing"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:106
@@ -1649,24 +1665,26 @@ msgstr ""
 
 #: ../lib/arraystats/class.c:221
 #, c-format
-msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
-msgstr ""
-
-#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
-#, c-format
-msgid "'%s' must be > 0 for '%s'"
+msgid ""
+"There are classbreaks outside the range min-max. Number of classes reduced "
+"to %i, but using probabilities for %i classes."
 msgstr ""
 
 #: ../lib/vector/neta/utils.c:221
+#, c-format
+msgid "'%s' must be > 0"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:230
 msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
 msgstr ""
 
-#: ../lib/vector/neta/utils.c:225
+#: ../lib/vector/neta/utils.c:233
 #, fuzzy
 msgid "Unable to load data from database"
 msgstr "لم يتم اضافة رابط قاعدة البيانات"
 
-#: ../lib/vector/neta/utils.c:236
+#: ../lib/vector/neta/utils.c:240
 #, fuzzy
 msgid "Problem loading category values"
 msgstr "للخرائط الراسترية الموجودة %d\n"
@@ -1692,7 +1710,9 @@ msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
-msgid "Attempt to read line angle for the line which is not connected to the node: node %d, line %d"
+msgid ""
+"Attempt to read line angle for the line which is not connected to the node: "
+"node %d, line %d"
 msgstr ""
 
 #: ../lib/vector/diglib/file.c:157
@@ -1865,12 +1885,15 @@ msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير 
 #: ../lib/vector/Vlib/legal_vname.c:63
 #, fuzzy, c-format
 msgid "Illegal vector map name <%s>. Character '%c' not allowed."
-msgstr "غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
+msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
-msgstr "غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
+msgid ""
+"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
 #, fuzzy, c-format
@@ -2052,12 +2075,12 @@ msgstr ""
 msgid "Map structure has been closed"
 msgstr ""
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 #, fuzzy
 msgid "Index out of range in"
 msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr ""
 
@@ -2192,7 +2215,9 @@ msgstr "غير موجود'%s' الفيكتور"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, c-format
-msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+"vector map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/geos.c:61
@@ -2226,7 +2251,9 @@ msgstr "لم يمكن فتحه %s فى %s"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line(): feature id %d is not reasonable (max features in vector "
+"map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:97
@@ -2239,7 +2266,9 @@ msgid "Unable to delete item %d from spatial index"
 msgstr "لم يمكن فتحه %s فى %s"
 
 #: ../lib/vector/Vlib/sindex.c:127
-msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:168
@@ -2274,7 +2303,8 @@ msgid "Partial build for OGR is not supported"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:342
-msgid "Random read is not supported by OGR for this layer, cannot build support"
+msgid ""
+"Random read is not supported by OGR for this layer, cannot build support"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:349
@@ -2327,12 +2357,16 @@ msgstr ":تسجيل الخطوط"
 
 #: ../lib/vector/Vlib/net.c:254
 #, c-format
-msgid "Database record for line %d (cat = %d, forward/both direction(s)) not found (forward/both direction(s) of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, forward/both direction(s)) not found "
+"(forward/both direction(s) of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
-msgid "Database record for line %d (cat = %d, backword direction) not found(direction of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, backword direction) not found"
+"(direction of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
@@ -2459,22 +2493,30 @@ msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
-msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:152
 #, c-format
-msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
-msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
+msgid ""
+"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
+"excess)"
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
-msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
+msgid ""
+"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
+"missing)."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:100
@@ -2484,13 +2526,16 @@ msgstr "تحذير: المبرمج طلب مستوى  غير معروف\n"
 
 #: ../lib/vector/Vlib/open.c:179
 #, fuzzy
-msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
 msgstr "الخريطة لا يمكن فتحها للتحديث"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
 #, fuzzy, c-format
-msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topology by v.build."
+msgid ""
+"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
+"by v.build."
 msgstr "%d على مستوى %s لم يمكن فتح فيكتور قديم "
 
 #: ../lib/vector/Vlib/open.c:214
@@ -2559,17 +2604,17 @@ msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "لم يمكن فتح ملف مؤقت"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 #, fuzzy
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "لم يمكن توفير ذاكرة"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2678,12 +2723,14 @@ msgstr "لم يمكن فتحه %s فى %s"
 
 #: ../lib/vector/Vlib/write.c:219
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened on topology level"
 msgstr "لم يمكن محو الخط,الخريطة  غير مفتوحة على المستوى الثانى"
 
 #: ../lib/vector/Vlib/write.c:225
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بوضع مهيأ للكتابة"
 
 #: ../lib/vector/Vlib/write.c:239
@@ -2693,12 +2740,14 @@ msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
 #: ../lib/vector/Vlib/write.c:265
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened on topology level"
 msgstr "لم يمكن محو الخط,الخريطة  غير مفتوحة على المستوى الثانى"
 
 #: ../lib/vector/Vlib/write.c:271
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بوضع مهيأ للكتابة"
 
 #: ../lib/vector/Vlib/write.c:285
@@ -2757,7 +2806,8 @@ msgstr "رقم الحقل يجب ان يكون 1 او اكثر"
 #: ../lib/vector/Vlib/field.c:98
 #, fuzzy
 msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr "لم يتم اضافة رابط قاعدة البيانات حيث ان الخريطة غير مفتوحة على وضع الكتابة"
+msgstr ""
+"لم يتم اضافة رابط قاعدة البيانات حيث ان الخريطة غير مفتوحة على وضع الكتابة"
 
 #: ../lib/vector/Vlib/field.c:104
 #, fuzzy
@@ -2801,7 +2851,9 @@ msgid "Unable to open OGR DBMI driver"
 msgstr "OGR DBMI لم يمكن فتح مشغل"
 
 #: ../lib/vector/Vlib/field.c:551
-msgid "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table"
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:606
@@ -2847,12 +2899,12 @@ msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
 msgid "Corrupted row in head: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, fuzzy, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "مسقط غير معروف"
 
-#: ../lib/vector/Vlib/header.c:518 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:516 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "مسقط غير معروف"
 
@@ -2867,12 +2919,16 @@ msgid "Unknown query tool"
 msgstr "مسقط غير معروف"
 
 #: ../lib/rst/interp_float/segmen2d.c:111
-msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
+msgid ""
+"Taking too long to find points for interpolation - please change the region "
+"to area where your points are. Continuing calculations..."
 msgstr ""
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
-msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
+msgid ""
+"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
+"cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -2947,7 +3003,9 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
-msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
+msgid ""
+"%d points given for interpolation (after thinning) is less than given NPMIN="
+"%d"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:340
@@ -2956,12 +3014,16 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
-msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
+msgid ""
+"Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
+"smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
-msgid "There are less than %d points for interpolation. No segmentation is necessary, to run the program faster set segmax=%d (see manual)"
+msgid ""
+"There are less than %d points for interpolation. No segmentation is "
+"necessary, to run the program faster set segmax=%d (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:355
@@ -3249,7 +3311,9 @@ msgid "%s not set"
 msgstr "%s لم يحدد"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
+msgid ""
+"Incompatible library version for module. You need to rebuild GRASS or "
+"untangle multiple installations."
 msgstr ""
 
 #: ../lib/gis/gisinit.c:63
@@ -3291,7 +3355,7 @@ msgstr "لم يمكن فتح ملف القناع الأتوماتيكى"
 msgid "Unable to locate symbol <%s>"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:116
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
@@ -3424,11 +3488,11 @@ msgstr ""
 msgid "Unable to load color rules <%s>"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/gis/error.c:257
+#: ../lib/gis/error.c:262
 msgid "WARNING: "
 msgstr "تحذير:"
 
-#: ../lib/gis/error.c:258
+#: ../lib/gis/error.c:263
 msgid "ERROR: "
 msgstr "خطــــأ:"
 
@@ -3583,7 +3647,9 @@ msgid "Layer number"
 msgstr "رقم الطبقة"
 
 #: ../lib/gis/parser.c:596
-msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
 msgstr ""
 
 #: ../lib/gis/parser.c:605
@@ -3964,7 +4030,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/set_window.c:76
-msgid "G_set_window(): projection/zone differs from that of currently open raster maps"
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"maps"
 msgstr ""
 
 #: ../lib/gis/home.c:39
@@ -4121,62 +4189,62 @@ msgstr ""
 msgid "Unable to get GIS_LOCK environment variable value"
 msgstr ""
 
-#: ../lib/gis/spawn.c:385
+#: ../lib/gis/spawn.c:386
 #, c-format
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:416
+#: ../lib/gis/spawn.c:421
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
+#: ../lib/gis/spawn.c:429 ../lib/gis/spawn.c:619
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr ""
 
-#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
+#: ../lib/gis/spawn.c:503 ../lib/gis/spawn.c:689
 #, fuzzy
 msgid "Unable to execute command"
 msgstr "لم يتم تنفيذ الأمر"
 
-#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
+#: ../lib/gis/spawn.c:528 ../lib/gis/spawn.c:536
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:557
+#: ../lib/gis/spawn.c:567
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:566
+#: ../lib/gis/spawn.c:576
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:577
+#: ../lib/gis/spawn.c:587
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:585
+#: ../lib/gis/spawn.c:595
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
+#: ../lib/gis/spawn.c:624 ../lib/gis/spawn.c:633
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:656
+#: ../lib/gis/spawn.c:666
 #, fuzzy
 msgid "Unable to create a new process"
 msgstr "لم يتم انشاء عملية جديدة"
 
-#: ../lib/gis/spawn.c:671
+#: ../lib/gis/spawn.c:681
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
@@ -4374,7 +4442,9 @@ msgstr "[%s] لم يتم ايجاد"
 
 #: ../lib/gis/opencell.c:188
 #, c-format
-msgid "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%s> which does not exist"
+msgid ""
+"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
+"%s> which does not exist"
 msgstr ""
 
 #: ../lib/gis/opencell.c:212
@@ -4384,7 +4454,9 @@ msgstr "[%s in %s] الملف الرئيسى غير صالح للخريطة ال
 
 #: ../lib/gis/opencell.c:219
 #, c-format
-msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
+msgid ""
+"Raster map <%s@%s> is in different projection than current region. Found "
+"raster map <%s@%s>, should be <%s>."
 msgstr ""
 
 #: ../lib/gis/opencell.c:226
@@ -4423,7 +4495,8 @@ msgstr ""
 
 #: ../lib/gis/opencell.c:736
 #, fuzzy
-msgid "Unable to write embedded null values for raster map open for random access"
+msgid ""
+"Unable to write embedded null values for raster map open for random access"
 msgstr "لم يمكن كتابة قيم منعدمة لخريطة مفتوحة لاتصال عشوائى"
 
 #: ../lib/gis/opencell.c:941
@@ -4461,7 +4534,8 @@ msgid "Raster map <%s> is not xdr: byte_order: %s"
 msgstr "غير موجود'%s' الفيكتور"
 
 #: ../lib/gis/opencell.c:1179
-msgid "G_set_quant_rules() can be called only for raster maps opened for reading"
+msgid ""
+"G_set_quant_rules() can be called only for raster maps opened for reading"
 msgstr ""
 
 #: ../lib/gis/sample.c:71
@@ -4528,17 +4602,22 @@ msgstr "لم يمكن قراءة الملف الرئيسى [%s in %s]\n"
 msgid "Unable to create header file for [%s]"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "هو الصف المنعدم الحالى فى الذاكرة %d\n"
+
+#: ../lib/gis/alloc.c:45
 #, c-format
 msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:76
+#: ../lib/gis/alloc.c:85
 #, c-format
 msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:114
+#: ../lib/gis/alloc.c:128
 #, c-format
 msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
@@ -4735,7 +4814,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 
 #: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
@@ -4782,72 +4862,72 @@ msgstr "لم يمكن فتح ملف مؤقت"
 msgid "closecell: can't move [%s] to null-cells file [%s]"
 msgstr ""
 
-#: ../lib/gis/closecell.c:235
+#: ../lib/gis/closecell.c:236
 #, fuzzy
 msgid "Unable to delete the temporary null-cells file"
 msgstr "datum لم يمكن فتح ملف جدول : %s"
 
-#: ../lib/gis/closecell.c:241
+#: ../lib/gis/closecell.c:243
 #, fuzzy
 msgid "Unable to delete the empty temporary null-cells file"
 msgstr "datum لم يمكن فتح ملف جدول : %s"
 
-#: ../lib/gis/closecell.c:245
+#: ../lib/gis/closecell.c:247
 #, fuzzy
 msgid "Unable to delete the prior null-cells file"
 msgstr "لم يمكن فتح ملف مؤقت"
 
-#: ../lib/gis/closecell.c:259
+#: ../lib/gis/closecell.c:261
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr ""
 
-#: ../lib/gis/closecell.c:270
+#: ../lib/gis/closecell.c:272
 #, fuzzy
 msgid "Unable to close the 'cell' file"
 msgstr "لم يمكن فتح ملف مؤقت"
 
-#: ../lib/gis/closecell.c:280
+#: ../lib/gis/closecell.c:282
 #, fuzzy
 msgid "Unable to delete prior 'fcell' file"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/closecell.c:289
+#: ../lib/gis/closecell.c:291
 #, fuzzy, c-format
 msgid "Unable to delete the prior %s file"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/closecell.c:298
+#: ../lib/gis/closecell.c:300
 #, fuzzy
 msgid "Unable to close file"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/closecell.c:325
+#: ../lib/gis/closecell.c:327
 #, fuzzy
 msgid "Unable to delete the prior 'cell' file"
 msgstr "لم يمكن فتح ملف مؤقت"
 
-#: ../lib/gis/closecell.c:330
+#: ../lib/gis/closecell.c:332
 #, c-format
 msgid "closecell: can't move [%s] to cell file [%s]"
 msgstr ""
 
-#: ../lib/gis/closecell.c:336
+#: ../lib/gis/closecell.c:339
 #, fuzzy
 msgid "Unable to delete the temporary 'cell' file"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/closecell.c:386
+#: ../lib/gis/closecell.c:390
 #, fuzzy
 msgid "Unable to write quant file!"
 msgstr "لم يتم انشاء عملية جديدة"
 
-#: ../lib/gis/closecell.c:393
+#: ../lib/gis/closecell.c:398
 #, fuzzy, c-format
 msgid "Unable to delete the %s file"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/gis/closecell.c:438
+#: ../lib/gis/closecell.c:444
 #, fuzzy
 msgid "Unable to write f_format file for CELL maps"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
@@ -4858,7 +4938,9 @@ msgstr "لم يتم اختير مجموعة الخريط"
 
 #: ../lib/gis/distance.c:160
 #, c-format
-msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
+msgid ""
+"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
+"%f)(%f,%f)"
 msgstr ""
 
 #: ../lib/gis/debug.c:74
@@ -4958,7 +5040,8 @@ msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير 
 #: ../lib/db/dbmi_base/legal_dbname.c:43
 #, fuzzy, c-format
 msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
-msgstr "غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
+msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
 #: ../lib/db/dbmi_base/default_name.c:127
 msgid "Programmer error"
@@ -5224,10 +5307,6 @@ msgstr ""
 #~ msgstr "صف البيانات الحالية فى الذاكرة %d\n"
 
 #, fuzzy
-#~ msgid "Current null row in memory %d"
-#~ msgstr "هو الصف المنعدم الحالى فى الذاكرة %d\n"
-
-#, fuzzy
 #~ msgid "nbytes per cell for current row %d"
 #~ msgstr "هو عدد البيتات لكل خلية فى الصف الحالى %d\n"
 
@@ -5306,7 +5385,9 @@ msgstr ""
 #~ msgid "decimal field %i not present in sites file"
 #~ msgstr "غير موجود فى ملف المواقع %i الحقل العشرى"
 
-#~ msgid "I'm finding records that do not have a floating point attributes (fields prefixed with '%')."
+#~ msgid ""
+#~ "I'm finding records that do not have a floating point attributes (fields "
+#~ "prefixed with '%')."
 #~ msgstr "('%' أيجاد قيم ليس لهل قيم عشرية (مبتدأ ب"
 
 #~ msgid "No n-dims in site_list"
@@ -5343,11 +5424,13 @@ msgstr ""
 #~ msgstr "لم يمكن فتح ملف مؤقت"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
 #~ msgstr "لم يمكن محو الخط,الخريطة  غير مفتوحة على المستوى الثانى"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
 #~ msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بوضع مهيأ للكتابة"
 
 #, fuzzy

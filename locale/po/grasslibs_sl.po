@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 10:01+0100\n"
+"POT-Creation-Date: 2012-08-29 15:54+0200\n"
 "PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <grass-translations@lists.osgeo.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr ""
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 #, fuzzy
 msgid "Unable to create rendering context"
 msgstr "ne morem ustvariti novega procesa"
@@ -79,7 +79,8 @@ msgstr ""
 
 #: ../lib/symbol/read.c:259
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 
 #: ../lib/symbol/read.c:283
@@ -115,7 +116,9 @@ msgid "Memory error in allocating timestamp"
 msgstr ""
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
-msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
+msgid ""
+"Dev note: Adapted sites library used for vector points. (module should be "
+"updated to GRASS 6 vector library)"
 msgstr ""
 
 #: ../lib/sites/sites.c:372 ../lib/vector/neta/utils.c:116
@@ -261,7 +264,9 @@ msgstr ""
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
-msgid "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please advise GRASS developers of this error"
+msgid ""
+"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
+"advise GRASS developers of this error"
 msgstr ""
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
@@ -340,7 +345,7 @@ msgstr "Nezmo¾en uganiti kak¹en je toèkovni format!"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -477,7 +482,8 @@ msgstr ""
 
 #: ../lib/proj/convert.c:127
 #, c-format
-msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgid ""
+"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
 msgstr ""
 
 #: ../lib/proj/convert.c:133
@@ -496,12 +502,16 @@ msgstr ""
 
 #: ../lib/proj/convert.c:442
 #, c-format
-msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You may want to look into this."
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
 msgstr ""
 
 #: ../lib/proj/convert.c:446
 #, c-format
-msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
+msgid ""
+"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
 msgstr ""
 
 #: ../lib/proj/datum.c:251
@@ -768,7 +778,8 @@ msgstr ""
 #: ../lib/raster/io_sock.c:112
 #, fuzzy
 msgid "Probably an error with the server."
-msgstr "Èas za poskus priklopa se je iztekel. Verjetno zaradi napake na stre¾niku.\n"
+msgstr ""
+"Èas za poskus priklopa se je iztekel. Verjetno zaradi napake na stre¾niku.\n"
 
 #: ../lib/raster/io_sock.c:120
 #, fuzzy
@@ -817,7 +828,9 @@ msgstr ""
 
 #: ../lib/imagery/sigsetfile.c:41
 #, fuzzy, c-format
-msgid "Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> is not current mapset"
+msgid ""
+"Unable to create signature file <%s> for subgroup <%s> of group <%s> - <%s> "
+"is not current mapset"
 msgstr "Nezmo¾en ustvariti datoteko z vzglavjem za [%s v %s]"
 
 #: ../lib/imagery/sigsetfile.c:57
@@ -1345,7 +1358,8 @@ msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid "The type of solver which should solve the symmetric linear equation system"
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -1357,11 +1371,14 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
-msgid "The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing"
+msgid ""
+"The relaxation parameter used by the jacobi and sor solver for speedup or "
+"stabilizing"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:106
@@ -1671,24 +1688,26 @@ msgstr ""
 
 #: ../lib/arraystats/class.c:221
 #, c-format
-msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
-msgstr ""
-
-#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
-#, c-format
-msgid "'%s' must be > 0 for '%s'"
+msgid ""
+"There are classbreaks outside the range min-max. Number of classes reduced "
+"to %i, but using probabilities for %i classes."
 msgstr ""
 
 #: ../lib/vector/neta/utils.c:221
+#, c-format
+msgid "'%s' must be > 0"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:230
 msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
 msgstr ""
 
-#: ../lib/vector/neta/utils.c:225
+#: ../lib/vector/neta/utils.c:233
 #, fuzzy
 msgid "Unable to load data from database"
 msgstr "Ne morem dodati povezave z bazo podatkov."
 
-#: ../lib/vector/neta/utils.c:236
+#: ../lib/vector/neta/utils.c:240
 #, fuzzy
 msgid "Problem loading category values"
 msgstr "za obstojeèe rastrske sloje %d\n"
@@ -1714,7 +1733,9 @@ msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
-msgid "Attempt to read line angle for the line which is not connected to the node: node %d, line %d"
+msgid ""
+"Attempt to read line angle for the line which is not connected to the node: "
+"node %d, line %d"
 msgstr ""
 
 #: ../lib/vector/diglib/file.c:157
@@ -1877,7 +1898,8 @@ msgstr "Ne morem prebrati histograma za [%s v %s]"
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, fuzzy, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
-msgstr "Neveljavno ime vektorskega sloja <%s>. Ne sme vsebovati '.' ali 'NULL'.\n"
+msgstr ""
+"Neveljavno ime vektorskega sloja <%s>. Ne sme vsebovati '.' ali 'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:55
 #, fuzzy, c-format
@@ -1891,7 +1913,8 @@ msgstr "Neveljavno ime vektorskega sloja <%s>. Znak <%c> ni dovoljen.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgid ""
+"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
 msgstr "Neveljavno ime vektorskega sloja <%s>. Znak <%c> ni dovoljen.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
@@ -2074,12 +2097,12 @@ msgstr ""
 msgid "Map structure has been closed"
 msgstr ""
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 #, fuzzy
 msgid "Index out of range in"
 msgstr "Dvojni atributni indeks je izven razpona"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr ""
 
@@ -2214,7 +2237,9 @@ msgstr "Vneseni vektor '%s' ni bil najden"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, c-format
-msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+"vector map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/geos.c:61
@@ -2249,7 +2274,9 @@ msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgid ""
+"Vect_read_line(): feature id %d is not reasonable (max features in vector "
+"map <%s>: %d)"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:97
@@ -2262,7 +2289,9 @@ msgid "Unable to delete item %d from spatial index"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
 #: ../lib/vector/Vlib/sindex.c:127
-msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
 msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:168
@@ -2297,7 +2326,8 @@ msgid "Partial build for OGR is not supported"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:342
-msgid "Random read is not supported by OGR for this layer, cannot build support"
+msgid ""
+"Random read is not supported by OGR for this layer, cannot build support"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:349
@@ -2350,12 +2380,16 @@ msgstr "Registriram linije: "
 
 #: ../lib/vector/Vlib/net.c:254
 #, c-format
-msgid "Database record for line %d (cat = %d, forward/both direction(s)) not found (forward/both direction(s) of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, forward/both direction(s)) not found "
+"(forward/both direction(s) of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
-msgid "Database record for line %d (cat = %d, backword direction) not found(direction of line skipped)"
+msgid ""
+"Database record for line %d (cat = %d, backword direction) not found"
+"(direction of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
@@ -2482,22 +2516,30 @@ msgstr "Ne morem odpreti datoteke z zgodovino za vektor '%s'"
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
-msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:152
 #, c-format
-msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
-msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
+msgid ""
+"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
+"excess)"
 msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
-msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
+msgid ""
+"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
+"missing)."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:100
@@ -2507,13 +2549,16 @@ msgstr "Opozorilo, Za¾elen programer: nepoznan open_level\n"
 
 #: ../lib/vector/Vlib/open.c:179
 #, fuzzy
-msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
 msgstr "Sloj, ki ni v trenutnem mapset ne more biti odprt za posodabljanje."
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
 #, fuzzy, c-format
-msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topology by v.build."
+msgid ""
+"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
+"by v.build."
 msgstr "Ne morem odpreti starega vektorja %s na nivoju %d"
 
 #: ../lib/vector/Vlib/open.c:214
@@ -2554,7 +2599,8 @@ msgstr "Nezmo¾en odpreti datoteko %s v %s"
 #: ../lib/vector/Vlib/open.c:731
 #, fuzzy
 msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr "Velikost datoteke 'coor' je razlièna od vrednosti shranjene v datoteki topo."
+msgstr ""
+"Velikost datoteke 'coor' je razlièna od vrednosti shranjene v datoteki topo."
 
 #: ../lib/vector/Vlib/open.c:742
 #, fuzzy, c-format
@@ -2582,17 +2628,17 @@ msgstr "Ne morem prebrati histograma za [%s v %s]"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "Ne morem prebrati histograma za [%s v %s]"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 #, fuzzy
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "ne morem dodeliti spomina"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
@@ -2702,12 +2748,14 @@ msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
 #: ../lib/vector/Vlib/write.c:219
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened on topology level"
 msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt na nivoju 2"
 
 #: ../lib/vector/Vlib/write.c:225
 #, fuzzy, c-format
-msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt v zapisovalnem naèinu"
 
 #: ../lib/vector/Vlib/write.c:239
@@ -2717,12 +2765,14 @@ msgstr "ne morem spremeniti direktorija v %s"
 
 #: ../lib/vector/Vlib/write.c:265
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened on topology level"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened on topology level"
 msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt na nivoju 2"
 
 #: ../lib/vector/Vlib/write.c:271
 #, fuzzy, c-format
-msgid "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
+msgid ""
+"Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt v zapisovalnem naèinu"
 
 #: ../lib/vector/Vlib/write.c:285
@@ -2781,7 +2831,9 @@ msgstr "©tevilka polja mora biti 1 ali veè."
 #: ../lib/vector/Vlib/field.c:98
 #, fuzzy
 msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr "Ne morem dodati povezave z bazo podatkov, sloj ni odprt v ZAPISOVALNEM naèinu."
+msgstr ""
+"Ne morem dodati povezave z bazo podatkov, sloj ni odprt v ZAPISOVALNEM "
+"naèinu."
 
 #: ../lib/vector/Vlib/field.c:104
 #, fuzzy
@@ -2828,7 +2880,9 @@ msgid "Unable to open OGR DBMI driver"
 msgstr "Ne morem odpreti OGR DBMI gonilnika."
 
 #: ../lib/vector/Vlib/field.c:551
-msgid "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table"
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:606
@@ -2874,12 +2928,12 @@ msgstr "Ne morem odpreti datoteke z zgodovino za vektor '%s'"
 msgid "Corrupted row in head: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, fuzzy, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "Nepoznan \"location\""
 
-#: ../lib/vector/Vlib/header.c:518 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:516 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Neznana projekcija"
 
@@ -2894,12 +2948,16 @@ msgid "Unknown query tool"
 msgstr "Nepoznan \"location\""
 
 #: ../lib/rst/interp_float/segmen2d.c:111
-msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
+msgid ""
+"Taking too long to find points for interpolation - please change the region "
+"to area where your points are. Continuing calculations..."
 msgstr ""
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
-msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
+msgid ""
+"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
+"cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -2974,7 +3032,9 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
-msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
+msgid ""
+"%d points given for interpolation (after thinning) is less than given NPMIN="
+"%d"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:340
@@ -2983,12 +3043,16 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
-msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
+msgid ""
+"Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
+"smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
-msgid "There are less than %d points for interpolation. No segmentation is necessary, to run the program faster set segmax=%d (see manual)"
+msgid ""
+"There are less than %d points for interpolation. No segmentation is "
+"necessary, to run the program faster set segmax=%d (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:355
@@ -3276,7 +3340,9 @@ msgid "%s not set"
 msgstr "%s ni nastavljen"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
+msgid ""
+"Incompatible library version for module. You need to rebuild GRASS or "
+"untangle multiple installations."
 msgstr ""
 
 #: ../lib/gis/gisinit.c:63
@@ -3293,7 +3359,9 @@ msgstr "ne najdem MAPSET %s"
 #: ../lib/gis/gisinit.c:110
 #, fuzzy
 msgid "System not initialized. Programmer forgot to call G_gisinit()."
-msgstr "\aNAPAKA: Sistem ni inicializiran. Programer je pozabil poklicati G_gisinit()\n"
+msgstr ""
+"\aNAPAKA: Sistem ni inicializiran. Programer je pozabil poklicati G_gisinit"
+"()\n"
 
 #: ../lib/gis/color_read.c:116
 #, c-format
@@ -3320,7 +3388,7 @@ msgstr "Nezmo¾en odpreti avtomatièno datoteko MASK"
 msgid "Unable to locate symbol <%s>"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/gdal.c:112
+#: ../lib/gis/gdal.c:116
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Ne morem odpreti datoteke topo za pisanje: %s\n"
@@ -3453,11 +3521,11 @@ msgstr ""
 msgid "Unable to load color rules <%s>"
 msgstr "ne morem spremeniti direktorija v %s"
 
-#: ../lib/gis/error.c:257
+#: ../lib/gis/error.c:262
 msgid "WARNING: "
 msgstr "OPOZORILO: "
 
-#: ../lib/gis/error.c:258
+#: ../lib/gis/error.c:263
 msgid "ERROR: "
 msgstr "NAPAKA: "
 
@@ -3502,7 +3570,9 @@ msgstr ""
 #: ../lib/gis/parser.c:340
 #, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "WHERE pogoji SQL stavka brez kljuène besede 'where': (primer: dohodek < 1000 and preb >= 10000)"
+msgstr ""
+"WHERE pogoji SQL stavka brez kljuène besede 'where': (primer: dohodek < 1000 "
+"and preb >= 10000)"
 
 #: ../lib/gis/parser.c:341
 msgid "Example: income < 1000 and inhab >= 10000"
@@ -3614,7 +3684,9 @@ msgid "Layer number"
 msgstr "©tevilka sloja"
 
 #: ../lib/gis/parser.c:596
-msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
 msgstr ""
 
 #: ../lib/gis/parser.c:605
@@ -4022,8 +4094,12 @@ msgstr ""
 
 #: ../lib/gis/set_window.c:76
 #, fuzzy
-msgid "G_set_window(): projection/zone differs from that of currently open raster maps"
-msgstr "G_set_window(): projekcija/cona je razlièna od tiste, ki je doloèena za trenutno odprte rastrske sloje"
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"maps"
+msgstr ""
+"G_set_window(): projekcija/cona je razlièna od tiste, ki je doloèena za "
+"trenutno odprte rastrske sloje"
 
 #: ../lib/gis/home.c:39
 msgid "unable to determine user's home directory"
@@ -4179,62 +4255,62 @@ msgstr "G_set_null_value: napaèen tip podatkov!"
 msgid "Unable to get GIS_LOCK environment variable value"
 msgstr ""
 
-#: ../lib/gis/spawn.c:385
+#: ../lib/gis/spawn.c:386
 #, c-format
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:416
+#: ../lib/gis/spawn.c:421
 #, fuzzy, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: ne morem podvojiti deskriptorja %d v %d"
 
-#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
+#: ../lib/gis/spawn.c:429 ../lib/gis/spawn.c:619
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: ne morem odpreti datoteke %s"
 
-#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
+#: ../lib/gis/spawn.c:503 ../lib/gis/spawn.c:689
 #, fuzzy
 msgid "Unable to execute command"
 msgstr "ne morem izvesti ukaza"
 
-#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
+#: ../lib/gis/spawn.c:528 ../lib/gis/spawn.c:536
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: ne morem obnoviti signala %d"
 
-#: ../lib/gis/spawn.c:557
+#: ../lib/gis/spawn.c:567
 #, fuzzy, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: ne morem ponovno zagnati signala %d"
 
-#: ../lib/gis/spawn.c:566
+#: ../lib/gis/spawn.c:576
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: ne morem ignorirati signala %d"
 
-#: ../lib/gis/spawn.c:577
+#: ../lib/gis/spawn.c:587
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: ne morem blokirati signala %d"
 
-#: ../lib/gis/spawn.c:585
+#: ../lib/gis/spawn.c:595
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: ne morem deblokirati signala %d"
 
-#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
+#: ../lib/gis/spawn.c:624 ../lib/gis/spawn.c:633
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: ne morem podvojiti deskriptorja %d v %d"
 
-#: ../lib/gis/spawn.c:656
+#: ../lib/gis/spawn.c:666
 #, fuzzy
 msgid "Unable to create a new process"
 msgstr "ne morem ustvariti novega procesa"
 
-#: ../lib/gis/spawn.c:671
+#: ../lib/gis/spawn.c:681
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr "ne morem spremeniti direktorija v %s"
@@ -4443,8 +4519,12 @@ msgstr "ne najdem [%s]"
 
 #: ../lib/gis/opencell.c:188
 #, fuzzy, c-format
-msgid "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%s> which does not exist"
-msgstr "ne morem odpreti [%s] v [%s], ker je reklasificiran iz [%s] v [%s], ki ne obstaja"
+msgid ""
+"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
+"%s> which does not exist"
+msgstr ""
+"ne morem odpreti [%s] v [%s], ker je reklasificiran iz [%s] v [%s], ki ne "
+"obstaja"
 
 #: ../lib/gis/opencell.c:212
 #, fuzzy, c-format
@@ -4453,7 +4533,9 @@ msgstr "[%s] v \"mapset\" [%s]-format polja v datoteki vzglavja je neveljaven."
 
 #: ../lib/gis/opencell.c:219
 #, fuzzy, c-format
-msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
+msgid ""
+"Raster map <%s@%s> is in different projection than current region. Found "
+"raster map <%s@%s>, should be <%s>."
 msgstr ""
 "[%s] v \"mapset\" [%s] - je v drugaèni projekciji kot trenutna regija:\n"
 "najden sloj [%s] v: <%s>, moral bi biti <%s> "
@@ -4494,8 +4576,10 @@ msgstr ""
 
 #: ../lib/gis/opencell.c:736
 #, fuzzy
-msgid "Unable to write embedded null values for raster map open for random access"
-msgstr "Ne morem pisati \"embedded null\" vrednosti za sloj odprt nakljuènemu dostopu"
+msgid ""
+"Unable to write embedded null values for raster map open for random access"
+msgstr ""
+"Ne morem pisati \"embedded null\" vrednosti za sloj odprt nakljuènemu dostopu"
 
 #: ../lib/gis/opencell.c:941
 msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
@@ -4532,7 +4616,8 @@ msgid "Raster map <%s> is not xdr: byte_order: %s"
 msgstr "Vneseni vektor '%s' ni bil najden"
 
 #: ../lib/gis/opencell.c:1179
-msgid "G_set_quant_rules() can be called only for raster maps opened for reading"
+msgid ""
+"G_set_quant_rules() can be called only for raster maps opened for reading"
 msgstr ""
 
 #: ../lib/gis/sample.c:71
@@ -4599,17 +4684,22 @@ msgstr "Ne morem prebrati datoteke z vzglavjem za [%s v %s]\n"
 msgid "Unable to create header file for [%s]"
 msgstr "Nezmo¾en ustvariti vzglavno datoteko za [%s]"
 
-#: ../lib/gis/alloc.c:43
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "Trenutna vrstica null vrednosti v spominu %d\\n"
+
+#: ../lib/gis/alloc.c:45
 #, c-format
 msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:76
+#: ../lib/gis/alloc.c:85
 #, c-format
 msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr ""
 
-#: ../lib/gis/alloc.c:114
+#: ../lib/gis/alloc.c:128
 #, c-format
 msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
@@ -4788,7 +4878,9 @@ msgstr "Ne morem odpreti datoteke z zgodovino za vektor '%s'"
 #: ../lib/gis/get_cellhd.c:105
 #, fuzzy, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr "Je reklasifikacijski sloj [%s v %s] katerega datoteka z vzglavjem je neveljavna\n"
+msgstr ""
+"Je reklasifikacijski sloj [%s v %s] katerega datoteka z vzglavjem je "
+"neveljavna\n"
 
 #: ../lib/gis/get_cellhd.c:109
 #, fuzzy, c-format
@@ -4817,8 +4909,10 @@ msgstr "Okno shranjeno v \"%s\" je povsem izven trenutnega GRASS okna."
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr " Le %d%% okna shranjenega v \"%s\" se prekriva s trenutnim GRASS oknom."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+" Le %d%% okna shranjenega v \"%s\" se prekriva s trenutnim GRASS oknom."
 
 #: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
 #: ../lib/gis/ask_cell.c:96
@@ -4864,72 +4958,72 @@ msgstr "Ne morem odpreti temp datoteke"
 msgid "closecell: can't move [%s] to null-cells file [%s]"
 msgstr ""
 
-#: ../lib/gis/closecell.c:235
+#: ../lib/gis/closecell.c:236
 #, fuzzy
 msgid "Unable to delete the temporary null-cells file"
 msgstr "Nezmo¾en odpreti datoteko s tabelo fundamentalne toèke: %s"
 
-#: ../lib/gis/closecell.c:241
+#: ../lib/gis/closecell.c:243
 #, fuzzy
 msgid "Unable to delete the empty temporary null-cells file"
 msgstr "Nezmo¾en odpreti datoteko s tabelo fundamentalne toèke: %s"
 
-#: ../lib/gis/closecell.c:245
+#: ../lib/gis/closecell.c:247
 #, fuzzy
 msgid "Unable to delete the prior null-cells file"
 msgstr "Ne morem odpreti temp datoteke"
 
-#: ../lib/gis/closecell.c:259
+#: ../lib/gis/closecell.c:261
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr ""
 
-#: ../lib/gis/closecell.c:270
+#: ../lib/gis/closecell.c:272
 #, fuzzy
 msgid "Unable to close the 'cell' file"
 msgstr "Ne morem odpreti temp datoteke"
 
-#: ../lib/gis/closecell.c:280
+#: ../lib/gis/closecell.c:282
 #, fuzzy
 msgid "Unable to delete prior 'fcell' file"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/closecell.c:289
+#: ../lib/gis/closecell.c:291
 #, fuzzy, c-format
 msgid "Unable to delete the prior %s file"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/closecell.c:298
+#: ../lib/gis/closecell.c:300
 #, fuzzy
 msgid "Unable to close file"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/closecell.c:325
+#: ../lib/gis/closecell.c:327
 #, fuzzy
 msgid "Unable to delete the prior 'cell' file"
 msgstr "Ne morem odpreti temp datoteke"
 
-#: ../lib/gis/closecell.c:330
+#: ../lib/gis/closecell.c:332
 #, c-format
 msgid "closecell: can't move [%s] to cell file [%s]"
 msgstr ""
 
-#: ../lib/gis/closecell.c:336
+#: ../lib/gis/closecell.c:339
 #, fuzzy
 msgid "Unable to delete the temporary 'cell' file"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/closecell.c:386
+#: ../lib/gis/closecell.c:390
 #, fuzzy
 msgid "Unable to write quant file!"
 msgstr "ne morem ustvariti novega procesa"
 
-#: ../lib/gis/closecell.c:393
+#: ../lib/gis/closecell.c:398
 #, fuzzy, c-format
 msgid "Unable to delete the %s file"
 msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
-#: ../lib/gis/closecell.c:438
+#: ../lib/gis/closecell.c:444
 #, fuzzy
 msgid "Unable to write f_format file for CELL maps"
 msgstr "Nezmo¾en ustvariti vzglavno datoteko za [%s]"
@@ -4940,7 +5034,9 @@ msgstr "MAPSET ni nastavljen"
 
 #: ../lib/gis/distance.c:160
 #, c-format
-msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
+msgid ""
+"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
+"%f)(%f,%f)"
 msgstr ""
 
 #: ../lib/gis/debug.c:74
@@ -5030,7 +5126,8 @@ msgstr ""
 #: ../lib/db/dbmi_base/legal_dbname.c:25
 #, fuzzy, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Neveljavno ime vektorskega sloja <%s>. Ne sme vsebovati '.' ali 'NULL'.\n"
+msgstr ""
+"Neveljavno ime vektorskega sloja <%s>. Ne sme vsebovati '.' ali 'NULL'.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:33
 #, fuzzy, c-format
@@ -5197,7 +5294,8 @@ msgstr ""
 #~ msgstr "Grafiènega monitorja z imenom <%s> ni.\n"
 
 #~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-#~ msgstr "Prosim po¾enite \"d.mon\" za izbiro veljavnega grafiènega monitorja.\n"
+#~ msgstr ""
+#~ "Prosim po¾enite \"d.mon\" za izbiro veljavnega grafiènega monitorja.\n"
 
 #~ msgid "Error - Monitor <%s> is in use.\n"
 #~ msgstr "Napaka - Monitor <%s> je ¾e v uporabi.\n"
@@ -5320,10 +5418,6 @@ msgstr ""
 #~ msgstr "Trenutna vrstica podatkov v spominu %d\\n"
 
 #, fuzzy
-#~ msgid "Current null row in memory %d"
-#~ msgstr "Trenutna vrstica null vrednosti v spominu %d\\n"
-
-#, fuzzy
 #~ msgid "nbytes per cell for current row %d"
 #~ msgstr "nbajtov na celico v trenutni vrstici %d\n"
 
@@ -5401,7 +5495,8 @@ msgstr ""
 #~ msgstr "NAPAKA: GISBASE ni nastavljen\n"
 
 #~ msgid "Error reading datum shift parameters for %s from table"
-#~ msgstr "Napaka pri branju parametrov premika fundamentalne toèke za %s iz tabele"
+#~ msgstr ""
+#~ "Napaka pri branju parametrov premika fundamentalne toèke za %s iz tabele"
 
 #~ msgid "Error reading ellipsoid parameters for %s from table"
 #~ msgstr "Napaka pri branju parametrov elipsoida za %s iz tabele"
@@ -5439,8 +5534,12 @@ msgstr ""
 #~ msgid "decimal field %i not present in sites file"
 #~ msgstr "polje za decimalke %i ni prisotno v datoteki s toèkami"
 
-#~ msgid "I'm finding records that do not have a floating point attributes (fields prefixed with '%')."
-#~ msgstr "I¹èem enote, ki nimajo atributov s plavajoèo vejico (polja s predpono '%')."
+#~ msgid ""
+#~ "I'm finding records that do not have a floating point attributes (fields "
+#~ "prefixed with '%')."
+#~ msgstr ""
+#~ "I¹èem enote, ki nimajo atributov s plavajoèo vejico (polja s predpono "
+#~ "'%')."
 
 #~ msgid "WARNING: can not create a new process\n"
 #~ msgstr "OPOZORILO: ne morem ustvariti novega procesa\n"
@@ -5461,11 +5560,13 @@ msgstr ""
 #~ msgstr "Ne morem odpreti temp datoteke"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
 #~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt na nivoju 2"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
 #~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt v zapisovalnem naèinu"
 
 #, fuzzy
