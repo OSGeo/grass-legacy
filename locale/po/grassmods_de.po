@@ -3830,7 +3830,7 @@ msgstr "Die Datei scheint komprimiert zu sein.\n"
 #: ../raster/r.support/modhead/modhead.c:248
 #: ../raster/r.support/modhead/modhead.c:257
 msgid "Most likely the header is wrong, but I want you to decide.\n"
-msgstr "Höhstwahrscheinlich ist die Information aus dem Header falsch, aber ich möchte, dass Sie entscheiden.\n"
+msgstr "Höchstwahrscheinlich ist die Information aus dem Header falsch, aber ich möchte, dass Sie entscheiden.\n"
 
 #: ../raster/r.support/modhead/modhead.c:254
 #, c-format
