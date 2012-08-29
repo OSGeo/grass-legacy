@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-02-07 10:49+0100\n"
-"Last-Translator: Vincent Bain <bain@toraval.fr>\n"
+"PO-Revision-Date: 2012-08-26 20:29+0100\n"
+"Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1338,7 +1338,7 @@ msgid "Command / Condition"
 msgstr "Commande / Condition"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:4469
-#, fuzzy, python-format
+#, python-format
 msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
 msgstr "Les enregistrements sélectionnés (%d) vont être définitivement supprimés de la table. Souhaitez-vous les supprimer ?"
 
@@ -1416,15 +1416,15 @@ msgstr "Professionnel (noms de modules seuls)"
 
 #: ../gui/wxpython/gui_modules/preferences.py:675
 msgid "box"
-msgstr ""
+msgstr "boite"
 
 #: ../gui/wxpython/gui_modules/preferences.py:676
 msgid "sphere"
-msgstr ""
+msgstr "sphère"
 
 #: ../gui/wxpython/gui_modules/preferences.py:677
 msgid "cube"
-msgstr ""
+msgstr "cube"
 
 #: ../gui/wxpython/gui_modules/preferences.py:678
 msgid "diamond"
@@ -2088,11 +2088,12 @@ msgid "Open %s dialog"
 msgstr "Ouvrir la boite de dialogue %s"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1283
-#, fuzzy
 msgid ""
 "No layers marked for import.\n"
 "Operation canceled."
-msgstr "Aucune extension sélectionnée pour suppression. Opération annulée."
+msgstr ""
+"Aucune couche sélectionnée pour l'import.\n"
+"Opération annulée."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1356
 msgid "Import DXF layers"
@@ -2995,9 +2996,9 @@ msgid "Rectifying images, please wait..."
 msgstr "Rectification des images en cours, merci de patienter ..."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1387
-#, fuzzy, python-format
+#, python-format
 msgid "Transforming <%s>..."
-msgstr "Transformation <%s>..."
+msgstr "Transformation de <%s>..."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1404
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1475
@@ -4391,9 +4392,9 @@ msgid "Vector maps settings"
 msgstr "Paramètres de la carte vecteur"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:2979
-#, fuzzy, python-format
+#, python-format
 msgid "%s properties"
-msgstr "propriétés"
+msgstr "Propriétés de %s"
 
 #: ../gui/wxpython/gui_modules/psmap_dialogs.py:3029
 msgid "Data selection"
@@ -5006,9 +5007,9 @@ msgid "Fetch list of available extensions by clicking on 'Fetch' button"
 msgstr "Récupérer la liste des extensions disponibles en cliquant sur le bouton 'Récupérer'"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:940
-#, fuzzy, python-format
+#, python-format
 msgid "%d items match"
-msgstr "%d items correspondent"
+msgstr "%d éléments correspondent"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:953
 msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
@@ -5136,9 +5137,8 @@ msgid "Preview"
 msgstr "Aperçu"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:396
-#, fuzzy
 msgid "fp range"
-msgstr "Plage de validité"
+msgstr "Plage de valeurs"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:397
 #, python-format
@@ -5181,9 +5181,8 @@ msgid "Surface map elevation"
 msgstr "Hauteur de la carte de surface"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:272
-#, fuzzy
 msgid "Surface map color"
-msgstr "Carte de couleur pour la surface"
+msgstr "Couleur de la carte de surface"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:281
 msgid "XY distance from previous"
@@ -5855,9 +5854,9 @@ msgid "No raster or vector map layer selected for querying."
 msgstr "Pas de carte rater ou couche de carte vecteur sélectionnée pour interrogation."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:1304
-#, fuzzy, python-format
+#, python-format
 msgid "Vector map <%s> opened for editing - skipped."
-msgstr "Carte vecteur <%s> ouverte pour édition - ."
+msgstr "Carte vectorielle <%s> ouverte pour édition - sautée."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:1309
 msgid "Nothing to query."
@@ -6550,7 +6549,7 @@ msgid "Unable to update vector map."
 msgstr "Impossible de mettre à jour la carte vecteur."
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1241
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
 "Layer and category number must be integer.\n"
@@ -9688,9 +9687,8 @@ msgid "Prints vector map attributes."
 msgstr "Afficher la table d'attributs de la carte vecteur."
 
 #: ../gui/wxpython/menustrings.py:564
-#, fuzzy
 msgid "Feature selection"
-msgstr "Sélection des données"
+msgstr "Sélection d'entité"
 
 #: ../gui/wxpython/menustrings.py:565
 msgid "Query with attributes"
@@ -11105,9 +11103,8 @@ msgid "Add raster cell numbers"
 msgstr "Ajouter le numéro des cellules (raster)"
 
 #: ../gui/wxpython/icons/icon.py:251
-#, fuzzy
 msgid "Add thematic area (choropleth) map layer"
-msgstr "Ajouter une charte thématique (chloropète)"
+msgstr "Ajouter une carte thématique (choroplèthe)"
 
 #: ../gui/wxpython/icons/icon.py:253
 msgid "Add thematic chart layer"
@@ -11122,9 +11119,8 @@ msgid "Add geodesic line layer"
 msgstr "Ajouter une couche avec ligne géodésique"
 
 #: ../gui/wxpython/icons/icon.py:259
-#, fuzzy
 msgid "Add rhumbline layer"
-msgstr "Ajouter une rhumbline"
+msgstr "Ajouter une loxodromie"
 
 #: ../gui/wxpython/icons/icon.py:261
 msgid "Add labels"
