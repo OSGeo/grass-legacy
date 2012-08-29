@@ -957,6 +957,9 @@ class GMConsole(wx.SplitterWindow):
                             if prompt == 'raster':
                                 lcmd = ['d.rast',
                                         'map=%s' % name]
+                            elif prompt == '3d-raster':
+                                lcmd = ['d.rast3d',
+                                        'map=%s' % name]
                             else:
                                 lcmd = ['d.vect',
                                         'map=%s' % name]
