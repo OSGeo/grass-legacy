@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 08:43+0100\n"
+"POT-Creation-Date: 2012-08-29 15:45+0200\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../lib/nviz/render.c:104
+#: ../lib/nviz/render.c:105
 msgid "Bad server connection"
 msgstr "Kết nối với máy chủ kém"
 
-#: ../lib/nviz/render.c:113
+#: ../lib/nviz/render.c:114
 msgid "Unable to create rendering context"
 msgstr "Không thể tạo ngữ cảnh kết xuất"
 
@@ -61,12 +61,12 @@ msgstr "Lỗi khi đang nạp bản đồ raster 3d <%s>"
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): kiểu dữ liệu không được hỗ trợ"
 
-#: ../lib/nviz/nviz.c:103
+#: ../lib/nviz/nviz.c:126
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "Màu không hợp lệ (%s), dùng \"white\" (trắng) làm mặc định"
 
-#: ../lib/nviz/lights.c:174
+#: ../lib/nviz/lights.c:171
 msgid "Unable to define new light"
 msgstr "Không thể định nghĩa nguồn sáng mới"
 
@@ -168,32 +168,32 @@ msgstr "Cần tối thiểu 3 khung hình chính để dùng cho đường splin
 msgid "Need at least 2 keyframes for interpolation"
 msgstr "Cần ít nhất 2 khung chính để dùng cho việc nội suy"
 
-#: ../lib/ogsf/GS2.c:1193
+#: ../lib/ogsf/GS2.c:1207
 #, c-format
 msgid "no category info"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1212
+#: ../lib/ogsf/GS2.c:1226
 #, c-format
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1636
+#: ../lib/ogsf/GS2.c:1651
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "Bản đồ raster <%s> nằm ngoài vùng hiện tại. Việc nạp thất bại."
 
-#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
-#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
-#: ../lib/ogsf/GS2.c:1803
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr "GS_load_att_map(): Hết bộ nhớ. Không thể nạp bản đồ"
 
-#: ../lib/ogsf/GS2.c:1831
+#: ../lib/ogsf/GS2.c:1846
 msgid "Loading failed"
 msgstr "Việc nạp thất bại"
 
-#: ../lib/ogsf/GS2.c:1835
+#: ../lib/ogsf/GS2.c:1850
 msgid "Error finding range"
 msgstr "Lỗi khi đang tìm miền"
 
@@ -240,18 +240,18 @@ msgstr "Bản đồ vec-tơ <%s> được nạp (%d đối tượng)"
 msgid "Raster map <%s> not found"
 msgstr "Không tìm thấy bản đồ raster <%s>"
 
-#: ../lib/ogsf/Gp3.c:143 ../lib/vector/Vlib/map.c:68
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
 #: ../lib/vector/Vlib/map.c:84
 #, c-format
 msgid "Unable to read vector map <%s>"
 msgstr "Không thể đọc bản đồ vec-tơ <%s>"
 
-#: ../lib/ogsf/Gp3.c:204
+#: ../lib/ogsf/Gp3.c:206
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
 msgstr "Không có điểm nào trong bản đồ vec-tơ <%s> nằm trong vùng hiện tại"
 
-#: ../lib/ogsf/Gp3.c:209
+#: ../lib/ogsf/Gp3.c:211
 #, c-format
 msgid "Vector map <%s> loaded (%d points)"
 msgstr "Bản đồ vec-tơ <%s> đã được nạp (%d điểm)"
@@ -339,7 +339,7 @@ msgstr "Không thể tìm thấy định dạng đầu ra phù hợp"
 #: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
 #: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
 #: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/spanningtree.c:99
-#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:60
+#: ../lib/vector/neta/articulation_point.c:60 ../lib/vector/Vlib/line.c:62
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
@@ -1988,11 +1988,11 @@ msgstr "Cấu trúc bản đồ chưa từng được khởi tạo"
 msgid "Map structure has been closed"
 msgstr "Cấu trúc bản đồ đã được đóng"
 
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+#: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 msgid "Index out of range in"
 msgstr "Chỉ mục nằm ngoài miền trong"
 
-#: ../lib/vector/Vlib/line.c:527
+#: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
 msgstr "Phân đoạn nằm ngoài đường, không có phân đoạn nào được tạo ra"
 
@@ -2518,16 +2518,16 @@ msgstr "Cố gắng đọc tôpô của vùng chết (%d)"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr "Cố gắng đọc tôpô của đảo chết (%d)"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/cats.c:47
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "Vect_new_cats_struct(): Hết bộ nhớ"
 
-#: ../lib/vector/Vlib/cats.c:129
+#: ../lib/vector/Vlib/cats.c:131
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr "Quá nhiều phạm trù (%d), không thể thiết lập cat %d (lớp %d)"
 
-#: ../lib/vector/Vlib/cats.c:407
+#: ../lib/vector/Vlib/cats.c:410
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr "Không thể đổi chuỗi phạm trù '%s' (từ '%s') thành miền phạm trù"
@@ -2804,12 +2804,12 @@ msgstr "Không thể mở tập tin header của vec-tơ <%s>"
 msgid "Corrupted row in head: %s"
 msgstr "Hàng bị lỗi trong tiêu đề: %s"
 
-#: ../lib/vector/Vlib/header.c:187
+#: ../lib/vector/Vlib/header.c:189
 #, c-format
 msgid "Unknown keyword %s in vector head"
 msgstr "Không hiểu từ khoá %s trong tiêu đề vec-tơ"
 
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Phép chiếu không biết"
 
@@ -4545,19 +4545,24 @@ msgstr "Không thể đọc tập tin mô tả dữ liệu %s cho [%s trong %s]"
 msgid "Unable to create header file for [%s]"
 msgstr "Không thể tạo ra tập tin header cho [%s]"
 
-#: ../lib/gis/alloc.c:43
-#, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "Hàng null hiện tại trong bộ nhớ %d"
+
+#: ../lib/gis/alloc.c:45
+#, fuzzy, c-format
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_malloc: không thể cấp phát %lu byte tại %s:%d"
 
-#: ../lib/gis/alloc.c:76
-#, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:85
+#, fuzzy, c-format
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr "G_malloc: không thể cấp phát %lu* %lu byte tại %s:%d"
 
-#: ../lib/gis/alloc.c:114
-#, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#: ../lib/gis/alloc.c:128
+#, fuzzy, c-format
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr "G_realloc: không thể cấp phát %lu byte tại %s:%d"
 
 #: ../lib/gis/open_misc.c:45
@@ -4906,7 +4911,7 @@ msgstr "Không thể lấy dữ liệu từ bảng <%s>"
 msgid "Unknown column type (column <%s>)"
 msgstr "Kiểu cột không biết (cột <%s>)"
 
-#: ../lib/db/dbmi_client/column.c:115
+#: ../lib/db/dbmi_client/column.c:114
 #, c-format
 msgid "Unable to describe table <%s>"
 msgstr "Không thể mô tả bảng <%s>"
@@ -5277,9 +5282,6 @@ msgstr "Lỗi của lập trình viên"
 
 #~ msgid "Current data row in memory %d"
 #~ msgstr "Hàng dữ liệu hiện tại trong bộ nhớ %d"
-
-#~ msgid "Current null row in memory %d"
-#~ msgstr "Hàng null hiện tại trong bộ nhớ %d"
 
 #~ msgid "nbytes per cell for current row %d"
 #~ msgstr "nbytes trên cell của hàng hiện tại %d"
