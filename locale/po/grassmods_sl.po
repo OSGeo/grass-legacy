@@ -6510,11 +6510,6 @@ msgstr ""
 msgid "Must have a weight value for each filter"
 msgstr ""
 
-#: ../raster/r.random.surface/init.c:425
-#, fuzzy, c-format
-msgid "<%s> is an illegal name"
-msgstr "Ime izhodnega rastrskega sloja"
-
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, fuzzy, c-format
 msgid "Unable to write color table for raster map <%s>"
@@ -11323,7 +11318,7 @@ msgstr ""
 msgid "Distance must be >= 0.0"
 msgstr "navedena morata biti 2 sloja"
 
-#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:52
+#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:52 ../raster/r.random.surface/init.c:425
 #, fuzzy, c-format
 msgid "<%s> is an illegal name"
 msgstr "Ime izhodnega rastrskega sloja"
