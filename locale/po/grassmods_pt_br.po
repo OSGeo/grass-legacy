@@ -6799,7 +6799,7 @@ msgstr ""
 
 #: ../raster/r.random.surface/init.c:425
 #, fuzzy, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "[%s] é um nome ilegal"
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -16749,7 +16749,7 @@ msgstr ""
 
 #: ../imagery/i.cluster/main.c:207
 #, fuzzy, c-format
-msgid "Illegal value of iterations (%s>)"
+msgid "Illegal value of iterations (%s)"
 msgstr ""
 "\n"
 "<%s> -- número ilegal de iterações"

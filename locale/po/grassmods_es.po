@@ -6748,7 +6748,7 @@ msgstr ""
 
 #: ../raster/r.random.surface/init.c:425
 #, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "<%s> es un nombre no admitido"
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -16526,8 +16526,8 @@ msgstr "Valor(es) de intervalos de muestreo (%s) no admitidos"
 
 #: ../imagery/i.cluster/main.c:207
 #, c-format
-msgid "Illegal value of iterations (%s>)"
-msgstr "Valor no admitido de iteraciones (%s>)"
+msgid "Illegal value of iterations (%s)"
+msgstr "Valor no admitido de iteraciones (%s)"
 
 #: ../imagery/i.cluster/main.c:213
 #, c-format
