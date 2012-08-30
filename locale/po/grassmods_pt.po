@@ -6694,11 +6694,6 @@ msgstr ""
 msgid "Must have a weight value for each filter"
 msgstr ""
 
-#: ../raster/r.random.surface/init.c:425
-#, fuzzy, c-format
-msgid "<%s> is an illegal name"
-msgstr "[%s] é um nome ilegal"
-
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, fuzzy, c-format
 msgid "Unable to write color table for raster map <%s>"
