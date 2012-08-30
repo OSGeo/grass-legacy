@@ -6274,7 +6274,7 @@ msgstr "各フィルタに対して加重値を含んでいなければなりま
 
 #: ../raster/r.random.surface/init.c:425
 #, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "<%s> は不正なファイル名です"
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -15732,8 +15732,8 @@ msgstr "無効なサンプル区間の値(%s)"
 
 #: ../imagery/i.cluster/main.c:207
 #, c-format
-msgid "Illegal value of iterations (%s>)"
-msgstr "無効な反復値(%s>)"
+msgid "Illegal value of iterations (%s)"
+msgstr "無効な反復値(%s)"
 
 #: ../imagery/i.cluster/main.c:213
 #, c-format

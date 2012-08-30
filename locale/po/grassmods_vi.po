@@ -6481,7 +6481,7 @@ msgstr ""
 
 #: ../raster/r.random.surface/init.c:425
 #, fuzzy, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "[%s] là tên không hợp lệ"
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -16166,7 +16166,7 @@ msgstr "(Các) giá trị của các khoảng thu mẫu không hợp lệ (%s)"
 
 #: ../imagery/i.cluster/main.c:207
 #, c-format
-msgid "Illegal value of iterations (%s>)"
+msgid "Illegal value of iterations (%s)"
 msgstr "Giá trị các lần lặp không hợp lệ (%s)"
 
 #: ../imagery/i.cluster/main.c:213
