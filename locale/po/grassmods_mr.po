@@ -6218,7 +6218,7 @@ msgstr ""
 
 #: ../raster/r.random.surface/init.c:425
 #, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr ""
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -15681,7 +15681,7 @@ msgstr "तक्त्याचे नाव"
 
 #: ../imagery/i.cluster/main.c:207
 #, fuzzy, c-format
-msgid "Illegal value of iterations (%s>)"
+msgid "Illegal value of iterations (%s)"
 msgstr "तक्त्याचे नाव"
 
 #: ../imagery/i.cluster/main.c:213

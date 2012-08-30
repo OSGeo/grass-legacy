@@ -6166,7 +6166,7 @@ msgstr ""
 
 #: ../raster/r.random.surface/init.c:425
 #, fuzzy, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "<%s> είναι μη επιτρεπτό όνομα αρχείου"
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -15394,7 +15394,7 @@ msgstr ""
 
 #: ../imagery/i.cluster/main.c:207
 #, c-format
-msgid "Illegal value of iterations (%s>)"
+msgid "Illegal value of iterations (%s)"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:213

@@ -6473,7 +6473,7 @@ msgstr "Es muss für jeden Filter einen Gewicht geben."
 
 #: ../raster/r.random.surface/init.c:425
 #, c-format
-msgid "<%s> is an ilegal name"
+msgid "<%s> is an illegal name"
 msgstr "<%s> ist ein ungültiger Name."
 
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
@@ -16172,8 +16172,8 @@ msgstr "Unzulässige(r) Wert(e) für die Stichproben-Intervalle (%s)."
 
 #: ../imagery/i.cluster/main.c:207
 #, c-format
-msgid "Illegal value of iterations (%s>)"
-msgstr "Unzulässige Wert für die Iterationen (%s>)."
+msgid "Illegal value of iterations (%s)"
+msgstr "Unzulässige Wert für die Iterationen (%s)."
 
 #: ../imagery/i.cluster/main.c:213
 #, c-format
