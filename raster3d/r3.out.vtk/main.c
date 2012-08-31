@@ -168,7 +168,7 @@ void check_input_maps(void)
 				   param.vectormaps->answers[i]);
 	    }
 	    else {
-		G3d_fatalError(_("Please provide three G3D vector maps [x,y,z]"));
+		G3d_fatalError(_("Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"));
 	    }
 	}
     }
