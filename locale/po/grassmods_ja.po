@@ -6474,11 +6474,6 @@ msgstr "各フィルタに対して指数値を含んでいなければなりま
 msgid "Must have a weight value for each filter"
 msgstr "各フィルタに対して加重値を含んでいなければなりません"
 
-#: ../raster/r.random.surface/init.c:425
-#, c-format
-msgid "<%s> is an illegal name"
-msgstr "<%s> は不正なファイル名です"
-
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, c-format
 msgid "Unable to write color table for raster map <%s>"
