@@ -450,7 +450,7 @@ msgstr "S&E"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:68
 msgid "Elevation of fringe bottom: "
-msgstr ""
+msgstr "Uniesienie obramowania od podłoża:"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:69
 #: ../visualization/nviz/scripts/panel_scale.tcl:60
@@ -1483,11 +1483,11 @@ msgstr "skręcenie"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:249
 msgid "Set field of view size (degrees)"
-msgstr ""
+msgstr "Ustaw pole widzenia (w stopniach)"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:250
 msgid "Set twist angle (degrees)"
-msgstr ""
+msgstr "Ustaw kąt skręcenia (w stopniach)"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:253
 msgid "reset"

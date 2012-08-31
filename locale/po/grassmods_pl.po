@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-08-30 00:45+0100\n"
+"PO-Revision-Date: 2012-08-30 16:49+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "Language: pl\n"
@@ -1521,7 +1521,7 @@ msgstr "Sortuj wartości różne od NULL"
 
 #: ../misc/m.nviz.image/args.c:49
 msgid "Use draw mode for all loaded surfaces"
-msgstr ""
+msgstr "Użyj trybu rysowania dla wszyskich wczytanych powierzchni"
 
 #: ../misc/m.nviz.image/args.c:50 ../misc/m.nviz.image/args.c:122
 #: ../misc/m.nviz.image/args.c:131 ../misc/m.nviz.image/args.c:138
@@ -1580,15 +1580,15 @@ msgstr "Wartość(ci) przezroczystości"
 
 #: ../misc/m.nviz.image/args.c:178
 msgid "Name of raster map(s) for shininess"
-msgstr "Nazwa mapy rastrowej, która ma być użyta do błyszczenia"
+msgstr "Nazwa mapy rastrowej do nałożenia jasności"
 
 #: ../misc/m.nviz.image/args.c:188
 msgid "Shininess value(s)"
-msgstr ""
+msgstr "Wartości jasności"
 
 #: ../misc/m.nviz.image/args.c:196
 msgid "Name of raster map(s) for emission"
-msgstr "Nazwa mapy rastrowej, która ma być użyta do emisji"
+msgstr "Nazwa mapy rastrowej do nałożenia emisji"
 
 #: ../misc/m.nviz.image/args.c:206
 msgid "Emission value(s)"
@@ -1672,7 +1672,7 @@ msgstr "Punkty wektorowe"
 
 #: ../misc/m.nviz.image/args.c:378
 msgid "Icon size"
-msgstr "Rozmiar ikon"
+msgstr "Rozmiar ikony"
 
 #: ../misc/m.nviz.image/args.c:390
 msgid "Icon width"
@@ -1684,7 +1684,7 @@ msgstr "Kolor ikony"
 
 #: ../misc/m.nviz.image/args.c:411
 msgid "Icon marker"
-msgstr ""
+msgstr "Symbol ikony"
 
 #: ../misc/m.nviz.image/args.c:424
 msgid "Vector points position"
@@ -1726,11 +1726,11 @@ msgstr "Raster 3D"
 
 #: ../misc/m.nviz.image/args.c:505
 msgid "Volume draw mode"
-msgstr ""
+msgstr "Tryb rysowania rastrów 3D"
 
 #: ../misc/m.nviz.image/args.c:517
 msgid "Volume shading"
-msgstr ""
+msgstr "Cieniowanie rastrów 3D"
 
 #: ../misc/m.nviz.image/args.c:529
 msgid "Volume position"
@@ -1742,11 +1742,11 @@ msgstr "Rozdzielczość rastrów 3D"
 
 #: ../misc/m.nviz.image/args.c:551
 msgid "Isosurface level"
-msgstr ""
+msgstr "Poziom izopowierzchni"
 
 #: ../misc/m.nviz.image/args.c:566
 msgid "Light position (x,y,z model coordinates)"
-msgstr "Pozycja źródła światła (x,y,z)"
+msgstr "Pozycja źródła światła (x,y,z współrzędne modelu)"
 
 #: ../misc/m.nviz.image/args.c:567 ../misc/m.nviz.image/args.c:573
 #: ../misc/m.nviz.image/args.c:582 ../misc/m.nviz.image/args.c:592
@@ -1759,11 +1759,11 @@ msgstr "Kolor światła"
 
 #: ../misc/m.nviz.image/args.c:581
 msgid "Light brightness"
-msgstr ""
+msgstr "Jasność światła"
 
 #: ../misc/m.nviz.image/args.c:591
 msgid "Light ambient"
-msgstr ""
+msgstr "Otoczenie światła"
 
 #: ../misc/m.nviz.image/args.c:603
 msgid "nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
@@ -1771,7 +1771,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:607
 msgid "Fringe edges"
-msgstr ""
+msgstr "Granice obramowania"
 
 #: ../misc/m.nviz.image/args.c:608 ../misc/m.nviz.image/args.c:614
 #: ../misc/m.nviz.image/args.c:623
@@ -1784,7 +1784,7 @@ msgstr "Kolor obramowania"
 
 #: ../misc/m.nviz.image/args.c:622
 msgid "Fringe elevation"
-msgstr ""
+msgstr "Uniesienie obramowania"
 
 #: ../misc/m.nviz.image/args.c:667
 #, c-format
@@ -2286,9 +2286,8 @@ msgid "reading r.stats output"
 msgstr "Problem z odczytem wyników r.stats"
 
 #: ../raster/r.profile/main.c:53
-#, fuzzy
 msgid "raster, profile"
-msgstr "raster, serie"
+msgstr "raster, profil"
 
 #: ../raster/r.profile/main.c:55
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
@@ -23066,7 +23065,7 @@ msgstr "Odznacz docelowy"
 
 #: ../vector/v.digit/attr.c:403
 msgid "Deselect Source"
-msgstr ""
+msgstr "Odznacz źródło"
 
 #: ../vector/v.digit/attr.c:462
 msgid "Display attributes:"
@@ -23219,7 +23218,7 @@ msgstr ""
 #: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
 #: ../vector/v.digit/zoom.c:75
 msgid "1. corner"
-msgstr ""
+msgstr "1. róg"
 
 #: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
 #: ../vector/v.digit/zoom.c:75 ../vector/v.digit/zoom.c:158
@@ -23228,7 +23227,7 @@ msgstr "Zakończ"
 
 #: ../vector/v.digit/zoom.c:44
 msgid "2. corner"
-msgstr ""
+msgstr "2. róg"
 
 #: ../vector/v.digit/zoom.c:157
 msgid "Pan"
@@ -23523,11 +23522,11 @@ msgstr "Tabela <%s> nie istnieje w bazie danych <%s>"
 #: ../vector/v.in.db/main.c:138
 #, c-format
 msgid "Missing column <%s> in table <%s>"
-msgstr ""
+msgstr "Brak kolumny <%s> w tabeli <%s>"
 
 #: ../vector/v.db.connect/main.c:290 ../vector/v.in.db/main.c:141
 msgid "Data type of key column must be integer"
-msgstr ""
+msgstr "Typ danych kolumny musi być integer"
 
 #: ../vector/v.db.connect/main.c:297 ../vector/v.db.connect/main.c:315
 #, c-format
@@ -23548,7 +23547,7 @@ msgstr "brak punktów do triangulacji"
 
 #: ../vector/v.delaunay2/main.c:149
 msgid "Delaunay triangulation..."
-msgstr ""
+msgstr "Triangulacja Delaunay"
 
 #: ../vector/v.delaunay2/main.c:152
 #, fuzzy
@@ -24976,27 +24975,27 @@ msgstr ""
 
 #: ../vector/v.transform/main.c:121
 msgid "Shifting value for x coordinates"
-msgstr ""
+msgstr "Wartość przesunięcia dla współrzędnych x"
 
 #: ../vector/v.transform/main.c:130
 msgid "Shifting value for y coordinates"
-msgstr ""
+msgstr "Wartość przesunięcia dla współrzędnych y"
 
 #: ../vector/v.transform/main.c:139 ../vector/v.extrude/main.c:85
 msgid "Shifting value for z coordinates"
-msgstr ""
+msgstr "Wartość przesunięcia dla współrzędnych z"
 
 #: ../vector/v.transform/main.c:148
 msgid "Scaling factor for x coordinates"
-msgstr ""
+msgstr "Współczynnik skali dla współrzędnych x"
 
 #: ../vector/v.transform/main.c:157
 msgid "Scaling factor for y coordinates"
-msgstr ""
+msgstr "Współczynnik skali dla współrzędnych y"
 
 #: ../vector/v.transform/main.c:166
 msgid "Scaling factor for z coordinates"
-msgstr ""
+msgstr "Współczynnik skali dla współrzędnych z"
 
 #: ../vector/v.transform/main.c:176
 #, fuzzy
@@ -25305,7 +25304,7 @@ msgstr "Nie można otworzyć tabeli"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:78
 msgid "vector, LIDAR, edges"
-msgstr ""
+msgstr "wektor LIDAR, granice"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:80
 msgid "Detects the object's edges from a LIDAR data set."
@@ -26378,7 +26377,7 @@ msgstr ""
 #: ../vector/v.out.pov/main.c:207
 #, c-format
 msgid "%d features written"
-msgstr ""
+msgstr "%d obiektów zapisano"
 
 #: ../vector/v.select/args.c:45
 msgid "Operator defines required relation between features"
@@ -26806,7 +26805,7 @@ msgstr ""
 
 #: ../vector/v.clean/main.c:210
 msgid "Snap vertices"
-msgstr ""
+msgstr "Snapowanie węzłów"
 
 #: ../vector/v.clean/main.c:213
 #, fuzzy
@@ -29974,7 +29973,7 @@ msgstr "A"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
 msgid "C"
@@ -29990,12 +29989,12 @@ msgstr "E"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
 msgid "Formula (e.g. A-B or A*C+B)"
-msgstr ""
+msgstr "Formuła (np. A-B lub A*C+B)"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
@@ -30340,13 +30339,13 @@ msgstr ""
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:20
 msgid "GeoTIFF creation option(s)"
-msgstr ""
+msgstr "Opcje tworzenia GeoTIFF"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:22
 #: ../locale/scriptstrings/d.out.file_to_translate.c:25
 #: ../locale/scriptstrings/d.out.file_to_translate.c:34
 msgid "GeoTIFF"
-msgstr ""
+msgstr "GeoTIFF"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:23
 msgid "GeoTIFF metadata key(s) and value(s) to add"
@@ -30374,14 +30373,12 @@ msgid "Set paper orientation to landscape (for PostScript output)"
 msgstr ""
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:33
-#, fuzzy
 msgid "Do not crop away margins"
-msgstr "Kopiowanie tablicy nie powiodło się"
+msgstr "Nie obcinaj marginesów"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
-#, fuzzy
 msgid "Name of aspect raster map"
-msgstr "Nazwa bazoewj mapy rastrowej"
+msgstr "Nazwa mapy rastrowej spadku"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
 msgid "Width of display canvas"
@@ -30821,27 +30818,27 @@ msgstr "raster, zobrazowanie, statystyki"
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:3
 msgid "LANDSAT TM band 1."
-msgstr ""
+msgstr "LANDSAT TM kanał 1."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:4
 msgid "LANDSAT TM band 2."
-msgstr ""
+msgstr "LANDSAT TM kanał 2."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:5
 msgid "LANDSAT TM band 3."
-msgstr ""
+msgstr "LANDSAT TM kanał 3."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:6
 msgid "LANDSAT TM band 4."
-msgstr ""
+msgstr "LANDSAT TM kanał 4."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:7
 msgid "LANDSAT TM band 5."
-msgstr ""
+msgstr "LANDSAT TM kanał 5."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:8
 msgid "LANDSAT TM band 7."
-msgstr ""
+msgstr "LANDSAT TM kanał 7."
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
 msgid "Drops a column from the attribute table connected to a given vector map."
@@ -30994,19 +30991,19 @@ msgstr "raster, zobrazowanie, mozaikowanie"
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
 msgid "1st map for mosaic (top of image stack)."
-msgstr ""
+msgstr "Pierwsza mapa do mozaiki (wierzch zestawu obrazów)."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
 msgid "2nd map for mosaic."
-msgstr ""
+msgstr "Druga mapa do mozaiki."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
 msgid "3rd map for mosaic."
-msgstr ""
+msgstr "Trzecia mapa do mozaiki."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
 msgid "4th map for mosaic."
-msgstr ""
+msgstr "Czwarta mapa do mozaiki."
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
 msgid "calculates univariate statistics from a GRASS raster map"
@@ -31079,7 +31076,7 @@ msgstr "Ściąga i importuje dane z serwerów WMS."
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:2
 msgid "wms"
-msgstr ""
+msgstr "wms"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:4
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:8
@@ -31284,21 +31281,21 @@ msgstr "zobrazowanie, fuzja, Brovey"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
 msgid "LANDSAT sensor"
-msgstr ""
+msgstr "Sensor LANDSAT'a"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
 msgid "Sensor"
-msgstr ""
+msgstr "Sensor"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
 msgid "QuickBird sensor"
-msgstr ""
+msgstr "Sensor QuickBird"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
 msgid "SPOT sensor"
-msgstr ""
+msgstr "Sensor SPOT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
 msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
