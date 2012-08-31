@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-08-30 01:13+0100\n"
+"PO-Revision-Date: 2012-08-30 17:01+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "Language: pl\n"
@@ -76,7 +76,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/psmap.py:330
 msgid "Preview generated"
-msgstr ""
+msgstr "Podgląd wygenerowany"
 
 #: ../gui/wxpython/gui_modules/psmap.py:358
 msgid "Save file as"
@@ -978,7 +978,7 @@ msgstr "Zmień ID"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2407
 msgid "Add new GRASS module to the model"
-msgstr ""
+msgstr "Dodaj nowy moduł GRASS do modelu"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2425
 #: ../gui/wxpython/gui_modules/gmodeler.py:4204
@@ -1080,9 +1080,8 @@ msgid "Invalid:"
 msgstr "Niewłaściwy:"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3339
-#, fuzzy
 msgid "Running:"
-msgstr "Uruchomiony"
+msgstr "Uruchomiony:"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3359
 #: ../gui/wxpython/gui_modules/gmodeler.py:3478
@@ -1132,7 +1131,6 @@ msgid "Vector:"
 msgstr "Wektor:"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3530
-#, fuzzy
 msgid "Loop"
 msgstr "Pętla"
 
@@ -6147,9 +6145,8 @@ msgid "Vector cleaning command copied to clipboard"
 msgstr "Kopiuj bieżącą komendę do schowka"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:71
-#, fuzzy
 msgid "GRASS GIS Manage Ground Control Points"
-msgstr "Zarządzaj Terenowymi Punktami Kontrolnymi (GCP)"
+msgstr "Zarządzanie Terenowymi Punktami Kontrolnymi (GCP)"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:155
 msgid "Go to GCP No."
@@ -6172,9 +6169,8 @@ msgid "Target Display"
 msgstr "Ekran docelowy"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:361
-#, fuzzy
 msgid "GCP Display toolbar"
-msgstr "Wyświetl mapę"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:374
 msgid "GCP Manager toolbar"
@@ -10343,9 +10339,8 @@ msgid "Performs atmospheric correction using the 6S algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:746
-#, fuzzy
 msgid "Topographic correction"
-msgstr "Korekcja atmosferyczna"
+msgstr "Korekcja topograficzna"
 
 #: ../gui/wxpython/menustrings.py:747
 #, fuzzy
@@ -11454,9 +11449,8 @@ msgstr "Dodaj pasek skali"
 msgid "Source name"
 msgstr "Nazwa źródła"
 
-#, fuzzy
 msgid "Close all"
-msgstr "Zamknij okno dialogu"
+msgstr "Zamknij wszystkie"
 
 msgid "Duplicate attributes"
 msgstr "Duplikuj atrybuty"
