@@ -32,9 +32,9 @@ from grass.script import core as grass
 class RegionDef(BaseClass, wx.Dialog):
     """!Page for setting default region extents and resolution
     """
-    def __init__(self, parent, id = wx.ID_ANY,
+    def __init__(self, parent, id = wx.ID_ANY, size = (800, 600),
                  title = _("Set default region extent and resolution"), location = None):
-        wx.Dialog.__init__(self, parent, id, title, size = (650,300))
+        wx.Dialog.__init__(self, parent, id, title, size = size)
         panel = wx.Panel(self, id = wx.ID_ANY)
         
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))

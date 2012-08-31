@@ -455,6 +455,13 @@ class ItemList(wx.ListCtrl,
         for column in columns:
             self.InsertColumn(i, column)
             i += 1
+        #
+        # add some attributes
+        #
+        self.attr1 = wx.ListItemAttr()
+        self.attr1.SetBackgroundColour(wx.Colour(238,238,238))
+        self.attr2 = wx.ListItemAttr()
+        self.attr2.SetBackgroundColour("white")
 
         if self.sourceData:
             self.Populate()
@@ -470,13 +477,6 @@ class ItemList(wx.ListCtrl,
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, self.GetColumnCount())
             
-        #
-        # add some attributes
-        #
-        self.attr1 = wx.ListItemAttr()
-        self.attr1.SetBackgroundColour(wx.Colour(238,238,238))
-        self.attr2 = wx.ListItemAttr()
-        self.attr2.SetBackgroundColour("white")
         self.il = wx.ImageList(16, 16)
         self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,   wx.ART_TOOLBAR,
                                                           (16,16)))
