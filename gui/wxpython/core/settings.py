@@ -436,20 +436,10 @@ class Settings:
                     },
                 },
             'profile': {
-                'raster0' : {
+                'raster' : {
                     'pcolor' : (0, 0, 255, 255), # profile line color
                     'pwidth' : 1, # profile line width
                     'pstyle' : 'solid', # profile line pen style
-                    },
-                'raster1' : {
-                    'pcolor' : (255, 0, 0, 255), 
-                    'pwidth' : 1, 
-                    'pstyle' : 'solid', 
-                    },
-                'raster2' : {
-                    'pcolor' : (0, 255, 0, 255), 
-                    'pwidth' : 1, 
-                    'pstyle' : 'solid', 
                     },
                 'font' : {
                     'titleSize' : 12,
