@@ -532,6 +532,8 @@ class OptDialog(wx.Dialog):
 
         self.mapchoice = wx.Choice(parent = self, id = wx.ID_ANY, size = (300, -1),
                                    choices = choicelist)
+        self.mapchoice.SetToolTipString(_("Settings for selected map"))
+
         if not self.map:
             self.map = self.rasterList[self.mapchoice.GetCurrentSelection()]
         else:
@@ -582,54 +584,53 @@ class OptDialog(wx.Dialog):
         boxMainSizer.Add(item = boxSizer, flag = wx.ALL, border = 3)
 
         #
-        # segment marker settings for profiles only
+        # segment marker settings for profiles
         #       
-        if self.plottype == 'profile':
-            box = wx.StaticBox(parent = self, id = wx.ID_ANY,
-                               label = " %s " % _("Transect segment marker settings"))
-            
-            boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-            
-            gridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Color"))
-            gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
-            ptcolor = csel.ColourSelect(parent = self, id = wx.ID_ANY, colour = self.properties['marker']['color'])
-            self.wxId['marker']['color'] = ptcolor.GetId()
-            gridSizer.Add(item = ptcolor, pos = (0, 1))
+        box = wx.StaticBox(parent = self, id = wx.ID_ANY,
+                           label = " %s " % _("Transect segment marker settings"))
+        
+        boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        
+        gridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Color"))
+        gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
+        ptcolor = csel.ColourSelect(parent = self, id = wx.ID_ANY, colour = self.properties['marker']['color'])
+        self.wxId['marker']['color'] = ptcolor.GetId()
+        gridSizer.Add(item = ptcolor, pos = (0, 1))
 
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Size"))
-            gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (1, 0))
-            ptsize = wx.SpinCtrl(parent = self, id = wx.ID_ANY, value = "",
-                                 size = (50, -1), style = wx.SP_ARROW_KEYS)
-            ptsize.SetRange(1, 10)
-            ptsize.SetValue(self.properties['marker']['size'])
-            self.wxId['marker']['size'] = ptsize.GetId()
-            gridSizer.Add(item = ptsize, pos = (1, 1))
-            
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Style"))
-            gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (2, 0))
-            ptfill = wx.Choice(parent = self, id = wx.ID_ANY, 
-                               size = (120, -1), choices = self.ptfilldict.keys())
-            ptfill.SetStringSelection(self.properties['marker']['fill'])
-            self.wxId['marker']['fill'] = ptfill.GetId()
-            gridSizer.Add(item = ptfill, pos = (2, 1))
-            
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Legend"))
-            gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (3, 0))
-            ptlegend = wx.TextCtrl(parent = self, id = wx.ID_ANY, value = "", size = (200,-1))
-            ptlegend.SetValue(self.properties['marker']['legend'])
-            self.wxId['marker']['legend'] = ptlegend.GetId()
-            gridSizer.Add(item = ptlegend, pos = (3, 1))
-                    
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Type"))
-            gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (4, 0))
-            pttype = wx.Choice(parent = self, size = (200, -1), choices = self.pttypelist)
-            pttype.SetStringSelection(self.properties['marker']['type'])
-            self.wxId['marker']['type'] = pttype.GetId()
-            gridSizer.Add(item = pttype, pos = (4, 1))
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Size"))
+        gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (1, 0))
+        ptsize = wx.SpinCtrl(parent = self, id = wx.ID_ANY, value = "",
+                             size = (50, -1), style = wx.SP_ARROW_KEYS)
+        ptsize.SetRange(1, 10)
+        ptsize.SetValue(self.properties['marker']['size'])
+        self.wxId['marker']['size'] = ptsize.GetId()
+        gridSizer.Add(item = ptsize, pos = (1, 1))
+        
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Fill"))
+        gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (2, 0))
+        ptfill = wx.Choice(parent = self, id = wx.ID_ANY, 
+                           size = (120, -1), choices = self.ptfilldict.keys())
+        ptfill.SetStringSelection(self.properties['marker']['fill'])
+        self.wxId['marker']['fill'] = ptfill.GetId()
+        gridSizer.Add(item = ptfill, pos = (2, 1))
+        
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Legend"))
+        gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (3, 0))
+        ptlegend = wx.TextCtrl(parent = self, id = wx.ID_ANY, value = "", size = (200,-1))
+        ptlegend.SetValue(self.properties['marker']['legend'])
+        self.wxId['marker']['legend'] = ptlegend.GetId()
+        gridSizer.Add(item = ptlegend, pos = (3, 1))
+                
+        label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Style"))
+        gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (4, 0))
+        pttype = wx.Choice(parent = self, size = (200, -1), choices = self.pttypelist)
+        pttype.SetStringSelection(self.properties['marker']['type'])
+        self.wxId['marker']['type'] = pttype.GetId()
+        gridSizer.Add(item = pttype, pos = (4, 1))
 
-            boxSizer.Add(item = gridSizer)
-            boxMainSizer.Add(item = boxSizer, flag = wx.ALL, border = 3)
+        boxSizer.Add(item = gridSizer)
+        boxMainSizer.Add(item = boxSizer, flag = wx.ALL, border = 3)
                         
         sizer.Add(item = boxMainSizer, flag = wx.ALL | wx.EXPAND, border = 3)
 
@@ -653,11 +654,12 @@ class OptDialog(wx.Dialog):
             prop = self.properties[atype]['prop']
             
             row = 0
-            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Style"))
+            label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Scale"))
             gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (row, 0))
-            type = wx.Choice(parent = self, id = wx.ID_ANY,
-                               size = (100, -1), choices = self.axislist)
+            type = wx.Choice(parent = self, id = wx.ID_ANY, 
+                             size = (100, -1), choices = self.axislist)
             type.SetStringSelection(prop['type']) 
+            type.SetToolTipString(_("Automatic axis scaling, custom max and min, or scale matches data range (min)" ))
             self.wxId[atype]['type'] = type.GetId()
             gridSizer.Add(item = type, pos = (row, 1))
                         
