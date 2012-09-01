@@ -54,25 +54,20 @@ class Settings:
     def _generateLocale(self):
         """!Generate locales
         """
-        # collect available locales
-        self.locs = list(set(locale.locale_alias.values()))
-        self.locs.append('en_GB.UTF-8')
-        self.locs.sort()
+        import os
         
         try:
-            loc = list(locale.getdefaultlocale())
-        except ValueError, e:
-            sys.stderr.write(_('ERROR: %s\n') % str(e))
-            return 'C'
+            self.locs = os.listdir(os.path.join(os.environ['GISBASE'], 'locale'))
+            self.locs.append('en') # GRASS doesn't ship EN po files
+            self.locs.sort()
+            # Add a default choice to not override system locale
+            self.locs.insert(0, 'system')
+        except:
+            # No NLS
+            self.locs = ['system']
         
-        if loc[1] == 'UTF8':
-            loc[1] = 'UTF-8'
-        code_loc = "%s.%s" % (loc[0], loc[1])
-        if code_loc in self.locs:
-            return code_loc
-        
-        return 'C'
-        
+        return 'system'
+    
     def _defaultSettings(self):
         """!Define default settings
         """
