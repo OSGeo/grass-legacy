@@ -565,7 +565,7 @@ class OptDialog(wx.Dialog):
         label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Line style"))
         gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (row, 0))
         style = wx.Choice(parent = self, id = wx.ID_ANY, 
-                             size = (120, -1), choices = self.linestyledict.keys(), style = wx.CB_DROPDOWN)
+                             size = (120, -1), choices = self.linestyledict.keys())
         style.SetStringSelection(self.raster[self.map]['pstyle'])
         self.wxId['pstyle'] = style.GetId()
         gridSizer.Add(item = style, pos = (row, 1))
@@ -608,8 +608,8 @@ class OptDialog(wx.Dialog):
             
             label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Style"))
             gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (2, 0))
-            ptfill = wx.ComboBox(parent = self, id = wx.ID_ANY,
-                                 size = (120, -1), choices = self.ptfilldict.keys(), style = wx.CB_DROPDOWN)
+            ptfill = wx.Choice(parent = self, id = wx.ID_ANY, 
+                               size = (120, -1), choices = self.ptfilldict.keys())
             ptfill.SetStringSelection(self.properties['marker']['fill'])
             self.wxId['marker']['fill'] = ptfill.GetId()
             gridSizer.Add(item = ptfill, pos = (2, 1))
@@ -623,8 +623,7 @@ class OptDialog(wx.Dialog):
                     
             label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Type"))
             gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (4, 0))
-            pttype = wx.ComboBox(parent = self, 
-                                 size = (200, -1), choices = self.pttypelist, style = wx.CB_DROPDOWN)
+            pttype = wx.Choice(parent = self, size = (200, -1), choices = self.pttypelist)
             pttype.SetStringSelection(self.properties['marker']['type'])
             self.wxId['marker']['type'] = pttype.GetId()
             gridSizer.Add(item = pttype, pos = (4, 1))
@@ -657,7 +656,7 @@ class OptDialog(wx.Dialog):
             label = wx.StaticText(parent = self, id = wx.ID_ANY, label = _("Style"))
             gridSizer.Add(item = label, flag = wx.ALIGN_CENTER_VERTICAL, pos = (row, 0))
             type = wx.Choice(parent = self, id = wx.ID_ANY,
-                               size = (100, -1), choices = self.axislist, style = wx.CB_DROPDOWN)
+                               size = (100, -1), choices = self.axislist)
             type.SetStringSelection(prop['type']) 
             self.wxId[atype]['type'] = type.GetId()
             gridSizer.Add(item = type, pos = (row, 1))
