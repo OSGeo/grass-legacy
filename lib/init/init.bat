@@ -89,6 +89,9 @@ rem Create an initial GISRC file based on current directory
 rem Now set the real GISRC
 FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%WINGISRC%"`) DO @set GISRC=%%i
 
+rem Fetch the language setting from user's prefs
+FOR /F "usebackq delims==" %%i IN (`g.gisenv "get=LANG"`) DO @set LANG=%%i
+
 rem Set GRASS_GUI
 
 if "%GRASS_GUI%" == "" (
