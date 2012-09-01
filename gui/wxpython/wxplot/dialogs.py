@@ -834,7 +834,7 @@ class OptDialog(wx.Dialog):
             self.properties['marker']['color'] = self.FindWindowById(self.wxId['marker']['color']).GetColour()
             self.properties['marker']['fill'] = self.FindWindowById(self.wxId['marker']['fill']).GetStringSelection()
             self.properties['marker']['size'] = self.FindWindowById(self.wxId['marker']['size']).GetValue()
-            self.properties['marker']['type'] = self.FindWindowById(self.wxId['marker']['type']).GetValue()
+            self.properties['marker']['type'] = self.FindWindowById(self.wxId['marker']['type']).GetStringSelection()
             self.properties['marker']['legend'] = self.FindWindowById(self.wxId['marker']['legend']).GetValue()
 
         self.properties['grid']['color'] = self.FindWindowById(self.wxId['grid']['color']).GetColour()
