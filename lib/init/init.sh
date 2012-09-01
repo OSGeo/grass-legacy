@@ -233,11 +233,6 @@ if [ ! "$GRASS_GUI" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
 
-    # Check for a reference to the language in the grassrc file
-    if [ -f "$GISRC" ] ; then
-    	LANG=`awk '/LANG/ {print $2}' "$GISRC"`
-    fi
-
     # Set the GRASS user interface to the default if needed
     if [ ! "$GRASS_GUI" ] ; then
 	GRASS_GUI="$DEFAULT_GUI"
@@ -253,12 +248,23 @@ fi
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC="$GISBASE/etc"
 
-if [ "$LC_ALL" ] ; then
-	LCL=`echo "$LC_ALL" | sed 's/\(..\)\(.*\)/\1/'`
-elif [ "$LC_MESSAGES" ] ; then
-	LCL=`echo "$LC_MESSAGES" | sed 's/\(..\)\(.*\)/\1/'`
+# Check for a reference to the language in the grassrc file
+if [ -f "$GISRC" ] ; then
+    LANG=`awk '/LANG/ {print $2}' "$GISRC"`
+fi
+
+if [ $LANG ] ; then
+    LCL=$LANG
+    export LANG
+    export LANGUAGE=$LANG
 else
-	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
+    if [ "$LC_ALL" ] ; then
+        LCL=`echo "$LC_ALL" | sed 's/\(..\)\(.*\)/\1/'`
+    elif [ "$LC_MESSAGES" ] ; then
+        LCL=`echo "$LC_MESSAGES" | sed 's/\(..\)\(.*\)/\1/'`
+    else
+        LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
+    fi
 fi
 
 # if it doesn't exist set it to something so that g.extension's default is reasonable
