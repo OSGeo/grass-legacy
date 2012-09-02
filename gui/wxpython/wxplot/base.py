@@ -51,7 +51,7 @@ class BasePlotFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, size = size, style = style, **kwargs)
         
-        self.parent = parent            # MapFrame
+        self.parent = parent            # MapFrame for a plot type
         self.mapwin = self.parent.MapWindow
         self.Map    = Map()             # instance of render.Map to be associated with display
         self.rasterList = rasterList    #list of rasters to plot
@@ -123,9 +123,8 @@ class BasePlotFrame(wx.Frame):
 
     def InitPlotOpts(self, plottype):
         """!Initialize options for entire plot
-        """
-        
-        self.plottype = plottype                # histogram, profile, or scatter
+        """        
+        self.plottype = plottype                # profile
 
         self.properties = {}                    # plot properties
         self.properties['font'] = {}
@@ -134,11 +133,17 @@ class BasePlotFrame(wx.Frame):
                                                     wx.FONTSTYLE_NORMAL,
                                                     wx.FONTWEIGHT_NORMAL)
         
+        self.properties['raster'] = {}
+        self.properties['raster'] = UserSettings.Get(group = self.plottype, key = 'raster')
+        colstr = str(self.properties['raster']['pcolor'])
+        self.properties['raster']['pcolor'] = tuple(int(colval) for colval in colstr.strip('()').split(','))
+
         if self.plottype == 'profile':
             self.properties['marker'] = UserSettings.Get(group = self.plottype, key = 'marker')
             # changing color string to tuple for markers/points
             colstr = str(self.properties['marker']['color'])
             self.properties['marker']['color'] = tuple(int(colval) for colval in colstr.strip('()').split(','))
+ 
 
         self.properties['grid'] = UserSettings.Get(group = self.plottype, key = 'grid')        
         colstr = str(self.properties['grid']['color']) # changing color string to tuple        
@@ -176,6 +181,8 @@ class BasePlotFrame(wx.Frame):
 
         rdict = {} # initialize a dictionary
 
+        self.properties['raster'] = UserSettings.Get(group = self.plottype, key = 'raster')
+
         for r in rasterList:
             idx = rasterList.index(r)
             
@@ -185,78 +192,47 @@ class BasePlotFrame(wx.Frame):
                 continue
                 # if r.info cannot parse map, skip it
                
-            self.raster[r] = UserSettings.Get(group = plottype, key = 'raster') # some default settings
+            self.raster[r] = self.properties['raster'] # some default settings
             rdict[r] = {} # initialize sub-dictionaries for each raster in the list
-
             
             rdict[r]['units'] = ''
             if ret['units'] not in ('(none)', '"none"', '', None):
                 rdict[r]['units'] = ret['units']
             
             rdict[r]['plegend'] = r.split('@')[0]
-            rdict[r]['datalist'] = [] # list of cell value,frequency pairs for plotting histogram
+            rdict[r]['datalist'] = [] # list of cell value,frequency pairs for plotting
             rdict[r]['pline'] = None
             rdict[r]['datatype'] = ret['datatype']
-            rdict[r]['pwidth'] = 1
-            rdict[r]['pstyle'] = 'solid'
-            
+
+            #    
+            #initialize with saved values
+            #
+            if self.properties['raster']['pwidth'] != None:
+                rdict[r]['pwidth'] = self.properties['raster']['pwidth']
+            else:
+                rdict[r]['pwidth'] = 1
+                
+            if self.properties['raster']['pstyle'] != None and \
+                self.properties['raster']['pstyle'] != '':
+                rdict[r]['pstyle'] = self.properties['raster']['pstyle']
+            else:
+                rdict[r]['pstyle'] = 'solid'
+                        
             if idx <= len(self.colorList):
-                rdict[r]['pcolor'] = self.colorDict[self.colorList[idx]]
+                if idx == 0:
+                    # use saved color for first plot
+                    if self.properties['raster']['pcolor'] != None:
+                        rdict[r]['pcolor'] = self.properties['raster']['pcolor'] 
+                    else:
+                        rdict[r]['pcolor'] = self.colorDict[self.colorList[idx]]
+                else:
+                    rdict[r]['pcolor'] = self.colorDict[self.colorList[idx]]
             else:
                 r = randint(0, 255)
                 b = randint(0, 255)
                 g = randint(0, 255)
                 rdict[r]['pcolor'] = ((r,g,b,255))
         
-        return rdict
-            
-    def InitRasterPairs(self, rasterList, plottype):
-        """!Initialize or update raster dictionary with raster pairs for
-            bivariate scatterplots
-        """
-        
-        if len(rasterList) == 0: return
-
-        rdict = {} # initialize a dictionary
-        for rpair in rasterList:
-            idx = rasterList.index(rpair)
-            
-            try:
-                ret0 = grass.raster_info(rpair[0])
-                ret1 = grass.raster_info(rpair[1])
-
-            except:
-                continue
-                # if r.info cannot parse map, skip it
-
-            self.raster[rpair] = UserSettings.Get(group = plottype, key = 'rasters') # some default settings
-            rdict[rpair] = {} # initialize sub-dictionaries for each raster in the list
-            rdict[rpair][0] = {}
-            rdict[rpair][1] = {}
-            rdict[rpair][0]['units'] = ''
-            rdict[rpair][1]['units'] = ''
-
-            if ret0['units'] not in ('(none)', '"none"', '', None):
-                rdict[rpair][0]['units'] = ret0['units']
-            if ret1['units'] not in ('(none)', '"none"', '', None):
-                rdict[rpair][1]['units'] = ret1['units']
-                
-            rdict[rpair]['plegend'] = rpair[0].split('@')[0] + ' vs ' + rpair[1].split('@')[0]
-            rdict[rpair]['datalist'] = [] # list of cell value,frequency pairs for plotting histogram
-            rdict[rpair]['ptype'] = 'dot'
-            rdict[rpair][0]['datatype'] = ret0['datatype']
-            rdict[rpair][1]['datatype'] = ret1['datatype']
-            rdict[rpair]['psize'] = 1
-            rdict[rpair]['pfill'] = 'solid'
-            
-            if idx <= len(self.colorList):
-                rdict[rpair]['pcolor'] = self.colorDict[self.colorList[idx]]
-            else:
-                r = randint(0, 255)
-                b = randint(0, 255)
-                g = randint(0, 255)
-                rdict[rpair]['pcolor'] = ((r,g,b,255))
-            
         return rdict
 
     def SetGraphStyle(self):
@@ -295,26 +271,32 @@ class BasePlotFrame(wx.Frame):
                                                  self.properties['y-axis']['prop']['max'])
         else:
             self.properties['y-axis']['axis'] = None
-
-        self.client.SetEnableGrid(self.properties['grid']['enabled'])
-        
-        self.client.SetGridColour(wx.Color(self.properties['grid']['color'][0],
-                                           self.properties['grid']['color'][1],
-                                           self.properties['grid']['color'][2],
-                                           255))
-
-        self.client.SetFontSizeLegend(self.properties['font']['prop']['legendSize'])
-        self.client.SetEnableLegend(self.properties['legend']['enabled'])
-
+            
         if self.properties['x-axis']['prop']['log'] == True:
             self.properties['x-axis']['axis'] = None
             self.client.SetXSpec('min')
         if self.properties['y-axis']['prop']['log'] == True:
             self.properties['y-axis']['axis'] = None
             self.client.SetYSpec('min')
-            
+                        
         self.client.setLogScale((self.properties['x-axis']['prop']['log'],
                                  self.properties['y-axis']['prop']['log']))
+        
+        #
+        # grid settings
+        #
+        self.client.SetEnableGrid(self.properties['grid']['enabled'])
+                
+        self.client.SetGridColour(wx.Color(self.properties['grid']['color'][0],
+                                           self.properties['grid']['color'][1],
+                                           self.properties['grid']['color'][2],
+                                           255))
+        
+        #
+        # legend settings
+        #
+        self.client.SetFontSizeLegend(self.properties['font']['prop']['legendSize'])
+        self.client.SetEnableLegend(self.properties['legend']['enabled'])
 
     def DrawPlot(self, plotlist):
         """!Draw line and point plot from list plot elements.
@@ -424,6 +406,7 @@ class BasePlotFrame(wx.Frame):
         """
         point = wx.GetMousePosition()
         popt = wx.Menu()
+
         # Add items to the menu
         settext = wx.MenuItem(popt, wx.ID_ANY, _('Text settings'))
         popt.AppendItem(settext)
@@ -449,12 +432,11 @@ class BasePlotFrame(wx.Frame):
         dlg.Destroy()
 
     def OnPlotText(self, dlg):
-        """!Custom text settings for histogram plot.
+        """!Custom text settings.
         """
         self.ptitle = dlg.ptitle
         self.xlabel = dlg.xlabel
         self.ylabel = dlg.ylabel
-        dlg.UpdateSettings()
 
         self.client.SetFont(self.properties['font']['wxfont'])
         self.client.SetFontSizeTitle(self.properties['font']['prop']['titleSize'])
@@ -464,7 +446,7 @@ class BasePlotFrame(wx.Frame):
             self.plot.setTitle(dlg.ptitle)
             self.plot.setXLabel(dlg.xlabel)
             self.plot.setYLabel(dlg.ylabel)
-        
+
         self.OnRedraw(event = None)
     
     def PlotText(self, event):
@@ -474,27 +456,25 @@ class BasePlotFrame(wx.Frame):
                                  plottype = self.plottype, 
                                  title = _('Histogram text settings'))
 
-        if dlg.ShowModal() == wx.ID_OK:
-            self.OnPlotText(dlg)
+        btnval = dlg.ShowModal()
+        if btnval == wx.ID_SAVE or btnval == wx.ID_OK or btnval == wx.ID_CANCEL:
+            dlg.Destroy()            
 
-        dlg.Destroy()
 
     def PlotOptions(self, event):
         """!Set various profile options, including: line width, color,
         style; marker size, color, fill, and style; grid and legend
         options.  Calls OptDialog class.
         """
+       
         dlg = OptDialog(parent = self, id = wx.ID_ANY, 
                         plottype = self.plottype, 
                         title = _('Plot settings'))
+
         btnval = dlg.ShowModal()
 
-        if btnval == wx.ID_SAVE:
-            dlg.UpdateSettings()            
-            self.SetGraphStyle()            
+        if btnval == wx.ID_SAVE or btnval == wx.ID_OK or btnval == wx.ID_CANCEL:
             dlg.Destroy()            
-        elif btnval == wx.ID_CANCEL:
-            dlg.Destroy()
 
     def PrintMenu(self, event):
         """!Print options and output menu
