@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       r.grow2
+ * MODULE:       r.grow.distance
  *
  * AUTHOR(S):    Marjorie Larson - CERL
  *               Glynn Clements
@@ -9,7 +9,7 @@
  * PURPOSE:      Generates a raster map layer with contiguous areas 
  *               grown by one cell.
  *
- * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -26,6 +26,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+static struct Cell_head window;
 static int nrows, ncols;
 static DCELL *in_row;
 static CELL *old_x_row, *old_y_row;
@@ -52,6 +53,16 @@ static double distance_manhattan(double dx, double dy)
     return abs(dx) + abs(dy);
 }
 
+static double geodesic_distance(int x1, int y1, int x2, int y2)
+{
+    double lat1 = G_row_to_northing(y1 + 0.5, &window);
+    double lat2 = G_row_to_northing(y2 + 0.5, &window);
+    double lon1 = G_col_to_easting(x1 + 0.5, &window);
+    double lon2 = G_col_to_easting(x2 + 0.5, &window);
+
+    return G_geodesic_distance(lon1, lat1, lon2, lat2);
+}
+
 void swap_rows(void)
 {
     CELL *temp;
@@ -69,7 +80,8 @@ void swap_rows(void)
     old_val_row = new_val_row;
     new_val_row = dtemp;
 }
-static void check(int col, int dx, int dy)
+
+static void check(int row, int col, int dx, int dy)
 {
     const CELL *xrow = dy ? old_x_row : new_x_row;
     const CELL *yrow = dy ? old_y_row : new_y_row;
@@ -92,7 +104,9 @@ static void check(int col, int dx, int dy)
     x = xrow[col + dx] + dx;
     y = yrow[col + dx] + dy;
     v = vrow[col + dx];
-    d = (*distance) (xres * x, yres * y);
+    d = distance
+	? (*distance) (xres * x, yres * y)
+	: geodesic_distance(col, row, col + x, row + y);
 
     if (!G_is_d_null_value(&dist_row[col]) && dist_row[col] < d)
 	return;
@@ -110,6 +124,10 @@ int main(int argc, char **argv)
     {
 	struct Option *in, *dist, *val, *met;
     } opt;
+    struct
+    {
+	struct Flag *m;
+    } flag;
     const char *in_name;
     const char *dist_name;
     const char *val_name;
@@ -122,7 +140,7 @@ int main(int argc, char **argv)
     struct FPRange range;
     DCELL min, max;
     DCELL *out_row;
-    struct Cell_head window;
+    double scale = 1.0;
 
     G_gisinit(argv[0]);
 
@@ -148,8 +166,12 @@ int main(int argc, char **argv)
     opt.met->type = TYPE_STRING;
     opt.met->required = NO;
     opt.met->description = _("Metric");
-    opt.met->options = "euclidean,squared,maximum,manhattan";
+    opt.met->options = "euclidean,squared,maximum,manhattan,geodesic";
     opt.met->answer = "euclidean";
+
+    flag.m = G_define_flag();
+    flag.m->key = 'm';
+    flag.m->description = _("Output distances in meters instead of map units");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -161,6 +183,8 @@ int main(int argc, char **argv)
     if (!dist_name && !val_name)
 	G_fatal_error(_("At least one of distance= and value= must be given"));
 
+    G_get_window(&window);
+
     if (strcmp(opt.met->answer, "euclidean") == 0)
 	distance = &distance_euclidean_squared;
     else if (strcmp(opt.met->answer, "squared") == 0)
@@ -169,12 +193,26 @@ int main(int argc, char **argv)
 	distance = &distance_maximum;
     else if (strcmp(opt.met->answer, "manhattan") == 0)
 	distance = &distance_manhattan;
+    else if (strcmp(opt.met->answer, "geodesic") == 0) {
+	double a, e2;
+	if (window.proj != PROJECTION_LL)
+	    G_fatal_error(_("metric=geodesic is only valid for lat/lon"));
+	distance = NULL;
+	G_get_ellipsoid_parameters(&a, &e2);
+	G_begin_geodesic_distance(a, e2);
+    }
     else
 	G_fatal_error(_("Unknown metric: [%s]."), opt.met->answer);
 
     in_fd = G_open_cell_old(in_name, "");
     if (in_fd < 0)
 	G_fatal_error(_("Unable to open raster map <%s>"), in_name);
+
+    if (flag.m->answer) {
+	scale = G_database_units_to_meters_factor();
+	if (strcmp(opt.met->answer, "squared") == 0)
+	    scale *= scale;
+    }
 
     if (dist_name) {
 	dist_fd = G_open_raster_new(dist_name, DCELL_TYPE);
@@ -192,8 +230,6 @@ int main(int argc, char **argv)
     temp_fd = open(temp_name, O_RDWR | O_CREAT | O_EXCL, 0700);
     if (temp_fd < 0)
 	G_fatal_error(_("Unable to create temporary file <%s>"), temp_name);
-
-    G_get_window(&window);
 
     nrows = window.rows;
     ncols = window.cols;
@@ -220,6 +256,7 @@ int main(int argc, char **argv)
     G_set_c_null_value(old_x_row, ncols);
     G_set_c_null_value(old_y_row, ncols);
 
+    G_message(_("Reading raster map <%s>..."), opt.in->answer);
     for (row = 0; row < nrows; row++) {
 	int irow = nrows - 1 - row;
 
@@ -241,15 +278,15 @@ int main(int argc, char **argv)
 	    }
 
 	for (col = 0; col < ncols; col++)
-	    check(col, -1, 0);
+	    check(irow, col, -1, 0);
 
 	for (col = ncols - 1; col >= 0; col--)
-	    check(col, 1, 0);
+	    check(irow, col, 1, 0);
 
 	for (col = 0; col < ncols; col++) {
-	    check(col, -1, 1);
-	    check(col, 0, 1);
-	    check(col, 1, 1);
+	    check(irow, col, -1, 1);
+	    check(irow, col, 0, 1);
+	    check(irow, col, 1, 1);
 	}
 
 	write(temp_fd, new_x_row, ncols * sizeof(CELL));
@@ -267,6 +304,7 @@ int main(int argc, char **argv)
     G_set_c_null_value(old_x_row, ncols);
     G_set_c_null_value(old_y_row, ncols);
 
+    G_message(_("Writing output raster maps..."), opt.in->answer);
     for (row = 0; row < nrows; row++) {
 	int irow = nrows - 1 - row;
 	off_t offset =
@@ -282,23 +320,27 @@ int main(int argc, char **argv)
 	read(temp_fd, new_val_row, ncols * sizeof(DCELL));
 
 	for (col = 0; col < ncols; col++) {
-	    check(col, -1, -1);
-	    check(col, 0, -1);
-	    check(col, 1, -1);
+	    check(row, col, -1, -1);
+	    check(row, col, 0, -1);
+	    check(row, col, 1, -1);
 	}
 
 	for (col = 0; col < ncols; col++)
-	    check(col, -1, 0);
+	    check(row, col, -1, 0);
 
 	for (col = ncols - 1; col >= 0; col--)
-	    check(col, 1, 0);
+	    check(row, col, 1, 0);
 
 	if (dist_name) {
 	    if (out_row != dist_row)
 		for (col = 0; col < ncols; col++)
 		    out_row[col] = sqrt(dist_row[col]);
 
-	    G_put_d_raster_row(dist_fd, out_row);
+	    if (scale != 1.0)
+		for (col = 0; col < ncols; col++)
+		    out_row[col] *= scale;
+
+	   G_put_d_raster_row(dist_fd, out_row);
 	}
 
 	if (val_name)
