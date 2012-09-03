@@ -600,7 +600,7 @@ class Settings:
                 'cplane' : {
                     'shading': 4,
                     'rotation':{
-                        'rot': 0, 
+                        'rot': 180, 
                         'tilt': 0
                         }, 
                     'position':{
