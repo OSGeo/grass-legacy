@@ -124,6 +124,8 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.flag = ''                       # flag for drag and drop hittest
         self.rerender = False                # layer change requires a rerendering if auto render
         self.reorder = False                 # layer change requires a reordering
+        self.hitCheckbox = False             # if cursor points at layer checkbox (to cancel selection changes)
+        self.forceCheck = False              # force check layer if CheckItem is called
         
         try:
             ctstyle |= CT.TR_ALIGN_WINDOWS
@@ -227,13 +229,16 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED,   self.OnCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED,   self.OnActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED,      self.OnChangeSel)
+        self.Bind(wx.EVT_TREE_SEL_CHANGING,     self.OnChangingSel)
         self.Bind(CT.EVT_TREE_ITEM_CHECKED,     self.OnLayerChecked)
+        self.Bind(CT.EVT_TREE_ITEM_CHECKING,    self.OnLayerChecking)
         self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.OnDeleteLayer)
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnLayerContextMenu)
         self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
         self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnRenamed)
         self.Bind(wx.EVT_KEY_UP,                self.OnKeyUp)
         self.Bind(wx.EVT_IDLE,                  self.OnIdle)
+        self.Bind(wx.EVT_MOTION,                self.OnMotion)
 
     def _setGradient(self, iType = None):
         """!Set gradient for items
@@ -250,6 +255,22 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.SetFirstGradientColour(wx.Colour(100, 100, 100))
             self.SetSecondGradientColour(wx.Colour(150, 150, 150))
         
+    def GetSelections(self):
+        """Returns a list of selected items.
+
+        This method is copied from customtreecontrol and overriden because
+        with some version wx (?) multiple selection doesn't work. 
+        Probably it is caused by another GetSelections method in treemixin.DragAndDrop?
+        """
+        array = []
+        idRoot = self.GetRootItem()
+        if idRoot:
+            array = self.FillArray(idRoot, array)
+        
+        #else: the tree is empty, so no selections
+
+        return array
+
     def GetMap(self):
         """!Get map instace"""
         return self.Map
@@ -448,8 +469,9 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 self.popupMenu.Enable(self.popupID['univar'],  False)
                 self.popupMenu.Enable(self.popupID['prof'],    False)
                 self.popupMenu.Enable(self.popupID['meta'],    False)
-                self.popupMenu.Enable(self.popupID['nviz'],    False)
                 self.popupMenu.Enable(self.popupID['export'],  False)
+                if self.lmgr.IsPaneShown('toolbarNviz'):
+                    self.popupMenu.Enable(self.popupID['nviz'], False)
 
         self.PopupMenu(self.popupMenu)
         self.popupMenu.Destroy()
@@ -792,6 +814,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         else:
             checked = True
         
+        self.forceCheck = True
         self.CheckItem(layer, checked = checked)
         
         # add text and icons for each layer ltype
@@ -1085,6 +1108,17 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             
         event.Skip()
 
+    def OnLayerChecking(self, event):
+        """!Layer checkbox is being checked.
+
+        Continue only if mouse is above checkbox or layer was checked programatically.
+        """
+        if self.hitCheckbox or self.forceCheck:
+            self.forceCheck = False
+            event.Skip()
+        else:
+            event.Veto()
+
     def OnLayerChecked(self, event):
         """!Enable/disable data layer"""
         self.lmgr.WorkspaceChanged()
@@ -1098,6 +1132,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             if self.GetPyData(item)[0]['type'] == 'group':
                 child, cookie = self.GetFirstChild(item)
                 while child:
+                    self.forceCheck = True
                     self.CheckItem(child, checked)
                     mapLayer = self.GetPyData(child)[0]['maplayer']
                     if not digitToolbar or \
@@ -1111,8 +1146,6 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                        (digitToolbar and digitToolbar.GetLayer() != mapLayer):
                     # ignore when map layer is edited
                     self.Map.ChangeLayerActive(mapLayer, checked)
-        
-        self.Unselect()
         
         # update progress bar range (mapwindow statusbar)
         self.mapdisplay.GetProgressBar().SetRange(len(self.Map.GetListOfLayers(l_active = True)))
@@ -1169,14 +1202,32 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         
         event.Skip()
 
+    def OnMotion(self, event):
+        """!Mouse is moving.
+
+        Detects if mouse points at checkbox.
+        """
+        thisItem, flags = self.HitTest(event.GetPosition())
+        # workaround: in order not to check checkox when clicking outside
+        # we need flag TREE_HITTEST_ONITEMCHECKICON but not TREE_HITTEST_ONITEMLABEL
+        # this applies only for TR_FULL_ROW_HIGHLIGHT style
+        if (flags & CT.TREE_HITTEST_ONITEMCHECKICON) and not (flags & CT.TREE_HITTEST_ONITEMLABEL):
+            self.hitCheckbox = True
+        else:
+            self.hitCheckbox = False
+        event.Skip()
+        
+    def OnChangingSel(self, event):
+        """!Selection is changing.
+
+        If the user is clicking on checkbox, selection change is vetoed.
+        """
+        if self.hitCheckbox:
+            event.Veto()
+
     def OnChangeSel(self, event):
         """!Selection changed"""
-        oldlayer = event.GetOldItem()
         layer = event.GetItem()
-        if layer == oldlayer:
-            event.Veto()
-            return
-        
         digitToolbar = self.mapdisplay.GetToolbar('vdigit')
         if digitToolbar:
             mapLayer = self.GetPyData(layer)[0]['maplayer']
@@ -1382,6 +1433,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         else:
             self.GetPyData(newItem)[0]['ctrl'] = None
             
+        self.forceCheck = True
         self.CheckItem(newItem, checked = checked) # causes a new render
         
         return newItem
