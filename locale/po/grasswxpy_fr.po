@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-29 15:54+0200\n"
-"PO-Revision-Date: 2012-08-31 00:46+0100\n"
+"PO-Revision-Date: 2012-09-03 19:21+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -52,27 +52,30 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:238
 msgid "Adjusts the viewer's angle of view"
-msgstr ""
+msgstr "Ajuster l'angle de vue"
 
 #: ../gui/wxpython/nviz/tools.py:243 ../gui/wxpython/nviz/preferences.py:68
 msgid "Perspective:"
-msgstr "Perspective :"
+msgstr "Perspective:"
 
 #: ../gui/wxpython/nviz/tools.py:251
+#, fuzzy
 msgid "Rotates the scene about the horizontal axis. An angle of 0 is flat. The scene rotates between -90 and 90 degrees."
-msgstr ""
+msgstr "Effectue une rotation sur l'axe horitontal. Un angle de 0 est plat. L'angle de rotaiton doit être entre -90 et 90 degrés."
 
 #: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/preferences.py:131
 msgid "Twist:"
 msgstr "Basculer :"
 
 #: ../gui/wxpython/nviz/tools.py:263
+#, fuzzy
 msgid "Adjusts the viewer's height above the scene"
-msgstr ""
+msgstr "Ajuster l'angle de vue vertical"
 
 #: ../gui/wxpython/nviz/tools.py:267
+#, fuzzy
 msgid "Adjusts the vertical exaggeration of the surface. As an example, if the easting and northing are in meters and the elevation in feet, a vertical exaggeration of .305 would produce a true (unexaggerated) surface. "
-msgstr ""
+msgstr "Ajuster l'exagération verticale. En exemple, si les paramètres de region sont en mètres et l'altitude en pieds, une exagération verticale de 0,305 produira une surface vraie (non exagérée)."
 
 #: ../gui/wxpython/nviz/tools.py:277 ../gui/wxpython/nviz/tools.py:1039
 #: ../gui/wxpython/nviz/tools.py:1677 ../gui/wxpython/gui_core/dialogs.py:2189
@@ -100,7 +103,7 @@ msgstr "sphère"
 
 #: ../gui/wxpython/nviz/tools.py:302
 msgid "Allows you to select a point on the surface that becomes the new center of view. Click on the button and then on the surface."
-msgstr ""
+msgstr "Permet de sélectionner un point sur la surface qui deviendra le nouveau centre de la vue. Cliquer sur le bouton puis sur la surface."
 
 #: ../gui/wxpython/nviz/tools.py:308
 #, fuzzy
@@ -108,8 +111,9 @@ msgid "center"
 msgstr "Centre :"
 
 #: ../gui/wxpython/nviz/tools.py:311
+#, fuzzy
 msgid "Resets the view to the original default center of view"
-msgstr ""
+msgstr "Rétablir le centre de la vue par défaut"
 
 #: ../gui/wxpython/nviz/tools.py:315
 msgid "top"
@@ -1174,6 +1178,9 @@ msgid ""
 "\n"
 "Do you want to switch to the new location?"
 msgstr ""
+"Secteur <%s> crée.\n"
+"\n"
+"Voulez-vous entrer dans le nouveau secteur ?"
 
 #: ../gui/wxpython/lmgr/frame.py:339
 #, fuzzy
@@ -1244,26 +1251,24 @@ msgstr "Le fichier de script '%s' n'existe pas. Opération annulée."
 #: ../gui/wxpython/lmgr/frame.py:619
 #, python-format
 msgid "Script <%s> is not executable. Do you want to set the permissions that allows you to run this script (note that you must be the owner of the file)?"
-msgstr ""
+msgstr "Le script <%s> n'est pas exécutable. Voulez-vous définir les permissions d'exécution du script (vous devez être l'utilisateur propriétaire) ?"
 
 #: ../gui/wxpython/lmgr/frame.py:624
-#, fuzzy
 msgid "Set permission?"
-msgstr "Définir la région"
+msgstr "Définir les permissions ?"
 
 #: ../gui/wxpython/lmgr/frame.py:633
-#, fuzzy
 msgid "Unable to set permission. Operation canceled."
-msgstr "Impossible d'exécuter la requête SQL '%s'. Opération annulée."
+msgstr "Impossible de définir les permissions. Opération annulée."
 
 #: ../gui/wxpython/lmgr/frame.py:644
 #, python-format
 msgid "Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this directory to GRASS_ADDON_PATH?"
-msgstr ""
+msgstr "Le dossier '%s' n'est pas définit dans GRASS_ADDON_PATH. Voulez-vous ajouter ce dossier à GRASS_ADDON_PATH ?"
 
 #: ../gui/wxpython/lmgr/frame.py:647
 msgid "Update Addons path?"
-msgstr ""
+msgstr "Mettre à jour le chemin des extentions ?"
 
 #: ../gui/wxpython/lmgr/frame.py:653
 #, python-format
@@ -1271,9 +1276,8 @@ msgid "Launching script '%s'..."
 msgstr "Lancement du script '%s'..."
 
 #: ../gui/wxpython/lmgr/frame.py:665
-#, fuzzy
 msgid "No location/mapset provided. Operation canceled."
-msgstr "Aucune carte sélectionnée. Opération annulée."
+msgstr "Aucun secteur/jeux de carte sélectionné. Opération annulée."
 
 #: ../gui/wxpython/lmgr/frame.py:684 ../gui/wxpython/gis_set.py:776
 msgid "Enter name for new mapset:"
@@ -1285,9 +1289,8 @@ msgid "Create new mapset"
 msgstr "Créer un nouveau jeu de cartes"
 
 #: ../gui/wxpython/lmgr/frame.py:691 ../gui/wxpython/lmgr/frame.py:712
-#, fuzzy
 msgid "No mapset provided. Operation canceled."
-msgstr "Aucune carte sélectionnée. Opération annulée."
+msgstr "Aucun jeux de carte sélectionné. Opération annulée."
 
 #: ../gui/wxpython/lmgr/frame.py:700 ../gui/wxpython/lmgr/frame.py:719
 #, python-format
@@ -1321,7 +1324,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:856 ../gui/wxpython/lmgr/frame.py:985
 msgid "Please wait, loading workspace..."
-msgstr "Patientez, l'environnement de travail est en cours de chargement..."
+msgstr "Patientez, chargement de l'environnement de travail ..."
 
 #: ../gui/wxpython/lmgr/frame.py:969
 msgid "Choose GRC file to load"
@@ -1347,7 +1350,7 @@ msgstr "Enregistrer l'espace de travail"
 
 #: ../gui/wxpython/lmgr/frame.py:1062
 msgid "Writing current settings to workspace file failed."
-msgstr "Échec d'écriture des paramètres de l'espace de travail actuel."
+msgstr "Échec d'écriture des paramètres de l'espace de travail courant."
 
 #: ../gui/wxpython/lmgr/frame.py:1073 ../gui/wxpython/wxplot/profile.py:348
 #: ../gui/wxpython/gmodeler/frame.py:881
@@ -1356,18 +1359,17 @@ msgid "Unable to open file <%s> for writing."
 msgstr "Impossible d'écrire dans le fichier <%s>."
 
 #: ../gui/wxpython/lmgr/frame.py:1113
-#, fuzzy
 msgid "Enter new name:"
-msgstr "Entrer le nom du nouveau jeu de cartes :"
+msgstr "Entrer le nouveau nom :"
 
 #: ../gui/wxpython/lmgr/frame.py:1119
-#, fuzzy, python-format
+#, python-format
 msgid "GRASS GIS Map Display: %(name)s  - Location: %(loc)s"
-msgstr "SIG GRASS - Moniteur d'affichage des cartes :  %(id)d - Secteur : %(loc)s"
+msgstr "SIG GRASS - Moniteur d'affichage des cartes :  %(name)s - Secteur : %(loc)s"
 
 #: ../gui/wxpython/lmgr/frame.py:1331
 msgid "Nothing to import. No WMS layer selected."
-msgstr "Rien à imoprter. Pas de couche WMS sélectionnée."
+msgstr "Rien à importer. Pas de couche WMS sélectionnée."
 
 #: ../gui/wxpython/lmgr/frame.py:1367
 msgid "Please wait, loading attribute data..."
@@ -1378,13 +1380,13 @@ msgid "Add selected map layers into layer tree"
 msgstr "Ajouter les cartes sélectionnées dans l'arborescence des couches"
 
 #: ../gui/wxpython/lmgr/frame.py:1471
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported map layer type <%s>."
-msgstr "Type de couche '%s' non pris en charge"
+msgstr "Type de couche <%s> non pris en charge"
 
 #: ../gui/wxpython/lmgr/frame.py:1596
 msgid "Note that cell values can only be displayed for regions of less than 10,000 cells."
-msgstr ""
+msgstr "A noter que les valeurs des cellules ne peuvent être affichées que pour les régions de moins de 10 000 cellules."
 
 #: ../gui/wxpython/lmgr/frame.py:1678
 #, python-format
@@ -1410,9 +1412,8 @@ msgid "Quit GRASS GUI"
 msgstr "Quitter l'interface graphique GRASS"
 
 #: ../gui/wxpython/lmgr/frame.py:1779
-#, fuzzy
 msgid "No map layer selected. Operation canceled."
-msgstr "Aucune carte sélectionnée. Opération annulée."
+msgstr "Aucune ccouche sélectionnée. Opération annulée."
 
 #: ../gui/wxpython/lmgr/frame.py:1780 ../gui/wxpython/gis_set.py:519
 #: ../gui/wxpython/gis_set.py:554 ../gui/wxpython/gui_core/ghelp.py:274
@@ -1421,12 +1422,13 @@ msgid "Message"
 msgstr "Message"
 
 #: ../gui/wxpython/lmgr/frame.py:1789
+#, fuzzy
 msgid "Display resolution is currently not constrained to computational settings. It's suggested to constrain map to region geometry. Do you want to constrain the resolution?"
-msgstr ""
+msgstr "La résolution de l'affichage n'est actuellement pas restreint aux limite de la région de calculs. Il est suggéré de restreindre les cartes aux limites de la région. Voulez-vous restreindre la résolution ?"
 
 #: ../gui/wxpython/lmgr/frame.py:1798
 msgid "Constrain map to region geometry?"
-msgstr ""
+msgstr "Restreindre la carte aux limites de la région ?"
 
 #: ../gui/wxpython/lmgr/pyshell.py:35
 #, python-format
@@ -1464,7 +1466,7 @@ msgstr "Carte vectorielle <%s> ajoutée"
 
 #: ../gui/wxpython/lmgr/toolbars.py:50
 msgid "Start new map display"
-msgstr "Lancer un nouvel écran d'affichage"
+msgstr "Lancer un nouvel affichage de cartes"
 
 #: ../gui/wxpython/lmgr/toolbars.py:52
 msgid "Create new workspace (Ctrl+N)"
@@ -1516,62 +1518,55 @@ msgstr "Importer/Lier des données raster ou vecteur"
 
 #: ../gui/wxpython/lmgr/toolbars.py:136
 msgid "Raster Map Calculator"
-msgstr "Calculateur carte raster"
+msgstr "Calculatrice raster"
 
 #: ../gui/wxpython/lmgr/toolbars.py:138
 msgid "Graphical Modeler"
 msgstr "Modeleur graphique"
 
 #: ../gui/wxpython/lmgr/toolbars.py:140
-#, fuzzy
 msgid "Georectifier"
 msgstr "Géorectifier"
 
 #: ../gui/wxpython/lmgr/toolbars.py:142 ../gui/wxpython/menustrings.py:196
 msgid "Cartographic Composer"
-msgstr "Composeur cartographique"
+msgstr "Composeur de cartes"
 
 #: ../gui/wxpython/lmgr/toolbars.py:173
-#, fuzzy
 msgid "GUI settings"
-msgstr "Paramètres de l'interface utilisateur"
+msgstr "Paramètres de l'interface graphique"
 
 #: ../gui/wxpython/lmgr/toolbars.py:174
-#, fuzzy
 msgid "GRASS manual"
-msgstr "Afficher le manuel"
+msgstr "Manuel de GRASS"
 
 #: ../gui/wxpython/lmgr/toolbars.py:199
 msgid "Edit vector maps"
-msgstr "Éditer une carte vecteur"
+msgstr "Éditer une carte vectorielle"
 
 #: ../gui/wxpython/lmgr/toolbars.py:201
 msgid "Show attribute table"
-msgstr "Afficher la table d'attributs"
+msgstr "Afficher la table attributaire"
 
 #: ../gui/wxpython/lmgr/toolbars.py:230
-#, fuzzy
 msgid "Generate command for m.nviz.image"
-msgstr "Générer l'histogramme d'une image"
+msgstr "Générer la commande pour m.nviz.image"
 
 #: ../gui/wxpython/lmgr/toolbars.py:231
 msgid "Generate command for m.nviz.image based on current state"
-msgstr ""
+msgstr "Générer la commande pour m.nviz.image à partir de l'état actuel"
 
 #: ../gui/wxpython/lmgr/toolbars.py:233
-#, fuzzy
 msgid "3D view mode settings"
 msgstr "Paramètres de vue 3D"
 
 #: ../gui/wxpython/lmgr/toolbars.py:234
-#, fuzzy
 msgid "Show 3D view mode settings dialog"
-msgstr "Afficher/Cacher les réglages du mode vue 3D"
+msgstr "Afficher les paramètres de vue 3D"
 
 #: ../gui/wxpython/lmgr/toolbars.py:236
-#, fuzzy
 msgid "Show 3D view mode manual"
-msgstr "Afficher/Cacher les réglages du mode vue 3D"
+msgstr "Afficher le manuel de la vue 3D"
 
 #: ../gui/wxpython/lmgr/layertree.py:50
 #: ../gui/wxpython/gui_core/dialogs.py:1681 ../gui/wxpython/menustrings.py:29
@@ -1584,9 +1579,8 @@ msgid "Link external raster data"
 msgstr "Lier une carte raster externe"
 
 #: ../gui/wxpython/lmgr/layertree.py:54
-#, fuzzy
 msgid "Set raster output format"
-msgstr "Sélectionner une police"
+msgstr "Sélectionner le format de sortie raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:56
 #: ../gui/wxpython/gui_core/dialogs.py:1675 ../gui/wxpython/menustrings.py:56
@@ -1599,9 +1593,8 @@ msgid "Link external vector data"
 msgstr "Lier des données vectorielles externes"
 
 #: ../gui/wxpython/lmgr/layertree.py:60
-#, fuzzy
 msgid "Set vector output format"
-msgstr "Sélectionner une police"
+msgstr "Sélectionner le format de sortie vectorielle"
 
 #: ../gui/wxpython/lmgr/layertree.py:62
 msgid "Add command layer"
@@ -1642,7 +1635,7 @@ msgstr "Ajouter un diagramme thématique"
 
 #: ../gui/wxpython/lmgr/layertree.py:80
 msgid "Add grid layer"
-msgstr "Ajouter une couche de carroyage"
+msgstr "Ajouter une couche de carroyage (grille)"
 
 #: ../gui/wxpython/lmgr/layertree.py:82
 msgid "Add geodesic line layer"
