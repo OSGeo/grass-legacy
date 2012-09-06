@@ -4,6 +4,22 @@
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
+ * 
+
+ *  Iostream is a library that implements streams, external memory
+ *  sorting on streams, and an external memory priority queue on
+ *  streams. These are the fundamental components used in external
+ *  memory algorithms.  
+
+ * Credits: The library was developed by Laura Toma.  The kernel of
+ * class STREAM is based on the similar class existent in the GPL TPIE
+ * project developed at Duke University. The sorting and priority
+ * queue have been developed by Laura Toma based on communications
+ * with Rajiv Wickremesinghe. The library was developed as part of
+ * porting Terraflow to GRASS in 2001.  PEARL upgrades in 2003 by
+ * Rajiv Wickremesinghe as part of the Terracost project.
+
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -491,7 +507,7 @@ void BasicMinMaxHeap<T>::print_range() const {
   T a, b;
   min(a);
   max(b);
-  if (size) {
+  if (size()) {
     cout << a.getPriority() << ".."
 	 << b.getPriority();
   }
