@@ -105,7 +105,7 @@ int db_select_int(dbDriver * driver, const char *tab, const char *col,
 {
     int type, more, alloc, count;
     int *val;
-    char buf[1024];
+    char *buf = NULL;
     const char *sval;
     dbString stmt;
     dbCursor cursor;
@@ -125,20 +125,24 @@ int db_select_int(dbDriver * driver, const char *tab, const char *col,
     val = (int *)G_malloc(alloc * sizeof(int));
 
     if (where == NULL || strlen(where) == 0)
-	G_snprintf(buf, 1023, "SELECT %s FROM %s", col, tab);
+	G_asprintf(&buf, "SELECT %s FROM %s", col, tab);
     else
-	G_snprintf(buf, 1023, "SELECT %s FROM %s WHERE %s", col, tab, where);
+	G_asprintf(&buf, "SELECT %s FROM %s WHERE %s", col, tab, where);
 
     G_debug(3, "  SQL: %s", buf);
 
     db_init_string(&stmt);
     db_set_string(&stmt, buf);
+    G_free(buf);
 
     if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
 	return (-1);
 
     table = db_get_cursor_table(&cursor);
     column = db_get_table_column(table, 0);	/* first column */
+    if (column == NULL) {
+	return -1;
+    }
     value = db_get_column_value(column);
     type = db_get_column_sqltype(column);
     type = db_sqltype_to_Ctype(type);
@@ -201,7 +205,7 @@ int db_select_value(dbDriver * driver, const char *tab, const char *key,
 		    int id, const char *col, dbValue * val)
 {
     int more, count;
-    char buf[1024];
+    char *buf = NULL;
     dbString stmt;
     dbCursor cursor;
     dbColumn *column;
@@ -219,9 +223,10 @@ int db_select_value(dbDriver * driver, const char *tab, const char *key,
     }
 
     G_zero(val, sizeof(dbValue));
-    sprintf(buf, "SELECT %s FROM %s WHERE %s = %d\n", col, tab, key, id);
+    G_asprintf(&buf, "SELECT %s FROM %s WHERE %s = %d", col, tab, key, id);
     db_init_string(&stmt);
     db_set_string(&stmt, buf);
+    G_free(buf);
 
     if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
 	return (-1);
@@ -264,8 +269,8 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
 			  const char *col, const char *where,
 			  dbCatValArray * cvarr)
 {
-    int i, type, more, nrows;
-    char buf[1024];
+    int i, type, more, nrows, ncols;
+    char *buf = NULL;
     dbString stmt;
     dbCursor cursor;
     dbColumn *column;
@@ -283,11 +288,18 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
 	G_warning(_("Missing column name"));
 	return -1;
     }
-
     db_init_string(&stmt);
 
-    sprintf(buf, "SELECT %s, %s FROM %s", key, col, tab);
+    if (strcmp(key, col) == 0) {
+	ncols = 1;
+	G_asprintf(&buf, "SELECT %s FROM %s", key, tab);
+    }
+    else {
+	ncols = 2;
+	G_asprintf(&buf, "SELECT %s, %s FROM %s", key, col, tab);
+    }
     db_set_string(&stmt, buf);
+    G_free(buf);
 
     if (where != NULL && strlen(where) > 0) {
 	db_append_string(&stmt, " WHERE ");
@@ -301,8 +313,12 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
 
     nrows = db_get_num_rows(&cursor);
     G_debug(3, "  %d rows selected", nrows);
-    if (nrows < 0)
-	G_fatal_error(_("Unable select records from table <%s>"), tab);
+    if (nrows < 0) {
+	G_warning(_("Unable select records from table <%s>"), tab);
+	db_close_cursor(&cursor);
+	db_free_string(&stmt);
+	return -1;
+    }
 
     db_CatValArray_alloc(cvarr, nrows);
 
@@ -314,19 +330,23 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
     G_debug(3, "  key type = %d", type);
 
     if (type != DB_C_TYPE_INT) {
-	G_fatal_error("Key column type is not integer");
+	G_warning(_("Key column type is not integer"));
+	db_close_cursor(&cursor);
+	db_free_string(&stmt);
+	return -1;
     }
 
-    column = db_get_table_column(table, 1);
-    type = db_sqltype_to_Ctype(db_get_column_sqltype(column));
-    G_debug(3, "  col type = %d", type);
+    if (ncols == 2) {
+	column = db_get_table_column(table, 1);
+	type = db_sqltype_to_Ctype(db_get_column_sqltype(column));
+	G_debug(3, "  col type = %d", type);
 
-    /*
-       if ( type != DB_C_TYPE_INT && type != DB_C_TYPE_DOUBLE ) {
-       G_fatal_error ( "Column type not supported by db_select_to_array()" );
-       }
-     */
-
+	/*
+	  if ( type != DB_C_TYPE_INT && type != DB_C_TYPE_DOUBLE ) {
+	  G_fatal_error ( "Column type not supported by db_select_to_array()" );
+	  }
+	*/
+    }
     cvarr->ctype = type;
 
     /* fetch the data */
@@ -338,8 +358,10 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
 	value = db_get_column_value(column);
 	cvarr->value[i].cat = db_get_value_int(value);
 
-	column = db_get_table_column(table, 1);
-	value = db_get_column_value(column);
+	if (ncols == 2) {
+	    column = db_get_table_column(table, 1);
+	    value = db_get_column_value(column);
+	}
 	cvarr->value[i].isNull = value->isNull;
 	switch (type) {
 	case (DB_C_TYPE_INT):
@@ -385,7 +407,7 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
 
     db_CatValArray_sort(cvarr);
 
-    return (nrows);
+    return nrows;
 }
 
 /*!
