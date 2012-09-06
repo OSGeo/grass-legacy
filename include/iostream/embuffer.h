@@ -1,10 +1,25 @@
-
 /****************************************************************************
  * 
  *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
+ * 
+
+ *  Iostream is a library that implements streams, external memory
+ *  sorting on streams, and an external memory priority queue on
+ *  streams. These are the fundamental components used in external
+ *  memory algorithms.  
+
+ * Credits: The library was developed by Laura Toma.  The kernel of
+ * class STREAM is based on the similar class existent in the GPL TPIE
+ * project developed at Duke University. The sorting and priority
+ * queue have been developed by Laura Toma based on communications
+ * with Rajiv Wickremesinghe. The library was developed as part of
+ * porting Terraflow to GRASS in 2001.  PEARL upgrades in 2003 by
+ * Rajiv Wickremesinghe as part of the Terracost project.
+
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -363,8 +378,7 @@ public:
      
   // return the number of items actually inserted 
   long insert(AMI_STREAM<T>* str, 
-	      //long bos=0); 
-	      long bos); 
+	      long bos=0);
   
   //print range of elements in buffer
   void print_range();
@@ -1120,7 +1134,7 @@ long em_buffer<T,Key>::insert(T* a, long n) {
    
    return the number of items actually inserted */
 template<class T, class Key>
-long em_buffer<T,Key>::insert(AMI_STREAM<T>* str, long bos=0) {
+long em_buffer<T,Key>::insert(AMI_STREAM<T>* str, long bos) {
 
   assert(str);
   
