@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-29 15:54+0200\n"
-"PO-Revision-Date: 2012-09-03 19:21+0100\n"
+"PO-Revision-Date: 2012-09-07 22:12+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -37,18 +37,16 @@ msgid "Appearance"
 msgstr "Apparence"
 
 #: ../gui/wxpython/nviz/tools.py:94
-#, fuzzy
 msgid "Analysis"
-msgstr "Analyser"
+msgstr "Analyses"
 
 #: ../gui/wxpython/nviz/tools.py:97 ../gui/wxpython/nviz/tools.py:379
-#, fuzzy
 msgid "Animation"
-msgstr "Quantification"
+msgstr "Animation"
 
 #: ../gui/wxpython/nviz/tools.py:217
 msgid "Control View"
-msgstr ""
+msgstr "Contrôles de la vue"
 
 #: ../gui/wxpython/nviz/tools.py:238
 msgid "Adjusts the viewer's angle of view"
@@ -56,26 +54,23 @@ msgstr "Ajuster l'angle de vue"
 
 #: ../gui/wxpython/nviz/tools.py:243 ../gui/wxpython/nviz/preferences.py:68
 msgid "Perspective:"
-msgstr "Perspective:"
+msgstr "Perspective :"
 
 #: ../gui/wxpython/nviz/tools.py:251
-#, fuzzy
 msgid "Rotates the scene about the horizontal axis. An angle of 0 is flat. The scene rotates between -90 and 90 degrees."
-msgstr "Effectue une rotation sur l'axe horitontal. Un angle de 0 est plat. L'angle de rotaiton doit être entre -90 et 90 degrés."
+msgstr "Effectue une rotation sur l'axe horitontal. Un angle de 0 est plat. L'angle de rotation doit être entre -90 et 90 degrés."
 
 #: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/preferences.py:131
 msgid "Twist:"
 msgstr "Basculer :"
 
 #: ../gui/wxpython/nviz/tools.py:263
-#, fuzzy
 msgid "Adjusts the viewer's height above the scene"
-msgstr "Ajuster l'angle de vue vertical"
+msgstr "Ajuster la hauteur de la vue au dessus de la scène"
 
 #: ../gui/wxpython/nviz/tools.py:267
-#, fuzzy
 msgid "Adjusts the vertical exaggeration of the surface. As an example, if the easting and northing are in meters and the elevation in feet, a vertical exaggeration of .305 would produce a true (unexaggerated) surface. "
-msgstr "Ajuster l'exagération verticale. En exemple, si les paramètres de region sont en mètres et l'altitude en pieds, une exagération verticale de 0,305 produira une surface vraie (non exagérée)."
+msgstr "Ajuster l'exagération verticale. Par exemple, si les abscisse et ordonnée sont en mètres et l'altitude en pieds, une exagération verticale de 0,305 produira une surface vraie (non exagérée)."
 
 #: ../gui/wxpython/nviz/tools.py:277 ../gui/wxpython/nviz/tools.py:1039
 #: ../gui/wxpython/nviz/tools.py:1677 ../gui/wxpython/gui_core/dialogs.py:2189
@@ -92,41 +87,36 @@ msgid "Z-exag:"
 msgstr "Exagération verticale :"
 
 #: ../gui/wxpython/nviz/tools.py:296
-#, fuzzy
 msgid "Look:"
-msgstr "Regarder vers :"
+msgstr "Orienter vers :"
 
 #: ../gui/wxpython/nviz/tools.py:299
-#, fuzzy
 msgid "here"
-msgstr "sphère"
+msgstr "curseur"
 
 #: ../gui/wxpython/nviz/tools.py:302
 msgid "Allows you to select a point on the surface that becomes the new center of view. Click on the button and then on the surface."
 msgstr "Permet de sélectionner un point sur la surface qui deviendra le nouveau centre de la vue. Cliquer sur le bouton puis sur la surface."
 
 #: ../gui/wxpython/nviz/tools.py:308
-#, fuzzy
 msgid "center"
-msgstr "Centre :"
+msgstr "centre"
 
 #: ../gui/wxpython/nviz/tools.py:311
-#, fuzzy
 msgid "Resets the view to the original default center of view"
 msgstr "Rétablir le centre de la vue par défaut"
 
 #: ../gui/wxpython/nviz/tools.py:315
 msgid "top"
-msgstr "sommet"
+msgstr "nord"
 
 #: ../gui/wxpython/nviz/tools.py:318
 msgid "Sets the viewer directly over the scene's center position. This top view orients approximately north south."
-msgstr ""
+msgstr "Définir la vue directement au dessus du centre de la scène. Cette vue du haut est orientée approximativement nord-sud."
 
 #: ../gui/wxpython/nviz/tools.py:322
-#, fuzzy
 msgid "reset"
-msgstr "Remise à zéro"
+msgstr "par défaut"
 
 #: ../gui/wxpython/nviz/tools.py:323
 msgid "Reset to default view"
@@ -142,31 +132,29 @@ msgid "Background color:"
 msgstr "Couleur d'arrière-plan :"
 
 #: ../gui/wxpython/nviz/tools.py:386
+#, fuzzy
 msgid "Press 'Record' button and start changing the view. It is recommended to use fly-through mode (Map Display toolbar) to achieve smooth motion."
-msgstr ""
+msgstr "Appuyez sur le bouton 'Enregistrer' et commencez à changer la vue. Il ets recommendé d'utiliser le mode avion (barre d'outils d'affichage) pour obtenir un déplacement fluide."
 
 #: ../gui/wxpython/nviz/tools.py:397
-#, fuzzy
 msgid "Record"
-msgstr "Recoder"
+msgstr "Enregistrer"
 
 #: ../gui/wxpython/nviz/tools.py:399
 msgid "Play"
-msgstr ""
+msgstr "Lecture"
 
 #: ../gui/wxpython/nviz/tools.py:401
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: ../gui/wxpython/nviz/tools.py:403
-#, fuzzy
 msgid "Stop"
-msgstr "Sommet"
+msgstr "Stop"
 
 #: ../gui/wxpython/nviz/tools.py:415
-#, fuzzy
 msgid "Total number of frames :"
-msgstr "Nombre de segments :"
+msgstr "Nombre total d'images :"
 
 #: ../gui/wxpython/nviz/tools.py:419
 msgid "Frame rate (FPS):"
@@ -177,19 +165,16 @@ msgid "Frames are recorded with given frequency (FPS). "
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:468
-#, fuzzy
 msgid "Save image sequence"
-msgstr "Fixer la taille de l'image"
+msgstr "Enregistrer la séquence d'image"
 
 #: ../gui/wxpython/nviz/tools.py:475 ../gui/wxpython/psmap/dialogs.py:4119
-#, fuzzy
 msgid "Choose a directory:"
-msgstr "Choisir le répertoire d'entrée"
+msgstr "Choisir un répertoire :"
 
 #: ../gui/wxpython/nviz/tools.py:476
-#, fuzzy
 msgid "Choose a directory for images"
-msgstr "Choisir le répertoire d'entrée"
+msgstr "Choisir un répertoire pour les images"
 
 #: ../gui/wxpython/nviz/tools.py:477 ../gui/wxpython/gui_core/gselect.py:877
 #: ../gui/wxpython/gui_core/gselect.py:1175
@@ -210,16 +195,15 @@ msgstr "Parcourir"
 
 #: ../gui/wxpython/nviz/tools.py:480
 msgid "File prefix:"
-msgstr ""
+msgstr "Préfix :"
 
 #: ../gui/wxpython/nviz/tools.py:484
 msgid "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
-msgstr ""
+msgstr "Les noms de fichiers générés ressembleront à ceci : prefix_1.ppm, prefix_2.ppm, ..."
 
 #: ../gui/wxpython/nviz/tools.py:485
-#, fuzzy
 msgid "File format:"
-msgstr "Format :"
+msgstr "Format de fichier :"
 
 #: ../gui/wxpython/nviz/tools.py:543 ../gui/wxpython/nviz/tools.py:1769
 #: ../gui/wxpython/nviz/preferences.py:360
@@ -227,9 +211,8 @@ msgid "Surface"
 msgstr "Surface"
 
 #: ../gui/wxpython/nviz/tools.py:549 ../gui/wxpython/nviz/tools.py:1082
-#, fuzzy
 msgid "Constant surface"
-msgstr "Surface de coût"
+msgstr "Surface constante"
 
 #: ../gui/wxpython/nviz/tools.py:554 ../gui/wxpython/nviz/preferences.py:462
 msgid "Vector"
@@ -306,21 +289,18 @@ msgid "Use draw settings for all loaded surfaces"
 msgstr "Utiliser les paramètres de rendu pour toutes les surfaces chargées"
 
 #: ../gui/wxpython/nviz/tools.py:714 ../gui/wxpython/nviz/preferences.py:405
-#, fuzzy
 msgid "Coarse mode:"
-msgstr "Grossier :"
+msgstr "Mode grossier :"
 
 #: ../gui/wxpython/nviz/tools.py:717 ../gui/wxpython/nviz/tools.py:757
 #: ../gui/wxpython/nviz/preferences.py:392
 #: ../gui/wxpython/nviz/preferences.py:409
-#, fuzzy
 msgid "resolution:"
-msgstr "Résolution :"
+msgstr "résolution :"
 
 #: ../gui/wxpython/nviz/tools.py:730 ../gui/wxpython/nviz/preferences.py:421
-#, fuzzy
 msgid "style:"
-msgstr "style"
+msgstr "style :"
 
 #: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
@@ -328,17 +308,15 @@ msgstr "treillis"
 
 #: ../gui/wxpython/nviz/tools.py:734 ../gui/wxpython/nviz/preferences.py:425
 msgid "surface"
-msgstr "surface "
+msgstr "surface"
 
 #: ../gui/wxpython/nviz/tools.py:746
-#, fuzzy
 msgid "Change wire color"
 msgstr "Couleur du treillis"
 
 #: ../gui/wxpython/nviz/tools.py:753 ../gui/wxpython/nviz/preferences.py:388
-#, fuzzy
 msgid "Fine mode:"
-msgstr "Fin :"
+msgstr "Mode fin :"
 
 #: ../gui/wxpython/nviz/tools.py:778
 msgid "Surface attributes"
@@ -388,7 +366,7 @@ msgstr "Position"
 
 #: ../gui/wxpython/nviz/tools.py:860
 msgid "Changes the x, y, and z position of the current surface"
-msgstr ""
+msgstr "Modifier les positions x, y et z de la surface actuelle"
 
 #: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1058
 #: ../gui/wxpython/nviz/tools.py:1601 ../gui/wxpython/nviz/tools.py:2457
@@ -396,9 +374,8 @@ msgid "Reset"
 msgstr "Remise à zéro"
 
 #: ../gui/wxpython/nviz/tools.py:871 ../gui/wxpython/nviz/tools.py:1602
-#, fuzzy
 msgid "Reset to default position"
-msgstr "Revenir à la vue par défaut"
+msgstr "Revenir à la position par défaut"
 
 #: ../gui/wxpython/nviz/tools.py:946
 msgid "Active cutting plane:"
@@ -406,7 +383,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:958
 msgid "clear"
-msgstr ""
+msgstr "effacer"
 
 #: ../gui/wxpython/nviz/tools.py:959
 #, fuzzy
@@ -424,7 +401,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:962
 msgid "shaded"
-msgstr ""
+msgstr "ombré"
 
 #: ../gui/wxpython/nviz/tools.py:974
 #, fuzzy
@@ -475,19 +452,16 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: ../gui/wxpython/nviz/tools.py:1110
-#, fuzzy
 msgid "Fine resolution:"
-msgstr "Résolution :"
+msgstr "Résolution fine :"
 
 #: ../gui/wxpython/nviz/tools.py:1122
-#, fuzzy
 msgid "Value:"
-msgstr "Valeurs"
+msgstr "Valeur :"
 
 #: ../gui/wxpython/nviz/tools.py:1134 ../gui/wxpython/nviz/tools.py:2446
-#, fuzzy
 msgid "Transparency:"
-msgstr "Transparence"
+msgstr "Transparence :"
 
 #: ../gui/wxpython/nviz/tools.py:1146 ../gui/wxpython/nviz/tools.py:1699
 #: ../gui/wxpython/nviz/tools.py:1820 ../gui/wxpython/nviz/preferences.py:333
@@ -529,9 +503,8 @@ msgid "Display"
 msgstr "Affichage"
 
 #: ../gui/wxpython/nviz/tools.py:1256
-#, fuzzy
 msgid "on surface(s):"
-msgstr "sur la surface"
+msgstr "sur la surface :"
 
 #: ../gui/wxpython/nviz/tools.py:1266 ../gui/wxpython/nviz/tools.py:1393
 msgid "Height above surface:"
@@ -547,7 +520,7 @@ msgstr "Points vectoriels"
 
 #: ../gui/wxpython/nviz/tools.py:1321
 msgid "Icon:"
-msgstr "Icône"
+msgstr "Icône :"
 
 #: ../gui/wxpython/nviz/tools.py:1324 ../gui/wxpython/psmap/dialogs.py:2000
 msgid "size:"
@@ -558,9 +531,8 @@ msgid "symbol:"
 msgstr "symbole :"
 
 #: ../gui/wxpython/nviz/tools.py:1390
-#, fuzzy
 msgid "Display on surface(s):"
-msgstr "Distance le long de la surface"
+msgstr "Afficher sur la surface :"
 
 #: ../gui/wxpython/nviz/tools.py:1447
 msgid "3D raster map"
@@ -592,7 +564,7 @@ msgstr "Position de la source de lumière"
 
 #: ../gui/wxpython/nviz/tools.py:1671
 msgid "Adjusts the light height"
-msgstr ""
+msgstr "Ajuster la hauteur de la source de lumière"
 
 #: ../gui/wxpython/nviz/tools.py:1695
 msgid "Light color and intensity"
@@ -604,7 +576,7 @@ msgstr "Luminosité :"
 
 #: ../gui/wxpython/nviz/tools.py:1711
 msgid "Adjusts the brightness of the light"
-msgstr ""
+msgstr "Ajuster la luminosité de la lumière"
 
 #: ../gui/wxpython/nviz/tools.py:1720 ../gui/wxpython/nviz/preferences.py:320
 msgid "Ambient:"
@@ -612,7 +584,7 @@ msgstr "Ambiant :"
 
 #: ../gui/wxpython/nviz/tools.py:1722
 msgid "Adjusts the ambient light"
-msgstr ""
+msgstr "Ajuster la lumière ambiante"
 
 #: ../gui/wxpython/nviz/tools.py:1783
 msgid "Edges with fringe"
@@ -646,86 +618,75 @@ msgstr "Altitude de la frange depuis le fond :"
 #: ../gui/wxpython/nviz/tools.py:1856 ../gui/wxpython/psmap/toolbars.py:85
 #: ../gui/wxpython/psmap/dialogs.py:4490
 #: ../gui/wxpython/mapdisp/toolbars.py:35
-#, fuzzy
 msgid "North Arrow"
-msgstr "Échelle et direction du Nord"
+msgstr "Flèche du Nord"
 
 #: ../gui/wxpython/nviz/tools.py:1861
-#, fuzzy
 msgid "Arrow length (in map units):"
-msgstr "La longueur de barre d'échelle est donnée en unités de cartes"
+msgstr "Longueur de la flèche (en unité de carte) :"
 
 #: ../gui/wxpython/nviz/tools.py:1871
-#, fuzzy
 msgid "Arrow color:"
-msgstr "couleur de bordure :"
+msgstr "Couleur de la flèche :"
 
 #: ../gui/wxpython/nviz/tools.py:1880
 msgid "Place arrow"
-msgstr ""
+msgstr "Positionner la flèche"
 
 #: ../gui/wxpython/nviz/tools.py:1898 ../gui/wxpython/psmap/toolbars.py:81
-#, fuzzy
 msgid "Scale bar"
-msgstr "Ajouter une barre d'échelle"
+msgstr "Barre d'échelle"
 
 #: ../gui/wxpython/nviz/tools.py:1903
-#, fuzzy
 msgid "Scale bar length (in map units):"
-msgstr "La longueur de barre d'échelle est donnée en unités de cartes"
+msgstr "Longueur de la barre d'échelle (en unités de carte) : "
 
 #: ../gui/wxpython/nviz/tools.py:1913
-#, fuzzy
 msgid "Scale bar color:"
-msgstr "utiliser la couleur de bordure :"
+msgstr "Couleur de la barre d'échelle :"
 
 #: ../gui/wxpython/nviz/tools.py:1922
-#, fuzzy
 msgid "Place scalebar"
-msgstr "Ajouter une barre d'échelle"
+msgstr "Positionner la barre d'échelle"
 
 #: ../gui/wxpython/nviz/tools.py:1928
-#, fuzzy
 msgid "Delete last"
-msgstr "Supprimer le jeu de cartes"
+msgstr "Supprimer le dernier"
 
 #: ../gui/wxpython/nviz/tools.py:1961
 msgid "Do you want to record new animation without saving the previous one?"
-msgstr ""
+msgstr "Voulez-vous enregistrer une nouvelle animation sans sauvegarder la précédente ?"
 
 #: ../gui/wxpython/nviz/tools.py:1964
-#, fuzzy
 msgid "Animation already axists"
-msgstr "Le fichier existe déjà"
+msgstr "L'animation existe déjà"
 
 #: ../gui/wxpython/nviz/tools.py:2126
 msgid "No file prefix given."
-msgstr ""
+msgstr "Pas de préfix de fichier."
 
 #: ../gui/wxpython/nviz/tools.py:2130
 #, python-format
 msgid "Directory %s does not exist."
-msgstr ""
+msgstr "Le répertoire %s n'existe pas."
 
 #: ../gui/wxpython/nviz/tools.py:2149 ../gui/wxpython/nviz/tools.py:2194
 #: ../gui/wxpython/nviz/tools.py:4281 ../gui/wxpython/nviz/mapwindow.py:2107
 #: ../gui/wxpython/nviz/mapwindow.py:2125
-#, fuzzy
 msgid "constant#"
-msgstr "constante"
+msgstr "constante#"
 
 #: ../gui/wxpython/nviz/tools.py:2260
 msgid "Isosurface attributes"
-msgstr "attributs des iso-surfaces"
+msgstr "Attributs de l'iso-surface"
 
 #: ../gui/wxpython/nviz/tools.py:2266
 msgid "toggle normal direction"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:2272
-#, fuzzy
 msgid "Isosurface value"
-msgstr "attributs des iso-surfaces"
+msgstr "Valeur de l'iso-surface"
 
 #: ../gui/wxpython/nviz/tools.py:2375
 #, fuzzy
@@ -753,24 +714,20 @@ msgid "E"
 msgstr "E"
 
 #: ../gui/wxpython/nviz/tools.py:2518
-#, fuzzy
 msgid "NW"
-msgstr "O"
+msgstr "NO"
 
 #: ../gui/wxpython/nviz/tools.py:2519
-#, fuzzy
 msgid "NE"
-msgstr "N"
+msgstr "NE"
 
 #: ../gui/wxpython/nviz/tools.py:2520
-#, fuzzy
 msgid "SE"
-msgstr "S"
+msgstr "SE"
 
 #: ../gui/wxpython/nviz/tools.py:2521
-#, fuzzy
 msgid "SW"
-msgstr "O"
+msgstr "SO"
 
 #: ../gui/wxpython/nviz/tools.py:3003 ../gui/wxpython/nviz/tools.py:3695
 #: ../gui/wxpython/nviz/tools.py:3697 ../gui/wxpython/nviz/tools.py:4614
@@ -789,9 +746,10 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:4287
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: ../gui/wxpython/nviz/tools.py:4289 ../gui/wxpython/menustrings.py:461
+#, fuzzy
 msgid "Plane"
 msgstr "Plan"
 
@@ -815,54 +773,47 @@ msgstr "fourchette"
 
 # Easting et Northing sont ici traduits resp. Abscisse et Ordonnée, désignant plutôt des valeurs numériques que des directions cardinales.
 #: ../gui/wxpython/nviz/tools.py:4715 ../gui/wxpython/nviz/tools.py:4726
-#, fuzzy
 msgid "North edge:"
-msgstr "Ordonnée"
+msgstr "Limite nord :"
 
 #: ../gui/wxpython/nviz/tools.py:4716 ../gui/wxpython/nviz/tools.py:4727
-#, fuzzy
 msgid "South edge:"
-msgstr "Sud"
+msgstr "Limite sud :"
 
 #: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4724
 #: ../gui/wxpython/nviz/tools.py:4733
-#, fuzzy
 msgid "West edge:"
-msgstr "Détecter les bordures"
+msgstr "Limite ouest :"
 
 #: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4725
 #: ../gui/wxpython/nviz/tools.py:4734
 msgid "East edge:"
-msgstr ""
+msgstr "Limite est :"
 
 # Easting et Northing sont ici traduits resp. Abscisse et Ordonnée, désignant plutôt des valeurs numériques que des directions cardinales.
 #: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4731
 #: ../gui/wxpython/nviz/tools.py:4739
-#, fuzzy
 msgid "Northing (Y):"
-msgstr "Ordonnée"
+msgstr "Ordonnée (Y) :"
 
 #: ../gui/wxpython/nviz/tools.py:4721 ../gui/wxpython/nviz/tools.py:4730
 #: ../gui/wxpython/nviz/tools.py:4740
-#, fuzzy
 msgid "Height (Z):"
-msgstr "Hauteur :"
+msgstr "Hauteur (Z) :"
 
 # Easting et Northing sont ici traduits resp. Abscisse et Ordonnée, désignant plutôt des valeurs numériques que des directions cardinales.
 #: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4729
 #: ../gui/wxpython/nviz/tools.py:4738
-#, fuzzy
 msgid "Easting (X):"
-msgstr "Abscisse"
+msgstr "Abscisse (X) :"
 
 #: ../gui/wxpython/nviz/tools.py:4735
-#, fuzzy
 msgid "Bottom edge:"
-msgstr "Base"
+msgstr "Limite basse :"
 
 #: ../gui/wxpython/nviz/tools.py:4736
 msgid "Top edge:"
-msgstr ""
+msgstr "Limite haute :"
 
 #: ../gui/wxpython/nviz/tools.py:4840
 msgid "Adjusts the look direction (azimuth). Click and drag the puck to change the current eye position."
@@ -877,16 +828,14 @@ msgid "3D view settings"
 msgstr "Paramètres de vue 3D"
 
 #: ../gui/wxpython/nviz/preferences.py:48
-#, fuzzy
 msgid "Revert settings to default, changes are not applied"
-msgstr "Revenir aux réglages par défaut et appliquer les modifications"
+msgstr "Revenir aux réglages par défaut, les changements ne seront pas appliqués"
 
 #: ../gui/wxpython/nviz/preferences.py:71
 #: ../gui/wxpython/nviz/preferences.py:134
 #: ../gui/wxpython/nviz/preferences.py:152
-#, fuzzy
 msgid "value:"
-msgstr "valeurs"
+msgstr "valeur :"
 
 #: ../gui/wxpython/nviz/preferences.py:83
 #, fuzzy
@@ -900,9 +849,8 @@ msgstr "Position :"
 
 #: ../gui/wxpython/nviz/preferences.py:101
 #: ../gui/wxpython/nviz/preferences.py:268
-#, fuzzy
 msgid "x:"
-msgstr " : "
+msgstr "x : "
 
 #: ../gui/wxpython/nviz/preferences.py:204
 msgid "Fly-through"
@@ -928,14 +876,12 @@ msgid "Light"
 msgstr "Droit"
 
 #: ../gui/wxpython/nviz/preferences.py:292
-#, fuzzy
 msgid "z:"
-msgstr " : "
+msgstr "z : "
 
 #: ../gui/wxpython/nviz/preferences.py:436
-#, fuzzy
 msgid "wire color:"
-msgstr "Couleur du treillis"
+msgstr "couleur du treillis :"
 
 #: ../gui/wxpython/nviz/preferences.py:475
 #: ../gui/wxpython/gui_core/dialogs.py:2185
