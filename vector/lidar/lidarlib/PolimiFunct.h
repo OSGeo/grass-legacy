@@ -161,13 +161,13 @@ double **P_Null_Matrix(double ** /**/);
 
 /*----------------------------------------------------------------------------------------------------------*/
 /*tcholBand */
-void tcholDec(double **N, double **T, int n, int BW, int CV);
-void tcholSolve(double **N, double *TN, double *parVect, int n, int BW, int CV);
+void tcholDec(double **N, double **T, int n, int BW);
+void tcholSolve(double **N, double *TN, double *parVect, int n, int BW);
 void tcholSolve2(double **N, double *TN, double **T, double *parVect, int n,
 		 int BW);
-void tcholInv(double **N, double *invNdiag, int n, int BW, int CV);
+void tcholInv(double **N, double *invNdiag, int n, int BW);
 void tcholSolveInv(double **N, double *TN, double *invNdiag, double *parVect,
-		   int n, int BW, int CV);
+		   int n, int BW);
 
 /*---------------------------------------------------------------------------------------*/
 /*interpSpline */

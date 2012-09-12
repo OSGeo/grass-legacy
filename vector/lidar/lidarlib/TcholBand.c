@@ -7,7 +7,7 @@
 /*--------------------------------------------------------------------------------------*/
 /* Cholesky decomposition -> T= Lower Triangular Matrix */
 
-void tcholDec(double **N, double **T, int n, int BW, int CV)
+void tcholDec(double **N, double **T, int n, int BW)
 {
     int i, j, k, end;
     double somma;
@@ -15,7 +15,7 @@ void tcholDec(double **N, double **T, int n, int BW, int CV)
     G_debug(2, "tcholDec(): n=%d  BW=%d", n, BW);
 
     for (i = 0; i < n; i++) {
-	if (CV == 0) G_percent(i, n, 2);
+	G_percent(i, n, 2);
 	for (j = 0; j < BW; j++) {
 	    somma = N[i][j];
 	    /* start = 1 */
@@ -33,14 +33,14 @@ void tcholDec(double **N, double **T, int n, int BW, int CV)
 	}
     }
 
-    if (CV == 0) G_percent(i, n, 2);
+    G_percent(i, n, 2);
     return;
 }
 
 /*--------------------------------------------------------------------------------------*/
 /* Cholesky matrix solution */
 
-void tcholSolve(double **N, double *TN, double *parVect, int n, int BW, int CV)
+void tcholSolve(double **N, double *TN, double *parVect, int n, int BW)
 {
 
     double **T;
@@ -50,7 +50,7 @@ void tcholSolve(double **N, double *TN, double *parVect, int n, int BW, int CV)
     T = G_alloc_matrix(n, BW);
 
 	/*--------------------------------------*/
-    tcholDec(N, T, n, BW, CV);	/* T computation                */
+    tcholDec(N, T, n, BW);	/* T computation                */
 
     /* Forward substitution */
     parVect[0] = TN[0] / T[0][0];
@@ -121,7 +121,7 @@ void tcholSolve2(double **N, double *TN, double **T, double *parVect, int n,
 /*--------------------------------------------------------------------------------------*/
 /* Cholesky matrix inversion */
 
-void tcholInv(double **N, double *invNdiag, int n, int BW, int CV)
+void tcholInv(double **N, double *invNdiag, int n, int BW)
 {
     double **T = NULL;
     double *vect = NULL;
@@ -133,7 +133,7 @@ void tcholInv(double **N, double *invNdiag, int n, int BW, int CV)
     vect = G_alloc_vector(n);
 
     /* T computation                */
-    tcholDec(N, T, n, BW, CV);
+    tcholDec(N, T, n, BW);
 
     /* T Diagonal invertion */
     for (i = 0; i < n; i++) {
@@ -168,7 +168,7 @@ void tcholInv(double **N, double *invNdiag, int n, int BW, int CV)
 /* Cholesky matrix solution and inversion */
 
 void tcholSolveInv(double **N, double *TN, double *invNdiag, double *parVect,
-		   int n, int BW, int CV)
+		   int n, int BW)
 {
 
     double **T = NULL;
@@ -181,7 +181,7 @@ void tcholSolveInv(double **N, double *TN, double *invNdiag, double *parVect,
     vect = G_alloc_vector(n);
 
     /* T computation                */
-    tcholDec(N, T, n, BW, CV);
+    tcholDec(N, T, n, BW);
 
     /* Forward substitution */
     parVect[0] = TN[0] / T[0][0];
