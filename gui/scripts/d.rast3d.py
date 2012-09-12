@@ -8,7 +8,7 @@
 #
 # PURPOSE:	Wrapper for wxGUI to add 3D raster map into layer tree
 #
-# COPYRIGHT:	(C) 2008, 2010 by the GRASS Development Team
+# COPYRIGHT:	(C) 2008, 2010, 2012 by the GRASS Development Team
 #
 #		This program is free software under the GNU General
 #		Public License (>=v2). Read the file COPYING that
@@ -17,7 +17,7 @@
 #############################################################################
 
 #%module
-#% description: Displays 3D raster map layer.
+#% description: Displays user-specified 3D raster map in the active graphics frame.
 #% keywords: display, raster3d
 #%end
 

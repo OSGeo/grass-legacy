@@ -987,7 +987,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 cmd.append('-o')
                          
         elif ltype == '3d-raster':
-            cmd = ['d.rast3d']
+            cmd = ['d.rast3d.py']
                                         
         elif ltype == 'rgb':
             cmd = ['d.rgb']
