@@ -5,7 +5,7 @@
 #include <grass/PolimiFunct.h>
 
 /*--------------------------------------------------------------------------------------*/
-/* Tcholetsky decomposition -> T= Lower Triangular Matrix */
+/* Cholesky decomposition -> T= Lower Triangular Matrix */
 
 void tcholDec(double **N, double **T, int n, int BW)
 {
@@ -38,7 +38,7 @@ void tcholDec(double **N, double **T, int n, int BW)
 }
 
 /*--------------------------------------------------------------------------------------*/
-/* Tcholetsky matrix solution */
+/* Cholesky matrix solution */
 
 void tcholSolve(double **N, double *TN, double *parVect, int n, int BW)
 {
@@ -83,7 +83,7 @@ void tcholSolve(double **N, double *TN, double *parVect, int n, int BW)
 
 
 /*--------------------------------------------------------------------------------------*/
-/* Soluzione con Tcholetsky -> la matrice T triangolare viene passata come paramtero e 
+/* Soluzione con Cholesky -> la matrice T triangolare viene passata come paramtero e 
    non calcolata internamente alla procedura -> T = dmatrix (0, n-1, 0, BW-1) */
 
 void tcholSolve2(double **N, double *TN, double **T, double *parVect, int n,
@@ -119,7 +119,7 @@ void tcholSolve2(double **N, double *TN, double **T, double *parVect, int n,
 }
 
 /*--------------------------------------------------------------------------------------*/
-/* Tcholetsky matrix invertion */
+/* Cholesky matrix inversion */
 
 void tcholInv(double **N, double *invNdiag, int n, int BW)
 {
@@ -165,7 +165,7 @@ void tcholInv(double **N, double *invNdiag, int n, int BW)
 }
 
 /*--------------------------------------------------------------------------------------*/
-/* Tcholetsky matrix solution and invertion */
+/* Cholesky matrix solution and inversion */
 
 void tcholSolveInv(double **N, double *TN, double *invNdiag, double *parVect,
 		   int n, int BW)
