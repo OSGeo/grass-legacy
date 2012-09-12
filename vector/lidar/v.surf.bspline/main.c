@@ -610,7 +610,7 @@ int main(int argc, char *argv[])
 		    nCorrectGrad(N, lambda, nsplx, nsply, passoE, passoN);
 		}
 
-		tcholSolve(N, TN, parVect, nparameters, BW);
+		tcholSolve(N, TN, parVect, nparameters, BW, cross_corr_flag->answer);
 
 		G_free_matrix(N);
 		G_free_vector(TN);
