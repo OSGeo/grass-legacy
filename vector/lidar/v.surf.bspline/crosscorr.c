@@ -257,7 +257,7 @@ int cross_correlation(struct Map_info *Map, double passWE, double passNS)
 		   if (bilin) interpolation (&interp, P_BILINEAR);
 		   else interpolation (&interp, P_BICUBIC);
 		 */
-		tcholSolve(N, TN, parVect, nparam_spl, BW);
+		tcholSolve(N, TN, parVect, nparam_spl, BW, 1);
 
 		/* Estimation of j-point */
 		if (bilin)

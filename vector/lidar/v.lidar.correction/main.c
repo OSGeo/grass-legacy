@@ -406,7 +406,7 @@ int main(int argc, char *argv[])
 			       elaboration_reg.south, nterrain, nparameters,
 			       BW);
 		nCorrectGrad(N, lambda, nsplx, nsply, passoE, passoN);
-		tcholSolve(N, TN, parVect, nparameters, BW);
+		tcholSolve(N, TN, parVect, nparameters, BW, 0);
 
 		G_free_matrix(N);
 		G_free_vector(TN);
