@@ -396,7 +396,7 @@ int main(int argc, char *argv[])
 			       elaboration_reg.south, npoints, nparameters,
 			       BW);
 		nCorrectGrad(N, lambda, nsplx, nsply, passoE, passoN);
-		tcholSolve(N, TN, parVect, nparameters, BW, 0);
+		tcholSolve(N, TN, parVect, nparameters, BW);
 
 		G_free_matrix(N);
 		G_free_vector(TN);
