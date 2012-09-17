@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-01 08:43+0100\n"
-"PO-Revision-Date: 2012-08-30 16:49+0100\n"
+"PO-Revision-Date: 2012-09-17 22:47+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "Language: pl\n"
@@ -281,7 +281,7 @@ msgstr "Odczytywanie pliku [%s]..."
 #: ../vector/v.drape/main.c:245
 #, c-format
 msgid "Raster map <%s> not found"
-msgstr "Mapy rastrowa <%s> nie została znaleziona"
+msgstr "Mapa rastrowa <%s> nie została znaleziona"
 
 #: ../visualization/xganim/main.c:370 ../doc/raster/r.example/main.c:122
 #: ../raster/r.bilinear/main.c:94 ../raster/r.profile/main.c:144
@@ -392,7 +392,7 @@ msgstr "Mój pierwszy moduł rastrowy"
 #: ../imagery/i.cluster/main.c:163 ../vector/v.kcv/main.c:106
 #: ../vector/v.sample/main.c:129 ../vector/v.perturb/main.c:117
 msgid "Quiet"
-msgstr "Cisza"
+msgstr "Ciche wyjście modułu"
 
 #: ../doc/raster/r.example/main.c:114 ../raster/r.mode/main.c:94
 #: ../raster/r.watershed/shed/com_line.c:231
@@ -1552,7 +1552,7 @@ msgstr "Rozmiar (szerokość, wysokość) wyjściowego obrazu"
 
 #: ../misc/m.nviz.image/args.c:121
 msgid "Name of raster map(s) for elevation"
-msgstr "Nazwa map(y) rastrowych(ej)  do wysokości"
+msgstr "Nazwa map(y) rastrowych(ej) do wysokości"
 
 #: ../misc/m.nviz.image/args.c:130
 msgid "Elevation value(s)"
@@ -20575,7 +20575,7 @@ msgstr "Dołączanie centroidów..."
 
 #: ../vector/v.overlay/main.c:56
 msgid "Overlays two vector maps."
-msgstr "Nakłada na siebie dwie mapy rastrowe."
+msgstr "Nakłada na siebie dwie mapy wektorowe."
 
 #: ../vector/v.overlay/main.c:59 ../vector/v.select/args.c:10
 msgid "Name of input vector map (A)"
@@ -21349,14 +21349,13 @@ msgid "Mapset <%s> in input location <%s> not found"
 msgstr "Plik rastrowy <%s> nie został znaleziony"
 
 #: ../vector/v.proj/main.c:270
-#, fuzzy, c-format
+#, c-format
 msgid "Reprojecting primitives: "
-msgstr "Nazwa istniejącego pliku wektorowego"
+msgstr "Reprojekcja prymitywów: "
 
 #: ../vector/v.proj/main.c:281
-#, fuzzy
 msgid "Reading input vector map"
-msgstr "Mapa wektorowa punktów początkowych"
+msgstr "Czytanie wejściowej mapy wektorowej"
 
 #: ../vector/v.proj/main.c:287
 msgid "Error in pj_do_transform"
@@ -21499,7 +21498,7 @@ msgstr "Szerokość strefy w jednostkach mapy"
 
 #: ../vector/v.buffer2/main.c:185 ../vector/v.parallel2/main.c:73
 msgid "Angle of major axis in degrees"
-msgstr ""
+msgstr "Kąt głównej osi w stopniach"
 
 #: ../vector/v.buffer2/main.c:191
 #, fuzzy
@@ -23943,11 +23942,11 @@ msgstr "Typ obiektu (na)"
 
 #: ../vector/v.distance/main.c:144
 msgid "Layer number (from)"
-msgstr "Liczba warstw (z)"
+msgstr "Numer warstwy (z)"
 
 #: ../vector/v.distance/main.c:149
 msgid "Layer number (to)"
-msgstr "Liczba warstw (na)"
+msgstr "Numer warstwy (na)"
 
 #: ../vector/v.distance/main.c:155
 msgid "Name for output vector map containing lines connecting nearest elements"
@@ -24167,7 +24166,7 @@ msgstr "nazwa wejściowego pliku wektorowego"
 #: ../vector/v.to.db/parse.c:46
 #, fuzzy
 msgid "Query layer number (read from)"
-msgstr "Liczba warstw"
+msgstr "Odpytaj numer warstwy"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
 #: ../db/base/execute.c:118
@@ -24273,40 +24272,35 @@ msgstr "Wczytywanie obszarów..."
 
 #: ../vector/v.parallel2/main.c:45
 msgid "Creates parallel line to input vector lines."
-msgstr "Tworzy linie równoległe do linii wejściowych."
+msgstr "Tworzy linie równoległe do podanych linii wektorowych."
 
 #: ../vector/v.parallel2/main.c:57
-#, fuzzy
 msgid "Offset along major axis in map units"
-msgstr "Odległość położenia kamery (w jednostkach mapy)"
+msgstr "Odległość wzdłuż głównej osi, w jednostkach mapy"
 
 #: ../vector/v.parallel2/main.c:65
-#, fuzzy
 msgid "Offset along minor axis in map units"
-msgstr "Odległość położenia kamery (w jednostkach mapy)"
+msgstr "Odległość wzdłuż krótszej osi, w jednostkach mapy"
 
 #: ../vector/v.parallel2/main.c:82
-#, fuzzy
 msgid "Side"
-msgstr "&Strona:"
+msgstr "Strona"
 
 #: ../vector/v.parallel2/main.c:84
 msgid "left;Parallel line is on the left;right;Parallel line is on the right;both;Parallel lines on both sides"
-msgstr ""
+msgstr "lewa;Linia równoległa jest po lewej;prawa;Linia równoległa jest po prawej;obie;Linie równoległe są po obu stronach"
 
 #: ../vector/v.parallel2/main.c:94
-#, fuzzy
 msgid "Tolerance of arc polylines in map units"
-msgstr "Współrzędne są podane w jednostkach mapy"
+msgstr "Tolerancja linii łuków w jednostkach mapy"
 
 #: ../vector/v.parallel2/main.c:98
 msgid "Make outside corners round"
-msgstr ""
+msgstr "Zewnętrzne rogi zaokrąglone"
 
 #: ../vector/v.parallel2/main.c:102
-#, fuzzy
 msgid "Create buffer-like parallel lines"
-msgstr "Utwórz linie równoległe do podanych linii"
+msgstr "Utwórz linie równoległe jak bufory"
 
 #: ../vector/v.mkgrid/write_grid.c:42
 #, fuzzy
@@ -24610,9 +24604,8 @@ msgid "Name of arc backward direction capacity column"
 msgstr ""
 
 #: ../vector/v.net.flow/main.c:86
-#, fuzzy
 msgid "Source layer number or name"
-msgstr "Liczba warstw"
+msgstr "Numer lub nazwa warstwy źródłowej"
 
 #: ../vector/v.net.flow/main.c:91
 #, fuzzy
@@ -25818,8 +25811,9 @@ msgid "Finds shortest path using timetables."
 msgstr "Znajduje najkrótszą trasę przy użyciu rozkładów jazdy."
 
 #: ../vector/v.net.timetable/main.c:267
+#, fuzzy
 msgid "Layer number or name with walking connections or -1"
-msgstr ""
+msgstr "Numer warstwy lub nazwa lub -1"
 
 #: ../vector/v.net.timetable/main.c:272
 #, fuzzy
@@ -25910,12 +25904,12 @@ msgstr "Nie można otworzyć pliku SVG <%s>"
 
 #: ../vector/v.out.svg/main.c:205
 msgid "No areas found, skipping type=poly"
-msgstr ""
+msgstr "Nie znaleziono obszarów, pomijanie type=poly"
 
 #: ../vector/v.out.svg/main.c:215 ../vector/v.extrude/main.c:204
 #, c-format
 msgid "Skipping area %d without centroid"
-msgstr ""
+msgstr "Pomijanie obszaru %d bez centroidu"
 
 #: ../vector/v.out.svg/main.c:242
 #, c-format
@@ -27575,62 +27569,59 @@ msgstr "wektor, geometria, 3D"
 
 #: ../vector/v.extrude/main.c:71
 msgid "Extrudes flat vector object to 3D with defined height."
-msgstr ""
+msgstr "Wytłacza płaskie obiekty wektorowe do 3D ze zdefiniowaną wysokością."
 
 #: ../vector/v.extrude/main.c:75
 msgid "Trace elevation"
-msgstr ""
+msgstr "Podążaj za ukształtowaniem terenu"
 
 #: ../vector/v.extrude/main.c:78
 msgid "Name of input 2D vector map"
-msgstr "Nazwa mapy wektorowej 2D"
+msgstr "Nazwa źródłowej mapy wektorowej 2D"
 
 #: ../vector/v.extrude/main.c:81
 msgid "Name of resulting 3D vector map"
-msgstr "Nazwa wynikowego pliku wektorowego 3D"
+msgstr "Nazwa wyjściowej mapy wektorowej 3D"
 
 #: ../vector/v.extrude/main.c:93
 msgid "Elevation raster for height extraction"
-msgstr ""
+msgstr "Raster z wysokością"
 
 #: ../vector/v.extrude/main.c:100
 msgid "Fixed height for 3D vector objects"
-msgstr ""
+msgstr "Stała wartość wysokości dla obiektów 3D"
 
 #: ../vector/v.extrude/main.c:105
-#, fuzzy
 msgid "Name of attribute column with object heights"
-msgstr "Nazwa wyświetlanej kolumny"
+msgstr "Nazwa kolumny zawierającej wysokość obiektów"
 
 #: ../vector/v.extrude/main.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "One of '%s' or '%s' parameters must be set"
-msgstr "Jeden z parametrów [%s] lub [%s] musi być ustawiony"
+msgstr "Jeden z parametrów '%s' lub '%s' musi być ustawiony"
 
 #: ../vector/v.extrude/main.c:194
-#, fuzzy
 msgid "Extruding areas..."
-msgstr "Zapiywanie %s ..."
+msgstr "Wytłaczanie obszarów..."
 
 #: ../vector/v.extrude/main.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select attributes for area %d"
-msgstr "Nir można wybrać atrybutów dla pola #%d"
+msgstr "Nie można wybrać atrybutów dla pola %d"
 
 #: ../vector/v.extrude/main.c:258
-#, fuzzy
 msgid "Extruding vector primitives..."
-msgstr "Zapiywanie %s ..."
+msgstr "Wytłaczanie prymitywów wektorowych ..."
 
 #: ../vector/v.extrude/main.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select attributes for area #%d"
-msgstr "Nir można wybrać atrybutów dla pola #%d"
+msgstr "Nie można wybrać atrybutów dla pola #%d"
 
 #: ../vector/v.extrude/main.c:309
 #, c-format
 msgid "Column <%s>: invalid data type"
-msgstr ""
+msgstr "Kolumna <%s>: niewłaściwy typ danych"
 
 #: ../vector/v.segment/main.c:54
 msgid "Creates points/segments from input vector lines and positions."
@@ -27690,9 +27681,9 @@ msgid "%d lines read from input"
 msgstr "Wczytano [%d] linii"
 
 #: ../vector/v.segment/main.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "%d lines written to output map (%d lost)"
-msgstr "[%d] linii zapisanych do mapy wejściowej(%d utraconych)"
+msgstr "%d linii zapisanych do mapy wyjściowej(%d utraconych)"
 
 #: ../vector/v.what/what.c:157
 #, c-format
@@ -27898,9 +27889,8 @@ msgid "Inverting matrix..."
 msgstr "Odwracanie matrycy..."
 
 #: ../vector/v.generalize/displacement.c:198
-#, fuzzy
 msgid "Unable to calculate the inverse matrix"
-msgstr "nie można zamknąć mapy wejściowej"
+msgstr "Nie można obliczyć matrycy odwróconej"
 
 #: ../vector/v.generalize/displacement.c:201
 msgid "Resolving conflicts..."
@@ -28545,7 +28535,7 @@ msgstr "Liczba kolumn"
 
 #: ../vector/v.net.connectivity/main.c:70
 msgid "Set1 layer number or name"
-msgstr "Zestaw1 liczba warstw lub nazwa"
+msgstr "Zestaw1 numer warstwy lub nazwa"
 
 #: ../vector/v.net.connectivity/main.c:71
 #: ../vector/v.net.connectivity/main.c:76
@@ -28563,7 +28553,7 @@ msgstr ""
 
 #: ../vector/v.net.connectivity/main.c:86
 msgid "Set2 layer number or name"
-msgstr "Zestaw2 liczba warstw lub nazwa"
+msgstr "Zestaw2 numer warstwy lub nazwa"
 
 #: ../vector/v.net.connectivity/main.c:87
 #: ../vector/v.net.connectivity/main.c:92
@@ -28819,7 +28809,7 @@ msgstr "Ścieżka do wynikowego pliku VKT"
 #: ../locale/scriptstrings/v.centroids_to_translate.c:6
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
 msgid "Layer number"
-msgstr "Liczba warstw"
+msgstr "Numer warstwy"
 
 #: ../vector/v.out.vtk/main.c:93
 msgid "Export numeric attribute table fields as VTK scalar variables"
@@ -31014,9 +31004,8 @@ msgid "extended statistics (quartiles and percentile)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
-#, fuzzy
 msgid "Percentile to calculate (requires -e flag)"
-msgstr "nie można zamknąć mapy wejściowej"
+msgstr ""
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:1
 msgid "Produces tilings of the source projection for use in the destination region and projection."
@@ -31370,9 +31359,8 @@ msgid "vector, area, dissolve"
 msgstr "wektor, obszar, rozłączanie"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:5
-#, fuzzy
 msgid "Layer number. If -1, all layers are extracted."
-msgstr "Numer warstwy. Jesli -l, wszystkie warstwy są wyświetlane."
+msgstr "Numer warstwy. Dla -l, wszystkie warstwy będą wyciągnięte."
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:7
 #, fuzzy
