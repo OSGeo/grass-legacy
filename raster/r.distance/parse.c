@@ -36,7 +36,7 @@ void parse(int argc, char *argv[], struct Parms *parms)
     maps->key = "maps";
     maps->key_desc = "map1,map2";
     maps->required = YES;
-    maps->multiple = NO;
+    maps->multiple = YES;
     maps->type = TYPE_STRING;
     maps->description = _("Maps for computing inter-class distances");
     maps->gisprompt = "old,cell,raster";
