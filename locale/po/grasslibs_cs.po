@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -4919,19 +4919,24 @@ msgstr "Nelze popsat tabulku <%s>"
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "Nelze otevřít databázi <%s> pomocí ovladače <%s>"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr "Chybí jméno sloupce"
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr "Chybí jméno klíčového sloupce"
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "Nelze vybrat záznam z tabulky <%s>"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "Sloupec <%s> není typu integer"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"

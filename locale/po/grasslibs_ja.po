@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2012-03-05 12:14+0900\n"
 "Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -4922,19 +4922,24 @@ msgstr "テーブル <%s>を記述できません"
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "ドライバー <%s> でデータベース <%s> を開けません"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr "カラム名がありません"
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr "キーカラム名がありません"
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "テーブル <%s> からレコードを選択できません"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "列 <%s> は整数型ではありません"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"

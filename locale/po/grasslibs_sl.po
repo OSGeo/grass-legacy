@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <grass-translations@lists.osgeo.org>\n"
@@ -4932,19 +4932,24 @@ msgstr "Nezmo¾en odpreti datoteko %s v %s"
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "Ne morem zapisati povezav z bazo podatkov."
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, fuzzy, c-format
 msgid "Unable select records from table <%s>"
 msgstr "Nezmo¾en ustvariti datoteko z vzglavjem za [%s v %s]"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "Ne morem zapisati povezav z bazo podatkov."
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"

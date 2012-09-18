@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2011-08-03 16:27+0200\n"
 "Last-Translator: Jan Trochta <j.trochta@gmail.com>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -20,66 +20,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../gui/wxpython/nviz/tools.py:82 ../gui/wxpython/nviz/preferences.py:55
+#: ../gui/wxpython/nviz/tools.py:83 ../gui/wxpython/nviz/preferences.py:55
 #: ../gui/wxpython/nviz/preferences.py:60
 msgid "View"
 msgstr "Pohled"
 
-#: ../gui/wxpython/nviz/tools.py:86
+#: ../gui/wxpython/nviz/tools.py:87
 #: ../gui/wxpython/gmodeler/preferences.py:202
 msgid "Data"
 msgstr "Data"
 
-#: ../gui/wxpython/nviz/tools.py:90
-#: ../gui/wxpython/gui_core/preferences.py:398
+#: ../gui/wxpython/nviz/tools.py:91
+#: ../gui/wxpython/gui_core/preferences.py:408
 msgid "Appearance"
 msgstr "Vzhled"
 
-#: ../gui/wxpython/nviz/tools.py:94
+#: ../gui/wxpython/nviz/tools.py:95
 #, fuzzy
 msgid "Analysis"
 msgstr "Analýza"
 
-#: ../gui/wxpython/nviz/tools.py:97 ../gui/wxpython/nviz/tools.py:379
+#: ../gui/wxpython/nviz/tools.py:98 ../gui/wxpython/nviz/tools.py:378
 #, fuzzy
 msgid "Animation"
 msgstr "Kvantizace"
 
-#: ../gui/wxpython/nviz/tools.py:217
+#: ../gui/wxpython/nviz/tools.py:218
 msgid "Control View"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:238
-msgid "Adjusts the viewer's angle of view"
+#: ../gui/wxpython/nviz/tools.py:239
+msgid "Adjusts the distance and angular perspective of the image viewpoint"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:243 ../gui/wxpython/nviz/preferences.py:68
+#: ../gui/wxpython/nviz/tools.py:244 ../gui/wxpython/nviz/preferences.py:68
 msgid "Perspective:"
 msgstr "Perspektiva:"
 
-#: ../gui/wxpython/nviz/tools.py:251
-msgid ""
-"Rotates the scene about the horizontal axis. An angle of 0 is flat. The "
-"scene rotates between -90 and 90 degrees."
+#: ../gui/wxpython/nviz/tools.py:252
+msgid "Tilts the plane of the surface from the horizontal"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/preferences.py:131
-msgid "Twist:"
-msgstr "Otočení:"
+#: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/tools.py:1022
+msgid "Tilt:"
+msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:263
-msgid "Adjusts the viewer's height above the scene"
-msgstr ""
-
-#: ../gui/wxpython/nviz/tools.py:267
 msgid ""
-"Adjusts the vertical exaggeration of the surface. As an example, if the "
-"easting and northing are in meters and the elevation in feet, a vertical "
-"exaggeration of .305 would produce a true (unexaggerated) surface. "
+"Adjusts the viewing height above the surface (angle of view automatically "
+"adjusts to maintain the same center of view)"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:277 ../gui/wxpython/nviz/tools.py:1039
-#: ../gui/wxpython/nviz/tools.py:1677 ../gui/wxpython/gui_core/dialogs.py:2189
+#: ../gui/wxpython/nviz/tools.py:268
+msgid "Adjusts the relative height of features above the plane of the surface"
+msgstr ""
+
+#: ../gui/wxpython/nviz/tools.py:276 ../gui/wxpython/nviz/tools.py:1038
+#: ../gui/wxpython/nviz/tools.py:1676 ../gui/wxpython/gui_core/dialogs.py:2189
 #: ../gui/wxpython/psmap/dialogs.py:2734 ../gui/wxpython/psmap/dialogs.py:2872
 #: ../gui/wxpython/psmap/dialogs.py:3477
 #: ../gui/wxpython/gmodeler/preferences.py:176
@@ -88,115 +85,115 @@ msgstr ""
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../gui/wxpython/nviz/tools.py:283 ../gui/wxpython/nviz/preferences.py:149
+#: ../gui/wxpython/nviz/tools.py:282 ../gui/wxpython/nviz/preferences.py:149
 msgid "Z-exag:"
 msgstr "Převýšení:"
 
-#: ../gui/wxpython/nviz/tools.py:296
+#: ../gui/wxpython/nviz/tools.py:295
 #, fuzzy
 msgid "Look:"
 msgstr "Pohled na:"
 
-#: ../gui/wxpython/nviz/tools.py:299
+#: ../gui/wxpython/nviz/tools.py:298
 #, fuzzy
 msgid "here"
 msgstr "koule"
 
-#: ../gui/wxpython/nviz/tools.py:302
+#: ../gui/wxpython/nviz/tools.py:301
 msgid ""
 "Allows you to select a point on the surface that becomes the new center of "
 "view. Click on the button and then on the surface."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:308
+#: ../gui/wxpython/nviz/tools.py:307
 #, fuzzy
 msgid "center"
 msgstr "Vykreslit"
 
-#: ../gui/wxpython/nviz/tools.py:311
+#: ../gui/wxpython/nviz/tools.py:310
 msgid "Resets the view to the original default center of view"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:315
+#: ../gui/wxpython/nviz/tools.py:314
 msgid "top"
 msgstr "vršek"
 
-#: ../gui/wxpython/nviz/tools.py:318
+#: ../gui/wxpython/nviz/tools.py:317
 msgid ""
 "Sets the viewer directly over the scene's center position. This top view "
 "orients approximately north south."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:322
+#: ../gui/wxpython/nviz/tools.py:321
 #, fuzzy
 msgid "reset"
 msgstr "Reset"
 
-#: ../gui/wxpython/nviz/tools.py:323
+#: ../gui/wxpython/nviz/tools.py:322
 msgid "Reset to default view"
 msgstr "Reset na výchozí pohled"
 
-#: ../gui/wxpython/nviz/tools.py:341 ../gui/wxpython/nviz/preferences.py:171
+#: ../gui/wxpython/nviz/tools.py:340 ../gui/wxpython/nviz/preferences.py:171
 msgid "Image Appearance"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:349 ../gui/wxpython/nviz/preferences.py:178
-#: ../gui/wxpython/gui_core/preferences.py:664
+#: ../gui/wxpython/nviz/tools.py:348 ../gui/wxpython/nviz/preferences.py:178
+#: ../gui/wxpython/gui_core/preferences.py:676
 msgid "Background color:"
 msgstr "Barva pozadí:"
 
-#: ../gui/wxpython/nviz/tools.py:386
+#: ../gui/wxpython/nviz/tools.py:385
 msgid ""
 "Press 'Record' button and start changing the view. It is recommended to use "
 "fly-through mode (Map Display toolbar) to achieve smooth motion."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:397
+#: ../gui/wxpython/nviz/tools.py:396
 #, fuzzy
 msgid "Record"
 msgstr "Překódovat"
 
-#: ../gui/wxpython/nviz/tools.py:399
+#: ../gui/wxpython/nviz/tools.py:398
 msgid "Play"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:401
+#: ../gui/wxpython/nviz/tools.py:400
 msgid "Pause"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:403
+#: ../gui/wxpython/nviz/tools.py:402
 msgid "Stop"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:415
+#: ../gui/wxpython/nviz/tools.py:414
 #, fuzzy
 msgid "Total number of frames :"
 msgstr "Jméno prvku:"
 
-#: ../gui/wxpython/nviz/tools.py:419
+#: ../gui/wxpython/nviz/tools.py:418
 msgid "Frame rate (FPS):"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:425
+#: ../gui/wxpython/nviz/tools.py:424
 msgid "Frames are recorded with given frequency (FPS). "
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:468
+#: ../gui/wxpython/nviz/tools.py:467
 #, fuzzy
 msgid "Save image sequence"
 msgstr "Nastavit velikost obrazu"
 
-#: ../gui/wxpython/nviz/tools.py:475 ../gui/wxpython/psmap/dialogs.py:4119
+#: ../gui/wxpython/nviz/tools.py:474 ../gui/wxpython/psmap/dialogs.py:4119
 #, fuzzy
 msgid "Choose a directory:"
 msgstr "Vyberte vstupní adresář"
 
-#: ../gui/wxpython/nviz/tools.py:476
+#: ../gui/wxpython/nviz/tools.py:475
 #, fuzzy
 msgid "Choose a directory for images"
 msgstr "Vyberte vstupní adresář"
 
-#: ../gui/wxpython/nviz/tools.py:477 ../gui/wxpython/gui_core/gselect.py:877
+#: ../gui/wxpython/nviz/tools.py:476 ../gui/wxpython/gui_core/gselect.py:877
 #: ../gui/wxpython/gui_core/gselect.py:1175
 #: ../gui/wxpython/gui_core/gselect.py:1184
 #: ../gui/wxpython/gui_core/gselect.py:1193
@@ -213,177 +210,177 @@ msgstr "Vyberte vstupní adresář"
 msgid "Browse"
 msgstr "Procházet"
 
-#: ../gui/wxpython/nviz/tools.py:480
+#: ../gui/wxpython/nviz/tools.py:479
 msgid "File prefix:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:484
+#: ../gui/wxpython/nviz/tools.py:483
 msgid ""
 "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:485
+#: ../gui/wxpython/nviz/tools.py:484
 #, fuzzy
 msgid "File format:"
 msgstr "Formát:"
 
-#: ../gui/wxpython/nviz/tools.py:543 ../gui/wxpython/nviz/tools.py:1769
+#: ../gui/wxpython/nviz/tools.py:542 ../gui/wxpython/nviz/tools.py:1768
 #: ../gui/wxpython/nviz/preferences.py:360
 msgid "Surface"
 msgstr "Povrch"
 
-#: ../gui/wxpython/nviz/tools.py:549 ../gui/wxpython/nviz/tools.py:1082
+#: ../gui/wxpython/nviz/tools.py:548 ../gui/wxpython/nviz/tools.py:1081
 #, fuzzy
 msgid "Constant surface"
 msgstr "Povrch nákladů"
 
-#: ../gui/wxpython/nviz/tools.py:554 ../gui/wxpython/nviz/preferences.py:462
+#: ../gui/wxpython/nviz/tools.py:553 ../gui/wxpython/nviz/preferences.py:462
 msgid "Vector"
 msgstr "Vektor"
 
-#: ../gui/wxpython/nviz/tools.py:560
+#: ../gui/wxpython/nviz/tools.py:559
 msgid "Volume"
 msgstr "3D rastr"
 
-#: ../gui/wxpython/nviz/tools.py:595 ../gui/wxpython/nviz/preferences.py:252
+#: ../gui/wxpython/nviz/tools.py:594 ../gui/wxpython/nviz/preferences.py:252
 msgid "Lighting"
 msgstr "Osvětlení"
 
-#: ../gui/wxpython/nviz/tools.py:600
+#: ../gui/wxpython/nviz/tools.py:599
 msgid "Fringe"
 msgstr "Okraj"
 
-#: ../gui/wxpython/nviz/tools.py:607
+#: ../gui/wxpython/nviz/tools.py:606
 #, fuzzy
 msgid "Decorations"
 msgstr "Popis"
 
-#: ../gui/wxpython/nviz/tools.py:627 ../gui/wxpython/nviz/tools.py:940
+#: ../gui/wxpython/nviz/tools.py:626 ../gui/wxpython/nviz/tools.py:939
 msgid "Cutting planes"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:649 ../gui/wxpython/nviz/mapwindow.py:1608
+#: ../gui/wxpython/nviz/tools.py:648 ../gui/wxpython/nviz/mapwindow.py:1611
 #: ../gui/wxpython/psmap/dialogs.py:1143
 msgid "Raster map"
 msgstr "Rastrová mapa"
 
-#: ../gui/wxpython/nviz/tools.py:672 ../gui/wxpython/nviz/tools.py:1470
+#: ../gui/wxpython/nviz/tools.py:671 ../gui/wxpython/nviz/tools.py:1469
 #: ../gui/wxpython/nviz/preferences.py:367
 msgid "Draw"
 msgstr "Vykreslit"
 
-#: ../gui/wxpython/nviz/tools.py:679 ../gui/wxpython/nviz/tools.py:1477
+#: ../gui/wxpython/nviz/tools.py:678 ../gui/wxpython/nviz/tools.py:1476
 #: ../gui/wxpython/nviz/preferences.py:373
 msgid "Mode:"
 msgstr "Mód:"
 
-#: ../gui/wxpython/nviz/tools.py:682 ../gui/wxpython/nviz/preferences.py:376
+#: ../gui/wxpython/nviz/tools.py:681 ../gui/wxpython/nviz/preferences.py:376
 msgid "coarse"
 msgstr "hrubý"
 
-#: ../gui/wxpython/nviz/tools.py:683 ../gui/wxpython/nviz/preferences.py:377
+#: ../gui/wxpython/nviz/tools.py:682 ../gui/wxpython/nviz/preferences.py:377
 msgid "fine"
 msgstr "jemný"
 
-#: ../gui/wxpython/nviz/tools.py:684 ../gui/wxpython/nviz/preferences.py:378
+#: ../gui/wxpython/nviz/tools.py:683 ../gui/wxpython/nviz/preferences.py:378
 msgid "both"
 msgstr "oba"
 
-#: ../gui/wxpython/nviz/tools.py:693 ../gui/wxpython/nviz/tools.py:956
-#: ../gui/wxpython/nviz/tools.py:1491
+#: ../gui/wxpython/nviz/tools.py:692 ../gui/wxpython/nviz/tools.py:955
+#: ../gui/wxpython/nviz/tools.py:1490
 msgid "Shading:"
 msgstr "Stínění:"
 
-#: ../gui/wxpython/nviz/tools.py:696 ../gui/wxpython/nviz/tools.py:1257
-#: ../gui/wxpython/nviz/tools.py:1494
+#: ../gui/wxpython/nviz/tools.py:695 ../gui/wxpython/nviz/tools.py:1256
+#: ../gui/wxpython/nviz/tools.py:1493
 msgid "flat"
 msgstr "plocha"
 
-#: ../gui/wxpython/nviz/tools.py:697 ../gui/wxpython/nviz/tools.py:1495
+#: ../gui/wxpython/nviz/tools.py:696 ../gui/wxpython/nviz/tools.py:1494
 msgid "gouraud"
 msgstr "Gouraudovo stínování"
 
-#: ../gui/wxpython/nviz/tools.py:705
+#: ../gui/wxpython/nviz/tools.py:704
 msgid "Set to all"
 msgstr "Nastavit všechny"
 
-#: ../gui/wxpython/nviz/tools.py:706
+#: ../gui/wxpython/nviz/tools.py:705
 msgid "Use draw settings for all loaded surfaces"
 msgstr "Použít vykreslovací nastavení pro všechny načtené povrchy"
 
-#: ../gui/wxpython/nviz/tools.py:714 ../gui/wxpython/nviz/preferences.py:405
+#: ../gui/wxpython/nviz/tools.py:713 ../gui/wxpython/nviz/preferences.py:405
 #, fuzzy
 msgid "Coarse mode:"
 msgstr "Hrubý:"
 
-#: ../gui/wxpython/nviz/tools.py:717 ../gui/wxpython/nviz/tools.py:757
+#: ../gui/wxpython/nviz/tools.py:716 ../gui/wxpython/nviz/tools.py:756
 #: ../gui/wxpython/nviz/preferences.py:392
 #: ../gui/wxpython/nviz/preferences.py:409
 #, fuzzy
 msgid "resolution:"
 msgstr "Rozlišení:"
 
-#: ../gui/wxpython/nviz/tools.py:730 ../gui/wxpython/nviz/preferences.py:421
+#: ../gui/wxpython/nviz/tools.py:729 ../gui/wxpython/nviz/preferences.py:421
 #, fuzzy
 msgid "style:"
 msgstr "styl"
 
-#: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:424
+#: ../gui/wxpython/nviz/tools.py:732 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
 msgstr "síť"
 
-#: ../gui/wxpython/nviz/tools.py:734 ../gui/wxpython/nviz/preferences.py:425
+#: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:425
 msgid "surface"
 msgstr "povrch"
 
-#: ../gui/wxpython/nviz/tools.py:746
+#: ../gui/wxpython/nviz/tools.py:745
 #, fuzzy
 msgid "Change wire color"
 msgstr "barva sítě"
 
-#: ../gui/wxpython/nviz/tools.py:753 ../gui/wxpython/nviz/preferences.py:388
+#: ../gui/wxpython/nviz/tools.py:752 ../gui/wxpython/nviz/preferences.py:388
 #, fuzzy
 msgid "Fine mode:"
 msgstr "Vyhlazený:"
 
-#: ../gui/wxpython/nviz/tools.py:778
+#: ../gui/wxpython/nviz/tools.py:777
 msgid "Surface attributes"
 msgstr "Vlastnosti povrchu"
 
-#: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2273
+#: ../gui/wxpython/nviz/tools.py:785 ../gui/wxpython/nviz/tools.py:2272
 #: ../gui/wxpython/psmap/dialogs.py:4593 ../gui/wxpython/psmap/dialogs.py:4848
-#: ../gui/wxpython/wxplot/dialogs.py:562
+#: ../gui/wxpython/wxplot/dialogs.py:595
 #: ../gui/wxpython/gmodeler/preferences.py:88
 #: ../gui/wxpython/gmodeler/preferences.py:326
 msgid "Color"
 msgstr "Barva"
 
-#: ../gui/wxpython/nviz/tools.py:787 ../gui/wxpython/nviz/tools.py:2274
+#: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2273
 #: ../gui/wxpython/menustrings.py:311 ../gui/wxpython/psmap/dialogs.py:1726
 msgid "Mask"
 msgstr "Maska"
 
-#: ../gui/wxpython/nviz/tools.py:788 ../gui/wxpython/nviz/tools.py:2275
+#: ../gui/wxpython/nviz/tools.py:787 ../gui/wxpython/nviz/tools.py:2274
 msgid "Transparency"
 msgstr "Průhlednost"
 
-#: ../gui/wxpython/nviz/tools.py:789 ../gui/wxpython/nviz/tools.py:2276
+#: ../gui/wxpython/nviz/tools.py:788 ../gui/wxpython/nviz/tools.py:2275
 msgid "Shininess"
 msgstr "Jasnost"
 
-#: ../gui/wxpython/nviz/tools.py:795 ../gui/wxpython/nviz/tools.py:2287
+#: ../gui/wxpython/nviz/tools.py:794 ../gui/wxpython/nviz/tools.py:2286
 msgid "map"
 msgstr "mapa"
 
-#: ../gui/wxpython/nviz/tools.py:798 ../gui/wxpython/nviz/tools.py:2292
+#: ../gui/wxpython/nviz/tools.py:797 ../gui/wxpython/nviz/tools.py:2291
 msgid "unset"
 msgstr "zrušit"
 
-#: ../gui/wxpython/nviz/tools.py:803 ../gui/wxpython/nviz/tools.py:2297
+#: ../gui/wxpython/nviz/tools.py:802 ../gui/wxpython/nviz/tools.py:2296
 msgid "constant"
 msgstr "stejný"
 
-#: ../gui/wxpython/nviz/tools.py:854 ../gui/wxpython/nviz/tools.py:1586
+#: ../gui/wxpython/nviz/tools.py:853 ../gui/wxpython/nviz/tools.py:1585
 #: ../gui/wxpython/psmap/dialogs.py:2704 ../gui/wxpython/psmap/dialogs.py:3246
 #: ../gui/wxpython/psmap/dialogs.py:3441 ../gui/wxpython/psmap/dialogs.py:3815
 #: ../gui/wxpython/psmap/dialogs.py:3819 ../gui/wxpython/psmap/dialogs.py:4221
@@ -392,492 +389,486 @@ msgstr "stejný"
 msgid "Position"
 msgstr "Pozice"
 
-#: ../gui/wxpython/nviz/tools.py:860
+#: ../gui/wxpython/nviz/tools.py:859
 msgid "Changes the x, y, and z position of the current surface"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1058
-#: ../gui/wxpython/nviz/tools.py:1601 ../gui/wxpython/nviz/tools.py:2457
+#: ../gui/wxpython/nviz/tools.py:869 ../gui/wxpython/nviz/tools.py:1057
+#: ../gui/wxpython/nviz/tools.py:1600 ../gui/wxpython/nviz/tools.py:2456
 msgid "Reset"
 msgstr "Reset"
 
-#: ../gui/wxpython/nviz/tools.py:871 ../gui/wxpython/nviz/tools.py:1602
+#: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1601
 #, fuzzy
 msgid "Reset to default position"
 msgstr "Reset na výchozí pohled"
 
-#: ../gui/wxpython/nviz/tools.py:946
+#: ../gui/wxpython/nviz/tools.py:945
 msgid "Active cutting plane:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:958
+#: ../gui/wxpython/nviz/tools.py:957
 msgid "clear"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:959
+#: ../gui/wxpython/nviz/tools.py:958
 #, fuzzy
 msgid "top color"
 msgstr "barva"
 
-#: ../gui/wxpython/nviz/tools.py:960
+#: ../gui/wxpython/nviz/tools.py:959
 #, fuzzy
 msgid "bottom color"
 msgstr "podle barvy"
 
-#: ../gui/wxpython/nviz/tools.py:961
+#: ../gui/wxpython/nviz/tools.py:960
 msgid "blend"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:962
+#: ../gui/wxpython/nviz/tools.py:961
 msgid "shaded"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:974
+#: ../gui/wxpython/nviz/tools.py:973
 #, fuzzy
 msgid "Horizontal X:"
 msgstr "Úhel horizontu"
 
-#: ../gui/wxpython/nviz/tools.py:976
+#: ../gui/wxpython/nviz/tools.py:975
 msgid "Sets the X coordinate of the current cutting plane"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:990
+#: ../gui/wxpython/nviz/tools.py:989
 #, fuzzy
 msgid "Horizontal Y:"
 msgstr "Úhel horizontu"
 
-#: ../gui/wxpython/nviz/tools.py:992
+#: ../gui/wxpython/nviz/tools.py:991
 msgid "Sets the Y coordinate of the current cutting plane"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1007 ../gui/wxpython/gui_core/dialogs.py:756
+#: ../gui/wxpython/nviz/tools.py:1006 ../gui/wxpython/gui_core/dialogs.py:756
 msgid "Rotation:"
 msgstr "Otočení:"
 
-#: ../gui/wxpython/nviz/tools.py:1009
+#: ../gui/wxpython/nviz/tools.py:1008
 msgid "Rotates the current cutting plane about vertical axis"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1023
-msgid "Tilt:"
-msgstr ""
-
-#: ../gui/wxpython/nviz/tools.py:1025
+#: ../gui/wxpython/nviz/tools.py:1024
 msgid "Rotates the current cutting plane about horizontal axis"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1041
+#: ../gui/wxpython/nviz/tools.py:1040
 msgid ""
 "Sets the Z coordinate of the current cutting plane (only meaningful when "
 "tilt is not 0)"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1093 ../gui/wxpython/menustrings.py:4
+#: ../gui/wxpython/nviz/tools.py:1092 ../gui/wxpython/menustrings.py:4
 #: ../gui/wxpython/menustrings.py:855
 msgid "New"
 msgstr "Nový"
 
-#: ../gui/wxpython/nviz/tools.py:1097 ../gui/wxpython/nviz/tools.py:1886
+#: ../gui/wxpython/nviz/tools.py:1096 ../gui/wxpython/nviz/tools.py:1885
 #: ../gui/wxpython/menustrings.py:163 ../gui/wxpython/psmap/dialogs.py:1316
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../gui/wxpython/nviz/tools.py:1110
+#: ../gui/wxpython/nviz/tools.py:1109
 #, fuzzy
 msgid "Fine resolution:"
 msgstr "Rozlišení:"
 
-#: ../gui/wxpython/nviz/tools.py:1122
+#: ../gui/wxpython/nviz/tools.py:1121
 #, fuzzy
 msgid "Value:"
 msgstr "Hodnoty"
 
-#: ../gui/wxpython/nviz/tools.py:1134 ../gui/wxpython/nviz/tools.py:2446
+#: ../gui/wxpython/nviz/tools.py:1133 ../gui/wxpython/nviz/tools.py:2445
 #, fuzzy
 msgid "Transparency:"
 msgstr "Průhlednost"
 
-#: ../gui/wxpython/nviz/tools.py:1146 ../gui/wxpython/nviz/tools.py:1699
-#: ../gui/wxpython/nviz/tools.py:1820 ../gui/wxpython/nviz/preferences.py:333
+#: ../gui/wxpython/nviz/tools.py:1145 ../gui/wxpython/nviz/tools.py:1698
+#: ../gui/wxpython/nviz/tools.py:1819 ../gui/wxpython/nviz/preferences.py:333
 #: ../gui/wxpython/nviz/preferences.py:490
 #: ../gui/wxpython/nviz/preferences.py:544
-#: ../gui/wxpython/gui_core/preferences.py:948
+#: ../gui/wxpython/gui_core/preferences.py:960
 #: ../gui/wxpython/psmap/dialogs.py:1776 ../gui/wxpython/psmap/dialogs.py:1879
 #: ../gui/wxpython/gcp/manager.py:2437
 msgid "Color:"
 msgstr "Barva:"
 
-#: ../gui/wxpython/nviz/tools.py:1176 ../gui/wxpython/psmap/dialogs.py:2618
+#: ../gui/wxpython/nviz/tools.py:1175 ../gui/wxpython/psmap/dialogs.py:2618
 msgid "Vector map"
 msgstr "Vektorová mapa"
 
-#: ../gui/wxpython/nviz/tools.py:1200
+#: ../gui/wxpython/nviz/tools.py:1199
 msgid "Show vector lines"
 msgstr "Ukázat vektorové linie"
 
-#: ../gui/wxpython/nviz/tools.py:1210 ../gui/wxpython/nviz/preferences.py:468
+#: ../gui/wxpython/nviz/tools.py:1209 ../gui/wxpython/nviz/preferences.py:468
 msgid "Vector lines"
 msgstr "Vektorové linie"
 
-#: ../gui/wxpython/nviz/tools.py:1217
+#: ../gui/wxpython/nviz/tools.py:1216
 msgid "Line:"
 msgstr "Linie:"
 
-#: ../gui/wxpython/nviz/tools.py:1220
+#: ../gui/wxpython/nviz/tools.py:1219
 #, fuzzy
 msgid "width:"
 msgstr "šířka"
 
-#: ../gui/wxpython/nviz/tools.py:1236 ../gui/wxpython/nviz/tools.py:1342
+#: ../gui/wxpython/nviz/tools.py:1235 ../gui/wxpython/nviz/tools.py:1341
 #, fuzzy
 msgid "color:"
 msgstr "barva"
 
-#: ../gui/wxpython/nviz/tools.py:1251
+#: ../gui/wxpython/nviz/tools.py:1250
 #: ../gui/wxpython/vdigit/preferences.py:125
 msgid "Display"
 msgstr "Displej"
 
-#: ../gui/wxpython/nviz/tools.py:1256
+#: ../gui/wxpython/nviz/tools.py:1255
 #, fuzzy
 msgid "on surface(s):"
 msgstr "na povrchu"
 
-#: ../gui/wxpython/nviz/tools.py:1266 ../gui/wxpython/nviz/tools.py:1393
+#: ../gui/wxpython/nviz/tools.py:1265 ../gui/wxpython/nviz/tools.py:1392
 msgid "Height above surface:"
 msgstr "Výška nad povrchem:"
 
-#: ../gui/wxpython/nviz/tools.py:1301
+#: ../gui/wxpython/nviz/tools.py:1300
 msgid "Show vector points"
 msgstr "Ukázat vektorové body"
 
-#: ../gui/wxpython/nviz/tools.py:1310 ../gui/wxpython/nviz/preferences.py:508
+#: ../gui/wxpython/nviz/tools.py:1309 ../gui/wxpython/nviz/preferences.py:508
 msgid "Vector points"
 msgstr "Vektorové body"
 
-#: ../gui/wxpython/nviz/tools.py:1321
+#: ../gui/wxpython/nviz/tools.py:1320
 msgid "Icon:"
 msgstr "Ikona:"
 
-#: ../gui/wxpython/nviz/tools.py:1324 ../gui/wxpython/psmap/dialogs.py:2000
+#: ../gui/wxpython/nviz/tools.py:1323 ../gui/wxpython/psmap/dialogs.py:2000
 #, fuzzy
 msgid "size:"
 msgstr "velikost"
 
-#: ../gui/wxpython/nviz/tools.py:1374 ../gui/wxpython/psmap/dialogs.py:1958
+#: ../gui/wxpython/nviz/tools.py:1373 ../gui/wxpython/psmap/dialogs.py:1958
 #, fuzzy
 msgid "symbol:"
 msgstr "symbol"
 
-#: ../gui/wxpython/nviz/tools.py:1390
+#: ../gui/wxpython/nviz/tools.py:1389
 #, fuzzy
 msgid "Display on surface(s):"
 msgstr "Vzdálenost podél transektu"
 
-#: ../gui/wxpython/nviz/tools.py:1447
+#: ../gui/wxpython/nviz/tools.py:1446
 msgid "3D raster map"
 msgstr "3D rastrová mapa"
 
-#: ../gui/wxpython/nviz/tools.py:1480
+#: ../gui/wxpython/nviz/tools.py:1479
 msgid "isosurfaces"
 msgstr "Isopovrch"
 
-#: ../gui/wxpython/nviz/tools.py:1481
+#: ../gui/wxpython/nviz/tools.py:1480
 msgid "slices"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1504
+#: ../gui/wxpython/nviz/tools.py:1503
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../gui/wxpython/nviz/tools.py:1526 ../gui/wxpython/nviz/tools.py:3508
+#: ../gui/wxpython/nviz/tools.py:1525 ../gui/wxpython/nviz/tools.py:3510
 msgid "List of isosurfaces"
 msgstr "Seznam Isopovrchů"
 
-#: ../gui/wxpython/nviz/tools.py:1642
+#: ../gui/wxpython/nviz/tools.py:1641
 msgid "Show light model"
 msgstr "Ukázat světelný model"
 
-#: ../gui/wxpython/nviz/tools.py:1655
+#: ../gui/wxpython/nviz/tools.py:1654
 msgid "Light source position"
 msgstr "Umístění zdroje světla"
 
-#: ../gui/wxpython/nviz/tools.py:1671
+#: ../gui/wxpython/nviz/tools.py:1670
 msgid "Adjusts the light height"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1695
+#: ../gui/wxpython/nviz/tools.py:1694
 msgid "Light color and intensity"
 msgstr "Barva světla a intenzita"
 
-#: ../gui/wxpython/nviz/tools.py:1709 ../gui/wxpython/nviz/preferences.py:306
+#: ../gui/wxpython/nviz/tools.py:1708 ../gui/wxpython/nviz/preferences.py:306
 msgid "Brightness:"
 msgstr "Jas:"
 
-#: ../gui/wxpython/nviz/tools.py:1711
+#: ../gui/wxpython/nviz/tools.py:1710
 msgid "Adjusts the brightness of the light"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1720 ../gui/wxpython/nviz/preferences.py:320
+#: ../gui/wxpython/nviz/tools.py:1719 ../gui/wxpython/nviz/preferences.py:320
 msgid "Ambient:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1722
+#: ../gui/wxpython/nviz/tools.py:1721
 msgid "Adjusts the ambient light"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1783
+#: ../gui/wxpython/nviz/tools.py:1782
 msgid "Edges with fringe"
 msgstr "Hrany s okrajem"
 
-#: ../gui/wxpython/nviz/tools.py:1785
+#: ../gui/wxpython/nviz/tools.py:1784
 msgid "N && W"
 msgstr "S && Z"
 
-#: ../gui/wxpython/nviz/tools.py:1786
+#: ../gui/wxpython/nviz/tools.py:1785
 msgid "N && E"
 msgstr "S && V"
 
-#: ../gui/wxpython/nviz/tools.py:1787
+#: ../gui/wxpython/nviz/tools.py:1786
 msgid "S && W"
 msgstr "J &c Z"
 
-#: ../gui/wxpython/nviz/tools.py:1788
+#: ../gui/wxpython/nviz/tools.py:1787
 msgid "S && E"
 msgstr "J && V"
 
-#: ../gui/wxpython/nviz/tools.py:1802 ../gui/wxpython/gui_core/gselect.py:1101
+#: ../gui/wxpython/nviz/tools.py:1801 ../gui/wxpython/gui_core/gselect.py:1101
 #: ../gui/wxpython/gui_core/toolbars.py:77
 msgid "Settings"
 msgstr "Nastavení"
 
-#: ../gui/wxpython/nviz/tools.py:1808
+#: ../gui/wxpython/nviz/tools.py:1807
 msgid "Elevation of fringe from bottom:"
 msgstr "Výška okraje ze spodní strany"
 
-#: ../gui/wxpython/nviz/tools.py:1856 ../gui/wxpython/psmap/toolbars.py:85
+#: ../gui/wxpython/nviz/tools.py:1855 ../gui/wxpython/psmap/toolbars.py:85
 #: ../gui/wxpython/psmap/dialogs.py:4490
 #: ../gui/wxpython/mapdisp/toolbars.py:35
 #, fuzzy
 msgid "North Arrow"
 msgstr "Měřítko a směrová růžice"
 
-#: ../gui/wxpython/nviz/tools.py:1861
+#: ../gui/wxpython/nviz/tools.py:1860
 msgid "Arrow length (in map units):"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1871
+#: ../gui/wxpython/nviz/tools.py:1870
 #, fuzzy
 msgid "Arrow color:"
 msgstr "barva sítě"
 
-#: ../gui/wxpython/nviz/tools.py:1880
+#: ../gui/wxpython/nviz/tools.py:1879
 msgid "Place arrow"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1898 ../gui/wxpython/psmap/toolbars.py:81
+#: ../gui/wxpython/nviz/tools.py:1897 ../gui/wxpython/psmap/toolbars.py:81
 #, fuzzy
 msgid "Scale bar"
 msgstr "Přidat vrstvu"
 
-#: ../gui/wxpython/nviz/tools.py:1903
+#: ../gui/wxpython/nviz/tools.py:1902
 msgid "Scale bar length (in map units):"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1913
+#: ../gui/wxpython/nviz/tools.py:1912
 #, fuzzy
 msgid "Scale bar color:"
 msgstr "použijte | X souřadnici"
 
-#: ../gui/wxpython/nviz/tools.py:1922
+#: ../gui/wxpython/nviz/tools.py:1921
 #, fuzzy
 msgid "Place scalebar"
 msgstr "Přidat vrstvu"
 
-#: ../gui/wxpython/nviz/tools.py:1928
+#: ../gui/wxpython/nviz/tools.py:1927
 #, fuzzy
 msgid "Delete last"
 msgstr "Odstranit mapset"
 
-#: ../gui/wxpython/nviz/tools.py:1961
+#: ../gui/wxpython/nviz/tools.py:1960
 msgid "Do you want to record new animation without saving the previous one?"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1964
+#: ../gui/wxpython/nviz/tools.py:1963
 #, fuzzy
 msgid "Animation already axists"
 msgstr "Soubor již existuje"
 
-#: ../gui/wxpython/nviz/tools.py:2126
+#: ../gui/wxpython/nviz/tools.py:2125
 msgid "No file prefix given."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2130
+#: ../gui/wxpython/nviz/tools.py:2129
 #, python-format
 msgid "Directory %s does not exist."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2149 ../gui/wxpython/nviz/tools.py:2194
-#: ../gui/wxpython/nviz/tools.py:4281 ../gui/wxpython/nviz/mapwindow.py:2107
-#: ../gui/wxpython/nviz/mapwindow.py:2125
+#: ../gui/wxpython/nviz/tools.py:2148 ../gui/wxpython/nviz/tools.py:2193
+#: ../gui/wxpython/nviz/tools.py:4288 ../gui/wxpython/nviz/mapwindow.py:2110
+#: ../gui/wxpython/nviz/mapwindow.py:2128
 #, fuzzy
 msgid "constant#"
 msgstr "stejný"
 
-#: ../gui/wxpython/nviz/tools.py:2260
+#: ../gui/wxpython/nviz/tools.py:2259
 msgid "Isosurface attributes"
 msgstr "Atributy Isopovrchu"
 
-#: ../gui/wxpython/nviz/tools.py:2266
+#: ../gui/wxpython/nviz/tools.py:2265
 msgid "toggle normal direction"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2272
+#: ../gui/wxpython/nviz/tools.py:2271
 #, fuzzy
 msgid "Isosurface value"
 msgstr "Atributy Isopovrchu"
 
-#: ../gui/wxpython/nviz/tools.py:2375
+#: ../gui/wxpython/nviz/tools.py:2374
 #, fuzzy
 msgid "Slice attributes"
 msgstr "Duplicitní atributy"
 
-#: ../gui/wxpython/nviz/tools.py:2381
+#: ../gui/wxpython/nviz/tools.py:2380
 msgid "Slice parallel to axis:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2514
+#: ../gui/wxpython/nviz/tools.py:2513
 msgid "W"
 msgstr "Z"
 
-#: ../gui/wxpython/nviz/tools.py:2515
+#: ../gui/wxpython/nviz/tools.py:2514
 msgid "N"
 msgstr "S"
 
-#: ../gui/wxpython/nviz/tools.py:2516
+#: ../gui/wxpython/nviz/tools.py:2515
 msgid "S"
 msgstr "J"
 
-#: ../gui/wxpython/nviz/tools.py:2517
+#: ../gui/wxpython/nviz/tools.py:2516
 msgid "E"
 msgstr "V"
 
-#: ../gui/wxpython/nviz/tools.py:2518
+#: ../gui/wxpython/nviz/tools.py:2517
 #, fuzzy
 msgid "NW"
 msgstr "Z"
 
-#: ../gui/wxpython/nviz/tools.py:2519
+#: ../gui/wxpython/nviz/tools.py:2518
 #, fuzzy
 msgid "NE"
 msgstr "S"
 
-#: ../gui/wxpython/nviz/tools.py:2520
+#: ../gui/wxpython/nviz/tools.py:2519
 #, fuzzy
 msgid "SE"
 msgstr "J"
 
-#: ../gui/wxpython/nviz/tools.py:2521
+#: ../gui/wxpython/nviz/tools.py:2520
 #, fuzzy
 msgid "SW"
 msgstr "Z"
 
-#: ../gui/wxpython/nviz/tools.py:3003 ../gui/wxpython/nviz/tools.py:3695
-#: ../gui/wxpython/nviz/tools.py:3697 ../gui/wxpython/nviz/tools.py:4614
+#: ../gui/wxpython/nviz/tools.py:3005 ../gui/wxpython/nviz/tools.py:3697
+#: ../gui/wxpython/nviz/tools.py:3699 ../gui/wxpython/nviz/tools.py:4616
 msgid "Level"
 msgstr "Úroveň"
 
-#: ../gui/wxpython/nviz/tools.py:3514
+#: ../gui/wxpython/nviz/tools.py:3516
 #, fuzzy
 msgid "List of slices"
 msgstr "Seznam zdvojených prvků"
 
-#: ../gui/wxpython/nviz/tools.py:3704 ../gui/wxpython/nviz/tools.py:3706
-#: ../gui/wxpython/nviz/tools.py:3983 ../gui/wxpython/nviz/tools.py:4627
+#: ../gui/wxpython/nviz/tools.py:3706 ../gui/wxpython/nviz/tools.py:3708
+#: ../gui/wxpython/nviz/tools.py:3985 ../gui/wxpython/nviz/tools.py:4629
 msgid "Slice parallel to"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4287
+#: ../gui/wxpython/nviz/tools.py:4294
 msgid "None"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4289 ../gui/wxpython/menustrings.py:461
+#: ../gui/wxpython/nviz/tools.py:4296 ../gui/wxpython/menustrings.py:461
 msgid "Plane"
 msgstr "Rovinná plocha"
 
-#: ../gui/wxpython/nviz/tools.py:4477
+#: ../gui/wxpython/nviz/tools.py:4479
 msgid "Vector map is 3D"
 msgstr "Vektorové mapa je 3D"
 
-#: ../gui/wxpython/nviz/tools.py:4480
+#: ../gui/wxpython/nviz/tools.py:4482
 msgid "Vector map is 2D"
 msgstr "Vektorová mapa je 2D"
 
-#: ../gui/wxpython/nviz/tools.py:4482
+#: ../gui/wxpython/nviz/tools.py:4484
 #, python-format
 msgid "%(features)d features (%(points)d points)"
 msgstr "%(features)d prvků (%(points)d bodů)"
 
-#: ../gui/wxpython/nviz/tools.py:4647
+#: ../gui/wxpython/nviz/tools.py:4649
 #, fuzzy
 msgid "range:"
 msgstr "rozmezí"
 
-#: ../gui/wxpython/nviz/tools.py:4715 ../gui/wxpython/nviz/tools.py:4726
+#: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4728
 #, fuzzy
 msgid "North edge:"
 msgstr "Sever"
 
-#: ../gui/wxpython/nviz/tools.py:4716 ../gui/wxpython/nviz/tools.py:4727
+#: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4729
 #, fuzzy
 msgid "South edge:"
 msgstr "Jih"
 
-#: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4724
-#: ../gui/wxpython/nviz/tools.py:4733
+#: ../gui/wxpython/nviz/tools.py:4719 ../gui/wxpython/nviz/tools.py:4726
+#: ../gui/wxpython/nviz/tools.py:4735
 #, fuzzy
 msgid "West edge:"
 msgstr "Detekce hran"
 
-#: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4725
-#: ../gui/wxpython/nviz/tools.py:4734
+#: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4727
+#: ../gui/wxpython/nviz/tools.py:4736
 msgid "East edge:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4731
-#: ../gui/wxpython/nviz/tools.py:4739
+#: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4733
+#: ../gui/wxpython/nviz/tools.py:4741
 #, fuzzy
 msgid "Northing (Y):"
 msgstr "Sever"
 
-#: ../gui/wxpython/nviz/tools.py:4721 ../gui/wxpython/nviz/tools.py:4730
-#: ../gui/wxpython/nviz/tools.py:4740
+#: ../gui/wxpython/nviz/tools.py:4723 ../gui/wxpython/nviz/tools.py:4732
+#: ../gui/wxpython/nviz/tools.py:4742
 #, fuzzy
 msgid "Height (Z):"
 msgstr "Výška:"
 
-#: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4729
-#: ../gui/wxpython/nviz/tools.py:4738
+#: ../gui/wxpython/nviz/tools.py:4724 ../gui/wxpython/nviz/tools.py:4731
+#: ../gui/wxpython/nviz/tools.py:4740
 #, fuzzy
 msgid "Easting (X):"
 msgstr "Východ"
 
-#: ../gui/wxpython/nviz/tools.py:4735
+#: ../gui/wxpython/nviz/tools.py:4737
 #, fuzzy
 msgid "Bottom edge:"
 msgstr "Spodní"
 
-#: ../gui/wxpython/nviz/tools.py:4736
+#: ../gui/wxpython/nviz/tools.py:4738
 msgid "Top edge:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4840
-msgid ""
-"Adjusts the look direction (azimuth). Click and drag the puck to change the "
-"current eye position."
+#: ../gui/wxpython/nviz/tools.py:4842
+msgid "Adjusts the distance and direction of the image viewpoint"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4873
+#: ../gui/wxpython/nviz/tools.py:4874
 msgid ""
 "Adjusts the light direction. Click and drag the puck to change the light "
 "direction."
@@ -914,6 +905,10 @@ msgstr "Pozice:"
 #, fuzzy
 msgid "x:"
 msgstr ":"
+
+#: ../gui/wxpython/nviz/preferences.py:131
+msgid "Twist:"
+msgstr "Otočení:"
 
 #: ../gui/wxpython/nviz/preferences.py:204
 msgid "Fly-through"
@@ -1011,7 +1006,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:768
-#: ../gui/wxpython/mapdisp/mapwindow.py:1115
+#: ../gui/wxpython/mapdisp/mapwindow.py:1121
 msgid "Querying is not implemented in standalone mode of Map Display"
 msgstr ""
 
@@ -1079,48 +1074,48 @@ msgstr "selhalo"
 msgid "Unsupported layer type '%s'"
 msgstr "Nepodporovaný typ vrstvy '%s'"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1607
+#: ../gui/wxpython/nviz/mapwindow.py:1610
 msgid "Unable to unload raster map"
 msgstr "Nelze načíst rastrovou mapu"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1612
+#: ../gui/wxpython/nviz/mapwindow.py:1615
 msgid "Unable to unload 3d raster map"
 msgstr "Nelze načíst 3D rastrovou mapu"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1613
+#: ../gui/wxpython/nviz/mapwindow.py:1616
 msgid "3d raster map"
 msgstr "3D rastrová mapa:"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1623
+#: ../gui/wxpython/nviz/mapwindow.py:1626
 msgid "unloaded successfully"
 msgstr "načteno "
 
-#: ../gui/wxpython/nviz/mapwindow.py:1675
+#: ../gui/wxpython/nviz/mapwindow.py:1678
 #, python-format
 msgid "Loading vector map <%(name)s> (%(type)s) failed"
 msgstr "Načítání vektorové mapy '%(name)s' %(type)s selhalo"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1734
+#: ../gui/wxpython/nviz/mapwindow.py:1737
 #, python-format
 msgid "Unable to unload vector map <%(name)s> (%(type)s)"
 msgstr "Nelze načíst vektorovou mapu <%(name)s> (%(type)s)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1737
+#: ../gui/wxpython/nviz/mapwindow.py:1740
 #, python-format
 msgid "Vector map <%(name)s> (%(type)s) unloaded successfully"
 msgstr "Vektorová mapa <%(name)s> (%(type)s) úspěšně načtena"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2070
+#: ../gui/wxpython/nviz/mapwindow.py:2073
 #, python-format
 msgid "Vector point layer not found (id = %d)"
 msgstr "Vektorová bodová vrstva nenalezena (id = %d)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2072
+#: ../gui/wxpython/nviz/mapwindow.py:2075
 #, python-format
 msgid "Unable to set data layer properties (id = %d)"
 msgstr "Nelze nastavit vlastnosti datové vrstvy (id = %d)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2075
+#: ../gui/wxpython/nviz/mapwindow.py:2078
 #, python-format
 msgid ""
 "Setting data layer properties failed.\n"
@@ -1131,7 +1126,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2182
+#: ../gui/wxpython/nviz/mapwindow.py:2185
 #, fuzzy
 msgid "At least one raster map required"
 msgstr "Vybrat rastrovou mapu 1 (vyžadováno):"
@@ -1184,12 +1179,12 @@ msgid "Command console"
 msgstr "Příkazová konzole"
 
 #: ../gui/wxpython/lmgr/frame.py:264
-#: ../gui/wxpython/gui_core/preferences.py:304
+#: ../gui/wxpython/gui_core/preferences.py:314
 msgid "Search module"
 msgstr "Hledat modul"
 
 #: ../gui/wxpython/lmgr/frame.py:271
-#: ../gui/wxpython/gui_core/preferences.py:314
+#: ../gui/wxpython/gui_core/preferences.py:324
 msgid "Python shell"
 msgstr ""
 
@@ -1451,25 +1446,25 @@ msgstr "Odstranit mapovou vrstvu"
 msgid "Quit GRASS GUI"
 msgstr "Ukončit GRASS GUI"
 
-#: ../gui/wxpython/lmgr/frame.py:1779
+#: ../gui/wxpython/lmgr/frame.py:1781
 #, fuzzy
 msgid "No map layer selected. Operation canceled."
 msgstr "Nebyla vybrána žádná mapová vrstva. Operace ukončena."
 
-#: ../gui/wxpython/lmgr/frame.py:1780 ../gui/wxpython/gis_set.py:519
+#: ../gui/wxpython/lmgr/frame.py:1782 ../gui/wxpython/gis_set.py:519
 #: ../gui/wxpython/gis_set.py:554 ../gui/wxpython/gui_core/ghelp.py:274
 #: ../gui/wxpython/core/gcmd.py:142
 msgid "Message"
 msgstr "Zpráva"
 
-#: ../gui/wxpython/lmgr/frame.py:1789
+#: ../gui/wxpython/lmgr/frame.py:1791
 msgid ""
 "Display resolution is currently not constrained to computational settings. "
 "It's suggested to constrain map to region geometry. Do you want to constrain "
 "the resolution?"
 msgstr ""
 
-#: ../gui/wxpython/lmgr/frame.py:1798
+#: ../gui/wxpython/lmgr/frame.py:1800
 msgid "Constrain map to region geometry?"
 msgstr ""
 
@@ -1728,112 +1723,112 @@ msgstr "3D rastrová data mohou být zobrazena pouze v 3D módu"
 msgid "Set options"
 msgstr "Nastavit volby"
 
-#: ../gui/wxpython/lmgr/layertree.py:157
+#: ../gui/wxpython/lmgr/layertree.py:159
 #, python-format
 msgid "GRASS GIS Map Display: %(id)d  - Location: %(loc)s"
 msgstr "GRASS GIS Mapové okno: %(id)d - Location: %(loc)s"
 
-#: ../gui/wxpython/lmgr/layertree.py:167
+#: ../gui/wxpython/lmgr/layertree.py:169
 msgid "Map Layers"
 msgstr "Mapové vrstvy"
 
-#: ../gui/wxpython/lmgr/layertree.py:313
+#: ../gui/wxpython/lmgr/layertree.py:334
 #: ../gui/wxpython/gmodeler/frame.py:1177
 msgid "Remove"
 msgstr "Odstranit"
 
-#: ../gui/wxpython/lmgr/layertree.py:317 ../gui/wxpython/menustrings.py:161
+#: ../gui/wxpython/lmgr/layertree.py:338 ../gui/wxpython/menustrings.py:161
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: ../gui/wxpython/lmgr/layertree.py:325
+#: ../gui/wxpython/lmgr/layertree.py:346
 msgid "Change opacity level"
 msgstr "Změnit úroveň průhlednosti"
 
-#: ../gui/wxpython/lmgr/layertree.py:327
+#: ../gui/wxpython/lmgr/layertree.py:348
 #: ../gui/wxpython/gmodeler/frame.py:1209
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../gui/wxpython/lmgr/layertree.py:335
+#: ../gui/wxpython/lmgr/layertree.py:356
 msgid "3D view properties"
 msgstr "Vlastnosti 3D zobrazení"
 
-#: ../gui/wxpython/lmgr/layertree.py:339
+#: ../gui/wxpython/lmgr/layertree.py:360
 msgid "Zoom to selected map(s)"
 msgstr "Přiblížit na vybranou mapu"
 
-#: ../gui/wxpython/lmgr/layertree.py:341
+#: ../gui/wxpython/lmgr/layertree.py:362
 msgid "Set computational region from selected map(s)"
 msgstr "Nastavit výpočetní region podle vybrané mapy"
 
-#: ../gui/wxpython/lmgr/layertree.py:353 ../gui/wxpython/lmgr/layertree.py:426
+#: ../gui/wxpython/lmgr/layertree.py:374 ../gui/wxpython/lmgr/layertree.py:447
 #, fuzzy
 msgid "Export"
 msgstr "MPEG-1 export"
 
-#: ../gui/wxpython/lmgr/layertree.py:360 ../gui/wxpython/lmgr/layertree.py:432
+#: ../gui/wxpython/lmgr/layertree.py:381 ../gui/wxpython/lmgr/layertree.py:453
 msgid "Set color table"
 msgstr "Nastavit tabulku barev"
 
-#: ../gui/wxpython/lmgr/layertree.py:363
+#: ../gui/wxpython/lmgr/layertree.py:384
 msgid "Show attribute data"
 msgstr "Zobrazit atributovou tabulku"
 
-#: ../gui/wxpython/lmgr/layertree.py:366
+#: ../gui/wxpython/lmgr/layertree.py:387
 msgid "Start editing"
 msgstr "Spustit editaci"
 
-#: ../gui/wxpython/lmgr/layertree.py:367
+#: ../gui/wxpython/lmgr/layertree.py:388
 msgid "Stop editing"
 msgstr "Ukončit editaci"
 
-#: ../gui/wxpython/lmgr/layertree.py:378
+#: ../gui/wxpython/lmgr/layertree.py:399
 #, fuzzy
 msgid "Use as background vector map for digitizer"
 msgstr "Použít jako podklad vektorové mapy"
 
-#: ../gui/wxpython/lmgr/layertree.py:385
+#: ../gui/wxpython/lmgr/layertree.py:406
 msgid "Rebuild topology"
 msgstr "Vytvořit/znovu sestavit topologii"
 
-#: ../gui/wxpython/lmgr/layertree.py:407 ../gui/wxpython/lmgr/layertree.py:440
+#: ../gui/wxpython/lmgr/layertree.py:428 ../gui/wxpython/lmgr/layertree.py:461
 #: ../gui/wxpython/gmodeler/preferences.py:428
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../gui/wxpython/lmgr/layertree.py:420
+#: ../gui/wxpython/lmgr/layertree.py:441
 msgid "Zoom to selected map(s) (ignore NULLs)"
 msgstr "Přiblížit na vybranou mapu (ignorovat NULL hodnoty)"
 
-#: ../gui/wxpython/lmgr/layertree.py:422
+#: ../gui/wxpython/lmgr/layertree.py:443
 msgid "Set computational region from selected map(s) (ignore NULLs)"
 msgstr ""
 "Nastavit výpočetní region podle podle vybrané mapy (ignoruje NULL hodnoty)"
 
-#: ../gui/wxpython/lmgr/layertree.py:434 ../gui/wxpython/menustrings.py:716
+#: ../gui/wxpython/lmgr/layertree.py:455 ../gui/wxpython/menustrings.py:716
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../gui/wxpython/lmgr/layertree.py:436 ../gui/wxpython/menustrings.py:505
+#: ../gui/wxpython/lmgr/layertree.py:457 ../gui/wxpython/menustrings.py:505
 msgid "Univariate raster statistics"
 msgstr "Univariantní statistika rastrové vrstvy"
 
-#: ../gui/wxpython/lmgr/layertree.py:438 ../gui/wxpython/wxplot/dialogs.py:502
+#: ../gui/wxpython/lmgr/layertree.py:459
 msgid "Profile"
 msgstr "Profil"
 
-#: ../gui/wxpython/lmgr/layertree.py:529
+#: ../gui/wxpython/lmgr/layertree.py:551
 msgid "Unable to create profile of raster map."
 msgstr "Nelze vytvořit profil rastrové mapy."
 
-#: ../gui/wxpython/lmgr/layertree.py:531 ../gui/wxpython/gis_set.py:208
+#: ../gui/wxpython/lmgr/layertree.py:553 ../gui/wxpython/gis_set.py:208
 #: ../gui/wxpython/gis_set.py:531 ../gui/wxpython/gis_set.py:567
-#: ../gui/wxpython/gis_set.py:633 ../gui/wxpython/gui_core/preferences.py:201
-#: ../gui/wxpython/gui_core/preferences.py:1225
-#: ../gui/wxpython/gui_core/preferences.py:1254
-#: ../gui/wxpython/gui_core/preferences.py:1263
-#: ../gui/wxpython/gui_core/preferences.py:1272
+#: ../gui/wxpython/gis_set.py:633 ../gui/wxpython/gui_core/preferences.py:211
+#: ../gui/wxpython/gui_core/preferences.py:1237
+#: ../gui/wxpython/gui_core/preferences.py:1266
+#: ../gui/wxpython/gui_core/preferences.py:1275
+#: ../gui/wxpython/gui_core/preferences.py:1284
 #: ../gui/wxpython/psmap/dialogs.py:3951
 #: ../gui/wxpython/location_wizard/wizard.py:530
 #: ../gui/wxpython/location_wizard/wizard.py:715
@@ -1843,111 +1838,111 @@ msgstr "Nelze vytvořit profil rastrové mapy."
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
 #: ../gui/wxpython/wxplot/profile.py:349
-#: ../gui/wxpython/mapdisp/mapwindow.py:1637
+#: ../gui/wxpython/mapdisp/mapwindow.py:1643
 #: ../gui/wxpython/vdigit/dialogs.py:241 ../gui/wxpython/vdigit/dialogs.py:433
 #: ../gui/wxpython/gmodeler/frame.py:882 ../gui/wxpython/core/workspace.py:997
 #: ../gui/wxpython/core/gcmd.py:108
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gui/wxpython/lmgr/layertree.py:565
+#: ../gui/wxpython/lmgr/layertree.py:587
 #, fuzzy
 msgid "Unable to display histogram of raster map. No map name defined."
 msgstr "Nelze zobrazit histogram rastrové mapy."
 
-#: ../gui/wxpython/lmgr/layertree.py:645
+#: ../gui/wxpython/lmgr/layertree.py:667
 #, python-format
 msgid "Set opacity of <%s>"
 msgstr "Nastavit průhlednost <%s>"
 
-#: ../gui/wxpython/lmgr/layertree.py:752
+#: ../gui/wxpython/lmgr/layertree.py:774
 msgid "Layer group:"
 msgstr "Skupina vrstev:"
 
-#: ../gui/wxpython/lmgr/layertree.py:757
-#: ../gui/wxpython/lmgr/layertree.py:1322
+#: ../gui/wxpython/lmgr/layertree.py:779
+#: ../gui/wxpython/lmgr/layertree.py:1373
 msgid "Click to edit layer settings"
 msgstr "Klikněte pro nastavení vrstev "
 
-#: ../gui/wxpython/lmgr/layertree.py:798
+#: ../gui/wxpython/lmgr/layertree.py:821
 msgid "(double click to set properties)"
 msgstr "(dvojklik pro nastavení vlastností)"
 
-#: ../gui/wxpython/lmgr/layertree.py:801
+#: ../gui/wxpython/lmgr/layertree.py:824
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #: ../gui/wxpython/psmap/dialogs.py:695 ../gui/wxpython/gcp/manager.py:314
 #: ../gui/wxpython/gmodeler/frame.py:1285
 msgid "raster"
 msgstr "rastrová data"
 
-#: ../gui/wxpython/lmgr/layertree.py:804
+#: ../gui/wxpython/lmgr/layertree.py:827
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #, fuzzy
 msgid "3D raster"
 msgstr "3D rastr:"
 
-#: ../gui/wxpython/lmgr/layertree.py:807
+#: ../gui/wxpython/lmgr/layertree.py:830
 msgid "RGB"
 msgstr "RGB"
 
-#: ../gui/wxpython/lmgr/layertree.py:810
+#: ../gui/wxpython/lmgr/layertree.py:833
 msgid "HIS"
 msgstr "HIS"
 
-#: ../gui/wxpython/lmgr/layertree.py:813
+#: ../gui/wxpython/lmgr/layertree.py:836
 #, fuzzy
 msgid "shaded relief"
 msgstr "Mapa stínovaného reliéfu"
 
-#: ../gui/wxpython/lmgr/layertree.py:816
+#: ../gui/wxpython/lmgr/layertree.py:839
 msgid "raster cell numbers"
 msgstr "Číslo kategorie rastrové buňky"
 
-#: ../gui/wxpython/lmgr/layertree.py:819
+#: ../gui/wxpython/lmgr/layertree.py:842
 msgid "raster flow arrows"
 msgstr "Směry odtoku v rastrové mapě"
 
-#: ../gui/wxpython/lmgr/layertree.py:822
+#: ../gui/wxpython/lmgr/layertree.py:845
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #: ../gui/wxpython/psmap/dialogs.py:696 ../gui/wxpython/gcp/manager.py:314
 #: ../gui/wxpython/gmodeler/frame.py:1286
 msgid "vector"
 msgstr "vektorová mapa"
 
-#: ../gui/wxpython/lmgr/layertree.py:825
+#: ../gui/wxpython/lmgr/layertree.py:848
 msgid "thematic map"
 msgstr "tématická mapa"
 
-#: ../gui/wxpython/lmgr/layertree.py:828
+#: ../gui/wxpython/lmgr/layertree.py:851
 msgid "thematic charts"
 msgstr "tématická mapa s grafem"
 
-#: ../gui/wxpython/lmgr/layertree.py:831
+#: ../gui/wxpython/lmgr/layertree.py:854
 msgid "grid"
 msgstr "mřížka (grid)"
 
-#: ../gui/wxpython/lmgr/layertree.py:834
+#: ../gui/wxpython/lmgr/layertree.py:857
 msgid "geodesic line"
 msgstr "Geodetické čáry"
 
-#: ../gui/wxpython/lmgr/layertree.py:837
+#: ../gui/wxpython/lmgr/layertree.py:860
 msgid "rhumbline"
 msgstr "zeměpisné čáry"
 
-#: ../gui/wxpython/lmgr/layertree.py:840
+#: ../gui/wxpython/lmgr/layertree.py:863
 msgid "vector labels"
 msgstr "vektorové popisky"
 
-#: ../gui/wxpython/lmgr/layertree.py:1077
-#: ../gui/wxpython/lmgr/layertree.py:1126
+#: ../gui/wxpython/lmgr/layertree.py:1100
+#: ../gui/wxpython/lmgr/layertree.py:1159
 msgid "Please wait, updating data..."
 msgstr "Prosím čekejte, aktualizuji data..."
 
-#: ../gui/wxpython/lmgr/layertree.py:1406
+#: ../gui/wxpython/lmgr/layertree.py:1458
 msgid "opacity:"
 msgstr "průhlednost:"
 
-#: ../gui/wxpython/lmgr/layertree.py:1423
+#: ../gui/wxpython/lmgr/layertree.py:1475
 #, python-format
 msgid "Map <%s> not found."
 msgstr "Mapa <%s> nebyla nalezena."
@@ -2497,7 +2492,7 @@ msgstr "Přidat nový sloupec"
 msgid "Column"
 msgstr "Sloupce"
 
-#: ../gui/wxpython/dbmgr/manager.py:911 ../gui/wxpython/wxplot/dialogs.py:592
+#: ../gui/wxpython/dbmgr/manager.py:911
 #: ../gui/wxpython/gmodeler/preferences.py:207
 msgid "Type"
 msgstr "Typ"
@@ -2528,7 +2523,7 @@ msgstr "Vrstvy vektorové mapy"
 msgid "List of layers"
 msgstr "Seznam vrstev"
 
-#: ../gui/wxpython/dbmgr/manager.py:1135 ../gui/wxpython/core/settings.py:719
+#: ../gui/wxpython/dbmgr/manager.py:1135 ../gui/wxpython/core/settings.py:704
 msgid "Edit selected record"
 msgstr "Editovat vybraný záznam"
 
@@ -3049,13 +3044,13 @@ msgid "Revert settings to default and apply changes"
 msgstr "Znovu nastavit výchozí nastavení a uložit"
 
 #: ../gui/wxpython/gui_core/preferences.py:87
-#: ../gui/wxpython/wxplot/dialogs.py:373 ../gui/wxpython/wxplot/dialogs.py:728
+#: ../gui/wxpython/wxplot/dialogs.py:376 ../gui/wxpython/wxplot/dialogs.py:763
 #: ../gui/wxpython/gcp/manager.py:2370
 msgid "Apply changes for the current session"
 msgstr "Aplikovat změny jen pro toto spuštění"
 
 #: ../gui/wxpython/gui_core/preferences.py:89
-#: ../gui/wxpython/wxplot/dialogs.py:378 ../gui/wxpython/wxplot/dialogs.py:730
+#: ../gui/wxpython/wxplot/dialogs.py:381 ../gui/wxpython/wxplot/dialogs.py:765
 #: ../gui/wxpython/gcp/manager.py:2372
 msgid ""
 "Apply and save changes to user settings file (default for next sessions)"
@@ -3064,8 +3059,8 @@ msgstr ""
 "seance)"
 
 #: ../gui/wxpython/gui_core/preferences.py:92
-#: ../gui/wxpython/psmap/dialogs.py:354 ../gui/wxpython/wxplot/dialogs.py:380
-#: ../gui/wxpython/wxplot/dialogs.py:733
+#: ../gui/wxpython/psmap/dialogs.py:354 ../gui/wxpython/wxplot/dialogs.py:383
+#: ../gui/wxpython/wxplot/dialogs.py:766
 #: ../gui/wxpython/vdigit/preferences.py:58
 #: ../gui/wxpython/gmodeler/preferences.py:452
 msgid "Close dialog and ignore changes"
@@ -3075,72 +3070,72 @@ msgstr "Zavřít dialog a ignorovat provedené změny"
 msgid "Settings applied to current session but not saved"
 msgstr "Nastavení jsou přijata ale nejsou uložena "
 
-#: ../gui/wxpython/gui_core/preferences.py:166
+#: ../gui/wxpython/gui_core/preferences.py:175
 #, python-format
 msgid "Settings saved to file '%s'."
 msgstr "Nastavení uloženo do souboru '%s'."
 
-#: ../gui/wxpython/gui_core/preferences.py:200
+#: ../gui/wxpython/gui_core/preferences.py:210
 msgid "Key column cannot be empty string."
 msgstr "Klíčový sloupec nemůže obsahovat prázdný řetězec."
 
-#: ../gui/wxpython/gui_core/preferences.py:209
+#: ../gui/wxpython/gui_core/preferences.py:219
 #, python-format
 msgid ""
 "Field separator must be ASCII character not <%s> (use e.g. ';', '&', '#')"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:246
+#: ../gui/wxpython/gui_core/preferences.py:256
 #, fuzzy
 msgid "GUI Settings"
 msgstr "Nastavení grafického prostředí (GUI)"
 
-#: ../gui/wxpython/gui_core/preferences.py:267
+#: ../gui/wxpython/gui_core/preferences.py:277
 #: ../gui/wxpython/vdigit/preferences.py:118
 #: ../gui/wxpython/gmodeler/preferences.py:45
 msgid "General"
 msgstr "Obecné"
 
-#: ../gui/wxpython/gui_core/preferences.py:273
+#: ../gui/wxpython/gui_core/preferences.py:283
 msgid "Layer Manager settings"
 msgstr "Nastavení okna Správy vrstev"
 
-#: ../gui/wxpython/gui_core/preferences.py:284
+#: ../gui/wxpython/gui_core/preferences.py:294
 msgid "Ask when removing map layer from layer tree"
 msgstr "Zeptat se při odstraňování mapy ze stromu vrstev"
 
-#: ../gui/wxpython/gui_core/preferences.py:294
+#: ../gui/wxpython/gui_core/preferences.py:304
 msgid "Ask when quiting wxGUI or closing display"
 msgstr "Zeptat se při ukončení wxGUI nebo při zavírání displeje"
 
-#: ../gui/wxpython/gui_core/preferences.py:304
 #: ../gui/wxpython/gui_core/preferences.py:314
+#: ../gui/wxpython/gui_core/preferences.py:324
 #, python-format
 msgid "Hide '%s' tab (requires GUI restart)"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:327
+#: ../gui/wxpython/gui_core/preferences.py:337
 msgid "Automatically copy selected text to clipboard (in Command console)"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:341
+#: ../gui/wxpython/gui_core/preferences.py:351
 #, fuzzy
 msgid "Workspace settings"
 msgstr "Nastavení serveru"
 
-#: ../gui/wxpython/gui_core/preferences.py:349
+#: ../gui/wxpython/gui_core/preferences.py:359
 msgid "Suppress positioning Map Display Window(s)"
 msgstr "Zachovat pozici okna Mapového displeje"
 
-#: ../gui/wxpython/gui_core/preferences.py:361
+#: ../gui/wxpython/gui_core/preferences.py:371
 msgid "Suppress positioning Layer Manager window"
 msgstr "Zachovat pozici okna Správce vrstev"
 
-#: ../gui/wxpython/gui_core/preferences.py:372
+#: ../gui/wxpython/gui_core/preferences.py:382
 msgid "Save current window layout as default"
 msgstr "Uložit aktuální nastavení oken jako výchozí"
 
-#: ../gui/wxpython/gui_core/preferences.py:375
+#: ../gui/wxpython/gui_core/preferences.py:385
 msgid ""
 "Save current position and size of Layer Manager window and opened Map "
 "Display window(s) and use as default for next sessions."
@@ -3148,222 +3143,222 @@ msgstr ""
 "Uložit aktuální pozici a velikost okna Správa vrstev a mapový displej a "
 "použít jako výchozí při příštích spuštění."
 
-#: ../gui/wxpython/gui_core/preferences.py:402
-#: ../gui/wxpython/gui_core/preferences.py:575
-#: ../gui/wxpython/gui_core/preferences.py:1375
+#: ../gui/wxpython/gui_core/preferences.py:412
+#: ../gui/wxpython/gui_core/preferences.py:587
+#: ../gui/wxpython/gui_core/preferences.py:1387
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3265
-#: ../gui/wxpython/psmap/dialogs.py:3721 ../gui/wxpython/wxplot/dialogs.py:307
+#: ../gui/wxpython/psmap/dialogs.py:3721 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/gui_core/preferences.py:416
+#: ../gui/wxpython/gui_core/preferences.py:426
 msgid "Font for command output:"
 msgstr "Font pro výstup příkazů:"
 
-#: ../gui/wxpython/gui_core/preferences.py:421
-#: ../gui/wxpython/gui_core/preferences.py:591
+#: ../gui/wxpython/gui_core/preferences.py:431
+#: ../gui/wxpython/gui_core/preferences.py:603
 #: ../gui/wxpython/gui_core/dialogs.py:769
 msgid "Set font"
 msgstr "Nastavit písmo"
 
-#: ../gui/wxpython/gui_core/preferences.py:430
+#: ../gui/wxpython/gui_core/preferences.py:440
 #, fuzzy
 msgid "Language settings"
 msgstr "Změnit nastavení"
 
-#: ../gui/wxpython/gui_core/preferences.py:440
+#: ../gui/wxpython/gui_core/preferences.py:450
 msgid "Choose language (requires to save and GRASS restart):"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:460
+#: ../gui/wxpython/gui_core/preferences.py:472
 #, fuzzy
 msgid "Appearance settings"
 msgstr "Rozšířené nastavení"
 
-#: ../gui/wxpython/gui_core/preferences.py:471
+#: ../gui/wxpython/gui_core/preferences.py:483
 msgid "Element list:"
 msgstr "Seznam prvků"
 
-#: ../gui/wxpython/gui_core/preferences.py:493
+#: ../gui/wxpython/gui_core/preferences.py:505
 msgid "Menu style (requires to save and GUI restart):"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:517
+#: ../gui/wxpython/gui_core/preferences.py:529
 msgid "Height of map selection popup window (in pixels):"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:541
+#: ../gui/wxpython/gui_core/preferences.py:553
 msgid "Icon theme (requires GUI restart):"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:571
+#: ../gui/wxpython/gui_core/preferences.py:583
 #, fuzzy
 msgid "Map Display"
 msgstr "zobrazit"
 
-#: ../gui/wxpython/gui_core/preferences.py:586
+#: ../gui/wxpython/gui_core/preferences.py:598
 msgid "Default font for GRASS displays:"
 msgstr "Výchozí písmo pro GRASS monitory:"
 
-#: ../gui/wxpython/gui_core/preferences.py:603
+#: ../gui/wxpython/gui_core/preferences.py:615
 msgid "Default display settings"
 msgstr "Výchozí nastavení displeje"
 
-#: ../gui/wxpython/gui_core/preferences.py:615
+#: ../gui/wxpython/gui_core/preferences.py:627
 msgid "Display driver:"
 msgstr "Ovladač displeje:"
 
-#: ../gui/wxpython/gui_core/preferences.py:644
+#: ../gui/wxpython/gui_core/preferences.py:656
 msgid "Statusbar mode:"
 msgstr "Výchozí zobrazení na stavové liště:"
 
-#: ../gui/wxpython/gui_core/preferences.py:683
+#: ../gui/wxpython/gui_core/preferences.py:695
 #: ../gui/wxpython/mapdisp/statusbar.py:435
 msgid "Align region extent based on display size"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:696
+#: ../gui/wxpython/gui_core/preferences.py:708
 #: ../gui/wxpython/mapdisp/statusbar.py:455
 msgid "Constrain display resolution to computational settings"
 msgstr "Nastavit zobrazené rozlišení jako výpočetní "
 
-#: ../gui/wxpython/gui_core/preferences.py:709
+#: ../gui/wxpython/gui_core/preferences.py:721
 msgid "Enable auto-rendering"
 msgstr "Zapnout/vypnout automatické vykreslování"
 
-#: ../gui/wxpython/gui_core/preferences.py:722
+#: ../gui/wxpython/gui_core/preferences.py:734
 msgid "Enable auto-zooming to selected map layer"
 msgstr "Povolit automatické přiblížení na vybranou mapovou vrstvu"
 
-#: ../gui/wxpython/gui_core/preferences.py:735
+#: ../gui/wxpython/gui_core/preferences.py:747
 msgid "Mouse wheel action:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:750
+#: ../gui/wxpython/gui_core/preferences.py:762
 msgid "Mouse scrolling direction:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:782
+#: ../gui/wxpython/gui_core/preferences.py:794
 #: ../gui/wxpython/gmodeler/dialogs.py:136
 #: ../gui/wxpython/gmodeler/dialogs.py:392
 #: ../gui/wxpython/gmodeler/dialogs.py:494
 msgid "Command"
 msgstr "Příkazy"
 
-#: ../gui/wxpython/gui_core/preferences.py:785
+#: ../gui/wxpython/gui_core/preferences.py:797
 msgid "Command dialog settings"
 msgstr "Dialog nastavení příkazů"
 
-#: ../gui/wxpython/gui_core/preferences.py:797
+#: ../gui/wxpython/gui_core/preferences.py:809
 #: ../gui/wxpython/gui_core/dialogs.py:1506
 #: ../gui/wxpython/modules/vclean.py:135 ../gui/wxpython/scripts/vkrige.py:139
 #: ../gui/wxpython/gmodeler/preferences.py:442
 msgid "Allow output files to overwrite existing files"
 msgstr "Povolit přepsání existujících souborů"
 
-#: ../gui/wxpython/gui_core/preferences.py:807
+#: ../gui/wxpython/gui_core/preferences.py:819
 #, fuzzy
 msgid "Close dialog when command is successfully finished"
 msgstr "Zavřít dialog při ukončení"
 
-#: ../gui/wxpython/gui_core/preferences.py:817
+#: ../gui/wxpython/gui_core/preferences.py:829
 #: ../gui/wxpython/gui_core/dialogs.py:257
 msgid "Add created map into layer tree"
 msgstr "Přidat vytvořenou mapu do stromu vrstev"
 
-#: ../gui/wxpython/gui_core/preferences.py:828
+#: ../gui/wxpython/gui_core/preferences.py:840
 msgid "Allow interactive input"
 msgstr "Povolit interaktivní vstup"
 
-#: ../gui/wxpython/gui_core/preferences.py:838
+#: ../gui/wxpython/gui_core/preferences.py:850
 msgid "Verbosity level:"
 msgstr "Úroveň upovídanosti příkazů:"
 
-#: ../gui/wxpython/gui_core/preferences.py:857
+#: ../gui/wxpython/gui_core/preferences.py:869
 msgid "Raster settings"
 msgstr "Nastavení rastru"
 
-#: ../gui/wxpython/gui_core/preferences.py:868
+#: ../gui/wxpython/gui_core/preferences.py:880
 msgid "Overlay raster maps"
 msgstr "Překrývat rastrové mapy"
 
-#: ../gui/wxpython/gui_core/preferences.py:879
+#: ../gui/wxpython/gui_core/preferences.py:891
 msgid "Default color table"
 msgstr "Výchozí tabulka barev"
 
-#: ../gui/wxpython/gui_core/preferences.py:905
+#: ../gui/wxpython/gui_core/preferences.py:917
 msgid "Vector settings"
 msgstr "Nastavení vektorů"
 
-#: ../gui/wxpython/gui_core/preferences.py:911
+#: ../gui/wxpython/gui_core/preferences.py:923
 msgid "Display:"
 msgstr "Zobrazit:"
 
-#: ../gui/wxpython/gui_core/preferences.py:934
+#: ../gui/wxpython/gui_core/preferences.py:946
 #: ../gui/wxpython/vdigit/preferences.py:344
 msgid "Attributes"
 msgstr "Atributy"
 
-#: ../gui/wxpython/gui_core/preferences.py:942
+#: ../gui/wxpython/gui_core/preferences.py:954
 msgid "Highlighting"
 msgstr "Zvýraznění"
 
-#: ../gui/wxpython/gui_core/preferences.py:958
+#: ../gui/wxpython/gui_core/preferences.py:970
 msgid "Line width (in pixels):"
 msgstr "Šířka linie (v pixelech):"
 
-#: ../gui/wxpython/gui_core/preferences.py:981
+#: ../gui/wxpython/gui_core/preferences.py:993
 msgid "Data browser"
 msgstr "Datový prohlížeč"
 
-#: ../gui/wxpython/gui_core/preferences.py:986
+#: ../gui/wxpython/gui_core/preferences.py:998
 msgid "Left mouse double click:"
 msgstr "Dvojklik levých tlačítkem myši:"
 
-#: ../gui/wxpython/gui_core/preferences.py:998
+#: ../gui/wxpython/gui_core/preferences.py:1010
 msgid "Encoding (e.g. utf-8, ascii, iso8859-1, koi8-r):"
 msgstr "Kódování atributů (např. utf-8, ascii, iso8859-1, Windows-1250):"
 
-#: ../gui/wxpython/gui_core/preferences.py:1009
+#: ../gui/wxpython/gui_core/preferences.py:1021
 msgid "Field separator:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1020
+#: ../gui/wxpython/gui_core/preferences.py:1032
 msgid "Ask when deleting data record(s) from table"
 msgstr "Zeptat se při odstraňování dat z tabulky"
 
-#: ../gui/wxpython/gui_core/preferences.py:1041
+#: ../gui/wxpython/gui_core/preferences.py:1053
 msgid "Create table"
 msgstr "Vytvořit tabulku"
 
-#: ../gui/wxpython/gui_core/preferences.py:1048
+#: ../gui/wxpython/gui_core/preferences.py:1060
 #: ../gui/wxpython/gui_core/dialogs.py:287
 msgid "Key column:"
 msgstr "Sloupec s klíčem:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1075
+#: ../gui/wxpython/gui_core/preferences.py:1087
 #: ../gui/wxpython/mapdisp/statusbar.py:681
 msgid "Projection"
 msgstr "Projekce"
 
-#: ../gui/wxpython/gui_core/preferences.py:1082
+#: ../gui/wxpython/gui_core/preferences.py:1094
 msgid "Projection statusbar settings"
 msgstr "Nastavení stavového řádku projekce"
 
-#: ../gui/wxpython/gui_core/preferences.py:1091
+#: ../gui/wxpython/gui_core/preferences.py:1103
 #: ../gui/wxpython/location_wizard/wizard.py:1255
 msgid "EPSG code:"
 msgstr "Kód EPSG:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1108
+#: ../gui/wxpython/gui_core/preferences.py:1120
 msgid "Proj.4 string (required):"
 msgstr "Proj.4 řatězec (vyžadováno):"
 
-#: ../gui/wxpython/gui_core/preferences.py:1124
+#: ../gui/wxpython/gui_core/preferences.py:1136
 msgid "EPSG file:"
 msgstr "Soubor s EPSG kódy:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1139
+#: ../gui/wxpython/gui_core/preferences.py:1151
 msgid ""
 "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
 "directly."
@@ -3371,60 +3366,60 @@ msgstr ""
 "Načíst EPSG kódy (buďte trpěliví), vložit EPSG k´d nebo vložit Proj.4řetězec "
 "přímo."
 
-#: ../gui/wxpython/gui_core/preferences.py:1147
+#: ../gui/wxpython/gui_core/preferences.py:1159
 msgid "&Load EPSG codes"
 msgstr "&Načíst Kódy EPSG:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1158
+#: ../gui/wxpython/gui_core/preferences.py:1170
 msgid "Coordinates format"
 msgstr "Formát souřadnic"
 
-#: ../gui/wxpython/gui_core/preferences.py:1167
+#: ../gui/wxpython/gui_core/preferences.py:1179
 msgid "LL projections"
 msgstr "Projekce Lat/long"
 
-#: ../gui/wxpython/gui_core/preferences.py:1186
+#: ../gui/wxpython/gui_core/preferences.py:1198
 msgid "Precision:"
 msgstr "Přesnost:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1224
+#: ../gui/wxpython/gui_core/preferences.py:1236
 #, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Nelze přešíst EPSG kódy: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1253
-#: ../gui/wxpython/gui_core/preferences.py:1262
-#: ../gui/wxpython/gui_core/preferences.py:1271
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1274
+#: ../gui/wxpython/gui_core/preferences.py:1283
 #, python-format
 msgid "EPSG code %s not found"
 msgstr "EPSG kód %s nebyl nalezen"
 
-#: ../gui/wxpython/gui_core/preferences.py:1279
+#: ../gui/wxpython/gui_core/preferences.py:1291
 msgid "Select default display font"
 msgstr "Vybrat výchozí písmo"
 
-#: ../gui/wxpython/gui_core/preferences.py:1304
+#: ../gui/wxpython/gui_core/preferences.py:1316
 msgid "Select output font"
 msgstr "Zvolit font výstupu"
 
-#: ../gui/wxpython/gui_core/preferences.py:1382
+#: ../gui/wxpython/gui_core/preferences.py:1394
 msgid "Select font:"
 msgstr "Vybrat font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1406
+#: ../gui/wxpython/gui_core/preferences.py:1418
 msgid "Character encoding:"
 msgstr "Kódování znaků:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1424
+#: ../gui/wxpython/gui_core/preferences.py:1436
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3555
 msgid "Font size:"
 msgstr "Velikost fontu:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1522
+#: ../gui/wxpython/gui_core/preferences.py:1534
 msgid "Manage access to mapsets"
 msgstr "Správa přístupu do mapsetů"
 
-#: ../gui/wxpython/gui_core/preferences.py:1535
+#: ../gui/wxpython/gui_core/preferences.py:1547
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -3438,12 +3433,12 @@ msgstr ""
 " - Můžete zapisovat pouze do současného mapsetu.\n"
 " - Můžete zapisovat pouze do mapsetu  který vlastníte."
 
-#: ../gui/wxpython/gui_core/preferences.py:1609
+#: ../gui/wxpython/gui_core/preferences.py:1621
 #: ../gui/wxpython/gui_core/gselect.py:346
 msgid "Mapset"
 msgstr "Mapset"
 
-#: ../gui/wxpython/gui_core/preferences.py:1610
+#: ../gui/wxpython/gui_core/preferences.py:1622
 msgid "Owner"
 msgstr "Vlastník"
 
@@ -3684,7 +3679,7 @@ msgid "Save display to graphic file"
 msgstr "Uložit kompozici displeje do souboru"
 
 #: ../gui/wxpython/gui_core/toolbars.py:60
-#: ../gui/wxpython/modules/histogram.py:451 ../gui/wxpython/wxplot/base.py:506
+#: ../gui/wxpython/modules/histogram.py:451 ../gui/wxpython/wxplot/base.py:486
 #: ../gui/wxpython/gcp/mapdisplay.py:493 ../gui/wxpython/mapdisp/frame.py:604
 msgid "Print display"
 msgstr "Tisk kompozice displeje"
@@ -8640,7 +8635,7 @@ msgid "Generate PDF output"
 msgstr "Vytvořit bodovou vrstvu"
 
 #: ../gui/wxpython/psmap/toolbars.py:60
-#: ../gui/wxpython/modules/histogram.py:443 ../gui/wxpython/wxplot/base.py:504
+#: ../gui/wxpython/modules/histogram.py:443 ../gui/wxpython/wxplot/base.py:484
 #: ../gui/wxpython/gcp/mapdisplay.py:485 ../gui/wxpython/mapdisp/frame.py:596
 msgid "Page setup"
 msgstr "Nastavení stránky"
@@ -8694,8 +8689,8 @@ msgstr "Test"
 msgid "Map info"
 msgstr "Přidat mapové prvky"
 
-#: ../gui/wxpython/psmap/toolbars.py:79 ../gui/wxpython/wxplot/dialogs.py:533
-#: ../gui/wxpython/wxplot/dialogs.py:585
+#: ../gui/wxpython/psmap/toolbars.py:79 ../gui/wxpython/wxplot/dialogs.py:576
+#: ../gui/wxpython/wxplot/dialogs.py:618
 msgid "Legend"
 msgstr "Legenda"
 
@@ -9130,6 +9125,7 @@ msgid "Width (pts):"
 msgstr "Šířka:"
 
 #: ../gui/wxpython/psmap/dialogs.py:1795 ../gui/wxpython/psmap/dialogs.py:1899
+#: ../gui/wxpython/wxplot/dialogs.py:610
 #, fuzzy
 msgid "Fill"
 msgstr "Soubor"
@@ -9183,7 +9179,7 @@ msgid "Choose a file"
 msgstr "Vyberte soubor"
 
 #: ../gui/wxpython/psmap/dialogs.py:1995 ../gui/wxpython/psmap/dialogs.py:2706
-#: ../gui/wxpython/psmap/dialogs.py:3471 ../gui/wxpython/wxplot/dialogs.py:568
+#: ../gui/wxpython/psmap/dialogs.py:3471 ../gui/wxpython/wxplot/dialogs.py:601
 msgid "Size"
 msgstr " Velikost"
 
@@ -9226,7 +9222,7 @@ msgid "multiply width by category value"
 msgstr "Interaktivně editovat hodnoty kategorií"
 
 #: ../gui/wxpython/psmap/dialogs.py:2114 ../gui/wxpython/psmap/dialogs.py:4893
-#: ../gui/wxpython/wxplot/dialogs.py:524
+#: ../gui/wxpython/wxplot/dialogs.py:567
 msgid "Line style"
 msgstr "styl linie"
 
@@ -9452,8 +9448,7 @@ msgstr ""
 msgid "default"
 msgstr "Výchozí"
 
-#: ../gui/wxpython/psmap/dialogs.py:3524 ../gui/wxpython/wxplot/dialogs.py:577
-#: ../gui/wxpython/wxplot/dialogs.py:623
+#: ../gui/wxpython/psmap/dialogs.py:3524 ../gui/wxpython/wxplot/dialogs.py:625
 msgid "Style"
 msgstr "Styl"
 
@@ -9669,7 +9664,7 @@ msgstr ""
 "vyberte jméno souboru pro uložení obrázku (není potřeba zadávat příponu "
 "soubru)"
 
-#: ../gui/wxpython/modules/histogram.py:447 ../gui/wxpython/wxplot/base.py:505
+#: ../gui/wxpython/modules/histogram.py:447 ../gui/wxpython/wxplot/base.py:485
 #: ../gui/wxpython/gcp/mapdisplay.py:489 ../gui/wxpython/mapdisp/frame.py:600
 msgid "Print preview"
 msgstr "Náhled tisku"
@@ -10967,164 +10962,196 @@ msgstr "Uložit profilová data do souboru csv"
 msgid "Quit plot tool"
 msgstr "Ukončit nástroj pro digitalizaci"
 
-#: ../gui/wxpython/wxplot/base.py:399
+#: ../gui/wxpython/wxplot/base.py:381
 #, fuzzy
 msgid "Left Mouse Down at Point:"
 msgstr "Levé: nový bod"
 
-#: ../gui/wxpython/wxplot/base.py:428 ../gui/wxpython/wxplot/dialogs.py:244
+#: ../gui/wxpython/wxplot/base.py:411 ../gui/wxpython/wxplot/dialogs.py:247
 msgid "Text settings"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/wxplot/base.py:432 ../gui/wxpython/wxplot/base.py:489
+#: ../gui/wxpython/wxplot/base.py:415 ../gui/wxpython/wxplot/base.py:472
+#: ../gui/wxpython/wxplot/dialogs.py:503
 #, fuzzy
 msgid "Plot settings"
 msgstr "Nastavení písma"
 
-#: ../gui/wxpython/wxplot/base.py:445
+#: ../gui/wxpython/wxplot/base.py:428
 msgid "This feature is not yet functional"
 msgstr "Tento prvek ještě není funkční"
 
-#: ../gui/wxpython/wxplot/base.py:446
+#: ../gui/wxpython/wxplot/base.py:429
 msgid "Under Construction"
 msgstr "Ve vývoji"
 
-#: ../gui/wxpython/wxplot/base.py:475
+#: ../gui/wxpython/wxplot/base.py:457
 #, fuzzy
 msgid "Histogram text settings"
 msgstr "Nastavení písma profilu"
 
-#: ../gui/wxpython/wxplot/dialogs.py:32
+#: ../gui/wxpython/wxplot/dialogs.py:34
 #, fuzzy
 msgid "Select raster maps to profile"
 msgstr "Rastrová map pro profil"
 
-#: ../gui/wxpython/wxplot/dialogs.py:61
+#: ../gui/wxpython/wxplot/dialogs.py:63
 #, fuzzy
 msgid "Select raster map(s) to profile:"
 msgstr "Rastrová map pro profil"
 
-#: ../gui/wxpython/wxplot/dialogs.py:108
+#: ../gui/wxpython/wxplot/dialogs.py:110
 #, fuzzy
 msgid "Statistics"
 msgstr "Základní statistiky 3D pixelu (voxel)"
 
-#: ../gui/wxpython/wxplot/dialogs.py:159
+#: ../gui/wxpython/wxplot/dialogs.py:161
 #, fuzzy
 msgid "C&opy"
 msgstr "Kopírovat"
 
-#: ../gui/wxpython/wxplot/dialogs.py:160
+#: ../gui/wxpython/wxplot/dialogs.py:162
 #, fuzzy
 msgid "Copy regression statistics the clipboard (Ctrl+C)"
 msgstr "Kopírovat příkaz do schránky (Ctrl+C)"
 
-#: ../gui/wxpython/wxplot/dialogs.py:189
+#: ../gui/wxpython/wxplot/dialogs.py:191
 #, fuzzy
 msgid "Regression statistics copied to clipboard"
 msgstr "'%s' zkopírováno do schránky"
 
-#: ../gui/wxpython/wxplot/dialogs.py:251
+#: ../gui/wxpython/wxplot/dialogs.py:254
 msgid "Profile title:"
 msgstr "Nadpis profilu:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:261
+#: ../gui/wxpython/wxplot/dialogs.py:264
 msgid "Title font size (pts):"
 msgstr "Velikost písma nadpisu (pts):"
 
-#: ../gui/wxpython/wxplot/dialogs.py:272
+#: ../gui/wxpython/wxplot/dialogs.py:275
 msgid "X-axis label:"
 msgstr "Popisek osy X:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:282
+#: ../gui/wxpython/wxplot/dialogs.py:285
 msgid "Y-axis label:"
 msgstr "Popisek osy Y:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:292
+#: ../gui/wxpython/wxplot/dialogs.py:295
 msgid "Label font size (pts):"
 msgstr "Velikost písma popisků (pts):"
 
-#: ../gui/wxpython/wxplot/dialogs.py:315
+#: ../gui/wxpython/wxplot/dialogs.py:318
 msgid "Font family:"
 msgstr "Písmo:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:329
+#: ../gui/wxpython/wxplot/dialogs.py:332
 msgid "Style:"
 msgstr "Styl:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:343
+#: ../gui/wxpython/wxplot/dialogs.py:346
 msgid "Weight:"
 msgstr "Váha:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:375
+#: ../gui/wxpython/wxplot/dialogs.py:378 ../gui/wxpython/wxplot/dialogs.py:764
 msgid "Apply changes for the current session and close dialog"
 msgstr "Přijmout změny pr současné sezení a zavřít dialogové okno"
 
-#: ../gui/wxpython/wxplot/dialogs.py:431 ../gui/wxpython/wxplot/dialogs.py:781
-#, python-format
-msgid "Profile settings saved to file '%s'."
-msgstr "Nastavení profilu uloženo do souboru '%s'."
+#: ../gui/wxpython/wxplot/dialogs.py:434
+#, fuzzy, python-format
+msgid "Plot text sizes saved to file '%s'."
+msgstr "Nastavení uloženo do souboru '%s'."
 
 #: ../gui/wxpython/wxplot/dialogs.py:492
-msgid "Profile line settings"
-msgstr "Nastavení linie profilu"
+#, fuzzy
+msgid "No map or image group selected to plot."
+msgstr "Nebyla vybrána žádná mapová vrstva"
 
-#: ../gui/wxpython/wxplot/dialogs.py:507
+#: ../gui/wxpython/wxplot/dialogs.py:493
+#: ../gui/wxpython/mapdisp/mapwindow.py:1675
+#: ../gui/wxpython/core/workspace.py:1013 ../gui/wxpython/core/gcmd.py:133
+msgid "Warning"
+msgstr "Upozornění"
+
+#: ../gui/wxpython/wxplot/dialogs.py:523
+msgid "Map/image plotted"
+msgstr ""
+
+#: ../gui/wxpython/wxplot/dialogs.py:535
+#, fuzzy
+msgid "Settings for selected map"
+msgstr "Nastavit výpočetní region podle vybrané mapy"
+
+#: ../gui/wxpython/wxplot/dialogs.py:550
 msgid "Line color"
 msgstr "Barva linie"
 
-#: ../gui/wxpython/wxplot/dialogs.py:514
+#: ../gui/wxpython/wxplot/dialogs.py:557
 #: ../gui/wxpython/vdigit/preferences.py:130
 msgid "Line width"
 msgstr "Šířka linie"
 
-#: ../gui/wxpython/wxplot/dialogs.py:557
+#: ../gui/wxpython/wxplot/dialogs.py:590
 msgid "Transect segment marker settings"
 msgstr "Nastavení značek segmentů transektu"
 
-#: ../gui/wxpython/wxplot/dialogs.py:607
+#: ../gui/wxpython/wxplot/dialogs.py:641
 msgid "Axis settings"
 msgstr "Nastavení osy"
 
-#: ../gui/wxpython/wxplot/dialogs.py:613
+#: ../gui/wxpython/wxplot/dialogs.py:647
 msgid "X-Axis"
 msgstr "X osa"
 
-#: ../gui/wxpython/wxplot/dialogs.py:614
+#: ../gui/wxpython/wxplot/dialogs.py:648
 msgid "Y-Axis"
 msgstr "Y osa"
 
-#: ../gui/wxpython/wxplot/dialogs.py:632
+#: ../gui/wxpython/wxplot/dialogs.py:657
+#, fuzzy
+msgid "Scale"
+msgstr "Styl:"
+
+#: ../gui/wxpython/wxplot/dialogs.py:662
+msgid ""
+"Automatic axis scaling, custom max and min, or scale matches data range (min)"
+msgstr ""
+
+#: ../gui/wxpython/wxplot/dialogs.py:667
 msgid "Custom min"
 msgstr "Volitelné minimum"
 
-#: ../gui/wxpython/wxplot/dialogs.py:640
+#: ../gui/wxpython/wxplot/dialogs.py:675
 msgid "Custom max"
 msgstr "Volitelné maximum"
 
-#: ../gui/wxpython/wxplot/dialogs.py:648
+#: ../gui/wxpython/wxplot/dialogs.py:683
 msgid "Log scale"
 msgstr "Logaritmické měřítko"
 
-#: ../gui/wxpython/wxplot/dialogs.py:672
+#: ../gui/wxpython/wxplot/dialogs.py:707
 msgid "Grid and Legend settings"
 msgstr "Nastavení legendy a mřížky"
 
-#: ../gui/wxpython/wxplot/dialogs.py:677
+#: ../gui/wxpython/wxplot/dialogs.py:712
 msgid "Grid color"
 msgstr "Barva mřížky"
 
-#: ../gui/wxpython/wxplot/dialogs.py:684
+#: ../gui/wxpython/wxplot/dialogs.py:719
 msgid "Show grid"
 msgstr "Zobrazit mřížku"
 
-#: ../gui/wxpython/wxplot/dialogs.py:690
+#: ../gui/wxpython/wxplot/dialogs.py:725
 msgid "Legend font size"
 msgstr "Velikost písma legendy"
 
-#: ../gui/wxpython/wxplot/dialogs.py:700
+#: ../gui/wxpython/wxplot/dialogs.py:735
 msgid "Show legend"
 msgstr "Zobrazit legendu"
+
+#: ../gui/wxpython/wxplot/dialogs.py:857
+#, fuzzy, python-format
+msgid "Plot settings saved to file '%s'."
+msgstr "Nastavení profilu uloženo do souboru '%s'."
 
 #: ../gui/wxpython/gcp/manager.py:129
 msgid "Setup for georectification"
@@ -11960,28 +11987,23 @@ msgstr "RMS (střední kvadratická) chyba"
 msgid "Forward: %(forw)s, Backward: %(back)s"
 msgstr "Dopředná: %(forw)s, Zpětná: %(back)s"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1627
+#: ../gui/wxpython/mapdisp/mapwindow.py:1633
 msgid "Zoom to saved region extents"
 msgstr "Přiblížit na uložený region"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1636
+#: ../gui/wxpython/mapdisp/mapwindow.py:1642
 #, python-format
 msgid "Region <%s> not found. Operation canceled."
 msgstr "Region <%s> nebyl nalezen. Operace ukončena."
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1657
+#: ../gui/wxpython/mapdisp/mapwindow.py:1663
 msgid "Save display extents to region file"
 msgstr "Uložit hranice displeje souboru regionu"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1667
+#: ../gui/wxpython/mapdisp/mapwindow.py:1673
 #, python-format
 msgid "Region file <%s> already exists. Do you want to overwrite it?"
 msgstr "Soubor regionu <%s> již existuje. Přejete si tento soubor přepsat?"
-
-#: ../gui/wxpython/mapdisp/mapwindow.py:1669
-#: ../gui/wxpython/core/workspace.py:1013 ../gui/wxpython/core/gcmd.py:133
-msgid "Warning"
-msgstr "Upozornění"
 
 #: ../gui/wxpython/mapdisp/main.py:116
 #, fuzzy, python-format
@@ -13278,120 +13300,115 @@ msgstr "Nelze vykreslit mapovou vrstvu <%s>."
 msgid "Unable to render overlay <%s>."
 msgstr "Nelze vykreslit překrytí <%s>."
 
-#: ../gui/wxpython/core/settings.py:65 ../gui/wxpython/core/gcmd.py:80
-#, python-format
-msgid "ERROR: %s\n"
-msgstr ""
-
-#: ../gui/wxpython/core/settings.py:464
+#: ../gui/wxpython/core/settings.py:449
 msgid "Segment break"
 msgstr "Zlom segmentu"
 
-#: ../gui/wxpython/core/settings.py:531
+#: ../gui/wxpython/core/settings.py:516
 #, fuzzy
 msgid "animation"
 msgstr "Kvantizace"
 
-#: ../gui/wxpython/core/settings.py:712
+#: ../gui/wxpython/core/settings.py:697
 msgid "Collapse all except PERMANENT and current"
 msgstr "Zabalit všechny kromě PERMANENT a aktuální mapset"
 
-#: ../gui/wxpython/core/settings.py:713
+#: ../gui/wxpython/core/settings.py:698
 msgid "Collapse all except PERMANENT"
 msgstr "Zabalit všechny kromě PERMANENT mapset"
 
-#: ../gui/wxpython/core/settings.py:714
+#: ../gui/wxpython/core/settings.py:699
 msgid "Collapse all except current"
 msgstr "Zabalit všechny kromě aktuální mapset"
 
-#: ../gui/wxpython/core/settings.py:715
+#: ../gui/wxpython/core/settings.py:700
 msgid "Collapse all"
 msgstr "Zabalit všechny"
 
-#: ../gui/wxpython/core/settings.py:716
+#: ../gui/wxpython/core/settings.py:701
 msgid "Expand all"
 msgstr "Zozbalit všechny"
 
-#: ../gui/wxpython/core/settings.py:720
+#: ../gui/wxpython/core/settings.py:705
 msgid "Display selected"
 msgstr "Zobrazit vybrané"
 
-#: ../gui/wxpython/core/settings.py:730
+#: ../gui/wxpython/core/settings.py:715
 msgid "Classic (labels only)"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:731
+#: ../gui/wxpython/core/settings.py:716
 msgid "Combined (labels and module names)"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:732
+#: ../gui/wxpython/core/settings.py:717
 msgid "Professional (module names only)"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:739
+#: ../gui/wxpython/core/settings.py:724
 msgid "Zoom and recenter"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:740
+#: ../gui/wxpython/core/settings.py:725
 #, fuzzy
 msgid "Zoom to mouse cursor"
 msgstr "Zvětšit podle uloženého regionu"
 
-#: ../gui/wxpython/core/settings.py:741
+#: ../gui/wxpython/core/settings.py:726
 #, fuzzy
 msgid "Nothing"
 msgstr "Sever"
 
-#: ../gui/wxpython/core/settings.py:742
+#: ../gui/wxpython/core/settings.py:727
 msgid "Scroll forward to zoom in"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:743
+#: ../gui/wxpython/core/settings.py:728
 msgid "Scroll back to zoom in"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:776
+#: ../gui/wxpython/core/settings.py:761
 msgid "box"
 msgstr "rám"
 
-#: ../gui/wxpython/core/settings.py:777
+#: ../gui/wxpython/core/settings.py:762
 msgid "sphere"
 msgstr "koule"
 
-#: ../gui/wxpython/core/settings.py:778
+#: ../gui/wxpython/core/settings.py:763
 msgid "cube"
 msgstr "krychle"
 
-#: ../gui/wxpython/core/settings.py:779
+#: ../gui/wxpython/core/settings.py:764
 msgid "diamond"
 msgstr "diamant"
 
-#: ../gui/wxpython/core/settings.py:780
+#: ../gui/wxpython/core/settings.py:765
 msgid "dtree"
 msgstr "dtree"
 
-#: ../gui/wxpython/core/settings.py:781
+#: ../gui/wxpython/core/settings.py:766
 msgid "ctree"
 msgstr "ctree"
 
-#: ../gui/wxpython/core/settings.py:782
+#: ../gui/wxpython/core/settings.py:767
 msgid "aster"
 msgstr "astra"
 
-#: ../gui/wxpython/core/settings.py:783
+#: ../gui/wxpython/core/settings.py:768
 msgid "gyro"
 msgstr "gyro"
 
-#: ../gui/wxpython/core/settings.py:784
+#: ../gui/wxpython/core/settings.py:769
 msgid "histogram"
 msgstr "Histogram"
 
-#: ../gui/wxpython/core/settings.py:821
+#: ../gui/wxpython/core/settings.py:806
 #, fuzzy, python-format
 msgid "Unable to read settings file <%s>\n"
 msgstr "Nelze provést nastavení '%s'"
 
-#: ../gui/wxpython/core/settings.py:845
+#: ../gui/wxpython/core/settings.py:830
 #, fuzzy, python-format
 msgid ""
 "Error: Reading settings from file <%(file)s> failed.\n"
@@ -13402,12 +13419,12 @@ msgstr ""
 "       Detaily: %(detail)s\n"
 "       řádek: '%(line)s'"
 
-#: ../gui/wxpython/core/settings.py:864
+#: ../gui/wxpython/core/settings.py:849
 #, fuzzy
 msgid "Unable to create settings directory"
 msgstr "Nelze modifikovat existující záznam."
 
-#: ../gui/wxpython/core/settings.py:900
+#: ../gui/wxpython/core/settings.py:885
 #, python-format
 msgid ""
 "Writing settings to file <%(file)s> failed.\n"
@@ -13418,11 +13435,11 @@ msgstr ""
 "\n"
 "Detaily: %(detail)s"
 
-#: ../gui/wxpython/core/settings.py:999
+#: ../gui/wxpython/core/settings.py:984
 msgid "Unable to set "
 msgstr "Nelze nastavit "
 
-#: ../gui/wxpython/core/settings.py:1025 ../gui/wxpython/core/settings.py:1031
+#: ../gui/wxpython/core/settings.py:1010 ../gui/wxpython/core/settings.py:1016
 #, python-format
 msgid "Unable to parse settings '%s'"
 msgstr "Nelze provést nastavení '%s'"
@@ -13432,17 +13449,17 @@ msgstr "Nelze provést nastavení '%s'"
 msgid "Unknow tag"
 msgstr "Neznámý"
 
-#: ../gui/wxpython/core/utils.py:302
+#: ../gui/wxpython/core/utils.py:311
 #, fuzzy, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Nová vektorová mapa <%s> byla vytvořena"
 
-#: ../gui/wxpython/core/utils.py:525
+#: ../gui/wxpython/core/utils.py:534
 #, python-format
 msgid "failed to open '%s'"
 msgstr "Nelze otevřít  '%s'"
 
-#: ../gui/wxpython/core/utils.py:760
+#: ../gui/wxpython/core/utils.py:769
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr ""
@@ -13470,6 +13487,11 @@ msgstr ""
 msgid " row %d:"
 msgstr "řádek: %d"
 
+#: ../gui/wxpython/core/gcmd.py:80
+#, python-format
+msgid "ERROR: %s\n"
+msgstr ""
+
 #: ../gui/wxpython/core/gcmd.py:121
 msgid "Reason"
 msgstr "Důvod"
@@ -13486,6 +13508,9 @@ msgstr "Chyba:"
 #, python-format
 msgid "Unable to exectute command: '%s'"
 msgstr "Nelze vykonat příkaz: '%s'"
+
+#~ msgid "Profile line settings"
+#~ msgstr "Nastavení linie profilu"
 
 #~ msgid "Profile of %s"
 #~ msgstr "Profil %s"
@@ -13670,8 +13695,8 @@ msgstr "Nelze vykonat příkaz: '%s'"
 #~ "Layer and category number must be integer.\n"
 #~ "Layer number must be greater then zero."
 #~ msgstr ""
-#~ "Nelze přidat identifikátor nové vrstvy/kategorie <%(layer)s/"
-#~ "%(category)s>.\n"
+#~ "Nelze přidat identifikátor nové vrstvy/kategorie <%(layer)s/%(category)"
+#~ "s>.\n"
 #~ "Identifikátor vrstvy a kategorie musí být celé číslo.\n"
 #~ "Identifikátor vrstvy navíc větší než nula."
 
@@ -13860,9 +13885,6 @@ msgstr "Nelze vykonat příkaz: '%s'"
 
 #~ msgid "Vector digitizer"
 #~ msgstr "Vektorová digitalizace"
-
-#~ msgid "No map layer selected"
-#~ msgstr "Nebyla vybrána žádná mapová vrstva"
 
 #~ msgid "Vector querying"
 #~ msgstr "Dotazování vektorů"

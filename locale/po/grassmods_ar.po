@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -330,7 +330,7 @@ msgstr "غير موجودة <%s> الخريطة الراسترية "
 #: ../raster/wildfire/r.ros/main.c:515 ../raster/wildfire/r.ros/main.c:523
 #: ../raster/wildfire/r.ros/main.c:532 ../raster/wildfire/r.ros/main.c:540
 #: ../raster/wildfire/r.ros/main.c:549 ../raster/r.univar2/r.univar_main.c:221
-#: ../raster/r.grow.distance/main.c:177 ../raster/r.out.pov/main.c:178
+#: ../raster/r.grow.distance/main.c:209 ../raster/r.out.pov/main.c:178
 #: ../raster/r.carve/main.c:181 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.null/null.c:324 ../raster/r.surf.idw2/read_cell.c:34
 #: ../raster/r.out.mat/main.c:108 ../raster/r.sunmask/main.c:448
@@ -484,7 +484,7 @@ msgstr "لم بمكن قراءة معلومات الحقل"
 #: ../imagery/i.topo.corr/main.c:58 ../imagery/i.ifft/ifftmain.c:219
 #: ../imagery/i.modis.qc/main.c:235 ../imagery/i.rgb.his/openfiles.c:29
 #: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
-#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:319
+#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:317
 #: ../vector/v.neighbors/main.c:96 ../vector/v.surf.idw/main.c:264
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #, fuzzy, c-format
@@ -567,7 +567,7 @@ msgstr "اسم الخريطة الراسترية الموجودة"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.correction/main.c:182
 #: ../vector/lidar/v.surf.bspline/main.c:219
-#: ../vector/lidar/v.surf.bspline/main.c:278
+#: ../vector/lidar/v.surf.bspline/main.c:273
 #: ../vector/lidar/v.lidar.growing/main.c:129 ../vector/v.reclass/main.c:107
 #: ../vector/v.out.svg/main.c:127 ../vector/v.normal/main.c:128
 #: ../vector/v.out.ogr/main.c:196 ../vector/v.out.pov/main.c:94
@@ -624,7 +624,7 @@ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/lidar/v.surf.bspline/main.c:298
+#: ../vector/lidar/v.surf.bspline/main.c:293
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.spanningtree/main.c:87
 #: ../vector/v.net.allpairs/main.c:116 ../vector/v.net.components/main.c:114
 #: ../vector/v.to.3d/main.c:88 ../vector/v.in.dxf/main.c:168
@@ -644,7 +644,7 @@ msgstr "اسم الخريطة الراسترية الناتجة"
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
 #: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
 #: ../vector/v.distance/main.c:395
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:114
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
 #: ../vector/v.reclass/main.c:121 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:46 ../vector/v.to.3d/trans2.c:45
 #: ../vector/v.db.select/main.c:149 ../vector/v.what.rast/main.c:127
@@ -690,8 +690,8 @@ msgstr "'%s'لم يمكن بدء المشغل"
 #: ../vector/v.mkgrid/main.c:237 ../vector/v.net.flow/main.c:157
 #: ../vector/v.buffer/main.c:387 ../vector/v.surf.rst/main.c:607
 #: ../vector/v.transform/trans_digit.c:58
-#: ../vector/lidar/v.surf.bspline/main.c:334
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:335
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:128
 #: ../vector/v.reclass/main.c:126 ../vector/v.net.timetable/main.c:93
 #: ../vector/v.out.svg/main.c:148 ../vector/v.normal/main.c:141
 #: ../vector/v.out.ogr/main.c:634 ../vector/v.patch/main.c:132
@@ -966,7 +966,7 @@ msgid "Suppress printing of header information"
 msgstr "header تخطى طباعة معلومات عن العنوان الرئيسى بأول الملف"
 
 #: ../raster3d/r3.out.ascii/main.c:107 ../raster3d/r3.to.rast/main.c:90
-#: ../raster3d/r3.cross.rast/main.c:110
+#: ../raster3d/r3.cross.rast/main.c:110 ../raster/r.to.rast3elev/main.c:232
 msgid "Use 3D raster mask (if exists) with input map"
 msgstr ""
 
@@ -1518,8 +1518,9 @@ msgid "3D vector map <%s> not found"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../raster3d/r3.out.vtk/main.c:171
-msgid "Please provide three G3D vector maps [x,y,z]"
-msgstr ""
+#, fuzzy
+msgid "Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"
+msgstr "اسم الخريطة الراسترية"
 
 #: ../raster3d/r3.out.vtk/main.c:178
 msgid ""
@@ -3769,7 +3770,7 @@ msgstr "اسم الملف المخرج"
 #: ../raster/r.topmodel/main.c:55 ../raster/r.gwflow/main.c:189
 #: ../raster/r.topidx/main.c:37 ../raster/r.fill.dir/main.c:84
 #: ../raster/r.water.outlet/main.c:47 ../raster/r.carve/main.c:77
-#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:148
+#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:150
 #: ../raster/r.flow/calc.c:411
 #, fuzzy
 msgid "raster, hydrology"
@@ -3926,7 +3927,7 @@ msgid "Output values as percentages"
 msgstr "اسم خريطة اتجاه الإنحدار"
 
 #: ../raster/r.colors.out/main.c:91 ../raster/r.colors/main.c:390
-#: ../raster/r.grow.distance/main.c:322
+#: ../raster/r.grow.distance/main.c:364
 #, fuzzy, c-format
 msgid "Unable to read color table for raster map <%s>"
 msgstr "اسم الخريطة الراسترية الناتجة"
@@ -4787,7 +4788,7 @@ msgstr "لم يتم تحديث الحدود"
 
 #: ../raster/r.patch/main.c:53 ../raster/r.grow2/main.c:128
 #: ../raster/r.circle/dist.c:51 ../raster/r.digit/main.c:45
-#: ../raster/r.grow.distance/main.c:130
+#: ../raster/r.grow.distance/main.c:148
 #, fuzzy
 msgid "raster, geometry"
 msgstr "الملف الراسترى المدخل"
@@ -5075,8 +5076,8 @@ msgstr "لم يتم تحديث الحدود"
 
 #: ../raster/r.cost/main.c:393 ../raster/r.cost/main.c:620
 #: ../raster/r.series/main.c:214 ../raster/r.colors/stats.c:41
-#: ../raster/r.colors/stats.c:107 ../raster/r.surf.idw2/read_cell.c:38
-#: ../raster/r.surf.idw/main.c:685
+#: ../raster/r.colors/stats.c:107 ../raster/r.grow.distance/main.c:259
+#: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.surf.idw/main.c:685
 #, fuzzy, c-format
 msgid "Reading raster map <%s>..."
 msgstr "%-5d dig_att قراءة ملف...\n"
@@ -5152,7 +5153,7 @@ msgstr "انشاء خريطة راسترية بها مساحات متجاورة 
 msgid "Radius of buffer in raster cells"
 msgstr "buffer نصف قطر الحلجز المصدى"
 
-#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:150
+#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:168
 msgid "Metric"
 msgstr "مترى"
 
@@ -5164,7 +5165,7 @@ msgstr "(-1 => NULL) القيمة للخلايا المدخلة غير المن�
 msgid "Value to write for \"grown\" cells"
 msgstr "\"grown\" القيمة للخلاايا  "
 
-#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:173
+#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:205
 #, fuzzy, c-format
 msgid "Unknown metric: [%s]."
 msgstr "%c :نوع غير معروف"
@@ -6420,6 +6421,12 @@ msgstr ""
 msgid "Must have a weight value for each filter"
 msgstr ""
 
+#: ../raster/r.random.surface/init.c:425 ../raster/r.random.cells/init.c:156
+#: ../imagery/i.topo.corr/main.c:52
+#, fuzzy, c-format
+msgid "<%s> is an illegal name"
+msgstr "اسم ااملف المخرج"
+
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, fuzzy, c-format
 msgid "Unable to write color table for raster map <%s>"
@@ -7501,7 +7508,7 @@ msgid "2d raster maps which represent the slices"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:83
-msgid "Use G3D mask (if exists) with output map"
+msgid "Use 3D raster mask (if exists) with output map"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:117
@@ -7526,8 +7533,8 @@ msgstr "اسم الخريطة المخرجة"
 
 #: ../raster/r.to.rast3/main.c:222 ../raster/r.to.rast3elev/main.c:462
 msgid ""
-"The 2d and 3d region settings are different. I will use the g3d settings to "
-"adjust the 2d region."
+"The 2D and 3D region settings are different. I will use the 3D region "
+"settings to adjust the 2D region."
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:260
@@ -9288,40 +9295,54 @@ msgstr "حساب إحصائيات المتغير الأحادى من خلايا 
 msgid "Unable to load 3D raster range"
 msgstr "اسم الخريطة الراسترية"
 
-#: ../raster/r.grow.distance/main.c:132
+#: ../raster/r.grow.distance/main.c:150
 #, fuzzy
 msgid "Generates a raster map layer of distance to features in input layer."
 msgstr "انشاء خريطة راسترية بها مساحات متجاورة نمت بخلية واحدة"
 
-#: ../raster/r.grow.distance/main.c:139
+#: ../raster/r.grow.distance/main.c:157
 #, fuzzy
 msgid "Name for distance output map"
 msgstr "اسم الخريطة المدخلة"
 
-#: ../raster/r.grow.distance/main.c:144
+#: ../raster/r.grow.distance/main.c:162
 #, fuzzy
 msgid "Name for value output map"
 msgstr "اسم الخريطة الراسترية المخرجة"
 
-#: ../raster/r.grow.distance/main.c:162
+#: ../raster/r.grow.distance/main.c:174
+#, fuzzy
+msgid "Output distances in meters instead of map units"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../raster/r.grow.distance/main.c:184
 #, fuzzy
 msgid "At least one of distance= and value= must be given"
 msgstr "طبقتين يجب تحديدهم"
 
-#: ../raster/r.grow.distance/main.c:182
+#: ../raster/r.grow.distance/main.c:199
+msgid "metric=geodesic is only valid for lat/lon"
+msgstr ""
+
+#: ../raster/r.grow.distance/main.c:220
 #, fuzzy, c-format
 msgid "Unable to create distance map <%s>"
 msgstr "اسم الخريطة الراسترية الناتجة"
 
-#: ../raster/r.grow.distance/main.c:188
+#: ../raster/r.grow.distance/main.c:226
 #, fuzzy, c-format
 msgid "Unable to create value map <%s>"
 msgstr "اسم الخريطة الراسترية الناتجة"
 
-#: ../raster/r.grow.distance/main.c:194
+#: ../raster/r.grow.distance/main.c:232
 #, fuzzy, c-format
 msgid "Unable to create temporary file <%s>"
 msgstr "لم يتم تحديث الحدود"
+
+#: ../raster/r.grow.distance/main.c:307
+#, fuzzy
+msgid "Writing output raster maps..."
+msgstr "اسم خريطة الراستر المخرجة"
 
 #: ../raster/r.report/main.c:65
 msgid "Reports statistics for raster map layers."
@@ -11153,11 +11174,6 @@ msgstr ""
 #, fuzzy
 msgid "Distance must be >= 0.0"
 msgstr "طبقتين يجب تحديدهم"
-
-#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:52
-#, fuzzy, c-format
-msgid "<%s> is an illegal name"
-msgstr "اسم ااملف المخرج"
 
 #: ../raster/r.random.cells/random.c:51
 #, c-format
@@ -13356,40 +13372,40 @@ msgstr ""
 msgid "Failed writing output raster map row %d"
 msgstr "%-5d dig_att قراءة ملف...\n"
 
-#: ../raster/r.lake/main.c:149
+#: ../raster/r.lake/main.c:151
 msgid "Fills lake at given point to given level."
 msgstr ""
 
-#: ../raster/r.lake/main.c:154
+#: ../raster/r.lake/main.c:156
 #, fuzzy
 msgid "Name of terrain raster map (DEM)"
 msgstr "خريطة الراستر الغطاء"
 
-#: ../raster/r.lake/main.c:161
+#: ../raster/r.lake/main.c:163
 msgid "Water level"
 msgstr ""
 
-#: ../raster/r.lake/main.c:168
+#: ../raster/r.lake/main.c:170
 #, fuzzy
 msgid "Name for output raster map with lake"
 msgstr "اسم الخريطة الراسترية المخرجة"
 
-#: ../raster/r.lake/main.c:175
+#: ../raster/r.lake/main.c:177
 #, fuzzy
 msgid "Seed point coordinates"
 msgstr "الإحداثى الشمالى للخريطة\n"
 
-#: ../raster/r.lake/main.c:185
+#: ../raster/r.lake/main.c:187
 #, fuzzy
 msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "<%s> اسم الملف المستخدم لل"
 
-#: ../raster/r.lake/main.c:193
+#: ../raster/r.lake/main.c:195
 #, fuzzy
 msgid "Use negative depth values for lake raster map"
 msgstr "بدء بالقيم فى الخريطة الراسترية"
 
-#: ../raster/r.lake/main.c:198
+#: ../raster/r.lake/main.c:200
 msgid "Overwrite seed map with result (lake) map"
 msgstr ""
 
@@ -13779,10 +13795,6 @@ msgstr ""
 msgid "Use the input map values to fill the lower cells"
 msgstr ""
 
-#: ../raster/r.to.rast3elev/main.c:232
-msgid "Use G3D mask (if exists) with input map"
-msgstr ""
-
 #: ../raster/r.to.rast3elev/main.c:276
 #, fuzzy
 msgid "Could not get raster row from input map"
@@ -13795,7 +13807,7 @@ msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../raster/r.to.rast3elev/main.c:326 ../raster/r.to.rast3elev/main.c:360
 #, fuzzy
-msgid "Error writing G3D double data"
+msgid "Error writing 3D raster double data"
 msgstr "تغلب على الخريطة المخرجة"
 
 #: ../raster/r.to.rast3elev/main.c:400
@@ -14980,7 +14992,7 @@ msgstr ""
 msgid "Unable to open output signature file '%s'"
 msgstr "اسم الخريطة المخرجة"
 
-#: ../imagery/i.class/main.c:248
+#: ../imagery/i.class/main.c:249
 msgid ""
 "\n"
 "SEED SIGNATURES"
@@ -17030,7 +17042,7 @@ msgstr "نوع العمود غير مدعم"
 #: ../ps/ps.map/catval.c:67 ../ps/ps.map/catval.c:132
 #: ../ps/ps.map/catval.c:199 ../vector/v.univar/main.c:276
 #: ../vector/v.sample/main.c:185 ../vector/v.buffer/main.c:397
-#: ../vector/lidar/v.surf.bspline/main.c:347 ../vector/v.normal/main.c:154
+#: ../vector/lidar/v.surf.bspline/main.c:348 ../vector/v.normal/main.c:154
 #: ../vector/v.class/main.c:126 ../vector/v.to.rast3/main.c:96
 #: ../vector/v.surf.idw/read_sites.c:52
 #, fuzzy
@@ -23658,8 +23670,8 @@ msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.buffer2/main.c:349 ../vector/v.univar/main.c:273
 #: ../vector/v.sample/main.c:266 ../vector/v.buffer/main.c:402
-#: ../vector/lidar/v.surf.bspline/main.c:344
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:133 ../vector/v.class/main.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:345
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:138 ../vector/v.class/main.c:123
 #: ../vector/v.what.rast/main.c:163 ../vector/v.to.rast3/main.c:100
 #: ../vector/v.surf.idw/read_sites.c:49
 msgid "Column type not supported"
@@ -27530,7 +27542,7 @@ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 #: ../vector/lidar/v.lidar.correction/main.c:169
 #: ../vector/lidar/v.lidar.correction/main.c:229
 #: ../vector/lidar/v.surf.bspline/main.c:210
-#: ../vector/lidar/v.surf.bspline/main.c:361
+#: ../vector/lidar/v.surf.bspline/main.c:362
 #: ../vector/lidar/v.lidar.growing/main.c:166
 #, fuzzy, c-format
 msgid "No database connection for driver <%s> is defined. Run db.connect."
@@ -27547,7 +27559,7 @@ msgstr "غير موجود <%s> الراستر"
 
 #: ../vector/lidar/v.outlier/main.c:181
 #: ../vector/lidar/v.surf.bspline/main.c:223
-#: ../vector/lidar/v.surf.bspline/main.c:282
+#: ../vector/lidar/v.surf.bspline/main.c:277
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> at the topological level"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
@@ -27575,7 +27587,7 @@ msgstr "%s:لم يتم إنشاء الجدول"
 #: ../vector/lidar/v.outlier/main.c:276
 #: ../vector/lidar/v.lidar.edgedetection/main.c:298
 #: ../vector/lidar/v.lidar.correction/main.c:278
-#: ../vector/lidar/v.surf.bspline/main.c:415
+#: ../vector/lidar/v.surf.bspline/main.c:416
 #, c-format
 msgid "adjusted EW splines %d"
 msgstr ""
@@ -27583,7 +27595,7 @@ msgstr ""
 #: ../vector/lidar/v.outlier/main.c:277
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
-#: ../vector/lidar/v.surf.bspline/main.c:416
+#: ../vector/lidar/v.surf.bspline/main.c:417
 #, c-format
 msgid "adjusted NS splines %d"
 msgstr ""
@@ -27591,7 +27603,7 @@ msgstr ""
 #: ../vector/lidar/v.outlier/main.c:332
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.correction/main.c:334
-#: ../vector/lidar/v.surf.bspline/main.c:480
+#: ../vector/lidar/v.surf.bspline/main.c:485
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #, fuzzy, c-format
 msgid "subregion %d of %d"
@@ -27612,14 +27624,13 @@ msgstr " nv لون\n"
 #: ../vector/lidar/v.outlier/main.c:423
 #: ../vector/lidar/v.lidar.edgedetection/main.c:460
 #: ../vector/lidar/v.lidar.correction/main.c:429
-#: ../vector/lidar/v.surf.bspline/main.c:681
 msgid "No data within this subregion. Consider changing the spline step."
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:433
 #: ../vector/lidar/v.lidar.edgedetection/main.c:470
 #: ../vector/lidar/v.lidar.correction/main.c:440
-#: ../vector/lidar/v.surf.bspline/main.c:703
+#: ../vector/lidar/v.surf.bspline/main.c:731
 #, fuzzy
 msgid "Auxiliar table could not be dropped"
 msgstr "غير موجود <%s> الراستر"
@@ -27893,137 +27904,139 @@ msgstr ""
 msgid "Cross validation finished for sie = %f and sin = %f"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:268
-#, c-format
-msgid ""
-"No vector map of sparse points to interpolate was specified. Interpolation "
-"will be done with <%s> vector map"
-msgstr ""
-
-#: ../vector/lidar/v.surf.bspline/main.c:274
+#: ../vector/lidar/v.surf.bspline/main.c:269
 #, fuzzy, c-format
 msgid "Vector map <%s> of sparse points will be interpolated"
 msgstr "خريطة مخرجة حيث ستكتب النقاط"
 
-#: ../vector/lidar/v.surf.bspline/main.c:290
+#: ../vector/lidar/v.surf.bspline/main.c:285
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. Try with "
 "a raster output or other driver."
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:328
+#: ../vector/lidar/v.surf.bspline/main.c:307
+#, fuzzy, c-format
+msgid "Points in input vector map <%s> will be interpolated"
+msgstr "خريطة مخرجة حيث ستكتب النقاط"
+
+#: ../vector/lidar/v.surf.bspline/main.c:320
+#, fuzzy, c-format
+msgid "Cells for raster map <%s> will be interpolated"
+msgstr "خريطة مخرجة حيث ستكتب النقاط"
+
+#: ../vector/lidar/v.surf.bspline/main.c:329
 msgid "Cannot read field info"
 msgstr "لم بمكن قراءة معلومات الحقل"
 
-#: ../vector/lidar/v.surf.bspline/main.c:349
+#: ../vector/lidar/v.surf.bspline/main.c:350
 #, fuzzy, c-format
 msgid "[%d] records selected from table"
 msgstr "%d التسجيلات اختيرت من الجدول"
 
-#: ../vector/lidar/v.surf.bspline/main.c:368
+#: ../vector/lidar/v.surf.bspline/main.c:369
 #, fuzzy, c-format
 msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr "%s:لم يتم إنشاء الجدول"
 
-#: ../vector/lidar/v.surf.bspline/main.c:391
+#: ../vector/lidar/v.surf.bspline/main.c:392
 #, fuzzy
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
 msgstr "لم يتم حساب شبه مركز المساحة"
 
-#: ../vector/lidar/v.surf.bspline/main.c:568
+#: ../vector/lidar/v.surf.bspline/main.c:590
 #, fuzzy, c-format
 msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "cat = %d لا يوجد تسجيل للخط"
 
-#: ../vector/lidar/v.surf.bspline/main.c:687
+#: ../vector/lidar/v.surf.bspline/main.c:709
+msgid "No data within this subregion. Consider increasing spline step values."
+msgstr ""
+
+#: ../vector/lidar/v.surf.bspline/main.c:715
 #, fuzzy
 msgid "Writing output..."
 msgstr "كتابة ملف جديد...\n"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:77
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:80
 #, c-format
 msgid "%d are too many points. The cross validation would take too much time."
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:86
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:89
 #, fuzzy, c-format
 msgid "%d points read in region"
 msgstr "%d نقاط تم تحميلها\n"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:90
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:93
 msgid ""
 "Maybe, it takes too long. It will depend on how many points you are "
 "considering."
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:124
 #, c-format
 msgid "CrossCorrelation: driver=%s db=%s"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:136
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:141
 #, fuzzy, c-format
 msgid "No records selected from table <%s> "
 msgstr "%d التسجيلات اختيرت من الجدول"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:151
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:156
 #, c-format
 msgid ""
 "Too many splines (%d x %d). Consider changing spline steps \"sie=\" \"sin=\"."
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:169
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:174
 #, c-format
-msgid "Beginning cross validation with lambda_i=%.4f..."
+msgid "Beginning cross validation with lambda_i=%.4f ... (%d of %d)"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:219
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:225
 #: ../vector/v.surf.idw/read_sites.c:86
 #, fuzzy, c-format
 msgid "No record for point (cat = %d)"
 msgstr "cat = %d لا يوجد تسجيل للخط"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:289
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:300
 #, c-format
 msgid "Mean = %.5lf"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:290
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:301
 #, fuzzy, c-format
-msgid "Root Means Square (RMS) = %.5lf"
+msgid "Root Mean Square (RMS) = %.5lf"
 msgstr "%d نقاط تم تحميلها\n"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:306
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 msgid ""
 "Different number of splines and lambda_i values have been taken for the "
 "cross correlation"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:308
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:320
 #, c-format
 msgid ""
 "The minimum value for the test (rms=%lf) was obtained with: lambda_i = %.3f"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:316
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:328
 #, fuzzy
-msgid "Results into a table:"
-msgstr "اسم الخريطة الناتجة"
+msgid "Table of results:"
+msgstr "الخريطة المخرجة"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:317
-#, fuzzy
-msgid " lambda    | mean        | rms         |"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:329
+#, fuzzy, c-format
+msgid "    lambda |       mean |        rms |\n"
 msgstr "                       إختبر متبقيـــــــــــــــات الخـــــــــريطة\n"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:319
-#, c-format
-msgid " %-10.5f| %-12.4f| %-12.4f|"
-msgstr ""
-
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:327
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:339
 #, fuzzy
 msgid "No point lies into the current region"
 msgstr "%d نقاط تم تحميلها\n"
@@ -34421,6 +34434,10 @@ msgstr "اسم الخريطة الراسترية"
 #, fuzzy
 msgid "Percent to brighten"
 msgstr "مقلوب فرق العزم"
+
+#, fuzzy
+#~ msgid "Results into a table:"
+#~ msgstr "اسم الخريطة الناتجة"
 
 #~ msgid "Title, in quotes"
 #~ msgstr "وصف مبسط"

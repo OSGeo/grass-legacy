@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2012-05-25 14:33+0100\n"
 "Last-Translator: Silvia Franceschi <silvia.franceschi@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
@@ -19,66 +19,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.0\n"
 
-#: ../gui/wxpython/nviz/tools.py:82 ../gui/wxpython/nviz/preferences.py:55
+#: ../gui/wxpython/nviz/tools.py:83 ../gui/wxpython/nviz/preferences.py:55
 #: ../gui/wxpython/nviz/preferences.py:60
 msgid "View"
 msgstr "Vista"
 
-#: ../gui/wxpython/nviz/tools.py:86
+#: ../gui/wxpython/nviz/tools.py:87
 #: ../gui/wxpython/gmodeler/preferences.py:202
 msgid "Data"
 msgstr "Dati"
 
-#: ../gui/wxpython/nviz/tools.py:90
-#: ../gui/wxpython/gui_core/preferences.py:398
+#: ../gui/wxpython/nviz/tools.py:91
+#: ../gui/wxpython/gui_core/preferences.py:408
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: ../gui/wxpython/nviz/tools.py:94
+#: ../gui/wxpython/nviz/tools.py:95
 #, fuzzy
 msgid "Analysis"
 msgstr "Analizza"
 
-#: ../gui/wxpython/nviz/tools.py:97 ../gui/wxpython/nviz/tools.py:379
+#: ../gui/wxpython/nviz/tools.py:98 ../gui/wxpython/nviz/tools.py:378
 #, fuzzy
 msgid "Animation"
 msgstr "Quantificazione"
 
-#: ../gui/wxpython/nviz/tools.py:217
+#: ../gui/wxpython/nviz/tools.py:218
 msgid "Control View"
 msgstr "Vista di controllo"
 
-#: ../gui/wxpython/nviz/tools.py:238
-msgid "Adjusts the viewer's angle of view"
+#: ../gui/wxpython/nviz/tools.py:239
+msgid "Adjusts the distance and angular perspective of the image viewpoint"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:243 ../gui/wxpython/nviz/preferences.py:68
+#: ../gui/wxpython/nviz/tools.py:244 ../gui/wxpython/nviz/preferences.py:68
 msgid "Perspective:"
 msgstr "Prospettiva:"
 
-#: ../gui/wxpython/nviz/tools.py:251
-msgid ""
-"Rotates the scene about the horizontal axis. An angle of 0 is flat. The "
-"scene rotates between -90 and 90 degrees."
+#: ../gui/wxpython/nviz/tools.py:252
+msgid "Tilts the plane of the surface from the horizontal"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/preferences.py:131
-msgid "Twist:"
-msgstr "Curva:"
+#: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/tools.py:1022
+msgid "Tilt:"
+msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:263
-msgid "Adjusts the viewer's height above the scene"
-msgstr ""
-
-#: ../gui/wxpython/nviz/tools.py:267
 msgid ""
-"Adjusts the vertical exaggeration of the surface. As an example, if the "
-"easting and northing are in meters and the elevation in feet, a vertical "
-"exaggeration of .305 would produce a true (unexaggerated) surface. "
+"Adjusts the viewing height above the surface (angle of view automatically "
+"adjusts to maintain the same center of view)"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:277 ../gui/wxpython/nviz/tools.py:1039
-#: ../gui/wxpython/nviz/tools.py:1677 ../gui/wxpython/gui_core/dialogs.py:2189
+#: ../gui/wxpython/nviz/tools.py:268
+msgid "Adjusts the relative height of features above the plane of the surface"
+msgstr ""
+
+#: ../gui/wxpython/nviz/tools.py:276 ../gui/wxpython/nviz/tools.py:1038
+#: ../gui/wxpython/nviz/tools.py:1676 ../gui/wxpython/gui_core/dialogs.py:2189
 #: ../gui/wxpython/psmap/dialogs.py:2734 ../gui/wxpython/psmap/dialogs.py:2872
 #: ../gui/wxpython/psmap/dialogs.py:3477
 #: ../gui/wxpython/gmodeler/preferences.py:176
@@ -87,116 +84,116 @@ msgstr ""
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../gui/wxpython/nviz/tools.py:283 ../gui/wxpython/nviz/preferences.py:149
+#: ../gui/wxpython/nviz/tools.py:282 ../gui/wxpython/nviz/preferences.py:149
 msgid "Z-exag:"
 msgstr "esagerazione verticale"
 
-#: ../gui/wxpython/nviz/tools.py:296
+#: ../gui/wxpython/nviz/tools.py:295
 #, fuzzy
 msgid "Look:"
 msgstr "Zoom a:"
 
-#: ../gui/wxpython/nviz/tools.py:299
+#: ../gui/wxpython/nviz/tools.py:298
 #, fuzzy
 msgid "here"
 msgstr "sfera"
 
-#: ../gui/wxpython/nviz/tools.py:302
+#: ../gui/wxpython/nviz/tools.py:301
 msgid ""
 "Allows you to select a point on the surface that becomes the new center of "
 "view. Click on the button and then on the surface."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:308
+#: ../gui/wxpython/nviz/tools.py:307
 #, fuzzy
 msgid "center"
 msgstr "Centro:"
 
-#: ../gui/wxpython/nviz/tools.py:311
+#: ../gui/wxpython/nviz/tools.py:310
 msgid "Resets the view to the original default center of view"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:315
+#: ../gui/wxpython/nviz/tools.py:314
 msgid "top"
 msgstr "sopra"
 
-#: ../gui/wxpython/nviz/tools.py:318
+#: ../gui/wxpython/nviz/tools.py:317
 msgid ""
 "Sets the viewer directly over the scene's center position. This top view "
 "orients approximately north south."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:322
+#: ../gui/wxpython/nviz/tools.py:321
 #, fuzzy
 msgid "reset"
 msgstr "Resetta"
 
-#: ../gui/wxpython/nviz/tools.py:323
+#: ../gui/wxpython/nviz/tools.py:322
 msgid "Reset to default view"
 msgstr "Resetta alla visualizzazione di default"
 
-#: ../gui/wxpython/nviz/tools.py:341 ../gui/wxpython/nviz/preferences.py:171
+#: ../gui/wxpython/nviz/tools.py:340 ../gui/wxpython/nviz/preferences.py:171
 msgid "Image Appearance"
 msgstr "Aspetto dell'Immagine"
 
-#: ../gui/wxpython/nviz/tools.py:349 ../gui/wxpython/nviz/preferences.py:178
-#: ../gui/wxpython/gui_core/preferences.py:664
+#: ../gui/wxpython/nviz/tools.py:348 ../gui/wxpython/nviz/preferences.py:178
+#: ../gui/wxpython/gui_core/preferences.py:676
 msgid "Background color:"
 msgstr "Colore sfondo: "
 
-#: ../gui/wxpython/nviz/tools.py:386
+#: ../gui/wxpython/nviz/tools.py:385
 msgid ""
 "Press 'Record' button and start changing the view. It is recommended to use "
 "fly-through mode (Map Display toolbar) to achieve smooth motion."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:397
+#: ../gui/wxpython/nviz/tools.py:396
 #, fuzzy
 msgid "Record"
 msgstr "Ricodifica"
 
-#: ../gui/wxpython/nviz/tools.py:399
+#: ../gui/wxpython/nviz/tools.py:398
 msgid "Play"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:401
+#: ../gui/wxpython/nviz/tools.py:400
 msgid "Pause"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:403
+#: ../gui/wxpython/nviz/tools.py:402
 #, fuzzy
 msgid "Stop"
 msgstr "C&opia"
 
-#: ../gui/wxpython/nviz/tools.py:415
+#: ../gui/wxpython/nviz/tools.py:414
 #, fuzzy
 msgid "Total number of frames :"
 msgstr "Numero dei segmenti:"
 
-#: ../gui/wxpython/nviz/tools.py:419
+#: ../gui/wxpython/nviz/tools.py:418
 msgid "Frame rate (FPS):"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:425
+#: ../gui/wxpython/nviz/tools.py:424
 msgid "Frames are recorded with given frequency (FPS). "
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:468
+#: ../gui/wxpython/nviz/tools.py:467
 #, fuzzy
 msgid "Save image sequence"
 msgstr "Imposta dimensione dell'immagine"
 
-#: ../gui/wxpython/nviz/tools.py:475 ../gui/wxpython/psmap/dialogs.py:4119
+#: ../gui/wxpython/nviz/tools.py:474 ../gui/wxpython/psmap/dialogs.py:4119
 #, fuzzy
 msgid "Choose a directory:"
 msgstr "Scegli cartella di input"
 
-#: ../gui/wxpython/nviz/tools.py:476
+#: ../gui/wxpython/nviz/tools.py:475
 #, fuzzy
 msgid "Choose a directory for images"
 msgstr "Scegli cartella di input"
 
-#: ../gui/wxpython/nviz/tools.py:477 ../gui/wxpython/gui_core/gselect.py:877
+#: ../gui/wxpython/nviz/tools.py:476 ../gui/wxpython/gui_core/gselect.py:877
 #: ../gui/wxpython/gui_core/gselect.py:1175
 #: ../gui/wxpython/gui_core/gselect.py:1184
 #: ../gui/wxpython/gui_core/gselect.py:1193
@@ -213,177 +210,177 @@ msgstr "Scegli cartella di input"
 msgid "Browse"
 msgstr "Naviga"
 
-#: ../gui/wxpython/nviz/tools.py:480
+#: ../gui/wxpython/nviz/tools.py:479
 msgid "File prefix:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:484
+#: ../gui/wxpython/nviz/tools.py:483
 msgid ""
 "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:485
+#: ../gui/wxpython/nviz/tools.py:484
 #, fuzzy
 msgid "File format:"
 msgstr "Formato:"
 
-#: ../gui/wxpython/nviz/tools.py:543 ../gui/wxpython/nviz/tools.py:1769
+#: ../gui/wxpython/nviz/tools.py:542 ../gui/wxpython/nviz/tools.py:1768
 #: ../gui/wxpython/nviz/preferences.py:360
 msgid "Surface"
 msgstr "Superficie"
 
-#: ../gui/wxpython/nviz/tools.py:549 ../gui/wxpython/nviz/tools.py:1082
+#: ../gui/wxpython/nviz/tools.py:548 ../gui/wxpython/nviz/tools.py:1081
 #, fuzzy
 msgid "Constant surface"
 msgstr "Superficie Coste"
 
-#: ../gui/wxpython/nviz/tools.py:554 ../gui/wxpython/nviz/preferences.py:462
+#: ../gui/wxpython/nviz/tools.py:553 ../gui/wxpython/nviz/preferences.py:462
 msgid "Vector"
 msgstr "Vettore"
 
-#: ../gui/wxpython/nviz/tools.py:560
+#: ../gui/wxpython/nviz/tools.py:559
 msgid "Volume"
 msgstr "Volumi"
 
-#: ../gui/wxpython/nviz/tools.py:595 ../gui/wxpython/nviz/preferences.py:252
+#: ../gui/wxpython/nviz/tools.py:594 ../gui/wxpython/nviz/preferences.py:252
 msgid "Lighting"
 msgstr "Evidenziazione"
 
-#: ../gui/wxpython/nviz/tools.py:600
+#: ../gui/wxpython/nviz/tools.py:599
 msgid "Fringe"
 msgstr "Bordo"
 
-#: ../gui/wxpython/nviz/tools.py:607
+#: ../gui/wxpython/nviz/tools.py:606
 #, fuzzy
 msgid "Decorations"
 msgstr "Descrizione"
 
-#: ../gui/wxpython/nviz/tools.py:627 ../gui/wxpython/nviz/tools.py:940
+#: ../gui/wxpython/nviz/tools.py:626 ../gui/wxpython/nviz/tools.py:939
 msgid "Cutting planes"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:649 ../gui/wxpython/nviz/mapwindow.py:1608
+#: ../gui/wxpython/nviz/tools.py:648 ../gui/wxpython/nviz/mapwindow.py:1611
 #: ../gui/wxpython/psmap/dialogs.py:1143
 msgid "Raster map"
 msgstr "Mappa Raster"
 
-#: ../gui/wxpython/nviz/tools.py:672 ../gui/wxpython/nviz/tools.py:1470
+#: ../gui/wxpython/nviz/tools.py:671 ../gui/wxpython/nviz/tools.py:1469
 #: ../gui/wxpython/nviz/preferences.py:367
 msgid "Draw"
 msgstr "Disegna"
 
-#: ../gui/wxpython/nviz/tools.py:679 ../gui/wxpython/nviz/tools.py:1477
+#: ../gui/wxpython/nviz/tools.py:678 ../gui/wxpython/nviz/tools.py:1476
 #: ../gui/wxpython/nviz/preferences.py:373
 msgid "Mode:"
 msgstr "Tipologia:"
 
-#: ../gui/wxpython/nviz/tools.py:682 ../gui/wxpython/nviz/preferences.py:376
+#: ../gui/wxpython/nviz/tools.py:681 ../gui/wxpython/nviz/preferences.py:376
 msgid "coarse"
 msgstr "scabro"
 
-#: ../gui/wxpython/nviz/tools.py:683 ../gui/wxpython/nviz/preferences.py:377
+#: ../gui/wxpython/nviz/tools.py:682 ../gui/wxpython/nviz/preferences.py:377
 msgid "fine"
 msgstr "liscio"
 
-#: ../gui/wxpython/nviz/tools.py:684 ../gui/wxpython/nviz/preferences.py:378
+#: ../gui/wxpython/nviz/tools.py:683 ../gui/wxpython/nviz/preferences.py:378
 msgid "both"
 msgstr "entrambi"
 
-#: ../gui/wxpython/nviz/tools.py:693 ../gui/wxpython/nviz/tools.py:956
-#: ../gui/wxpython/nviz/tools.py:1491
+#: ../gui/wxpython/nviz/tools.py:692 ../gui/wxpython/nviz/tools.py:955
+#: ../gui/wxpython/nviz/tools.py:1490
 msgid "Shading:"
 msgstr "Ombreggiatura:"
 
-#: ../gui/wxpython/nviz/tools.py:696 ../gui/wxpython/nviz/tools.py:1257
-#: ../gui/wxpython/nviz/tools.py:1494
+#: ../gui/wxpython/nviz/tools.py:695 ../gui/wxpython/nviz/tools.py:1256
+#: ../gui/wxpython/nviz/tools.py:1493
 msgid "flat"
 msgstr "piano"
 
-#: ../gui/wxpython/nviz/tools.py:697 ../gui/wxpython/nviz/tools.py:1495
+#: ../gui/wxpython/nviz/tools.py:696 ../gui/wxpython/nviz/tools.py:1494
 msgid "gouraud"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:705
+#: ../gui/wxpython/nviz/tools.py:704
 msgid "Set to all"
 msgstr "Imposta a tutti"
 
-#: ../gui/wxpython/nviz/tools.py:706
+#: ../gui/wxpython/nviz/tools.py:705
 msgid "Use draw settings for all loaded surfaces"
 msgstr "Usa impostazioni di disegno per tutte le superfici caricate"
 
-#: ../gui/wxpython/nviz/tools.py:714 ../gui/wxpython/nviz/preferences.py:405
+#: ../gui/wxpython/nviz/tools.py:713 ../gui/wxpython/nviz/preferences.py:405
 #, fuzzy
 msgid "Coarse mode:"
 msgstr "Scabro:"
 
-#: ../gui/wxpython/nviz/tools.py:717 ../gui/wxpython/nviz/tools.py:757
+#: ../gui/wxpython/nviz/tools.py:716 ../gui/wxpython/nviz/tools.py:756
 #: ../gui/wxpython/nviz/preferences.py:392
 #: ../gui/wxpython/nviz/preferences.py:409
 #, fuzzy
 msgid "resolution:"
 msgstr "Risoluzione:"
 
-#: ../gui/wxpython/nviz/tools.py:730 ../gui/wxpython/nviz/preferences.py:421
+#: ../gui/wxpython/nviz/tools.py:729 ../gui/wxpython/nviz/preferences.py:421
 #, fuzzy
 msgid "style:"
 msgstr "Stile"
 
-#: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:424
+#: ../gui/wxpython/nviz/tools.py:732 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:734 ../gui/wxpython/nviz/preferences.py:425
+#: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:425
 msgid "surface"
 msgstr "superficie"
 
-#: ../gui/wxpython/nviz/tools.py:746
+#: ../gui/wxpython/nviz/tools.py:745
 #, fuzzy
 msgid "Change wire color"
 msgstr "Gestione colori image"
 
-#: ../gui/wxpython/nviz/tools.py:753 ../gui/wxpython/nviz/preferences.py:388
+#: ../gui/wxpython/nviz/tools.py:752 ../gui/wxpython/nviz/preferences.py:388
 #, fuzzy
 msgid "Fine mode:"
 msgstr "Liscio:"
 
-#: ../gui/wxpython/nviz/tools.py:778
+#: ../gui/wxpython/nviz/tools.py:777
 msgid "Surface attributes"
 msgstr "Attributi della superficie"
 
-#: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2273
+#: ../gui/wxpython/nviz/tools.py:785 ../gui/wxpython/nviz/tools.py:2272
 #: ../gui/wxpython/psmap/dialogs.py:4593 ../gui/wxpython/psmap/dialogs.py:4848
-#: ../gui/wxpython/wxplot/dialogs.py:562
+#: ../gui/wxpython/wxplot/dialogs.py:595
 #: ../gui/wxpython/gmodeler/preferences.py:88
 #: ../gui/wxpython/gmodeler/preferences.py:326
 msgid "Color"
 msgstr "Colore"
 
-#: ../gui/wxpython/nviz/tools.py:787 ../gui/wxpython/nviz/tools.py:2274
+#: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2273
 #: ../gui/wxpython/menustrings.py:311 ../gui/wxpython/psmap/dialogs.py:1726
 msgid "Mask"
 msgstr "Mask"
 
-#: ../gui/wxpython/nviz/tools.py:788 ../gui/wxpython/nviz/tools.py:2275
+#: ../gui/wxpython/nviz/tools.py:787 ../gui/wxpython/nviz/tools.py:2274
 msgid "Transparency"
 msgstr "Trasparenza"
 
-#: ../gui/wxpython/nviz/tools.py:789 ../gui/wxpython/nviz/tools.py:2276
+#: ../gui/wxpython/nviz/tools.py:788 ../gui/wxpython/nviz/tools.py:2275
 msgid "Shininess"
 msgstr "Luminosità"
 
-#: ../gui/wxpython/nviz/tools.py:795 ../gui/wxpython/nviz/tools.py:2287
+#: ../gui/wxpython/nviz/tools.py:794 ../gui/wxpython/nviz/tools.py:2286
 msgid "map"
 msgstr "mappa"
 
-#: ../gui/wxpython/nviz/tools.py:798 ../gui/wxpython/nviz/tools.py:2292
+#: ../gui/wxpython/nviz/tools.py:797 ../gui/wxpython/nviz/tools.py:2291
 msgid "unset"
 msgstr "deseleziona"
 
-#: ../gui/wxpython/nviz/tools.py:803 ../gui/wxpython/nviz/tools.py:2297
+#: ../gui/wxpython/nviz/tools.py:802 ../gui/wxpython/nviz/tools.py:2296
 msgid "constant"
 msgstr "costante"
 
-#: ../gui/wxpython/nviz/tools.py:854 ../gui/wxpython/nviz/tools.py:1586
+#: ../gui/wxpython/nviz/tools.py:853 ../gui/wxpython/nviz/tools.py:1585
 #: ../gui/wxpython/psmap/dialogs.py:2704 ../gui/wxpython/psmap/dialogs.py:3246
 #: ../gui/wxpython/psmap/dialogs.py:3441 ../gui/wxpython/psmap/dialogs.py:3815
 #: ../gui/wxpython/psmap/dialogs.py:3819 ../gui/wxpython/psmap/dialogs.py:4221
@@ -392,490 +389,484 @@ msgstr "costante"
 msgid "Position"
 msgstr "Posizione"
 
-#: ../gui/wxpython/nviz/tools.py:860
+#: ../gui/wxpython/nviz/tools.py:859
 msgid "Changes the x, y, and z position of the current surface"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1058
-#: ../gui/wxpython/nviz/tools.py:1601 ../gui/wxpython/nviz/tools.py:2457
+#: ../gui/wxpython/nviz/tools.py:869 ../gui/wxpython/nviz/tools.py:1057
+#: ../gui/wxpython/nviz/tools.py:1600 ../gui/wxpython/nviz/tools.py:2456
 msgid "Reset"
 msgstr "Resetta"
 
-#: ../gui/wxpython/nviz/tools.py:871 ../gui/wxpython/nviz/tools.py:1602
+#: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1601
 #, fuzzy
 msgid "Reset to default position"
 msgstr "Resetta alla visualizzazione di default"
 
-#: ../gui/wxpython/nviz/tools.py:946
+#: ../gui/wxpython/nviz/tools.py:945
 msgid "Active cutting plane:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:958
+#: ../gui/wxpython/nviz/tools.py:957
 msgid "clear"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:959
+#: ../gui/wxpython/nviz/tools.py:958
 #, fuzzy
 msgid "top color"
 msgstr "colore"
 
-#: ../gui/wxpython/nviz/tools.py:960
+#: ../gui/wxpython/nviz/tools.py:959
 #, fuzzy
 msgid "bottom color"
 msgstr "attreverso il colore"
 
-#: ../gui/wxpython/nviz/tools.py:961
+#: ../gui/wxpython/nviz/tools.py:960
 msgid "blend"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:962
+#: ../gui/wxpython/nviz/tools.py:961
 msgid "shaded"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:974
+#: ../gui/wxpython/nviz/tools.py:973
 #, fuzzy
 msgid "Horizontal X:"
 msgstr "orizzontale (pts):"
 
-#: ../gui/wxpython/nviz/tools.py:976
+#: ../gui/wxpython/nviz/tools.py:975
 msgid "Sets the X coordinate of the current cutting plane"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:990
+#: ../gui/wxpython/nviz/tools.py:989
 #, fuzzy
 msgid "Horizontal Y:"
 msgstr "orizzontale (pts):"
 
-#: ../gui/wxpython/nviz/tools.py:992
+#: ../gui/wxpython/nviz/tools.py:991
 msgid "Sets the Y coordinate of the current cutting plane"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1007 ../gui/wxpython/gui_core/dialogs.py:756
+#: ../gui/wxpython/nviz/tools.py:1006 ../gui/wxpython/gui_core/dialogs.py:756
 msgid "Rotation:"
 msgstr "Rotazione:"
 
-#: ../gui/wxpython/nviz/tools.py:1009
+#: ../gui/wxpython/nviz/tools.py:1008
 msgid "Rotates the current cutting plane about vertical axis"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1023
-msgid "Tilt:"
-msgstr ""
-
-#: ../gui/wxpython/nviz/tools.py:1025
+#: ../gui/wxpython/nviz/tools.py:1024
 msgid "Rotates the current cutting plane about horizontal axis"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1041
+#: ../gui/wxpython/nviz/tools.py:1040
 msgid ""
 "Sets the Z coordinate of the current cutting plane (only meaningful when "
 "tilt is not 0)"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1093 ../gui/wxpython/menustrings.py:4
+#: ../gui/wxpython/nviz/tools.py:1092 ../gui/wxpython/menustrings.py:4
 #: ../gui/wxpython/menustrings.py:855
 msgid "New"
 msgstr "Nuovo"
 
-#: ../gui/wxpython/nviz/tools.py:1097 ../gui/wxpython/nviz/tools.py:1886
+#: ../gui/wxpython/nviz/tools.py:1096 ../gui/wxpython/nviz/tools.py:1885
 #: ../gui/wxpython/menustrings.py:163 ../gui/wxpython/psmap/dialogs.py:1316
 msgid "Delete"
 msgstr "Elimina"
 
-#: ../gui/wxpython/nviz/tools.py:1110
+#: ../gui/wxpython/nviz/tools.py:1109
 #, fuzzy
 msgid "Fine resolution:"
 msgstr "Risoluzione:"
 
-#: ../gui/wxpython/nviz/tools.py:1122
+#: ../gui/wxpython/nviz/tools.py:1121
 #, fuzzy
 msgid "Value:"
 msgstr "Valori"
 
-#: ../gui/wxpython/nviz/tools.py:1134 ../gui/wxpython/nviz/tools.py:2446
+#: ../gui/wxpython/nviz/tools.py:1133 ../gui/wxpython/nviz/tools.py:2445
 #, fuzzy
 msgid "Transparency:"
 msgstr "Trasparenza"
 
-#: ../gui/wxpython/nviz/tools.py:1146 ../gui/wxpython/nviz/tools.py:1699
-#: ../gui/wxpython/nviz/tools.py:1820 ../gui/wxpython/nviz/preferences.py:333
+#: ../gui/wxpython/nviz/tools.py:1145 ../gui/wxpython/nviz/tools.py:1698
+#: ../gui/wxpython/nviz/tools.py:1819 ../gui/wxpython/nviz/preferences.py:333
 #: ../gui/wxpython/nviz/preferences.py:490
 #: ../gui/wxpython/nviz/preferences.py:544
-#: ../gui/wxpython/gui_core/preferences.py:948
+#: ../gui/wxpython/gui_core/preferences.py:960
 #: ../gui/wxpython/psmap/dialogs.py:1776 ../gui/wxpython/psmap/dialogs.py:1879
 #: ../gui/wxpython/gcp/manager.py:2437
 msgid "Color:"
 msgstr "Colore:"
 
-#: ../gui/wxpython/nviz/tools.py:1176 ../gui/wxpython/psmap/dialogs.py:2618
+#: ../gui/wxpython/nviz/tools.py:1175 ../gui/wxpython/psmap/dialogs.py:2618
 msgid "Vector map"
 msgstr "Mappa vettoriale"
 
-#: ../gui/wxpython/nviz/tools.py:1200
+#: ../gui/wxpython/nviz/tools.py:1199
 msgid "Show vector lines"
 msgstr "Mostra le linee vettoriale"
 
-#: ../gui/wxpython/nviz/tools.py:1210 ../gui/wxpython/nviz/preferences.py:468
+#: ../gui/wxpython/nviz/tools.py:1209 ../gui/wxpython/nviz/preferences.py:468
 msgid "Vector lines"
 msgstr "Linee vettoriali"
 
-#: ../gui/wxpython/nviz/tools.py:1217
+#: ../gui/wxpython/nviz/tools.py:1216
 msgid "Line:"
 msgstr "Linea:"
 
-#: ../gui/wxpython/nviz/tools.py:1220
+#: ../gui/wxpython/nviz/tools.py:1219
 msgid "width:"
 msgstr "larghezza:"
 
-#: ../gui/wxpython/nviz/tools.py:1236 ../gui/wxpython/nviz/tools.py:1342
+#: ../gui/wxpython/nviz/tools.py:1235 ../gui/wxpython/nviz/tools.py:1341
 msgid "color:"
 msgstr "colore:"
 
-#: ../gui/wxpython/nviz/tools.py:1251
+#: ../gui/wxpython/nviz/tools.py:1250
 #: ../gui/wxpython/vdigit/preferences.py:125
 msgid "Display"
 msgstr "Visualizza"
 
-#: ../gui/wxpython/nviz/tools.py:1256
+#: ../gui/wxpython/nviz/tools.py:1255
 #, fuzzy
 msgid "on surface(s):"
 msgstr "sulla superficie"
 
-#: ../gui/wxpython/nviz/tools.py:1266 ../gui/wxpython/nviz/tools.py:1393
+#: ../gui/wxpython/nviz/tools.py:1265 ../gui/wxpython/nviz/tools.py:1392
 msgid "Height above surface:"
 msgstr "Altezza sulla superficie:"
 
-#: ../gui/wxpython/nviz/tools.py:1301
+#: ../gui/wxpython/nviz/tools.py:1300
 msgid "Show vector points"
 msgstr "Mostra punti vettoriali"
 
-#: ../gui/wxpython/nviz/tools.py:1310 ../gui/wxpython/nviz/preferences.py:508
+#: ../gui/wxpython/nviz/tools.py:1309 ../gui/wxpython/nviz/preferences.py:508
 msgid "Vector points"
 msgstr "Punti vettoriale"
 
-#: ../gui/wxpython/nviz/tools.py:1321
+#: ../gui/wxpython/nviz/tools.py:1320
 msgid "Icon:"
 msgstr "Icona:"
 
-#: ../gui/wxpython/nviz/tools.py:1324 ../gui/wxpython/psmap/dialogs.py:2000
+#: ../gui/wxpython/nviz/tools.py:1323 ../gui/wxpython/psmap/dialogs.py:2000
 msgid "size:"
 msgstr "dimensione:"
 
-#: ../gui/wxpython/nviz/tools.py:1374 ../gui/wxpython/psmap/dialogs.py:1958
+#: ../gui/wxpython/nviz/tools.py:1373 ../gui/wxpython/psmap/dialogs.py:1958
 msgid "symbol:"
 msgstr "simbolo:"
 
-#: ../gui/wxpython/nviz/tools.py:1390
+#: ../gui/wxpython/nviz/tools.py:1389
 #, fuzzy
 msgid "Display on surface(s):"
 msgstr "Distanza lungo la superficie"
 
-#: ../gui/wxpython/nviz/tools.py:1447
+#: ../gui/wxpython/nviz/tools.py:1446
 msgid "3D raster map"
 msgstr "Raster 3D"
 
-#: ../gui/wxpython/nviz/tools.py:1480
+#: ../gui/wxpython/nviz/tools.py:1479
 msgid "isosurfaces"
 msgstr "isosuperfici"
 
-#: ../gui/wxpython/nviz/tools.py:1481
+#: ../gui/wxpython/nviz/tools.py:1480
 msgid "slices"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1504
+#: ../gui/wxpython/nviz/tools.py:1503
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
-#: ../gui/wxpython/nviz/tools.py:1526 ../gui/wxpython/nviz/tools.py:3508
+#: ../gui/wxpython/nviz/tools.py:1525 ../gui/wxpython/nviz/tools.py:3510
 msgid "List of isosurfaces"
 msgstr "Lista delle isosuperfici"
 
-#: ../gui/wxpython/nviz/tools.py:1642
+#: ../gui/wxpython/nviz/tools.py:1641
 msgid "Show light model"
 msgstr "Mostra il modello leggero"
 
-#: ../gui/wxpython/nviz/tools.py:1655
+#: ../gui/wxpython/nviz/tools.py:1654
 msgid "Light source position"
 msgstr "Posizione della luce"
 
-#: ../gui/wxpython/nviz/tools.py:1671
+#: ../gui/wxpython/nviz/tools.py:1670
 msgid "Adjusts the light height"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1695
+#: ../gui/wxpython/nviz/tools.py:1694
 msgid "Light color and intensity"
 msgstr "Colore e intensità della luce"
 
-#: ../gui/wxpython/nviz/tools.py:1709 ../gui/wxpython/nviz/preferences.py:306
+#: ../gui/wxpython/nviz/tools.py:1708 ../gui/wxpython/nviz/preferences.py:306
 msgid "Brightness:"
 msgstr "Luminosità:"
 
-#: ../gui/wxpython/nviz/tools.py:1711
+#: ../gui/wxpython/nviz/tools.py:1710
 msgid "Adjusts the brightness of the light"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1720 ../gui/wxpython/nviz/preferences.py:320
+#: ../gui/wxpython/nviz/tools.py:1719 ../gui/wxpython/nviz/preferences.py:320
 msgid "Ambient:"
 msgstr "Ambiente:"
 
-#: ../gui/wxpython/nviz/tools.py:1722
+#: ../gui/wxpython/nviz/tools.py:1721
 msgid "Adjusts the ambient light"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1783
+#: ../gui/wxpython/nviz/tools.py:1782
 msgid "Edges with fringe"
 msgstr "Vertici con bordo"
 
-#: ../gui/wxpython/nviz/tools.py:1785
+#: ../gui/wxpython/nviz/tools.py:1784
 msgid "N && W"
 msgstr "N && O"
 
-#: ../gui/wxpython/nviz/tools.py:1786
+#: ../gui/wxpython/nviz/tools.py:1785
 msgid "N && E"
 msgstr "N && E"
 
-#: ../gui/wxpython/nviz/tools.py:1787
+#: ../gui/wxpython/nviz/tools.py:1786
 msgid "S && W"
 msgstr "S && O"
 
-#: ../gui/wxpython/nviz/tools.py:1788
+#: ../gui/wxpython/nviz/tools.py:1787
 msgid "S && E"
 msgstr "S && E"
 
-#: ../gui/wxpython/nviz/tools.py:1802 ../gui/wxpython/gui_core/gselect.py:1101
+#: ../gui/wxpython/nviz/tools.py:1801 ../gui/wxpython/gui_core/gselect.py:1101
 #: ../gui/wxpython/gui_core/toolbars.py:77
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: ../gui/wxpython/nviz/tools.py:1808
+#: ../gui/wxpython/nviz/tools.py:1807
 msgid "Elevation of fringe from bottom:"
 msgstr "Altezza del bordo dalla base:"
 
-#: ../gui/wxpython/nviz/tools.py:1856 ../gui/wxpython/psmap/toolbars.py:85
+#: ../gui/wxpython/nviz/tools.py:1855 ../gui/wxpython/psmap/toolbars.py:85
 #: ../gui/wxpython/psmap/dialogs.py:4490
 #: ../gui/wxpython/mapdisp/toolbars.py:35
 #, fuzzy
 msgid "North Arrow"
 msgstr "Scala e Barra del nord"
 
-#: ../gui/wxpython/nviz/tools.py:1861
+#: ../gui/wxpython/nviz/tools.py:1860
 #, fuzzy
 msgid "Arrow length (in map units):"
 msgstr "La lunghezza della barra della scale è impostata in unità della mappa"
 
-#: ../gui/wxpython/nviz/tools.py:1871
+#: ../gui/wxpython/nviz/tools.py:1870
 #, fuzzy
 msgid "Arrow color:"
 msgstr "colore del bordo:"
 
-#: ../gui/wxpython/nviz/tools.py:1880
+#: ../gui/wxpython/nviz/tools.py:1879
 msgid "Place arrow"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1898 ../gui/wxpython/psmap/toolbars.py:81
+#: ../gui/wxpython/nviz/tools.py:1897 ../gui/wxpython/psmap/toolbars.py:81
 #, fuzzy
 msgid "Scale bar"
 msgstr "Aggiungi barra della scala"
 
-#: ../gui/wxpython/nviz/tools.py:1903
+#: ../gui/wxpython/nviz/tools.py:1902
 #, fuzzy
 msgid "Scale bar length (in map units):"
 msgstr "La lunghezza della barra della scale è impostata in unità della mappa"
 
-#: ../gui/wxpython/nviz/tools.py:1913
+#: ../gui/wxpython/nviz/tools.py:1912
 #, fuzzy
 msgid "Scale bar color:"
 msgstr "usa colore del bordo:"
 
-#: ../gui/wxpython/nviz/tools.py:1922
+#: ../gui/wxpython/nviz/tools.py:1921
 #, fuzzy
 msgid "Place scalebar"
 msgstr "Aggiungi barra della scala"
 
-#: ../gui/wxpython/nviz/tools.py:1928
+#: ../gui/wxpython/nviz/tools.py:1927
 #, fuzzy
 msgid "Delete last"
 msgstr "Elimina mapset"
 
-#: ../gui/wxpython/nviz/tools.py:1961
+#: ../gui/wxpython/nviz/tools.py:1960
 msgid "Do you want to record new animation without saving the previous one?"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:1964
+#: ../gui/wxpython/nviz/tools.py:1963
 #, fuzzy
 msgid "Animation already axists"
 msgstr "Il file esiste già"
 
-#: ../gui/wxpython/nviz/tools.py:2126
+#: ../gui/wxpython/nviz/tools.py:2125
 msgid "No file prefix given."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2130
+#: ../gui/wxpython/nviz/tools.py:2129
 #, python-format
 msgid "Directory %s does not exist."
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2149 ../gui/wxpython/nviz/tools.py:2194
-#: ../gui/wxpython/nviz/tools.py:4281 ../gui/wxpython/nviz/mapwindow.py:2107
-#: ../gui/wxpython/nviz/mapwindow.py:2125
+#: ../gui/wxpython/nviz/tools.py:2148 ../gui/wxpython/nviz/tools.py:2193
+#: ../gui/wxpython/nviz/tools.py:4288 ../gui/wxpython/nviz/mapwindow.py:2110
+#: ../gui/wxpython/nviz/mapwindow.py:2128
 #, fuzzy
 msgid "constant#"
 msgstr "costante"
 
-#: ../gui/wxpython/nviz/tools.py:2260
+#: ../gui/wxpython/nviz/tools.py:2259
 msgid "Isosurface attributes"
 msgstr "Attributi delle isosuperfici"
 
-#: ../gui/wxpython/nviz/tools.py:2266
+#: ../gui/wxpython/nviz/tools.py:2265
 msgid "toggle normal direction"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2272
+#: ../gui/wxpython/nviz/tools.py:2271
 #, fuzzy
 msgid "Isosurface value"
 msgstr "Attributi delle isosuperfici"
 
-#: ../gui/wxpython/nviz/tools.py:2375
+#: ../gui/wxpython/nviz/tools.py:2374
 #, fuzzy
 msgid "Slice attributes"
 msgstr "Duplica attributi"
 
-#: ../gui/wxpython/nviz/tools.py:2381
+#: ../gui/wxpython/nviz/tools.py:2380
 msgid "Slice parallel to axis:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:2514
+#: ../gui/wxpython/nviz/tools.py:2513
 msgid "W"
 msgstr "O"
 
-#: ../gui/wxpython/nviz/tools.py:2515
+#: ../gui/wxpython/nviz/tools.py:2514
 msgid "N"
 msgstr "N"
 
-#: ../gui/wxpython/nviz/tools.py:2516
+#: ../gui/wxpython/nviz/tools.py:2515
 msgid "S"
 msgstr "S"
 
-#: ../gui/wxpython/nviz/tools.py:2517
+#: ../gui/wxpython/nviz/tools.py:2516
 msgid "E"
 msgstr "E"
 
-#: ../gui/wxpython/nviz/tools.py:2518
+#: ../gui/wxpython/nviz/tools.py:2517
 #, fuzzy
 msgid "NW"
 msgstr "O"
 
-#: ../gui/wxpython/nviz/tools.py:2519
+#: ../gui/wxpython/nviz/tools.py:2518
 #, fuzzy
 msgid "NE"
 msgstr "N"
 
-#: ../gui/wxpython/nviz/tools.py:2520
+#: ../gui/wxpython/nviz/tools.py:2519
 #, fuzzy
 msgid "SE"
 msgstr "S"
 
-#: ../gui/wxpython/nviz/tools.py:2521
+#: ../gui/wxpython/nviz/tools.py:2520
 #, fuzzy
 msgid "SW"
 msgstr "O"
 
-#: ../gui/wxpython/nviz/tools.py:3003 ../gui/wxpython/nviz/tools.py:3695
-#: ../gui/wxpython/nviz/tools.py:3697 ../gui/wxpython/nviz/tools.py:4614
+#: ../gui/wxpython/nviz/tools.py:3005 ../gui/wxpython/nviz/tools.py:3697
+#: ../gui/wxpython/nviz/tools.py:3699 ../gui/wxpython/nviz/tools.py:4616
 msgid "Level"
 msgstr "Livello"
 
-#: ../gui/wxpython/nviz/tools.py:3514
+#: ../gui/wxpython/nviz/tools.py:3516
 #, fuzzy
 msgid "List of slices"
 msgstr "Lista dei duplicati"
 
-#: ../gui/wxpython/nviz/tools.py:3704 ../gui/wxpython/nviz/tools.py:3706
-#: ../gui/wxpython/nviz/tools.py:3983 ../gui/wxpython/nviz/tools.py:4627
+#: ../gui/wxpython/nviz/tools.py:3706 ../gui/wxpython/nviz/tools.py:3708
+#: ../gui/wxpython/nviz/tools.py:3985 ../gui/wxpython/nviz/tools.py:4629
 msgid "Slice parallel to"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4287
+#: ../gui/wxpython/nviz/tools.py:4294
 msgid "None"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4289 ../gui/wxpython/menustrings.py:461
+#: ../gui/wxpython/nviz/tools.py:4296 ../gui/wxpython/menustrings.py:461
 msgid "Plane"
 msgstr "Piano"
 
-#: ../gui/wxpython/nviz/tools.py:4477
+#: ../gui/wxpython/nviz/tools.py:4479
 msgid "Vector map is 3D"
 msgstr "Mappa vettoriale è 3D"
 
-#: ../gui/wxpython/nviz/tools.py:4480
+#: ../gui/wxpython/nviz/tools.py:4482
 msgid "Vector map is 2D"
 msgstr "Mappa vettoriale è 2D"
 
-#: ../gui/wxpython/nviz/tools.py:4482
+#: ../gui/wxpython/nviz/tools.py:4484
 #, python-format
 msgid "%(features)d features (%(points)d points)"
 msgstr "%(features)d elementi (%(points)d points)"
 
-#: ../gui/wxpython/nviz/tools.py:4647
+#: ../gui/wxpython/nviz/tools.py:4649
 #, fuzzy
 msgid "range:"
 msgstr "intervallo"
 
-#: ../gui/wxpython/nviz/tools.py:4715 ../gui/wxpython/nviz/tools.py:4726
+#: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4728
 #, fuzzy
 msgid "North edge:"
 msgstr "Nord"
 
-#: ../gui/wxpython/nviz/tools.py:4716 ../gui/wxpython/nviz/tools.py:4727
+#: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4729
 #, fuzzy
 msgid "South edge:"
 msgstr "Sud"
 
-#: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4724
-#: ../gui/wxpython/nviz/tools.py:4733
+#: ../gui/wxpython/nviz/tools.py:4719 ../gui/wxpython/nviz/tools.py:4726
+#: ../gui/wxpython/nviz/tools.py:4735
 #, fuzzy
 msgid "West edge:"
 msgstr "Cancella vertici"
 
-#: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4725
-#: ../gui/wxpython/nviz/tools.py:4734
+#: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4727
+#: ../gui/wxpython/nviz/tools.py:4736
 msgid "East edge:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4731
-#: ../gui/wxpython/nviz/tools.py:4739
+#: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4733
+#: ../gui/wxpython/nviz/tools.py:4741
 #, fuzzy
 msgid "Northing (Y):"
 msgstr "Nord"
 
-#: ../gui/wxpython/nviz/tools.py:4721 ../gui/wxpython/nviz/tools.py:4730
-#: ../gui/wxpython/nviz/tools.py:4740
+#: ../gui/wxpython/nviz/tools.py:4723 ../gui/wxpython/nviz/tools.py:4732
+#: ../gui/wxpython/nviz/tools.py:4742
 #, fuzzy
 msgid "Height (Z):"
 msgstr "Altezza:"
 
-#: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4729
-#: ../gui/wxpython/nviz/tools.py:4738
+#: ../gui/wxpython/nviz/tools.py:4724 ../gui/wxpython/nviz/tools.py:4731
+#: ../gui/wxpython/nviz/tools.py:4740
 #, fuzzy
 msgid "Easting (X):"
 msgstr "Est"
 
-#: ../gui/wxpython/nviz/tools.py:4735
+#: ../gui/wxpython/nviz/tools.py:4737
 #, fuzzy
 msgid "Bottom edge:"
 msgstr "Basso"
 
-#: ../gui/wxpython/nviz/tools.py:4736
+#: ../gui/wxpython/nviz/tools.py:4738
 msgid "Top edge:"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4840
-msgid ""
-"Adjusts the look direction (azimuth). Click and drag the puck to change the "
-"current eye position."
+#: ../gui/wxpython/nviz/tools.py:4842
+msgid "Adjusts the distance and direction of the image viewpoint"
 msgstr ""
 
-#: ../gui/wxpython/nviz/tools.py:4873
+#: ../gui/wxpython/nviz/tools.py:4874
 msgid ""
 "Adjusts the light direction. Click and drag the puck to change the light "
 "direction."
@@ -912,6 +903,10 @@ msgstr "Posizione:"
 #, fuzzy
 msgid "x:"
 msgstr ":"
+
+#: ../gui/wxpython/nviz/preferences.py:131
+msgid "Twist:"
+msgstr "Curva:"
 
 #: ../gui/wxpython/nviz/preferences.py:204
 msgid "Fly-through"
@@ -1009,7 +1004,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:768
-#: ../gui/wxpython/mapdisp/mapwindow.py:1115
+#: ../gui/wxpython/mapdisp/mapwindow.py:1121
 msgid "Querying is not implemented in standalone mode of Map Display"
 msgstr ""
 
@@ -1075,48 +1070,48 @@ msgstr "fallito"
 msgid "Unsupported layer type '%s'"
 msgstr "Layer '%s' non supportato"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1607
+#: ../gui/wxpython/nviz/mapwindow.py:1610
 msgid "Unable to unload raster map"
 msgstr "Impossibile caricare raster"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1612
+#: ../gui/wxpython/nviz/mapwindow.py:1615
 msgid "Unable to unload 3d raster map"
 msgstr "Impossibile caricare raster 3D"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1613
+#: ../gui/wxpython/nviz/mapwindow.py:1616
 msgid "3d raster map"
 msgstr "Raster 3D"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1623
+#: ../gui/wxpython/nviz/mapwindow.py:1626
 msgid "unloaded successfully"
 msgstr "Caricato con successo"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1675
+#: ../gui/wxpython/nviz/mapwindow.py:1678
 #, python-format
 msgid "Loading vector map <%(name)s> (%(type)s) failed"
 msgstr "Caricamento vettore <%(name)s> (%(type)s) fallito"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1734
+#: ../gui/wxpython/nviz/mapwindow.py:1737
 #, python-format
 msgid "Unable to unload vector map <%(name)s> (%(type)s)"
 msgstr "Impossibile caricare vettoriale <%(name)s> (%(type)s)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:1737
+#: ../gui/wxpython/nviz/mapwindow.py:1740
 #, python-format
 msgid "Vector map <%(name)s> (%(type)s) unloaded successfully"
 msgstr "Vettoriale <%(name)s> (%(type)s) caricato con successo"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2070
+#: ../gui/wxpython/nviz/mapwindow.py:2073
 #, python-format
 msgid "Vector point layer not found (id = %d)"
 msgstr "Vettoriale puntuale non trovato (id = %d)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2072
+#: ../gui/wxpython/nviz/mapwindow.py:2075
 #, python-format
 msgid "Unable to set data layer properties (id = %d)"
 msgstr "Impossibile impostare proprietà del layer (id = %d)"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2075
+#: ../gui/wxpython/nviz/mapwindow.py:2078
 #, python-format
 msgid ""
 "Setting data layer properties failed.\n"
@@ -1127,7 +1122,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/nviz/mapwindow.py:2182
+#: ../gui/wxpython/nviz/mapwindow.py:2185
 #, fuzzy
 msgid "At least one raster map required"
 msgstr "Seleziona mappa raster 1 (richiesto)"
@@ -1175,12 +1170,12 @@ msgid "Command console"
 msgstr "Console dei programmi"
 
 #: ../gui/wxpython/lmgr/frame.py:264
-#: ../gui/wxpython/gui_core/preferences.py:304
+#: ../gui/wxpython/gui_core/preferences.py:314
 msgid "Search module"
 msgstr "Cerca modulo"
 
 #: ../gui/wxpython/lmgr/frame.py:271
-#: ../gui/wxpython/gui_core/preferences.py:314
+#: ../gui/wxpython/gui_core/preferences.py:324
 msgid "Python shell"
 msgstr "Console python"
 
@@ -1444,25 +1439,25 @@ msgstr "Rimuovi layer"
 msgid "Quit GRASS GUI"
 msgstr "Esci dalla GUI di GRASS"
 
-#: ../gui/wxpython/lmgr/frame.py:1779
+#: ../gui/wxpython/lmgr/frame.py:1781
 #, fuzzy
 msgid "No map layer selected. Operation canceled."
 msgstr "Nessun layer selezionato. Operazione cancellata"
 
-#: ../gui/wxpython/lmgr/frame.py:1780 ../gui/wxpython/gis_set.py:519
+#: ../gui/wxpython/lmgr/frame.py:1782 ../gui/wxpython/gis_set.py:519
 #: ../gui/wxpython/gis_set.py:554 ../gui/wxpython/gui_core/ghelp.py:274
 #: ../gui/wxpython/core/gcmd.py:142
 msgid "Message"
 msgstr "Messaggio"
 
-#: ../gui/wxpython/lmgr/frame.py:1789
+#: ../gui/wxpython/lmgr/frame.py:1791
 msgid ""
 "Display resolution is currently not constrained to computational settings. "
 "It's suggested to constrain map to region geometry. Do you want to constrain "
 "the resolution?"
 msgstr ""
 
-#: ../gui/wxpython/lmgr/frame.py:1798
+#: ../gui/wxpython/lmgr/frame.py:1800
 msgid "Constrain map to region geometry?"
 msgstr ""
 
@@ -1709,111 +1704,111 @@ msgstr "Notare che i raster 3D sono visualizzati solo nel visualizzatore 3D"
 msgid "Set options"
 msgstr "Imposta opzioni"
 
-#: ../gui/wxpython/lmgr/layertree.py:157
+#: ../gui/wxpython/lmgr/layertree.py:159
 #, python-format
 msgid "GRASS GIS Map Display: %(id)d  - Location: %(loc)s"
 msgstr "GRASS GIS Map Display: %(id)d  - Location: %(loc)s"
 
-#: ../gui/wxpython/lmgr/layertree.py:167
+#: ../gui/wxpython/lmgr/layertree.py:169
 msgid "Map Layers"
 msgstr "Layer"
 
-#: ../gui/wxpython/lmgr/layertree.py:313
+#: ../gui/wxpython/lmgr/layertree.py:334
 #: ../gui/wxpython/gmodeler/frame.py:1177
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../gui/wxpython/lmgr/layertree.py:317 ../gui/wxpython/menustrings.py:161
+#: ../gui/wxpython/lmgr/layertree.py:338 ../gui/wxpython/menustrings.py:161
 msgid "Rename"
 msgstr "Rinomina"
 
-#: ../gui/wxpython/lmgr/layertree.py:325
+#: ../gui/wxpython/lmgr/layertree.py:346
 msgid "Change opacity level"
 msgstr "Cambia il livello di opacità"
 
-#: ../gui/wxpython/lmgr/layertree.py:327
+#: ../gui/wxpython/lmgr/layertree.py:348
 #: ../gui/wxpython/gmodeler/frame.py:1209
 msgid "Properties"
 msgstr "Proprietà"
 
-#: ../gui/wxpython/lmgr/layertree.py:335
+#: ../gui/wxpython/lmgr/layertree.py:356
 msgid "3D view properties"
 msgstr "Proprieta della visualizzazione 3D"
 
-#: ../gui/wxpython/lmgr/layertree.py:339
+#: ../gui/wxpython/lmgr/layertree.py:360
 msgid "Zoom to selected map(s)"
 msgstr "Zoom alla mappa selezionata"
 
-#: ../gui/wxpython/lmgr/layertree.py:341
+#: ../gui/wxpython/lmgr/layertree.py:362
 msgid "Set computational region from selected map(s)"
 msgstr "Imposta la regione computazionale dalla/e mappa/e selezionata/e"
 
-#: ../gui/wxpython/lmgr/layertree.py:353 ../gui/wxpython/lmgr/layertree.py:426
+#: ../gui/wxpython/lmgr/layertree.py:374 ../gui/wxpython/lmgr/layertree.py:447
 msgid "Export"
 msgstr "Esporta"
 
-#: ../gui/wxpython/lmgr/layertree.py:360 ../gui/wxpython/lmgr/layertree.py:432
+#: ../gui/wxpython/lmgr/layertree.py:381 ../gui/wxpython/lmgr/layertree.py:453
 msgid "Set color table"
 msgstr "Imposta la tabella di colore"
 
-#: ../gui/wxpython/lmgr/layertree.py:363
+#: ../gui/wxpython/lmgr/layertree.py:384
 msgid "Show attribute data"
 msgstr "Mostra gli attributi dei dati"
 
-#: ../gui/wxpython/lmgr/layertree.py:366
+#: ../gui/wxpython/lmgr/layertree.py:387
 msgid "Start editing"
 msgstr "Incomincia l'editing"
 
-#: ../gui/wxpython/lmgr/layertree.py:367
+#: ../gui/wxpython/lmgr/layertree.py:388
 msgid "Stop editing"
 msgstr "Ferma l'editing"
 
-#: ../gui/wxpython/lmgr/layertree.py:378
+#: ../gui/wxpython/lmgr/layertree.py:399
 msgid "Use as background vector map for digitizer"
 msgstr "Usa vettore come background per il digitalizzatore"
 
-#: ../gui/wxpython/lmgr/layertree.py:385
+#: ../gui/wxpython/lmgr/layertree.py:406
 msgid "Rebuild topology"
 msgstr "Ricrea topologia"
 
-#: ../gui/wxpython/lmgr/layertree.py:407 ../gui/wxpython/lmgr/layertree.py:440
+#: ../gui/wxpython/lmgr/layertree.py:428 ../gui/wxpython/lmgr/layertree.py:461
 #: ../gui/wxpython/gmodeler/preferences.py:428
 msgid "Metadata"
 msgstr "Metadati"
 
-#: ../gui/wxpython/lmgr/layertree.py:420
+#: ../gui/wxpython/lmgr/layertree.py:441
 msgid "Zoom to selected map(s) (ignore NULLs)"
 msgstr "Zoom alla/e mappa/e selezionata/e (ignore i NULLS)"
 
-#: ../gui/wxpython/lmgr/layertree.py:422
+#: ../gui/wxpython/lmgr/layertree.py:443
 msgid "Set computational region from selected map(s) (ignore NULLs)"
 msgstr ""
 "Imposta la regione computazionale dalla/e mappa/e selezionata/e (ignora "
 "nulli)"
 
-#: ../gui/wxpython/lmgr/layertree.py:434 ../gui/wxpython/menustrings.py:716
+#: ../gui/wxpython/lmgr/layertree.py:455 ../gui/wxpython/menustrings.py:716
 msgid "Histogram"
 msgstr "Istogramma"
 
-#: ../gui/wxpython/lmgr/layertree.py:436 ../gui/wxpython/menustrings.py:505
+#: ../gui/wxpython/lmgr/layertree.py:457 ../gui/wxpython/menustrings.py:505
 msgid "Univariate raster statistics"
 msgstr "Statistiche univariate raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:438 ../gui/wxpython/wxplot/dialogs.py:502
+#: ../gui/wxpython/lmgr/layertree.py:459
 msgid "Profile"
 msgstr "Profilo"
 
-#: ../gui/wxpython/lmgr/layertree.py:529
+#: ../gui/wxpython/lmgr/layertree.py:551
 msgid "Unable to create profile of raster map."
 msgstr "Impossibile creare profilo del raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:531 ../gui/wxpython/gis_set.py:208
+#: ../gui/wxpython/lmgr/layertree.py:553 ../gui/wxpython/gis_set.py:208
 #: ../gui/wxpython/gis_set.py:531 ../gui/wxpython/gis_set.py:567
-#: ../gui/wxpython/gis_set.py:633 ../gui/wxpython/gui_core/preferences.py:201
-#: ../gui/wxpython/gui_core/preferences.py:1225
-#: ../gui/wxpython/gui_core/preferences.py:1254
-#: ../gui/wxpython/gui_core/preferences.py:1263
-#: ../gui/wxpython/gui_core/preferences.py:1272
+#: ../gui/wxpython/gis_set.py:633 ../gui/wxpython/gui_core/preferences.py:211
+#: ../gui/wxpython/gui_core/preferences.py:1237
+#: ../gui/wxpython/gui_core/preferences.py:1266
+#: ../gui/wxpython/gui_core/preferences.py:1275
+#: ../gui/wxpython/gui_core/preferences.py:1284
 #: ../gui/wxpython/psmap/dialogs.py:3951
 #: ../gui/wxpython/location_wizard/wizard.py:530
 #: ../gui/wxpython/location_wizard/wizard.py:715
@@ -1823,111 +1818,111 @@ msgstr "Impossibile creare profilo del raster"
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
 #: ../gui/wxpython/wxplot/profile.py:349
-#: ../gui/wxpython/mapdisp/mapwindow.py:1637
+#: ../gui/wxpython/mapdisp/mapwindow.py:1643
 #: ../gui/wxpython/vdigit/dialogs.py:241 ../gui/wxpython/vdigit/dialogs.py:433
 #: ../gui/wxpython/gmodeler/frame.py:882 ../gui/wxpython/core/workspace.py:997
 #: ../gui/wxpython/core/gcmd.py:108
 msgid "Error"
 msgstr "Errore"
 
-#: ../gui/wxpython/lmgr/layertree.py:565
+#: ../gui/wxpython/lmgr/layertree.py:587
 #, fuzzy
 msgid "Unable to display histogram of raster map. No map name defined."
 msgstr "Impossibile visualizzare l'istogramma della mappa raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:645
+#: ../gui/wxpython/lmgr/layertree.py:667
 #, python-format
 msgid "Set opacity of <%s>"
 msgstr "Imposta opacità <%s>"
 
-#: ../gui/wxpython/lmgr/layertree.py:752
+#: ../gui/wxpython/lmgr/layertree.py:774
 msgid "Layer group:"
 msgstr "Gruppo di layer:"
 
-#: ../gui/wxpython/lmgr/layertree.py:757
-#: ../gui/wxpython/lmgr/layertree.py:1322
+#: ../gui/wxpython/lmgr/layertree.py:779
+#: ../gui/wxpython/lmgr/layertree.py:1373
 msgid "Click to edit layer settings"
 msgstr "Clicca per editare le impostazione del layer"
 
-#: ../gui/wxpython/lmgr/layertree.py:798
+#: ../gui/wxpython/lmgr/layertree.py:821
 msgid "(double click to set properties)"
 msgstr "(doppio click per impostare le propriet?)"
 
-#: ../gui/wxpython/lmgr/layertree.py:801
+#: ../gui/wxpython/lmgr/layertree.py:824
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #: ../gui/wxpython/psmap/dialogs.py:695 ../gui/wxpython/gcp/manager.py:314
 #: ../gui/wxpython/gmodeler/frame.py:1285
 msgid "raster"
 msgstr "raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:804
+#: ../gui/wxpython/lmgr/layertree.py:827
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #, fuzzy
 msgid "3D raster"
 msgstr "Raster 3D:"
 
-#: ../gui/wxpython/lmgr/layertree.py:807
+#: ../gui/wxpython/lmgr/layertree.py:830
 msgid "RGB"
 msgstr "RGB"
 
-#: ../gui/wxpython/lmgr/layertree.py:810
+#: ../gui/wxpython/lmgr/layertree.py:833
 msgid "HIS"
 msgstr "HIS"
 
-#: ../gui/wxpython/lmgr/layertree.py:813
+#: ../gui/wxpython/lmgr/layertree.py:836
 #, fuzzy
 msgid "shaded relief"
 msgstr "Mappa rilievo ombreggiato"
 
-#: ../gui/wxpython/lmgr/layertree.py:816
+#: ../gui/wxpython/lmgr/layertree.py:839
 msgid "raster cell numbers"
 msgstr "numeri delle celle raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:819
+#: ../gui/wxpython/lmgr/layertree.py:842
 msgid "raster flow arrows"
 msgstr "direzioni di flusso raster"
 
-#: ../gui/wxpython/lmgr/layertree.py:822
+#: ../gui/wxpython/lmgr/layertree.py:845
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #: ../gui/wxpython/psmap/dialogs.py:696 ../gui/wxpython/gcp/manager.py:314
 #: ../gui/wxpython/gmodeler/frame.py:1286
 msgid "vector"
 msgstr "vettoriale"
 
-#: ../gui/wxpython/lmgr/layertree.py:825
+#: ../gui/wxpython/lmgr/layertree.py:848
 msgid "thematic map"
 msgstr "mappa tematica"
 
-#: ../gui/wxpython/lmgr/layertree.py:828
+#: ../gui/wxpython/lmgr/layertree.py:851
 msgid "thematic charts"
 msgstr "grafico tematico"
 
-#: ../gui/wxpython/lmgr/layertree.py:831
+#: ../gui/wxpython/lmgr/layertree.py:854
 msgid "grid"
 msgstr "griglia"
 
-#: ../gui/wxpython/lmgr/layertree.py:834
+#: ../gui/wxpython/lmgr/layertree.py:857
 msgid "geodesic line"
 msgstr "linea geodetica"
 
-#: ../gui/wxpython/lmgr/layertree.py:837
+#: ../gui/wxpython/lmgr/layertree.py:860
 msgid "rhumbline"
 msgstr "linea lossodromica"
 
-#: ../gui/wxpython/lmgr/layertree.py:840
+#: ../gui/wxpython/lmgr/layertree.py:863
 msgid "vector labels"
 msgstr "etichette vettoriali"
 
-#: ../gui/wxpython/lmgr/layertree.py:1077
-#: ../gui/wxpython/lmgr/layertree.py:1126
+#: ../gui/wxpython/lmgr/layertree.py:1100
+#: ../gui/wxpython/lmgr/layertree.py:1159
 msgid "Please wait, updating data..."
 msgstr "Per favore aspettare, aggiornamento dei dati..."
 
-#: ../gui/wxpython/lmgr/layertree.py:1406
+#: ../gui/wxpython/lmgr/layertree.py:1458
 msgid "opacity:"
 msgstr "opacità:"
 
-#: ../gui/wxpython/lmgr/layertree.py:1423
+#: ../gui/wxpython/lmgr/layertree.py:1475
 #, python-format
 msgid "Map <%s> not found."
 msgstr "Mappa <%s> non trovata."
@@ -2492,7 +2487,7 @@ msgstr "Aggiungi colonna"
 msgid "Column"
 msgstr "Colonna"
 
-#: ../gui/wxpython/dbmgr/manager.py:911 ../gui/wxpython/wxplot/dialogs.py:592
+#: ../gui/wxpython/dbmgr/manager.py:911
 #: ../gui/wxpython/gmodeler/preferences.py:207
 msgid "Type"
 msgstr "Tipe"
@@ -2522,7 +2517,7 @@ msgstr "Layer della mappa vettoriale"
 msgid "List of layers"
 msgstr "Lista dei layer"
 
-#: ../gui/wxpython/dbmgr/manager.py:1135 ../gui/wxpython/core/settings.py:719
+#: ../gui/wxpython/dbmgr/manager.py:1135 ../gui/wxpython/core/settings.py:704
 msgid "Edit selected record"
 msgstr "Edita il record selezionato"
 
@@ -3039,21 +3034,21 @@ msgid "Revert settings to default and apply changes"
 msgstr "Ritorno le impostazioni a quelle di default e applica i cambiamenti"
 
 #: ../gui/wxpython/gui_core/preferences.py:87
-#: ../gui/wxpython/wxplot/dialogs.py:373 ../gui/wxpython/wxplot/dialogs.py:728
+#: ../gui/wxpython/wxplot/dialogs.py:376 ../gui/wxpython/wxplot/dialogs.py:763
 #: ../gui/wxpython/gcp/manager.py:2370
 msgid "Apply changes for the current session"
 msgstr "Applica i cambiamenti per la sessione corrente"
 
 #: ../gui/wxpython/gui_core/preferences.py:89
-#: ../gui/wxpython/wxplot/dialogs.py:378 ../gui/wxpython/wxplot/dialogs.py:730
+#: ../gui/wxpython/wxplot/dialogs.py:381 ../gui/wxpython/wxplot/dialogs.py:765
 #: ../gui/wxpython/gcp/manager.py:2372
 msgid ""
 "Apply and save changes to user settings file (default for next sessions)"
 msgstr "Applica e salva cambiamenti per le impostazione per l'utente"
 
 #: ../gui/wxpython/gui_core/preferences.py:92
-#: ../gui/wxpython/psmap/dialogs.py:354 ../gui/wxpython/wxplot/dialogs.py:380
-#: ../gui/wxpython/wxplot/dialogs.py:733
+#: ../gui/wxpython/psmap/dialogs.py:354 ../gui/wxpython/wxplot/dialogs.py:383
+#: ../gui/wxpython/wxplot/dialogs.py:766
 #: ../gui/wxpython/vdigit/preferences.py:58
 #: ../gui/wxpython/gmodeler/preferences.py:452
 msgid "Close dialog and ignore changes"
@@ -3063,72 +3058,72 @@ msgstr "Chiudi e ignora i cambiamenti"
 msgid "Settings applied to current session but not saved"
 msgstr "Impostazioni applicate alla sessione corrente ma non salvate"
 
-#: ../gui/wxpython/gui_core/preferences.py:166
+#: ../gui/wxpython/gui_core/preferences.py:175
 #, python-format
 msgid "Settings saved to file '%s'."
 msgstr "Impostazioni salvate nel file %s."
 
-#: ../gui/wxpython/gui_core/preferences.py:200
+#: ../gui/wxpython/gui_core/preferences.py:210
 msgid "Key column cannot be empty string."
 msgstr "La chiave primaria non può essere una stringa vuota"
 
-#: ../gui/wxpython/gui_core/preferences.py:209
+#: ../gui/wxpython/gui_core/preferences.py:219
 #, python-format
 msgid ""
 "Field separator must be ASCII character not <%s> (use e.g. ';', '&', '#')"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:246
+#: ../gui/wxpython/gui_core/preferences.py:256
 msgid "GUI Settings"
 msgstr "Impostazioni dell'interfaccia grafica"
 
-#: ../gui/wxpython/gui_core/preferences.py:267
+#: ../gui/wxpython/gui_core/preferences.py:277
 #: ../gui/wxpython/vdigit/preferences.py:118
 #: ../gui/wxpython/gmodeler/preferences.py:45
 msgid "General"
 msgstr "Generale"
 
-#: ../gui/wxpython/gui_core/preferences.py:273
+#: ../gui/wxpython/gui_core/preferences.py:283
 msgid "Layer Manager settings"
 msgstr "Impostazione del Layer Manager"
 
-#: ../gui/wxpython/gui_core/preferences.py:284
+#: ../gui/wxpython/gui_core/preferences.py:294
 msgid "Ask when removing map layer from layer tree"
 msgstr "Chiedi quando si sta rimuovendo un layer dal layer tree"
 
-#: ../gui/wxpython/gui_core/preferences.py:294
+#: ../gui/wxpython/gui_core/preferences.py:304
 msgid "Ask when quiting wxGUI or closing display"
 msgstr "Chiedi quando si sta chiudendo wxGUI o un display"
 
-#: ../gui/wxpython/gui_core/preferences.py:304
 #: ../gui/wxpython/gui_core/preferences.py:314
+#: ../gui/wxpython/gui_core/preferences.py:324
 #, python-format
 msgid "Hide '%s' tab (requires GUI restart)"
 msgstr "Nascondi la scheda '%s' (richiede riavvio dell'interfaccia grafica)"
 
-#: ../gui/wxpython/gui_core/preferences.py:327
+#: ../gui/wxpython/gui_core/preferences.py:337
 msgid "Automatically copy selected text to clipboard (in Command console)"
 msgstr ""
 "Copia automaticamente il testo selezionato nella memoria (nella console dei "
 "comandi)"
 
-#: ../gui/wxpython/gui_core/preferences.py:341
+#: ../gui/wxpython/gui_core/preferences.py:351
 msgid "Workspace settings"
 msgstr "Impostazioni dell'ambiente di lavoro"
 
-#: ../gui/wxpython/gui_core/preferences.py:349
+#: ../gui/wxpython/gui_core/preferences.py:359
 msgid "Suppress positioning Map Display Window(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:361
+#: ../gui/wxpython/gui_core/preferences.py:371
 msgid "Suppress positioning Layer Manager window"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:372
+#: ../gui/wxpython/gui_core/preferences.py:382
 msgid "Save current window layout as default"
 msgstr "Salva il layout corrente della finestra come default"
 
-#: ../gui/wxpython/gui_core/preferences.py:375
+#: ../gui/wxpython/gui_core/preferences.py:385
 msgid ""
 "Save current position and size of Layer Manager window and opened Map "
 "Display window(s) and use as default for next sessions."
@@ -3136,222 +3131,222 @@ msgstr ""
 "Salva la posizione e dimensione correnti della finestra Layer Manager e le "
 "finestre Map Display aperte e usa come default per la prossima sessione"
 
-#: ../gui/wxpython/gui_core/preferences.py:402
-#: ../gui/wxpython/gui_core/preferences.py:575
-#: ../gui/wxpython/gui_core/preferences.py:1375
+#: ../gui/wxpython/gui_core/preferences.py:412
+#: ../gui/wxpython/gui_core/preferences.py:587
+#: ../gui/wxpython/gui_core/preferences.py:1387
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3265
-#: ../gui/wxpython/psmap/dialogs.py:3721 ../gui/wxpython/wxplot/dialogs.py:307
+#: ../gui/wxpython/psmap/dialogs.py:3721 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
 msgstr "Impostazioni del font"
 
-#: ../gui/wxpython/gui_core/preferences.py:416
+#: ../gui/wxpython/gui_core/preferences.py:426
 msgid "Font for command output:"
 msgstr "Font per output del comando:"
 
-#: ../gui/wxpython/gui_core/preferences.py:421
-#: ../gui/wxpython/gui_core/preferences.py:591
+#: ../gui/wxpython/gui_core/preferences.py:431
+#: ../gui/wxpython/gui_core/preferences.py:603
 #: ../gui/wxpython/gui_core/dialogs.py:769
 msgid "Set font"
 msgstr "Imposta font"
 
-#: ../gui/wxpython/gui_core/preferences.py:430
+#: ../gui/wxpython/gui_core/preferences.py:440
 #, fuzzy
 msgid "Language settings"
 msgstr "Cambia impostazione"
 
-#: ../gui/wxpython/gui_core/preferences.py:440
+#: ../gui/wxpython/gui_core/preferences.py:450
 msgid "Choose language (requires to save and GRASS restart):"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:460
+#: ../gui/wxpython/gui_core/preferences.py:472
 msgid "Appearance settings"
 msgstr "Impostazioni dell'aspetto"
 
-#: ../gui/wxpython/gui_core/preferences.py:471
+#: ../gui/wxpython/gui_core/preferences.py:483
 msgid "Element list:"
 msgstr "Lista degli elementi:"
 
-#: ../gui/wxpython/gui_core/preferences.py:493
+#: ../gui/wxpython/gui_core/preferences.py:505
 #, fuzzy
 msgid "Menu style (requires to save and GUI restart):"
 msgstr "Stile del menu (richiede riavvio dell'interfaccia grafica):"
 
-#: ../gui/wxpython/gui_core/preferences.py:517
+#: ../gui/wxpython/gui_core/preferences.py:529
 msgid "Height of map selection popup window (in pixels):"
 msgstr "Altezza della finestra della selezione della mappa (in pixel):"
 
-#: ../gui/wxpython/gui_core/preferences.py:541
+#: ../gui/wxpython/gui_core/preferences.py:553
 msgid "Icon theme (requires GUI restart):"
 msgstr "Tema delle icone (richiede riavvio dell'interfaccia grafica)"
 
-#: ../gui/wxpython/gui_core/preferences.py:571
+#: ../gui/wxpython/gui_core/preferences.py:583
 msgid "Map Display"
 msgstr "Visualizzatore di mappe"
 
-#: ../gui/wxpython/gui_core/preferences.py:586
+#: ../gui/wxpython/gui_core/preferences.py:598
 msgid "Default font for GRASS displays:"
 msgstr "Font di default per i display di GRASS:"
 
-#: ../gui/wxpython/gui_core/preferences.py:603
+#: ../gui/wxpython/gui_core/preferences.py:615
 msgid "Default display settings"
 msgstr "Impostazioni di default del display"
 
-#: ../gui/wxpython/gui_core/preferences.py:615
+#: ../gui/wxpython/gui_core/preferences.py:627
 msgid "Display driver:"
 msgstr "Visualizza driver:"
 
-#: ../gui/wxpython/gui_core/preferences.py:644
+#: ../gui/wxpython/gui_core/preferences.py:656
 msgid "Statusbar mode:"
 msgstr "Barra di stato:"
 
-#: ../gui/wxpython/gui_core/preferences.py:683
+#: ../gui/wxpython/gui_core/preferences.py:695
 #: ../gui/wxpython/mapdisp/statusbar.py:435
 msgid "Align region extent based on display size"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:696
+#: ../gui/wxpython/gui_core/preferences.py:708
 #: ../gui/wxpython/mapdisp/statusbar.py:455
 msgid "Constrain display resolution to computational settings"
 msgstr ""
 "Forza la risoluzione del display all'impostazione della regione "
 "computazionale"
 
-#: ../gui/wxpython/gui_core/preferences.py:709
+#: ../gui/wxpython/gui_core/preferences.py:721
 msgid "Enable auto-rendering"
 msgstr "Attiva auto-rendering"
 
-#: ../gui/wxpython/gui_core/preferences.py:722
+#: ../gui/wxpython/gui_core/preferences.py:734
 msgid "Enable auto-zooming to selected map layer"
 msgstr "Attiva auto-zoom al layer selezionato."
 
-#: ../gui/wxpython/gui_core/preferences.py:735
+#: ../gui/wxpython/gui_core/preferences.py:747
 msgid "Mouse wheel action:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:750
+#: ../gui/wxpython/gui_core/preferences.py:762
 msgid "Mouse scrolling direction:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:782
+#: ../gui/wxpython/gui_core/preferences.py:794
 #: ../gui/wxpython/gmodeler/dialogs.py:136
 #: ../gui/wxpython/gmodeler/dialogs.py:392
 #: ../gui/wxpython/gmodeler/dialogs.py:494
 msgid "Command"
 msgstr "Comando"
 
-#: ../gui/wxpython/gui_core/preferences.py:785
+#: ../gui/wxpython/gui_core/preferences.py:797
 msgid "Command dialog settings"
 msgstr "Impostazioni finestre di dialogo"
 
-#: ../gui/wxpython/gui_core/preferences.py:797
+#: ../gui/wxpython/gui_core/preferences.py:809
 #: ../gui/wxpython/gui_core/dialogs.py:1506
 #: ../gui/wxpython/modules/vclean.py:135 ../gui/wxpython/scripts/vkrige.py:139
 #: ../gui/wxpython/gmodeler/preferences.py:442
 msgid "Allow output files to overwrite existing files"
 msgstr "Permetti al file di output di sovrascrivere file esistenti"
 
-#: ../gui/wxpython/gui_core/preferences.py:807
+#: ../gui/wxpython/gui_core/preferences.py:819
 msgid "Close dialog when command is successfully finished"
 msgstr "Chiudi dialogo quando il comando è finito correttamente"
 
-#: ../gui/wxpython/gui_core/preferences.py:817
+#: ../gui/wxpython/gui_core/preferences.py:829
 #: ../gui/wxpython/gui_core/dialogs.py:257
 msgid "Add created map into layer tree"
 msgstr "Aggiungi la mappa creata nel layer tree"
 
-#: ../gui/wxpython/gui_core/preferences.py:828
+#: ../gui/wxpython/gui_core/preferences.py:840
 msgid "Allow interactive input"
 msgstr "Permetti input interattivo"
 
-#: ../gui/wxpython/gui_core/preferences.py:838
+#: ../gui/wxpython/gui_core/preferences.py:850
 msgid "Verbosity level:"
 msgstr "Livello di verbosità:"
 
-#: ../gui/wxpython/gui_core/preferences.py:857
+#: ../gui/wxpython/gui_core/preferences.py:869
 msgid "Raster settings"
 msgstr "Impostazioni raster"
 
-#: ../gui/wxpython/gui_core/preferences.py:868
+#: ../gui/wxpython/gui_core/preferences.py:880
 msgid "Overlay raster maps"
 msgstr "Overlay raster"
 
-#: ../gui/wxpython/gui_core/preferences.py:879
+#: ../gui/wxpython/gui_core/preferences.py:891
 msgid "Default color table"
 msgstr "Tabella dei colori di default"
 
-#: ../gui/wxpython/gui_core/preferences.py:905
+#: ../gui/wxpython/gui_core/preferences.py:917
 msgid "Vector settings"
 msgstr "Impostazione del vettore"
 
-#: ../gui/wxpython/gui_core/preferences.py:911
+#: ../gui/wxpython/gui_core/preferences.py:923
 msgid "Display:"
 msgstr "Visualizza:"
 
-#: ../gui/wxpython/gui_core/preferences.py:934
+#: ../gui/wxpython/gui_core/preferences.py:946
 #: ../gui/wxpython/vdigit/preferences.py:344
 msgid "Attributes"
 msgstr "Attributi"
 
-#: ../gui/wxpython/gui_core/preferences.py:942
+#: ../gui/wxpython/gui_core/preferences.py:954
 msgid "Highlighting"
 msgstr "Evidenziazione"
 
-#: ../gui/wxpython/gui_core/preferences.py:958
+#: ../gui/wxpython/gui_core/preferences.py:970
 msgid "Line width (in pixels):"
 msgstr "Larghezza linea (in pixel):"
 
-#: ../gui/wxpython/gui_core/preferences.py:981
+#: ../gui/wxpython/gui_core/preferences.py:993
 msgid "Data browser"
 msgstr "Naviga nei dati"
 
-#: ../gui/wxpython/gui_core/preferences.py:986
+#: ../gui/wxpython/gui_core/preferences.py:998
 msgid "Left mouse double click:"
 msgstr "Doppio click tasto sinistro:"
 
-#: ../gui/wxpython/gui_core/preferences.py:998
+#: ../gui/wxpython/gui_core/preferences.py:1010
 msgid "Encoding (e.g. utf-8, ascii, iso8859-1, koi8-r):"
 msgstr "Codifica (es utf-8, ascii, iso8859-1, koi8-r):"
 
-#: ../gui/wxpython/gui_core/preferences.py:1009
+#: ../gui/wxpython/gui_core/preferences.py:1021
 msgid "Field separator:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1020
+#: ../gui/wxpython/gui_core/preferences.py:1032
 msgid "Ask when deleting data record(s) from table"
 msgstr "Chiedi quando si sta eliminando record(s) dalla tabella"
 
-#: ../gui/wxpython/gui_core/preferences.py:1041
+#: ../gui/wxpython/gui_core/preferences.py:1053
 msgid "Create table"
 msgstr "Crea tabella"
 
-#: ../gui/wxpython/gui_core/preferences.py:1048
+#: ../gui/wxpython/gui_core/preferences.py:1060
 #: ../gui/wxpython/gui_core/dialogs.py:287
 msgid "Key column:"
 msgstr "Chiave della colonna:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1075
+#: ../gui/wxpython/gui_core/preferences.py:1087
 #: ../gui/wxpython/mapdisp/statusbar.py:681
 msgid "Projection"
 msgstr "Proiezione"
 
-#: ../gui/wxpython/gui_core/preferences.py:1082
+#: ../gui/wxpython/gui_core/preferences.py:1094
 msgid "Projection statusbar settings"
 msgstr "Impostazioni della proiezione nella barra di stato"
 
-#: ../gui/wxpython/gui_core/preferences.py:1091
+#: ../gui/wxpython/gui_core/preferences.py:1103
 #: ../gui/wxpython/location_wizard/wizard.py:1255
 msgid "EPSG code:"
 msgstr "codice EPSG:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1108
+#: ../gui/wxpython/gui_core/preferences.py:1120
 msgid "Proj.4 string (required):"
 msgstr "Stringa Proj.4 (richiesto):"
 
-#: ../gui/wxpython/gui_core/preferences.py:1124
+#: ../gui/wxpython/gui_core/preferences.py:1136
 msgid "EPSG file:"
 msgstr "File EPSG:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1139
+#: ../gui/wxpython/gui_core/preferences.py:1151
 msgid ""
 "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
 "directly."
@@ -3359,60 +3354,60 @@ msgstr ""
 "Carica codici EPSG (essere pazienzi), inserisci codice EPSG o direttamente "
 "una stringa Proj.4"
 
-#: ../gui/wxpython/gui_core/preferences.py:1147
+#: ../gui/wxpython/gui_core/preferences.py:1159
 msgid "&Load EPSG codes"
 msgstr "&Carica codici EPSG"
 
-#: ../gui/wxpython/gui_core/preferences.py:1158
+#: ../gui/wxpython/gui_core/preferences.py:1170
 msgid "Coordinates format"
 msgstr "Formato delle coordinate"
 
-#: ../gui/wxpython/gui_core/preferences.py:1167
+#: ../gui/wxpython/gui_core/preferences.py:1179
 msgid "LL projections"
 msgstr "Proiezione LL"
 
-#: ../gui/wxpython/gui_core/preferences.py:1186
+#: ../gui/wxpython/gui_core/preferences.py:1198
 msgid "Precision:"
 msgstr "Precisione:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1224
+#: ../gui/wxpython/gui_core/preferences.py:1236
 #, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Impossibile leggere codici EPSG: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1253
-#: ../gui/wxpython/gui_core/preferences.py:1262
-#: ../gui/wxpython/gui_core/preferences.py:1271
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1274
+#: ../gui/wxpython/gui_core/preferences.py:1283
 #, python-format
 msgid "EPSG code %s not found"
 msgstr "Codice EPSG %s non trovato"
 
-#: ../gui/wxpython/gui_core/preferences.py:1279
+#: ../gui/wxpython/gui_core/preferences.py:1291
 msgid "Select default display font"
 msgstr "Seleziona il font di default"
 
-#: ../gui/wxpython/gui_core/preferences.py:1304
+#: ../gui/wxpython/gui_core/preferences.py:1316
 msgid "Select output font"
 msgstr "Seleziona font di output"
 
-#: ../gui/wxpython/gui_core/preferences.py:1382
+#: ../gui/wxpython/gui_core/preferences.py:1394
 msgid "Select font:"
 msgstr "Seleziona font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1406
+#: ../gui/wxpython/gui_core/preferences.py:1418
 msgid "Character encoding:"
 msgstr "Codifica dei caratteri:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1424
+#: ../gui/wxpython/gui_core/preferences.py:1436
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3555
 msgid "Font size:"
 msgstr "Dimensione del font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1522
+#: ../gui/wxpython/gui_core/preferences.py:1534
 msgid "Manage access to mapsets"
 msgstr "Gestisci l'accesso ai mapset"
 
-#: ../gui/wxpython/gui_core/preferences.py:1535
+#: ../gui/wxpython/gui_core/preferences.py:1547
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -3426,12 +3421,12 @@ msgstr ""
 "    - Puoi scrivere solo nel mapset corrente.\n"
 "    - Puoi scrivere solo nei tuoi mapset."
 
-#: ../gui/wxpython/gui_core/preferences.py:1609
+#: ../gui/wxpython/gui_core/preferences.py:1621
 #: ../gui/wxpython/gui_core/gselect.py:346
 msgid "Mapset"
 msgstr "Mapset"
 
-#: ../gui/wxpython/gui_core/preferences.py:1610
+#: ../gui/wxpython/gui_core/preferences.py:1622
 msgid "Owner"
 msgstr "Proprietario"
 
@@ -3663,7 +3658,7 @@ msgid "Save display to graphic file"
 msgstr "Salva il display in un file"
 
 #: ../gui/wxpython/gui_core/toolbars.py:60
-#: ../gui/wxpython/modules/histogram.py:451 ../gui/wxpython/wxplot/base.py:506
+#: ../gui/wxpython/modules/histogram.py:451 ../gui/wxpython/wxplot/base.py:486
 #: ../gui/wxpython/gcp/mapdisplay.py:493 ../gui/wxpython/mapdisp/frame.py:604
 msgid "Print display"
 msgstr "Stampa il display"
@@ -8599,7 +8594,7 @@ msgid "Generate PDF output"
 msgstr "Genera output PDF"
 
 #: ../gui/wxpython/psmap/toolbars.py:60
-#: ../gui/wxpython/modules/histogram.py:443 ../gui/wxpython/wxplot/base.py:504
+#: ../gui/wxpython/modules/histogram.py:443 ../gui/wxpython/wxplot/base.py:484
 #: ../gui/wxpython/gcp/mapdisplay.py:485 ../gui/wxpython/mapdisp/frame.py:596
 msgid "Page setup"
 msgstr "Impostazione della pagina"
@@ -8647,8 +8642,8 @@ msgstr "Testo"
 msgid "Map info"
 msgstr "Aggiungi informazioni della mappa"
 
-#: ../gui/wxpython/psmap/toolbars.py:79 ../gui/wxpython/wxplot/dialogs.py:533
-#: ../gui/wxpython/wxplot/dialogs.py:585
+#: ../gui/wxpython/psmap/toolbars.py:79 ../gui/wxpython/wxplot/dialogs.py:576
+#: ../gui/wxpython/wxplot/dialogs.py:618
 msgid "Legend"
 msgstr "Legenda"
 
@@ -9039,6 +9034,7 @@ msgid "Width (pts):"
 msgstr "Larghezza (pts):"
 
 #: ../gui/wxpython/psmap/dialogs.py:1795 ../gui/wxpython/psmap/dialogs.py:1899
+#: ../gui/wxpython/wxplot/dialogs.py:610
 msgid "Fill"
 msgstr "Riempimento"
 
@@ -9086,7 +9082,7 @@ msgid "Choose a file"
 msgstr "Scegli un file"
 
 #: ../gui/wxpython/psmap/dialogs.py:1995 ../gui/wxpython/psmap/dialogs.py:2706
-#: ../gui/wxpython/psmap/dialogs.py:3471 ../gui/wxpython/wxplot/dialogs.py:568
+#: ../gui/wxpython/psmap/dialogs.py:3471 ../gui/wxpython/wxplot/dialogs.py:601
 msgid "Size"
 msgstr "Dimensione"
 
@@ -9123,7 +9119,7 @@ msgid "multiply width by category value"
 msgstr "Multiple larghezza dal valore della categoria"
 
 #: ../gui/wxpython/psmap/dialogs.py:2114 ../gui/wxpython/psmap/dialogs.py:4893
-#: ../gui/wxpython/wxplot/dialogs.py:524
+#: ../gui/wxpython/wxplot/dialogs.py:567
 msgid "Line style"
 msgstr "Stile della linea"
 
@@ -9328,8 +9324,7 @@ msgstr "L'altezza della barra della scale è la reale altezza nel foglio"
 msgid "default"
 msgstr "default"
 
-#: ../gui/wxpython/psmap/dialogs.py:3524 ../gui/wxpython/wxplot/dialogs.py:577
-#: ../gui/wxpython/wxplot/dialogs.py:623
+#: ../gui/wxpython/psmap/dialogs.py:3524 ../gui/wxpython/wxplot/dialogs.py:625
 msgid "Style"
 msgstr "Stile"
 
@@ -9538,7 +9533,7 @@ msgstr ""
 "Scegli il nome del file dove salvare l'immagine (non bisogna aggiungere "
 "l'estensione)"
 
-#: ../gui/wxpython/modules/histogram.py:447 ../gui/wxpython/wxplot/base.py:505
+#: ../gui/wxpython/modules/histogram.py:447 ../gui/wxpython/wxplot/base.py:485
 #: ../gui/wxpython/gcp/mapdisplay.py:489 ../gui/wxpython/mapdisp/frame.py:600
 msgid "Print preview"
 msgstr "Anteprima di stampa"
@@ -10826,163 +10821,195 @@ msgstr "Salva il profilo in un file CSV"
 msgid "Quit plot tool"
 msgstr "Esci dal tool di digitalizzazione"
 
-#: ../gui/wxpython/wxplot/base.py:399
+#: ../gui/wxpython/wxplot/base.py:381
 #, fuzzy
 msgid "Left Mouse Down at Point:"
 msgstr "Sinistro: nuovo punto"
 
-#: ../gui/wxpython/wxplot/base.py:428 ../gui/wxpython/wxplot/dialogs.py:244
+#: ../gui/wxpython/wxplot/base.py:411 ../gui/wxpython/wxplot/dialogs.py:247
 msgid "Text settings"
 msgstr "Impostazioni del testo"
 
-#: ../gui/wxpython/wxplot/base.py:432 ../gui/wxpython/wxplot/base.py:489
+#: ../gui/wxpython/wxplot/base.py:415 ../gui/wxpython/wxplot/base.py:472
+#: ../gui/wxpython/wxplot/dialogs.py:503
 #, fuzzy
 msgid "Plot settings"
 msgstr "Impostazioni del font"
 
-#: ../gui/wxpython/wxplot/base.py:445
+#: ../gui/wxpython/wxplot/base.py:428
 msgid "This feature is not yet functional"
 msgstr "Questa feature non è ancora stata implementata"
 
-#: ../gui/wxpython/wxplot/base.py:446
+#: ../gui/wxpython/wxplot/base.py:429
 msgid "Under Construction"
 msgstr "In costruzione"
 
-#: ../gui/wxpython/wxplot/base.py:475
+#: ../gui/wxpython/wxplot/base.py:457
 #, fuzzy
 msgid "Histogram text settings"
 msgstr "Impostazioni del testo del profilo"
 
-#: ../gui/wxpython/wxplot/dialogs.py:32
+#: ../gui/wxpython/wxplot/dialogs.py:34
 #, fuzzy
 msgid "Select raster maps to profile"
 msgstr "Seleziona raster per creare il profilo"
 
-#: ../gui/wxpython/wxplot/dialogs.py:61
+#: ../gui/wxpython/wxplot/dialogs.py:63
 #, fuzzy
 msgid "Select raster map(s) to profile:"
 msgstr "Seleziona raster per creare il profilo"
 
-#: ../gui/wxpython/wxplot/dialogs.py:108
+#: ../gui/wxpython/wxplot/dialogs.py:110
 #, fuzzy
 msgid "Statistics"
 msgstr "Statistiche voxel"
 
-#: ../gui/wxpython/wxplot/dialogs.py:159
+#: ../gui/wxpython/wxplot/dialogs.py:161
 msgid "C&opy"
 msgstr "C&opia"
 
-#: ../gui/wxpython/wxplot/dialogs.py:160
+#: ../gui/wxpython/wxplot/dialogs.py:162
 #, fuzzy
 msgid "Copy regression statistics the clipboard (Ctrl+C)"
 msgstr "Copia la seguente stringa di comando negli appunti (Ctrl+C)"
 
-#: ../gui/wxpython/wxplot/dialogs.py:189
+#: ../gui/wxpython/wxplot/dialogs.py:191
 #, fuzzy
 msgid "Regression statistics copied to clipboard"
 msgstr "'%s' copiato negli appunti"
 
-#: ../gui/wxpython/wxplot/dialogs.py:251
+#: ../gui/wxpython/wxplot/dialogs.py:254
 msgid "Profile title:"
 msgstr "Titolo del profilo:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:261
+#: ../gui/wxpython/wxplot/dialogs.py:264
 msgid "Title font size (pts):"
 msgstr "Dimensione del font del titolo (pts):"
 
-#: ../gui/wxpython/wxplot/dialogs.py:272
+#: ../gui/wxpython/wxplot/dialogs.py:275
 msgid "X-axis label:"
 msgstr "label dell'asse X:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:282
+#: ../gui/wxpython/wxplot/dialogs.py:285
 msgid "Y-axis label:"
 msgstr "label dell'asse Y:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:292
+#: ../gui/wxpython/wxplot/dialogs.py:295
 msgid "Label font size (pts):"
 msgstr "Dimensione del font delle etichette (pts):"
 
-#: ../gui/wxpython/wxplot/dialogs.py:315
+#: ../gui/wxpython/wxplot/dialogs.py:318
 msgid "Font family:"
 msgstr "Famiglia dei font:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:329
+#: ../gui/wxpython/wxplot/dialogs.py:332
 msgid "Style:"
 msgstr "Stile:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:343
+#: ../gui/wxpython/wxplot/dialogs.py:346
 msgid "Weight:"
 msgstr "Larghezza:"
 
-#: ../gui/wxpython/wxplot/dialogs.py:375
+#: ../gui/wxpython/wxplot/dialogs.py:378 ../gui/wxpython/wxplot/dialogs.py:764
 msgid "Apply changes for the current session and close dialog"
 msgstr "Applica i cambiamenti per la sessione corrente e chiudi la finestra"
 
-#: ../gui/wxpython/wxplot/dialogs.py:431 ../gui/wxpython/wxplot/dialogs.py:781
-#, python-format
-msgid "Profile settings saved to file '%s'."
-msgstr "Impostazione del profilo salvate nel file '%s'."
+#: ../gui/wxpython/wxplot/dialogs.py:434
+#, fuzzy, python-format
+msgid "Plot text sizes saved to file '%s'."
+msgstr "Impostazioni salvate nel file %s."
 
 #: ../gui/wxpython/wxplot/dialogs.py:492
-msgid "Profile line settings"
-msgstr "Impostazioni della linea del profilo"
+#, fuzzy
+msgid "No map or image group selected to plot."
+msgstr "Nessuno layer selezionato"
 
-#: ../gui/wxpython/wxplot/dialogs.py:507
+#: ../gui/wxpython/wxplot/dialogs.py:493
+#: ../gui/wxpython/mapdisp/mapwindow.py:1675
+#: ../gui/wxpython/core/workspace.py:1013 ../gui/wxpython/core/gcmd.py:133
+msgid "Warning"
+msgstr "Attenzione"
+
+#: ../gui/wxpython/wxplot/dialogs.py:523
+msgid "Map/image plotted"
+msgstr ""
+
+#: ../gui/wxpython/wxplot/dialogs.py:535
+#, fuzzy
+msgid "Settings for selected map"
+msgstr "Imposta la regione computazionale dalla/e mappa/e selezionata/e"
+
+#: ../gui/wxpython/wxplot/dialogs.py:550
 msgid "Line color"
 msgstr "Colore della linea"
 
-#: ../gui/wxpython/wxplot/dialogs.py:514
+#: ../gui/wxpython/wxplot/dialogs.py:557
 #: ../gui/wxpython/vdigit/preferences.py:130
 msgid "Line width"
 msgstr "Grandezza linea"
 
-#: ../gui/wxpython/wxplot/dialogs.py:557
+#: ../gui/wxpython/wxplot/dialogs.py:590
 msgid "Transect segment marker settings"
 msgstr "Opzioni di evidenziazione del segmento del transetto"
 
-#: ../gui/wxpython/wxplot/dialogs.py:607
+#: ../gui/wxpython/wxplot/dialogs.py:641
 msgid "Axis settings"
 msgstr "Impostazioni delle assi"
 
-#: ../gui/wxpython/wxplot/dialogs.py:613
+#: ../gui/wxpython/wxplot/dialogs.py:647
 msgid "X-Axis"
 msgstr "Asse X"
 
-#: ../gui/wxpython/wxplot/dialogs.py:614
+#: ../gui/wxpython/wxplot/dialogs.py:648
 msgid "Y-Axis"
 msgstr "Asse Y"
 
-#: ../gui/wxpython/wxplot/dialogs.py:632
+#: ../gui/wxpython/wxplot/dialogs.py:657
+#, fuzzy
+msgid "Scale"
+msgstr "Scala:"
+
+#: ../gui/wxpython/wxplot/dialogs.py:662
+msgid ""
+"Automatic axis scaling, custom max and min, or scale matches data range (min)"
+msgstr ""
+
+#: ../gui/wxpython/wxplot/dialogs.py:667
 msgid "Custom min"
 msgstr "Personalizza min"
 
-#: ../gui/wxpython/wxplot/dialogs.py:640
+#: ../gui/wxpython/wxplot/dialogs.py:675
 msgid "Custom max"
 msgstr "Personalizza max"
 
-#: ../gui/wxpython/wxplot/dialogs.py:648
+#: ../gui/wxpython/wxplot/dialogs.py:683
 msgid "Log scale"
 msgstr "Log della scala"
 
-#: ../gui/wxpython/wxplot/dialogs.py:672
+#: ../gui/wxpython/wxplot/dialogs.py:707
 msgid "Grid and Legend settings"
 msgstr "Impostazioni della griglia e legenda"
 
-#: ../gui/wxpython/wxplot/dialogs.py:677
+#: ../gui/wxpython/wxplot/dialogs.py:712
 msgid "Grid color"
 msgstr "Colore della griglia"
 
-#: ../gui/wxpython/wxplot/dialogs.py:684
+#: ../gui/wxpython/wxplot/dialogs.py:719
 msgid "Show grid"
 msgstr "Mostra griglie"
 
-#: ../gui/wxpython/wxplot/dialogs.py:690
+#: ../gui/wxpython/wxplot/dialogs.py:725
 msgid "Legend font size"
 msgstr "Dimensione del font della legenda"
 
-#: ../gui/wxpython/wxplot/dialogs.py:700
+#: ../gui/wxpython/wxplot/dialogs.py:735
 msgid "Show legend"
 msgstr "Mostra legend"
+
+#: ../gui/wxpython/wxplot/dialogs.py:857
+#, fuzzy, python-format
+msgid "Plot settings saved to file '%s'."
+msgstr "Impostazione del profilo salvate nel file '%s'."
 
 #: ../gui/wxpython/gcp/manager.py:129
 msgid "Setup for georectification"
@@ -11809,28 +11836,23 @@ msgstr "Errore RMS"
 msgid "Forward: %(forw)s, Backward: %(back)s"
 msgstr "Successivo: %(forw)s, Precedente: %(back)s"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1627
+#: ../gui/wxpython/mapdisp/mapwindow.py:1633
 msgid "Zoom to saved region extents"
 msgstr "Zoom all'estensione della regione salvata"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1636
+#: ../gui/wxpython/mapdisp/mapwindow.py:1642
 #, python-format
 msgid "Region <%s> not found. Operation canceled."
 msgstr "Region <%s> non trovata. Operazione cancellata"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1657
+#: ../gui/wxpython/mapdisp/mapwindow.py:1663
 msgid "Save display extents to region file"
 msgstr "Salva l'estensione del display in un file"
 
-#: ../gui/wxpython/mapdisp/mapwindow.py:1667
+#: ../gui/wxpython/mapdisp/mapwindow.py:1673
 #, python-format
 msgid "Region file <%s> already exists. Do you want to overwrite it?"
 msgstr "Il file della regione <%s> esiste gi?. Vuoi sovrascriverlo?"
-
-#: ../gui/wxpython/mapdisp/mapwindow.py:1669
-#: ../gui/wxpython/core/workspace.py:1013 ../gui/wxpython/core/gcmd.py:133
-msgid "Warning"
-msgstr "Attenzione"
 
 #: ../gui/wxpython/mapdisp/main.py:116
 #, fuzzy, python-format
@@ -13133,120 +13155,115 @@ msgstr "Impossibile visualizzare layer <%s>."
 msgid "Unable to render overlay <%s>."
 msgstr "Impossibile visualizzare <%s> sovrapposto"
 
-#: ../gui/wxpython/core/settings.py:65 ../gui/wxpython/core/gcmd.py:80
-#, python-format
-msgid "ERROR: %s\n"
-msgstr ""
-
-#: ../gui/wxpython/core/settings.py:464
+#: ../gui/wxpython/core/settings.py:449
 msgid "Segment break"
 msgstr "Rompi segmento"
 
-#: ../gui/wxpython/core/settings.py:531
+#: ../gui/wxpython/core/settings.py:516
 #, fuzzy
 msgid "animation"
 msgstr "Quantificazione"
 
-#: ../gui/wxpython/core/settings.py:712
+#: ../gui/wxpython/core/settings.py:697
 msgid "Collapse all except PERMANENT and current"
 msgstr "Collassa tutto eccetto PERMANENT e il corrente"
 
-#: ../gui/wxpython/core/settings.py:713
+#: ../gui/wxpython/core/settings.py:698
 msgid "Collapse all except PERMANENT"
 msgstr "Collassa tutto eccetto PERMANENT"
 
-#: ../gui/wxpython/core/settings.py:714
+#: ../gui/wxpython/core/settings.py:699
 msgid "Collapse all except current"
 msgstr "Collassa tutto eccetto corrente"
 
-#: ../gui/wxpython/core/settings.py:715
+#: ../gui/wxpython/core/settings.py:700
 msgid "Collapse all"
 msgstr "Collassa tutto"
 
-#: ../gui/wxpython/core/settings.py:716
+#: ../gui/wxpython/core/settings.py:701
 msgid "Expand all"
 msgstr "Espandi tutto"
 
-#: ../gui/wxpython/core/settings.py:720
+#: ../gui/wxpython/core/settings.py:705
 msgid "Display selected"
 msgstr "Visualizza i selezionati"
 
-#: ../gui/wxpython/core/settings.py:730
+#: ../gui/wxpython/core/settings.py:715
 msgid "Classic (labels only)"
 msgstr "Classico (solo descrizione)"
 
-#: ../gui/wxpython/core/settings.py:731
+#: ../gui/wxpython/core/settings.py:716
 msgid "Combined (labels and module names)"
 msgstr "Combinata (descrizione e nome dei moduli)"
 
-#: ../gui/wxpython/core/settings.py:732
+#: ../gui/wxpython/core/settings.py:717
 msgid "Professional (module names only)"
 msgstr "Avanzat (solo nome dei moduli)"
 
-#: ../gui/wxpython/core/settings.py:739
+#: ../gui/wxpython/core/settings.py:724
 msgid "Zoom and recenter"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:740
+#: ../gui/wxpython/core/settings.py:725
 #, fuzzy
 msgid "Zoom to mouse cursor"
 msgstr "Zoom alla region salvata"
 
-#: ../gui/wxpython/core/settings.py:741
+#: ../gui/wxpython/core/settings.py:726
 #, fuzzy
 msgid "Nothing"
 msgstr "Nord"
 
-#: ../gui/wxpython/core/settings.py:742
+#: ../gui/wxpython/core/settings.py:727
 msgid "Scroll forward to zoom in"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:743
+#: ../gui/wxpython/core/settings.py:728
 msgid "Scroll back to zoom in"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:776
+#: ../gui/wxpython/core/settings.py:761
 msgid "box"
 msgstr "box"
 
-#: ../gui/wxpython/core/settings.py:777
+#: ../gui/wxpython/core/settings.py:762
 msgid "sphere"
 msgstr "sfera"
 
-#: ../gui/wxpython/core/settings.py:778
+#: ../gui/wxpython/core/settings.py:763
 msgid "cube"
 msgstr "cubo "
 
-#: ../gui/wxpython/core/settings.py:779
+#: ../gui/wxpython/core/settings.py:764
 msgid "diamond"
 msgstr "diamante"
 
-#: ../gui/wxpython/core/settings.py:780
+#: ../gui/wxpython/core/settings.py:765
 msgid "dtree"
 msgstr "dtree"
 
-#: ../gui/wxpython/core/settings.py:781
+#: ../gui/wxpython/core/settings.py:766
 msgid "ctree"
 msgstr "ctree"
 
-#: ../gui/wxpython/core/settings.py:782
+#: ../gui/wxpython/core/settings.py:767
 msgid "aster"
 msgstr "aster"
 
-#: ../gui/wxpython/core/settings.py:783
+#: ../gui/wxpython/core/settings.py:768
 msgid "gyro"
 msgstr ""
 
-#: ../gui/wxpython/core/settings.py:784
+#: ../gui/wxpython/core/settings.py:769
 msgid "histogram"
 msgstr "istogramma"
 
-#: ../gui/wxpython/core/settings.py:821
+#: ../gui/wxpython/core/settings.py:806
 #, python-format
 msgid "Unable to read settings file <%s>\n"
 msgstr "Impossibile leggere il file delle impostazioni <%s>\n"
 
-#: ../gui/wxpython/core/settings.py:845
+#: ../gui/wxpython/core/settings.py:830
 #, python-format
 msgid ""
 "Error: Reading settings from file <%(file)s> failed.\n"
@@ -13257,11 +13274,11 @@ msgstr ""
 "\t\tDettagli: %(detail)s\n"
 "\t\tLinea: '%(line)s'\n"
 
-#: ../gui/wxpython/core/settings.py:864
+#: ../gui/wxpython/core/settings.py:849
 msgid "Unable to create settings directory"
 msgstr "Impossibile creare la directory delle impostazioni"
 
-#: ../gui/wxpython/core/settings.py:900
+#: ../gui/wxpython/core/settings.py:885
 #, python-format
 msgid ""
 "Writing settings to file <%(file)s> failed.\n"
@@ -13271,11 +13288,11 @@ msgstr ""
 "Scrittura delle impostazione nel file <%(file)s> fallita.<br> <br> Dettagli: "
 "%(detail)s"
 
-#: ../gui/wxpython/core/settings.py:999
+#: ../gui/wxpython/core/settings.py:984
 msgid "Unable to set "
 msgstr "Impossibile da settare"
 
-#: ../gui/wxpython/core/settings.py:1025 ../gui/wxpython/core/settings.py:1031
+#: ../gui/wxpython/core/settings.py:1010 ../gui/wxpython/core/settings.py:1016
 #, python-format
 msgid "Unable to parse settings '%s'"
 msgstr "Impossibile analizzare le impostazioni '%s'"
@@ -13284,17 +13301,17 @@ msgstr "Impossibile analizzare le impostazioni '%s'"
 msgid "Unknow tag"
 msgstr "etichetta sconosciuta"
 
-#: ../gui/wxpython/core/utils.py:302
+#: ../gui/wxpython/core/utils.py:311
 #, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Vettoriale <%(map)s>:%(msg)s\n"
 
-#: ../gui/wxpython/core/utils.py:525
+#: ../gui/wxpython/core/utils.py:534
 #, python-format
 msgid "failed to open '%s'"
 msgstr "Impossibile aprire '%s'"
 
-#: ../gui/wxpython/core/utils.py:760
+#: ../gui/wxpython/core/utils.py:769
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr "ERRORE: Impossibile determinare la versione di GRASS. Dettagli: %s"
@@ -13323,6 +13340,11 @@ msgstr ""
 msgid " row %d:"
 msgstr "riga %d:"
 
+#: ../gui/wxpython/core/gcmd.py:80
+#, python-format
+msgid "ERROR: %s\n"
+msgstr ""
+
 #: ../gui/wxpython/core/gcmd.py:121
 msgid "Reason"
 msgstr "Motivo"
@@ -13339,6 +13361,9 @@ msgstr "Errore:"
 #, python-format
 msgid "Unable to exectute command: '%s'"
 msgstr "Impossibile eseguire il comando '%s'"
+
+#~ msgid "Profile line settings"
+#~ msgstr "Impostazioni della linea del profilo"
 
 #~ msgid "'%(cmd)s' failed. Details: %(det)s"
 #~ msgstr "'%(cmd)s' fallito. Dettagli: %(det)s"
@@ -13713,9 +13738,6 @@ msgstr "Impossibile eseguire il comando '%s'"
 
 #~ msgid "Vector digitizer"
 #~ msgstr "Digitalizzatore vettoriale"
-
-#~ msgid "No map layer selected"
-#~ msgstr "Nessuno layer selezionato"
 
 #~ msgid "Vector querying"
 #~ msgstr "Interrogazione di vettori"
