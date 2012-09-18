@@ -714,7 +714,7 @@ class GMConsole(wx.SplitterWindow):
         
         # message prefix
         if type == 'warning':
-            messege = 'WARNING: ' + message
+            message = 'WARNING: ' + message
         elif type == 'error':
             message = 'ERROR: ' + message
         
