@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2010-11-08 15:14+0200\n"
 "Last-Translator: Saban Safak <ssafak@cvm.com.tr>\n"
 "Language-Team: Türkçe <grass-translations@lists.osgeo.org>\n"
@@ -4785,19 +4785,24 @@ msgstr "<%s> tablosu tanımlanamıyor"
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "<%s>  veritabanı <%s> sürücüsüyle açılamıyor"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "<%s> tablosundan veri seçilemiyor"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "<%s> sütunu tamsayı değil"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
@@ -5768,10 +5773,6 @@ msgstr "Muhtemelen program hatası."
 #, fuzzy
 #~ msgid "Fetching data from table <%s> failed"
 #~ msgstr "<%s> tablosundan veri alınamadı"
-
-#, fuzzy
-#~ msgid "Key column type is not integer"
-#~ msgstr "<%s> sütunu tamsayı değil"
 
 #, fuzzy
 #~ msgid ""

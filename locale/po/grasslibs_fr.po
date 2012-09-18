@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2012-02-07 10:49+0100\n"
 "Last-Translator: Vincent Bain <bain@toraval.fr>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -5081,19 +5081,24 @@ msgstr "Impossible de supprimer la table <%s>"
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "Impossible d'ouvrir la base de données <%s> avec le driver <%s>"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr "Nom de colonne manquant"
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr "Nom de colonne clé manquant"
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, fuzzy, c-format
 msgid "Unable select records from table <%s>"
 msgstr "Impossible de supprimer la table <%s>"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "Impossible d'ouvrir la base de données %s"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"

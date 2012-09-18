@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2012-02-04 14:42+0100\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
@@ -323,7 +323,7 @@ msgstr "Rasterkarte <%s> konnte nicht gefunden werden."
 #: ../raster/wildfire/r.ros/main.c:515 ../raster/wildfire/r.ros/main.c:523
 #: ../raster/wildfire/r.ros/main.c:532 ../raster/wildfire/r.ros/main.c:540
 #: ../raster/wildfire/r.ros/main.c:549 ../raster/r.univar2/r.univar_main.c:221
-#: ../raster/r.grow.distance/main.c:177 ../raster/r.out.pov/main.c:178
+#: ../raster/r.grow.distance/main.c:209 ../raster/r.out.pov/main.c:178
 #: ../raster/r.carve/main.c:181 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.null/null.c:324 ../raster/r.surf.idw2/read_cell.c:34
 #: ../raster/r.out.mat/main.c:108 ../raster/r.sunmask/main.c:448
@@ -473,7 +473,7 @@ msgstr "Kann die Header-Datei für <%s> nicht lesen."
 #: ../imagery/i.topo.corr/main.c:58 ../imagery/i.ifft/ifftmain.c:219
 #: ../imagery/i.modis.qc/main.c:235 ../imagery/i.rgb.his/openfiles.c:29
 #: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
-#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:319
+#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:317
 #: ../vector/v.neighbors/main.c:96 ../vector/v.surf.idw/main.c:264
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #, c-format
@@ -555,7 +555,7 @@ msgstr "Mein erstes Vektormodul."
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.correction/main.c:182
 #: ../vector/lidar/v.surf.bspline/main.c:219
-#: ../vector/lidar/v.surf.bspline/main.c:278
+#: ../vector/lidar/v.surf.bspline/main.c:273
 #: ../vector/lidar/v.lidar.growing/main.c:129 ../vector/v.reclass/main.c:107
 #: ../vector/v.out.svg/main.c:127 ../vector/v.normal/main.c:128
 #: ../vector/v.out.ogr/main.c:196 ../vector/v.out.pov/main.c:94
@@ -611,7 +611,7 @@ msgstr "Kann die Vektorkarte <%s> nicht öffnen."
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/lidar/v.surf.bspline/main.c:298
+#: ../vector/lidar/v.surf.bspline/main.c:293
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.spanningtree/main.c:87
 #: ../vector/v.net.allpairs/main.c:116 ../vector/v.net.components/main.c:114
 #: ../vector/v.to.3d/main.c:88 ../vector/v.in.dxf/main.c:168
@@ -631,7 +631,7 @@ msgstr "Kann die Vektorkarte <%s> nicht erzeugen."
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
 #: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
 #: ../vector/v.distance/main.c:395
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:114
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
 #: ../vector/v.reclass/main.c:121 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:46 ../vector/v.to.3d/trans2.c:45
 #: ../vector/v.db.select/main.c:149 ../vector/v.what.rast/main.c:127
@@ -677,8 +677,8 @@ msgstr "Kann den Treiber <%s> nicht starten."
 #: ../vector/v.mkgrid/main.c:237 ../vector/v.net.flow/main.c:157
 #: ../vector/v.buffer/main.c:387 ../vector/v.surf.rst/main.c:607
 #: ../vector/v.transform/trans_digit.c:58
-#: ../vector/lidar/v.surf.bspline/main.c:334
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:335
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:128
 #: ../vector/v.reclass/main.c:126 ../vector/v.net.timetable/main.c:93
 #: ../vector/v.out.svg/main.c:148 ../vector/v.normal/main.c:141
 #: ../vector/v.out.ogr/main.c:634 ../vector/v.patch/main.c:132
@@ -953,7 +953,7 @@ msgid "Suppress printing of header information"
 msgstr "Unterdrücke Headerinformationen"
 
 #: ../raster3d/r3.out.ascii/main.c:107 ../raster3d/r3.to.rast/main.c:90
-#: ../raster3d/r3.cross.rast/main.c:110
+#: ../raster3d/r3.cross.rast/main.c:110 ../raster/r.to.rast3elev/main.c:232
 msgid "Use 3D raster mask (if exists) with input map"
 msgstr "Verwende G3D Maske (falls existent) mit der Eingabekarte"
 
@@ -1487,7 +1487,8 @@ msgid "3D vector map <%s> not found"
 msgstr "3D Vektorkarte <%s> nicht gefunden."
 
 #: ../raster3d/r3.out.vtk/main.c:171
-msgid "Please provide three G3D vector maps [x,y,z]"
+#, fuzzy
+msgid "Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"
 msgstr "Bitte geben Sie drei G3D Vektorkarten an [x,y,z]."
 
 #: ../raster3d/r3.out.vtk/main.c:178
@@ -3828,7 +3829,7 @@ msgstr "Kann die Ausgabedatei nicht öffnen."
 #: ../raster/r.topmodel/main.c:55 ../raster/r.gwflow/main.c:189
 #: ../raster/r.topidx/main.c:37 ../raster/r.fill.dir/main.c:84
 #: ../raster/r.water.outlet/main.c:47 ../raster/r.carve/main.c:77
-#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:148
+#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:150
 #: ../raster/r.flow/calc.c:411
 msgid "raster, hydrology"
 msgstr "Raster, Hydrologie"
@@ -3992,7 +3993,7 @@ msgid "Output values as percentages"
 msgstr "Gebe Prozentwerte aus"
 
 #: ../raster/r.colors.out/main.c:91 ../raster/r.colors/main.c:390
-#: ../raster/r.grow.distance/main.c:322
+#: ../raster/r.grow.distance/main.c:364
 #, c-format
 msgid "Unable to read color table for raster map <%s>"
 msgstr "Kann die Farbtabelle der Rasterkarte <%s> nicht lesen."
@@ -4861,7 +4862,7 @@ msgstr "Kann die temporäre Datei nicht schreiben."
 
 #: ../raster/r.patch/main.c:53 ../raster/r.grow2/main.c:128
 #: ../raster/r.circle/dist.c:51 ../raster/r.digit/main.c:45
-#: ../raster/r.grow.distance/main.c:130
+#: ../raster/r.grow.distance/main.c:148
 msgid "raster, geometry"
 msgstr "Raster, Geometrie"
 
@@ -5133,8 +5134,8 @@ msgstr "Erzeuge einige temporäre Dateien..."
 
 #: ../raster/r.cost/main.c:393 ../raster/r.cost/main.c:620
 #: ../raster/r.series/main.c:214 ../raster/r.colors/stats.c:41
-#: ../raster/r.colors/stats.c:107 ../raster/r.surf.idw2/read_cell.c:38
-#: ../raster/r.surf.idw/main.c:685
+#: ../raster/r.colors/stats.c:107 ../raster/r.grow.distance/main.c:259
+#: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.surf.idw/main.c:685
 #, c-format
 msgid "Reading raster map <%s>..."
 msgstr "Lese Rasterkarte <%s> ..."
@@ -5206,7 +5207,7 @@ msgstr ""
 msgid "Radius of buffer in raster cells"
 msgstr "Radius des Buffers in Rasterzellen."
 
-#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:150
+#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:168
 msgid "Metric"
 msgstr "Metrisch"
 
@@ -5220,7 +5221,7 @@ msgstr ""
 msgid "Value to write for \"grown\" cells"
 msgstr "Wert für die \"gewachsenen\" Zellen."
 
-#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:173
+#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:205
 #, c-format
 msgid "Unknown metric: [%s]."
 msgstr "Unbekannte Maßzahl: [%s]."
@@ -6471,6 +6472,12 @@ msgstr "Es muss für jeden Filter einen Exponenten geben."
 msgid "Must have a weight value for each filter"
 msgstr "Es muss für jeden Filter einen Gewicht geben."
 
+#: ../raster/r.random.surface/init.c:425 ../raster/r.random.cells/init.c:156
+#: ../imagery/i.topo.corr/main.c:52
+#, c-format
+msgid "<%s> is an illegal name"
+msgstr "<%s> ist ein ungültiger Name."
+
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, c-format
 msgid "Unable to write color table for raster map <%s>"
@@ -7535,8 +7542,9 @@ msgid "2d raster maps which represent the slices"
 msgstr "2D-Rasterkarte, die die Schnitte repräsentiert."
 
 #: ../raster/r.to.rast3/main.c:83
-msgid "Use G3D mask (if exists) with output map"
-msgstr "Benutzt G3D Maske (falls existent) für die Ausgabekarte."
+#, fuzzy
+msgid "Use 3D raster mask (if exists) with output map"
+msgstr "Verwende G3D Maske (falls existent) mit der Eingabekarte"
 
 #: ../raster/r.to.rast3/main.c:117
 msgid "Could not get raster row"
@@ -7556,9 +7564,10 @@ msgid "No output map"
 msgstr "Keine Ausgabekarte angegeben."
 
 #: ../raster/r.to.rast3/main.c:222 ../raster/r.to.rast3elev/main.c:462
+#, fuzzy
 msgid ""
-"The 2d and 3d region settings are different. I will use the g3d settings to "
-"adjust the 2d region."
+"The 2D and 3D region settings are different. I will use the 3D region "
+"settings to adjust the 2D region."
 msgstr ""
 "Die 2D und 3D Regions Parameter sind unterschiedlich. Ich werde die G3D "
 "Parameter verwenden, um die 2D Region anzupassen."
@@ -9321,37 +9330,51 @@ msgstr ""
 msgid "Unable to load 3D raster range"
 msgstr "Kann den 3D Raster Wertebereich nicht laden."
 
-#: ../raster/r.grow.distance/main.c:132
+#: ../raster/r.grow.distance/main.c:150
 msgid "Generates a raster map layer of distance to features in input layer."
 msgstr ""
 "Erzeugt eine Rasterkarte mit Distanzen zu Featuren in der Eingabekarte."
 
-#: ../raster/r.grow.distance/main.c:139
+#: ../raster/r.grow.distance/main.c:157
 msgid "Name for distance output map"
 msgstr "Name der Distanz-Ausgabekarte."
 
-#: ../raster/r.grow.distance/main.c:144
+#: ../raster/r.grow.distance/main.c:162
 msgid "Name for value output map"
 msgstr "Name der Wert-Ausgabekarte."
 
-#: ../raster/r.grow.distance/main.c:162
+#: ../raster/r.grow.distance/main.c:174
+#, fuzzy
+msgid "Output distances in meters instead of map units"
+msgstr "Maximale Distanz zwischen den Punkten in Karteneinheiten (map units)."
+
+#: ../raster/r.grow.distance/main.c:184
 msgid "At least one of distance= and value= must be given"
 msgstr "Entweder distance= oder value= muss angegeben werden."
 
-#: ../raster/r.grow.distance/main.c:182
+#: ../raster/r.grow.distance/main.c:199
+msgid "metric=geodesic is only valid for lat/lon"
+msgstr ""
+
+#: ../raster/r.grow.distance/main.c:220
 #, c-format
 msgid "Unable to create distance map <%s>"
 msgstr "Kann die Distanz-Karte <%s> nicht erzeugen."
 
-#: ../raster/r.grow.distance/main.c:188
+#: ../raster/r.grow.distance/main.c:226
 #, c-format
 msgid "Unable to create value map <%s>"
 msgstr "Kann die Wert-Karte <%s> nicht erzeugen."
 
-#: ../raster/r.grow.distance/main.c:194
+#: ../raster/r.grow.distance/main.c:232
 #, c-format
 msgid "Unable to create temporary file <%s>"
 msgstr "Kann die temporäre Datei <%s> nicht erzeugen."
+
+#: ../raster/r.grow.distance/main.c:307
+#, fuzzy
+msgid "Writing output raster maps..."
+msgstr "Schreibe Ausgabe-Rasterkarte %s..."
 
 #: ../raster/r.report/main.c:65
 msgid "Reports statistics for raster map layers."
@@ -11168,11 +11191,6 @@ msgstr ""
 #: ../raster/r.random.cells/init.c:96
 msgid "Distance must be >= 0.0"
 msgstr "Distanz muss >= 0.0 sein."
-
-#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:52
-#, c-format
-msgid "<%s> is an illegal name"
-msgstr "<%s> ist ein ungültiger Name."
 
 #: ../raster/r.random.cells/random.c:51
 #, c-format
@@ -13387,35 +13405,35 @@ msgstr "GDAL-Datentyp: %s, gültiger Wertebereich: %g - %g"
 msgid "Failed writing output raster map row %d"
 msgstr "Schreiben der Zeile <%d> der Rasterkarte fehlgeschlagen."
 
-#: ../raster/r.lake/main.c:149
+#: ../raster/r.lake/main.c:151
 msgid "Fills lake at given point to given level."
 msgstr "Fülle den See vom Startpunkt am definierten Level."
 
-#: ../raster/r.lake/main.c:154
+#: ../raster/r.lake/main.c:156
 msgid "Name of terrain raster map (DEM)"
 msgstr "Name der Terrain Rasterkarte (DEM)."
 
-#: ../raster/r.lake/main.c:161
+#: ../raster/r.lake/main.c:163
 msgid "Water level"
 msgstr "Wasserniveau"
 
-#: ../raster/r.lake/main.c:168
+#: ../raster/r.lake/main.c:170
 msgid "Name for output raster map with lake"
 msgstr "Name der Ausgabe-Rasterkarte mit See."
 
-#: ../raster/r.lake/main.c:175
+#: ../raster/r.lake/main.c:177
 msgid "Seed point coordinates"
 msgstr "Koordinaten der Startpunkte"
 
-#: ../raster/r.lake/main.c:185
+#: ../raster/r.lake/main.c:187
 msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Name der Rasterkarte mit Startpunkten (mindestens eine Zelle > 0)."
 
-#: ../raster/r.lake/main.c:193
+#: ../raster/r.lake/main.c:195
 msgid "Use negative depth values for lake raster map"
 msgstr "Verwende negative Tiefenwerte für die See-Rasterkarte."
 
-#: ../raster/r.lake/main.c:198
+#: ../raster/r.lake/main.c:200
 msgid "Overwrite seed map with result (lake) map"
 msgstr ""
 "Überschreibe die Karte mit Startpunkten mit der resultierenden Seekarte."
@@ -13804,10 +13822,6 @@ msgstr "Verwende die Werte der Eingabekarte, um die oberen Zellen zu füllen."
 msgid "Use the input map values to fill the lower cells"
 msgstr "Verwende die Werte der Eingabekarte, um die unteren Zellen zu füllen."
 
-#: ../raster/r.to.rast3elev/main.c:232
-msgid "Use G3D mask (if exists) with input map"
-msgstr "Benutzt G3D Maske (falls existent) mit der Eingabekarte"
-
 #: ../raster/r.to.rast3elev/main.c:276
 msgid "Could not get raster row from input map"
 msgstr "Konnte die Rasterzeile der Eingabekarte nicht holen."
@@ -13817,7 +13831,8 @@ msgid "Could not get raster row from elev map"
 msgstr "Konnte die Rasterzeile der Karte mit Höhenwerten nicht holen."
 
 #: ../raster/r.to.rast3elev/main.c:326 ../raster/r.to.rast3elev/main.c:360
-msgid "Error writing G3D double data"
+#, fuzzy
+msgid "Error writing 3D raster double data"
 msgstr "Fehler beim Schreiben der G3D double-Daten."
 
 #: ../raster/r.to.rast3elev/main.c:400
@@ -14999,7 +15014,7 @@ msgstr ""
 msgid "Unable to open output signature file '%s'"
 msgstr "Kann die Ausgabe-Signaturdatei '%s' nicht öffnen."
 
-#: ../imagery/i.class/main.c:248
+#: ../imagery/i.class/main.c:249
 msgid ""
 "\n"
 "SEED SIGNATURES"
@@ -17020,7 +17035,7 @@ msgstr "Spaltentyp wird nicht unterstützt (muss 'string' sein)."
 #: ../ps/ps.map/catval.c:67 ../ps/ps.map/catval.c:132
 #: ../ps/ps.map/catval.c:199 ../vector/v.univar/main.c:276
 #: ../vector/v.sample/main.c:185 ../vector/v.buffer/main.c:397
-#: ../vector/lidar/v.surf.bspline/main.c:347 ../vector/v.normal/main.c:154
+#: ../vector/lidar/v.surf.bspline/main.c:348 ../vector/v.normal/main.c:154
 #: ../vector/v.class/main.c:126 ../vector/v.to.rast3/main.c:96
 #: ../vector/v.surf.idw/read_sites.c:52
 msgid "Unable to select data from table"
@@ -23722,8 +23737,8 @@ msgstr "Kann keine Daten der Tabelle <%s> selektieren"
 
 #: ../vector/v.buffer2/main.c:349 ../vector/v.univar/main.c:273
 #: ../vector/v.sample/main.c:266 ../vector/v.buffer/main.c:402
-#: ../vector/lidar/v.surf.bspline/main.c:344
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:133 ../vector/v.class/main.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:345
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:138 ../vector/v.class/main.c:123
 #: ../vector/v.what.rast/main.c:163 ../vector/v.to.rast3/main.c:100
 #: ../vector/v.surf.idw/read_sites.c:49
 msgid "Column type not supported"
@@ -27599,7 +27614,7 @@ msgstr "Kann den Namen des Treibers nicht lesen"
 #: ../vector/lidar/v.lidar.correction/main.c:169
 #: ../vector/lidar/v.lidar.correction/main.c:229
 #: ../vector/lidar/v.surf.bspline/main.c:210
-#: ../vector/lidar/v.surf.bspline/main.c:361
+#: ../vector/lidar/v.surf.bspline/main.c:362
 #: ../vector/lidar/v.lidar.growing/main.c:166
 #, c-format
 msgid "No database connection for driver <%s> is defined. Run db.connect."
@@ -27617,7 +27632,7 @@ msgstr "Alte Hilfstabelle konnte nicht gelöscht werden."
 
 #: ../vector/lidar/v.outlier/main.c:181
 #: ../vector/lidar/v.surf.bspline/main.c:223
-#: ../vector/lidar/v.surf.bspline/main.c:282
+#: ../vector/lidar/v.surf.bspline/main.c:277
 #, c-format
 msgid "Unable to open vector map <%s> at the topological level"
 msgstr "Kann Vektorkarte <%s> nicht im topologischen Modus öffnen"
@@ -27644,7 +27659,7 @@ msgstr "Es war unmöglich die Tabelle <%s> zu erzeugen."
 #: ../vector/lidar/v.outlier/main.c:276
 #: ../vector/lidar/v.lidar.edgedetection/main.c:298
 #: ../vector/lidar/v.lidar.correction/main.c:278
-#: ../vector/lidar/v.surf.bspline/main.c:415
+#: ../vector/lidar/v.surf.bspline/main.c:416
 #, c-format
 msgid "adjusted EW splines %d"
 msgstr "Adjustiere OW Splines %d"
@@ -27652,7 +27667,7 @@ msgstr "Adjustiere OW Splines %d"
 #: ../vector/lidar/v.outlier/main.c:277
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
-#: ../vector/lidar/v.surf.bspline/main.c:416
+#: ../vector/lidar/v.surf.bspline/main.c:417
 #, c-format
 msgid "adjusted NS splines %d"
 msgstr "Adjustiere NS Splines %d"
@@ -27660,7 +27675,7 @@ msgstr "Adjustiere NS Splines %d"
 #: ../vector/lidar/v.outlier/main.c:332
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.correction/main.c:334
-#: ../vector/lidar/v.surf.bspline/main.c:480
+#: ../vector/lidar/v.surf.bspline/main.c:485
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #, c-format
 msgid "subregion %d of %d"
@@ -27679,7 +27694,6 @@ msgstr "Erkennung von Ausreißern"
 #: ../vector/lidar/v.outlier/main.c:423
 #: ../vector/lidar/v.lidar.edgedetection/main.c:460
 #: ../vector/lidar/v.lidar.correction/main.c:429
-#: ../vector/lidar/v.surf.bspline/main.c:681
 msgid "No data within this subregion. Consider changing the spline step."
 msgstr ""
 "Keine Daten in dieser Unterregion. Erwägen Sie die Splineschrittweite zu "
@@ -27688,7 +27702,7 @@ msgstr ""
 #: ../vector/lidar/v.outlier/main.c:433
 #: ../vector/lidar/v.lidar.edgedetection/main.c:470
 #: ../vector/lidar/v.lidar.correction/main.c:440
-#: ../vector/lidar/v.surf.bspline/main.c:703
+#: ../vector/lidar/v.surf.bspline/main.c:731
 msgid "Auxiliar table could not be dropped"
 msgstr "Hilfstabelle konnte nicht gelöscht werden."
 
@@ -27960,21 +27974,12 @@ msgstr "Die Kreuzvalidierung wurde nicht korrekt abgeschlossen."
 msgid "Cross validation finished for sie = %f and sin = %f"
 msgstr "Kreuzvalidierung fertig für sie = %f und sin = %f"
 
-#: ../vector/lidar/v.surf.bspline/main.c:268
-#, c-format
-msgid ""
-"No vector map of sparse points to interpolate was specified. Interpolation "
-"will be done with <%s> vector map"
-msgstr ""
-"Keine Vektorkarte mit wenigen zu interpolierenden Punkten angegeben. Die "
-"Interpolation erfolgt mit der <%s> Vektorkarte"
-
-#: ../vector/lidar/v.surf.bspline/main.c:274
+#: ../vector/lidar/v.surf.bspline/main.c:269
 #, c-format
 msgid "Vector map <%s> of sparse points will be interpolated"
 msgstr "Die Vektorkarte <%s> mit wenigen Punkten wird interpoliert."
 
-#: ../vector/lidar/v.surf.bspline/main.c:290
+#: ../vector/lidar/v.surf.bspline/main.c:285
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. Try with "
@@ -27983,23 +27988,33 @@ msgstr ""
 "Der Treiber <%s> ist leider nicht für die Vektorausgabe in diesem Modul "
 "erlaubt. Versuchen Sie die Rasterausgabe oder einen anderen Treiber."
 
-#: ../vector/lidar/v.surf.bspline/main.c:328
+#: ../vector/lidar/v.surf.bspline/main.c:307
+#, fuzzy, c-format
+msgid "Points in input vector map <%s> will be interpolated"
+msgstr "Die Vektorkarte <%s> mit wenigen Punkten wird interpoliert."
+
+#: ../vector/lidar/v.surf.bspline/main.c:320
+#, fuzzy, c-format
+msgid "Cells for raster map <%s> will be interpolated"
+msgstr "Die Vektorkarte <%s> mit wenigen Punkten wird interpoliert."
+
+#: ../vector/lidar/v.surf.bspline/main.c:329
 msgid "Cannot read field info"
 msgstr "Kann Feld-Information nicht lesen."
 
-#: ../vector/lidar/v.surf.bspline/main.c:349
+#: ../vector/lidar/v.surf.bspline/main.c:350
 #, c-format
 msgid "[%d] records selected from table"
 msgstr "[%d] Datensätze aus der Tabelle selektiert."
 
-#: ../vector/lidar/v.surf.bspline/main.c:368
+#: ../vector/lidar/v.surf.bspline/main.c:369
 #, c-format
 msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr ""
 "Interpolation: Tabellenerzeugung: Es war nicht möglich die Tabelle <%s> zu "
 "erstellen."
 
-#: ../vector/lidar/v.surf.bspline/main.c:391
+#: ../vector/lidar/v.surf.bspline/main.c:392
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
@@ -28007,26 +28022,33 @@ msgstr ""
 "Kann keinen Speicher für Hilfsmatrix reservieren. Erwägen Sie die Auflösung "
 "der Region zu ändern."
 
-#: ../vector/lidar/v.surf.bspline/main.c:568
+#: ../vector/lidar/v.surf.bspline/main.c:590
 #, c-format
 msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "Interpolation: (%d,%d): Kein Eintrag für den Punkt (cat = %d)."
 
-#: ../vector/lidar/v.surf.bspline/main.c:687
+#: ../vector/lidar/v.surf.bspline/main.c:709
+#, fuzzy
+msgid "No data within this subregion. Consider increasing spline step values."
+msgstr ""
+"Keine Daten in dieser Unterregion. Erwägen Sie die Splineschrittweite zu "
+"ändern."
+
+#: ../vector/lidar/v.surf.bspline/main.c:715
 msgid "Writing output..."
 msgstr "Schreibe Ausgabe..."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:77
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:80
 #, c-format
 msgid "%d are too many points. The cross validation would take too much time."
 msgstr "%d sind zu viele Punkte. Die Kreuzvalidierung würde zu lange dauern."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:86
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:89
 #, c-format
 msgid "%d points read in region"
 msgstr "%d Punkte in der Region gelesen"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:90
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:93
 msgid ""
 "Maybe, it takes too long. It will depend on how many points you are "
 "considering."
@@ -28034,17 +28056,17 @@ msgstr ""
 "Vielleicht dauert es zu lange. Es hängt davon ab wieviel Punkte Sie erwägen "
 "zu verwenden."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:124
 #, c-format
 msgid "CrossCorrelation: driver=%s db=%s"
 msgstr "Kreuzvalidierung: Treiber=%s db=%s"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:136
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:141
 #, c-format
 msgid "No records selected from table <%s> "
 msgstr "Keine Datensätze in der Tabelle <%s> selektiert."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:151
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:156
 #, c-format
 msgid ""
 "Too many splines (%d x %d). Consider changing spline steps \"sie=\" \"sin=\"."
@@ -28052,28 +28074,28 @@ msgstr ""
 "Zu viele Splines (%d x %d). Erwägen Sie die Splineschrittweite (\"sie=\" "
 "\"sin=\") zu ändern."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:169
-#, c-format
-msgid "Beginning cross validation with lambda_i=%.4f..."
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:174
+#, fuzzy, c-format
+msgid "Beginning cross validation with lambda_i=%.4f ... (%d of %d)"
 msgstr "Beginne die Kreuzvalidierung mit lambda_i=%.4f..."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:219
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:225
 #: ../vector/v.surf.idw/read_sites.c:86
 #, c-format
 msgid "No record for point (cat = %d)"
 msgstr "Kein Eintrag für Punkt (cat = %d)."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:289
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:300
 #, c-format
 msgid "Mean = %.5lf"
 msgstr "Mittelwert = %.5lf"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:290
-#, c-format
-msgid "Root Means Square (RMS) = %.5lf"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:301
+#, fuzzy, c-format
+msgid "Root Mean Square (RMS) = %.5lf"
 msgstr "Root Means Square (RMS) = %.5lf"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:306
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 msgid ""
 "Different number of splines and lambda_i values have been taken for the "
 "cross correlation"
@@ -28081,27 +28103,24 @@ msgstr ""
 "Eine unterschiedliche Anzahl von Splines und lambda_i-Werten wurde für die "
 "Kreuzvalidierung angegeben."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:308
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:320
 #, c-format
 msgid ""
 "The minimum value for the test (rms=%lf) was obtained with: lambda_i = %.3f"
 msgstr ""
 "Der Minimalwert für den Test (rms=%lf) wurde erreicht mit: lambda_i = %.3f"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:316
-msgid "Results into a table:"
-msgstr "Nun, -husch husch- die Ergebnisse in eine Tabelle:"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:328
+#, fuzzy
+msgid "Table of results:"
+msgstr "Tabellenformat"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:317
-msgid " lambda    | mean        | rms         |"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:329
+#, fuzzy, c-format
+msgid "    lambda |       mean |        rms |\n"
 msgstr " lambda    | Mittelwert  | rms         |"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:319
-#, c-format
-msgid " %-10.5f| %-12.4f| %-12.4f|"
-msgstr " %-10.5f| %-12.4f| %-12.4f|"
-
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:327
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:339
 msgid "No point lies into the current region"
 msgstr "Keine Punkte in der aktuellen Region."
 
@@ -34384,6 +34403,25 @@ msgstr "Name der Rasterkarte die über das Relief drapiertwird."
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
 msgid "Percent to brighten"
 msgstr "Prozentuale Aufhellung."
+
+#~ msgid "Use G3D mask (if exists) with output map"
+#~ msgstr "Benutzt G3D Maske (falls existent) für die Ausgabekarte."
+
+#~ msgid "Use G3D mask (if exists) with input map"
+#~ msgstr "Benutzt G3D Maske (falls existent) mit der Eingabekarte"
+
+#~ msgid ""
+#~ "No vector map of sparse points to interpolate was specified. "
+#~ "Interpolation will be done with <%s> vector map"
+#~ msgstr ""
+#~ "Keine Vektorkarte mit wenigen zu interpolierenden Punkten angegeben. Die "
+#~ "Interpolation erfolgt mit der <%s> Vektorkarte"
+
+#~ msgid "Results into a table:"
+#~ msgstr "Nun, -husch husch- die Ergebnisse in eine Tabelle:"
+
+#~ msgid " %-10.5f| %-12.4f| %-12.4f|"
+#~ msgstr " %-10.5f| %-12.4f| %-12.4f|"
 
 #~ msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
 #~ msgstr "Inkonsistente Attributanzahl (<%s/%s> %d: <%s> %d."

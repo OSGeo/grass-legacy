@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:45+0200\n"
+"POT-Creation-Date: 2012-09-18 23:29+0200\n"
 "PO-Revision-Date: 2010-03-07 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -335,7 +335,7 @@ msgstr "Rastrová mapa <%s> nenalezena"
 #: ../raster/wildfire/r.ros/main.c:515 ../raster/wildfire/r.ros/main.c:523
 #: ../raster/wildfire/r.ros/main.c:532 ../raster/wildfire/r.ros/main.c:540
 #: ../raster/wildfire/r.ros/main.c:549 ../raster/r.univar2/r.univar_main.c:221
-#: ../raster/r.grow.distance/main.c:177 ../raster/r.out.pov/main.c:178
+#: ../raster/r.grow.distance/main.c:209 ../raster/r.out.pov/main.c:178
 #: ../raster/r.carve/main.c:181 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.null/null.c:324 ../raster/r.surf.idw2/read_cell.c:34
 #: ../raster/r.out.mat/main.c:108 ../raster/r.sunmask/main.c:448
@@ -485,7 +485,7 @@ msgstr "Nelze číst hlavičku souboru <%s>"
 #: ../imagery/i.topo.corr/main.c:58 ../imagery/i.ifft/ifftmain.c:219
 #: ../imagery/i.modis.qc/main.c:235 ../imagery/i.rgb.his/openfiles.c:29
 #: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
-#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:319
+#: ../vector/v.kernel/main.c:327 ../vector/lidar/v.surf.bspline/main.c:317
 #: ../vector/v.neighbors/main.c:96 ../vector/v.surf.idw/main.c:264
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #, c-format
@@ -567,7 +567,7 @@ msgstr "Můj první modul pro zpracování vektorových dat"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.correction/main.c:182
 #: ../vector/lidar/v.surf.bspline/main.c:219
-#: ../vector/lidar/v.surf.bspline/main.c:278
+#: ../vector/lidar/v.surf.bspline/main.c:273
 #: ../vector/lidar/v.lidar.growing/main.c:129 ../vector/v.reclass/main.c:107
 #: ../vector/v.out.svg/main.c:127 ../vector/v.normal/main.c:128
 #: ../vector/v.out.ogr/main.c:196 ../vector/v.out.pov/main.c:94
@@ -623,7 +623,7 @@ msgstr "Nelze otevřít vektorovou mapu <%s>"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/lidar/v.surf.bspline/main.c:298
+#: ../vector/lidar/v.surf.bspline/main.c:293
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.spanningtree/main.c:87
 #: ../vector/v.net.allpairs/main.c:116 ../vector/v.net.components/main.c:114
 #: ../vector/v.to.3d/main.c:88 ../vector/v.in.dxf/main.c:168
@@ -643,7 +643,7 @@ msgstr "Nelze vytvořit vektorovou mapu <%s>"
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
 #: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
 #: ../vector/v.distance/main.c:395
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:114
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
 #: ../vector/v.reclass/main.c:121 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:46 ../vector/v.to.3d/trans2.c:45
 #: ../vector/v.db.select/main.c:149 ../vector/v.what.rast/main.c:127
@@ -689,8 +689,8 @@ msgstr "Nelze spustit ovladač <%s>"
 #: ../vector/v.mkgrid/main.c:237 ../vector/v.net.flow/main.c:157
 #: ../vector/v.buffer/main.c:387 ../vector/v.surf.rst/main.c:607
 #: ../vector/v.transform/trans_digit.c:58
-#: ../vector/lidar/v.surf.bspline/main.c:334
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:335
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:128
 #: ../vector/v.reclass/main.c:126 ../vector/v.net.timetable/main.c:93
 #: ../vector/v.out.svg/main.c:148 ../vector/v.normal/main.c:141
 #: ../vector/v.out.ogr/main.c:634 ../vector/v.patch/main.c:132
@@ -967,7 +967,7 @@ msgid "Suppress printing of header information"
 msgstr "Potlač výpis informací z hlavičky"
 
 #: ../raster3d/r3.out.ascii/main.c:107 ../raster3d/r3.to.rast/main.c:90
-#: ../raster3d/r3.cross.rast/main.c:110
+#: ../raster3d/r3.cross.rast/main.c:110 ../raster/r.to.rast3elev/main.c:232
 #, fuzzy
 msgid "Use 3D raster mask (if exists) with input map"
 msgstr "Použít masku G3D (pokud existuje) s vstupní mapou"
@@ -1524,7 +1524,7 @@ msgstr "Vektorová mapa <%s> nebyla nalezena"
 
 #: ../raster3d/r3.out.vtk/main.c:171
 #, fuzzy
-msgid "Please provide three G3D vector maps [x,y,z]"
+msgid "Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"
 msgstr "Prosím zadejte tři g3d vektory [x,y,z]"
 
 #: ../raster3d/r3.out.vtk/main.c:178
@@ -3875,7 +3875,7 @@ msgstr "Nelze otevřít výstupní soubor."
 #: ../raster/r.topmodel/main.c:55 ../raster/r.gwflow/main.c:189
 #: ../raster/r.topidx/main.c:37 ../raster/r.fill.dir/main.c:84
 #: ../raster/r.water.outlet/main.c:47 ../raster/r.carve/main.c:77
-#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:148
+#: ../raster/r.basins.fill/main.c:53 ../raster/r.lake/main.c:150
 #: ../raster/r.flow/calc.c:411
 #, fuzzy
 msgid "raster, hydrology"
@@ -4035,7 +4035,7 @@ msgid "Output values as percentages"
 msgstr "Název výstupní tabulky"
 
 #: ../raster/r.colors.out/main.c:91 ../raster/r.colors/main.c:390
-#: ../raster/r.grow.distance/main.c:322
+#: ../raster/r.grow.distance/main.c:364
 #, c-format
 msgid "Unable to read color table for raster map <%s>"
 msgstr "Nelze načíst tabulku barev pro rastrovou mapu <%s>"
@@ -4894,7 +4894,7 @@ msgstr "Nelze zapisovat do dočasného souboru"
 
 #: ../raster/r.patch/main.c:53 ../raster/r.grow2/main.c:128
 #: ../raster/r.circle/dist.c:51 ../raster/r.digit/main.c:45
-#: ../raster/r.grow.distance/main.c:130
+#: ../raster/r.grow.distance/main.c:148
 #, fuzzy
 msgid "raster, geometry"
 msgstr "rastr, mapová algebra"
@@ -5165,8 +5165,8 @@ msgstr "Vytvářím nějaké dočasné soubory..."
 
 #: ../raster/r.cost/main.c:393 ../raster/r.cost/main.c:620
 #: ../raster/r.series/main.c:214 ../raster/r.colors/stats.c:41
-#: ../raster/r.colors/stats.c:107 ../raster/r.surf.idw2/read_cell.c:38
-#: ../raster/r.surf.idw/main.c:685
+#: ../raster/r.colors/stats.c:107 ../raster/r.grow.distance/main.c:259
+#: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.surf.idw/main.c:685
 #, c-format
 msgid "Reading raster map <%s>..."
 msgstr "Načítám rastrový soubor <%s>..."
@@ -5236,7 +5236,7 @@ msgstr "Vytvoří rastrovou spojitých oblastí zvětšených o jednu buňku."
 msgid "Radius of buffer in raster cells"
 msgstr "Poloměr obalové zóny (bufferu) v počtu buněk"
 
-#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:150
+#: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:168
 msgid "Metric"
 msgstr "Metrický"
 
@@ -5250,7 +5250,7 @@ msgstr ""
 msgid "Value to write for \"grown\" cells"
 msgstr "Hodnota, která bude přiřazena buňkám \"grown\""
 
-#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:173
+#: ../raster/r.grow2/main.c:199 ../raster/r.grow.distance/main.c:205
 #, c-format
 msgid "Unknown metric: [%s]."
 msgstr "Neznámá metrika: [%s]."
@@ -6499,6 +6499,12 @@ msgstr ""
 msgid "Must have a weight value for each filter"
 msgstr ""
 
+#: ../raster/r.random.surface/init.c:425 ../raster/r.random.cells/init.c:156
+#: ../imagery/i.topo.corr/main.c:52
+#, fuzzy, c-format
+msgid "<%s> is an illegal name"
+msgstr "<%s> je neplatné jméno souboru"
+
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, c-format
 msgid "Unable to write color table for raster map <%s>"
@@ -7560,8 +7566,9 @@ msgid "2d raster maps which represent the slices"
 msgstr "2d rastrové mapy představující pláty"
 
 #: ../raster/r.to.rast3/main.c:83
-msgid "Use G3D mask (if exists) with output map"
-msgstr "Použít masku G3D (pokud existuje) s výstupní mapovou vrstvou"
+#, fuzzy
+msgid "Use 3D raster mask (if exists) with output map"
+msgstr "Použít masku G3D (pokud existuje) s vstupní mapou"
 
 #: ../raster/r.to.rast3/main.c:117
 msgid "Could not get raster row"
@@ -7580,9 +7587,10 @@ msgid "No output map"
 msgstr "Žádné výstupní mapy"
 
 #: ../raster/r.to.rast3/main.c:222 ../raster/r.to.rast3elev/main.c:462
+#, fuzzy
 msgid ""
-"The 2d and 3d region settings are different. I will use the g3d settings to "
-"adjust the 2d region."
+"The 2D and 3D region settings are different. I will use the 3D region "
+"settings to adjust the 2D region."
 msgstr ""
 "2d a 3d nastavení regionu jsou různá. Použiji hodnoty z nastavení g3d a "
 "přenastavím 2d region."
@@ -9326,36 +9334,50 @@ msgstr "Spočítá základní statistiku z ne NULLových 3d buněk 3d rastrové 
 msgid "Unable to load 3D raster range"
 msgstr "Nelze momentálně číst rastrovou mapu."
 
-#: ../raster/r.grow.distance/main.c:132
+#: ../raster/r.grow.distance/main.c:150
 msgid "Generates a raster map layer of distance to features in input layer."
 msgstr "Vytvoří rastrovou mapu se vzdáleností k prvkům ve vstupní vrstvě."
 
-#: ../raster/r.grow.distance/main.c:139
+#: ../raster/r.grow.distance/main.c:157
 msgid "Name for distance output map"
 msgstr "Jméno výstupní vrstvy se vzdáleností"
 
-#: ../raster/r.grow.distance/main.c:144
+#: ../raster/r.grow.distance/main.c:162
 msgid "Name for value output map"
 msgstr "Jméno pro hodnotu výstupní mapy"
 
-#: ../raster/r.grow.distance/main.c:162
+#: ../raster/r.grow.distance/main.c:174
+#, fuzzy
+msgid "Output distances in meters instead of map units"
+msgstr "Maximální vzdálenost mezi body v jednotkách mapy."
+
+#: ../raster/r.grow.distance/main.c:184
 msgid "At least one of distance= and value= must be given"
 msgstr "Nejméně jedna z voleb distance= a hodnota= musí být zadána"
 
-#: ../raster/r.grow.distance/main.c:182
+#: ../raster/r.grow.distance/main.c:199
+msgid "metric=geodesic is only valid for lat/lon"
+msgstr ""
+
+#: ../raster/r.grow.distance/main.c:220
 #, c-format
 msgid "Unable to create distance map <%s>"
 msgstr "Nelze vytvořit mapu vzdáleností <%s>"
 
-#: ../raster/r.grow.distance/main.c:188
+#: ../raster/r.grow.distance/main.c:226
 #, c-format
 msgid "Unable to create value map <%s>"
 msgstr "Nelze vytvořit mapou hodnot <%s>"
 
-#: ../raster/r.grow.distance/main.c:194
+#: ../raster/r.grow.distance/main.c:232
 #, c-format
 msgid "Unable to create temporary file <%s>"
 msgstr "Nelze zapisovat do dočasného souboru <%s>"
+
+#: ../raster/r.grow.distance/main.c:307
+#, fuzzy
+msgid "Writing output raster maps..."
+msgstr "Zapisuji výslednou rastrovou mapu %s... "
 
 #: ../raster/r.report/main.c:65
 msgid "Reports statistics for raster map layers."
@@ -11195,11 +11217,6 @@ msgstr ""
 #, fuzzy
 msgid "Distance must be >= 0.0"
 msgstr "'layer' musí být . 0 pro 'where'"
-
-#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:52
-#, fuzzy, c-format
-msgid "<%s> is an illegal name"
-msgstr "<%s> je neplatné jméno souboru"
 
 #: ../raster/r.random.cells/random.c:51
 #, fuzzy, c-format
@@ -13385,35 +13402,35 @@ msgstr ""
 msgid "Failed writing output raster map row %d"
 msgstr "Chyba při zápisu řádku rastrové mapy %d"
 
-#: ../raster/r.lake/main.c:149
+#: ../raster/r.lake/main.c:151
 msgid "Fills lake at given point to given level."
 msgstr "Vytvoří jezero ze zadaného bodu dané hloubky"
 
-#: ../raster/r.lake/main.c:154
+#: ../raster/r.lake/main.c:156
 msgid "Name of terrain raster map (DEM)"
 msgstr "Jméno rastrové mapy obsahující výšky (DMT)"
 
-#: ../raster/r.lake/main.c:161
+#: ../raster/r.lake/main.c:163
 msgid "Water level"
 msgstr "Úroveň hladiny"
 
-#: ../raster/r.lake/main.c:168
+#: ../raster/r.lake/main.c:170
 msgid "Name for output raster map with lake"
 msgstr "Název výstupní rastrové mapy s jezery"
 
-#: ../raster/r.lake/main.c:175
+#: ../raster/r.lake/main.c:177
 msgid "Seed point coordinates"
 msgstr "Počáteční mapové souřadnice"
 
-#: ../raster/r.lake/main.c:185
+#: ../raster/r.lake/main.c:187
 msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 msgstr "Rastrová mapa s počátkem (alespoň jedna buňka > 0)"
 
-#: ../raster/r.lake/main.c:193
+#: ../raster/r.lake/main.c:195
 msgid "Use negative depth values for lake raster map"
 msgstr "Použij negativní hodnoty pro hloubku jezera"
 
-#: ../raster/r.lake/main.c:198
+#: ../raster/r.lake/main.c:200
 msgid "Overwrite seed map with result (lake) map"
 msgstr "Přepiš počáteční mapu výslednou mapou (jezerem)"
 
@@ -13783,10 +13800,6 @@ msgstr "Použij hodnoty mapy pro výplň svrchních buněk"
 msgid "Use the input map values to fill the lower cells"
 msgstr "Použij hodnoty mapy pro výplň spodních buněk"
 
-#: ../raster/r.to.rast3elev/main.c:232
-msgid "Use G3D mask (if exists) with input map"
-msgstr "Použít masku G3D (pokud existuje) s vstupní mapou"
-
 #: ../raster/r.to.rast3elev/main.c:276
 msgid "Could not get raster row from input map"
 msgstr "Nelze získat řádek rastru z vstupní vrstvy"
@@ -13796,7 +13809,8 @@ msgid "Could not get raster row from elev map"
 msgstr "Nelze získat řádek rastru z výškového modelu"
 
 #: ../raster/r.to.rast3elev/main.c:326 ../raster/r.to.rast3elev/main.c:360
-msgid "Error writing G3D double data"
+#, fuzzy
+msgid "Error writing 3D raster double data"
 msgstr "Chyba při zápisu G3D dat s plovoucí desetinnou čárkou"
 
 #: ../raster/r.to.rast3elev/main.c:400
@@ -14970,7 +14984,7 @@ msgstr ""
 msgid "Unable to open output signature file '%s'"
 msgstr "Nelze otevřít výstupní soubor se signaturami <%s>"
 
-#: ../imagery/i.class/main.c:248
+#: ../imagery/i.class/main.c:249
 msgid ""
 "\n"
 "SEED SIGNATURES"
@@ -16989,7 +17003,7 @@ msgstr "Typ sloupce není podporován (musí být string)"
 #: ../ps/ps.map/catval.c:67 ../ps/ps.map/catval.c:132
 #: ../ps/ps.map/catval.c:199 ../vector/v.univar/main.c:276
 #: ../vector/v.sample/main.c:185 ../vector/v.buffer/main.c:397
-#: ../vector/lidar/v.surf.bspline/main.c:347 ../vector/v.normal/main.c:154
+#: ../vector/lidar/v.surf.bspline/main.c:348 ../vector/v.normal/main.c:154
 #: ../vector/v.class/main.c:126 ../vector/v.to.rast3/main.c:96
 #: ../vector/v.surf.idw/read_sites.c:52
 msgid "Unable to select data from table"
@@ -23756,8 +23770,8 @@ msgstr "Nelze vybrat data z tabulky <%s>"
 
 #: ../vector/v.buffer2/main.c:349 ../vector/v.univar/main.c:273
 #: ../vector/v.sample/main.c:266 ../vector/v.buffer/main.c:402
-#: ../vector/lidar/v.surf.bspline/main.c:344
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:133 ../vector/v.class/main.c:123
+#: ../vector/lidar/v.surf.bspline/main.c:345
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:138 ../vector/v.class/main.c:123
 #: ../vector/v.what.rast/main.c:163 ../vector/v.to.rast3/main.c:100
 #: ../vector/v.surf.idw/read_sites.c:49
 msgid "Column type not supported"
@@ -27599,7 +27613,7 @@ msgstr "Nelze číst jméno ovladače"
 #: ../vector/lidar/v.lidar.correction/main.c:169
 #: ../vector/lidar/v.lidar.correction/main.c:229
 #: ../vector/lidar/v.surf.bspline/main.c:210
-#: ../vector/lidar/v.surf.bspline/main.c:361
+#: ../vector/lidar/v.surf.bspline/main.c:362
 #: ../vector/lidar/v.lidar.growing/main.c:166
 #, c-format
 msgid "No database connection for driver <%s> is defined. Run db.connect."
@@ -27616,7 +27630,7 @@ msgstr "Nemohla být odstraněna pomocná tabulka"
 
 #: ../vector/lidar/v.outlier/main.c:181
 #: ../vector/lidar/v.surf.bspline/main.c:223
-#: ../vector/lidar/v.surf.bspline/main.c:282
+#: ../vector/lidar/v.surf.bspline/main.c:277
 #, c-format
 msgid "Unable to open vector map <%s> at the topological level"
 msgstr "Vektorová mapa <%s> nemohla být otevřena na úrovní topologie"
@@ -27643,7 +27657,7 @@ msgstr "Nebylo možné vytvořit tabulku <%s>"
 #: ../vector/lidar/v.outlier/main.c:276
 #: ../vector/lidar/v.lidar.edgedetection/main.c:298
 #: ../vector/lidar/v.lidar.correction/main.c:278
-#: ../vector/lidar/v.surf.bspline/main.c:415
+#: ../vector/lidar/v.surf.bspline/main.c:416
 #, c-format
 msgid "adjusted EW splines %d"
 msgstr "Upravené V-Z křivky %d"
@@ -27651,7 +27665,7 @@ msgstr "Upravené V-Z křivky %d"
 #: ../vector/lidar/v.outlier/main.c:277
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
-#: ../vector/lidar/v.surf.bspline/main.c:416
+#: ../vector/lidar/v.surf.bspline/main.c:417
 #, c-format
 msgid "adjusted NS splines %d"
 msgstr "Upravené S-J křivky %d"
@@ -27659,7 +27673,7 @@ msgstr "Upravené S-J křivky %d"
 #: ../vector/lidar/v.outlier/main.c:332
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.correction/main.c:334
-#: ../vector/lidar/v.surf.bspline/main.c:480
+#: ../vector/lidar/v.surf.bspline/main.c:485
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #, c-format
 msgid "subregion %d of %d"
@@ -27678,14 +27692,13 @@ msgstr "Zjištění bodů mimo region"
 #: ../vector/lidar/v.outlier/main.c:423
 #: ../vector/lidar/v.lidar.edgedetection/main.c:460
 #: ../vector/lidar/v.lidar.correction/main.c:429
-#: ../vector/lidar/v.surf.bspline/main.c:681
 msgid "No data within this subregion. Consider changing the spline step."
 msgstr "Subregion neosahuje žádná data. zvaže změnu kroku křivosti"
 
 #: ../vector/lidar/v.outlier/main.c:433
 #: ../vector/lidar/v.lidar.edgedetection/main.c:470
 #: ../vector/lidar/v.lidar.correction/main.c:440
-#: ../vector/lidar/v.surf.bspline/main.c:703
+#: ../vector/lidar/v.surf.bspline/main.c:731
 msgid "Auxiliar table could not be dropped"
 msgstr "Nemohla být odstraněna pomocná tabulka"
 
@@ -27949,21 +27962,12 @@ msgstr "Křížová validace nebyla správně ukončena"
 msgid "Cross validation finished for sie = %f and sin = %f"
 msgstr "Křížová validace skončila pro sie = %f a pro sin = %f"
 
-#: ../vector/lidar/v.surf.bspline/main.c:268
-#, c-format
-msgid ""
-"No vector map of sparse points to interpolate was specified. Interpolation "
-"will be done with <%s> vector map"
-msgstr ""
-"Žádná vektorová mapa pro interpolaci. Interpolace bude aplikována na "
-"vektorové mapě <%s>"
-
-#: ../vector/lidar/v.surf.bspline/main.c:274
+#: ../vector/lidar/v.surf.bspline/main.c:269
 #, c-format
 msgid "Vector map <%s> of sparse points will be interpolated"
 msgstr "vektorová mapa <%s> bude interpolována"
 
-#: ../vector/lidar/v.surf.bspline/main.c:290
+#: ../vector/lidar/v.surf.bspline/main.c:285
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. Try with "
@@ -27972,119 +27976,131 @@ msgstr ""
 "Promiňte, ovladač <%s> není pro vektorový výstup tohoto modul povolen. "
 "Vyzkoušejte rastrový výstup nebo jiný ovladač."
 
-#: ../vector/lidar/v.surf.bspline/main.c:328
+#: ../vector/lidar/v.surf.bspline/main.c:307
+#, fuzzy, c-format
+msgid "Points in input vector map <%s> will be interpolated"
+msgstr "vektorová mapa <%s> bude interpolována"
+
+#: ../vector/lidar/v.surf.bspline/main.c:320
+#, fuzzy, c-format
+msgid "Cells for raster map <%s> will be interpolated"
+msgstr "vektorová mapa <%s> bude interpolována"
+
+#: ../vector/lidar/v.surf.bspline/main.c:329
 msgid "Cannot read field info"
 msgstr "Nelze číst informace o vrstvě"
 
-#: ../vector/lidar/v.surf.bspline/main.c:349
+#: ../vector/lidar/v.surf.bspline/main.c:350
 #, c-format
 msgid "[%d] records selected from table"
 msgstr "[%d] záznamů bylo vybráno z tabulky"
 
-#: ../vector/lidar/v.surf.bspline/main.c:368
+#: ../vector/lidar/v.surf.bspline/main.c:369
 #, c-format
 msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr "Interpolation: Vytvářím tabulku: Nebylo možno vytvořit tabulku <%s>."
 
-#: ../vector/lidar/v.surf.bspline/main.c:391
+#: ../vector/lidar/v.surf.bspline/main.c:392
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
 msgstr ""
 "Nelze alokovat paměŤ pro podpůrnou matici. Zvažuji změnu rozlišení regionu "
 
-#: ../vector/lidar/v.surf.bspline/main.c:568
+#: ../vector/lidar/v.surf.bspline/main.c:590
 #, c-format
 msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "Interpolation: (%d,%d): Pro bod (cat = %d) žádný záznam nenalezen"
 
-#: ../vector/lidar/v.surf.bspline/main.c:687
+#: ../vector/lidar/v.surf.bspline/main.c:709
+#, fuzzy
+msgid "No data within this subregion. Consider increasing spline step values."
+msgstr "Subregion neosahuje žádná data. zvaže změnu kroku křivosti"
+
+#: ../vector/lidar/v.surf.bspline/main.c:715
 msgid "Writing output..."
 msgstr "Zapisuji výstupní vrstvu..."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:77
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:80
 #, c-format
 msgid "%d are too many points. The cross validation would take too much time."
 msgstr ""
 "%d je příliš mnoho bodů. Křížová validace by zabrala příliš mnoho času."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:86
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:89
 #, c-format
 msgid "%d points read in region"
 msgstr "%d bodů načteno v regionu"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:90
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:93
 msgid ""
 "Maybe, it takes too long. It will depend on how many points you are "
 "considering."
 msgstr ""
 "Možná to bude trvat déle, v závislosti na počtu bodů, které zpracováváte."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:119
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:124
 #, c-format
 msgid "CrossCorrelation: driver=%s db=%s"
 msgstr "CrossCorrelation: ovladač=%s db=%s"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:136
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:141
 #, c-format
 msgid "No records selected from table <%s> "
 msgstr "Žádný záznam nebyl vybrán z tabulky <%s> "
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:151
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:156
 #, c-format
 msgid ""
 "Too many splines (%d x %d). Consider changing spline steps \"sie=\" \"sin=\"."
 msgstr ""
 "Příliš mnoho splinů (%d x %d). Zvažte změnu kroku splinů \"sie=\" \"sin=\"."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:169
-#, c-format
-msgid "Beginning cross validation with lambda_i=%.4f..."
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:174
+#, fuzzy, c-format
+msgid "Beginning cross validation with lambda_i=%.4f ... (%d of %d)"
 msgstr "Začínám křížovou validaci s lambda_i=%.4f ..."
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:219
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:225
 #: ../vector/v.surf.idw/read_sites.c:86
 #, c-format
 msgid "No record for point (cat = %d)"
 msgstr "Pro bod nebyl nalezen záznam (cat = %d)"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:289
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:300
 #, c-format
 msgid "Mean = %.5lf"
 msgstr "Průměr = %.5lf"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:290
-#, c-format
-msgid "Root Means Square (RMS) = %.5lf"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:301
+#, fuzzy, c-format
+msgid "Root Mean Square (RMS) = %.5lf"
 msgstr "Root Means Square (RMS) = %.5lf"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:306
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 msgid ""
 "Different number of splines and lambda_i values have been taken for the "
 "cross correlation"
 msgstr ""
 "Pro křížovou validaci byly použity různé počty splinů a hodnot lambda_i"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:308
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:320
 #, c-format
 msgid ""
 "The minimum value for the test (rms=%lf) was obtained with: lambda_i = %.3f"
 msgstr "Minimální hodnota pro test (rms=%lf) byla odvozena s: lambda_i = %.3f"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:316
-msgid "Results into a table:"
-msgstr "Výsledky do tabulky:"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:328
+#, fuzzy
+msgid "Table of results:"
+msgstr "Formát"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:317
-msgid " lambda    | mean        | rms         |"
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:329
+#, fuzzy, c-format
+msgid "    lambda |       mean |        rms |\n"
 msgstr " lambda    | průměr (m)  |rms (m)     |"
 
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:319
-#, c-format
-msgid " %-10.5f| %-12.4f| %-12.4f|"
-msgstr " %-10.5f| %-12.4f| %-12.4f|"
-
-#: ../vector/lidar/v.surf.bspline/crosscorr.c:327
+#: ../vector/lidar/v.surf.bspline/crosscorr.c:339
 msgid "No point lies into the current region"
 msgstr "Žádný bod neleží v daném regionu"
 
@@ -34415,6 +34431,25 @@ msgstr "Název rastrové mapy pro vložení do skupiny"
 #, fuzzy
 msgid "Percent to brighten"
 msgstr "Procentuální konvergence"
+
+#~ msgid "Use G3D mask (if exists) with output map"
+#~ msgstr "Použít masku G3D (pokud existuje) s výstupní mapovou vrstvou"
+
+#~ msgid "Use G3D mask (if exists) with input map"
+#~ msgstr "Použít masku G3D (pokud existuje) s vstupní mapou"
+
+#~ msgid ""
+#~ "No vector map of sparse points to interpolate was specified. "
+#~ "Interpolation will be done with <%s> vector map"
+#~ msgstr ""
+#~ "Žádná vektorová mapa pro interpolaci. Interpolace bude aplikována na "
+#~ "vektorové mapě <%s>"
+
+#~ msgid "Results into a table:"
+#~ msgstr "Výsledky do tabulky:"
+
+#~ msgid " %-10.5f| %-12.4f| %-12.4f|"
+#~ msgstr " %-10.5f| %-12.4f| %-12.4f|"
 
 #~ msgid "Title, in quotes"
 #~ msgstr "Titulek v uvozovkách"
