@@ -181,36 +181,27 @@ class VirtualAttributeList(wx.ListCtrl,
         # TODO: more effective way should be implemented...
         outFile = tempfile.NamedTemporaryFile(mode = 'w+b')
         
+        cmdParams = dict(quiet = True,
+                         parent = self,
+                         flags = 'c')
+        if sys.platform != "win32":
+            cmdParams.update(dict(fs = fs))
+
         if sql:
+            cmdParams.update(dict(sql = sql,
+                                  output = outFile.name))
             ret = RunCommand('db.select',
-                             quiet = True,
-                             parent = self,
-                             flags = 'c',
-                             fs = fs,
-                             sql = sql,
-                             output = outFile.name)
+                             **cmdParams)
         else:
+            cmdParams.update(dict(map = self.mapDBInfo.map,
+                                  layer = layer,
+                                  where = where,
+                                  stdout = outFile))
             if columns:
-                ret = RunCommand('v.db.select',
-                                 quiet = True,
-                                 parent = self,
-                                 flags = 'c',
-                                 map = self.mapDBInfo.map,
-                                 layer = layer,
-                                 columns = ','.join(columns),
-                                 fs = fs,
-                                 where = where,
-                                 stdout = outFile)
-            else:
-                ret = RunCommand('v.db.select',
-                                 quiet = True,
-                                 parent = self,
-                                 flags = 'c',
-                                 map = self.mapDBInfo.map,
-                                 layer = layer,
-                                 fs = fs,
-                                 where = where,
-                                 stdout = outFile) 
+                cmdParams.update(dict(columns = ','.join(columns)))
+
+            ret = RunCommand('v.db.select',
+                             **cmdParams)
         
         # These two should probably be passed to init more cleanly
         # setting the numbers of items = number of elements in the dictionary
