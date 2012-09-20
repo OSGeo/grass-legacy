@@ -24580,7 +24580,7 @@ msgid "[%d] points - too many records found"
 msgstr "[%d] точек - слишком много записей"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr "Создать линейную систему координат"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -24746,7 +24746,7 @@ msgid "Building topology for error (err) map..."
 msgstr "Построение топологии для слоя ошибок (err) ..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr "Создать станции из исходных линий и линейную систему координат"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111

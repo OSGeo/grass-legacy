@@ -25322,7 +25322,7 @@ msgid "[%d] points - too many records found"
 msgstr "%d pontos fora da região atual."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -25496,7 +25496,7 @@ msgid "Building topology for error (err) map..."
 msgstr "Lendo arquivo dig_att...\n"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111

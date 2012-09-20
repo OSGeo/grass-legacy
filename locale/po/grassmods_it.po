@@ -23721,7 +23721,7 @@ msgid "[%d] points - too many records found"
 msgstr "[%d] punti - trovati troppi record"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr "Crea sistema di riferimento lineare"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -23886,7 +23886,7 @@ msgstr ""
 "Costruzione della topologia per la mappa degli errori (err) in corso..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr " Crea dislocazioni da linee, e il sistema di riferimento lineare"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111

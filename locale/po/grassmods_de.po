@@ -24597,8 +24597,8 @@ msgid "[%d] points - too many records found"
 msgstr "[%d] Punkte - zu viele Einträge gefunden."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
-msgstr "Erzeuge Linearesreferenzsystem"
+msgid "Creates Linear Reference System"
+msgstr "Erzeugt Lineares Referenzsystem"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
 msgid "Output vector map where oriented lines are written"
@@ -24773,7 +24773,7 @@ msgid "Building topology for error (err) map..."
 msgstr "Erstelle Topologie für Fehlerkarte (err)..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr ""
 "Erzeuge Stationen auf Basis der Eingabelinien und dem Linearenreferenzsystem."
 
