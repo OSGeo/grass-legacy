@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = _("Create stationing from input lines, "
+    module->description = _("Creates stationing from input lines, "
 			    "and linear reference system");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);

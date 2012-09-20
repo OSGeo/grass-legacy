@@ -24316,10 +24316,10 @@ msgstr "[%d] puntos - ningún registro encontrado"
 #: ../vector/v.lrs/v.lrs.where/main.c:227
 #, c-format
 msgid "[%d] points - too many records found"
-msgstr "[%d]puntos - demasiados registros encontrados"
+msgstr "[%d] puntos - demasiados registros encontrados"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr "Crear Sistema de Referencia Lineal (LRS)"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -24496,7 +24496,7 @@ msgstr "Construyendo topología para el mapa de errores (err)..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
 #, fuzzy
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr "líneas"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111

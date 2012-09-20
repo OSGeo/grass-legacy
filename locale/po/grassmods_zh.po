@@ -24112,7 +24112,7 @@ msgid "[%d] points - too many records found"
 msgstr "%d 个点在当前范围之外，将被忽略"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -24286,7 +24286,7 @@ msgid "Building topology for error (err) map..."
 msgstr "矢量文件读取错误"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111

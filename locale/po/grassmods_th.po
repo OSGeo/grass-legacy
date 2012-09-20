@@ -23960,7 +23960,7 @@ msgid "[%d] points - too many records found"
 msgstr "[%d] จุด - พบข้อมูลมากเกินไป"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-msgid "Create Linear Reference System"
+msgid "Creates Linear Reference System"
 msgstr "สร้าง ระบบการอ้างอิงตำแหน่งเชิงเส้น"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
@@ -24122,7 +24122,7 @@ msgid "Building topology for error (err) map..."
 msgstr "สร้าง  topology สำหรับ แผนที่ข้อผิดพลาด ..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:103
-msgid "Create stationing from input lines, and linear reference system"
+msgid "Creates stationing from input lines, and linear reference system"
 msgstr "สร้าง  stationing จาก เส้นที่นำเข้า, และ ระบบอ้างอิงเชิงเส้น"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:111
