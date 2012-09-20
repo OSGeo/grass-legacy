@@ -1734,9 +1734,8 @@ msgid "Vertical exaggeration"
 msgstr "Pionowy współczynnik skali"
 
 #: ../misc/m.nviz.image/args.c:503
-#, fuzzy
 msgid "Focus to point on surface (from SW corner in map units)"
-msgstr "Szerokość strefy w jednostkach mapy"
+msgstr ""
 
 #: ../misc/m.nviz.image/args.c:513 ../misc/m.nviz.image/args.c:548
 #: ../misc/m.nviz.image/args.c:560 ../misc/m.nviz.image/args.c:570
@@ -1805,12 +1804,14 @@ msgid "Volume slice position"
 msgstr "Położenie linii wektorowych"
 
 #: ../misc/m.nviz.image/args.c:655
+#, fuzzy
 msgid "Volume slice transparency"
-msgstr ""
+msgstr "Położenie linii wektorowych"
 
 #: ../misc/m.nviz.image/args.c:671
+#, fuzzy
 msgid "Cutting plane index (0-5)"
-msgstr ""
+msgstr "Oblicza biny"
 
 #: ../misc/m.nviz.image/args.c:672 ../misc/m.nviz.image/args.c:681
 #: ../misc/m.nviz.image/args.c:690 ../misc/m.nviz.image/args.c:701
@@ -1829,12 +1830,14 @@ msgid "Cutting plane rotation along the vertical axis"
 msgstr ""
 
 #: ../misc/m.nviz.image/args.c:702
+#, fuzzy
 msgid "Cutting plane tilt"
-msgstr ""
+msgstr "Oblicza biny"
 
 #: ../misc/m.nviz.image/args.c:713
+#, fuzzy
 msgid "Cutting plane color (between two surfaces)"
-msgstr ""
+msgstr "Współrzędne początku i końca"
 
 #: ../misc/m.nviz.image/args.c:727
 msgid "Light position (x,y,z model coordinates)"
@@ -13755,7 +13758,7 @@ msgstr ""
 #: ../imagery/i.landsat.acca/algorithm.c:186
 #, fuzzy
 msgid "Maximum temperature:"
-msgstr "Obiekty"
+msgstr "temperatura"
 
 #: ../imagery/i.landsat.acca/algorithm.c:187
 #, c-format
@@ -13923,11 +13926,12 @@ msgstr ""
 #: ../imagery/i.landsat.toar/main.c:127
 #, fuzzy
 msgid "Solar elevation in degrees"
-msgstr "Nazwa pliku rastrowego mapy wysokości"
+msgstr "Kąt głównej osi w stopniach"
 
 #: ../imagery/i.landsat.toar/main.c:136
+#, fuzzy
 msgid "Image creation date (yyyy-mm-dd)"
-msgstr ""
+msgstr "Niedozwolony format daty: [%s] (rrrr-mm-dd)"
 
 #: ../imagery/i.landsat.toar/main.c:145
 msgid "Gain (H/L) of all Landsat ETM+ bands (1-5,61,62,7,8)"
@@ -13963,9 +13967,8 @@ msgid "Illegal date format: [%s] (yyyy-mm-dd)"
 msgstr "Niedozwolony format daty: [%s] (rrrr-mm-dd)"
 
 #: ../imagery/i.landsat.toar/main.c:241
-#, fuzzy
 msgid "Failed to identify satellite"
-msgstr "Nie można wyznaczyć stref buforowych dla rastra."
+msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:250
 #, c-format
@@ -14931,9 +14934,8 @@ msgid "Extracts quality control parameters from Modis QC layers."
 msgstr "Ekstrachuje parametry terenu z DEM."
 
 #: ../imagery/i.modis.qc/main.c:98
-#, fuzzy
 msgid "Name of input surface reflectance QC layer [bit array]"
-msgstr "Nazwa warstwy rastrowej powierzchni fraktalnej"
+msgstr ""
 
 #: ../imagery/i.modis.qc/main.c:103
 #, fuzzy
@@ -18303,7 +18305,7 @@ msgstr "Kolor obramowania "
 
 #: ../display/d.grid/main.c:101
 msgid "Font size for gridline coordinate labels"
-msgstr ""
+msgstr "Rozmiar czcionki współrzędnych opisujących siatkę"
 
 #: ../display/d.grid/main.c:106
 msgid "Draw geographic grid (referenced to current ellipsoid)"
@@ -22930,11 +22932,11 @@ msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
 msgid "Creates Linear Reference System"
-msgstr "Utwórz Linear Reference System"
+msgstr "Tworzy liniowy system odniesienia"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
 msgid "Output vector map where oriented lines are written"
-msgstr "Wyjściowa mapawektorowa gdzie zapisano linie"
+msgstr "Wyjściowa mapa wektorowa, gdzie zapisano linie"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:135
 msgid "Output vector map of errors"
@@ -24356,7 +24358,7 @@ msgstr "wektor do usunięcia"
 
 #: ../vector/v.extract/main.c:93
 msgid "Selects vector objects from an existing vector map and creates a new map containing only the selected objects."
-msgstr ""
+msgstr "Wybiera obiekty wektorowe i tworzy nową mapę zawierającą wybrane obiekty."
 
 #: ../vector/v.extract/main.c:98
 msgid "Dissolve common boundaries (default is no)"
@@ -27488,7 +27490,7 @@ msgstr "wektor, zapytania przestrzenne"
 
 #: ../vector/v.select/main.c:54
 msgid "Selects features from vector map (A) by features from other vector map (B)."
-msgstr ""
+msgstr "Wybiera obiekty z mapy wektorowej (A) obiektami z innej mapy wektorowej (B)."
 
 #: ../vector/v.select/main.c:87
 msgid "Unknown operator"
@@ -36069,6 +36071,14 @@ msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double) 
 msgid "Name of raster map with seed (at least 1 cell > 0)"
 msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 komórka >0)"
 
+#, fuzzy
+msgid "Root Means Square (RMS) = %.5lf"
+msgstr "Wyświetl ustawienia bieżącego regionu"
+
+#, fuzzy
+msgid " lambda    | mean        | rms         |"
+msgstr "Zakres:     min         max\n"
+
 #~ msgid "Title, in quotes"
 #~ msgstr "Tytuł, w cudzysłowiu"
 
@@ -36452,14 +36462,6 @@ msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 kom
 #~ msgid "Create a new vector from the current region."
 #~ msgstr "Twórz nowy wektor dla zasięgu bieżącego regionu."
 
-#, fuzzy
-#~ msgid "Root Means Square (RMS) = %.5lf"
-#~ msgstr "Wyświetl ustawienia bieżącego regionu"
-
-#, fuzzy
-#~ msgid " lambda    | mean        | rms         |"
-#~ msgstr "Zakres:     min         max\n"
-
 #~ msgid "Area without centroid (may be OK for island)"
 #~ msgstr "Obszar bez centroidu (może być OK dla wysp)"
 
@@ -36489,3 +36491,23 @@ msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 kom
 
 #~ msgid "4th map for mosaic."
 #~ msgstr "Czwarta mapa do mozaiki."
+
+#, fuzzy
+#~ msgid "Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"
+#~ msgstr "Proszę podać 3 mapy wektorowe 3D [x,y,z]"
+
+#, fuzzy
+#~ msgid "Use 3D raster mask (if exists) with output map"
+#~ msgstr "Użyj maski 3D (jeżeli istnieje) dla mapy wejściowej"
+
+#, fuzzy
+#~ msgid "The 2D and 3D region settings are different. I will use the 3D region settings to adjust the 2D region."
+#~ msgstr "Ustawienia regionu 2D i 3D różnią się. Region 2D zostanie dostosowany do ustawień regionu 3D"
+
+#, fuzzy
+#~ msgid "Writing output raster maps..."
+#~ msgstr "Zapis wyjściowej mapy rastrowej %s..."
+
+#, fuzzy
+#~ msgid "Error writing 3D raster double data"
+#~ msgstr "błąd podczas odczytu danych rastrowych"
