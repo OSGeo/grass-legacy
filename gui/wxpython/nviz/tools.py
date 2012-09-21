@@ -539,9 +539,9 @@ class NvizToolWindow(FN.FlatNotebook):
 
         
         # surface page
-        self.surfacePanel = self.foldpanelData.AddFoldPanel(_("Surface"), collapsed = False)
-        self.foldpanelData.AddFoldPanelWindow(self.surfacePanel, 
-            window = self._createSurfacePage(parent = self.surfacePanel), flags = fpb.FPB_ALIGN_WIDTH)
+        surfacePanel = self.foldpanelData.AddFoldPanel(_("Surface"), collapsed = False)
+        self.foldpanelData.AddFoldPanelWindow(surfacePanel, 
+            window = self._createSurfacePage(parent = surfacePanel), flags = fpb.FPB_ALIGN_WIDTH)
         self.EnablePage("surface", enabled = False)
         
         # constant page
@@ -886,8 +886,6 @@ class NvizToolWindow(FN.FlatNotebook):
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.ALL | wx.EXPAND, border = 3)
-        box.SetSizer(boxSizer)
-        box.Layout()
         
         pageSizer.Add(item = boxSizer, proportion = 1,
                       flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
