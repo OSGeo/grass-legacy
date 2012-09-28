@@ -83,10 +83,6 @@ double total_size = 0.0;	/* total size: length/area */
 /* Extended statistics */
 int perc;
 
-static void select_from_geometry(void);
-static void select_from_database(void);
-static void summary(void);
-
 int main(int argc, char *argv[])
 {
     struct GModule *module;
@@ -144,7 +140,11 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    /* Only require col_opt answer if -g flag is not set */
+    if (geometry->answer)
+	G_fatal_error(_("The '-%c' flag is currently broken, please use v.distance instead."),
+	              geometry->key);
+
+    /* Only require col_opt answer if -d flag is not set */
     if (!col_opt->answer && !geometry->answer) {
 	G_fatal_error(_("Required parameter <%s> not set:\n\t(%s)"), col_opt->key, col_opt->description);
     }
@@ -228,7 +228,8 @@ static void select_from_geometry(void)
     count = 0;
 
     nlines = Vect_get_num_primitives(&Map, otype);
-    /* Start calculating the statistics based on distance to all other primitives.
+    /* this does not make sense:
+     * Start calculating the statistics based on distance to all other primitives.
        Use the centroid of areas and the first point of lines */
     for (i = 1; i <= nlines; i++) {
 
@@ -249,6 +250,9 @@ static void select_from_geometry(void)
 	    if (!ok)
 	        continue;
 	}
+	/* starting from i + 1 is wrong because with
+	 * 1--2----3
+	 * the nearest feature of 2 would be 3 */
 	for (j = i + 1; j < nlines; j++) {
 	    /* get distance to this object */
 	    double val = 0.0;
@@ -257,6 +261,8 @@ static void select_from_geometry(void)
 
 	    if (!(type & otype))
 		continue;
+		
+	    /* where opt is missing here */
 
 	    /* now calculate the min distance between each point in line i with line j */
 	    for (k = 0; k < iPoints->n_points; k++) {
@@ -291,6 +297,7 @@ static void select_from_geometry(void)
 	    count++;
 	    G_debug(3, "i=%d j=%d sum = %f val=%f", i, j, sum, val);
 	}
+	/* areas are missing in case of otype & GV_AREAS */
     }
 }
 
