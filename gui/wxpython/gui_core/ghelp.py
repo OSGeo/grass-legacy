@@ -388,7 +388,7 @@ class AboutWindow(wx.Frame):
         
         # icon
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
-
+        
         # get version and web site
         vInfo = grass.version()
         
@@ -425,7 +425,7 @@ class AboutWindow(wx.Frame):
 
         row += 2
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('SVN Revision:')),
+                                               label = '%s:' % _('SVN Revision')),
                           pos = (row, 0),
                           flag = wx.ALIGN_RIGHT)
         
@@ -436,7 +436,7 @@ class AboutWindow(wx.Frame):
         
         row += 1
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('GIS Library Revision:')),
+                                               label = '%s:' % _('GIS Library Revision')),
                           pos = (row, 0),
                           flag = wx.ALIGN_RIGHT)
         
@@ -448,7 +448,7 @@ class AboutWindow(wx.Frame):
 
         row += 2
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('Python:')),
+                                               label = 'Python:'),
                           pos = (row, 0),
                           flag = wx.ALIGN_RIGHT)
         
@@ -459,7 +459,7 @@ class AboutWindow(wx.Frame):
 
         row += 1
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('wxPython:')),
+                                               label =  'wxPython:'),
                           pos = (row, 0),
                           flag = wx.ALIGN_RIGHT)
         
@@ -474,7 +474,7 @@ class AboutWindow(wx.Frame):
         
         row += 2
         infoGridSizer.Add(item = wx.StaticText(parent = infoTxt, id = wx.ID_ANY,
-                                               label = _('Language:')),
+                                               label = "%s:" % _('Language')),
                           pos = (row, 0),
                           flag = wx.ALIGN_RIGHT)
         lang = grass.gisenv().get('LANG', None)
