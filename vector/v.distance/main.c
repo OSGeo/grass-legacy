@@ -96,9 +96,9 @@ int main(int argc, char *argv[])
     dbString stmt, dbstr;
     dbDriver *driver, *to_driver;
     int *catexist, ncatexist, *cex;
-    char buf1[2000], buf2[2000];
+    char buf1[2000], buf2[2000], to_attr_sqltype[256];
     int update_ok, update_err, update_exist, update_notexist, update_dupl,
-	update_notfound;
+	update_notfound, sqltype;
     struct ilist *List;
     BOUND_BOX box;
     dbCatValArray cvarr;
@@ -401,9 +401,17 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			  toFi->database, toFi->driver);
 
-	/* check if to_column exists */
+	/* check if to_column exists and get its SQL type */
 	db_get_column(to_driver, toFi->table, to_column_opt->answer, &column);
 	if (column) {
+            sqltype = db_get_column_sqltype(column); 
+	    switch(sqltype) { 
+		case DB_SQL_TYPE_CHARACTER: 
+		    sprintf(to_attr_sqltype, "VARCHAR(%d)", db_get_column_length(column)); 
+		    break; 
+		default: 
+		    sprintf(to_attr_sqltype, "%s", db_sqltype_name(sqltype)); 
+	    }
 	    db_free_column(column);
 	    column = NULL;
 	}
@@ -813,6 +821,9 @@ int main(int argc, char *argv[])
 	    case TO_ALONG:
 	    case TO_ANGLE:
 		sprintf(buf2, "%s double precision", Upload[j].column);
+                break; 
+	    case TO_ATTR: 
+		sprintf(buf2, "%s %s", Upload[j].column, to_attr_sqltype);
 	    }
 	    db_append_string(&stmt, buf2);
 	    j++;
