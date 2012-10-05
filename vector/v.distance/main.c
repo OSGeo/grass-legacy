@@ -71,8 +71,8 @@ static int print_upload(NEAR *, UPLOAD *, int, dbCatValArray *, dbCatVal *);
 int main(int argc, char *argv[])
 {
     int i, j, k;
-    int print_as_matrix;	/* only for all */
-    int all;			/* calculate from each to each within the threshold */
+    int print_as_matrix;	/* only for do_all=TRUE */
+    int do_all;			/* calculate from each to each within the threshold */
     char *mapset;
     struct GModule *module;
     struct Option *from_opt, *to_opt, *from_type_opt, *to_type_opt,
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     struct line_pnts *FPoints, *TPoints;
     struct line_cats *FCats, *TCats;
     NEAR *Near, *near;
-    int anear;			/* allocated space, used only for all */
+    int anear;			/* allocated space, used only for do_all */
     UPLOAD *Upload;		/* zero terminated */
     int ftype, fcat, tcat, count;
     int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
@@ -96,16 +96,16 @@ int main(int argc, char *argv[])
     dbString stmt, dbstr;
     dbDriver *driver, *to_driver;
     int *catexist, ncatexist, *cex;
-    char buf1[2000], buf2[2000];
+    char buf1[2000], buf2[2000], to_attr_sqltype[256];
     int update_ok, update_err, update_exist, update_notexist, update_dupl,
-	update_notfound;
+	update_notfound, sqltype;
     struct ilist *List;
     BOUND_BOX box;
     dbCatValArray cvarr;
     dbColumn *column;
 
-    all = 0;
-    print_as_matrix = 0;
+    do_all = FALSE;
+    print_as_matrix = FALSE;
     column = NULL;
 
     G_gisinit(argv[0]);
@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
     min = atof(min_opt->answer);
 
     if (all_flag->answer)
-	all = 1;
+	do_all = TRUE;
 
     /* Read upload and column options */
     /* count */
@@ -249,8 +249,8 @@ int main(int argc, char *argv[])
     while (upload_opt->answers[i])
 	i++;
     if (strcmp(from_opt->answer, to_opt->answer) == 0 &&
-	all && !table_opt->answer && i == 1)
-	print_as_matrix = 1;
+	do_all && !table_opt->answer && i == 1)
+	print_as_matrix = TRUE;
 
     /* alloc */
     Upload = (UPLOAD *) G_calloc(i + 1, sizeof(UPLOAD));
@@ -353,7 +353,7 @@ int main(int argc, char *argv[])
     driver = NULL;
     if (!print_flag->answer) {
 
-	if (!all) {
+	if (!do_all) {
 	    Fi = Vect_get_field(&From, from_field);
 	    if (Fi == NULL)
 		G_fatal_error(_("Database connection not defined for layer %d"),
@@ -401,9 +401,17 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			  toFi->database, toFi->driver);
 
-	/* check if to_column exists */
+	/* check if to_column exists and get its SQL type */
 	db_get_column(to_driver, toFi->table, to_column_opt->answer, &column);
 	if (column) {
+            sqltype = db_get_column_sqltype(column); 
+	    switch(sqltype) { 
+		case DB_SQL_TYPE_CHARACTER: 
+		    sprintf(to_attr_sqltype, "VARCHAR(%d)", db_get_column_length(column)); 
+		    break; 
+		default: 
+		    sprintf(to_attr_sqltype, "%s", db_sqltype_name(sqltype)); 
+	    }
 	    db_free_column(column);
 	    column = NULL;
 	}
@@ -413,7 +421,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Check column types */
-	if (!print_flag->answer && !all) {
+	if (!print_flag->answer && !do_all) {
 	    char *fcname = NULL;
 	    int fctype, tctype;
 
@@ -455,8 +463,8 @@ int main(int argc, char *argv[])
     /* Allocate space ( may be more than needed (duplicate cats and elements without cats) ) */
     nfrom = Vect_get_num_lines(&From);
     nto = Vect_get_num_lines(&To);
-    if (all) {
-	/* Attention with space for all, it can easily run out of memory */
+    if (do_all) {
+	/* Be careful with do_all, it can easily run out of memory */
 	anear = 2 * nfrom;
 	Near = (NEAR *) G_calloc(anear, sizeof(NEAR));
     }
@@ -465,7 +473,7 @@ int main(int argc, char *argv[])
     }
 
     /* Read all cats from 'from' */
-    if (!all) {
+    if (!do_all) {
 	nfcats = 0;
 	for (i = 1; i <= nfrom; i++) {
 	    ftype = Vect_read_line(&From, NULL, FCats, i);
@@ -502,7 +510,7 @@ int main(int argc, char *argv[])
     /* Go through all lines in 'from' and find nearest in 'to' for each */
     /* Note: as from_type is restricted to GV_POINTS (for now) everything is simple */
 
-    count = 0;			/* count of distances in 'all' mode */
+    count = 0;			/* count of distances in 'do_all' mode */
     /* Find nearest lines */
     if (to_type & (GV_POINTS | GV_LINES)) {
 	struct line_pnts *LLPoints;
@@ -525,7 +533,7 @@ int main(int argc, char *argv[])
 		continue;
 
 	    Vect_cat_get(FCats, from_field, &fcat);
-	    if (fcat < 0 && !all)
+	    if (fcat < 0 && !do_all)
 		continue;
 
 	    box.E = FPoints->x[0] + max;
@@ -575,7 +583,7 @@ int main(int argc, char *argv[])
 		G_debug(4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist,
 			tmp_tcat);
 
-		if (all) {
+		if (do_all) {
 		    if (anear <= count) {
 			anear += 10 + nfrom / 10;
 			Near = (NEAR *) G_realloc(Near, anear * sizeof(NEAR));
@@ -612,7 +620,7 @@ int main(int argc, char *argv[])
 	    }
 
 	    G_debug(4, "  dist = %f", dist);
-	    if (!all && tline > 0) {
+	    if (!do_all && tline > 0) {
 		/* find near by cat */
 		near =
 		    (NEAR *) bsearch((void *)&fcat, Near, nfcats,
@@ -652,7 +660,7 @@ int main(int argc, char *argv[])
 		continue;
 
 	    Vect_cat_get(FCats, from_field, &fcat);
-	    if (fcat < 0 && !all)
+	    if (fcat < 0 && !do_all)
 		continue;
 
 	    /* select areas by box */
@@ -724,7 +732,7 @@ int main(int argc, char *argv[])
 		G_debug(4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist,
 			tmp_tcat);
 
-		if (all) {
+		if (do_all) {
 		    if (anear <= count) {
 			anear += 10 + nfrom / 10;
 			Near = (NEAR *) G_realloc(Near, anear * sizeof(NEAR));
@@ -753,7 +761,7 @@ int main(int argc, char *argv[])
 		}
 	    }
 
-	    if (!all && tarea > 0) {
+	    if (!do_all && tarea > 0) {
 		/* find near by cat */
 		near =
 		    (NEAR *) bsearch((void *)&fcat, Near, nfcats,
@@ -782,7 +790,7 @@ int main(int argc, char *argv[])
     /* Update database / print to stdout / create output map */
     if (print_flag->answer) {	/* print header */
 	fprintf(stdout, "from_cat");
-	if (all)
+	if (do_all)
 	    fprintf(stdout, "|to_cat");
 	i = 0;
 	while (Upload[i].upload != END) {
@@ -791,7 +799,7 @@ int main(int argc, char *argv[])
 	}
 	fprintf(stdout, "\n");
     }
-    else if (all && table_opt->answer) {	/* create new table */
+    else if (do_all && table_opt->answer) {	/* create new table */
 	db_set_string(&stmt, "create table ");
 	db_append_string(&stmt, table_opt->answer);
 	db_append_string(&stmt, " (from_cat integer");
@@ -813,6 +821,9 @@ int main(int argc, char *argv[])
 	    case TO_ALONG:
 	    case TO_ANGLE:
 		sprintf(buf2, "%s double precision", Upload[j].column);
+                break; 
+	    case TO_ATTR: 
+		sprintf(buf2, "%s %s", Upload[j].column, to_attr_sqltype);
 	    }
 	    db_append_string(&stmt, buf2);
 	    j++;
@@ -830,7 +841,7 @@ int main(int argc, char *argv[])
 			  table_opt->answer);
 
     }
-    else if (!all) {		/* read existing cats from table */
+    else if (!do_all) {		/* read existing cats from table */
 	ncatexist =
 	    db_select_int(driver, Fi->table, Fi->key, NULL, &catexist);
 	G_debug(1, "%d cats selected from the table", ncatexist);
@@ -838,7 +849,7 @@ int main(int argc, char *argv[])
     update_ok = update_err = update_exist = update_notexist = update_dupl =
 	update_notfound = 0;
 
-    if (!all) {
+    if (!do_all) {
 	count = nfcats;
     }
     else {
@@ -892,7 +903,7 @@ int main(int argc, char *argv[])
 	    db_CatValArray_get_value(&cvarr, Near[i].to_cat, &catval);
 	}
 
-	if (print_flag->answer || (all && !table_opt->answer)) {	/* print only */
+	if (print_flag->answer || (do_all && !table_opt->answer)) {	/* print only */
 	    /*
 	       input and output is the same &&
 	       calculate distances &&
@@ -918,13 +929,13 @@ int main(int argc, char *argv[])
 	    }
 	    else {
 		fprintf(stdout, "%d", Near[i].from_cat);
-		if (all)
+		if (do_all)
 		    fprintf(stdout, "|%d", Near[i].to_cat);
 		print_upload(Near, Upload, i, &cvarr, catval);
 		fprintf(stdout, "\n");
 	    }
 	}
-	else if (all) {		/* insert new record */
+	else if (do_all) {		/* insert new record */
 	    sprintf(buf1, "insert into %s values ( %d ", table_opt->answer,
 		    Near[i].from_cat);
 	    db_set_string(&stmt, buf1);
@@ -1120,13 +1131,13 @@ int main(int argc, char *argv[])
 	db_free_string(&stmt);
 
 	/* print stats */
-	if (all && table_opt->answer) {
+	if (do_all && table_opt->answer) {
 	    G_message(_("%d distances calculated"), count);
 	    G_message(_("%d records inserted"), update_ok);
 	    if (update_err > 0)
 		G_message(_("%d insert errors"), update_err);
 	}
-	else if (!all) {
+	else if (!do_all) {
 	    if (nfcats > 0)
 		G_message(_("%d categories read from the map"), nfcats);
 	    if (ncatexist > 0)
