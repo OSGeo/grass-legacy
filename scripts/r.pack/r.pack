@@ -52,9 +52,9 @@ if [ -z "`which gzip`" ] ; then
 fi
 
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
-   outfile="$GIS_OPT_OUTPUT"
+   outfile="`echo $GIS_OPT_OUTPUT | cut -d'@' -f1`"
 else
-   outfile="$GIS_OPT_INPUT.pack"
+   outfile="`echo $GIS_OPT_INPUT | cut -d'@' -f1`.pack"
 fi
 
 #be overly helpful
@@ -87,16 +87,17 @@ fi
 BASEDIR=`echo "$file" | sed -e 's+/cell/.*$++'`
 OLDDIR=`pwd`
 
-
+# strip off mapset to remove fully qualified input
+GIS_OPT_INPUT="`echo $GIS_OPT_INPUT | cut -d'@' -f1`"
 for ELEMENT in cats cell cellhd colr fcell grid3 hist ; do
     if [ -e "$BASEDIR/$ELEMENT/$GIS_OPT_INPUT" ] ; then
-	cp "$BASEDIR/$ELEMENT/$name" "$TMP_DIR/$ELEMENT"
+	cp "$BASEDIR/$ELEMENT/$GIS_OPT_INPUT" "$TMP_DIR/$ELEMENT"
     fi
 done
 
 if [ -d "$BASEDIR/cell_misc/$GIS_OPT_INPUT/" ] ; then
     mkdir "$TMP_DIR/cell_misc/"
-    cp "$BASEDIR/cell_misc/$name/"* "$TMP_DIR/cell_misc/"
+    cp "$BASEDIR/cell_misc/$GIS_OPT_INPUT/"* "$TMP_DIR/cell_misc/"
 fi
 
 
