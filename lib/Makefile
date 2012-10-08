@@ -35,7 +35,8 @@ SUBDIRS = \
 	init \
 	cdhc \
 	stats \
-	arraystats
+	arraystats \
+	python
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
@@ -55,11 +56,6 @@ endif
 #compile if C++ compiler present:
 ifneq ($(strip $(CXX)),)
     SUBDIRS += iostream
-endif
-
-#compile if python present:
-ifneq ($(USE_PYTHON),)
-    SUBDIRS += python
 endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
