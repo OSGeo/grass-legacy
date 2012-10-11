@@ -870,8 +870,11 @@
 	  </items>
 	</menu>
 	<separator />
+	<menu>
+          <label>Addons extensions</label>
+          <items>
 	    <menuitem>
-	      <label>Install extension from add-ons</label>
+	      <label>Install extension from addons</label>
 	      <help>Installs new extension from GRASS AddOns SVN repository.</help>
 	      <keywords>general,extensions</keywords>
 	      <handler>OnInstallExtension</handler>
@@ -891,6 +894,8 @@
 	      <handler>OnUninstallExtension</handler>
 	      <command>g.extension</command>
 	    </menuitem>
+	  </items>
+	</menu>
 	<separator />
 	<menuitem>
 	  <label>Preferences</label>
