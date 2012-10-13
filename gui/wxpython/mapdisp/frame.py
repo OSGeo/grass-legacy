@@ -265,10 +265,11 @@ class MapFrame(MapFrameBase):
             return
         
         # disable 3D mode for other displays
-        for page in range(0, self._layerManager.gm_cb.GetPageCount()):
-            if self._layerManager.gm_cb.GetPage(page) != self._layerManager.curr_page:
-                if '3D' in self._layerManager.gm_cb.GetPage(page).maptree.mapdisplay.toolbars['map'].combo.GetString(1):
-                    self._layerManager.gm_cb.GetPage(page).maptree.mapdisplay.toolbars['map'].combo.Delete(1)
+        for page in range(0, self._layerManager.GetLayerNotebook().GetPageCount()):
+            mapdisp = self._layerManager.GetLayerNotebook().GetPage(page).maptree.GetMapDisplay()
+            if self._layerManager.GetLayerNotebook().GetPage(page) != self._layerManager.currentPage:
+                if '3D' in mapdisp.toolbars['map'].combo.GetString(1):
+                    mapdisp.toolbars['map'].combo.Delete(1)
         self.toolbars['map'].Enable2D(False)
         # add rotate tool to map toolbar
         self.toolbars['map'].InsertTool((('rotate', NvizIcons['rotate'],
@@ -335,8 +336,12 @@ class MapFrame(MapFrameBase):
     
     def RemoveNviz(self):
         """!Restore 2D view"""
-        self.toolbars['map'].RemoveTool(self.toolbars['map'].rotate)
-        self.toolbars['map'].RemoveTool(self.toolbars['map'].flyThrough)
+        try:
+            self.toolbars['map'].RemoveTool(self.toolbars['map'].rotate)
+            self.toolbars['map'].RemoveTool(self.toolbars['map'].flyThrough)
+        except AttributeError:
+            pass
+        
         # update status bar
         self.statusbarManager.ShowStatusbarChoiceItemsByClass(self.statusbarItemsHiddenInNviz)
         self.statusbarManager.SetMode(UserSettings.Get(group = 'display',
@@ -345,7 +350,8 @@ class MapFrame(MapFrameBase):
         self.SetStatusText(_("Please wait, unloading data..."), 0)
         self._layerManager.goutput.WriteCmdLog(_("Switching back to 2D view mode..."),
                                                switchPage = False)
-        self.MapWindow3D.OnClose(event = None)
+        if self.MapWindow3D:
+            self.MapWindow3D.OnClose(event = None)
         # switch from MapWindowGL to MapWindow
         self._mgr.GetPane('2d').Show()
         self._mgr.GetPane('3d').Hide()
@@ -353,9 +359,11 @@ class MapFrame(MapFrameBase):
         self.MapWindow = self.MapWindow2D
         # remove nviz notebook page
         self._layerManager.RemoveNvizTools()
-        
-        self.MapWindow2D.overlays = self.MapWindow3D.overlays
-        self.MapWindow2D.textdict = self.MapWindow3D.textdict
+        try:
+            self.MapWindow2D.overlays = self.MapWindow3D.overlays
+            self.MapWindow2D.textdict = self.MapWindow3D.textdict
+        except AttributeError:
+            pass
         self.MapWindow.UpdateMap()
         self._mgr.Update()
         
@@ -430,7 +438,7 @@ class MapFrame(MapFrameBase):
             pgnum = self.layerbook.GetPageIndex(self.page)
             if pgnum > -1:
                 self.layerbook.SetSelection(pgnum)
-                self._layerManager.curr_page = self.layerbook.GetCurrentPage()
+                self._layerManager.currentPage = self.layerbook.GetCurrentPage()
         
         event.Skip()
         

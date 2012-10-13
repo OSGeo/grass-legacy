@@ -551,7 +551,7 @@ class AttributeManager(wx.Frame):
         self.treeItem   = item   # item in layer tree
         if self.parent and self.parent.GetName() == "LayerManager" and \
                 self.treeItem and not self.vectorName:
-            maptree = self.parent.curr_page.maptree
+            maptree = self.parent.GetLayerTree()
             name = maptree.GetPyData(self.treeItem)[0]['maplayer'].GetName()
             self.vectorName = name
         

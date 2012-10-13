@@ -1621,7 +1621,7 @@ class ImportDialog(wx.Dialog):
             return
         
         self.commandId += 1
-        maptree = self.parent.curr_page.maptree
+        maptree = self.parent.GetLayerTree()
         
         layer, output = self.list.GetLayers()[self.commandId]
         
