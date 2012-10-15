@@ -1,71 +1,172 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.net</em> is used for network preparation and maintenance. 
-It permits to insert missing nodes or arcs and to connect unconnected 
-nodes to the network within a given distance threshold.
-It can also report the current network graph status. 
+<em>v.net</em> is used for network preparation and maintenance. Its main
+use is to create a vector network from vector lines (<em>arcs</em>) and points 
+(<em>nodes</em>) by creating nodes from intersections in a map of vector 
+lines (<em>node</em> operator), by connecting a vector lines map with a points map 
+(<em>connect</em> operator), and by creating new lines between pairs of vector points 
+(<em>arcs</em> operator).
 
 <p>
-In terms of network analysis, a network consists of nodes connected by 
-arcs. In a vector map prepared for network analysis, nodes are represented 
-by the grass-internal geometry type <em>node</em> and arcs by the geometry 
-type <em>line</em>. If a <em>line</em> consists of several vertices and 
-segments (the typical case), only its starting and ending vertex are 
-regarded as network nodes. Further more, explicit starting and ending 
-nodes for e.g. least cost path search or subnetwork allocation are 
-represented by the geometry type point which must be identical with the 
-start or end vertex (network node) of a line.
+A GIS network consists of topologically correct lines (arcs). That is, 
+the lines must be connected by shared vertices where real connections exist.
+In GRASS you also can add nodes to the network. These are specially 
+designated vertices used for analyzing network properties or computing 
+cost/distance measures. That is, not all vertices are treated as nodes by
+default. Only <em><a href="v.net.path.html">v.net.path</a></em> can use a 
+network without nodes, they are required  for all the other network modules.
+In GRASS, network arcs are stored in one data layer (normally layer 1) and
+nodes are stored in a different data layer (normally layer 2). 
 
 <p>
-In general, network analysis will find the least costly (shortest or 
-fastest) path from point A to point B by follwing the existing lines. 
-This implies that the points A, B must lie at the start or end point of a 
-line with is part of the network. If no line is starting or ending at a 
-given point, this point is not part of the network, i.e. the point is 
-unconnected and unreachable.
+<em>v.net</em> offers two ways to add nodes to a network of arcs and one 
+method to add arcs to a set of nodes:
 
+<ol>
+<li>Use the <em>connect</em> operation to create nodes from a vector points 
+file and add these nodes to an existing vector network of arcs (i.e., 
+lines/boundaries). This is useful when the goal is to analyze a set of places
+(points) in relation to a network--for example travel costs between places.
+Only points within the <em>thresh</em> (threshold) distance to a line/boundary
+will be connected as network nodes.</li>
+
+<li>Create nodes and arcs from a vector line/boundary file using the <em>node</em>
+operation. This is useful if you are mostly interested in the
+network itself and thus you can use intersections of the network as start and
+end points. Nodes will be created at all intersections of two or more lines.
+For an <em>arc</em> that consists of several segments connected by 
+vertices (the typical case), only the starting and ending vertices are 
+treated as network nodes.</li>
+
+<li>Create straight-line arcs between pairs of nodes with the <em>arcs</em> option. 
+This produces networks like those of airline flights between airports. It is
+also similar to the kind of network created with social networking
+software, making it possible to create georeferenced social networks.</li> 
+</ol>    
+    
+<p>
+While the arcs created with v.net will retain any attribute information
+associated with the input vector line/boundary file in data layer 1, nodes
+created and stored in data layer 2 will not have any associated attribute
+information. 
+
+<p>
+For nodes created using the <em>connect</em> and <em>arcs</em> operations (methods 1
+and 3 above), the nodes can be reconnected to the attribute table of the 
+input vector points file using the attribute table manager ("manage layers" 
+tab) or by running <em><a href="v.db.connect.html">v.db.connect</a></em>.
+
+<p>
+For nodes created using the <em>nodes</em> operation 
+(method 2 above), it is possible to create an attribute table for the 
+new nodes in layer 2 using the attribute table manager and connect it to
+layer 2 ("manage layers" tab) or to create a table with
+<em><a href="v.db.addtable.html">v.db.addtable</a>, 
+connect it to layer 2 with <em><a href="v.db.connect.html">v.db.connect</a></em>,
+and update the new table with cat values with <em><a href="v.to.db.html">v.to.db</a></em>. 
+
+<p>
+Once a vector network has been created, it can be analyzed in a number
+of powerful ways using the suite of <em>v.net</em>.* modules. The shortest route 
+between two nodes, following arcs, can be computed
+(<em><a href="v.net.path.html">v.net.path</a></em>), as can the 
+shortest route that will pass through a set of nodes and return to the 
+starting node (<em><a href="v.net.salesman.html">v.net.salesman</a></em>).
+Least cost routes through the network can be calculated on the basis of
+distance only or on the basis of distance weighted by an attribute
+associated with each arc (for example, travel speed along a network segment).
+A network can be divided into concentric zones of equal travel cost around 
+one or more nodes (<em><a href="v.net.iso.html">v.net.iso</a></em>) or
+subdivided so that each node is surrounded by a zone in which all arcs
+can be reached with the same travel costs as all arcs surrounding each
+other node (<em><a href="v.net.alloc.html">v.net.alloc</a></em>).
+
+In addition to the modules listed above, the GRASS vector networking suite
+includes numerous other modules for analysis of network costs and 
+connectivity. These include: 
+<em><a href="v.net.allpairs.html">v.net.allpairs</a></em>, 
+<em><a href="v.net.bridge.html">v.net.bridge</a></em>, 
+<em><a href="v.net.centrality.html">v.net.centrality</a></em>, 
+<em><a href="v.net.components.html">v.net.components</a></em>, 
+<em><a href="v.net.distance.html">v.net.distance</a></em>, 
+<em><a href="v.net.flow.html">v.net.flow</a></em>, 
+<em><a href="v.net.spanningtree.html">v.net.spanningtree</a></em>, 
+<em><a href="v.net.steiner.html">v.net.steiner</a></em>, 
+<em><a href="v.net.timetable.html">v.net.timetable</a></em>, and 
+<em><a href="v.net.visibility.html">v.net.visibility</a></em>.
+    
 <h3>NOTES</h3>
 
-If vector editing is required to modify the graph, <em>v.digit</em>
-or <em>v.edit</em> can be used. Separately, 
-<a href="lrs.html">Linear Referencing System</a> is available
-in GRASS.
+For a vector map prepared for network analysis in GRASS, nodes are 
+represented by the grass-internal geometry type <em>node</em> and arcs 
+by the geometry type <em>line</em>. 
+
+If vector editing is required to modify the
+graph, <em><a href="wxGUI.Vector_Digitizer.html">wxGUI vector
+digitizer</a></em> or <em><a href="v.edit.html">v.edit</a></em> can be
+used. 
+See also the <a href="lrs.html">Linear Referencing System</a> available in
+GRASS GIS.
 
 <h3>EXAMPLES</h3>
 
-Spearfish based examples:<p>
+The examples are <a href="http://www.grassbook.org/data_menu3rd.php">North Carolina dataset</a> based.
 
-Create nodes globally for all line ends and intersections:
-<br>
+<p>Create nodes globally for all line ends and intersections:
+
 <div class="code"><pre>
-v.net input=roads output=roads_node operation=nodes
+v.net input=streets_wake output=streets_node operation=nodes
 </pre></div>
 
-<p>
 Merge in nodes from a separate map within given threshold:
-<br>
-<div class="code"><pre>
-echo "1|601955.1|4916944.9|start
-2|594385.6|4921565.2|end" | v.in.ascii in=- cat=1 x=2 y=3 out=startend col="cat integer, \
-                         east double precision, north double precision, label varchar(6)"
 
-#create lines map connecting points to network (on layer 2)
-v.net myroads points=startend out=myroads_net op=connect thresh=200
+<div class="code"><pre>
+v.net input=streets_wake points=firestations out=streets_net operation=connect thresh=500
 </pre></div>
 
+For generating network for given vector point map is required input file in format
+
+<div class="code"><pre>
+[category of edge] [category of start node] [category of end node]
+</pre></div>
+
+<div class="code"><pre>
+v.net points=geodetic_swwake_pts output=geodetic_swwake_pts_net operation=arcs file=- << EOF
+> 1 28000 28005
+> 2 27945 27958
+> 3 27886 27897
+> EOF
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
-<em><a href="v.digit.html">v.digit</a></em>,
-<em><a href="v.edit.html">v.edit</a></em>,
-<em><a href="v.net.iso.html">v.net.iso</a></em>,
-<em><a href="v.net.path.html">v.net.path</a></em>,
-<em><a href="v.net.steiner.html">v.net.steiner</a></em>,
-<em><a href="v.net.salesman.html">v.net.salesman</a></em>
+<em>
+<a href="wxGUI.Vector_Digitizer.html">wxGUI vector digitizer</a>,
+<a href="v.edit.html">v.edit</a>,<br>
+<a href="v.net.alloc.html">v.net.alloc</a>,
+<a href="v.net.allpairs.html">v.net.allpairs</a>,
+<a href="v.net.bridge.html">v.net.bridge</a>,
+<a href="v.net.centrality.html">v.net.centrality</a>,
+<a href="v.net.components.html">v.net.components</a>,
+<a href="v.net.connectivity.html">v.net.connectivity</a>,
+<a href="v.net.distance.html">v.net.distance</a>,
+<a href="v.net.flow.html">v.net.flow</a>,
+<a href="v.net.iso.html">v.net.iso</a>,
+<a href="v.net.path.html">v.net.path</a>,
+<a href="v.net.salesman.html">v.net.salesman</a>
+<a href="v.net.spanningtree.html">v.net.spanningtree</a>,
+<a href="v.net.steiner.html">v.net.steiner</a>,
+<a href="v.net.timetable.html">v.net.timetable</a>,
+<a href="v.net.visibility.html">v.net.visibility</a>
+</em>
 
 <h2>AUTHORS</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy<br>
-Martin Landa, FBK-Irst, Trento, Italy
+Radim Blazek, ITC-irst, Trento, Italy<br>
 
-<p><i>Last changed: $Date$</i>
+Martin Landa, FBK-irst (formerly ITC-irst), Trento, Italy and CTU in
+Prague, Czech Republic (operation 'connect' and 'arcs')<br>
+
+Markus Metz: important fixes and improvements
+<p>
+<i>Last changed: $Date$</i>
