@@ -741,6 +741,7 @@ class GMFrame(wx.Frame):
         """!Print system information"""
         vInfo = grass.version()
         
+        self.goutput.WriteCmdLog(_("System Info"))
         self.goutput.WriteLog("%s: %s\n"
                               "%s: %s\n"
                               "%s: %s (%s)\n"
@@ -753,6 +754,7 @@ class GMFrame(wx.Frame):
                                            wx.__version__,
                                            _("Platform"), platform.platform()),
                               switchPage = True)
+        self.goutput.WriteCmdLog(' ')
     
     def OnAboutGRASS(self, event):
         """!Display 'About GRASS' dialog"""
