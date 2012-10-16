@@ -19,8 +19,7 @@ In GRASS, network arcs are stored in one data layer (normally layer 1) and
 nodes are stored in a different data layer (normally layer 2). 
 
 <p>
-<em>v.net</em> offers two ways to add nodes to a network of arcs and one 
-method to add arcs to a set of nodes:
+<em>v.net</em> offers two ways to add nodes to a network of arcs:
 
 <ol>
 <li>Use the <em>connect</em> operation to create nodes from a vector points 
@@ -37,11 +36,6 @@ end points. Nodes will be created at all intersections of two or more lines.
 For an <em>arc</em> that consists of several segments connected by 
 vertices (the typical case), only the starting and ending vertices are 
 treated as network nodes.</li>
-
-<li>Create straight-line arcs between pairs of nodes with the <em>arcs</em> option. 
-This produces networks like those of airline flights between airports. It is
-also similar to the kind of network created with social networking
-software, making it possible to create georeferenced social networks.</li> 
 </ol>    
     
 <p>
@@ -51,8 +45,8 @@ created and stored in data layer 2 will not have any associated attribute
 information. 
 
 <p>
-For nodes created using the <em>connect</em> and <em>arcs</em> operations (methods 1
-and 3 above), the nodes can be reconnected to the attribute table of the 
+For nodes created using the <em>connect</em> operation (method 1
+above), the nodes can be reconnected to the attribute table of the 
 input vector points file using the attribute table manager ("manage layers" 
 tab) or by running <em><a href="v.db.connect.html">v.db.connect</a></em>.
 
