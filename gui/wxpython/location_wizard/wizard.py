@@ -892,8 +892,10 @@ class DatumPage(TitledPage):
 #                proj4string = self.parent.CreateProj4String() + ' +datum=%s' % self.datum
                 ret = RunCommand('g.proj',
                                  read = True,
-                                 proj4 = '%s +datum=%s' % (proj, self.datum), 
+                                 proj4 = '%s' % proj,
+                                 datum = '%s' % self.datum, 
                                  datumtrans = '-1')
+#                wx.Messagebox('here')
                 if ret != '':
                     dtrans = ''
                     # open a dialog to select datum transform number
@@ -1617,6 +1619,7 @@ class SummaryPage(TitledPage):
         location = self.parent.startpage.location
         proj4string = self.parent.CreateProj4String()
         epsgcode = self.parent.epsgpage.epsgcode
+        datum = self.parent.datumpage.datum
         dtrans = self.parent.datumtrans
         
         global coordsys
@@ -1625,6 +1628,7 @@ class SummaryPage(TitledPage):
                 ret, projlabel, err = RunCommand('g.proj',
                                                  flags = 'jf',
                                                  proj4 = proj4string,
+                                                 datum = datum,
                                                  datumtrans = dtrans,
                                                  location = location,
                                                  getErrorMsg = True,
@@ -1640,6 +1644,8 @@ class SummaryPage(TitledPage):
 
             finishButton = wx.FindWindowById(wx.ID_FORWARD)
             if ret == 0:
+                if datum != '':
+                    projlabel = projlabel + ' ' + 'datum=%s' % datum
                 self.lproj4string.SetLabel(projlabel.replace(' ', os.linesep))
                 finishButton.Enable(True)
             else:
@@ -1966,7 +1972,8 @@ class LocationWizard(wx.Object):
                 grass.create_location(dbase = self.startpage.grassdatabase,
                                       location = self.startpage.location,
                                       proj4 = self.CreateProj4String(),
-                                      datum = self.datumtrans,
+                                      datum = self.datumpage.datum,
+                                      datumtrans = self.datumtrans,
                                       desc = self.startpage.locTitle)
             elif coordsys == 'custom':
                 grass.create_location(dbase = self.startpage.grassdatabase,
@@ -1980,7 +1987,8 @@ class LocationWizard(wx.Object):
                 grass.create_location(dbase = self.startpage.grassdatabase,
                                       location = self.startpage.location,
                                       epsg = self.epsgpage.epsgcode,
-                                      datum = self.datumtrans,
+                                      datum = self.datumpage.datum,
+                                      datumtrans = self.datumtrans,
                                       desc = self.startpage.locTitle)
             elif coordsys == "file":
                 if not self.filepage.georeffile or \
@@ -2013,7 +2021,7 @@ class LocationWizard(wx.Object):
         projdesc = self.projpage.projdesc
         proj4params = self.paramspage.p4projparams
                 
-        datum = self.datumpage.datum
+#        datum = self.datumpage.datum
         if self.datumpage.datumdesc:
             datumdesc = self.datumpage.datumdesc +' - ' + self.datumpage.ellipse
         else:
@@ -2038,9 +2046,7 @@ class LocationWizard(wx.Object):
                 item = ' +' + item
             proj4string = '%s %s' % (proj4string, item)
             
-        # set datum and transform parameters if relevant
-        if datum != '':
-            proj4string = '%s +datum=%s' % (proj4string, datum)
+        # set datum transform parameters if relevant
         if datumparams:
             for item in datumparams:
                 proj4string = '%s +%s' % (proj4string,item)
