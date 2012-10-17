@@ -547,6 +547,8 @@ class GMFrame(wx.Frame):
         
         if event:
             cmd = self.menucmd[event.GetId()]
+        else:
+            cmd = ''
         
         try:
             cmdlist = cmd.split(' ')
@@ -1178,7 +1180,7 @@ class GMFrame(wx.Frame):
                                        'loc' : grass.gisenv()["LOCATION_NAME"] })
         dlg.Destroy()
         
-    def RulesCmd(self, event):
+    def RulesCmd(self, event, cmd = None):
         """!Launches dialog for commands that need rules input and
         processes rules
         """
