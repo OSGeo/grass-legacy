@@ -15,34 +15,70 @@
  *****************************************************************************/
 
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
-#include <errno.h>
+#include <proj_api.h>
+
 #include <grass/gis.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
+#include <grass/config.h>
 
 #include "local_proto.h"
 
-static int check_xy(void);
+static int check_xy(int shell);
 
-void print_projinfo(void)
+void print_projinfo(int shell)
 {
     int i;
+    char path[GPATH_MAX];
 
-    if (check_xy())
+    if (check_xy(shell))
 	return;
 
-    fprintf(stdout,
-	    "-PROJ_INFO-------------------------------------------------\n");
-    for (i = 0; i < projinfo->nitems; i++)
-	fprintf(stdout, "%-11s: %s\n", projinfo->key[i], projinfo->value[i]);
+    if (!shell)
+	fprintf(stdout,
+		"-PROJ_INFO-------------------------------------------------\n");
+    for (i = 0; i < projinfo->nitems; i++) {
+	if (shell)
+	    fprintf(stdout, "%s=%s\n", projinfo->key[i], projinfo->value[i]);
+	else
+	    fprintf(stdout, "%-11s: %s\n", projinfo->key[i], projinfo->value[i]);
+    }
 
-    fprintf(stdout,
-	    "-PROJ_UNITS------------------------------------------------\n");
-    for (i = 0; i < projunits->nitems; i++)
-	fprintf(stdout, "%-11s: %s\n",
-		projunits->key[i], projunits->value[i]);
+    /* EPSG code is preserved for historical metadata interest only:
+	the contents of this file are not used by pj_*() routines at all */
+    G__file_name(path, "", "PROJ_EPSG", "PERMANENT");
+    if (access(path, F_OK) == 0) {
+	struct Key_Value *in_epsg_key;
+	int stat;
+	in_epsg_key = G_read_key_value_file(path, &stat);
+	if (!shell) {
+	    fprintf(stdout,
+		"-PROJ_EPSG-------------------------------------------------\n");
+	    fprintf(stdout, "%-11s: %s\n", in_epsg_key->key[0],
+		    in_epsg_key->value[0]);
+	}
+	else
+	    fprintf(stdout, "%s=%s\n", in_epsg_key->key[0],
+		    in_epsg_key->value[0]);
 
+	if (in_epsg_key != NULL)
+	    G_free_key_value(in_epsg_key);
+    }
+ 
+    if (!shell)
+	fprintf(stdout,
+		"-PROJ_UNITS------------------------------------------------\n");
+    for (i = 0; i < projunits->nitems; i++) {
+	if (shell)
+	    fprintf(stdout, "%s=%s\n",
+		    projunits->key[i], projunits->value[i]);
+	else
+	    fprintf(stdout, "%-11s: %s\n",
+		    projunits->key[i], projunits->value[i]);
+    }
+    
     return;
 }
 
@@ -52,7 +88,7 @@ void print_datuminfo(void)
     struct gpj_datum dstruct;
     int validdatum = 0;
 
-    if (check_xy())
+    if (check_xy(FALSE))
 	return;
 
     GPJ__get_datum_params(projinfo, &datum, &params);
@@ -93,13 +129,15 @@ void print_datuminfo(void)
 void print_proj4(int dontprettify)
 {
     struct pj_info pjinfo;
-    char *proj4, *proj4mod, *i, *unfact;
+    char *proj4, *proj4mod, *i;
+    const char *unfact;
 
-    if (check_xy())
+    if (check_xy(FALSE))
 	return;
 
     pj_get_kv(&pjinfo, projinfo, projunits);
     proj4 = pj_get_def(pjinfo.pj, 0);
+    pj_free(pjinfo.pj);
 
     /* GRASS-style PROJ.4 strings don't include a unit factor as this is
      * handled separately in GRASS - must include it here though */
@@ -107,7 +145,8 @@ void print_proj4(int dontprettify)
     if (unfact != NULL && (strcmp(pjinfo.proj, "ll") != 0))
 	G_asprintf(&proj4mod, "%s +to_meter=%s", proj4, unfact);
     else
-	proj4mod = proj4;
+	proj4mod = G_store(proj4);
+    pj_dalloc(proj4);
 
     for (i = proj4mod; *i; i++) {
 	/* Don't print the first space */
@@ -120,15 +159,17 @@ void print_proj4(int dontprettify)
 	    fputc(*i, stdout);
     }
     fputc('\n', stdout);
+    G_free(proj4mod);
 
     return;
 }
 
+#ifdef HAVE_OGR
 void print_wkt(int esristyle, int dontprettify)
 {
     char *outwkt;
 
-    if (check_xy())
+    if (check_xy(FALSE))
 	return;
 
     outwkt = GPJ_grass_to_wkt(projinfo, projunits, esristyle,
@@ -142,121 +183,13 @@ void print_wkt(int esristyle, int dontprettify)
 
     return;
 }
+#endif
 
-void create_location(char *location, int interactive)
-{
-    int ret;
-
-    if (location) {
-	ret = G__make_location(location, &cellhd, projinfo, projunits, NULL);
-	if (ret == 0)
-	    G_message(_("Location %s created!"), location);
-	else if (ret == -1)
-	    G_fatal_error(_("Unable to create location: %s"),
-			  strerror(errno));
-	else if (ret == -2)
-	    G_fatal_error(_("Unable to create projection files: %s"),
-			  strerror(errno));
-	else
-	    /* Shouldn't happen */
-	    G_fatal_error(_("Unspecified error while creating new location"));
-    }
-    else {
-	/* Create flag given but no location specified; overwrite
-	 * projection files for current location */
-
-	int go_ahead = 0;
-	char *mapset = G_mapset();
-	struct Key_Value *old_projinfo = NULL, *old_projunits = NULL;
-	struct Cell_head old_cellhd;
-
-	if (strcmp(mapset, "PERMANENT") != 0)
-	    G_fatal_error(_("You must select the PERMANENT mapset before updating the "
-			   "current location's projection. (Current mapset is %s)"),
-			  mapset);
-
-	/* Read projection information from current location first */
-	G_get_default_window(&old_cellhd);
-
-	if (old_cellhd.proj != PROJECTION_XY) {
-	    old_projinfo = G_get_projinfo();
-	    old_projunits = G_get_projunits();
-	}
-
-	if (old_projinfo && old_projunits) {
-	    if (interactive) {
-		/* Warn as in g.setproj before overwriting current location */
-		fprintf(stderr,
-			_("\n\nWARNING!  A projection file already exists for this location\n"));
-		fprintf(stderr,
-			"\nThis file contains all the parameters for the\nlocation's projection: %s\n",
-			G_find_key_value("proj", old_projinfo));
-		fprintf(stderr,
-			"\n    Overriding this information implies that the old projection parameters\n");
-		fprintf(stderr,
-			"    were incorrect.  If you change the parameters, all existing data will be\n");
-		fprintf(stderr,
-			"    interpreted differently by the projection software.\n%c%c%c",
-			7, 7, 7);
-		fprintf(stderr,
-			"    GRASS will not re-project your data automatically\n\n");
-
-		if (G_yes
-		    (_("Would you still like to overwrite the current projection information "),
-		     0))
-		    go_ahead = 1;
-	    }
-	    else
-		go_ahead = 1;
-	}
-	else {
-	    /* Projection files missing for some reason;
-	     * go ahead and update */
-	    go_ahead = 1;
-	}
-
-	if (go_ahead) {
-	    int out_stat;
-	    char path[4096];
-
-	    /* Write out the PROJ_INFO, and PROJ_UNITS if available. */
-	    if (projinfo != NULL) {
-		G__file_name(path, "", "PROJ_INFO", "PERMANENT");
-		G_write_key_value_file(path, projinfo, &out_stat);
-		if (out_stat != 0)
-		    G_fatal_error(_("Error writing PROJ_INFO"));
-	    }
-
-	    if (projunits != NULL) {
-		G__file_name(path, "", "PROJ_UNITS", "PERMANENT");
-		G_write_key_value_file(path, projunits, &out_stat);
-		if (out_stat != 0)
-		    G_fatal_error(_("Error writing PROJ_UNITS"));
-	    }
-
-	    if ((old_cellhd.zone != cellhd.zone) ||
-		(old_cellhd.proj != cellhd.proj)) {
-		/* Recreate the default, and current window files if projection
-		 * number or zone have changed */
-		G__put_window(&cellhd, "", "DEFAULT_WIND");
-		G__put_window(&cellhd, "", "WIND");
-		G_message(_("N.B. The default region was updated to the new projection, but if you have "
-			   "multiple mapsets g.region -d should be run in each to update the region from "
-			   "the default."));
-	    }
-	    G_message(_("Projection information updated!"));
-	}
-	else
-	    G_message(_("The projection information will not be updated."));
-
-    }
-
-    return;
-}
-
-static int check_xy(void)
+static int check_xy(int shell)
 {
     if (cellhd.proj == PROJECTION_XY) {
+	if (shell)
+	    fprintf(stdout, "name=");
 	fprintf(stdout, "XY location (unprojected)\n");
 	return 1;
     }
