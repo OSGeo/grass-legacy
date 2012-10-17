@@ -579,8 +579,8 @@ class AttributeManager(wx.Frame):
         self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
 
         try:
-            self.map        = self.parent.curr_page.maptree.Map
-            self.mapdisplay = self.parent.curr_page.maptree.mapdisplay
+            self.map        = self.parent.GetLayerTree().GetMap()
+            self.mapdisplay = self.parent.GetLayerTree().GetMapDisplay()
         except:
             self.map = self.mapdisplay = None
         
@@ -1274,7 +1274,7 @@ class AttributeManager(wx.Frame):
             # set opacity based on queried layer
             if self.parent and self.parent.GetName() == "LayerManager" and \
                     self.treeItem:
-                maptree = self.parent.curr_page.maptree
+                maptree = self.parent.GetLayerTree()
                 opacity = maptree.GetPyData(self.treeItem)[0]['maplayer'].GetOpacity(float = True)
                 self.qlayer.SetOpacity(opacity)
             if zoom:
@@ -2102,9 +2102,9 @@ class AttributeManager(wx.Frame):
             name = dlg.GetName(full = True)
             if name and dlg.IsChecked('add'):
                 # add layer to map layer tree
-                self.parent.curr_page.maptree.AddLayer(ltype = 'vector',
-                                                       lname = name,
-                                                       lcmd = ['d.vect', 'map=%s' % name])
+                self.parent.GetLayerTree().AddLayer(ltype = 'vector',
+                                                    lname = name,
+                                                    lcmd = ['d.vect', 'map=%s' % name])
             dlg.Destroy()
             
     def OnDeleteSelected(self, event):

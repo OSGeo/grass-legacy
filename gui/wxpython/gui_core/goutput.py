@@ -527,20 +527,21 @@ class GMConsole(wx.SplitterWindow):
                                          "Try adding it as a command layer instead.") % command[0])
                     return
                 
+                mapdisp = self.parent.GetMapDisplay()
                 if layertype == 'barscale':
-                    self.parent.curr_page.maptree.GetMapDisplay().OnAddBarscale(None)
+                    mapdisp.OnAddBarscale(None)
                 elif layertype == 'rastleg':
-                    self.parent.curr_page.maptree.GetMapDisplay().OnAddLegend(None)
+                    mapdisp.OnAddLegend(None)
                 elif layertype == 'redraw':
-                    self.parent.curr_page.maptree.GetMapDisplay().OnRender(None)
+                    mapdisp.OnRender(None)
                 else:
                     # add layer into layer tree
                     lname, found = utils.GetLayerNameFromCmd(command, fullyQualified = True,
                                                              layerType = layertype)
                     if self.parent.GetName() == "LayerManager":
-                        self.parent.curr_page.maptree.AddLayer(ltype = layertype,
-                                                               lname = lname,
-                                                               lcmd = command)
+                        self.parent.GetLayerTree().AddLayer(ltype = layertype,
+                                                            lname = lname,
+                                                            lcmd = command)
             
             else:
                 # other GRASS commands (r|v|g|...)
