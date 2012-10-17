@@ -1,25 +1,29 @@
-#ifdef G_PROJ_MAIN
-#  define G_PROJ_GLOBAL
-#else
-#  define G_PROJ_GLOBAL extern
-#endif
+#include <grass/config.h>
 
-G_PROJ_GLOBAL struct Key_Value *projinfo, *projunits;
-G_PROJ_GLOBAL struct Cell_head cellhd;
+extern struct Key_Value *projinfo, *projunits;
+extern struct Cell_head cellhd;
 
 /* input.c */
 void input_currloc(void);
+#ifdef HAVE_OGR
 int input_wkt(char *);
 int input_proj4(char *);
 int input_epsg(int);
 int input_georef(char *);
+#endif
 
 /* output.c */
-void print_projinfo(void);
+void print_projinfo(int);
 void print_datuminfo(void);
 void print_proj4(int);
+#ifdef HAVE_OGR
 void print_wkt(int, int);
-void create_location(char *, int);
+#endif
 
 /* datumtrans.c */
-int set_datumtrans(int, int, int);
+int set_datum(char *);
+int set_datumtrans(int, int);
+
+/* create.c */
+void create_location(char *);
+void modify_projinfo();
