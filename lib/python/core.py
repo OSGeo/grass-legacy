@@ -1052,18 +1052,19 @@ def mapsets(search_path = False):
 
 def create_location(dbase, location,
                     epsg = None, proj4 = None, filename = None, wkt = None,
-                    datum = None, desc = None):
+                    datum = None, datumtrans = None, desc = None):
     """!Create new location
 
     Raise ScriptError on error.
     
     @param dbase path to GRASS database
     @param location location name to create
-    @param epgs if given create new location based on EPSG code
+    @param epsg if given create new location based on EPSG code
     @param proj4 if given create new location based on Proj4 definition
     @param filename if given create new location based on georeferenced file
     @param wkt if given create new location based on WKT definition (path to PRJ file)
-    @param datum datum transformation parameters (used for epsg and proj4)
+    @param datum GRASS format datum code
+    @param datumtrans datum transformation parameters (used for epsg and proj4)
     @param desc description of the location (creates MYNAME file)
     """
     gisdbase = None
@@ -1077,11 +1078,12 @@ def create_location(dbase, location,
     kwargs = dict()
     if datum:
         kwargs['datum'] = datum
+    if datumtrans:
+        kwargs['datumtrans'] = datumtrans
     
     if epsg:
         ps = pipe_command('g.proj',
                           quiet = True,
-                          flags = 'c',
                           epsg = epsg,
                           location = location,
                           stderr = PIPE,
@@ -1089,7 +1091,6 @@ def create_location(dbase, location,
     elif proj4:
         ps = pipe_command('g.proj',
                           quiet = True,
-                          flags = 'c',
                           proj4 = proj4,
                           location = location,
                           stderr = PIPE,
@@ -1097,14 +1098,12 @@ def create_location(dbase, location,
     elif filename:
         ps = pipe_command('g.proj',
                           quiet = True,
-                          flags = 'c',
                           georef = filename,
                           location = location,
                           stderr = PIPE)
     elif wkt:
         ps = pipe_command('g.proj',
                           quiet = True,
-                          flags = 'c',
                           wkt = wkt,
                           location = location,
                           stderr = PIPE)
