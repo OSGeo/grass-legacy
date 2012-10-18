@@ -188,12 +188,7 @@ def list_available_extensions():
         for mnode in tree.findall('task'):
             name = mnode.get('name')
             if flags['c'] or flags['g']:
-                desc = mnode.find('description').text
-                if not desc:
-                    desc = ''
-                keyw = mnode.find('keywords').text
-                if not keyw:
-                    keyw = ''
+                desc, keyw = get_optional_params(mnode)
             
             if flags['g']:
                 print 'name=' + name
@@ -207,6 +202,22 @@ def list_available_extensions():
         return list_available_extensions_svn()
     
     return mlist
+
+def get_optional_params(mnode):
+    try:
+        desc = mnode.find('description').text
+    except AttributeError:
+        desc = ''
+    if desc is None:
+        desc = ''
+    try:
+        keyw = mnode.find('keywords').text
+    except AttributeError:
+        keyw = ''
+    if keyw is None:
+        keyw = ''
+        
+    return desc, keyw
 
 # list extensions (scan SVN repo)
 def list_available_extensions_svn():
@@ -351,12 +362,7 @@ def install_extension_xml():
                             path[-1] += '.py'
                     fList.append(os.path.sep.join(path))
             
-            desc = mnode.find('description').text
-            if not desc:
-                desc = ''
-            keyw = mnode.find('keywords').text
-            if not keyw:
-                keyw = ''
+            desc, keyw = get_optional_params(mnode)
             
             data = { 'name'  : name,
                      'desc'  : desc,
