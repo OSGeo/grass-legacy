@@ -985,7 +985,11 @@ class GMConsole(wx.SplitterWindow):
     def ResetFocus(self):
         """!Reset focus"""
         self.cmdPrompt.SetFocus()
-        
+    
+    def GetPrompt(self):
+        """!Get prompt"""
+        return self.cmdPrompt
+
 class GMStdout:
     """!GMConsole standard output
 
