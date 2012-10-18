@@ -316,6 +316,10 @@ def write_xml_modules(name, tree = None):
                 indent += 4
                 for fnode in bnode.findall('file'):
                     fpath = fnode.text.split(os.path.sep)
+                    if fpath[0] == 'man' and sys.platform == 'win32':
+                        # no manual pages on MS Windows
+                        continue
+                    
                     if not flags['s']: # tidy citizen hacks
                         if fpath[0] in ('bin', 'scripts'):
                             del fpath[0]
@@ -325,6 +329,13 @@ def write_xml_modules(name, tree = None):
                     fo.write('%s<file>%s</file>\n' % \
                                  (' ' * indent, os.path.join(options['prefix'],
                                                              os.path.sep.join(fpath))))
+                    
+                    if sys.platform == 'win32' and os.path.splitext(fpath[-1])[1] == '.bat':
+                        spath = fpath[:-1] + [os.path.splitext(fpath[-1])[0]]
+                        fo.write('%s<file>%s</file>\n' % \
+                                     (' ' * indent, os.path.join(options['prefix'],
+                                                                 os.path.sep.join(spath))))
+                    
                 indent -= 4 
                 fo.write('%s</binary>\n' % (' ' * indent))
             libgisRev = grass.version()['libgis_revision']
@@ -359,7 +370,7 @@ def install_extension_xml():
                         if path[0] == 'bin':
                             path[-1] += '.exe'
                         if path[0] == 'scripts':
-                            path[-1] += '.py'
+                            path[-1] += '.bat'
                     fList.append(os.path.sep.join(path))
             
             desc, keyw = get_optional_params(mnode)
