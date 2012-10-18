@@ -486,7 +486,7 @@ def install_extension():
         grass.message(_("Installation of <%s> successfully finished") % options['extension'])
     
     # cleanup build cruft
-    if not flags['s']:
+    if not flags['s'] and sys.platform != 'win32':
         tidy_citizen()
     
     if not os.environ.has_key('GRASS_ADDON_PATH') or \
