@@ -774,6 +774,7 @@ class GMFrame(wx.Frame):
         """!Print system information"""
         vInfo = grass.version()
         
+        # GDAL/OGR
         try:
             from osgeo import gdal
             gdalVersion = gdal.__version__
@@ -782,10 +783,17 @@ class GMFrame(wx.Frame):
                 gdalVersion = grass.Popen(['gdalinfo', '--version'], stdout = grass.PIPE).communicate()[0].rstrip('\n')
             except:
                 gdalVersion = _("unknown")
+        # PROJ4
         try:
             projVersion = RunCommand('proj', getErrorMsg = True)[1].splitlines()[0]
         except:
             projVersion = _("unknown")
+        # check also OSGeo4W on MS Windows
+        if sys.platform == 'win32' and \
+                os.path.exists(os.path.join(os.getenv("GISBASE"), "WinGRASS-README.url")):
+            osgeo4w = ' (OSGeo4W)'
+        else:
+            osgeo4w = ''
         
         self.goutput.WriteCmdLog(_("System Info"))
         self.goutput.WriteLog("%s: %s\n"
@@ -795,13 +803,13 @@ class GMFrame(wx.Frame):
                               "PROJ4: %s\n"
                               "Python: %s\n"
                               "wxPython: %s\n"
-                              "%s: %s\n"% (_("GRASS version"), vInfo['version'],
+                              "%s: %s%s\n"% (_("GRASS version"), vInfo['version'],
                                            _("GRASS SVN Revision"), vInfo['revision'],
                                            _("GIS Library Revision"), vInfo['libgis_revision'], vInfo['libgis_date'].split(' ', 1)[0],
                                            gdalVersion, projVersion,
                                            platform.python_version(),
                                            wx.__version__,
-                                           _("Platform"), platform.platform()),
+                                           _("Platform"), platform.platform(), osgeo4w),
                               switchPage = True)
         self.goutput.WriteCmdLog(' ')
     
