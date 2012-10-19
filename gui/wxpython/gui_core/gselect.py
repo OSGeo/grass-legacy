@@ -56,17 +56,18 @@ wxGdalSelect, EVT_GDALSELECT = NewEvent()
 
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE,
-                 type = None, multiple = False, mapsets = None,
-                 updateOnPopup = True, onPopup = None,
+                 type = None, multiple = False, nmaps = 1,
+                 mapsets = None, updateOnPopup = True, onPopup = None,
                  fullyQualified = True):
         """!Custom control to create a ComboBox with a tree control to
         display and select GIS elements within acessible mapsets.
         Elements can be selected with mouse. Can allow multiple
-        selections, when argument multiple=True. Multiple selections
-        are separated by commas.
+        selections, when argument <em>multiple</em> is True. Multiple
+        selections are separated by commas.
 
         @param type type of GIS elements ('raster, 'vector', ...)
-        @param multiple multiple input allowed?
+        @param multiple True for multiple input
+        @param nmaps number of maps to be entered
         @param mapsets force list of mapsets (otherwise search path)
         @param updateOnPopup True for updating list of elements on popup
         @param onPopup function to be called on Popup
@@ -81,7 +82,7 @@ class Select(wx.combo.ComboCtrl):
         self.SetPopupExtents(0, 100)
         if type:
             self.tcp.SetData(type = type, mapsets = mapsets,
-                             multiple = multiple,
+                             multiple = multiple, nmaps = nmaps,
                              updateOnPopup = updateOnPopup, onPopup = onPopup,
                              fullyQualified = fullyQualified)
         self.GetChildren()[0].Bind(wx.EVT_KEY_UP, self.OnKeyUp)
@@ -105,14 +106,14 @@ class Select(wx.combo.ComboCtrl):
         """!Load elements"""
         self.tcp.GetElementList()
     
-    def SetType(self, etype, multiple = False, mapsets = None,
-                updateOnPopup = True, onPopup = None):
+    def SetType(self, etype, multiple = False, nmaps = 1,
+                mapsets = None, updateOnPopup = True, onPopup = None):
         """!Param set element type for widget
 
         @param etype element type, see gselect.ElementSelect
         """
         self.tcp.SetData(type = etype, mapsets = mapsets,
-                         multiple = multiple,
+                         multiple = multiple, nmaps = nmaps,
                          updateOnPopup = updateOnPopup, onPopup = onPopup)
         
 class VectorSelect(Select):
@@ -150,6 +151,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         self.value = [] # for multiple is False -> len(self.value) in [0,1]
         self.curitem = None
         self.multiple = False
+        self.nmaps = 1
         self.type = None
         self.mapsets = None
         self.updateOnPopup = True
@@ -480,11 +482,16 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 if self.fullyQualified:
                     fullName += '@' + self.seltree.GetItemText(mapsetItem).split(':', -1)[1].strip()
                 
-                if self.multiple is True:
-                    # text item should be unique
+                if self.multiple:
                     self.value.append(fullName)
                 else:
-                    self.value = [fullName]
+                    if self.nmaps > 1: #  see key_desc
+                        if len(self.value) >= self.nmaps:
+                            self.value = [fullName]
+                        else:
+                            self.value.append(fullName)
+                    else:
+                        self.value = [fullName]
             
             self.Dismiss()
         
@@ -514,12 +521,17 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             if self.fullyQualified:
                 fullName += '@' + self.seltree.GetItemText(mapsetItem).split(':', -1)[1].strip()
             
-            if self.multiple is True:
-                # text item should be unique
+            if self.multiple:
                 self.value.append(fullName)
             else:
-                self.value = [fullName]
-            
+                if self.nmaps > 1: #  see key_desc
+                    if len(self.value) >= self.nmaps:
+                        self.value = [fullName]
+                    else:
+                        self.value.append(fullName)
+                else:
+                    self.value = [fullName]
+        
         self.Dismiss()
         
         evt.Skip()
@@ -532,6 +544,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.mapsets = kargs['mapsets']
         if 'multiple' in kargs:
             self.multiple = kargs['multiple']
+        if 'nmaps' in kargs:
+            self.nmaps = kargs['nmaps']
         if 'updateOnPopup' in kargs:
             self.updateOnPopup = kargs['updateOnPopup']
         if 'onPopup' in kargs:
