@@ -793,8 +793,9 @@ def StoreEnvVariable(key, value, envFile = None):
         if not windows:
             envFile = os.path.join(os.getenv('HOME'), '.grass.bashrc')
         else:
-            envFile = os.path.join(os.getenv('APPDATA'), 'GRASS%d' % version, 'env.bat')
-        
+            gVersion = grass.version()['version'].split('.', 1)[0]
+            envFile = os.path.join(os.getenv('APPDATA'), 'GRASS%s' % gVersion, 'env.bat')
+    
     # read env file
     environ = dict()
     if os.path.exists(envFile):
