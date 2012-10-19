@@ -188,12 +188,7 @@ def list_available_extensions():
         for mnode in tree.findall('task'):
             name = mnode.get('name')
             if flags['c'] or flags['g']:
-                desc = mnode.find('description').text
-                if not desc:
-                    desc = ''
-                keyw = mnode.find('keywords').text
-                if not keyw:
-                    keyw = ''
+                desc, keyw = get_optional_params(mnode)
             
             if flags['g']:
                 print 'name=' + name
@@ -207,6 +202,22 @@ def list_available_extensions():
         return list_available_extensions_svn()
     
     return mlist
+
+def get_optional_params(mnode):
+    try:
+        desc = mnode.find('description').text
+    except AttributeError:
+        desc = ''
+    if desc is None:
+        desc = ''
+    try:
+        keyw = mnode.find('keywords').text
+    except AttributeError:
+        keyw = ''
+    if keyw is None:
+        keyw = ''
+        
+    return desc, keyw
 
 # list extensions (scan SVN repo)
 def list_available_extensions_svn():
@@ -305,6 +316,10 @@ def write_xml_modules(name, tree = None):
                 indent += 4
                 for fnode in bnode.findall('file'):
                     fpath = fnode.text.split(os.path.sep)
+                    if fpath[0] == 'man' and sys.platform == 'win32':
+                        # no manual pages on MS Windows
+                        continue
+                    
                     if not flags['s']: # tidy citizen hacks
                         if fpath[0] in ('bin', 'scripts'):
                             del fpath[0]
@@ -314,6 +329,13 @@ def write_xml_modules(name, tree = None):
                     fo.write('%s<file>%s</file>\n' % \
                                  (' ' * indent, os.path.join(options['prefix'],
                                                              os.path.sep.join(fpath))))
+                    
+                    if sys.platform == 'win32' and os.path.splitext(fpath[-1])[1] == '.bat':
+                        spath = fpath[:-1] + [os.path.splitext(fpath[-1])[0]]
+                        fo.write('%s<file>%s</file>\n' % \
+                                     (' ' * indent, os.path.join(options['prefix'],
+                                                                 os.path.sep.join(spath))))
+                    
                 indent -= 4 
                 fo.write('%s</binary>\n' % (' ' * indent))
             libgisRev = grass.version()['libgis_revision']
@@ -348,15 +370,10 @@ def install_extension_xml():
                         if path[0] == 'bin':
                             path[-1] += '.exe'
                         if path[0] == 'scripts':
-                            path[-1] += '.py'
+                            path[-1] += '.bat'
                     fList.append(os.path.sep.join(path))
             
-            desc = mnode.find('description').text
-            if not desc:
-                desc = ''
-            keyw = mnode.find('keywords').text
-            if not keyw:
-                keyw = ''
+            desc, keyw = get_optional_params(mnode)
             
             data = { 'name'  : name,
                      'desc'  : desc,
@@ -428,8 +445,9 @@ def install_extension_win():
     ### TODO: do not use hardcoded url - http://wingrass.fsv.cvut.cz/grassXX/addonsX.X.X
     version = grass.version()['version'].split('.')
     grass.message(_("Downloading precompiled GRASS Addons <%s>...") % options['extension'])
-    url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons/grass-%s.%s.%s" % \
-        (version[0], version[1], version[0], version[1], version[2])
+    url = "http://wingrass.fsv.cvut.cz/grass%s%s/addons" % (version[0], version[1])
+    if version[0] == '6' and version[1] == '4':
+        url += '/grass-%s.%s.%s' % (version[0], version[1], version[2])
     grass.debug("url=%s" % url, 1)
     
     try:
