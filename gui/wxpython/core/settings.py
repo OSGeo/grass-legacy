@@ -76,8 +76,6 @@ class Settings:
         except KeyError:
             projFile = ''
         
-        id_loc = self._generateLocale()
-        
         self.defaultSettings = {
             #
             # general
@@ -152,7 +150,7 @@ class Settings:
             #
             'language': {
                 'locale': {
-                    'lc_all' : id_loc
+                    'lc_all' : self._generateLocale(),
                 }
             },
             #
