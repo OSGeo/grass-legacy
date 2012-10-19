@@ -162,15 +162,25 @@ class PreferencesBaseDialog(wx.Dialog):
         Posts event EVT_SETTINGS_CHANGED.
         """
         if self._updateSettings():
+            lang = self.settings.Get(group = 'language', key = 'locale', subkey = 'lc_all')
+            if lang == 'system':
+                # Most fool proof way to use system locale is to not provide any locale info at all
+                self.settings.Set(group = 'language', key = 'locale', subkey = 'lc_all', value = None)
+                lang = None
+            if lang == 'en':
+                # GRASS doesn't ship EN translation, default texts have to be used instead
+                self.settings.Set(group = 'language', key = 'locale', subkey = 'lc_all', value = 'C')
+                lang = 'C'
             self.settings.SaveToFile()
             self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % self.settings.filePath)
-            lang = UserSettings.Get(group = 'language', key = 'locale', subkey = 'lc_all')
             if lang:
                 RunCommand('g.gisenv', set = 'LANG=%s' % lang)
+            else:
+                RunCommand('g.gisenv', set = 'LANG=')
             event = wxSettingsChanged()
             wx.PostEvent(self, event)
             self.Close()
-
+        
     def _updateSettings(self):
         """!Update user settings"""
         for item in self.winId.keys():
