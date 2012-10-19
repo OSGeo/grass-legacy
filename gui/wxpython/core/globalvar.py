@@ -168,13 +168,15 @@ def UpdateGRASSAddOnCommands():
                 continue
             if grassScripts: # win32
                 name, ext = os.path.splitext(fname)
+                if ext not in ['.exe', '.bat']:
+                    continue
                 if name not in grassCmd:
                     grassCmd.add(name)
                     nCmd += 1
-                if ext in grassScripts.keys() and \
+                if ext == '.bat' and \
+                        ext in grassScripts.keys() and \
                         name not in grassScripts[ext]:
                     grassScripts[ext].append(name)
-                    nCmd += 1
             else:
                 if fname not in grassCmd:
                     grassCmd.add(fname)
