@@ -25,6 +25,10 @@ rem #########################################################################
 set SAVEPATH=%PATH%
 rem DON'T include scripts directory in PATH - .bat files in bin directory
 rem are used to run scripts on Windows
+
+if exist "%APPDATA%\GRASS6\env.bat" (
+   	call %APPDATA%\GRASS6\env.bat
+)
 if "%GRASS_ADDON_PATH%"=="" set GRASS_ADDON_PATH=%APPDATA%\GRASS6\addons
 PATH=%GISBASE%\bin;%GISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
 
