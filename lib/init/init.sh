@@ -736,15 +736,6 @@ if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
     exit 1
 fi
 
-# check gisenv's ADDON_PATH
-ADDON_PATH=`g.gisenv ADDON_PATH`
-if [ -n "$ADDON_PATH" ] ; then
-    GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$ADDON_PATH"
-    export GRASS_ADDON_PATH
-    PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
-    export PATH
-fi
-
 LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
 
 # Check for concurrent use

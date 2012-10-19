@@ -33,6 +33,7 @@ from grass.script import task as gtask
 
 from core             import globalvar
 from core.gcmd        import GError, RunCommand
+from core.utils       import SetAddOnPath
 from gui_core.forms   import GUI
 from gui_core.widgets import ItemTree
 from gui_core.ghelp   import SearchModuleWindow
@@ -221,6 +222,9 @@ class InstallExtensionWindow(wx.Frame):
         
     def OnDone(self, cmd, returncode):
         if returncode == 0:
+            if not os.getenv('GRASS_ADDON_PATH'):
+                SetAddOnPath()
+            
             globalvar.UpdateGRASSAddOnCommands()
             log = self.parent.GetLogWindow()
             log.GetPrompt().SetFilter(None)

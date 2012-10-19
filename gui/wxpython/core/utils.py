@@ -777,6 +777,79 @@ def GetSettingsPath():
     # keep location of settings files rc and wx in sync with
     # lib/init/init.sh and init.bat
     if sys.platform == 'win32':
-        return os.path.join(os.getenv('APPDATA'), 'grass%d' % version)
+        return os.path.join(os.getenv('APPDATA'), 'GRASS%d' % version)
     
     return os.path.join(os.getenv('HOME'), '.grass%d' % version)
+
+def StoreEnvVariable(key, value, envFile = None):
+    """!Store environmental variable
+
+    @param key env key
+    @param value env value
+    @param envFile path to the environmental file (None for default location)
+    """
+    windows = sys.platform == 'win32'
+    if not envFile:
+        if not windows:
+            envFile = os.path.join(os.getenv('HOME'), '.grass.bashrc')
+        else:
+            envFile = os.path.join(os.getenv('APPDATA'), 'GRASS%d' % version, 'env.bat')
+        
+    # read env file
+    environ = dict()
+    if os.path.exists(envFile):
+        try:
+            fd = open(envFile)
+        except IOError, e:
+            sys.stderr.write(_("Unable to open file '%s'") % envFile)
+            return
+        for line in fd.readlines():
+            try:
+                key, value = line.split(' ', 1).strip().split('=', 1)
+            except:
+                sys.stderr.write(_("%s: unable to parse '%s'") % (envFile, line))
+                continue
+            if key in environ:
+                sys.stderr.write(_("Duplicated key: %s") % key)
+            environ[key] = value
+        
+        fd.close()
+    
+    # update environmental variables
+    environ[key] = value
+    
+    # write update env file
+    try:
+        fd = open(envFile, 'w')
+    except IOError, e:
+        sys.stderr.write(_("Unable to create file '%s'") % envFile)
+        return
+    if windows:
+        expCmd = 'set'
+    else:
+        expCmd = 'export'
+    
+    for key, value in environ.iteritems():
+        fd.write('%s %s=%s\n' % (expCmd, key, value))
+        
+    fd.close()
+
+def SetAddOnPath(addonPath = None):
+    """!Set default AddOn path
+
+    @addonPath path to addons (None for default)
+    """
+    gVersion = grass.version()['version'].split('.', 1)[0]
+    # update env file
+    if not addonPath:
+        if sys.platform != 'win32':
+            addonPath = os.path.join(os.path.join(os.getenv('HOME'),
+                                                  '.grass%s' % gVersion,
+                                                  'addons'))
+        else:
+            addonPath = os.path.join(os.path.join(os.getenv('APPDATA'),
+                                                  'GRASS%s' % gVersion,
+                                                  'addons'))
+    
+    StoreEnvVariable('GRASS_ADDON_PATH', addonPath)
+    os.environ['GRASS_ADDON_PATH'] = addonPath
