@@ -520,14 +520,17 @@ class CommandThread(Thread):
             return
 
         Debug.msg(1, "gcmd.CommandThread(): %s" % ' '.join(self.cmd))
-
+        
         self.startTime = time.time()
-
+        
         # TODO: replace ugly hack bellow
         args = self.cmd
         if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == '.py':
             os.chdir(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'scripts'))
             args = [sys.executable, self.cmd[0]] + self.cmd[1:]
+        if sys.platform == 'win32' and os.getenv('GRASS_ADDON_PATH') and \
+                os.path.exists(os.path.join(os.getenv('GRASS_ADDON_PATH'), self.cmd[0] + '.bat')):
+            args[0] = self.cmd[0] + '.bat'
         
         try:
             self.module = Popen(args,
