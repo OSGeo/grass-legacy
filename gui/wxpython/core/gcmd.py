@@ -526,12 +526,12 @@ class CommandThread(Thread):
         
         # TODO: replace ugly hack bellow
         args = self.cmd
-        if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == '.py':
+        if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == globalvar.SCT_EXT:
             os.chdir(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'scripts'))
             args = [sys.executable, self.cmd[0]] + self.cmd[1:]
         if sys.platform == 'win32' and os.getenv('GRASS_ADDON_PATH') and \
-                os.path.exists(os.path.join(os.getenv('GRASS_ADDON_PATH'), self.cmd[0] + '.bat')):
-            args[0] = self.cmd[0] + '.bat'
+                os.path.exists(os.path.join(os.getenv('GRASS_ADDON_PATH'), self.cmd[0] + globalvar.SCT_EXT)):
+            args[0] = self.cmd[0] + globalvar.SCT_EXT
             env = copy.deepcopy(self.env)
             env['PATH'] = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts') + \
                 os.pathsep + env['PATH']
