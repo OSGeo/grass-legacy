@@ -526,7 +526,8 @@ class CommandThread(Thread):
         
         # TODO: replace ugly hack bellow
         args = self.cmd
-        if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == globalvar.SCT_EXT:
+        if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == '.py':
+            # Python GUI script should be replaced by Shell scripts
             os.chdir(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'scripts'))
             args = [sys.executable, self.cmd[0]] + self.cmd[1:]
         if sys.platform == 'win32' and os.getenv('GRASS_ADDON_PATH') and \
