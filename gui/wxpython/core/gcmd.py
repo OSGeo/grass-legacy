@@ -530,8 +530,8 @@ class CommandThread(Thread):
             # Python GUI script should be replaced by Shell scripts
             os.chdir(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'scripts'))
             args = [sys.executable, self.cmd[0]] + self.cmd[1:]
-        if sys.platform == 'win32' and os.getenv('GRASS_ADDON_PATH') and \
-                os.path.exists(os.path.join(os.getenv('GRASS_ADDON_PATH'), self.cmd[0] + globalvar.SCT_EXT)):
+        if sys.platform == 'win32' and \
+                self.cmd[0] in globalvar.grassScripts[globalvar.SCT_EXT]:
             args[0] = self.cmd[0] + globalvar.SCT_EXT
             env = copy.deepcopy(self.env)
             env['PATH'] = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts') + \
