@@ -31,6 +31,7 @@ import errno
 import signal
 import locale
 import traceback
+import copy
 
 import wx
 
@@ -531,6 +532,11 @@ class CommandThread(Thread):
         if sys.platform == 'win32' and os.getenv('GRASS_ADDON_PATH') and \
                 os.path.exists(os.path.join(os.getenv('GRASS_ADDON_PATH'), self.cmd[0] + '.bat')):
             args[0] = self.cmd[0] + '.bat'
+            env = copy.deepcopy(self.env)
+            env['PATH'] = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts') + \
+                os.pathsep + env['PATH']
+        else:
+            env = self.env
         
         try:
             self.module = Popen(args,
@@ -538,7 +544,7 @@ class CommandThread(Thread):
                                 stdout = subprocess.PIPE,
                                 stderr = subprocess.PIPE,
                                 shell = sys.platform == "win32",
-                                env = self.env)
+                                env = env)
         
         except OSError, e:
             self.error = str(e)
