@@ -887,13 +887,26 @@ class HelpPanel(wx.Panel):
     def LoadPage(self, path = None):
         """!Load page"""
         if not path:
-            path = os.path.join(self.content.fspath, self.grass_command + ".html")
+            path = self.GetFile()
         self.content.history.append(path)
         self.content.LoadPage(path)
         
-    def IsFile(self):
-        """!Check if file exists"""
-        return os.path.isfile(os.path.join(self.content.fspath, self.grass_command + ".html"))
+    def GetFile(self):
+        """!Get HTML file"""
+        fMan = os.path.join(self.content.fspath, self.grass_command + ".html")
+        if os.path.isfile(fMan):
+            return fMan
+        
+        # check also addons
+        aPath = os.getenv('GRASS_ADDON_PATH')
+        if aPath:
+            for path in aPath.split(os.pathsep):
+                faMan = os.path.join(path, "docs", "html",
+                                     self.grass_command + ".html")
+                if os.path.isfile(faMan):
+                    return faMan
+        
+        return None
 
     def IsLoaded(self):
         return self.content.loaded
