@@ -572,13 +572,13 @@ class HelpWindow(wx.html.HtmlWindow):
     The SYNOPSIS section is skipped, since this Panel is supposed to
     be integrated into the cmdPanel and options are obvious there.
     """
-    def __init__(self, parent, grass_command, text, skip_description,
+    def __init__(self, parent, command, text, skipDescription,
                  **kwargs):
-        """!If grass_command is given, the corresponding HTML help
+        """!If command is given, the corresponding HTML help
         file will be presented, with all links pointing to absolute
         paths of local files.
 
-        If 'skip_description' is True, the HTML corresponding to
+        If 'skipDescription' is True, the HTML corresponding to
         SYNOPSIS will be skipped, thus only presenting the help file
         from the DESCRIPTION section onwards.
 
@@ -589,25 +589,24 @@ class HelpWindow(wx.html.HtmlWindow):
         wx.InitAllImageHandlers()
         wx.html.HtmlWindow.__init__(self, parent = parent, **kwargs)
         
-        gisbase = os.getenv("GISBASE")
         self.loaded = False
         self.history = list()
         self.historyIdx = 0
-        self.fspath = os.path.join(gisbase, "docs", "html")
+        self.fspath = os.path.join(os.getenv("GISBASE"), "docs", "html")
         
         self.SetStandardFonts (size = 10)
         self.SetBorders(10)
         
         if text is None:
-            if skip_description:
-                url = os.path.join(self.fspath, grass_command + ".html")
+            if skipDescription:
+                url = os.path.join(self.fspath, command + ".html")
                 self.fillContentsFromFile(url,
-                                          skip_description = skip_description)
+                                          skipDescription = skipDescription)
                 self.history.append(url)
                 self.loaded = True
             else:
                 ### FIXME: calling LoadPage() is strangely time-consuming (only first call)
-                # self.LoadPage(self.fspath + grass_command + ".html")
+                # self.LoadPage(self.fspath + command + ".html")
                 self.loaded = False
         else:
             self.SetPage(text)
@@ -623,7 +622,7 @@ class HelpWindow(wx.html.HtmlWindow):
         
         super(HelpWindow, self).OnLinkClicked(linkinfo)
         
-    def fillContentsFromFile(self, htmlFile, skip_description = True):
+    def fillContentsFromFile(self, htmlFile, skipDescription = True):
         """!Load content from file"""
         aLink = re.compile(r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE)
         imgLink = re.compile(r'(<img src="?)(.+\.[png|gif])', re.IGNORECASE)
@@ -636,7 +635,7 @@ class HelpWindow(wx.html.HtmlWindow):
                 if not skip:
                     # do skip the options description if requested
                     if "SYNOPSIS" in l:
-                        skip = skip_description
+                        skip = skipDescription
                     else:
                         # FIXME: find only first item
                         findALink = aLink.search(l)
@@ -656,13 +655,12 @@ class HelpWindow(wx.html.HtmlWindow):
             self.loaded = False
         
 class HelpPanel(wx.Panel):
-    def __init__(self, parent, grass_command = "index", text = None,
-                 skip_description = False, **kwargs):
-        self.grass_command = grass_command
+    def __init__(self, parent, command = "index", text = None,
+                 skipDescription = False, **kwargs):
+        self.command = command
         wx.Panel.__init__(self, parent = parent, id = wx.ID_ANY)
         
-        self.content = HelpWindow(self, grass_command, text,
-                                  skip_description)
+        self.content = HelpWindow(self, command, text, skipDescription)
         
         self.btnNext = wx.Button(parent = self, id = wx.ID_ANY,
                                  label = _("&Next"))
@@ -698,14 +696,27 @@ class HelpPanel(wx.Panel):
     def LoadPage(self, path = None):
         """!Load page"""
         if not path:
-            path = os.path.join(self.content.fspath, self.grass_command + ".html")
+            path = self.GetFile()
         self.content.history.append(path)
         self.content.LoadPage(path)
         
-    def IsFile(self):
-        """!Check if file exists"""
-        return os.path.isfile(os.path.join(self.content.fspath, self.grass_command + ".html"))
-
+    def GetFile(self):
+        """!Get HTML file"""
+        fMan = os.path.join(self.content.fspath, self.command + ".html")
+        if os.path.isfile(fMan):
+            return fMan
+        
+        # check also addons
+        aPath = os.getenv('GRASS_ADDON_PATH')
+        if aPath:
+            for path in aPath.split(os.pathsep):
+                faMan = os.path.join(path, "docs", "html",
+                                     self.command + ".html")
+                if os.path.isfile(faMan):
+                    return faMan
+        
+        return None
+    
     def IsLoaded(self):
         return self.content.loaded
 

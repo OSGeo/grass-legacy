@@ -785,8 +785,8 @@ class CmdPanel(wx.Panel):
         else:
             self.goutput = None
         
-        self.manualTab = HelpPanel(parent = self, grass_command = self.task.name)
-        if not self.manualTab.IsFile():
+        self.manualTab = HelpPanel(parent = self, command = self.task.name)
+        if not self.manualTab.GetFile():
             self.manualTab.Hide()
         else:
             self.notebook.AddPage(page = self.manualTab, text = _("Manual"), name = 'manual')
