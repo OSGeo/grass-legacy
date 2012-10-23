@@ -785,11 +785,11 @@ class CmdPanel(wx.Panel):
         else:
             self.goutput = None
         
-        self.manual_tab = HelpPanel(parent = self, grass_command = self.task.name)
-        if not self.manual_tab.IsFile():
-            self.manual_tab.Hide()
+        self.manualTab = HelpPanel(parent = self, grass_command = self.task.name)
+        if not self.manualTab.IsFile():
+            self.manualTab.Hide()
         else:
-            self.notebook.AddPage(page = self.manual_tab, text = _("Manual"), name = 'manual')
+            self.notebook.AddPage(page = self.manualTab, text = _("Manual"), name = 'manual')
         
         self.notebook.SetSelection(0)
 
@@ -1466,8 +1466,8 @@ class CmdPanel(wx.Panel):
         for section in sections:
             tab[section].SetMinSize((self.constrained_size[0], self.panelMinHeight))
         
-        if self.manual_tab.IsLoaded():
-            self.manual_tab.SetMinSize((self.constrained_size[0], self.panelMinHeight))
+        if self.manualTab.IsLoaded():
+            self.manualTab.SetMinSize((self.constrained_size[0], self.panelMinHeight))
         
         self.SetSizer(panelsizer)
         panelsizer.Fit(self.notebook)
@@ -1603,9 +1603,9 @@ class CmdPanel(wx.Panel):
         if idx > -1 and sel ==  idx:
             # calling LoadPage() is strangely time-consuming (only first call)
             # FIXME: move to helpPage.__init__()
-            if not self.manual_tab.IsLoaded():
+            if not self.manualTab.IsLoaded():
                 wx.Yield()
-                self.manual_tab.LoadPage()
+                self.manualTab.LoadPage()
 
         self.Layout()
 
