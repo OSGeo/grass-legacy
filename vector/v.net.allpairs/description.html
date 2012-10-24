@@ -1,60 +1,53 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.net.allpairs</em> computes the shortest path between each selected 
-node and all other selected nodes.
+node and all other selected nodes. An attribute table is created and 
+linked to layer 1 of the output map. The table contains three columns: 
+<em>cat</em>, <em>to_cat</em>, <em>cost</em>. Each entry denotes the 
+cost of the shortest path from <em>cat</em> to <em>to_cat</em>. If the 
+cost is negative then no path exists. If points are specified by <b>cats, 
+layer</b> or <b>where</b> parameters then the table is filled only for 
+the selected points.
 <p>
-If the input vector has been prepared with <em>v.net</em> and 
-<em>v.net.allpairs</em> should use cost columns, further preparation is 
-of the input vector required. In contrast to the output of <em>v.net</em> 
-and the behaviour of other <em>v.net.*</em> modules, <em>v.net.allpairs</em> 
-uses the same layer to read cost columns for arcs and to read node 
-categories. Therefore new, unique categories for points must be added 
-to the layer with cost columns for lines with <em>v.category</em>.
-<br>
 If <b>abcolumn</b> is not given then then the same costs are used for 
 forward and backward arcs.
+<p>
+Contrary to other v.net.* modules, <em>v.net.allpairs</em> does not 
+allow to use arcs and nodes from separate layers.  This means that you
+have to put both types of features into the same layer, but with
+distinct category numbers in order to allow accessing specific nodes
+only. See the example below. 
+
 
 <h2>NOTES</h2>
 
-An attribute table is created and linked to layer 1. The table 
-contains three columns: <em>cat</em>, <em>to_cat</em>, <em>cost</em>. 
-Each entry denotes the cost of the shortest path from <em>cat</em> to 
-<em>to_cat</em>. If the cost is negative then no path exists. If points 
-are specified by <b>cats, layer</b> or <b>where</b> parameters then 
-the table is filled only for the selected points.
-<br>
 If the <b>-a</b> flag is set then new points are added on nodes without 
 nodes. These points have the largest category. Precisely, the category 
 value of each new point is larger than any of the old categories. Note 
 that these new points are not included in the output table.
+<br>
 
 <h2>EXAMPLE</h2>
 
-Find shortest path along roads from selected archsites (Spearfish sample 
+Find shortest path along roads between schools (North Carolina sample 
 dataset):
 <div class="code"><pre>
-# prepare network: connect archsites to roads with threshold 200
-v.net input=roads@PERMANENT points=archsites@PERMANENT \
-output=roads_net operation=connect thresh=200
+#check cat values in arcs layer (streets_wake here):
+v.category streets_wake op=report
 
-# verify result
-v.category input=roads_net option=report
+#take the existing cat values of the points in schools_wake and add
+50000 (because the cat values in streets_wake go up to just under 50000)
+v.category schools_wake out=schools op=sum cat=50000
 
-# only lines should have a category in layer 1
-# only points should have a category in layer 2
+#now link the nodes with their new categories to the arcs, with node category values in layer 1
+v.net streets_wake points=schools op=connect thresh=200 out=network
+nlayer=1
 
-# shortest path between all points with categories 1 - 5 in layer 2
-v.net.allpairs input=roads_net layer=2 cats=1-5 out=roads_net_all
-v.db.select roads_net_all
-</pre></div>
+#then launch your analysis indicating the cat values of the points which you want to use
+v.net.allpairs network cats=50000-50167 out=allpairs 
 
-Result in matrix form:
-<div class="code"><pre>
-from\to	1		3		4		5
-1	0		18820.386	17206.651	17373.274
-3	18820.386	0		1739.079	9040.575
-4	17206.651	1739.079	0		7426.84
-5	17373.274	9040.575	7426.84		0
+#get distance matrix
+v.db.select allpairs
 </pre></div>
 
 <h2>SEE ALSO</h2>
