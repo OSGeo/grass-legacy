@@ -701,18 +701,24 @@ def EncodeString(string):
 
 def _getGDALFormats():
     """!Get dictionary of avaialble GDAL drivers"""
-    ret = grass.read_command('r.in.gdal',
-                             quiet = True,
-                             flags = 'f')
+    try:
+        ret = grass.read_command('r.in.gdal',
+                                 quiet = True,
+                                 flags = 'f')
+    except:
+        ret = None
     
     return _parseFormats(ret)
 
 def _getOGRFormats():
     """!Get dictionary of avaialble OGR drivers"""
-    ret = grass.read_command('v.in.ogr',
-                             quiet = True,
-                             flags = 'f')
-    
+    try:
+        ret = grass.read_command('v.in.ogr',
+                                 quiet = True,
+                                 flags = 'f')
+    except:
+        ret = None
+
     return _parseFormats(ret)
 
 def _parseFormats(output):
