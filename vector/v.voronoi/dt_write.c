@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/display.h>

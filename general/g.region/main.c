@@ -13,8 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************/
 
+#include <math.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include <grass/gis.h>
 #include <grass/G3d.h>
 #include <grass/Vect.h>

@@ -1,15 +1,18 @@
 /* plot1() - Level One vector reading */
 
 #include <string.h>
+#include <math.h>
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/display.h>
 #include <grass/raster.h>
-#include "plot.h"
-#include "local_proto.h"
 #include <grass/symbol.h>
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
+
+#include "plot.h"
+#include "local_proto.h"
 
 #define RENDER_POLYLINE 0
 #define RENDER_POLYGON  1
