@@ -119,7 +119,6 @@ POINT_LIST *point_list_new(POINT p)
 
     if (!pl) {
 	G_fatal_error(_("Out of memory"));
-	exit(1);
     }
 
     pl->next = NULL;

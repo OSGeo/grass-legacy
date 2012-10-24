@@ -18,6 +18,7 @@
  * TODO:       3D support
  ****************************************************************/
 
+#include <string.h>
 #include <grass/dbmi.h>
 #include "global.h"
 

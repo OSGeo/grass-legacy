@@ -11,6 +11,8 @@
   \author Martin Landa <landa.martin gmail.com>
 */
 
+#include <math.h>
+
 #include <grass/glocale.h>
 #include <grass/vedit.h>
 
