@@ -18,6 +18,8 @@
  */
 
 #include <math.h>
+#include <stdlib.h>
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
