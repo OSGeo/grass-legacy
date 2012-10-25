@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     
     char *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
+    int ifield;
     int day, yr;
     BOUND_BOX box;
 
@@ -74,6 +75,7 @@ int main(int argc, char *argv[])
 	_("Performs an affine transformation (shift, scale and rotate, "
 	  "or GPCs) on vector map.");
 
+    /* remove in GRASS7 */
     quiet_flag = G_define_flag();
     quiet_flag->key = 'q';
     quiet_flag->description =
@@ -95,7 +97,6 @@ int main(int argc, char *argv[])
     print_mat_flag->description =
 	_("Print the transformation matrix to stdout");
     
-    /* remove in GRASS7 */
     shift_flag = G_define_flag();
     shift_flag->key = 's';
     shift_flag->description =
@@ -106,6 +107,7 @@ int main(int argc, char *argv[])
     vold = G_define_standard_option(G_OPT_V_INPUT);
 
     field = G_define_standard_option(G_OPT_V_FIELD);
+    field->answer = "-1";
     
     vnew = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -208,28 +210,41 @@ int main(int argc, char *argv[])
     Vect_check_input_output_name(vold->answer, vnew->answer, GV_FATAL_EXIT);
     
     out3d = WITHOUT_Z;
+    
+    ifield = atoi(field->answer);
 
-    /* please remove in GRASS7 */
     if (shift_flag->answer)
 	G_warning(_("The '%c' flag is deprecated and will be removed in future. "
 		   "Transformation parameters are used automatically when no pointsfile is given."),
 		  shift_flag->key);
 
+    /* please remove in GRASS7 */
     if (quiet_flag->answer) {
 	G_warning(_("The '%c' flag is deprecated and will be removed in future. "
 		   "Please use '--quiet' instead."), quiet_flag->key);
 	G_putenv("GRASS_VERBOSE", "0");
     }
 
-    if (!table->answer && columns->answer) {
-	G_fatal_error(_("Table name is not defined. Please use '%s' parameter."),
-		      table->key);
+    /* if a table is specified, require columns and layer */
+    /* if columns are specified, but no table, require layer > 0 and use 
+     * the table attached to that layer */
+    if (table->answer && !columns->answer) {
+	G_fatal_error(_("Column names are not defined. Please use '%s' parameter."),
+		      columns->key);
+    }
+
+    if ((columns->answer || table->answer) && ifield < 1) {
+	G_fatal_error(_("Please specify a valid layer with '%s' parameter."),
+		      field->key);
     }
 
     if (table->answer && strcmp(vnew->answer, table->answer) == 0) {
 	G_fatal_error(_("Name of table and name for output vector map must be different. "
 		       "Otherwise the table is overwritten."));
     }
+
+    if (!columns->answer && !table->answer)
+	ifield = -1;
 
     if (pointsfile->answer != NULL && !shift_flag->answer) {
 	G_strcpy(Coord.name, pointsfile->answer);
@@ -346,7 +361,7 @@ int main(int argc, char *argv[])
     /* do the transformation */
     transform_digit_file(&Old, &New, Coord.name[0] ? 1 : 0,
 			 ztozero, swap_flag->answer, trans_params,
-			 table->answer, columns_name, atoi(field->answer));
+			 table->answer, columns_name, ifield);
 
     if (Vect_copy_tables(&Old, &New, 0))
         G_warning(_("Failed to copy attribute table to output map"));
