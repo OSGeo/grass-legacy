@@ -66,6 +66,15 @@ endif
 %.tab.h %.tab.c: %.y
 	$(YACC) -b$* -p$* $(YACCFLAGS) $<
 
+ifneq ($(MINGW),)
+mkpath = $(shell $(TOOLSDIR)/g.echo$(EXE) $(1));$(2)
+else
+mkpath = $(1):$(2)
+endif
+
+GRASS_PYTHONPATH := $(call mkpath,$(GISBASE)/etc/python,$$PYTHONPATH)
+GRASS_PYTHONPATH := $(call mkpath,$(ARCH_DISTDIR)/etc/python,$(GRASS_PYTHONPATH))
+
 run_grass = \
 	GISRC=$(RUN_GISRC) \
 	GISBASE=$(RUN_GISBASE) \
