@@ -1,4 +1,4 @@
-#!/c/OSGeo4W/apps/msys/bin/sh
+#!/c/OSGeo4W_g6/apps/msys/bin/sh
 
 set -e
 
@@ -21,8 +21,8 @@ export PACKAGE=${1:-1}
 # package name for osgeo4w
 # eg. 64-dev -> grass64-dev, empty for release
 export PACKAGE_NAME=$2
-export OSGEO4W_ROOT_MSYS="/c/OSGeo4W"
-export OSGEO4W_ROOT="C:\\\OSGeo4W"
+export OSGEO4W_ROOT_MSYS="/c/OSGeo4W_g6"
+export OSGEO4W_ROOT="C:\\\OSGeo4W_g6"
 export PATH=.:/c/mingw/bin:/usr/local/bin:/bin:$OSGEO4W_ROOT_MSYS/bin:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/Subversion:$PWD/mswindows/osgeo4w
 
 T0=$(date +%s) 
@@ -73,8 +73,8 @@ else
     GRASS_EXECUTABLE=grass${MAJOR}${MINOR}
 fi
 
-export GRASS_PYTHON="/c/OSGeo4W/bin/python.exe"
-export PYTHONHOME="/c/OSGeo4W/apps/Python27"
+export GRASS_PYTHON="$OSGEO4W_ROOT_MSYS/bin/python.exe"
+export PYTHONHOME="$OSGEO4W_ROOT_MSYS/apps/Python27"
 
 if [ -f mswindows/osgeo4w/package.log ]; then 
     i=0 
