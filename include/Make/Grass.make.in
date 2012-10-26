@@ -64,6 +64,7 @@ DBDRIVERDIR     = $(ARCH_DISTDIR)/driver/db
 DOCSDIR         = $(ARCH_DISTDIR)/docs
 HTMLDIR         = $(ARCH_DISTDIR)/docs/html
 SCRIPTDIR       = $(ARCH_DISTDIR)/scripts
+TOOLSDIR	= $(ARCH_DISTDIR)/tools
 
 FONTDIR         = $(ARCH_DISTDIR)/fonts
 
