@@ -30,6 +30,7 @@ BINDIR=			${UNIX_BIN}
 MAKE_DIR_CMD=		mkdir -p -m 755
 
 SUBDIRS = \
+	tools \
 	lib \
 	db \
 	display \
@@ -43,7 +44,6 @@ SUBDIRS = \
 	raster3d \
 	scripts \
 	sites \
-	tools \
 	vector \
 	visualization \
 	man \
