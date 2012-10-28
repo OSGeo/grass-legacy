@@ -10,7 +10,7 @@
  * PURPOSE:      Calculate TOA Radiance or Reflectance and Kinetic Temperature
  *               for Landsat 1/2/3/4/5 MS, 4/5 TM or 7 ETM+
  *
- * COPYRIGHT:    (C) 2002-2012 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006-2012 by the GRASS Development Team
  *
  *               This program is free software under the GNU General
  *               Public License (>=v2). Read the file COPYING that
@@ -200,8 +200,10 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Illegal date format: [%s] (yyyy-mm-dd)"),
 			  lsat.date);
     }
+    /* Unnecessary because G_zero filled
     else
 	lsat.date[0] = '\0';
+	*/
 
     if (pdate->answer != NULL) {
 	strncpy(lsat.creation, pdate->answer, 11);
@@ -210,17 +212,23 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Illegal date format: [%s] (yyyy-mm-dd)"),
 			  lsat.creation);
     }
+    /* Unnecessary because G_zero filled
     else
 	lsat.creation[0] = '\0';
+	*/
 
     lsat.sun_elev = elev->answer == NULL ? 0. : atof(elev->answer);
     percent = atof(perc->answer);
     pixel = atoi(dark->answer);
     rayleigh = atof(atmo->answer);
 
+    /* Unnecessary because G_zero filled
+    lsat.flag = NOMETADATAFILE;
+     */
     /* Data from metadata file */
     if (met != NULL)
     {
+        lsat.flag = METADATAFILE;
         i = strlen(met);
         if (strcmp(met + i - 7, "MTL.txt") == 0)
         {
@@ -229,7 +237,7 @@ int main(int argc, char *argv[])
         else if (strcmp(met + i - 4, ".met") == 0)
         {
             if (strcmp(sensorname, "tm7") == 0)
-                lsat_mtldata(met, &lsat);  /* .met of Landsat-7 = new MTL file */
+                lsat_mtldata(met, &lsat);  /* old .met of Landsat-7 = new MTL file */
             else
                 lsat_metdata(met, &lsat);
         }
