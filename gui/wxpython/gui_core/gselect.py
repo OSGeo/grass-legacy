@@ -512,7 +512,6 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.curitem = item
             
             if self.seltree.GetRootItem() == self.seltree.GetItemParent(item):
-                self.value = [] # cannot select mapset item
                 evt.Skip()
                 return
             
@@ -532,7 +531,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 else:
                     self.value = [fullName]
         
-        self.Dismiss()
+            self.Dismiss()
         
         evt.Skip()
 
