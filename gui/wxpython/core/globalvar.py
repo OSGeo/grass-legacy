@@ -203,45 +203,57 @@ def SetLanguage():
     import locale
     
     language = os.getenv('LANG')
-    if language:
-        language = language.split('.')[0] # Split off ignored .encoding part if present
-        orig_language = language
-        try:
-            locale.setlocale(locale.LC_ALL, language)
-        except:
+    if not language:
+        return
+    
+    language = language.split('.')[0] # Split off ignored .encoding part if present
+    orig_language = language
+    try:
+        locale.setlocale(locale.LC_ALL, language)
+    except locale.Error, e:
+        if sys.platform != 'win32': # Don't try on Windows, it will probably not work
+            sys.stderr.write("Failed to set LC_ALL to %s (%s)\n" % (language, e))
             try:
-                # Locale lang.encoding might be missing. Let's try UTF-8 encoding before giving up
-                # as on Linux systems lang.UTF-8 locales are more common than legacy ISO-8859 ones.
-                language = locale.normalize('%s.UTF-8' % language)
+                # Locale lang.encoding might be missing. Let's try
+                # UTF-8 encoding before giving up as on Linux systems
+                # lang.UTF-8 locales are more common than legacy
+                # ISO-8859 ones.
+                language = locale.normalize('%s.UTF-8' % (language))
                 locale.setlocale(locale.LC_ALL, language)
-            except:
-                # If we got so far, provided locale is not supported on this system
-                sys.stderr.write("Failed to set LC_ALL to %s\n" % language)
-                try:
-                    default_locale = locale.getdefaultlocale()
-                except:
-                    default_locale = None
-                
-                if default_locale and default_locale[0]:
-                    language = default_locale[0]
-                else:
-                    language = 'C'
-        
-        # Set up environment for subprocesses
-        for lc in ('LC_CTYPE', 'LC_MESSAGES', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_PAPER', 'LC_NAME', 'LC_ADDRESS', 'LC_TELEPHONE', 'LC_MEASUREMENT', 'LC_IDENTIFICATION'):
-            os.environ[lc] = language
-        
-        # Some code in GRASS might not like other decimal separators than .
-        # Other potential sources for problems are: LC_TIME LC_CTYPE
-        locale.setlocale(locale.LC_NUMERIC, 'C')
-        os.environ['LC_NUMERIC'] = 'C'
-        if os.getenv('LC_ALL'):
-            del os.environ['LC_ALL'] # Remove LC_ALL to not override LC_NUMERIC
-        
-        # Even if setting locale has failed, let's set LANG in a hope, that UI will use it
-        # GRASS texts will be in selected language, system messages (i.e. OK, Cancel etc.) - in system default language
-        os.environ['LANGUAGE'] = orig_language
-        os.environ['LANG'] = orig_language
+            except locale.Error, e:
+                # If we got so far, provided locale is not supported
+                # on this system
+                sys.stderr.write("Failed to set LC_ALL to %s (%s)\n" % (language, e))
+                ### locale.getdefaultlocale() is probably related to gettext?
+                # try:
+                #     default_locale = locale.getdefaultlocale()
+                # except:
+                #     default_locale = None
+                # if default_locale and default_locale[0]:
+                #     language = default_locale[0]
+                # else:
+                language = 'C'
+    
+    # Set up environment for subprocesses
+    for lc in ('LC_CTYPE', 'LC_MESSAGES', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_PAPER',
+               'LC_NAME', 'LC_ADDRESS', 'LC_TELEPHONE', 'LC_MEASUREMENT', 'LC_IDENTIFICATION'):
+        os.environ[lc] = language
+    
+    Debug.msg(1, "Language setttings: (WX) %s / (GRASS) %s", language, orig_language)
+    
+    # Some code in GRASS might not like other decimal separators than .
+    # Other potential sources for problems are: LC_TIME LC_CTYPE
+    locale.setlocale(locale.LC_NUMERIC, 'C')
+    os.environ['LC_NUMERIC'] = 'C'
+    if os.getenv('LC_ALL'):
+        del os.environ['LC_ALL'] # Remove LC_ALL to not override LC_NUMERIC
+    
+    # Even if setting locale has failed, let's set LANG in a hope,
+    # that UI will use it GRASS texts will be in selected language,
+    # system messages (i.e. OK, Cancel etc.) - in system default
+    # language
+    os.environ['LANGUAGE'] = orig_language
+    os.environ['LANG'] = orig_language
 
 """@brief Collected GRASS-relared binaries/scripts"""
 grassCmd, grassScripts = GetGRASSCommands()
