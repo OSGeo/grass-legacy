@@ -218,26 +218,28 @@ def SetLanguage():
                 # UTF-8 encoding before giving up as on Linux systems
                 # lang.UTF-8 locales are more common than legacy
                 # ISO-8859 ones.
-                language = locale.normalize('%s.%s' % (language, locale.getdefaultlocale()[1]))
+                language = locale.normalize('%s.UTF-8' % (language))
                 locale.setlocale(locale.LC_ALL, language)
             except locale.Error, e:
                 # If we got so far, provided locale is not supported
                 # on this system
                 sys.stderr.write("Failed to set LC_ALL to %s (%s)\n" % (language, e))
-                try:
-                    default_locale = locale.getdefaultlocale()
-                except:
-                    default_locale = None
-                
-                if default_locale and default_locale[0]:
-                    language = default_locale[0]
-                else:
-                    language = 'C'
+                ### locale.getdefaultlocale() is probably related to gettext?
+                # try:
+                #     default_locale = locale.getdefaultlocale()
+                # except:
+                #     default_locale = None
+                # if default_locale and default_locale[0]:
+                #     language = default_locale[0]
+                # else:
+                language = 'C'
     
     # Set up environment for subprocesses
     for lc in ('LC_CTYPE', 'LC_MESSAGES', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_PAPER',
                'LC_NAME', 'LC_ADDRESS', 'LC_TELEPHONE', 'LC_MEASUREMENT', 'LC_IDENTIFICATION'):
         os.environ[lc] = language
+    
+    Debug.msg(1, "Language setttings: (WX) %s / (GRASS) %s", language, orig_language)
     
     # Some code in GRASS might not like other decimal separators than .
     # Other potential sources for problems are: LC_TIME LC_CTYPE
