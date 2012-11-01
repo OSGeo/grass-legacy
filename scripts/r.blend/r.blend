@@ -52,7 +52,12 @@
 if  [ -z "$GISBASE" ] ; then
    echo "You must be in GRASS GIS to run this program." 1>&2
    exit 1
-fi   
+fi
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
 
 # save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
@@ -76,10 +81,15 @@ fi
 
 PERC_INV=`expr 100 - $GIS_OPT_PERCENT`
 
+GIS_OPT_PERCENT=`echo $GIS_OPT_PERCENT | awk '{printf "%02d\n", $1}'`
+
 g.message "Calculating the three component maps..."
-r.mapcalc "$GIS_OPT_OUTPUT.r = r#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * r#$GIS_OPT_SECOND"
-r.mapcalc "$GIS_OPT_OUTPUT.g = g#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * g#$GIS_OPT_SECOND"
-r.mapcalc "$GIS_OPT_OUTPUT.b = b#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * b#$GIS_OPT_SECOND"
+r.mapcalc "$GIS_OPT_OUTPUT.r = if(isnull($GIS_OPT_FIRST), r#$GIS_OPT_SECOND, if(isnull($GIS_OPT_SECOND), r#$GIS_OPT_FIRST, \
+                               r#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * r#$GIS_OPT_SECOND))"
+r.mapcalc "$GIS_OPT_OUTPUT.g = if(isnull($GIS_OPT_FIRST), g#$GIS_OPT_SECOND, if(isnull($GIS_OPT_SECOND), g#$GIS_OPT_FIRST, \
+                               g#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * g#$GIS_OPT_SECOND))"
+r.mapcalc "$GIS_OPT_OUTPUT.b = if(isnull($GIS_OPT_FIRST), b#$GIS_OPT_SECOND, if(isnull($GIS_OPT_SECOND), b#$GIS_OPT_FIRST, \
+                               b#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * b#$GIS_OPT_SECOND))"
 
 g.message "Setting color tables to grey..."
 # this must be "0 black \n 255 white"
