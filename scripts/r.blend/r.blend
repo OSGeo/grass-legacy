@@ -57,7 +57,12 @@
 if  [ -z "$GISBASE" ] ; then
    echo "You must be in GRASS GIS to run this program." 1>&2
    exit 1
-fi   
+fi
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
 
 # save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
@@ -87,6 +92,8 @@ fi
 PERC_INV=`echo "$PERCENT" | awk '{printf("%.6g", 100.0 - $1)}'`
 
 g.message "Calculating the three component maps..."
+
+# TODO: NULL handling is broken, see G6.4 or 7
 r.mapcalc "$OUTPUT.r = r#$FIRST * $PERCENT/100.0 + (1.0 - $PERCENT/100.0) * r#$SECOND ; \
            $OUTPUT.g = g#$FIRST * $PERCENT/100.0 + (1.0 - $PERCENT/100.0) * g#$SECOND ; \
            $OUTPUT.b = b#$FIRST * $PERCENT/100.0 + (1.0 - $PERCENT/100.0) * b#$SECOND"
