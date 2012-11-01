@@ -319,6 +319,8 @@ int main(int argc, char *argv[])
 
 	    if (!Vect_cat_get(Cats, layer, &cat))
 		continue;
+	    Vect_reset_cats(Cats);
+	    Vect_cat_set(Cats, 1, cat);
 	    Vect_write_line(&Out, type, Points, Cats);
 	    Vect_get_line_nodes(&In, i, &node, NULL);
 	    process_node(node, cat);
