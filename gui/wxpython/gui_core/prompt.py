@@ -726,7 +726,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
         # create command and map lists for autocompletion
         #
         self.AutoCompSetIgnoreCase(False) 
-        
+                
         #
         # line margins
         #
