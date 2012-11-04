@@ -941,11 +941,10 @@ class MapFrame(MapFrameBase):
         self.MapWindow.SetCursor(self.cursors["pencil"])
         
         # initiating output
-        style = self._layerManager.goutput.cmd_output.StyleWarning
-        self._layerManager.goutput.WriteLog(_('Click and drag with left mouse button '
-                                              'to measure.%s'
-                                              'Double click with left button to clear.') % \
-                                                (os.linesep), style)
+        self._layerManager.goutput.WriteWarning(_('Click and drag with left mouse button '
+                                                  'to measure.\n'
+                                                  'Double click with left button to clear.'))
+        
         if self.Map.projinfo['proj'] != 'xy':
             units = self.Map.projinfo['units']
             self._layerManager.goutput.WriteCmdLog(_('Measuring distance') + ' ('
