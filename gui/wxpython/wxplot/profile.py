@@ -7,7 +7,7 @@ Classes:
  - profile::ProfileFrame
  - profile::ProfileToolbar
 
-(C) 2011 by the GRASS Development Team
+(C) 2011-2012 by the GRASS Development Team
 
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -22,7 +22,6 @@ import math
 import wx
 import wx.lib.plot as plot
 
-from core.gcmd import GWarning
 import grass.script as grass
 
 try:
@@ -38,7 +37,7 @@ except ImportError:
 from wxplot.base       import BasePlotFrame, PlotIcons
 from gui_core.toolbars import BaseToolbar, BaseIcons
 from wxplot.dialogs    import ProfileRasterDialog, PlotStatsFrame
-from core.gcmd         import RunCommand
+from core.gcmd         import RunCommand, GWarning, GError
 
 class ProfileFrame(BasePlotFrame):
     """!Mainframe for displaying profile of one or more raster maps. Uses wx.lib.plot.
@@ -330,28 +329,27 @@ class ProfileFrame(BasePlotFrame):
     def SaveProfileToFile(self, event):
         """!Save r.profile data to a csv file
         """    
-        wildcard = _("Comma separated value (*.csv)|*.csv")
-        
         dlg = wx.FileDialog(parent = self,
-                            message = _("Path and prefix (for raster name) to save profile values..."),
+                            message = _("Choose prefix for file where to save profile values..."),
                             defaultDir = os.getcwd(), 
-                            defaultFile = "",  wildcard = wildcard, style = wx.SAVE)
+                            wildcard = _("Comma separated value (*.csv)|*.csv"), style = wx.SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-            
             for r in self.rasterList:
-                pfile = path+'_'+str(r['name'])+'.csv'
+                pfile = path + '_' + str(r.replace('@', '_')) + '.csv'
                 try:
-                    file = open(pfile, "w")
-                except IOError:
-                    wx.MessageBox(parent = self,
-                                  message = _("Unable to open file <%s> for writing.") % pfile,
-                                  caption = _("Error"), style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
-                    return False
+                    fd = open(pfile, "w")
+                except IOError, e:
+                    GError(parent = self,
+                           message = _("Unable to open file <%s> for writing.\n"
+                                       "Reason: %s") % (pfile, e))
+                    dlg.Destroy()
+                    return
+                
                 for datapair in self.raster[r]['datalist']:
-                    file.write('%d,%d\n' % (float(datapair[0]),float(datapair[1])))
-                                        
-                file.close()
+                    fd.write('%d,%d\n' % (float(datapair[0]),float(datapair[1])))
+                
+                fd.close()
 
         dlg.Destroy()
         
