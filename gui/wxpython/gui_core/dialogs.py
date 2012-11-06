@@ -530,8 +530,7 @@ class DecorationDialog(wx.Dialog):
             resize.SetToolTipString(_("Click and drag on the map display to set legend"
                                         " size and position and then press OK"))
             resize.SetName('resize')
-            if self.parent.IsPaneShown('3d'):
-                resize.Disable()
+            resize.Disable()
             box.Add(item = resize, proportion = 0, flag = wx.ALIGN_CENTRE|wx.ALL, border = 5)
             sizer.Add(item = box, proportion = 0,
                       flag = wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border = 5)
@@ -587,8 +586,11 @@ class DecorationDialog(wx.Dialog):
             if name == 'legend':
                 mapName, found = GetLayerNameFromCmd(self.parent.MapWindow.overlays[self.ovlId]['cmd'])
                 if found:
-                    # enable 'OK' button
+                    # enable 'OK' and 'Resize' button
                     self.btnOK.Enable()
+                    if not self.parent.IsPaneShown('3d'):
+                        self.FindWindowByName('resize').Enable()
+                    
                     # set title
                     self.SetTitle(_('Legend of raster map <%s>') % \
                                       mapName)
@@ -632,7 +634,7 @@ class DecorationDialog(wx.Dialog):
                 self.parent.MapWindow.overlays[self.ovlId]['propwin'].Show()
     
     def OnResize(self, event):
-        if self.FindWindowByName('resize').GetValue():
+        if self.FindWindowByName('resize').GetValue(): 
             self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
             self.parent.MapWindow.mouse['use'] = 'legend'
             self.parent.MapWindow.mouse['box'] = 'box'
@@ -692,6 +694,8 @@ class DecorationDialog(wx.Dialog):
         if  self.name == 'legend':
             if params and not self.btnOK.IsEnabled():
                 self.btnOK.Enable()
+                if not self.parent.IsPaneShown('3d'):
+                    self.FindWindowByName('resize').Enable()
             
 class TextLayerDialog(wx.Dialog):
     """
