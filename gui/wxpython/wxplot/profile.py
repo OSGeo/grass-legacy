@@ -37,7 +37,7 @@ except ImportError:
 from wxplot.base       import BasePlotFrame, PlotIcons
 from gui_core.toolbars import BaseToolbar, BaseIcons
 from wxplot.dialogs    import ProfileRasterDialog, PlotStatsFrame
-from core.gcmd         import RunCommand, GWarning, GError
+from core.gcmd         import RunCommand, GWarning, GError, GMessage
 
 class ProfileFrame(BasePlotFrame):
     """!Mainframe for displaying profile of one or more raster maps. Uses wx.lib.plot.
@@ -330,19 +330,31 @@ class ProfileFrame(BasePlotFrame):
         """!Save r.profile data to a csv file
         """    
         dlg = wx.FileDialog(parent = self,
-                            message = _("Choose prefix for file where to save profile values..."),
+                            message = _("Choose prefix for file(s) where to save profile values..."),
                             defaultDir = os.getcwd(), 
                             wildcard = _("Comma separated value (*.csv)|*.csv"), style = wx.SAVE)
+        pfile = []
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             for r in self.rasterList:
-                pfile = path + '_' + str(r.replace('@', '_')) + '.csv'
+                pfile.append(path + '_' + str(r.replace('@', '_')) + '.csv')
+                if os.path.exists(pfile[-1]):
+                    dlgOv = wx.MessageDialog(self,
+                                             message = _("File <%s> already exists. "
+                                                         "Do you want to overwrite this file?") % pfile[-1],
+                                             caption = _("Overwrite file?"),
+                                             style = wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+                    if dlgOv.ShowModal() != wx.ID_YES:
+                        pfile.pop()
+                        dlgOv.Destroy()
+                        continue
+                
                 try:
-                    fd = open(pfile, "w")
+                    fd = open(pfile[-1], "w")
                 except IOError, e:
                     GError(parent = self,
                            message = _("Unable to open file <%s> for writing.\n"
-                                       "Reason: %s") % (pfile, e))
+                                       "Reason: %s") % (pfile[-1], e))
                     dlg.Destroy()
                     return
                 
@@ -350,9 +362,15 @@ class ProfileFrame(BasePlotFrame):
                     fd.write('%d,%d\n' % (float(datapair[0]),float(datapair[1])))
                 
                 fd.close()
-
-        dlg.Destroy()
         
+        dlg.Destroy()
+        if pfile:
+            message = _("%d files created:\n%s") % (len(pfile), '\n'.join(pfile))
+        else:
+            message = _("No files generated.")
+        
+        GMessage(parent = self, message = message)
+                        
     def OnStats(self, event):
         """!Displays regression information in messagebox
         """
