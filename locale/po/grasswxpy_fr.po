@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-29 15:54+0200\n"
-"PO-Revision-Date: 2012-10-11 20:52+0200\n"
+"PO-Revision-Date: 2012-11-07 17:44+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -131,7 +131,6 @@ msgid "Background color:"
 msgstr "Couleur d'arrière-plan :"
 
 #: ../gui/wxpython/nviz/tools.py:386
-#, fuzzy
 msgid "Press 'Record' button and start changing the view. It is recommended to use fly-through mode (Map Display toolbar) to achieve smooth motion."
 msgstr "Appuyez sur le bouton 'Enregistrer' et commencez à changer la vue. Il est recommandé d'utiliser le mode avion (barre d'outils d'affichage) pour obtenir un déplacement fluide."
 
@@ -230,14 +229,12 @@ msgid "Fringe"
 msgstr "Frange"
 
 #: ../gui/wxpython/nviz/tools.py:607
-#, fuzzy
 msgid "Decorations"
-msgstr "Description"
+msgstr "Décorations"
 
 #: ../gui/wxpython/nviz/tools.py:627 ../gui/wxpython/nviz/tools.py:940
-#, fuzzy
 msgid "Cutting planes"
-msgstr "Plan de coupe"
+msgstr "Plans de coupe"
 
 #: ../gui/wxpython/nviz/tools.py:649 ../gui/wxpython/nviz/mapwindow.py:1608
 #: ../gui/wxpython/psmap/dialogs.py:1143
@@ -378,9 +375,8 @@ msgid "Reset to default position"
 msgstr "Revenir à la position par défaut"
 
 #: ../gui/wxpython/nviz/tools.py:946
-#, fuzzy
 msgid "Active cutting plane:"
-msgstr "Activer les plans de coupe"
+msgstr "Activer les plans de coupe :"
 
 #: ../gui/wxpython/nviz/tools.py:958
 msgid "clear"
@@ -761,9 +757,8 @@ msgid "%(features)d features (%(points)d points)"
 msgstr "%(features)d primitives (%(points)d points)"
 
 #: ../gui/wxpython/nviz/tools.py:4647
-#, fuzzy
 msgid "range:"
-msgstr "fourchette"
+msgstr "intervalle:"
 
 # Easting et Northing sont ici traduits resp. Abscisse et Ordonnée, désignant plutôt des valeurs numériques que des directions cardinales.
 #: ../gui/wxpython/nviz/tools.py:4715 ../gui/wxpython/nviz/tools.py:4726
@@ -4068,7 +4063,6 @@ msgid "Select map layers and add them to the list."
 msgstr "Sélectionner la couche et l'ajouter à la liste"
 
 #: ../gui/wxpython/gui_core/dialogs.py:949
-#, fuzzy
 msgid "Remove selected layer(s) from list."
 msgstr "Suprimer la(les) couche(s) sélectionnée(s) de la liste."
 
@@ -4469,7 +4463,6 @@ msgid "Downloads and imports data from WMS servers"
 msgstr "Télécharger et importer des données depuis un serveur WMS"
 
 #: ../gui/wxpython/menustrings.py:54
-#, fuzzy
 msgid "Unpack raster map"
 msgstr "Dépaqueter une carte raster"
 
@@ -4739,13 +4732,12 @@ msgid "Converts raster maps into the VTK-Ascii format"
 msgstr "Convertit des cartes raster au format VTK-Ascii"
 
 #: ../gui/wxpython/menustrings.py:122
-#, fuzzy
 msgid "Pack raster map"
-msgstr "Combiner des cartes raster"
+msgstr "Empaqueter des cartes raster"
 
 #: ../gui/wxpython/menustrings.py:123
 msgid "Packs up a raster map and support files for copying."
-msgstr ""
+msgstr "Empaqueter une carte raster et les fichiers associée pour la copie."
 
 #: ../gui/wxpython/menustrings.py:124
 msgid "Export vector map"
@@ -5507,7 +5499,6 @@ msgid "Shadows map"
 msgstr "Carte des ombres"
 
 #: ../gui/wxpython/menustrings.py:333
-#, fuzzy
 msgid "Calculates cast shadow areas from sun position and elevation raster map."
 msgstr "Calcule les zones d'ombre depuis la position du soleil et une carte d'altitude."
 
@@ -5597,12 +5588,10 @@ msgid "Generates a raster map of distance to features in input raster map."
 msgstr "Convertir des tranches de cartes raster 2D en une carte volumique raster 3D. "
 
 #: ../gui/wxpython/menustrings.py:355
-#, fuzzy
 msgid "Horizon angle"
 msgstr "Angle d'hoziron"
 
 #: ../gui/wxpython/menustrings.py:356
-#, fuzzy
 msgid "Horizon angle computation from a digital elevation model."
 msgstr "Calcule l'angle d'horizon depuis un modèle numérique d'altitude."
 
@@ -6116,9 +6105,8 @@ msgid "Fill NULL cells"
 msgstr "Remplir les cellules NULL"
 
 #: ../gui/wxpython/menustrings.py:485
-#, fuzzy
 msgid "Fills no-data areas in raster maps using spline interpolation."
-msgstr "Ré-échantillonner la carte raster avec un maillage plus fin en procédant par interpolation"
+msgstr "Remplir les zones de no-data de la carte raster par interpolation spline."
 
 #: ../gui/wxpython/menustrings.py:486 ../gui/wxpython/menustrings.py:763
 msgid "Report and statistics"
@@ -6916,9 +6904,8 @@ msgid "Create/edit group"
 msgstr "Créer/éditer un groupe d'images"
 
 #: ../gui/wxpython/menustrings.py:702
-#, fuzzy
 msgid "Creates, edits, and lists groups of imagery files."
-msgstr "Crée, édite, et liste groupes et sous-groupes de fichiers d'imagerie."
+msgstr "Crée, édite, et liste les groupes d'images."
 
 #: ../gui/wxpython/menustrings.py:703
 msgid "Target group"
@@ -7119,20 +7106,19 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:754
 msgid "Modis quality control"
-msgstr ""
+msgstr "Contrôle de qualité MODIS"
 
 #: ../gui/wxpython/menustrings.py:755
-#, fuzzy
 msgid "Extracts quality control parameters from Modis QC layers."
-msgstr "Extraires les paramètres de terrain à partir d'une MNA."
+msgstr "Extraire le sparamètres de contrôle de qualité d'une couche MODIS QC."
 
 #: ../gui/wxpython/menustrings.py:756
 msgid "Atmospheric correction"
-msgstr ""
+msgstr "Corrections atmosphériques"
 
 #: ../gui/wxpython/menustrings.py:757
 msgid "Performs atmospheric correction using the 6S algorithm."
-msgstr ""
+msgstr "Effectue une correction atmosphérique par l'algorithme 6S."
 
 #: ../gui/wxpython/menustrings.py:758
 msgid "Topographic correction"
@@ -7140,7 +7126,7 @@ msgstr "Correction topographique"
 
 #: ../gui/wxpython/menustrings.py:759
 msgid "Computes topographic correction of reflectance."
-msgstr ""
+msgstr "Calcule la correction topographique de la réflectance."
 
 #: ../gui/wxpython/menustrings.py:760
 msgid "Satellite images products"
@@ -7279,9 +7265,8 @@ msgid "List drivers"
 msgstr "Lister les pilotes"
 
 #: ../gui/wxpython/menustrings.py:799
-#, fuzzy
 msgid "Lists all database drivers."
-msgstr "Lister tous les pilotes de base de données"
+msgstr "Lister tous les pilotes de bases de données."
 
 #: ../gui/wxpython/menustrings.py:800
 msgid "List tables"
@@ -7514,14 +7499,12 @@ msgid "&Model"
 msgstr "&Modèle"
 
 #: ../gui/wxpython/menustrings.py:875
-#, fuzzy
 msgid "Add command"
-msgstr "Ajouter une couche de commande"
+msgstr "Ajouter une commande"
 
 #: ../gui/wxpython/menustrings.py:876
-#, fuzzy
 msgid "Add action (GRASS command) to model"
-msgstr "Ajouter un nouveau module GRASS au modèle"
+msgstr "Ajouter une action (commande GRASS) au modèle"
 
 #: ../gui/wxpython/menustrings.py:877
 msgid "Add data"
@@ -7540,14 +7523,12 @@ msgid "Define relation between data and action items"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:881
-#, fuzzy
 msgid "Add loop / series"
-msgstr "Ajouter une boucle"
+msgstr "Ajouter une boucle / série"
 
 #: ../gui/wxpython/menustrings.py:882
-#, fuzzy
 msgid "Adds loop (series) to model"
-msgstr "Ajouter une nouvelle variable au modèle"
+msgstr "Ajouter une boucle (série) au modèle"
 
 #: ../gui/wxpython/menustrings.py:883
 msgid "Add condition"
@@ -7859,11 +7840,9 @@ msgid "Not all characters are supported by ISO-8859-1 (Latin 1) encoding which i
 msgstr "Tous les caractères ne sont pas supportés par l'encodage ISO-8859-1 (Latin 1) requis pour le module ps.map."
 
 #: ../gui/wxpython/psmap/instructions.py:931
-#, fuzzy, python-format
+#, python-format
 msgid "Failed to read instruction %(inst)s: file %(file)s not found."
-msgstr ""
-"Échec à la lecture de l'instruction %s.\n"
-"Utiliser la notation 1:25000."
+msgstr "Échec à la lecture de l'instruction %(inst)s : fichier %(file)s non trouvé."
 
 #: ../gui/wxpython/psmap/toolbars.py:52
 msgid "Generate text file with mapping instructions"
@@ -7926,9 +7905,8 @@ msgid "Text"
 msgstr "Texte"
 
 #: ../gui/wxpython/psmap/toolbars.py:77
-#, fuzzy
 msgid "Map info"
-msgstr "Ajouter les informations sur la carte"
+msgstr "Informations sur la carte"
 
 #: ../gui/wxpython/psmap/toolbars.py:79 ../gui/wxpython/wxplot/dialogs.py:533
 #: ../gui/wxpython/wxplot/dialogs.py:585
@@ -7937,13 +7915,12 @@ msgstr "Légende"
 
 #: ../gui/wxpython/psmap/toolbars.py:83 ../gui/wxpython/psmap/dialogs.py:4061
 #: ../gui/wxpython/psmap/dialogs.py:4109
-#, fuzzy
 msgid "Image"
-msgstr "&Imagerie"
+msgstr "Image"
 
 #: ../gui/wxpython/psmap/toolbars.py:87
 msgid "Add simple graphics"
-msgstr ""
+msgstr "Ajouter un graphique simple"
 
 #: ../gui/wxpython/psmap/toolbars.py:89 ../gui/wxpython/psmap/dialogs.py:4522
 #: ../gui/wxpython/vdigit/preferences.py:516
@@ -7956,9 +7933,8 @@ msgid "Line"
 msgstr "Ligne"
 
 #: ../gui/wxpython/psmap/toolbars.py:93
-#, fuzzy
 msgid "Rectangle"
-msgstr "Sélection des pendants"
+msgstr "Rectangle"
 
 #: ../gui/wxpython/psmap/dialogs.py:197
 msgid "Units:"
@@ -8563,7 +8539,6 @@ msgid "No raster"
 msgstr "pas de carte raster"
 
 #: ../gui/wxpython/psmap/dialogs.py:3221
-#, fuzzy
 msgid "Mapinfo settings"
 msgstr "Paramètres de la carte"
 
@@ -8682,74 +8657,70 @@ msgid "No text entered!"
 msgstr "Pas de texte saisi !"
 
 #: ../gui/wxpython/psmap/dialogs.py:4120
-#, fuzzy
 msgid "Choose a directory with images"
-msgstr "Choisir le répertoire d'entrée"
+msgstr "Choisir un répertoire avec des images"
 
 #: ../gui/wxpython/psmap/dialogs.py:4152
 msgid "Note: only EPS format supported"
-msgstr ""
+msgstr "Note : seul le format EPS est supporté"
 
 #: ../gui/wxpython/psmap/dialogs.py:4161
-#, fuzzy
 msgid "Scale And Rotation"
-msgstr "Échelle et direction du Nord"
+msgstr "Échelle et rotation"
 
 #: ../gui/wxpython/psmap/dialogs.py:4192 ../gui/wxpython/psmap/dialogs.py:4650
-#, fuzzy
 msgid "Rotation angle (deg):"
-msgstr "Rotation :"
+msgstr "Angle de rotation (deg) :"
 
 #: ../gui/wxpython/psmap/dialogs.py:4201 ../gui/wxpython/psmap/dialogs.py:4659
 msgid "Counterclockwise rotation in degrees"
-msgstr ""
+msgstr "Rotation anti-horaire en degrés"
 
 #: ../gui/wxpython/psmap/dialogs.py:4299
-#, fuzzy
 msgid ""
 "PIL\n"
 "missing"
-msgstr "Émission"
+msgstr ""
+"PIL\n"
+"manquant"
 
 #: ../gui/wxpython/psmap/dialogs.py:4316
-#, fuzzy, python-format
+#, python-format
 msgid "Unable to read file %s"
-msgstr "Impossible de lire le fichier %s."
+msgstr "Impossible de lire le fichier %s"
 
 #: ../gui/wxpython/psmap/dialogs.py:4374
 #, python-format
 msgid "size: %(width)s x %(height)s pts"
-msgstr ""
+msgstr "taille : %(width)s x %(height)s pts"
 
 #: ../gui/wxpython/psmap/dialogs.py:4396
-#, fuzzy
 msgid "No image selected."
-msgstr "Pas de carte sélectionnée !"
+msgstr "Pas d'image sélectionnée."
 
 #: ../gui/wxpython/psmap/dialogs.py:4493
-#, fuzzy
 msgid "North Arrow settings"
-msgstr "Montrer les paramètres"
+msgstr "Paramètres de la flèche nord"
 
 #: ../gui/wxpython/psmap/dialogs.py:4504
 msgid "Compute convergence"
 msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:4560
-#, fuzzy
 msgid "Symbol"
 msgstr "symbole"
 
 #: ../gui/wxpython/psmap/dialogs.py:4566
-#, fuzzy
 msgid "Select symbol:"
-msgstr "Sélection par boîte"
+msgstr "Sélectionner le symbole :"
 
 #: ../gui/wxpython/psmap/dialogs.py:4580
 msgid ""
 "Note: Selected symbol is not displayed\n"
 "in draft mode (only in preview mode)"
 msgstr ""
+"Note : le symbol sélectionné n'est pas affiché\n"
+"en mode brouillon (seulement en mode aperçu"
 
 #: ../gui/wxpython/psmap/dialogs.py:4598 ../gui/wxpython/psmap/dialogs.py:4852
 #, fuzzy
@@ -8757,43 +8728,36 @@ msgid "Outline color:"
 msgstr "Couleur de ligne"
 
 #: ../gui/wxpython/psmap/dialogs.py:4613 ../gui/wxpython/psmap/dialogs.py:4873
-#, fuzzy
 msgid "Fill color:"
-msgstr "remplir par la couleur"
+msgstr "Remplir par la couleur"
 
 #: ../gui/wxpython/psmap/dialogs.py:4636
-#, fuzzy
 msgid "Size and Rotation"
-msgstr "Taille et position"
+msgstr "Taille et rotation"
 
 #: ../gui/wxpython/psmap/dialogs.py:4641
-#, fuzzy
 msgid "Size (pt):"
-msgstr "Taille:"
+msgstr "Taille (pt) :"
 
 #: ../gui/wxpython/psmap/dialogs.py:4643
-#, fuzzy
 msgid "Symbol size in points"
-msgstr "Taille de symbole :"
+msgstr "Taille de symbole en points"
 
 #: ../gui/wxpython/psmap/dialogs.py:4817
-#, fuzzy
 msgid "Rectangle settings"
-msgstr "Modifier les paramètres"
+msgstr "Paramètres du rectangle"
 
 #: ../gui/wxpython/psmap/dialogs.py:4819
-#, fuzzy
 msgid "Line settings"
-msgstr "Modifier les paramètres"
+msgstr "Paramètres de la ligne"
 
 #: ../gui/wxpython/psmap/dialogs.py:4896 ../gui/wxpython/gcp/manager.py:2528
 msgid "Line width:"
 msgstr "Épaisseur de ligne :"
 
 #: ../gui/wxpython/psmap/dialogs.py:4905
-#, fuzzy
 msgid "Line width in points"
-msgstr "Largeur de ligne (en pixels) :"
+msgstr "Épaisseur de ligne en points :"
 
 #: ../gui/wxpython/modules/histogram.py:176
 #: ../gui/wxpython/mapdisp/mapwindow.py:438
@@ -8801,9 +8765,8 @@ msgid "Please wait, exporting image..."
 msgstr "Merci de patienter, export de l'image en cours ..."
 
 #: ../gui/wxpython/modules/histogram.py:266
-#, fuzzy
 msgid "GRASS GIS Histogramming Tool (d.histogram)"
-msgstr "Histogramme GRASS de carte raster"
+msgstr "Histogramme GRASS"
 
 #: ../gui/wxpython/modules/histogram.py:368
 msgid "Select font for histogram text"
@@ -9009,14 +8972,12 @@ msgid "Add created raster map into layer tree"
 msgstr "Ajouter la carte raster créée dans l'arborescence des couches"
 
 #: ../gui/wxpython/modules/mcalc_builder.py:458
-#, fuzzy
 msgid "You must enter the name of a new raster map to create."
-msgstr "Vous devez entrer le nom de la nouvelle carte à créer"
+msgstr "Vous devez entrer le nom de la nouvelle carte à créer."
 
 #: ../gui/wxpython/modules/mcalc_builder.py:468
-#, fuzzy
 msgid "You must enter an expression to create a new raster map."
-msgstr "Vous devez entrer une expression mapcalc pour créer une nouvelle cartes"
+msgstr "Vous devez entrer une expression pour créer une nouvelle carte."
 
 #: ../gui/wxpython/modules/mcalc_builder.py:503
 msgid "Choose a file name to save the expression"
@@ -9032,23 +8993,20 @@ msgid "Choose a file name to load the expression"
 msgstr "Choisir un fichier pour charger une formule"
 
 #: ../gui/wxpython/modules/colorrules.py:71
-#, fuzzy
 msgid "Check all"
-msgstr "Fermer la boîte de dialogue"
+msgstr "(Dé)cocher tout"
 
 #: ../gui/wxpython/modules/colorrules.py:74
-#, fuzzy
 msgid "Clear all"
-msgstr "Fermer la boîte de dialogue"
+msgstr "Effacer tout"
 
 #: ../gui/wxpython/modules/colorrules.py:130
-#, fuzzy
 msgid "Enter vector attribute values"
-msgstr "Interroger la carte vecteur depuis la table d'attributs"
+msgstr "Entrer les valeurs d'attributs"
 
 #: ../gui/wxpython/modules/colorrules.py:287
 msgid "Bad color format. Use color format '0:0:0'"
-msgstr ""
+msgstr "Mauvais format de couleur. Utiliser le format '0:0:0'"
 
 #: ../gui/wxpython/modules/colorrules.py:369
 msgid "Select raster map:"
@@ -9059,43 +9017,36 @@ msgid "Select vector map:"
 msgstr "Sélectionner une carte vecteur :"
 
 #: ../gui/wxpython/modules/colorrules.py:388
-#, fuzzy
 msgid "Import or export color table:"
-msgstr "Exporter la table de couleurs"
+msgstr "Importer ou exporter la table de couleurs :"
 
 #: ../gui/wxpython/modules/colorrules.py:393
-#, fuzzy
 msgid "Load color table from file:"
-msgstr "Enregistrer la table de couleur dans un fichier"
+msgstr "Charger la table de couleur depuis un fichier :"
 
 #: ../gui/wxpython/modules/colorrules.py:394
-#, fuzzy
 msgid "Choose file to load color table"
-msgstr "Choisir un fichier GRC à charger"
+msgstr "Choisir le fichier de table de couleur à charger"
 
 #: ../gui/wxpython/modules/colorrules.py:395
 msgid "Load"
 msgstr "Charger"
 
 #: ../gui/wxpython/modules/colorrules.py:396
-#, fuzzy
 msgid "Type filename or click to choose file and load color table"
-msgstr "Taper un nom de fichier ou cliquer sur Parcourir pour choisir un fichier"
+msgstr "Entrer un nom de fichier ou cliquer sur Parcourir pour charger une table de couleur"
 
 #: ../gui/wxpython/modules/colorrules.py:402
-#, fuzzy
 msgid "Save color table to file:"
-msgstr "Enregistrer la table de couleur dans un fichier"
+msgstr "Enregistrer la table de couleur dans le fichier :"
 
 #: ../gui/wxpython/modules/colorrules.py:403
-#, fuzzy
 msgid "Choose file to save color table"
 msgstr "Choisir le fichier à enregistrer"
 
 #: ../gui/wxpython/modules/colorrules.py:404
-#, fuzzy
 msgid "Type filename or click to choose file and save color table"
-msgstr "Taper un nom de fichier ou cliquer sur Parcourir pour choisir un fichier"
+msgstr "Entrer un nom de fichier ou cliquer sur Parcourir pour enregistrer une table de couleur"
 
 #: ../gui/wxpython/modules/colorrules.py:410
 #, fuzzy
@@ -9112,12 +9063,11 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:534
 msgid "No valid color rules given."
-msgstr ""
+msgstr "Pas de règle de couleur valide."
 
 #: ../gui/wxpython/modules/colorrules.py:600
-#, fuzzy
 msgid "Invalid color table format"
-msgstr "Échelle ou centre de carte non valide !"
+msgstr "Format de table de couleur invalide"
 
 #: ../gui/wxpython/modules/colorrules.py:677
 #, python-format
@@ -9142,26 +9092,22 @@ msgid "Enter raster category values or percents (%(range)s = %(min)d-%(max)d)"
 msgstr "Saisir les valeurs de catégorie ou le pourcentage (%(range)s = %(min)d-%(max)d)"
 
 #: ../gui/wxpython/modules/colorrules.py:926
-#, fuzzy
 msgid "Create new color rules for vector map"
-msgstr "Créer une nouvelle table de couleur pour une carte vecteur"
+msgstr "Créer une nouvelle règle de couleur pour une carte vecteur"
 
 #: ../gui/wxpython/modules/colorrules.py:937
 #: ../gui/wxpython/modules/colorrules.py:1462
-#, fuzzy
 msgid "Enter vector attribute values or percents:"
-msgstr "Saisir les valeurs ou la plage (n ou n1 à n2) d'attributs vecteur "
+msgstr "Entrer les valeurs d'attributs ou les pourcentages :"
 
 #: ../gui/wxpython/modules/colorrules.py:939
 #: ../gui/wxpython/modules/colorrules.py:1464
-#, fuzzy
 msgid "Enter vector attribute values:"
-msgstr "Interroger la carte vecteur depuis la table d'attributs"
+msgstr "Entrer les valeurs d'attributs :"
 
 #: ../gui/wxpython/modules/colorrules.py:950
-#, fuzzy
 msgid "Select vector columns"
-msgstr "Sélectionner une carte vecteur"
+msgstr "Sélectionner les colonnes"
 
 #: ../gui/wxpython/modules/colorrules.py:952
 msgid "Layer:"
@@ -9172,58 +9118,50 @@ msgid "Attribute column:"
 msgstr "Colonne d'attribut :"
 
 #: ../gui/wxpython/modules/colorrules.py:957
-#, fuzzy
 msgid "Load color from column:"
-msgstr "Colonne de couleur RVB :"
+msgstr "Charger les couleurs depuis la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:957
-#, fuzzy
 msgid "Save color to column:"
-msgstr "Colonne de couleur RVB :"
+msgstr "Enregistrer les couleurs dans la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:959
-#, fuzzy
 msgid "Load size from column:"
-msgstr "Charger le modèle depuis un fichier"
+msgstr "Charger la taille depuis la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:959
-#, fuzzy
 msgid "Save size to column:"
-msgstr "Raster vers volume"
+msgstr "Entregistrer la taille dans la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:961
-#, fuzzy
 msgid "Load width from column:"
-msgstr "Charger le modèle depuis un fichier"
+msgstr "Charger l'épaisseur depuis la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:961
 msgid "Save width to column:"
-msgstr ""
+msgstr "Enregistrer l'épaisseur dans la colonne :"
 
 #: ../gui/wxpython/modules/colorrules.py:965
 msgid "Use color column instead of color table:"
-msgstr ""
+msgstr "Utiliser la colonne de couleur à la place de la table de couleur :"
 
 #: ../gui/wxpython/modules/colorrules.py:980
-#, fuzzy
 msgid "Add GRASSRGB column to current attribute table."
-msgstr "Supprimer une colonne de la table d'attributs sélectionnée"
+msgstr "Ajouter la colonne GRASSRGV à la table d'attributs."
 
 #: ../gui/wxpython/modules/colorrules.py:1035
 #: ../gui/wxpython/modules/colorrules.py:1084
-#, fuzzy
 msgid "Import or export color table"
-msgstr "Exporter la table de couleurs"
+msgstr "Importer ou exporter la table de couleurs"
 
 #: ../gui/wxpython/modules/colorrules.py:1096
 #, fuzzy, python-format
 msgid "Database connection for vector map <%s> is not defined in DB file.  Do you want to create and connect new attribute table?"
-msgstr "La connexion à une base de données n'est pas définie dans le fichier DB pour la carte vecteur <%s>. Vous pouvez définir une nouvelle connexion dans l'onglet 'Gérer les couches'."
+msgstr "La connexion à une base de données n'est pas définie dans le fichier DB pour la carte vecteur <%s>. Voulez-vous la créer et connecter la nouvelle table d'attributs ?"
 
 #: ../gui/wxpython/modules/colorrules.py:1099
-#, fuzzy
 msgid "No database connection defined"
-msgstr "Connections vecteur base de données"
+msgstr "Pas de connexion à une base de données définie"
 
 #: ../gui/wxpython/modules/colorrules.py:1171
 #, python-format
@@ -9236,12 +9174,11 @@ msgid "Selected map <%(map)s> is not in current mapset <%(mapset)s>. Attribute t
 msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1318
-#, fuzzy, python-format
+#, python-format
 msgid "%s column already exists."
-msgstr "Le fichier existe déjà"
+msgstr "La colonne %s existe déjà."
 
 #: ../gui/wxpython/modules/colorrules.py:1350
-#, fuzzy
 msgid "Please wait, loading data from attribute table..."
 msgstr "Patientez, chargement des données attributaires .."
 
@@ -9270,9 +9207,8 @@ msgid "Please select column to save values to."
 msgstr "Merci de sélectionner un outil de nettoyage à ôter"
 
 #: ../gui/wxpython/modules/colorrules.py:1633
-#, fuzzy
 msgid "No color column defined. Operation canceled."
-msgstr "Aucune carte sélectionnée. Opération annulée."
+msgstr "Pas de colonne de couleur définie. Opération annulée"
 
 #: ../gui/wxpython/modules/extensions.py:42
 msgid "Fetch & install extension from GRASS Addons"
@@ -13739,9 +13675,8 @@ msgstr "Pas de couche sélectionnée"
 #~ msgid "Generates a raster map layer of distance to features in input layer."
 #~ msgstr "Génère une carte raster de distance à des objets dans la carte en entrée."
 
-#, fuzzy
 #~ msgid "Adjusts the relative height of features above the plane of the surface"
-#~ msgstr "Ajuster la hauteur de la vue au dessus de la scène"
+#~ msgstr "Ajuster la hauteur relative des objets au dessus de la surface"
 
 #~ msgid "Takes vector stream data, transforms it to raster and subtracts depth from the output DEM."
 #~ msgstr "Prends les données vectorielles de cours d'eau, les transforme en raster, et soustrait la profondeur du modèle de terrain en sortie."
@@ -13768,3 +13703,46 @@ msgstr "Pas de couche sélectionnée"
 #, fuzzy
 #~ msgid "Plot settings saved to file '%s'."
 #~ msgstr "Réglages de profil sauvegardés dans le fichier '%s'."
+
+#~ msgid "System Info"
+#~ msgstr "Information système"
+
+#~ msgid "GRASS version"
+#~ msgstr "Version de GRASS"
+
+#~ msgid "GRASS SVN Revision"
+#~ msgstr "Version SVN :"
+
+#~ msgid "GIS Library Revision"
+#~ msgstr "Version de la bibliothèque SIG :"
+
+#~ msgid "Platform"
+#~ msgstr "Plateforme"
+
+#~ msgid "SVN Revision"
+#~ msgstr "Version SVN"
+
+#~ msgid "Addons extensions"
+#~ msgstr "Liste des extentions"
+
+#~ msgid "Install extension from addons"
+#~ msgstr "Installer une extension depuis les addons"
+
+#~ msgid "Prints system information"
+#~ msgstr "Afficher les informations système"
+
+#, fuzzy
+#~ msgid ""
+#~ "Click and drag with left mouse button to measure.\n"
+#~ "Double click with left button to clear."
+#~ msgstr "Cliquer et glisser avec le bouton gauche de la souris pour mesurer. %s Double-cliquer avec le bouton gauche pour annuler."
+
+#, fuzzy
+#~ msgid "Unable to open file '%s'\n"
+#~ msgstr ""
+#~ "Impossible d'ouvrir le fichier\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "Unable to create file '%s'\n"
+#~ msgstr "Impossible de lire le fichier %s."
