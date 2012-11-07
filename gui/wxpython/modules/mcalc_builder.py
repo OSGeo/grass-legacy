@@ -294,7 +294,7 @@ class MapCalcFrame(wx.Frame):
 
         outputSizer = wx.StaticBoxSizer(self.outputBox, wx.VERTICAL)
         outputSizer.Add(item = self.newmaplabel,
-                        flag = wx.ALIGN_CENTER)
+                        flag = wx.ALIGN_CENTER | wx.BOTTOM | wx.TOP, border = 5)
         outputSizer.Add(item = self.newmaptxt,
                         flag = wx.EXPAND)
         
