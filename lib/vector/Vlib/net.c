@@ -383,7 +383,7 @@ Vect_net_build_graph(struct Map_info *Map,
 	    for (j = 0; j < nlines; j++) {
 		line = Vect_get_node_line(Map, i, j);
 		G_debug(2, "  line (%d) = %d", j, line);
-		type = Vect_read_line(Map, NULL, Cats, line);
+		type = Vect_read_line(Map, NULL, Cats, abs(line));
 		if (!(type & GV_POINT))
 		    continue;
 		if (Vect_cat_get(Cats, nfield, &cat)) {	/* point with category of field found */
