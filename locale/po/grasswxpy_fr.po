@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 10:54+0100\n"
-"PO-Revision-Date: 2012-11-07 17:44+0100\n"
+"PO-Revision-Date: 2012-11-10 19:23+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -5601,7 +5601,7 @@ msgstr "Génère une carte raster de distance à des objets dans la carte en ent
 
 #: ../gui/wxpython/menustrings.py:356
 msgid "Horizon angle"
-msgstr "Angle d'hoziron"
+msgstr "Angle d'horizon"
 
 #: ../gui/wxpython/menustrings.py:357
 msgid "Horizon angle computation from a digital elevation model."
