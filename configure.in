@@ -1147,7 +1147,7 @@ if test "$OPENGL_X11" = 1 ; then
 
 LOC_CHECK_INC_PATH(opengl,OpenGL,OPENGLINC)
 
-LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC $X_CFLAGS)
+LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h X11/Xmu/Xmu.h,OpenGL,$OPENGLINC $X_CFLAGS)
 
 # With OpenGL library directory
 
