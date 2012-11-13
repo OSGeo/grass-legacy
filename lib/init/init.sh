@@ -255,11 +255,6 @@ fi
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC="$GISBASE/etc"
 
-# Check for a reference to the language in the grassrc file
-if [ -f "$GISRC" ] ; then
-    LANG=`awk '/LANG/ {print $2}' "$GISRC"`
-fi
-
 if [ $LANG ] ; then
     LCL=$LANG
     export LANG
