@@ -233,6 +233,13 @@ if [ ! "$GRASS_GUI" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
 
+    # Check for a reference to the language in the grassrc file
+    if [ -f "$GISRC" ] ; then
+	if [ `grep -c 'LANG' "$GISRC"` -ge 1 ] ; then
+    	    LANG=`awk '/LANG/ {print $2}' "$GISRC"`
+	fi
+    fi
+
     # Set the GRASS user interface to the default if needed
     if [ ! "$GRASS_GUI" ] ; then
 	GRASS_GUI="$DEFAULT_GUI"
