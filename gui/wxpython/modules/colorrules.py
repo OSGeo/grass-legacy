@@ -11,13 +11,13 @@ Classes:
  - colorrules::VectorColorTable
  - colorrules::BufferedWindow
 
-(C) 2008, 2010-2011 by the GRASS Development Team
+(C) 2008, 2010-2012 by the GRASS Development Team
 
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
 @author Michael Barton (Arizona State University)
-@author Martin Landa <landa.martin gmail.com> (various updates)
+@author Martin Landa <landa.martin gmail.com> (various updates, pre-defined color table)
 @author Anna Kratochvilova <kratochanna gmail.com> (split to base and derived classes)
 """
 
@@ -310,13 +310,15 @@ class RulesPanel:
         return sqlrule  
 
 class ColorTable(wx.Frame):
-    def __init__(self, parent, title, id = wx.ID_ANY,
+    def __init__(self, parent, title, layerTree = None, id = wx.ID_ANY,
                  style = wx.DEFAULT_FRAME_STYLE | wx.RESIZE_BORDER,
                  **kwargs):
         """!Dialog for interactively entering rules for map management
         commands
         """
-        self.parent = parent # GMFrame
+        self.parent = parent        # GMFrame ?
+        self.layerTree = layerTree  # LayerTree or None
+        
         wx.Frame.__init__(self, parent, id, title, style = style, **kwargs)
         
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
@@ -328,17 +330,21 @@ class ColorTable(wx.Frame):
         
         # input map to change
         self.inmap = ''
+        
         # reference to layer with preview
-        self.layer = None     
+        self.layer = None
+        
         # layout
         self._doLayout()
         
         # bindings
-        self.Bind(wx.EVT_BUTTON, self.OnHelp, self.btnHelp)
-        self.selectionInput.Bind(wx.EVT_TEXT, self.OnSelectionInput)
-        self.Bind(wx.EVT_BUTTON, self.OnCancel, self.btnCancel)
-        self.Bind(wx.EVT_BUTTON, self.OnApply, self.btnApply)
-        self.Bind(wx.EVT_BUTTON, self.OnOK, self.btnOK)
+        self.Bind(wx.EVT_BUTTON, self.OnHelp,             self.btnHelp)
+        self.selectionInput.Bind(wx.EVT_TEXT,             self.OnSelectionInput)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel,           self.btnCancel)
+        self.Bind(wx.EVT_BUTTON, self.OnApply,            self.btnApply)
+        self.Bind(wx.EVT_BUTTON, self.OnOK,               self.btnOK)
+        self.Bind(wx.EVT_BUTTON, self.OnLoadDefaultTable, self.btnDefault)
+        
         self.Bind(wx.EVT_CLOSE,  self.OnCloseWindow)
        
         self.Bind(wx.EVT_BUTTON, self.OnPreview, self.btnPreview)
@@ -348,15 +354,15 @@ class ColorTable(wx.Frame):
         # set map layer from layer tree, first selected,
         # if not the right type, than select another
         try:
-            sel = self.parent.GetLayerTree().layer_selected
-            if sel and self.parent.GetLayerTree().GetPyData(sel)[0]['type'] == self.mapType:
+            sel = self.layerTree.layer_selected
+            if sel and self.layerTree.GetPyData(sel)[0]['type'] == self.mapType:
                 layer = sel
             else:
-                layer = self.parent.GetLayerTree().FindItemByData(key = 'type', value = self.mapType)
+                layer = self.layerTree.FindItemByData(key = 'type', value = self.mapType)
         except:
             layer = None
         if layer:
-            mapLayer = self.parent.GetLayerTree().GetPyData(layer)[0]['maplayer']
+            mapLayer = self.layerTree.GetPyData(layer)[0]['maplayer']
             name = mapLayer.GetName()
             type = mapLayer.GetType()
             self.selectionInput.SetValue(name)
@@ -386,11 +392,10 @@ class ColorTable(wx.Frame):
         """!Create file (open/save rules) selection part of dialog"""
         inputBox = wx.StaticBox(parent, id = wx.ID_ANY,
                                 label = " %s " % _("Import or export color table:"))
-        inputSizer = wx.StaticBoxSizer(inputBox, wx.VERTICAL)
+        inputSizer = wx.StaticBoxSizer(inputBox, wx.HORIZONTAL)
         
         self.loadRules = filebrowse.FileBrowseButton(parent = parent, id = wx.ID_ANY, fileMask = '*',
-                                                     size = globalvar.DIALOG_GSELECT_SIZE,
-                                                     labelText = _('Load color table from file:'),
+                                                     labelText = '',
                                                      dialogTitle = _('Choose file to load color table'),
                                                      buttonText = _('Load'),
                                                      toolTip = _("Type filename or click to choose "
@@ -398,30 +403,38 @@ class ColorTable(wx.Frame):
                                                      startDirectory = os.getcwd(), fileMode = wx.OPEN,
                                                      changeCallback = self.OnLoadRulesFile)
         self.saveRules = filebrowse.FileBrowseButton(parent = parent, id = wx.ID_ANY, fileMask = '*',
-                                                     size = globalvar.DIALOG_GSELECT_SIZE,
-                                                     labelText = _('Save color table to file:'),
+                                                     labelText = '',
                                                      dialogTitle = _('Choose file to save color table'),
                                                      toolTip = _("Type filename or click to choose "
                                                                  "file and save color table"),
                                                      buttonText = _('Save'),
                                                      startDirectory = os.getcwd(), fileMode = wx.SAVE,
                                                      changeCallback = self.OnSaveRulesFile)
+
+        colorTable = wx.Choice(parent = parent, id = wx.ID_ANY, size = (200, -1),
+                               choices = utils.GetColorTables(),
+                               name = "colorTableChoice")
+        self.btnSet = wx.Button(parent = parent, id = wx.ID_ANY, label = _("&Set"), name = 'btnSet')
+        self.btnSet.Bind(wx.EVT_BUTTON, self.OnSetTable)
+        self.btnSet.Enable(False)
         
-        default = wx.Button(parent = parent, id = wx.ID_ANY, label = _("Reload default table"))   
         # layout
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(item = self.loadRules, proportion = 1,
-                  flag = wx.RIGHT | wx.EXPAND, border = 10)
-        sizer.Add(item = default, flag = wx.ALIGN_CENTER_VERTICAL)
-        inputSizer.Add(item = sizer,
-                       flag = wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, border = 5)
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(item = self.saveRules, proportion = 1,
-                  flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-        inputSizer.Add(item = sizer, proportion = 1,
-                       flag = wx.ALL | wx.EXPAND, border = 5)
+        gridSizer =  wx.GridBagSizer(hgap = 2, vgap = 2)
+        gridSizer.AddGrowableCol(1)
         
-        default.Bind(wx.EVT_BUTTON, self.OnLoadDefaultTable)
+        gridSizer.Add(item = wx.StaticText(parent, label = _("Load color table:")),
+                      pos = (0, 0), flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item = colorTable, pos = (0, 1))
+        gridSizer.Add(item = self.btnSet, pos = (0, 2), flag = wx.ALIGN_RIGHT)
+        gridSizer.Add(item = wx.StaticText(parent, label = _('Load color table from file:')),
+                      pos = (1, 0), flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item = self.loadRules, pos = (1, 1), span = (1, 2), flag = wx.EXPAND)
+        gridSizer.Add(item = wx.StaticText(parent, label = _('Save color table to file:')),
+                      pos = (2, 0), flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item = self.saveRules, pos = (2, 1), span = (1, 2), flag = wx.EXPAND)
+        
+        inputSizer.Add(gridSizer, proportion = 1, flag = wx.EXPAND | wx.ALL,
+                       border = 5)
         
         if self.mapType == 'vector':
             # parent is collapsible pane
@@ -439,18 +452,23 @@ class ColorTable(wx.Frame):
         
     def _createButtons(self, parent):
         """!Create buttons for leaving dialog"""
-        self.btnHelp   = wx.Button(parent, id = wx.ID_HELP)
-        self.btnCancel = wx.Button(parent, id = wx.ID_CANCEL)
-        self.btnApply  = wx.Button(parent, id = wx.ID_APPLY) 
-        self.btnOK     = wx.Button(parent, id = wx.ID_OK)
+        self.btnHelp    = wx.Button(parent, id = wx.ID_HELP)
+        self.btnCancel  = wx.Button(parent, id = wx.ID_CANCEL)
+        self.btnApply   = wx.Button(parent, id = wx.ID_APPLY) 
+        self.btnOK      = wx.Button(parent, id = wx.ID_OK)
+        self.btnDefault = wx.Button(parent, id = wx.ID_ANY,
+                                    label = _("Reload default table"))
         
         self.btnOK.SetDefault()
         self.btnOK.Enable(False)
         self.btnApply.Enable(False)
+        self.btnDefault.Enable(False)
         
         # layout
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer.Add(wx.Size(-1, -1), proportion = 1)
+        btnSizer.Add(self.btnDefault,
+                     flag = wx.LEFT | wx.RIGHT, border = 5)
         btnSizer.Add(self.btnHelp,
                      flag = wx.LEFT | wx.RIGHT, border = 5)
         btnSizer.Add(self.btnCancel,
@@ -535,7 +553,7 @@ class ColorTable(wx.Frame):
         else:
             # re-render preview and current map window
             self.OnPreview(None)
-            display = self.parent.GetLayerTree().GetMapDisplay()
+            display = self.layerTree.GetMapDisplay()
             if display and display.IsAutoRendered():
                 display.GetWindow().UpdateMap(render = True)
         
@@ -552,6 +570,23 @@ class ColorTable(wx.Frame):
         self.Map.Clean()
         self.Destroy()
         
+    def OnSetTable(self, event):
+        """!Load pre-defined color table"""
+        ct = self.FindWindowByName("colorTableChoice").GetStringSelection()
+        # save original color table
+        ctOriginal = RunCommand('r.colors.out', read = True, map = self.inmap, rules = '-')
+        # set new color table
+        ret, err = RunCommand('r.colors', map = self.inmap, color = ct, getErrorMsg = True)
+        if ret != 0:
+            GError(err, parent = self)
+            return
+        ctNew = RunCommand('r.colors.out', read = True, map = self.inmap, rules = '-')
+        # restore original table
+        RunCommand('r.colors', map = self.inmap, rules = '-', stdin = ctOriginal)
+        # load color table
+        self.rulesPanel.Clear()
+        self.ReadColorTable(ctable = ctNew)
+
     def OnSaveRulesFile(self, event):
         """!Save color table to file"""
         path = event.GetString()
@@ -580,9 +615,9 @@ class ColorTable(wx.Frame):
         
         self.rulesPanel.Clear()
         
-        file = open(path, 'r')
-        ctable = file.read()
-        self.ReadColorTable(ctable = ctable)
+        fd = open(path, 'r')
+        self.ReadColorTable(ctable = fd.read())
+        fd.close()
         
     def ReadColorTable(self, ctable):
         """!Read color table
@@ -634,7 +669,7 @@ class ColorTable(wx.Frame):
         
         @param mapType map type (raster or vector)"""
         self.rulesPanel.Clear()
-
+        
         if mapType == 'raster':
             cmd = ['r.colors.out',
                    'read=True',
@@ -723,6 +758,10 @@ class ColorTable(wx.Frame):
                    quiet = True,
                    parent = self,
                    entry = cmd)
+
+    def SetMap(self, name):
+        """!Set map name and update dialog"""
+        self.selectionInput.SetValue(name)
         
     def _IsNumber(self, s):
         """!Check if 's' is a number"""
@@ -732,7 +771,6 @@ class ColorTable(wx.Frame):
         except ValueError:
             return False
         
-
 class RasterColorTable(ColorTable):
     def __init__(self, parent, **kwargs):
         """!Dialog for interactively entering color rules for raster maps"""
@@ -755,10 +793,7 @@ class RasterColorTable(ColorTable):
         
         # self.SetMinSize(self.GetSize()) 
         self.SetMinSize((650, 700))
-        
-        self.CentreOnScreen()
-        self.Show()
-    
+                
     def _doLayout(self):
         """!Do main layout"""
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -773,13 +808,13 @@ class RasterColorTable(ColorTable):
         #
         fileSelection = self._createFileSelection(parent = self.panel)
         sizer.Add(item = fileSelection, proportion = 0,
-                  flag = wx.ALL | wx.EXPAND, border = 5)
+                  flag = wx.LEFT | wx.RIGHT | wx.EXPAND, border = 5)
         #
         # body & preview
         #
         bodySizer = self._createBody(parent = self.panel)
         sizer.Add(item = bodySizer, proportion = 1,
-                  flag = wx.ALL | wx.EXPAND, border = 5)
+                  flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 5)
         #
         # buttons
         #
@@ -800,17 +835,18 @@ class RasterColorTable(ColorTable):
         """!Raster map selected"""
         if event:
             self.inmap = event.GetString()
-    
+        
         self.loadRules.SetValue('')
         self.saveRules.SetValue('')
+        
         if self.inmap:
             if not grass.find_file(name = self.inmap, element = 'cell')['file']:
                 self.inmap = None
         
         if not self.inmap:
-            self.btnPreview.Enable(False)
-            self.btnOK.Enable(False)
-            self.btnApply.Enable(False)
+            for btn in (self.btnPreview, self.btnOK,
+                        self.btnApply, self.btnDefault, self.btnSet):
+                btn.Enable(False)
             self.LoadTable()
             return
         
@@ -823,9 +859,9 @@ class RasterColorTable(ColorTable):
         else:
             self.inmap = ''
             self.properties['min'] = self.properties['max'] = None
-            self.btnPreview.Enable(False)
-            self.btnOK.Enable(False)
-            self.btnApply.Enable(False)
+            for btn in (self.btnPreview, self.btnOK,
+                        self.btnApply, self.btnDefault, self.btnSet):
+                btn.Enable(False)
             self.preview.EraseMap()
             self.cr_label.SetLabel(_('Enter raster category values or percents'))
             return
@@ -838,12 +874,11 @@ class RasterColorTable(ColorTable):
                                  { 'range' : mapRange,
                                    'min' : self.properties['min'],
                                    'max' : self.properties['max'] })                       
-            
-        self.btnPreview.Enable()
-        self.btnOK.Enable()
-        self.btnApply.Enable()
-            
-          
+        
+        for btn in (self.btnPreview, self.btnOK,
+                    self.btnApply, self.btnDefault, self.btnSet):
+            btn.Enable()
+        
     def OnPreview(self, tmp = True):
         """!Update preview (based on computational region)"""
         if not self.inmap:
@@ -1541,13 +1576,13 @@ class VectorColorTable(ColorTable):
         
     def UseAttrColumn(self, useAttrColumn):
         """!Find layers and apply the changes in d.vect command"""
-        layers = self.parent.GetLayerTree().FindItemByData(key = 'name', value = self.inmap)
+        layers = self.layerTree.FindItemByData(key = 'name', value = self.inmap)
         if not layers:
             return
         for layer in layers:
-            if self.parent.GetLayerTree().GetPyData(layer)[0]['type'] != 'vector':
+            if self.layerTree.GetPyData(layer)[0]['type'] != 'vector':
                 continue
-            cmdlist = self.parent.GetLayerTree().GetPyData(layer)[0]['maplayer'].GetCmd()
+            cmdlist = self.layerTree.GetPyData(layer)[0]['maplayer'].GetCmd()
             
             if self.attributeType == 'color':
                 if useAttrColumn:
@@ -1561,7 +1596,7 @@ class VectorColorTable(ColorTable):
                 cmdlist[1].update({'size_column': self.properties['storeColumn']})
             elif self.attributeType == 'width':
                 cmdlist[1].update({'width_column' :self.properties['storeColumn']})
-            self.parent.GetLayerTree().GetPyData(layer)[0]['cmd'] = cmdlist
+            self.layerTree.GetPyData(layer)[0]['cmd'] = cmdlist
         
     def CreateColorTable(self, tmp = False):
         """!Create color rules (color table or color column)"""
