@@ -847,7 +847,7 @@
            </menuitem>
            <menuitem>
               <label>Manage projections</label>
-              <help>Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format).</help>
+              <help>Prints and manipulates GRASS projection information files (in various co-ordinate system descriptions).</help>
               <keywords>general,projection</keywords>
               <handler>OnMenuCmd</handler>
               <command>g.proj</command>
@@ -1348,7 +1348,7 @@
             </menuitem>
             <menuitem>
               <label>Fill lake</label>
-              <help>Fills lake from seed at given level.</help>
+              <help>Fills lake at given point to given level.</help>
               <keywords>raster,hydrology</keywords>
               <handler>OnMenuCmd</handler>
               <command>r.lake</command>
@@ -2207,14 +2207,14 @@
           <items>
             <menuitem>
               <label>Create LRS</label>
-              <help>Create Linear Reference System</help>
+              <help>Creates Linear Reference System</help>
               <keywords>vector,LRS,networking</keywords>
               <handler>OnMenuCmd</handler>
               <command>v.lrs.create</command>
             </menuitem>
             <menuitem>
               <label>Create stationing</label>
-              <help>Create stationing from input lines, and linear reference system</help>
+              <help>Creates stationing from input lines, and linear reference system</help>
               <keywords>vector,LRS,networking</keywords>
               <handler>OnMenuCmd</handler>
               <command>v.lrs.label</command>
@@ -2446,7 +2446,7 @@
         <separator />
         <menuitem>
           <label>Generate area for current region</label>
-          <help>Create a new vector from the current region.</help>
+          <help>Creates a vector polygon from the current region extent.</help>
           <keywords>vector,geometry</keywords>
           <handler>OnMenuCmd</handler>
           <command>v.in.region</command>
