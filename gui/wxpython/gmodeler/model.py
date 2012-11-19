@@ -1806,7 +1806,7 @@ class WriteModelFile:
         self.fd.write('%s<properties>\n' % (' ' * self.indent))
         self.indent += 4
         if self.properties['name']:
-            self.fd.write('%s<name>%s</name>\n' % (' ' * self.indent, self.properties['name']))
+            self.fd.write('%s<name>%s</name>\n' % (' ' * self.indent, EncodeString(self.properties['name'])))
         if self.properties['description']:
             self.fd.write('%s<description>%s</description>\n' % (' ' * self.indent,
                                                                  utils.EncodeString(self.properties['description'])))
@@ -1828,11 +1828,11 @@ class WriteModelFile:
         self.indent += 4
         for name, values in self.variables.iteritems():
             self.fd.write('%s<variable name="%s" type="%s">\n' % \
-                              (' ' * self.indent, name, values['type']))
+                              (' ' * self.indent, EncodeString(name), values['type']))
             self.indent += 4
             if 'value' in values:
                 self.fd.write('%s<value>%s</value>\n' % \
-                                  (' ' * self.indent, values['value']))
+                                  (' ' * self.indent, EncodeString(values['value'])))
             if 'description' in values:
                 self.fd.write('%s<description>%s</description>\n' % \
                                   (' ' * self.indent, EncodeString(values['description'])))
@@ -2008,7 +2008,7 @@ r"""#!/usr/bin/env python
 #
 #%s
 """ % ('#' * 79,
-       properties['name'],
+       EncodeString(properties['name']),
        EncodeString(properties['author']),
        EncodeString('\n# '.join(properties['description'].splitlines())),
        time.asctime(),
