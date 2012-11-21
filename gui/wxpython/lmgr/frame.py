@@ -1022,7 +1022,7 @@ class GMFrame(wx.Frame):
             
         for idx, mdisp in enumerate(mapdisplay):
             mdisp.MapWindow2D.UpdateMap()
-            #nviz
+            # nviz
             if gxwXml.displays[idx]['viewMode'] == '3d':
                 mdisp.AddNviz()
                 self.nviz.UpdateState(view = gxwXml.nviz_state['view'],
@@ -1034,9 +1034,10 @@ class GMFrame(wx.Frame):
                 for page in ('view', 'light', 'fringe', 'constant', 'cplane'):
                     self.nviz.UpdatePage(page)
                 self.nviz.UpdateSettings()
-                mapdisp.toolbars['map'].combo.SetSelection(1)
-
-
+                mdisp.toolbars['map'].combo.SetSelection(1)
+            
+            mdisp.Show() # show mapdisplay
+        
         return True
     
     def OnWorkspaceLoadGrcFile(self, event):
