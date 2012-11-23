@@ -627,12 +627,11 @@ double compute_all_net_distances(struct Map_info *In, struct Map_info *Net,
 {
     int nn, kk, nalines, aline;
     double dist;
-    struct line_pnts *APoints, *BPoints;
+    struct line_pnts *Points;
     BOUND_BOX box;
     struct ilist *List;
 
-    APoints = Vect_new_line_struct();
-    BPoints = Vect_new_line_struct();
+    Points = Vect_new_line_struct();
     List = Vect_new_list();
 
     nn = Vect_get_num_primitives(In, GV_POINTS);
@@ -646,14 +645,14 @@ double compute_all_net_distances(struct Map_info *In, struct Map_info *Net,
 
 	G_debug(3, "  aline = %d", aline);
 
-	altype = Vect_read_line(In, APoints, NULL, aline);
+	altype = Vect_read_line(In, Points, NULL, aline);
 	if (!(altype & GV_POINTS))
 	    continue;
 
-	box.E = APoints->x[0] + dmax;
-	box.W = APoints->x[0] - dmax;
-	box.N = APoints->y[0] + dmax;
-	box.S = APoints->y[0] - dmax;
+	box.E = Points->x[0] + dmax;
+	box.W = Points->x[0] - dmax;
+	box.N = Points->y[0] + dmax;
+	box.S = Points->y[0] - dmax;
 	box.T = PORT_DOUBLE_MAX;
 	box.B = -PORT_DOUBLE_MAX;
 
@@ -669,17 +668,18 @@ double compute_all_net_distances(struct Map_info *In, struct Map_info *Net,
 		continue;
 
 	    G_debug(3, "    bline = %d", bline);
-	    Vect_read_line(In, BPoints, NULL, bline);
+
+	    Vect_get_line_box(In, bline, &box);
+
+
+	    G_debug(3, "  SP: %f %f -> %f %f", Points->x[0], Points->y[0],
+		    box.E, box.N);
 
 	    ret =
-		Vect_net_shortest_path_coor(Net, APoints->x[0], APoints->y[0],
-					    0.0, BPoints->x[0], BPoints->y[0],
+		Vect_net_shortest_path_coor(Net, Points->x[0], Points->y[0],
+					    0.0, box.E, box.N,
 					    0.0, netmax, netmax, &dist, NULL,
 					    NULL, NULL, NULL, NULL, NULL);
-
-	    G_debug(3, "  SP: %f %f -> %f %f", APoints->x[0], APoints->y[0],
-		    BPoints->x[0], BPoints->y[0]);
-
 	    if (ret == 0) {
 		G_debug(3, "not reachable");
 		continue;	/* Not reachable */
@@ -722,14 +722,10 @@ void compute_net_distance(double x, double y, struct Map_info *In,
 {
     int i;
     double dist, kernel;
-    static struct line_pnts *Points = NULL;
     static struct line_pnts *FPoints = NULL;
     BOUND_BOX box;
     static struct ilist *PointsList = NULL;
     static struct ilist *NodesList = NULL;
-
-    if (!Points)
-	Points = Vect_new_line_struct();
 
     if (!PointsList)
 	PointsList = Vect_new_list();
@@ -761,15 +757,13 @@ void compute_net_distance(double x, double y, struct Map_info *In,
 	int line, ret;
 
 	line = PointsList->value[i];
-	Vect_read_line(In, Points, NULL, line);
 
-	G_debug(3, "  SP: %f %f -> %f %f", x, y, Points->x[0], Points->y[0]);
-	/*ret = Vect_net_shortest_path_coor(Net, x, y, 0.0, Points->x[0], */
-	/*Points->y[0], 0.0, netmax, netmax, */
-	/*&dist, NULL, NULL, NULL, NULL, NULL, */
-	/*NULL); */
+	Vect_get_line_box(In, line, &box);
+
+	G_debug(3, "  SP: %f %f -> %f %f", x, y, box.E, box.N);
+
 	ret = Vect_net_shortest_path_coor2(Net,
-					   Points->x[0], Points->y[0], 0.0,
+					   box.E, box.N, 0.0,
 					   x, y, 0.0, netmax, 1.0,
 					   &dist, NULL,
 					   NULL, NodesList, FPoints, NULL,
@@ -825,15 +819,12 @@ void compute_distance(double N, double E, struct Map_info *In,
     /* spatial index handling, borrowed from lib/vector/Vlib/find.c */
     BOUND_BOX box;
     static struct ilist *NList = NULL;
-    static struct line_pnts *Points = NULL;
 
     a[0] = E;
     a[1] = N;
 
     if (!NList)
 	NList = Vect_new_list();
-    if (!Points)
-	Points = Vect_new_line_struct();
 
     /* create bounding box 2x2*dmax size from the current cell center */
     box.N = N + dmax;
@@ -850,17 +841,14 @@ void compute_distance(double N, double E, struct Map_info *In,
 
     for (line = 0; line < nlines; line++) {
 
-	Vect_read_line(In, Points, NULL, NList->value[line]);
-
-	b[0] = Points->x[0];
-	b[1] = Points->y[0];
+	Vect_get_line_box(In, NList->value[line], &box);
+	b[0] = box.E;
+	b[1] = box.N;
 
 	dist = euclidean_distance(a, b, 2);
 
 	if (dist <= dmax)
 	    /* *gaussian += gaussianKernel(dist / sigma, term); */
 	    *gaussian += kernelFunction(kernel_function, 2, sigma, dist);
-
-
     }
 }
