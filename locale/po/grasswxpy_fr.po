@@ -1152,7 +1152,7 @@ msgstr "Voulez-vous enregistrer les paramètres actuels dans un fichier ?"
 #: ../gui/wxpython/lmgr/frame.py:480
 #, python-format
 msgid "Close Map Display %s"
-msgstr "Fermer la fenêtre de carte %d"
+msgstr "Fermer la fenêtre de carte %s"
 
 #: ../gui/wxpython/lmgr/frame.py:581 ../gui/wxpython/lmgr/frame.py:1402
 msgid "Selected map layer is not vector."
