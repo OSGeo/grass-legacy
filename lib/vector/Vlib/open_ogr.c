@@ -48,7 +48,8 @@ int V1_open_old_ogr(struct Map_info *Map, int update)
     OGRDataSourceH Ogr_ds;
     OGRLayerH Ogr_layer = NULL;
     OGRFeatureDefnH Ogr_featuredefn;
-
+    OGRwkbGeometryType Ogr_geom_type;
+    
     if (update) {
 	G_fatal_error(_("OGR format cannot be updated"));
 	return -1;
@@ -74,8 +75,8 @@ int V1_open_old_ogr(struct Map_info *Map, int update)
     for (i = 0; i < nLayers; i++) {
 	Ogr_layer = OGR_DS_GetLayer(Ogr_ds, i);
 	Ogr_featuredefn = OGR_L_GetLayerDefn(Ogr_layer);
-	if (strcmp(OGR_FD_GetName(Ogr_featuredefn), Map->fInfo.ogr.layer_name)
-	    == 0) {
+	if (strcmp(OGR_FD_GetName(Ogr_featuredefn), Map->fInfo.ogr.layer_name) == 0) {
+            Ogr_geom_type = OGR_FD_GetGeomType(Ogr_featuredefn);
 	    layer = i;
 	    break;
 	}
@@ -95,8 +96,17 @@ int V1_open_old_ogr(struct Map_info *Map, int update)
     Map->fInfo.ogr.lines_num = 0;
     Map->fInfo.ogr.lines_next = 0;
 
-    Map->head.with_z = WITHOUT_Z;	/* TODO: 3D */
-
+    switch(Ogr_geom_type) {
+    case wkbPoint25D: case wkbLineString25D: case wkbPolygon25D:
+    case wkbMultiPoint25D: case wkbMultiLineString25D: case wkbMultiPolygon25D:
+    case wkbGeometryCollection25D:
+        Map->head.with_z = WITH_Z;
+        break;
+    default:
+        Map->head.with_z = WITHOUT_Z;
+        break;
+    }
+    
     Map->fInfo.ogr.feature_cache = NULL;
     Map->fInfo.ogr.feature_cache_id = -1;	/* FID >= 0 */
 
