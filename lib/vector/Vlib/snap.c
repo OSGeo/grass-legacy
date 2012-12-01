@@ -36,17 +36,45 @@ typedef struct
     /* -1  - init value */
 } XPNT;
 
+/* Segment */
+typedef struct
+{
+    double x1, y1,  /* start point */
+           x2, y2;  /* end point */
+} XSEG;
+
 typedef struct
 {
     int anchor;
     double along;
 } NEW;
 
-/* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
+typedef struct
+{
+    double x, y, z, along;
+} NEW2;
+
+/* for qsort */
+static int sort_new2(const void *pa, const void *pb)
+{
+    NEW2 *p1 = (NEW2 *) pa;
+    NEW2 *p2 = (NEW2 *) pb;
+
+    return (p1->along < p2->along ? -1 : (p1->along > p2->along));
+}
+
+/* This function is called by RTreeSearch() to add selected node/line/area/isle to the list */
 int add_item(int id, struct ilist *list)
 {
     dig_list_add(list, id);
     return 1;
+}
+
+/* This function is called by RTreeSearch() to find an item in the list */
+int find_item(int id, struct ilist *list)
+{
+    dig_list_add(list, id);
+    return 0;
 }
 
 /*!
@@ -481,4 +509,398 @@ Vect_snap_lines(struct Map_info *Map, int type, double thresh,
     Vect_destroy_list(List);
 
     return;
+}
+
+/*!
+   \brief Snap a line to reference lines in Map with threshold.
+  
+   The line to snap and the reference lines can but do not need to be 
+   in different vector maps.
+   
+   Vect_snap_line() uses less memory, but is slower than 
+   Vect_snap_lines_list()
+
+   For details on snapping, see Vect_snap_lines_list()
+
+   \param[in] Map input map with reference lines
+   \param[in] reflist list of reference lines
+   \param[in,out] Points line points to snap
+   \param[in] thresh threshold in which to snap vertices
+   \param[in,out] nsnapped number of snapped verices
+   \param[in,out] ncreated number of new vertices (on segments)
+  
+   \return 1 if line was changed, otherwise 0
+ */
+int
+Vect_snap_line(struct Map_info *Map, struct ilist *reflist,
+	       struct line_pnts *Points, double thresh,
+	       int *nsnapped, int *ncreated)
+{
+    struct line_pnts *LPoints, *NPoints;
+    struct line_cats *Cats;
+    int i, v, line, nlines;
+    int changed;
+    double thresh2;
+
+    int point;			/* index in points array */
+    int segment;		/* index in segments array */
+    int asegments;		/* number of allocated segments */
+    int apoints, nvertices;	/* number of allocated points and registered vertices */
+    XSEG *XSegs = NULL;		/* Array of segments */
+    XPNT *XPnts = NULL;		/* Array of points */
+    NEW2 *New = NULL;		/* Array of new points */
+    int anew = 0, nnew;		/* allocated new points , number of new points */
+    struct ilist *List;
+
+    struct Node *pnt_tree,	/* spatial index for reference points */
+                *seg_tree;	/* spatial index for reference segments */
+    struct Rect rect;
+
+    rect.boundary[0] = 0;
+    rect.boundary[1] = 0;
+    rect.boundary[2] = 0;
+    rect.boundary[3] = 0;
+    rect.boundary[4] = 0;
+    rect.boundary[5] = 0;
+
+    changed = 0;
+    if (nsnapped)
+	*nsnapped = 0;
+    if (ncreated)
+	*ncreated = 0;
+
+    point = Points->n_points;
+    Vect_line_prune(Points);
+    if (point != Points->n_points)
+	changed = 1;
+
+    nlines = reflist->n_values;
+    if (nlines < 1)
+	return changed;
+
+    LPoints = Vect_new_line_struct();
+    NPoints = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    List = Vect_new_list();
+    pnt_tree = RTreeNewIndex();
+    seg_tree = RTreeNewIndex();
+
+    thresh2 = thresh * thresh;
+
+    point = segment = 1;	/* index starts from 1 ! */
+    nvertices = 0;
+    asegments = 0;
+    apoints = 0;
+
+    /* Add all vertices and all segments of all reference lines 
+     * to spatial indices */
+    nlines = reflist->n_values;
+    for (i = 0; i < nlines; i++) {
+
+	line = reflist->value[i];
+
+	G_debug(3, "line =  %d", line);
+	if (!Vect_line_alive(Map, line))
+	    continue;
+
+	Vect_read_line(Map, LPoints, Cats, line);
+	Vect_line_prune(LPoints);
+
+	for (v = 0; v < LPoints->n_points; v++) {
+	    G_debug(3, "  vertex v = %d", v);
+	    nvertices++;
+
+	    /* Box */
+	    rect.boundary[0] = LPoints->x[v];
+	    rect.boundary[3] = LPoints->x[v];
+	    rect.boundary[1] = LPoints->y[v];
+	    rect.boundary[4] = LPoints->y[v];
+
+	    /* Already registered ? */
+	    Vect_reset_list(List);
+	    RTreeSearch(pnt_tree, &rect, (void *)find_item, List);
+	    G_debug(3, "List : nvalues =  %d", List->n_values);
+
+	    if (List->n_values == 0) {	/* Not found */
+
+		/* Add to points tree */
+		RTreeInsertRect(&rect, point, &pnt_tree, 0);
+
+		if ((point - 1) == apoints) {
+		    apoints += 10000;
+		    XPnts =
+			(XPNT *) G_realloc(XPnts,
+					   (apoints + 1) * sizeof(XPNT));
+		}
+		XPnts[point].x = LPoints->x[v];
+		XPnts[point].y = LPoints->y[v];
+		XPnts[point].anchor = 0;
+
+		point++;
+	    }
+	    
+	    /* reference segments */
+	    if (v) {
+		/* Box */
+		if (LPoints->x[v - 1] < LPoints->x[v]) {
+		    rect.boundary[0] = LPoints->x[v - 1];
+		    rect.boundary[3] = LPoints->x[v];
+		}
+		else {
+		    rect.boundary[0] = LPoints->x[v];
+		    rect.boundary[3] = LPoints->x[v - 1];
+		}
+		if (LPoints->y[v - 1] < LPoints->y[v]) {
+		    rect.boundary[1] = LPoints->y[v - 1];
+		    rect.boundary[4] = LPoints->y[v];
+		}
+		else {
+		    rect.boundary[1] = LPoints->y[v];
+		    rect.boundary[4] = LPoints->y[v - 1];
+		}
+
+		/* do not check for duplicates, too costly
+		 * because different segments can have identical boxes */
+		RTreeInsertRect(&rect, segment, &seg_tree, 0);
+
+		if ((segment - 1) == asegments) {
+		    asegments += 1000;
+		    XSegs =
+			(XSEG *) G_realloc(XSegs,
+					   (asegments + 1) * sizeof(XSEG));
+		}
+		XSegs[segment].x1 = LPoints->x[v - 1];
+		XSegs[segment].x2 = LPoints->x[v];
+		XSegs[segment].y1 = LPoints->y[v - 1];
+		XSegs[segment].y2 = LPoints->y[v];
+
+		segment++;
+	    }
+	}
+    }
+
+    /* go through all vertices of the line to snap */
+    for (v = 0; v < Points->n_points; v++) {
+	double dist2, tmpdist2;
+	double x, y;
+
+	dist2 = thresh2 + thresh2;
+	x = Points->x[v];
+	y = Points->y[v];
+
+	/* Box */
+	rect.boundary[0] = Points->x[v] - thresh;
+	rect.boundary[3] = Points->x[v] + thresh;
+	rect.boundary[1] = Points->y[v] - thresh;
+	rect.boundary[4] = Points->y[v] + thresh;
+
+	/* find nearest reference vertex */
+	Vect_reset_list(List);
+
+	RTreeSearch(pnt_tree, &rect, (void *)add_item, List);
+
+	for (i = 0; i < List->n_values; i++) {
+	    double dx, dy;
+	    
+	    point = List->value[i];
+	    
+	    dx = Points->x[v] - XPnts[point].x;
+	    dy = Points->y[v] - XPnts[point].y;
+	    
+	    tmpdist2 = dx * dx + dy * dy;
+	    
+	    if (tmpdist2 < dist2) {
+		dist2 = tmpdist2;
+
+		x = XPnts[point].x;
+		y = XPnts[point].y;
+	    }
+	}
+
+	if (dist2 <= thresh2 && dist2 > 0) {
+	    Points->x[v] = x;
+	    Points->y[v] = y;
+
+	    changed = 1;
+	    if (nsnapped)
+		(*nsnapped)++;
+	}
+    }
+
+    /* go through all vertices of the line to snap */
+    for (v = 0; v < Points->n_points; v++) {
+	double dist2, tmpdist2;
+	double x, y;
+	
+	dist2 = thresh2 + thresh2;
+	x = Points->x[v];
+	y = Points->y[v];
+
+	/* Box */
+	rect.boundary[0] = Points->x[v] - thresh;
+	rect.boundary[3] = Points->x[v] + thresh;
+	rect.boundary[1] = Points->y[v] - thresh;
+	rect.boundary[4] = Points->y[v] + thresh;
+
+	/* find nearest reference segment */
+	Vect_reset_list(List);
+
+	RTreeSearch(seg_tree, &rect, (void *)add_item, List);
+
+	for (i = 0; i < List->n_values; i++) {
+	    double tmpx, tmpy;
+	    int segment, status;
+	    
+	    segment = List->value[i];
+	    
+	    /* Check the distance */
+	    tmpdist2 =
+		dig_distance2_point_to_line(Points->x[v],
+					    Points->y[v],
+					    0, 
+					    XSegs[segment].x1,
+					    XSegs[segment].y1,
+					    0,
+					    XSegs[segment].x2,
+					    XSegs[segment].y2,
+					    0,
+					    0, &tmpx, &tmpy, NULL,
+					    NULL, &status);
+
+	    if (tmpdist2 < dist2 && status == 0) {
+		dist2 = tmpdist2;
+
+		x = tmpx;
+		y = tmpy;
+	    }
+	}
+
+	if (dist2 <= thresh2 && dist2 > 0) {
+	    Points->x[v] = x;
+	    Points->y[v] = y;
+	    
+	    changed = 1;
+	    if (nsnapped)
+		(*nsnapped)++;
+	}
+    }
+
+    RTreeDestroyNode(seg_tree);
+    G_free(XSegs);
+
+    /* go through all segments of the line to snap */
+    /* find nearest reference vertex, add this vertex */
+    for (v = 0; v < Points->n_points - 1; v++) {
+	double x1, x2, y1, y2;
+	double xmin, xmax, ymin, ymax;
+
+	x1 = Points->x[v];
+	x2 = Points->x[v + 1];
+	y1 = Points->y[v];
+	y2 = Points->y[v + 1];
+
+	Vect_append_point(NPoints, Points->x[v], Points->y[v],
+			  Points->z[v]);
+
+	/* Box */
+	if (x1 <= x2) {
+	    xmin = x1;
+	    xmax = x2;
+	}
+	else {
+	    xmin = x2;
+	    xmax = x1;
+	}
+	if (y1 <= y2) {
+	    ymin = y1;
+	    ymax = y2;
+	}
+	else {
+	    ymin = y2;
+	    ymax = y1;
+	}
+
+	rect.boundary[0] = xmin - thresh;
+	rect.boundary[3] = xmax + thresh;
+	rect.boundary[1] = ymin - thresh;
+	rect.boundary[4] = ymax + thresh;
+
+	/* Find points */
+	Vect_reset_list(List);
+	RTreeSearch(pnt_tree, &rect, (void *)add_item, List);
+
+	G_debug(3, "  %d points in box", List->n_values);
+
+	/* Snap to vertex in threshold different from end points */
+	nnew = 0;
+	for (i = 0; i < List->n_values; i++) {
+	    double dist2, along;
+	    int status;
+
+	    point = List->value[i];
+
+	    if (Points->x[v] == XPnts[i].x && 
+	        Points->y[v] == XPnts[i].y)
+		continue;	/* start point */
+
+	    if (Points->x[v + 1] == XPnts[i].x && 
+	        Points->y[v + 1] == XPnts[i].y)
+		continue;	/* end point */
+
+	    /* Check the distance */
+	    dist2 =
+		dig_distance2_point_to_line(XPnts[i].x,
+					    XPnts[i].y,
+					    0, x1, y1, 0,
+					    x2, y2, 0, 0, NULL, NULL,
+					    NULL, &along, &status);
+
+	    if (dist2 <= thresh2 && status == 0) {
+		G_debug(4, "      anchor in thresh, along = %lf", along);
+
+		if (nnew == anew) {
+		    anew += 100;
+		    New = (NEW2 *) G_realloc(New, anew * sizeof(NEW2));
+		}
+		New[nnew].x = XPnts[i].x;
+		New[nnew].y = XPnts[i].y;
+		New[nnew].along = along;
+		nnew++;
+	    }
+	    G_debug(3, "dist: %g, thresh: %g", dist2, thresh2);
+	}
+	G_debug(3, "  nnew = %d", nnew);
+	/* insert new vertices */
+	if (nnew > 0) {
+	    /* sort by distance along the segment */
+	    qsort(New, nnew, sizeof(NEW2), sort_new2);
+
+	    for (i = 0; i < nnew; i++) {
+		Vect_append_point(NPoints, New[i].x, New[i].y, 0);
+		if (ncreated)
+		    (*ncreated)++;
+	    }
+	    changed = 1;
+	}
+    }
+
+    /* append end point */
+    v = Points->n_points - 1;
+    Vect_append_point(NPoints, Points->x[v], Points->y[v], Points->z[v]);
+
+    if (Points->n_points != NPoints->n_points) {
+	Vect_line_prune(NPoints);	/* remove duplicates */
+	Vect_reset_line(Points);
+	Vect_append_points(Points, NPoints, GV_FORWARD);
+    }
+
+    Vect_destroy_line_struct(LPoints);
+    Vect_destroy_line_struct(NPoints);
+    Vect_destroy_cats_struct(Cats);
+    Vect_destroy_list(List);
+    G_free(New);
+    G_free(XPnts);
+    RTreeDestroyNode(pnt_tree);
+
+    return changed;
 }
