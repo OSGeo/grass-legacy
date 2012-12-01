@@ -8,6 +8,7 @@
  *               Jachym Cepicky <jachym les-ejk.cz>,
  *               Markus Neteler <neteler itc.it>,
  *               Paul Kelly <paul-grass stjohnspoint.co.uk>
+ *               Markus Metz
  * PURPOSE:      
  * COPYRIGHT:    (C) 2003-2008 by the GRASS Development Team
  *
@@ -16,6 +17,7 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -29,15 +31,18 @@ int main(int argc, char *argv[])
 {
     int i, input, line, nlines, operator;
     int type[2], field[2], ofield[3];
+    double snap_thresh;
     char *mapset[2];
     char *pre[2];
     struct GModule *module;
     struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2],
-	*ofield_opt, *operator_opt;
+	*ofield_opt, *operator_opt, *snap_opt;
     struct Flag *table_flag;
     struct Map_info In[2], Out;
-    struct line_pnts *Points;
+    struct line_pnts *Points, *Points2;
     struct line_cats *Cats;
+    struct ilist *BList;
+    int verbose;
 
     struct field_info *Fi = NULL;
     char buf[1000];
@@ -56,7 +61,7 @@ int main(int argc, char *argv[])
     module->description = _("Overlays two vector maps.");
 
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt[0]->description = _("Name of input vector map (A)");
+    in_opt[0]->label = _("Name of input vector map (A)");
     in_opt[0]->key = "ainput";
 
     type_opt[0] = G_define_standard_option(G_OPT_V_TYPE);
@@ -70,7 +75,7 @@ int main(int argc, char *argv[])
     field_opt[0]->key = "alayer";
 
     in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt[1]->description = _("Name of input vector map (B)");
+    in_opt[1]->label = _("Name of input vector map (B)");
     in_opt[1]->key = "binput";
 
     type_opt[1] = G_define_standard_option(G_OPT_V_TYPE);
@@ -115,6 +120,13 @@ int main(int argc, char *argv[])
     ofield_opt->description = _("If 0 or not given, "
 				"the category is not written");
 
+    snap_opt = G_define_option();
+    snap_opt->key = "snap";
+    snap_opt->label = _("Snapping threshold for boundaries");
+    snap_opt->description = _("Disable snapping with snap <= 0");
+    snap_opt->type = TYPE_DOUBLE;
+    snap_opt->answer = "1e-8";
+
     table_flag = G_define_flag();
     table_flag->key = 't';
     table_flag->description = _("Do not create attribute table");
@@ -126,6 +138,8 @@ int main(int argc, char *argv[])
 	type[input] = Vect_option_to_types(type_opt[input]);
 	field[input] = atoi(field_opt[input]->answer);
     }
+    if (type[0] & GV_AREA)
+	type[0] = GV_AREA;
 
     ofield[0] = ofield[1] = ofield[2] = 0;
     i = 0;
@@ -136,15 +150,14 @@ int main(int argc, char *argv[])
 
     if (operator_opt->answer[0] == 'a')
 	operator = OP_AND;
-
     else if (operator_opt->answer[0] == 'o')
 	operator = OP_OR;
-
     else if (operator_opt->answer[0] == 'n')
 	operator = OP_NOT;
-
     else if (operator_opt->answer[0] == 'x')
 	operator = OP_XOR;
+    else
+	G_fatal_error(_("Unknown operator '%s'"), operator_opt->answer);
 
     /* OP_OR, OP_XOR is not supported for lines,
        mostly because I'am not sure if they make enouhg sense */
@@ -157,7 +170,10 @@ int main(int argc, char *argv[])
     Vect_check_input_output_name(in_opt[1]->answer, out_opt->answer,
 				 GV_FATAL_EXIT);
 
+    snap_thresh = atof(snap_opt->answer);
+
     Points = Vect_new_line_struct();
+    Points2 = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
     /* Open output */
@@ -193,8 +209,13 @@ int main(int argc, char *argv[])
     }
 
     /* Copy lines to output */
+    BList = Vect_new_list();
+    verbose = G_verbose();
+    G_set_verbose(0);
+    Vect_build_partial(&Out, GV_BUILD_BASE);
+    G_set_verbose(verbose);
     for (input = 0; input < 2; input++) {
-	int ncats, index, nlines_out;
+	int ncats, index, nlines_out, newline;
 
 	G_message(_("Copying vector objects from vector map <%s>..."),
 		  in_opt[input]->answer);
@@ -213,6 +234,7 @@ int main(int argc, char *argv[])
 	nlines_out = 0;
 	for (line = 1; line <= nlines; line++) {
 	    int ltype;
+	    int vertices = 100; /* max number of vertices per line */
 
 	    G_percent(line, nlines, 1);	/* must be before any continue */
 
@@ -226,8 +248,44 @@ int main(int argc, char *argv[])
 		if (!(ltype & type[input]))
 		    continue;
 	    }
+	    
+	    /* lines and boundaries must have at least 2 distinct vertices */
+	    Vect_line_prune(Points);
+	    if (Points->n_points < 2)
+		continue;
 
-	    Vect_write_line(&Out, ltype, Points, Cats);
+	    /* TODO: figure out a reasonable threshold */
+	    if (Points->n_points > vertices) {
+		int start = 0;	/* number of coordinates written */
+		
+		vertices = Points->n_points / (Points->n_points / vertices + 1);
+		
+		/* split */
+		while (start < Points->n_points - 1) {
+		    int v = 0;
+
+		    Vect_reset_line(Points2);
+		    for (i = 0; i < vertices; i++) {
+			v = start + i;
+			if (v == Points->n_points)
+			    break;
+
+			Vect_append_point(Points2, Points->x[v], Points->y[v],
+					  Points->z[v]);
+		    }
+
+		    newline = Vect_write_line(&Out, ltype, Points2, Cats);
+		    if (input == 1)
+			Vect_list_append(BList, newline);
+
+		    start = v;
+		}
+	    }
+	    else {
+		newline = Vect_write_line(&Out, ltype, Points, Cats);
+		if (input == 1)
+		    Vect_list_append(BList, newline);
+	    }
 	    nlines_out++;
 	}
 	if (nlines_out == 0) {
@@ -328,6 +386,9 @@ int main(int argc, char *argv[])
 		    sprintf(buf, "varchar(%d)", db_get_column_length(Column));
 		    db_append_string(&col_defs, buf);
 		    break;
+		case DB_SQL_TYPE_TEXT:
+		    db_append_string(&col_defs, "varchar(250)");
+		    break;
 		case DB_SQL_TYPE_SMALLINT:
 		case DB_SQL_TYPE_INTEGER:
 		    db_append_string(&col_defs, "integer");
@@ -349,8 +410,8 @@ int main(int argc, char *argv[])
 		    db_append_string(&col_defs, "datetime");
 		    break;
 		default:
-		    G_warning(_("Unknown column type '%s'"),
-			      db_get_column_name(Column));
+		    G_warning(_("Unknown column type '%s' of column '%s'"),
+			      db_sqltype_name(sqltype), db_get_column_name(Column));
 		    sprintf(buf, "varchar(250)");
 		}
 	    }
@@ -358,7 +419,7 @@ int main(int argc, char *argv[])
 	    attr[input].columns = G_store(db_get_string(&col_defs));
 
 	    while (1) {
-		int cat;
+		int cat = -1;
 		ATTR *at;
 
 		if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
@@ -414,8 +475,8 @@ int main(int argc, char *argv[])
 			}
 			break;
 		    default:
-			G_warning(_("Unknown column type '%s' values lost"),
-				  db_get_column_name(Column));
+			G_warning(_("Unknown column type '%s' of column '%s', values lost"),
+			      db_sqltype_name(sqltype), db_get_column_name(Column));
 			db_append_string(&sql, "null");
 		    }
 		}
@@ -479,16 +540,12 @@ int main(int argc, char *argv[])
 			    Fi->database, Fi->driver);
     }
 
-    G_message(_("Building partial topology..."));
-    /* do not print output, because befor cleaning it is nonsense */
-    Vect_build_partial(&Out, GV_BUILD_BASE);
-
     /* AREA x AREA */
     if (type[0] == GV_AREA) {
-	area_area(In, field, &Out, Fi, driver, operator, ofield, attr);
+	area_area(In, field, &Out, Fi, driver, operator, ofield, attr, BList, snap_thresh);
     }
     else {			/* LINE x AREA */
-	line_area(In, field, &Out, Fi, driver, operator, ofield, attr);
+	line_area(In, field, &Out, Fi, driver, operator, ofield, attr, BList);
     }
 
     G_message(_("Rebuilding topology..."));
@@ -500,6 +557,23 @@ int main(int argc, char *argv[])
 	/* Close table */
 	db_commit_transaction(driver);
 	db_close_database_shutdown_driver(driver);
+    }
+    if (ofield[0] < 1 && !table_flag->answer) {
+	int otype;
+	
+	if (type[0] == GV_AREA)
+	    otype = GV_CENTROID;
+	else
+	    otype = GV_LINE;
+	
+	/* copy attributes from ainput */
+	if (ofield[1] > 0 && field[0] > 0) {
+	    Vect_copy_table(&In[0], &Out, field[0], ofield[1], NULL, otype);
+	}
+	/* copy attributes from binput */
+	if (ofield[2] > 0 && field[1] > 0 && ofield[1] != ofield[2]) {
+	    Vect_copy_table(&In[1], &Out, field[1], ofield[2], NULL, otype);
+	}
     }
 
     Vect_close(&(In[0]));

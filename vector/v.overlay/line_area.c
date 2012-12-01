@@ -22,7 +22,7 @@ int point_area(struct Map_info *Map, int field, double x, double y,
 	       struct line_cats *Cats)
 {
     int i, area, centr;
-    struct line_cats *CCats = NULL;
+    static struct line_cats *CCats = NULL;
 
     Vect_reset_cats(Cats);
     area = Vect_find_area(Map, x, y);
@@ -51,7 +51,7 @@ int point_area(struct Map_info *Map, int field, double x, double y,
 
 int line_area(struct Map_info *In, int *field, struct Map_info *Out,
 	      struct field_info *Fi, dbDriver * driver, int operator,
-	      int *ofield, ATTRIBUTES * attr)
+	      int *ofield, ATTRIBUTES * attr, struct ilist *BList)
 {
     int line, nlines, ncat;
     struct line_pnts *Points;
@@ -67,10 +67,9 @@ int line_area(struct Map_info *In, int *field, struct Map_info *Out,
     db_init_string(&stmt);
 
     G_message(_("Breaking lines..."));
-    Vect_break_lines(Out, GV_LINE | GV_BOUNDARY, NULL);
-
-    /* Basic topology needed only */
-    Vect_build_partial(Out, GV_BUILD_BASE);
+    Vect_break_lines_list(Out, NULL, BList, GV_LINE | GV_BOUNDARY, NULL);
+    G_message(_("Merging lines..."));
+    Vect_merge_lines(Out, GV_LINE, NULL, NULL);
 
     nlines = Vect_get_num_lines(Out);
 
@@ -81,6 +80,7 @@ int line_area(struct Map_info *In, int *field, struct Map_info *Out,
      */
 
     /* Check if the line is inside or outside binput area */
+    G_message(_("Selecting lines..."));
     ncat = 1;
     for (line = 1; line <= nlines; line++) {
 	int ltype;
@@ -131,107 +131,111 @@ int line_area(struct Map_info *In, int *field, struct Map_info *Out,
 
 	    Vect_reset_cats(OCats);
 
-	    /* rewrite with all combinations of acat - bcat (-1 in cycle for null) */
-	    for (i = -1; i < Cats->n_cats; i++) {	/* line cats */
-		int j;
+	    if (ofield[0]  > 0) {
+		/* rewrite with all combinations of acat - bcat (-1 in cycle for null) */
+		for (i = -1; i < Cats->n_cats; i++) {	/* line cats */
+		    int j;
 
-		if (i == -1 && Cats->n_cats > 0)
-		    continue;	/* no need to make null */
-
-		for (j = -1; j < ACats->n_cats; j++) {
-		    if (j == -1 && ACats->n_cats > 0)
+		    if (i == -1 && Cats->n_cats > 0)
 			continue;	/* no need to make null */
 
-		    if (ofield[0] > 0)
-			Vect_cat_set(OCats, ofield[0], ncat);
+		    for (j = -1; j < ACats->n_cats; j++) {
+			if (j == -1 && ACats->n_cats > 0)
+			    continue;	/* no need to make null */
 
-		    /* Attributes */
-		    if (driver) {
-			ATTR *at;
+			if (ofield[0] > 0)
+			    Vect_cat_set(OCats, ofield[0], ncat);
 
-			sprintf(buf, "insert into %s values ( %d", Fi->table,
-				ncat);
-			db_set_string(&stmt, buf);
+			/* Attributes */
+			if (driver) {
+			    ATTR *at;
 
-			/* cata */
-			if (i >= 0) {
-			    if (attr[0].columns) {
-				at = find_attr(&(attr[0]), Cats->cat[i]);
-				if (!at)
-				    G_fatal_error(_("Attribute not found"));
+			    sprintf(buf, "insert into %s values ( %d", Fi->table,
+				    ncat);
+			    db_set_string(&stmt, buf);
 
-				if (at->values)
-				    db_append_string(&stmt, at->values);
-				else
-				    db_append_string(&stmt,
-						     attr[0].null_values);
+			    /* cata */
+			    if (i >= 0) {
+				if (attr[0].columns) {
+				    at = find_attr(&(attr[0]), Cats->cat[i]);
+				    if (!at)
+					G_fatal_error(_("Attribute not found"));
+
+				    if (at->values)
+					db_append_string(&stmt, at->values);
+				    else
+					db_append_string(&stmt,
+							 attr[0].null_values);
+				}
+				else {
+				    sprintf(buf, ", %d", Cats->cat[i]);
+				    db_append_string(&stmt, buf);
+				}
 			    }
 			    else {
-				sprintf(buf, ", %d", Cats->cat[i]);
-				db_append_string(&stmt, buf);
+				if (attr[0].columns) {
+				    db_append_string(&stmt, attr[0].null_values);
+				}
+				else {
+				    sprintf(buf, ", null");
+				    db_append_string(&stmt, buf);
+				}
 			    }
-			}
-			else {
-			    if (attr[0].columns) {
-				db_append_string(&stmt, attr[0].null_values);
+
+			    /* catb */
+			    if (j >= 0) {
+				if (attr[1].columns) {
+				    at = find_attr(&(attr[1]), ACats->cat[j]);
+				    if (!at)
+					G_fatal_error(_("Attribute not found"));
+
+				    if (at->values)
+					db_append_string(&stmt, at->values);
+				    else
+					db_append_string(&stmt,
+							 attr[1].null_values);
+				}
+				else {
+				    sprintf(buf, ", %d", ACats->cat[j]);
+				    db_append_string(&stmt, buf);
+				}
 			    }
 			    else {
-				sprintf(buf, ", null");
-				db_append_string(&stmt, buf);
+				if (attr[1].columns) {
+				    db_append_string(&stmt, attr[1].null_values);
+				}
+				else {
+				    sprintf(buf, ", null");
+				    db_append_string(&stmt, buf);
+				}
 			    }
+
+			    db_append_string(&stmt, " )");
+
+			    G_debug(3, db_get_string(&stmt));
+
+			    if (db_execute_immediate(driver, &stmt) != DB_OK)
+				G_warning(_("Unable to insert new record: '%s'"),
+					  db_get_string(&stmt));
 			}
 
-			/* catb */
-			if (j >= 0) {
-			    if (attr[1].columns) {
-				at = find_attr(&(attr[1]), ACats->cat[j]);
-				if (!at)
-				    G_fatal_error(_("Attribute not found"));
-
-				if (at->values)
-				    db_append_string(&stmt, at->values);
-				else
-				    db_append_string(&stmt,
-						     attr[1].null_values);
-			    }
-			    else {
-				sprintf(buf, ", %d", ACats->cat[j]);
-				db_append_string(&stmt, buf);
-			    }
-			}
-			else {
-			    if (attr[1].columns) {
-				db_append_string(&stmt, attr[1].null_values);
-			    }
-			    else {
-				sprintf(buf, ", null");
-				db_append_string(&stmt, buf);
-			    }
-			}
-
-			db_append_string(&stmt, " )");
-
-			G_debug(3, db_get_string(&stmt));
-
-			if (db_execute_immediate(driver, &stmt) != DB_OK)
-			    G_warning(_("Unable to insert new record: '%s'"),
-				      db_get_string(&stmt));
+			ncat++;
 		    }
-
-		    ncat++;
 		}
 	    }
 
-	    /* Add all cats from imput vectors */
-	    if (ofield[1] > 0) {
+	    /* Add cats from input vectors */
+	    if (ofield[1] > 0 && field[0] > 0) {
 		for (i = 0; i < Cats->n_cats; i++) {
-		    Vect_cat_set(OCats, ofield[1], Cats->cat[i]);
+		    if (Cats->field[i] == field[0])
+			Vect_cat_set(OCats, ofield[1], Cats->cat[i]);
 		}
 	    }
 
-	    if (ofield[2] > 0) {
+	    if (ofield[2] > 0 && field[1] > 0 && ofield[1] != ofield[2]) {
 		for (i = 0; i < ACats->n_cats; i++) {
-		    Vect_cat_set(OCats, ofield[2], ACats->cat[i]);
+		    if (Cats->field[i] == field[1])
+			Vect_cat_set(OCats, ofield[2], ACats->cat[i]);
 		}
 	    }
 
