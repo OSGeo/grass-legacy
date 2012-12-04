@@ -64,14 +64,14 @@ static int sort_new2(const void *pa, const void *pb)
 }
 
 /* This function is called by RTreeSearch() to add selected node/line/area/isle to the list */
-int add_item(int id, struct ilist *list)
+static int add_item(int id, struct ilist *list)
 {
     dig_list_add(list, id);
     return 1;
 }
 
 /* This function is called by RTreeSearch() to find an item in the list */
-int find_item(int id, struct ilist *list)
+static int find_item(int id, struct ilist *list)
 {
     dig_list_add(list, id);
     return 0;
