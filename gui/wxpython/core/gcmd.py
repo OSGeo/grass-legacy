@@ -14,6 +14,7 @@ Classes:
 
 Functions:
  - RunCommand
+ - GetDefaultEncoding
 
 (C) 2007-2008, 2010-2011 by the GRASS Development Team
 
@@ -700,3 +701,17 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
     
     Debug.msg(2, "gcmd.RunCommand(): return result")
     return stdout, _formatMsg(stderr)
+
+def GetDefaultEncoding(forceUTF8 = False):
+    """!Get default system encoding
+    
+    @param forceUTF8 force 'UTF-8' if encoding is not defined
+
+    @return system encoding (can be None)
+    """
+    enc = locale.getdefaultlocale()[1]
+    if forceUTF8 and (enc is None or enc == 'UTF8'):
+        return 'UTF-8'
+    
+    Debug.msg(1, "GetSystemEncoding(): %s" % enc)
+    return enc
