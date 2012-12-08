@@ -76,10 +76,9 @@ def DecodeString(string):
     if not string:
         return string
     
-    enc = GetDefaultEncoding()
-    if enc:
-        Debug.msg(5, "DecodeString(): enc=%s" % enc)
-        return string.decode(enc)
+    if _enc:
+        Debug.msg(5, "DecodeString(): enc=%s" % _enc)
+        return string.decode(_enc)
     
     return string
 
@@ -93,10 +92,9 @@ def EncodeString(string):
     if not string:
         return string
     
-    enc = GetDefaultEncoding()
-    if enc:
-        Debug.msg(5, "EncodeString(): enc=%s" % enc)
-        return string.encode(enc)
+    if _enc:
+        Debug.msg(5, "EncodeString(): enc=%s" % _enc)
+        return string.encode(_enc)
     
     return string
 
@@ -466,9 +464,8 @@ class Command:
         
         for type, msg in self.__ProcessStdErr():
             if type == 'ERROR':
-                enc = GetDefaultEncoding()
-                if enc:
-                    return unicode(msg, enc)
+                if _enc:
+                    return unicode(msg, _enc)
                 return msg
         
         return ''
@@ -710,3 +707,5 @@ def GetDefaultEncoding(forceUTF8 = False):
     
     Debug.msg(1, "GetSystemEncoding(): %s" % enc)
     return enc
+
+_enc = GetDefaultEncoding() # define as global variable
