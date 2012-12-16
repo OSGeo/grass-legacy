@@ -68,16 +68,6 @@ settings; the program will run foreground.
 <h2>OPTIONS</h2>
 
 
-<h3>Flags:</h3>
-
-<dl>
-
-<dt><b>-q</b> 
-
-<dd>Run quietly, without printing program messages to standard output.
-
-</dl>
-
 <h3>Parameters:</h3>
 
 <dl>
@@ -153,6 +143,22 @@ along with all required options, it will overwrite the
 classified raster map without prompting if this map
 existed.
 
+<h2>EXAMPLE</h2>
+
+Completion of the unsupervised classification of
+a LANDSAT subscene (VIZ, NIR, MIR channels) in North Carolina
+(see <em>i.cluster</em> manual page for the first part):
+
+<div class="code"><pre>
+i.maxlik group=my_lsat7_2002 subgroup=my_lsat7_2002 sigfile=sig_clust_lsat2002 \
+          class=lsat7_2002_clust_classes reject=lsat7_2002_clust_classes.rej
+
+# Visually check result
+d.mon x0
+d.rast.leg lsat7_2002_clust_classes
+d.rast.leg lsat7_2002_clust_classes.rej
+</pre></div>
+
 <h2>SEE ALSO</h2>
 
 The GRASS 4 <em>
@@ -161,10 +167,11 @@ Processing manual</a></em>
 
 <p>
 <em>
-<a href="i.class.html">i.class</a><br>
-<a href="i.cluster.html">i.cluster</a><br>
-<a href="i.gensig.html">i.gensig</a><br>
-<a href="i.group.html">i.group</a>
+<a href="i.class.html">i.class</a>,
+<a href="i.cluster.html">i.cluster</a>,
+<a href="i.gensig.html">i.gensig</a>,
+<a href="i.group.html">i.group</a>,
+<a href="r.kappa.html">r.kappa</a>
 </em>
 
 <h2>AUTHORS</h2>
