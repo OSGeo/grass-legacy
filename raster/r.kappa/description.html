@@ -1,6 +1,5 @@
 <h2>DESCRIPTION</h2>
 
-
 <em>r.kappa</em> tabulates the error matrix of classification result by
 crossing classified map layer with respect to reference map layer.  Both
 overall <em>kappa</em> (accompanied by its <em>variance</em>) and
@@ -20,7 +19,6 @@ pixels are tabulated.
 The report will be write to an output file which is in
 plain text format and named by user at prompt of running
 the program.
-
 
 <p>
 The body of the report is arranged in panels.  The
@@ -45,9 +43,16 @@ layer. Because <em>r.kappa</em> calculates and then reports
 information for each and every category.
 
 <p>
-
 <em>NA</em>'s in output file mean non-applicable in case
 <em>MASK</em> exists.
+
+<H2>EXAMPLE</H2>
+
+Verification of classified LANDSAT scene against training areas:
+
+<div class="code"><pre>
+r.kappa -w classification=lsat7_2002_classes reference=training
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
