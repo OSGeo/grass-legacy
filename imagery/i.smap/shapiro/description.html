@@ -1,7 +1,6 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-
-The <EM>i.smap</EM> program is used to segment
+The <em>i.smap</em> program is used to segment
 multispectral images using a spectral class model known as
 a Gaussian mixture distribution.  Since Gaussian mixture
 distributions include conventional multivariate Gaussian
@@ -9,78 +8,73 @@ distributions, this program may also be used to segment
 multispectral images based on simple spectral mean and
 covariance parameters.
 
-<P>
-
-<EM>i.smap</EM> has two modes of operation.  The first mode
+<p><em>i.smap</em> has two modes of operation.  The first mode
 is the sequential maximum a posteriori (SMAP) mode
-[<A HREF="#ref1">1</A>,<A HREF="#ref2">2</A>].  The SMAP
+[<a href="#ref1">1</a>,<a href="#ref2">2</a>].  The SMAP
 segmentation algorithm attempts to improve segmentation
 accuracy by segmenting the image into regions rather than
 segmenting each pixel separately 
-(see <A HREF="#notes">NOTES</A>).
+(see <a href="#notes">NOTES</a>).
 
 
-<P>
-
-The second mode is the more conventional maximum likelihood (ML)
+<p>The second mode is the more conventional maximum likelihood (ML)
 classification which classifies each pixel separately,
 but requires somewhat less computation. This mode is selected with
-the <B>-m</B> flag (see <A HREF="#mflag.html">below</A>).
+the <b>-m</b> flag (see <a href="#mflag.html">below</a>).
 
-<H2>OPTIONS</H2>
+<h2>OPTIONS</h2>
 
-<H3>Flags:</H3>
+<h3>Flags:</h3>
 
-<DL>
+<dl>
 
-<DT><B>-m</B></A>
+<dt><b>-m</b></a>
 
-<DD>Use maximum likelihood estimation (instead of smap).
+<dd>Use maximum likelihood estimation (instead of smap).
 Normal operation is to use SMAP estimation (see
-<A HREF="#notes">NOTES</A>).
+<a href="#notes">NOTES</a>).
 
-<DT><B>-q</B> 
+<dt><b>-q</b> 
 
-<DD>Run quietly, without printing messages about program
+<dd>Run quietly, without printing messages about program
 progress.  Without this flag, messages will be printed (to
 stderr) as the program progresses.
 
-</DL>
+</dl>
 
 
-<H3>Parameters:</H3>
+<h3>Parameters:</h3>
 
-<DL>
-<DT><B>group=</B><EM>name</EM> 
+<dl>
+<dt><b>group=</b><em>name</em> 
 
-<DD>imagery group<BR>
+<dd>imagery group<br>
 The imagery group that defines the image to be classified.
 
-<DT><B>subgroup=</B><EM>name</EM> 
+<dt><b>subgroup=</b><em>name</em> 
 
-<DD>imagery subgroup<BR>
+<dd>imagery subgroup<br>
 The subgroup within the group specified that specifies the
 subset of the band files that are to be used as image data
 to be classified.
 
-<DT><B>signaturefile=</B><EM>name</EM> 
+<dt><b>signaturefile=</b><em>name</em> 
 
-<DD>imagery signaturefile<BR>
+<dd>imagery signaturefile<br>
 The signature file that contains the spectral signatures (i.e., the
 statistics) for the classes to be identified in the image.
 This signature file is produced by the program
-<EM><A HREF="i.gensigset.html">i.gensigset</A></EM>
-(see <A HREF="#notes">NOTES</A>).
+<em><a href="i.gensigset.html">i.gensigset</a></em>
+(see <a href="#notes">NOTES</a>).
 
-<DT><B>blocksize=</B><EM>value</EM> 
+<dt><b>blocksize=</b><em>value</em> 
 
-<DD>size of submatrix to process at one time<BR>
-default: 128<BR>
+<dd>size of submatrix to process at one time<br>
+default: 128<br>
 This option specifies the size of the "window" to be used when
 reading the image data. 
 
-<P>
-
+<p>
 This program was written to be nice about memory usage
 without influencing the resultant classification. This
 option allows the user to control how much memory is used.
@@ -88,8 +82,7 @@ More memory may mean faster (or slower) operation depending
 on how much real memory your machine has and how much
 virtual memory the program uses.
 
-<P>
-
+<p>
 The size of the submatrix used in segmenting the image has
 a principle function of controlling memory usage; however,
 it also can have a subtle effect on the quality of the
@@ -102,28 +95,27 @@ submatrix small enough so that different smoothing
 parameters may be used for each distinctive region of the
 image.
 
-<P>
-
+<p>
 The submatrix size has no effect on the performance of the
 ML segmentation method.
 
-<DT><B>output=</B><EM>name</EM>
+<dt><b>output=</b><em>name</em>
 
-<DD>output raster map.<BR>
+<dd>output raster map.<br>
 The name of a raster map that will contain the
 classification results.  This new raster map layer will
 contain categories that can be related to landcover
 categories on the ground.
 
-</DL>
+</dl>
 
-<H2>INTERACTIVE MODE</H2>
+<h2>INTERACTIVE MODE</h2>
 
 If none of the arguments are specified on the command line,
-<EM>i.smap</EM> will interactively prompt for the names of
+<em>i.smap</em> will interactively prompt for the names of
 the maps and files.
 
-<A NAME="notes"><H2>NOTES</H2></A>
+<a name="notes"><h2>NOTES</h2></a>
 
 The SMAP algorithm exploits the fact that nearby pixels in
 an image are likely to have the same class.  It works by
@@ -134,8 +126,7 @@ misclassifications, the SMAP algorithm generally produces
 segmentations with larger connected regions of a fixed
 class which may be useful in some applications.
 
-<P>
-
+<p>
 The amount of smoothing that is performed in the
 segmentation is dependent of the behavior of the data in
 the image.  If the data suggests that the nearby pixels
@@ -143,15 +134,45 @@ often change class, then the algorithm will adaptively
 reduce the amount of smoothing.  This ensures that
 excessively large regions are not formed.
 
-<P>
-
-The module i.smap does not support MASKed or NULL cells. Therefore 
-it might be necessary to create a copy of the classification results 
-using e.g. r.mapcalc. 
 <p>
-r.mapcalc  MASKed_map=classification results 
+The module <em>i.smap</em> does not support MASKed or NULL cells. Therefore 
+it might be necessary to create a copy of the classification results 
+using e.g. r.mapcalc:
+<p><div class="code"><pre>
+r.mapcalc "MASKed_map = classification_results"
+</pre></div>
 
-<H2>REFERENCES</H2>
+<h2>EXAMPLE</h2>
+
+Supervised classification of LANDSAT
+
+<div class="code"><pre>
+g.region rast=lsat7_2002_10 -p
+
+# store VIZ, NIR, MIR into group/subgroup
+i.group group=my_lsat7_2002 subgroup=my_lsat7_2002 \
+  input=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7_2002_50,lsat7_2002_70
+
+# Now digitize training areas "training" with the digitizer
+# and convert to raster model with v.to.rast
+v.to.rast training out=training use=cat labelcolumn=label
+
+# calculate statistics
+i.gensigset trainingmap=training group=my_lsat7_2002 subgroup=my_lsat7_2002 \
+            signaturefile=my_smap_lsat7_2002 maxsig=5
+
+i.smap group=my_lsat7_2002 subgroup=my_lsat7_2002 signaturefile=my_smap_lsat7_2002 \
+       output=lsat7_2002_smap_classes
+
+# Visually check result
+d.mon x0
+d.rast.leg lsat7_2002_smap_classes
+
+# Statistically check result
+r.kappa -w classification=lsat7_2002_smap_classes reference=training
+</pre></div>
+
+<h2>REFERENCES</h2>
 
 <ul>
 <li>C. Bouman and M. Shapiro,
@@ -169,29 +190,28 @@ pp. III-565 - III-568, San Francisco, California, March 23-26, 1992.
 <em>IEEE Trans. on Geoscience and Remote Sensing, 33(6): 1313-1316.</em>
 </ul>
 
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="i.group.html">i.group</A></EM>
+<em><a href="i.group.html">i.group</a></em>
 for creating groups and subgroups
 
-<P>
-
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+<p>
+<em><a href="r.mapcalc.html">r.mapcalc</a></em>
 to copy classification result in order to cut out MASKed subareas
 
-<P>
-
-<EM><A HREF="i.gensigset.html">i.gensigset</A></EM>
+<p>
+<em><a href="i.gensigset.html">i.gensigset</a></em>
 to generate the signature file required by this program
 
-<H2>AUTHORS</H2>
+<h2>AUTHORS</h2>
 
-<a href=http://dynamo.ecn.purdue.edu/~bouman/software/segmentation/>Charles Bouman, 
+<a href="http://dynamo.ecn.purdue.edu/~bouman/software/segmentation/">Charles Bouman, 
 School of Electrical Engineering, Purdue University</a>
 
-<BR>
+<p>
 Michael Shapiro,
 U.S.Army Construction Engineering 
 Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>

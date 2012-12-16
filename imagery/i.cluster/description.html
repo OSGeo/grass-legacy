@@ -1,6 +1,5 @@
 <h2>DESCRIPTION</h2>
 
-
 <em>i.cluster</em>
 performs the first pass in the GRASS two-pass unsupervised 
 classification of imagery, while the GRASS program <em>
@@ -9,7 +8,6 @@ the second pass. Both programs must be run to complete the unsupervised
 classification.
 
 <p>
-
 <em>i.cluster</em> is a clustering algorithm that reads
 through the (raster) imagery data and builds pixel clusters
 based on the spectral reflectances of the pixels (see Figure).
@@ -223,9 +221,7 @@ the result, i.e., the statistics for each cluster. Also
 included are the resulting percent convergence for the
 clusters, the number of iterations that was required to
 achieve the convergence, and the separability matrix.
-
 </dl>
-
 
 <h2>NOTES</h2>
 
@@ -233,6 +229,24 @@ Running in command line mode, <em>i.cluster</em> will
 overwrite the output signature file and reportfile (if
 required by the user) without prompting if the files
 existed.
+
+<h2>EXAMPLE</h2>
+
+Preparing the statistics for unsupervised classification of
+a LANDSAT subscene in North Carolina:
+
+<div class="code"><pre>
+g.region rast=lsat7_2002_10 -p
+
+# store VIZ, NIR, MIR into group/subgroup
+i.group group=my_lsat7_2002 subgroup=my_lsat7_2002 \
+  input=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7_2002_50,lsat7_2002_70
+
+i.cluster group=my_lsat7_2002 subgroup=my_lsat7_2002 sigfile=sig_clust_lsat2002 \
+          classes=10 report=rep_clust_lsat2002.txt
+</pre></div>
+
+To complete the unsupervised classification, <em>i.maxlik</em> is subsequently used.
 
 <h2>SEE ALSO</h2>
 
