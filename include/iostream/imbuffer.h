@@ -25,6 +25,8 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <vector>
+
 #include "ami_config.h" //for SAVE_MEMORY
 #include "ami_stream.h"
 #include "mm.h"
