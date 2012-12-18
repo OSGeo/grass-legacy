@@ -72,7 +72,7 @@ enum AMI_err {
   AMI_ERROR_NO_MAIN_MEMORY_OPERATION,
 };
 
-extern char *ami_str_error[];
+extern const char *ami_str_error[];
 
 //
 // AMI stream types passed to constructors
