@@ -968,7 +968,7 @@ dnl AC_CHECK_TOOL(AR, ar)
             LD_SEARCH_FLAGS=""
 	    LD_LIBRARY_PATH_VAR="PATH"
 	    ;;
-        MINGW*)
+        MINGW* | MSYS*)
             SHLIB_CFLAGS=""
             SHLIB_LD_LIBS='${LIBS}'
             SHLIB_SUFFIX=".dll"
@@ -1162,7 +1162,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    fi
 	    SHLIB_LD_LIBS=""
 	    SHLIB_SUFFIX=".so"
-	    LDFLAGS=""
+	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    if test "$GCC" = "yes" ; then
