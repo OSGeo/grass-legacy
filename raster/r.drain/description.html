@@ -67,9 +67,11 @@ Consider the following example:
 <div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
-. . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
+. 19. 20. 18. 19. 16. 15. 15.    .   .   .   .   .   .   .   .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 20| 19| 17. 16. 17. 16. 16.    .   . 1 . 1 . 1 .   .   .   .
-. . |___| . . . . . . . . . .    . . . . . . . . . . . . . . .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 18. 18. 24. 18. 15. 12. 11.    .   .   .   .   . 1 .   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 22. 16. 16. 18. 10. 10. 10.    .   .   .   .   . 1 .   .   .
@@ -96,9 +98,11 @@ With the <b>-c</b> <em>(copy)</em> flag, you get the following result:
 <div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
-. . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
+. 19. 20. 18. 19. 16. 15. 15.    .   .   .   .   .   .   .   .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 20| 19| 17. 16. 17. 16. 16.    .   . 19. 17. 16.   .   .   .
-. . |___| . . . . . . . . . .    . . . . . . . . . . . . . . .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 18. 18. 24. 18. 15. 12. 11.    .   .   .   .   . 15.   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 22. 16. 16. 18. 10. 10. 10.    .   .   .   .   . 10.   .   .
@@ -120,9 +124,11 @@ With the <b>-a</b> <em>(accumulate)</em> flag, you get the following result:
 <div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
-. . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
+. 19. 20. 18. 19. 16. 15. 15.    .   .   .   .   .   .   .   .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 20| 19| 17. 16. 17. 16. 16.    .   . 19. 36. 52.   .   .   .
-. . |___| . . . . . . . . . .    . . . . . . . . . . . . . . .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 18. 18. 24. 18. 15. 12. 11.    .   .   .   .   . 67.   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 22. 16. 16. 18. 10. 10. 10.    .   .   .   .   . 77.   .   .
@@ -142,9 +148,11 @@ With the <b>-n</b> <em>(number)</em> flag, you get the following result:
 <div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
-. . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
+. 19. 20. 18. 19. 16. 15. 15.    .   .   .   .   .   .   .   .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 20| 19| 17. 16. 17. 16. 16.    .   . 1 . 2 . 3 .   .   .   .
-. . |___| . . . . . . . . . .    . . . . . . . . . . . . . . .
+. .  ---  . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 18. 18. 24. 18. 15. 12. 11.    .   .   .   .   . 4 .   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 22. 16. 16. 18. 10. 10. 10.    .   .   .   .   . 5 .   .   .
@@ -177,7 +185,7 @@ The directions are recorded as GRASS standard directions:
 Sometimes, when the differences among integer cell category values in the
 <em><a href="r.cost.html">r.cost</a></em> cumulative cost surface output are 
 small, this cumulative cost output cannot accurately be used as input to
-<em>r.drain</em> (<em>t.drain</em> will output bad results).
+<em>r.drain</em> (<em>r.drain</em> will output bad results).
 This problem can be circumvented by making the differences
 between cell category values in the cumulative cost output bigger. It
 is recommended that if the output from <em>r.cost</em> is to be used
