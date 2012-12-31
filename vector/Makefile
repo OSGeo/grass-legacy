@@ -76,6 +76,7 @@ SUBDIRS = \
 	v.to.rast3 \
 	v.type \
 	v.univar \
+	v.vect.stats \
 	v.voronoi \
 	v.what \
 	v.what.rast\
