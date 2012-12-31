@@ -29,6 +29,7 @@
 #define      CUM_COST_LAYER        1
 #define      COST_LAYER            2
 #define      START_PT              3
+#define      MOVE_DIR_LAYER        4
 
 struct start_pt
 {
@@ -49,17 +50,18 @@ variables[] = {
     {
     "output", CUM_COST_LAYER}, {
     "input", COST_LAYER}, {
-    "coor", START_PT}
+    "coor", START_PT}, {
+    "outdir", MOVE_DIR_LAYER}
 };
 
-char cum_cost_layer[GNAME_MAX];
+char cum_cost_layer[GNAME_MAX], move_dir_layer[GNAME_MAX];
 char cost_layer[GNAME_MAX];
 struct start_pt *head_start_pt = NULL;
 struct start_pt *head_end_pt = NULL;
 
 #else
 
-extern char cum_cost_layer[];
+extern char cum_cost_layer[], move_dir_layer[];
 extern char cost_layer[];
 extern struct start_pt *head_start_pt;
 extern struct start_pt *head_end_pt;
