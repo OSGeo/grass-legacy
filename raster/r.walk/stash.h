@@ -43,8 +43,8 @@ variables[] = {
     "outdir", MOVE_DIR_LAYER}
 };
 
-char cum_cost_layer[64], move_dir_layer[64];
-char cost_layer[64], dtm_layer[64];
+char cum_cost_layer[GNAME_MAX], move_dir_layer[GNAME_MAX];
+char cost_layer[GNAME_MAX], dtm_layer[GNAME_MAX];
 struct start_pt *head_start_pt = NULL;
 struct start_pt *head_end_pt = NULL;
 
