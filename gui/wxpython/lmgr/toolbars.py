@@ -94,7 +94,7 @@ class LMDataToolbar(BaseToolbar):
             'addOverlay' : MetaIcon(img = 'layer-more',
                                     label = _('Add grid or vector labels overlay')),
             'delCmd'     : MetaIcon(img = 'layer-remove',
-                                    label = _('Delete selected map layer')),
+                                    label = _('Remove selected map layer(s) from layer tree')),
             }
         
         return self._getToolbarData((('addMulti', icons["addMulti"],
