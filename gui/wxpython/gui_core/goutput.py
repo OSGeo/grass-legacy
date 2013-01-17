@@ -977,7 +977,7 @@ class GMConsole(wx.SplitterWindow):
                 dialog.Close()
         
     def OnProcessPendingOutputWindowEvents(self, event):
-        self.ProcessPendingEvents()
+        wx.GetApp().ProcessPendingEvents()
 
     def ResetFocus(self):
         """!Reset focus"""
