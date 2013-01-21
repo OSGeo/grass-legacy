@@ -7,7 +7,7 @@
 #               Pythonized by Martin Landa
 # PURPOSE:      Tool to download and install extensions from GRASS Addons SVN into 
 #               local GRASS installation
-# COPYRIGHT:    (C) 2009-2011 by Markus Neteler, and the GRASS Development Team
+# COPYRIGHT:    (C) 2009-2013 by Markus Neteler, and the GRASS Development Team
 #
 #               This program is free software under the GNU General
 #               Public License (>=v2). Read the file COPYING that
@@ -183,7 +183,9 @@ def list_available_extensions():
         try:
             tree = etree.fromstring(f.read())
         except:
-            grass.fatal(_("Unable to parse '%s'") % url)
+            grass.warning(_("Unable to parse '%s'. Trying to scan SVN (may take some time)...") % url)
+            list_available_extensions_svn()
+            return
         
         for mnode in tree.findall('task'):
             name = mnode.get('name')
