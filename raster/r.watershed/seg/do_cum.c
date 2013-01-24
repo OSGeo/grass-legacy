@@ -29,9 +29,9 @@ int do_cum(void)
 	r = point.r;
 	c = point.c;
 	cseg_get(&asp, &asp_val, r, c);
-	if (asp_val) {
-	    dr = r + asp_r[ABS(asp_val)];
-	    dc = c + asp_c[ABS(asp_val)];
+	if (asp_val > 0) {
+	    dr = r + asp_r[asp_val];
+	    dc = c + asp_c[asp_val];
 	}
 	else
 	    dr = dc = -1;
