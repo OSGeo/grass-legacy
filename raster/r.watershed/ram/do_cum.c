@@ -25,7 +25,7 @@ int do_cum(void)
 	this_index = astar_pts[killer];
 	aspect = asp[this_index];
 	seg_index_rc(alt_seg, this_index, &r, &c);
-	if (aspect) {
+	if (aspect > 0) {
 	    dr = r + asp_r[ABS(aspect)];
 	    dc = c + asp_c[ABS(aspect)];
 	}
@@ -149,9 +149,9 @@ int do_cum_mfd(void)
 	seg_index_rc(alt_seg, this_index, &r, &c);
 	FLAG_SET(worked, r, c);
 	aspect = asp[this_index];
-	if (aspect) {
-	    dr = r + asp_r[ABS(aspect)];
-	    dc = c + asp_c[ABS(aspect)];
+	if (aspect > 0) {
+	    dr = r + asp_r[aspect];
+	    dc = c + asp_c[aspect];
 	}
 	else
 	    dr = dc = -1;
