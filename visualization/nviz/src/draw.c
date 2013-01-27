@@ -32,7 +32,7 @@ int auto_draw(Nv_data *, Tcl_Interp *);
 void CancelFunc_Hook(void)
 {
     if (cancel_script != NULL) {
-	TkCopyAndGlobalEval(cancel_interp, cancel_script);
+	Tcl_EvalEx(cancel_interp, cancel_script, -1, TCL_EVAL_GLOBAL);
     }
 }
 
