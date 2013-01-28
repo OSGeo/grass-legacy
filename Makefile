@@ -98,7 +98,7 @@ default: builddemolocation
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@test -d ${ARCH_DISTDIR}/tools/ || mkdir -p ${ARCH_DISTDIR}/tools/
 	-${INSTALL} tools/mkhtml.sh ${ARCH_DISTDIR}/tools/ 2>/dev/null
-	@test -d ${ARCH_DISTDIR}/tools/g.html2man/ && rm -rf ${ARCH_DISTDIR}/tools/g.html2man/
+	@if test -d ${ARCH_DISTDIR}/tools/g.html2man/; then rm -rf ${ARCH_DISTDIR}/tools/g.html2man/; fi
 	-${INSTALL} tools/g.html2man/g.html2man ${ARCH_DISTDIR}/tools/ 2>/dev/null
 	@(cd tools ; sh -c "./build_html_index.sh")
 	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 5 ] ; then \
