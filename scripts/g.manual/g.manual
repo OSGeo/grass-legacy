@@ -69,30 +69,59 @@ check_docbase()
 
 start_browser()
 {
-  if test ! -f "$GRASS_DOC_BASE"/docs/html/$1.html -a -n $1 ; then
-    g.message -e "No HTML manual page entry for <$1>."
-    exit 1
-  else
-    if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 1 ] ; then
-	g.message "Starting browser <$BROWSERNAME> for module $1..."
+  DOC_BASE="$GRASS_DOC_BASE/docs/html"
+  if test ! -f "$DOC_BASE/$1.html" -a -n "$1" ; then
+    DOC_BASE=""
+    IFS=":"
+    for ADDON_PATH in "$GRASS_ADDON_PATH" ; do
+      if [ -f "$ADDON_PATH/docs/html/$1.html" ] ; then
+        DOC_BASE="$ADDON_PATH/docs/html"
+	break
+      fi
+    done
+    unset IFS
+    if [ -z "$DOC_BASE" ] ; then
+      g.message -e "No HTML manual page entry for <$1>."
+      exit 1
     fi
-    "$GRASS_HTML_BROWSER" file://"$GRASS_DOC_BASE"/docs/html/$1.html
   fi
+  if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 1 ] ; then
+    g.message "Starting browser <$BROWSERNAME> for module $1..."
+  fi
+  "$GRASS_HTML_BROWSER" file://"$DOC_BASE/$1.html"
 }
 
 start_man()
 {
-  if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1 -a -n $1 ; then
-    if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1.gz -a -n $1 ; then
-       echo "ERROR: no MAN page entry for <$1>." 1>&2
-       exit 1
-    else
-       man "$GRASS_DOC_BASE"/man/man1/$1.1.gz
-    fi
-    g.message -e "No MAN page entry for <$1>."
+  DOC_BASE="$GRASS_DOC_BASE/man/man1"
+  if [ -z "$1" ] ; then
+    g.message -e "Programmer error"
     exit 1
+  fi
+
+  if [ ! -f "$DOC_BASE/$1.1" ] && [ ! -f "$DOC_BASE/$1.1.gz" ] ; then
+    DOC_BASE=""
+    IFS=":"
+    for ADDON_PATH in "$GRASS_ADDON_PATH" ; do
+      if [ -f "$ADDON_PATH/docs/man/man1/$1.1" ] || \
+	 [ -f "$ADDON_PATH/docs/man/man1/$1.1.gz" ] ; then
+        DOC_BASE="$ADDON_PATH/docs/man/man1"
+        break
+      fi
+    done
+    unset IFS
+    if [ -z "$DOC_BASE" ] ; then
+       g.message -e "No man page entry for <$1>."
+       exit 1
+    fi
+  fi
+
+  if [ -f "$DOC_BASE/$1.1" ] ; then
+    man "$DOC_BASE/$1.1"
+  elif [ -f "$DOC_BASE/$1.1.gz" ] ; then
+    man "$DOC_BASE/$1.1.gz"
   else
-    man "$GRASS_DOC_BASE"/man/man1/$1.1
+    g.message -e "No man page entry for <$1>."
   fi
 }
 
