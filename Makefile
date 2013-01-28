@@ -100,6 +100,8 @@ default: builddemolocation
 	-${INSTALL} tools/mkhtml.sh ${ARCH_DISTDIR}/tools/ 2>/dev/null
 	@if test -d ${ARCH_DISTDIR}/tools/g.html2man/; then rm -rf ${ARCH_DISTDIR}/tools/g.html2man/; fi
 	-${INSTALL} tools/g.html2man/g.html2man ${ARCH_DISTDIR}/tools/ 2>/dev/null
+	-sed -e 's+tools/g.html2man/g.html2man+tools/g.html2man+' \
+		include/Make/Man.make > ${ARCH_DISTDIR}/include/Make/Man.make
 	@(cd tools ; sh -c "./build_html_index.sh")
 	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 5 ] ; then \
 		echo "--"     >> $(ERRORLOG) ; \
@@ -143,8 +145,6 @@ libs:
 	done
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -fr --parents include ${ARCH_DISTDIR}/
-	-sed -e 's+tools/g.html2man/g.html2man+tools/g.html2man+' \
-		include/Make/Man.make > ${ARCH_DISTDIR}/include/Make/Man.make
 
 #we leave this target for a while so that people can easily upgrade (11/2004):
 mix:
@@ -294,8 +294,12 @@ endif
 	@ # default to be /usr/local
 	@##### -cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-sed -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" -e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" ${GISBASE}/include/Make/Platform.make > ${INST_DIR}/include/Make/Platform.make
-	-sed -e "s#^\(ARCH_DISTDIR.[^=]*\).*#\1= ${INST_DIR}#" -e "s#^\(ARCH_BINDIR.[^=]*\).*#\1= ${UNIX_BIN}#" ${GISBASE}/include/Make/Grass.make > ${INST_DIR}/include/Make/Grass.make
+	-sed -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" \
+		-e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" \
+		${GISBASE}/include/Make/Platform.make > ${INST_DIR}/include/Make/Platform.make
+	-sed -e "s#^\(ARCH_DISTDIR.[^=]*\).*#\1= ${INST_DIR}#" \
+		-e "s#^\(ARCH_BINDIR.[^=]*\).*#\1= ${UNIX_BIN}#" \
+		${GISBASE}/include/Make/Grass.make > ${INST_DIR}/include/Make/Grass.make
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
