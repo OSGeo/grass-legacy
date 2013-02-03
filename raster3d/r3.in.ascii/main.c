@@ -30,7 +30,7 @@ static void setParams();	/*Fill the paramType structure */
 
 /*Puts the userdefined parameters into easier handable variables */
 static void getParams(char **input, char **output, int *convertNull,
-		      double *nullValu);
+		      char *nullValu);
 
 /*reads a g3d ascii-file headerfile-string */
 static void readHeaderString(FILE * fp, char *valueString, double *value);
@@ -40,7 +40,7 @@ static FILE *openAscii(char *asciiFile, G3D_Region * region);	/*open the g3d asc
 /*This function does all the work, it reads the values from the g3d ascii-file and put 
    it into an g3d-map */
 static void asciiToG3d(FILE * fp, G3D_Region * region, int convertNull,
-		       double nullValue);
+		       char *nullValue);
 
 
 /*---------------------------------------------------------------------------*/
@@ -85,7 +85,7 @@ static void setParams()
     param.nv->type = TYPE_STRING;
     param.nv->required = NO;
     param.nv->multiple = NO;
-    param.nv->answer = "none";
+    param.nv->answer = "*";
     param.nv->description =
 	_("String representing NULL value data cell (use 'none' if no such value)");
 }
@@ -93,13 +93,13 @@ static void setParams()
 /*---------------------------------------------------------------------------*/
 
 static void
-getParams(char **input, char **output, int *convertNull, double *nullValue)
+getParams(char **input, char **output, int *convertNull, char *nullValue)
 {
     *input = param.input->answer;
     *output = param.output->answer;
     *convertNull = (strcmp(param.nv->answer, "none") != 0);
     if (*convertNull)
-	if (sscanf(param.nv->answer, "%lf", nullValue) != 1)
+	if (sscanf(param.nv->answer, "%s", nullValue) != 1)
 	    fatalError("getParams: NULL-value value invalid");
 
     G_debug(3, "getParams: input: %s, output: %s", *input, *output);
@@ -159,10 +159,11 @@ static FILE *openAscii(char *asciiFile, G3D_Region * region)
 #define MAX(a,b) (a > b ? a : b)
 
 static void
-asciiToG3d(FILE * fp, G3D_Region * region, int convertNull, double nullValue)
+asciiToG3d(FILE * fp, G3D_Region * region, int convertNull, char *nullValue)
 {
     int x, y, z;
     double value;
+    char buff[256];
     int tileX, tileY, tileZ;
 
 
@@ -185,16 +186,28 @@ asciiToG3d(FILE * fp, G3D_Region * region, int convertNull, double nullValue)
 
 	for (y = region->rows - 1; y >= 0; y--)	/* go south to north */
 	    for (x = 0; x < region->cols; x++) {
-		if (fscanf(fp, "%lf", &value) != 1) {
-		    if (feof(fp))
-			G_warning(_("End of file reached while still loading data."));
+
+                if (fscanf(fp, "%s", buff) != 1) {
+                    if (feof(fp))
+                        G_warning(_("End of file reached while still loading data."));
 		    G_debug(3,
 			    "missing data at col=%d row=%d depth=%d last_value=[%.4f]",
 			    x + 1, region->rows - y, z + 1, value);
 		    fatalError("asciiToG3d: read failed");
 		}
-		if (convertNull && (value == nullValue))
+
+                /* Check for null value */
+                if (convertNull && strncmp(buff, nullValue, strlen(nullValue)) == 0) {
 		    G3d_setNullValue(&value, 1, DCELL_TYPE);
+		}
+		else {
+		    if (sscanf(buff, "%lf", &value) != 1) {
+                        G_warning(_("Invalid value detected"));
+                        G_debug(1, "invalid value at col=%d row=%d depth=%d last_value=[%s]",
+				x + 1, region->rows - y, z + 1, buff);
+			fatalError("asciiToG3d: read failed");
+		    }
+		}
 		G3d_putDouble(map, x, y, z, value);
 	    }
 
@@ -224,7 +237,7 @@ int main(int argc, char *argv[])
 {
     char *input, *output;
     int convertNull;
-    double nullValue;
+    char nullValue[256];
     int useTypeDefault, type, useLzwDefault, doLzw, useRleDefault, doRle;
     int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY,
 	tileZ;
@@ -247,7 +260,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    getParams(&input, &output, &convertNull, &nullValue);
+    getParams(&input, &output, &convertNull, nullValue);
     if (!G3d_getStandard3dParams(&useTypeDefault, &type,
 				 &useLzwDefault, &doLzw,
 				 &useRleDefault, &doRle,
