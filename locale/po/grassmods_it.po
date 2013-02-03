@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 10:54+0100\n"
-"PO-Revision-Date: 2013-01-21 20:32+0100\n"
+"PO-Revision-Date: 2013-02-03 12:30+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
@@ -1139,15 +1139,15 @@ msgstr "Lo stato di ogni cella, = 0 - inattiva, 1 - attiva, 2 - dirichlet"
 
 #: ../raster3d/r3.gwflow/main.c:71
 msgid "The x-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "La componente x del tensore di conduttività idraulica in [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:79
 msgid "The y-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "La componente y del tensore di conduttività idraulica in [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:87
 msgid "The z-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "La componente z del tensore di conduttività idraulica in [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:94
 msgid "Sources and sinks in [m^3/s]"
@@ -1155,7 +1155,7 @@ msgstr "Sorgenti e pozzi in [m^3/s]"
 
 #: ../raster3d/r3.gwflow/main.c:101
 msgid "Specific yield in 1/m"
-msgstr ""
+msgstr "Flessione specifica in 1/m"
 
 #: ../raster3d/r3.gwflow/main.c:108
 msgid "Recharge raster map in m^3/s"
@@ -1258,7 +1258,7 @@ msgstr "Incremento positivo fra livelli di isosuperficie"
 
 #: ../raster3d/r3.mkdspf/main.c:123
 msgid "Number of isosurface threshold levels"
-msgstr ""
+msgstr "Numero di livelli di soglia dell'isosuperficie"
 
 #: ../raster3d/r3.mkdspf/main.c:127
 msgid "Suppress progress report & min/max information"
@@ -1734,7 +1734,7 @@ msgstr "Impossibile ottenere l'altezza dalla riga del raster"
 
 #: ../raster3d/r3.cross.rast/main.c:272
 msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
-msgstr ""
+msgstr "Crea sezione incrociata di mappa raster 2D da un raster 3D basato su mappa di elevazione 2D."
 
 #: ../raster3d/r3.cross.rast/main.c:298
 msgid "The 2D and 3D region settings are different. Using the 3D raster map settings to adjust the 2D region."
@@ -1886,7 +1886,7 @@ msgstr "Mappa vettoriale 3D <%s> non trovata"
 
 #: ../raster3d/r3.out.vtk/main.c:171
 msgid "Please provide three 3D raster maps for the xyz-vector maps [x,y,z]"
-msgstr ""
+msgstr "Fornire 3 mappe raster 3D per i vettori xyz delle mappe  [x,y,z]"
 
 #: ../raster3d/r3.out.vtk/main.c:178
 msgid "No 3D raster data, RGB or xyz-vector maps are provided. Will only write the geometry"
@@ -1906,7 +1906,7 @@ msgstr "Converte mappe raster 3D in formato VTK-Ascii"
 
 #: ../raster3d/r3.out.vtk/main.c:389
 msgid "failed to interpret dp as an integer"
-msgstr ""
+msgstr "Fallito nell'interpretare dp come un intero"
 
 #: ../raster3d/r3.out.vtk/main.c:391
 #: ../raster/r.out.ascii/main.c:125
@@ -2029,7 +2029,7 @@ msgstr "Immagine"
 #: ../misc/m.nviz.image/args.c:102
 #: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
-msgstr ""
+msgstr "Formato del file grafico"
 
 #: ../misc/m.nviz.image/args.c:112
 msgid "Size (width, height) of output image"
@@ -2113,7 +2113,7 @@ msgstr "Ombreggiatura"
 
 #: ../misc/m.nviz.image/args.c:283
 msgid "Wire color"
-msgstr ""
+msgstr "Colore della linea"
 
 #: ../misc/m.nviz.image/args.c:295
 msgid "Surface position"
@@ -2252,7 +2252,7 @@ msgstr "Risoluzione del volume"
 
 #: ../misc/m.nviz.image/args.c:569
 msgid "Isosurface level"
-msgstr ""
+msgstr "Colore del livello"
 
 #: ../misc/m.nviz.image/args.c:577
 msgid "Name of volume for isosurface color"
@@ -2260,7 +2260,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:585
 msgid "Isosurface color"
-msgstr ""
+msgstr "Colore della isosuperficie"
 
 #: ../misc/m.nviz.image/args.c:594
 msgid "Name of 3D raster map(s) for isosurface transparency"
@@ -2268,7 +2268,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:604
 msgid "Transparency value(s)for isosurfaces"
-msgstr ""
+msgstr "Valore(i) di trasparenza delle isosuperfici"
 
 #: ../misc/m.nviz.image/args.c:612
 msgid "Name of 3D raster map(s) for shininess"
@@ -2276,7 +2276,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:622
 msgid "Shininess value(s) for isosurfaces"
-msgstr ""
+msgstr "Livello(i) di brillantezza delle isosuperfici"
 
 #: ../misc/m.nviz.image/args.c:634
 msgid "Volume slice parallel to given axis (x, y, z)"
@@ -2292,7 +2292,7 @@ msgstr ""
 
 #: ../misc/m.nviz.image/args.c:671
 msgid "Cutting plane index (0-5)"
-msgstr ""
+msgstr "indice dei piani di taglio (0-5)"
 
 #: ../misc/m.nviz.image/args.c:672
 #: ../misc/m.nviz.image/args.c:681
@@ -2300,19 +2300,19 @@ msgstr ""
 #: ../misc/m.nviz.image/args.c:701
 #: ../misc/m.nviz.image/args.c:712
 msgid "Cutting planes"
-msgstr ""
+msgstr "Piani di taglio"
 
 #: ../misc/m.nviz.image/args.c:680
 msgid "Cutting plane x,y,z coordinates"
-msgstr ""
+msgstr "Coordinate x,y,z per piano di taglio"
 
 #: ../misc/m.nviz.image/args.c:691
 msgid "Cutting plane rotation along the vertical axis"
-msgstr ""
+msgstr "Rotazione del piano di taglio sull'asse verticale"
 
 #: ../misc/m.nviz.image/args.c:702
 msgid "Cutting plane tilt"
-msgstr ""
+msgstr "Inclinazione del piano di taglio"
 
 #: ../misc/m.nviz.image/args.c:713
 msgid "Cutting plane color (between two surfaces)"
@@ -2451,7 +2451,7 @@ msgstr ""
 #: ../misc/m.nviz.image/volume.c:105
 #, c-format
 msgid "Unable to add isosurface (volume set %d)"
-msgstr ""
+msgstr "Non capace di aggiungere isosuperficie (volume impostato %d)"
 
 #: ../misc/m.nviz.image/volume.c:113
 #: ../misc/m.nviz.image/volume.c:131
@@ -2493,7 +2493,7 @@ msgstr ""
 #: ../misc/m.nviz.image/cplane.c:40
 #, c-format
 msgid "Cutting plane number <%d> not found"
-msgstr ""
+msgstr "Piano di taglio numero <%d> non trovato"
 
 #: ../misc/m.nviz.image/main.c:50
 msgid "Creates a 3D rendering of GIS data."
@@ -2531,7 +2531,7 @@ msgstr "Attributo della topografia mancante per la superficie %d"
 #: ../misc/m.nviz.image/surface.c:134
 #, c-format
 msgid "Missing color attribute for surface %d"
-msgstr ""
+msgstr "Attributo di colore mancante per la superficie %d"
 
 #: ../misc/m.nviz.image/surface.c:211
 #, c-format
@@ -2554,11 +2554,11 @@ msgstr "Miscellanea, distanza"
 
 #: ../misc/m.cogo/main.c:226
 msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
-msgstr ""
+msgstr "Un semplice strumento per convertire da direzione e distanza a coordinate e viceversa."
 
 #: ../misc/m.cogo/main.c:228
 msgid "It assumes a cartesian coordinate system"
-msgstr ""
+msgstr "Si assume un sistema di coordinate cartesiane"
 
 #: ../misc/m.cogo/main.c:232
 msgid "Lines are labelled"
@@ -2570,11 +2570,11 @@ msgstr "Non mostrare gli avvertimenti"
 
 #: ../misc/m.cogo/main.c:241
 msgid "Convert from coordinates to bearing and distance"
-msgstr ""
+msgstr "Conversione da coordinate a direzione e distanza"
 
 #: ../misc/m.cogo/main.c:256
 msgid "Starting coordinate pair"
-msgstr ""
+msgstr "Coppia di coordinate di partenza"
 
 #: ../misc/m.cogo/main.c:266
 #, c-format
@@ -2589,7 +2589,7 @@ msgstr "Impossibile aprire il file di output <%s>"
 #: ../misc/m.cogo/main.c:305
 #: ../misc/m.cogo/main.c:308
 msgid "Converting starting coordinate pair"
-msgstr ""
+msgstr "Conversione coppia di coordinate di partenza"
 
 #: ../misc/m.cogo/main.c:324
 #, c-format
@@ -2819,7 +2819,7 @@ msgstr "Inoltre aggiorna la regione predefinita nel mapset PERMANENT"
 
 #: ../raster/r.external/main.c:566
 msgid "Require exact range"
-msgstr ""
+msgstr "Richiede un intervallo esatto"
 
 #: ../raster/r.external/main.c:570
 #: ../raster/r.in.gdal/main.c:144
@@ -3664,6 +3664,8 @@ msgid ""
 "\n"
 "This set of questions will organize the command line for the"
 msgstr ""
+"\n"
+"Questa serie di domande prepara la linea di comando del programma %spermettendogli di girare in modo proprio ai tuoi bisogni. "
 
 #: ../raster/r.watershed/shed/com_line.c:24
 #, c-format
@@ -3673,45 +3675,45 @@ msgstr ""
 #: ../raster/r.watershed/shed/com_line.c:26
 #, c-format
 msgid "The first question is whether you want %s to run"
-msgstr ""
+msgstr "La prima domanda è se vuoi lanciare  %s"
 
 #: ../raster/r.watershed/shed/com_line.c:28
 #, c-format
 msgid "in its fast mode or its slow mode.  If you run %s"
-msgstr ""
+msgstr "in modalità rapida o lenta. Se tu lanci %s"
 
 #: ../raster/r.watershed/shed/com_line.c:30
 msgid "in the fast mode, the computer will finish about 10 times faster"
-msgstr ""
+msgstr "in modalità rapida, il computer impiegherà circa un decimo del tempo"
 
 #: ../raster/r.watershed/shed/com_line.c:31
 msgid "than in the slow mode, but will not allow other programs to run"
-msgstr ""
+msgstr "rispetto alla modalità lenta, ma non permetterà ad altri programmi di girare"
 
 #: ../raster/r.watershed/shed/com_line.c:32
 msgid "at the same time.  The fast mode also places all of the data into"
-msgstr ""
+msgstr "nello stesso tempo. La modalità veloce carica anche tutti i dati nella"
 
 #: ../raster/r.watershed/shed/com_line.c:33
 msgid "RAM, which limits the size of window that can be run.  The slow"
-msgstr ""
+msgstr "RAM, limitando la dimensione della finestra che può essere lanciata. La modalità "
 
 #: ../raster/r.watershed/shed/com_line.c:34
 msgid "mode uses disk space in the same hard disk partition as where GRASS is"
-msgstr ""
+msgstr "lenta usa spazio disco nella stessa partizione dell'hard disk nella quale è installato GRASS."
 
 #: ../raster/r.watershed/shed/com_line.c:35
 msgid "stored.  Thus, if the program does not work in the slow mode, you will"
-msgstr ""
+msgstr "Perciò, se il programma non lavora in modalità lenta, dovrai"
 
 #: ../raster/r.watershed/shed/com_line.c:36
 msgid "need to remove unnecessary files from that partition.  The slow mode"
-msgstr ""
+msgstr "rimuovere tutti i file non necessari da quella partizione. La modalità lenta"
 
 #: ../raster/r.watershed/shed/com_line.c:37
 #, c-format
 msgid "will allow other processes to run concurrently with %s.\n"
-msgstr ""
+msgstr "permette ad altri processi di girare contemporaneamente a %s.\n"
 
 #: ../raster/r.watershed/shed/com_line.c:69
 #: ../raster/r.watershed/shed/com_line.c:182
@@ -3719,11 +3721,13 @@ msgid ""
 "\n"
 "If you hit <return> by itself for the next question, this"
 msgstr ""
+"\n"
+"Se pigi  il tasto <Invio> per la prossima domanda, questo"
 
 #: ../raster/r.watershed/shed/com_line.c:70
 #: ../raster/r.watershed/shed/com_line.c:183
 msgid "program will terminate."
-msgstr ""
+msgstr "programma sarà terminato."
 
 #: ../raster/r.watershed/shed/com_line.c:81
 #, c-format
@@ -3731,30 +3735,32 @@ msgid ""
 "\n"
 "One of the options for %s is a `depression map'.  A"
 msgstr ""
+"\n"
+"Una delle opzioni di %s è una 'mappa delle depressioni'. Una"
 
 #: ../raster/r.watershed/shed/com_line.c:83
 msgid "depression map indicates all the locations in the current map window where"
-msgstr ""
+msgstr "mappa delle depressioni indica tutti i luoghi nella mappa attuale dove"
 
 #: ../raster/r.watershed/shed/com_line.c:84
 msgid "water accumulates and does not leave by the edge of the map. Lakes without"
-msgstr ""
+msgstr "l'acqua si accumula e non esce dai bordi della mappa. Laghi senza"
 
 #: ../raster/r.watershed/shed/com_line.c:85
 msgid "outlet streams and sinkholes are examples of `depressions'.  If you wish to"
-msgstr ""
+msgstr "emissari o doline sono esempi di 'depressioni'. Se vuoi avere una"
 
 #: ../raster/r.watershed/shed/com_line.c:86
 msgid "have a depression map, prepare a map where non-zero values indicate the"
-msgstr ""
+msgstr "mappa delle depressioni, prepara una mappa dove i valori diversi da zero indicano"
 
 #: ../raster/r.watershed/shed/com_line.c:87
 msgid "locations where depressions occur.\n"
-msgstr ""
+msgstr "luoghi dove si trova una depressione.\n"
 
 #: ../raster/r.watershed/shed/com_line.c:88
 msgid "Hit <return> by itself for the next question if there is no depression map."
-msgstr ""
+msgstr "Pigia <Invio> alla prossima domanda se non ci sono mappe delle depressioni."
 
 #: ../raster/r.watershed/shed/com_line.c:99
 #, c-format
@@ -3762,19 +3768,21 @@ msgid ""
 "\n"
 "The %s program will divide the elevation map into a number of"
 msgstr ""
+"\n"
+"Il programma %s divide la mappa delle elevazioni in un numero di"
 
 #: ../raster/r.watershed/shed/com_line.c:101
 msgid "watershed basins.  The number of watershed basins is indirectly determined"
-msgstr ""
+msgstr "spartiacque di bacini. Il numero degli spartiacque di bacini è determinato indirettamente dal "
 
 #: ../raster/r.watershed/shed/com_line.c:102
 msgid "by the `basin threshold' value.  The basin threshold is the area necessary for"
-msgstr ""
+msgstr "valore della 'soglia di bacini'. La soglia dei bacini è l'area necessaria a"
 
 #: ../raster/r.watershed/shed/com_line.c:103
 #, c-format
 msgid "%s to define a unique watershed basin.  This area only applies to"
-msgstr ""
+msgstr " %s per definire un unico bacino. Quest'area può essere definita solo in"
 
 #: ../raster/r.watershed/shed/com_line.c:105
 msgid "`exterior drainage basins'.  An exterior drainage basin does not have any"
@@ -3816,7 +3824,7 @@ msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:116
 msgid "What unit of measure will you use for the basin threshold:"
-msgstr ""
+msgstr "Quali unità di misura userai per la soglia di bacino?:"
 
 #: ../raster/r.watershed/shed/com_line.c:119
 msgid " 1) acres,          2) meters sq., 3) miles sq., 4) hectares,"
@@ -7406,7 +7414,7 @@ msgstr ""
 
 #: ../raster/r.fill.dir/main.c:91
 msgid "Name of existing raster map containing elevation surface"
-msgstr "Nome di una mappa raster contenente una superfice di altezze"
+msgstr "Nome di una mappa raster contenente una superficie di altezze"
 
 #: ../raster/r.fill.dir/main.c:98
 msgid "Output elevation raster map after filling"
@@ -8201,7 +8209,7 @@ msgstr "raster, interpolazione"
 
 #: ../raster/r.surf.contour/main.c:54
 msgid "Surface generation program from rasterized contours."
-msgstr "Comando per la generazione di superfice da contorni rasterizzati"
+msgstr "Comando per la generazione di superficie da contorni rasterizzati"
 
 #: ../raster/r.surf.contour/main.c:61
 msgid "Name of existing raster map containing contours"
@@ -10916,7 +10924,7 @@ msgstr "Stampa in stile script per la shell"
 
 #: ../raster/r.regression.line/main.c:67
 msgid "Slower but accurate (applies to FP maps only"
-msgstr ""
+msgstr "Più lento ma più preciso (solo per mappe FP)"
 
 #: ../raster/r.out.bin/main.c:53
 #: ../raster/r.out.bin/main.c:62
@@ -10976,7 +10984,7 @@ msgstr "Genera file BIL, world e header"
 
 #: ../raster/r.out.bin/main.c:338
 msgid "Byte swap output"
-msgstr ""
+msgstr "Output con byte invertiti"
 
 #: ../raster/r.out.bin/main.c:344
 msgid "Invalid value for null (integers only)"
@@ -11129,27 +11137,27 @@ msgstr ""
 
 #: ../raster/r.in.mat/main.c:235
 msgid "Error reading 'map_name' array"
-msgstr ""
+msgstr "Errore nel leggere l'array 'map_name'"
 
 #: ../raster/r.in.mat/main.c:246
 msgid "Invalid 'map_northern_edge' array"
-msgstr ""
+msgstr "Array 'map_northern_edge' non valido"
 
 #: ../raster/r.in.mat/main.c:255
 msgid "Invalid 'map_southern_edge' array"
-msgstr ""
+msgstr "Array 'map_southern_edge' non valido"
 
 #: ../raster/r.in.mat/main.c:264
 msgid "Invalid 'map_eastern_edge' array"
-msgstr ""
+msgstr "'map_southern_edge'"
 
 #: ../raster/r.in.mat/main.c:273
 msgid "Invalid 'map_western_edge' array"
-msgstr ""
+msgstr "Array 'map_western_edge' non valido"
 
 #: ../raster/r.in.mat/main.c:281
 msgid "Invalid 'map_title' array"
-msgstr ""
+msgstr "Array 'map_title' non valido"
 
 #: ../raster/r.in.mat/main.c:291
 msgid "Error reading 'map_title' array"
@@ -11157,7 +11165,7 @@ msgstr "Errore nella lettura dell'array 'map_title'"
 
 #: ../raster/r.in.mat/main.c:304
 msgid "Invalid 'map_data' array"
-msgstr ""
+msgstr "Array 'map_data' non valido"
 
 #: ../raster/r.in.mat/main.c:330
 #: ../raster/r.in.mat/main.c:468
@@ -11168,17 +11176,17 @@ msgstr "Contattare il gruppo di sviluppo di GRASS"
 #: ../raster/r.in.mat/main.c:335
 #, c-format
 msgid "Skipping unknown array '%s'"
-msgstr ""
+msgstr "Salto array sconosciuto '%s'"
 
 #: ../raster/r.in.mat/main.c:363
 #, c-format
 msgid "No 'map_data' array found in <%s>"
-msgstr ""
+msgstr "Non trovato 'map_data' in <%s>"
 
 #: ../raster/r.in.mat/main.c:370
 #, c-format
 msgid "Setting map name to <%s> which overrides <%s>"
-msgstr ""
+msgstr "Imposto il nome della mappa a <%s> che sovrascrive <%s>"
 
 #: ../raster/r.in.mat/main.c:377
 #, c-format
@@ -11947,7 +11955,7 @@ msgstr "raster, conversione, vettorializzazione"
 
 #: ../raster/r.to.vect/main.c:52
 msgid "Converts a raster map into a vector map layer."
-msgstr "Converte un raster in un vettore"
+msgstr "Converte un raster in una mappa vettoriale."
 
 #: ../raster/r.to.vect/main.c:65
 #: ../vector/v.to.db/parse.c:36
@@ -12130,7 +12138,7 @@ msgstr "Impossibile leggere le etichette di categoria della mappa raster <%s>"
 
 #: ../raster/r.surf.area/main.c:87
 msgid "Surface area estimation for rasters."
-msgstr "Stima della superfice per raster"
+msgstr "Stima della superficie per raster"
 
 #: ../raster/r.surf.area/main.c:95
 msgid "Raster file for surface"
@@ -12492,6 +12500,8 @@ msgid ""
 "Do you wish it printed in 80 or 132 columns?\n"
 "> "
 msgstr ""
+"Lo vuoi stampato in 80 o 132 colonne?\n"
+">"
 
 #: ../raster/r.coin/inter.c:142
 #, c-format
@@ -12572,11 +12582,11 @@ msgstr ""
 
 #: ../raster/r.texture/main.c:147
 msgid "Sum Average"
-msgstr ""
+msgstr "Media della somma"
 
 #: ../raster/r.texture/main.c:152
 msgid "Sum Variance"
-msgstr ""
+msgstr "Varianza della somma"
 
 #: ../raster/r.texture/main.c:157
 msgid "Sum Entropy"
@@ -14427,7 +14437,7 @@ msgstr ""
 
 #: ../imagery/i.zc/main.c:123
 msgid "Threshold less than or equal to zero not allowed"
-msgstr ""
+msgstr "Non sono permesse soglie minori o uguali a zero"
 
 #: ../imagery/i.zc/main.c:129
 msgid "Width less than or equal to zero not allowed"
@@ -15825,7 +15835,7 @@ msgstr "Sto leggendo la mappa raster  <%s>..."
 
 #: ../imagery/i.fft/fftmain.c:182
 msgid "Starting FFT..."
-msgstr ""
+msgstr "Avvio FFT..."
 
 #: ../imagery/i.fft/fftmain.c:225
 msgid "Writing transformed data..."
@@ -17446,11 +17456,11 @@ msgstr "Mappa raster per la quale visualizzare l'istogramma"
 
 #: ../display/d.histogram/main.c:81
 msgid "Indicate if a pie or bar chart is desired"
-msgstr ""
+msgstr "Indica se si desidera un diagramma a barre o a torta"
 
 #: ../display/d.histogram/main.c:90
 msgid "Color for text and axes"
-msgstr ""
+msgstr "Colore del testo e delle assi"
 
 #: ../display/d.histogram/main.c:98
 msgid "Indicate if cell counts or map areas should be displayed"
@@ -17652,11 +17662,11 @@ msgstr ""
 
 #: ../display/d.vect/main.c:191
 msgid "Symbol size"
-msgstr ""
+msgstr "Dimensioni del simbolo"
 
 #: ../display/d.vect/main.c:193
 msgid "When used with the size_column option this becomes the scale factor"
-msgstr ""
+msgstr "Quando usato con l'opzione size_column questo diventa il fattore di scala"
 
 #: ../display/d.vect/main.c:199
 msgid "Name of numeric column containing symbol size"
@@ -17668,7 +17678,7 @@ msgstr "Nome della colonna numerica contenente l'angolo di rotazione del simbolo
 
 #: ../display/d.vect/main.c:207
 msgid "Measured in degrees CCW from east"
-msgstr ""
+msgstr "Misurato in gradi in senso antiorario da EST"
 
 #: ../display/d.vect/main.c:212
 #: ../display/d.vect/main.c:219
@@ -17760,7 +17770,7 @@ msgstr ""
 
 #: ../display/d.vect/main.c:344
 msgid "Colorize polygons according to z height"
-msgstr ""
+msgstr "Colora i poligoni in base a seconda dell'altezza z"
 
 #: ../display/d.vect/main.c:411
 msgid "The '-c' and '-a' flags cannot be used together, the '-c' flag will be ignored!"
@@ -17969,7 +17979,7 @@ msgstr ""
 
 #: ../display/d.mapgraph/main.c:57
 msgid "Unix file containg graphing instructions, if not given reads from standard input"
-msgstr ""
+msgstr "File Unix contenente istruzioni grafiche, se non fornito legge dall'input standard"
 
 #: ../display/d.mapgraph/main.c:67
 msgid "Color to draw with, either a standard GRASS color or R:G:B triplet (separated by colons)"
@@ -18076,7 +18086,7 @@ msgstr ""
 
 #: ../display/d.where/main.c:49
 msgid "One mouse click only"
-msgstr ""
+msgstr "Solo un click del mouse"
 
 #: ../display/d.where/main.c:53
 msgid "Output lat/long in decimal degree"
@@ -18325,13 +18335,13 @@ msgstr ""
 #: ../display/d.text/main.c:103
 #: ../display/d.text.new/main.c:192
 msgid "Screen position at which text will begin to be drawn (percentage, [0,0] is lower left)"
-msgstr ""
+msgstr "Posizione iniziale in cui il testo viene disegnato (percentuale, [0,0] è l'angolo basso a sinistra)"
 
 #: ../display/d.text/main.c:110
 #: ../display/d.text.freetype/main.c:217
 #: ../display/d.text.new/main.c:208
 msgid "Rotation angle in degrees (counter-clockwise)"
-msgstr ""
+msgstr "Angolo di rotazione in gradi (antiorario)"
 
 #: ../display/d.text/main.c:114
 #: ../display/d.text.freetype/main.c:236
@@ -18470,7 +18480,7 @@ msgstr ""
 #: ../display/d.linegraph/linegraph.c:295
 #, c-format
 msgid "The last %d point(s) will be ignored"
-msgstr ""
+msgstr "Gli ultimi %d punti saranno ignorati"
 
 #: ../display/d.linegraph/linegraph.c:355
 #, c-format
@@ -18558,7 +18568,7 @@ msgstr "%s: Impossibile leggere la tavola dei colori per <%s@%s>"
 
 #: ../display/d.profile/Range.c:87
 msgid "one moment ..."
-msgstr ""
+msgstr "un momento ..."
 
 #: ../display/d.profile/What.c:29
 msgid "Error reading raster map"
@@ -18684,7 +18694,7 @@ msgstr ""
 
 #: ../display/d.vect.chart/main.c:104
 msgid "Size of chart (diameter for pie, total width for bar)"
-msgstr ""
+msgstr "Dimensione del diagramma (diametro per quello a torta, larghezza totale per le barre)"
 
 #: ../display/d.vect.chart/main.c:111
 msgid "Scale for size (to get size in pixels)"
@@ -18821,7 +18831,7 @@ msgstr "Nome della mappa vettoriale"
 
 #: ../display/d.zoom/main.c:108
 msgid "Magnification: >1.0 zooms in, <1.0 zooms out"
-msgstr ""
+msgstr "Ingrandimento: >1.0 ingrandisce, <1.0 rimpicciolisce"
 
 #: ../display/d.zoom/main.c:118
 msgid "Full menu (zoom + pan) & Quit menu"
@@ -22716,7 +22726,7 @@ msgstr "vettoriale, importazione"
 
 #: ../vector/v.in.ogr/main.c:105
 msgid "Convert OGR vector layers to GRASS vector map."
-msgstr "Converte vettore OGR in vettore GRASS"
+msgstr "Converte layer vettoriale OGR in mappa vettoriale GRASS"
 
 #: ../vector/v.in.ogr/main.c:112
 msgid "OGR datasource name"
@@ -23593,7 +23603,7 @@ msgstr ""
 #: ../vector/v.net.allpairs/main.c:58
 #: ../vector/v.net.path/main.c:41
 msgid "vector, network, shortest path"
-msgstr "vettore, rete, persorso minimo"
+msgstr "vettore, rete, percorso minimo"
 
 #: ../vector/v.net.distance/main.c:61
 msgid "Computes shortest distance via the network between the given sets of features."
@@ -24127,7 +24137,7 @@ msgstr "vettoriale, esportazione"
 
 #: ../vector/v.out.ascii/out.c:47
 msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
-msgstr "Converte un vettore GRASS binario in un vettore GRASS ASCII"
+msgstr "Converte un mappa vettoriale GRASS binaria in una mappa vettoriale GRASS ASCII"
 
 #: ../vector/v.out.ascii/out.c:54
 msgid "Path to resulting ASCII file or ASCII vector name if '-o' is defined"
@@ -24406,7 +24416,7 @@ msgstr "vettoriale, modifica, geometria"
 
 #: ../vector/v.edit/main.c:57
 msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
-msgstr "Modifica un vettore, permette aggiunte, eliminzione e modifica degli elementi del vettore selezionato"
+msgstr "Modifica una mappa vettoriale, permette aggiunte, eliminzione e modifica degli elementi del vettore selezionato."
 
 #: ../vector/v.edit/main.c:66
 #, c-format
@@ -27514,9 +27524,9 @@ msgid "Mean = %.5lf"
 msgstr "Media = %.5lf"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:301
-#, fuzzy, c-format
+#, c-format
 msgid "Root Mean Square (RMS) = %.5lf"
-msgstr "Media quadratica (RMS) = %.5lf"
+msgstr "Radice quadrata media (RMS) = %.5lf"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 msgid "Different number of splines and lambda_i values have been taken for the cross correlation"
@@ -27755,7 +27765,7 @@ msgstr ""
 
 #: ../vector/v.out.svg/main.c:72
 msgid "Exports a GRASS vector map to SVG."
-msgstr "Esporta vettore GRASS in un SVG"
+msgstr "Esporta mappa vettoriale GRASS in un SVG"
 
 #: ../vector/v.out.svg/main.c:78
 msgid "Name for SVG output file"
@@ -27771,7 +27781,7 @@ msgstr ""
 
 #: ../vector/v.out.svg/main.c:96
 msgid "Coordinate precision"
-msgstr ""
+msgstr "Precisione della coordinata"
 
 #: ../vector/v.out.svg/main.c:103
 msgid "Attribute(s) to include in output SVG"
@@ -27779,11 +27789,11 @@ msgstr ""
 
 #: ../vector/v.out.svg/main.c:116
 msgid "Precision must not be negative"
-msgstr ""
+msgstr "La precisione non può essere negativa"
 
 #: ../vector/v.out.svg/main.c:119
 msgid "Precision must not be higher than 15"
-msgstr ""
+msgstr "La precisione non può essere maggiore di 15"
 
 #: ../vector/v.out.svg/main.c:190
 #, c-format
@@ -28157,11 +28167,11 @@ msgstr "Copia anche la tabella degli attributi"
 
 #: ../vector/v.patch/main.c:91
 msgid "Only the table of layer 1 is currently supported"
-msgstr ""
+msgstr "Solo la tabella del layer 1 è attualmente supportata"
 
 #: ../vector/v.patch/main.c:189
 msgid "Missing table"
-msgstr ""
+msgstr "Tabella mancante"
 
 #: ../vector/v.patch/main.c:193
 msgid "Key columns differ"
@@ -28301,7 +28311,7 @@ msgstr "Output da v.select"
 #: ../vector/v.select/main.c:172
 #, c-format
 msgid "Unable to read line id %d from vector map <%s>"
-msgstr ""
+msgstr "Non riesco a leggere la linea id %d dalla mappa vettore <%s>"
 
 #: ../vector/v.select/main.c:278
 msgid "Processing areas..."
@@ -28310,7 +28320,7 @@ msgstr "Elaborazione delle aree in corso ..."
 #: ../vector/v.select/main.c:301
 #, c-format
 msgid "Unable to read area id %d from vector map <%s>"
-msgstr ""
+msgstr "Non riesco a leggere l'area id %d dalla mappa vettore <%s>"
 
 #: ../vector/v.select/main.c:446
 msgid "Writing selected features..."
@@ -28618,7 +28628,7 @@ msgstr "Nome della mappa di output dove sono scritti gli errori"
 
 #: ../vector/v.clean/main.c:64
 msgid "Cleaning tool"
-msgstr ""
+msgstr "Strumento di pulizia"
 
 #: ../vector/v.clean/main.c:66
 msgid "break;break lines at each intersection;rmdupl;remove duplicate geometry features (pay attention to categories!);rmdangle;remove dangles, threshold ignored if < 0;chdangle;change the type of boundary dangle to line, threshold ignored if < 0, input line type is ignored;rmbridge;remove bridges connecting area and island or 2 islands;chbridge;change the type of bridges connecting area and island or 2 islands from boundary to line;snap;snap lines to vertex in threshold;rmdac;remove duplicate area centroids ('type' option ignored);bpol;break (topologically clean) polygons (imported from non topological format, like ShapeFile). Boundaries are broken on each point shared between 2 and more polygons where angles of segments are different;prune;remove vertices in threshold from lines and boundaries, boundary is pruned only if topology is not damaged (new intersection, changed attachement of centroid), first and last segment of the boundary is never changed;rmarea;remove small areas, the longest boundary with adjacent area is removed;rmline;remove all lines or boundaries of zero length, threshold is ignored;rmsa;remove small angles between lines at nodes"
@@ -28634,11 +28644,11 @@ msgstr ""
 
 #: ../vector/v.clean/main.c:121
 msgid "You must select at least one tool"
-msgstr ""
+msgstr "Devi selezionare almeno uno strumento"
 
 #: ../vector/v.clean/main.c:156
 msgid "Tool doesn't exist"
-msgstr ""
+msgstr "Lo strumento non esiste"
 
 #: ../vector/v.clean/main.c:176
 #, c-format
@@ -28712,11 +28722,11 @@ msgstr "Sto ricostruendo parti della topologia..."
 
 #: ../vector/v.clean/main.c:313
 msgid "Tool: Break lines at intersections"
-msgstr ""
+msgstr "Strumento: spezza la linea all'intersezione"
 
 #: ../vector/v.clean/main.c:317
 msgid "Tool: Remove duplicates"
-msgstr ""
+msgstr "Strumento: rimuove duplicati"
 
 #: ../vector/v.clean/main.c:321
 msgid "Tool: Remove dangles"
@@ -29235,7 +29245,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:62
 msgid "Converts files in DXF format to GRASS vector map format."
-msgstr "Converte file in formato DXF in un vettore in formato GRASS"
+msgstr "Converte file dal formato DXF in una mappa vettoriale in formato GRASS"
 
 #: ../vector/v.in.dxf/main.c:66
 msgid "Ignore the map extent of DXF file"
@@ -29285,15 +29295,15 @@ msgstr "Costruzione della topologia fallita"
 
 #: ../vector/v.in.dxf/main.c:195
 msgid "Failed to import DXF file!"
-msgstr ""
+msgstr "Fallito nell'importare file DXF!"
 
 #: ../vector/v.in.dxf/write_vect.c:78
 msgid "No DXF layers found!"
-msgstr ""
+msgstr "Nessun layer DXF trovato!"
 
 #: ../vector/v.in.dxf/write_vect.c:87
 msgid "Following DXF layers found:"
-msgstr ""
+msgstr "Sono stati trovati i seguenti layer DXF:"
 
 #: ../vector/v.in.dxf/write_vect.c:91
 #, c-format
@@ -29734,7 +29744,7 @@ msgstr ""
 #: ../vector/v.what/main.c:159
 #, c-format
 msgid "You must build topology on vector map <%s>"
-msgstr "Devi creare la topologia sul vettore <%s>"
+msgstr "Devi creare la topologia sulla mappa vettoriale <%s>"
 
 #: ../vector/v.what/main.c:178
 #, c-format
@@ -30263,7 +30273,7 @@ msgstr "Letti %d punti dalla mappa vettoriale <%s>"
 
 #: ../vector/v.out.dxf/main.c:50
 msgid "Exports GRASS vector map layers to DXF file format."
-msgstr "Esporta vettore GRASS in un file DXF"
+msgstr "Esporta mappa vettoriale GRASS in un file DXF"
 
 #: ../vector/v.out.dxf/main.c:60
 msgid "DXF output file"
@@ -30328,7 +30338,7 @@ msgstr ""
 #: ../vector/v.drape/main.c:407
 #: ../vector/v.drape/main.c:417
 msgid "Due to error attribute data to new map are not transferred"
-msgstr ""
+msgstr "A causa di un errore di attributo, i dati alla nuova mappa non vengono trasferiti"
 
 #: ../vector/v.drape/main.c:425
 msgid "No features drapped. Check Your computational region and input raster map."
@@ -30363,12 +30373,12 @@ msgstr "[%d] errori nel formato di input"
 #: ../vector/v.net.path/path.c:329
 #, c-format
 msgid "[%d] points of given category missing"
-msgstr ""
+msgstr "[%d] punti della categoria data mancanti"
 
 #: ../vector/v.net.path/path.c:331
 #, c-format
 msgid "%d destination(s) unreachable (including points out of threshold)"
-msgstr ""
+msgstr "%d destinazione(i) irraggiungibile (inclusi punti fuori della soglia)"
 
 #: ../vector/v.net.path/main.c:42
 msgid "Finds shortest path on vector network."
@@ -30472,7 +30482,7 @@ msgstr ""
 
 #: ../vector/v.to.rast/support.c:275
 msgid "Label column was not specified, no labels will be written"
-msgstr ""
+msgstr "Etichette di colonne non specificate, nessuna etichetta sarà scritta"
 
 #: ../vector/v.to.rast/support.c:351
 #: ../vector/v.to.rast/support.c:498
@@ -30526,7 +30536,7 @@ msgstr "Impossibile elaborare aree dalla mappa vettoriale <%s>"
 #: ../vector/v.to.rast/vect2rast.c:156
 #, c-format
 msgid "Pass %d of %d:"
-msgstr ""
+msgstr "Passata %d di %d:"
 
 #: ../vector/v.to.rast/vect2rast.c:164
 #, c-format
@@ -30544,17 +30554,17 @@ msgstr "Creazione dei file di supporto per la mappa raster in corso..."
 
 #: ../vector/v.to.rast/vect2rast.c:207
 msgid "Color can be updated from database only if use=attr"
-msgstr ""
+msgstr "Il colore può essere aggiornato dal database solo se use=attr"
 
 #: ../vector/v.to.rast/vect2rast.c:227
 #, c-format
 msgid "Converted areas: %d of %d"
-msgstr ""
+msgstr "Aree convertite: %d of %d"
 
 #: ../vector/v.to.rast/vect2rast.c:229
 #, c-format
 msgid "Converted points/lines: %d of %d"
-msgstr ""
+msgstr "Punti/linee convertite: %d of %d"
 
 #: ../vector/v.to.rast/main.c:39
 msgid "vector, raster, conversion"
@@ -30628,7 +30638,7 @@ msgstr "Nessun record per l'area (cat = %d)"
 #: ../vector/v.to.rast/do_areas.c:78
 #, c-format
 msgid "Get area %d failed"
-msgstr ""
+msgstr "Fallito ad ottenere l'area %d"
 
 #: ../vector/v.to.rast/do_areas.c:118
 msgid "Area without centroid (OK for island)"
@@ -30668,7 +30678,7 @@ msgstr ""
 
 #: ../vector/v.out.vtk/main.c:48
 msgid "Converts a GRASS binary vector map to VTK ASCII output."
-msgstr "Converte un vettore GRASS in un VTK ASCII"
+msgstr "Converte una mappa vettoriale GRASS in un VTK ASCII"
 
 #: ../vector/v.out.vtk/main.c:58
 msgid "Path to resulting VTK file"
@@ -30688,11 +30698,11 @@ msgstr ""
 
 #: ../vector/v.out.vtk/main.c:188
 msgid "dp has to be from 0 to 8"
-msgstr ""
+msgstr "dp deve essere tra 0 e 8"
 
 #: ../vector/v.out.vtk/main.c:197
 msgid "Failed to interpret 'layer' parameter as an integer"
-msgstr ""
+msgstr "Fallito nell'interpretare il parametro 'layer' come un intero"
 
 #: ../vector/v.net.visibility/main.c:46
 msgid "vector, path, visibility"
@@ -30796,7 +30806,7 @@ msgstr "Non riesco a mostrare i database:\n"
 
 #: ../db/drivers/mysql/parse.c:60
 msgid "Wrong port number in MySQL database definition: "
-msgstr ""
+msgstr "Errato numero di porta nella definizione del database MySQL"
 
 #: ../db/drivers/mysql/parse.c:71
 #: ../db/drivers/postgres/parse.c:55
@@ -30871,7 +30881,7 @@ msgstr "La connessione al database SQLite è ancora impegnata"
 #: ../db/drivers/sqlite/main.c:47
 #, c-format
 msgid "Busy SQLITE db, already waiting for %d seconds..."
-msgstr ""
+msgstr "Database SQLITE occupato, sto già attendendo da %d secondi..."
 
 #: ../db/drivers/sqlite/describe.c:191
 #, c-format
@@ -31164,7 +31174,7 @@ msgstr ""
 #: ../db/db.login/main.c:85
 #, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr ""
+msgstr "Pigia INVIO per interrompere la richiesta\n"
 
 #: ../db/db.login/main.c:93
 msgid "Exiting. Not changing current settings"
@@ -31188,11 +31198,11 @@ msgstr "Ridimensiona il monitor attivo visualizzato"
 
 #: ../locale/scriptstrings/d.resize_to_translate.c:3
 msgid "New width for window"
-msgstr ""
+msgstr "Nuova larghezza per la finestra"
 
 #: ../locale/scriptstrings/d.resize_to_translate.c:4
 msgid "New height for window"
-msgstr ""
+msgstr "Nuova altezza per la finestra"
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:1
 msgid "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map."
@@ -31205,7 +31215,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:3
 msgid "Uncompressed GNS file from NGA (with .txt extension)"
-msgstr ""
+msgstr "File GNS non compresso da NGA (con estensione .txt)"
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:4
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:5
@@ -31255,11 +31265,11 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
 msgid "A single vector map can be connected to multiple database tables. This number determines which table to use"
-msgstr ""
+msgstr "Una singola mappa di vettori può essere connessa a più tabelle del database. Questo numero determina quale tabella usare"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
 msgid "Name of raster map to calculate statistics from"
-msgstr ""
+msgstr "Nome della mappa raster da cui calcolare le statistiche"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
 msgid "Column prefix for new attribute columns"
@@ -31279,7 +31289,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
 msgid "Make JPEG instead of PNG image"
-msgstr ""
+msgstr "Crea immagine JPEG invece di PNG"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:1
 msgid "Blends color components of two raster maps by a given ratio."
@@ -31334,11 +31344,11 @@ msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
 msgid "Name of attribute column to use for thematic display (must be numeric)"
-msgstr ""
+msgstr "Nome della colonna dell'attributo da usare per visualizzazione tematica (deve essere numerico)"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
 msgid "Type of thematic display"
-msgstr ""
+msgstr "Tipo di visualizzazione tematica"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
 msgid "Thematic divisions of data for display"
@@ -31350,7 +31360,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
 msgid "Separate values by spaces (0 10 20 30 ...)"
-msgstr ""
+msgstr "Separa i valori con degli spazi (0 10 20 30 ...)"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
 msgid "Vector point icon for point data"
@@ -31413,7 +31423,7 @@ msgstr ""
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
 msgid "Misc"
-msgstr ""
+msgstr "Varie"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
 msgid "Select x11 display monitor for legend"
@@ -31489,15 +31499,15 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
 msgid "Altitude of the sun in degrees above the horizon"
-msgstr ""
+msgstr "Altitudine in gradi del sole sull'orizzonte"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
 msgid "Azimuth of the sun in degrees to the east of north"
-msgstr ""
+msgstr "Elevazione in gradi del sole da Nord averso Est"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
 msgid "Factor for exaggerating relief"
-msgstr ""
+msgstr "Indice per esagerare il rilievo"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
 msgid "Scale factor for converting horizontal units to elevation units"
@@ -31811,7 +31821,7 @@ msgstr "Nome del file di impostazioni .dmrc"
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
 msgid "Import E00 file into a vector map."
-msgstr "Importa file E00 in un vettore"
+msgstr "Importa file E00 in un mappa vettoriale."
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:4
 msgid "E00 file"
@@ -32077,7 +32087,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
 msgid "Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map."
-msgstr "Scarica punti di interesse, rotte e tracce da un GPS Garmin in un vettore"
+msgstr "Scarica punti di interesse, rotte e tracce da un GPS Garmin in una mappa vettoriale."
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
@@ -32611,7 +32621,7 @@ msgstr "Nome della mappa raster da cui generare la legenda"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
 msgid "Name of raster map to print in legend"
-msgstr ""
+msgstr "Nome della mappa raster da stampare nella legenda"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:10
 msgid "Position of vertical map-legend separator (in percent)"
@@ -32758,7 +32768,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
 msgid "Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map."
-msgstr "Scarica punti di interesse, rotte e tracce da un GPS o da un file di dati scaricati da un GPS in un vettore"
+msgstr "Scarica punti di interesse, rotte e tracce da un GPS o da un file di dati scaricati da un GPS in una mappa vettoriale."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
 msgid "Import waypoints"
@@ -32790,7 +32800,7 @@ msgstr "Proiezione dei dati in input (modello PROJ.4), se non impostato è utili
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
 msgid "Exports a vector map to a GPS receiver or file format supported by GpsBabel."
-msgstr "Esporta un vettore in un GPS o un file con un formato supportato da GPSBabel"
+msgstr "Esporta una mappa vettoriale in un GPS o un file con un formato supportato da GPSBabel"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
 msgid "vector, export, GPS"
@@ -33251,22 +33261,14 @@ msgstr ""
 msgid "Percent to brighten"
 msgstr ""
 
-#~ msgid ""
-#~ "Converts co-ordinate system descriptions (i.e. projection information) "
-#~ "between various formats (including GRASS format)."
-#~ msgstr ""
-#~ "Converte le descrizioni del sistema di coordinate (es. informazioni sulla "
-#~ "proiezione) utilizzando diversi formati (incluso quello di GRASS)."
+#~ msgid "Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format)."
+#~ msgstr "Converte le descrizioni del sistema di coordinate (es. informazioni sulla proiezione) utilizzando diversi formati (incluso quello di GRASS)."
 
 #~ msgid "Create/Edit"
 #~ msgstr "Crea/Modifica"
 
-#~ msgid ""
-#~ "Create new projection files (modifies current location unless 'location' "
-#~ "option specified)"
-#~ msgstr ""
-#~ "Crea un nuovo file contenente le informazioni sulla proiezione (modifica "
-#~ "la location attuale a meno che l'opzione 'location' venga specificata)"
+#~ msgid "Create new projection files (modifies current location unless 'location' option specified)"
+#~ msgstr "Crea un nuovo file contenente le informazioni sulla proiezione (modifica la location attuale a meno che l'opzione 'location' venga specificata)"
 
 #~ msgid "Location %s created!"
 #~ msgstr "Location %s creata!"
@@ -33280,8 +33282,7 @@ msgstr ""
 #~ "\n"
 #~ "ATTENZIONE!  Un file della proiezione esiste già per questa location\n"
 
-#~ msgid ""
-#~ "Would you still like to overwrite the current projection information "
+#~ msgid "Would you still like to overwrite the current projection information "
 #~ msgstr "Vuoi ancora sovrascrivere le attuali informazioni sulla proiezione"
 
 #~ msgid "Error writing PROJ_INFO"
@@ -33306,8 +33307,7 @@ msgstr ""
 #~ msgstr "Calcolo delle medie per la banda %d in corso..."
 
 #~ msgid "Computing row %d (of %d) of covariance matrix..."
-#~ msgstr ""
-#~ "Calcolo della riga %d (di %d) della matrice di covarianza in corso..."
+#~ msgstr "Calcolo della riga %d (di %d) della matrice di covarianza in corso..."
 
 #~ msgid "Unable to allocate memory for raster row"
 #~ msgstr "Impossibile allocare memoria per la riga raster"
@@ -33390,12 +33390,8 @@ msgstr ""
 #~ msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 #~ msgstr "Converte una mappa raster 3D (G3D) nel formato VTK-Ascii"
 
-#~ msgid ""
-#~ "The 2d and 3d region settings are different. The g3d settings are used to "
-#~ "adjust the 2d region."
-#~ msgstr ""
-#~ "La regione 2D e 3D hanno impostazioni differenti. Saranno usate le "
-#~ "impostazioni g3d per aggiustare la regione 2D"
+#~ msgid "The 2d and 3d region settings are different. The g3d settings are used to adjust the 2d region."
+#~ msgstr "La regione 2D e 3D hanno impostazioni differenti. Saranno usate le impostazioni g3d per aggiustare la regione 2D"
 
 #, fuzzy
 #~ msgid "unable to close input 3d raster map"
@@ -33406,12 +33402,8 @@ msgstr ""
 #~ msgstr "Impossibile acquisire la riga del raster inferiore \n"
 
 #, fuzzy
-#~ msgid ""
-#~ "write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-"
-#~ "ascii file"
-#~ msgstr ""
-#~ "vrite_vtk_data: Scrittura in corso di Celldata %s con %i righe e %i "
-#~ "colonne, profondità %i nel vtk-ascii file"
+#~ msgid "write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii file"
+#~ msgstr "vrite_vtk_data: Scrittura in corso di Celldata %s con %i righe e %i colonne, profondità %i nel vtk-ascii file"
 
 #~ msgid "write_vtk_rgb_data: writing rgb data"
 #~ msgstr "write_vtk_rgb_data: scrittura in corso dei dati rgb"
@@ -33529,17 +33521,14 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Exporting raster as double values (bytes=%d)"
-#~ msgstr ""
-#~ "Esportazione in corso del raster come valori a precisione doppia (double) "
-#~ "(bytes=%d)"
+#~ msgstr "Esportazione in corso del raster come valori a precisione doppia (double) (bytes=%d)"
 
 #, fuzzy
 #~ msgid "Reading map"
 #~ msgstr "Lettura della mappa"
 
 #~ msgid "Signed data (high bit means negative value)"
-#~ msgstr ""
-#~ "Dati costituiti da numeri relativi (un bit alto significa valore negativo)"
+#~ msgstr "Dati costituiti da numeri relativi (un bit alto significa valore negativo)"
 
 #~ msgid "Number of bytes per cell (1, 2, 4)"
 #~ msgstr "Numero di byte per cella (1, 2, 4)"
@@ -33649,18 +33638,12 @@ msgstr ""
 #~ msgstr "Nome del nuovo MAPSET"
 
 #, fuzzy
-#~ msgid ""
-#~ "Displays and overlays raster map layers in the active display frame on "
-#~ "the graphics monitor."
-#~ msgstr ""
-#~ "Seleziona il tipo di carattere con cui il testo deve essere rappresentato "
-#~ "nel monitor grafico dell'utente."
+#~ msgid "Displays and overlays raster map layers in the active display frame on the graphics monitor."
+#~ msgstr "Seleziona il tipo di carattere con cui il testo deve essere rappresentato nel monitor grafico dell'utente."
 
 #, fuzzy
 #~ msgid "Displays vector data in the active frame on the graphics monitor."
-#~ msgstr ""
-#~ "Seleziona il tipo di carattere con cui il testo deve essere rappresentato "
-#~ "nel monitor grafico dell'utente."
+#~ msgstr "Seleziona il tipo di carattere con cui il testo deve essere rappresentato nel monitor grafico dell'utente."
 
 #~ msgid "                No topology present"
 #~ msgstr "                Nessuna topologia presente"
@@ -33669,14 +33652,8 @@ msgstr ""
 #~ msgid "Failed in attempt to open %s"
 #~ msgstr "impossibile aprire <%s>"
 
-#~ msgid ""
-#~ "Generates raster map layers of slope, aspect, curvatures and partial "
-#~ "derivatives from a raster map layer of true elevation values. Aspect is "
-#~ "calculated counterclockwise from east."
-#~ msgstr ""
-#~ "Genera raster della pendenza, esposizione, curvature e le derivate "
-#~ "parziali da un raster con valori dell'elevazione. Esposizione è calcolata "
-#~ "in senso antiorario partendo dall'est."
+#~ msgid "Generates raster map layers of slope, aspect, curvatures and partial derivatives from a raster map layer of true elevation values. Aspect is calculated counterclockwise from east."
+#~ msgstr "Genera raster della pendenza, esposizione, curvature e le derivate parziali da un raster con valori dell'elevazione. Esposizione è calcolata in senso antiorario partendo dall'est."
 
 #, fuzzy
 #~ msgid "Output slope filename"
@@ -33711,9 +33688,7 @@ msgstr ""
 #~ msgstr "impossibile aprire <%s>"
 
 #~ msgid "Uses a GRASS vector points map to produce a convex hull vector map."
-#~ msgstr ""
-#~ "Usa un vettoriale di punti per produrre un vettoriale di poligoni "
-#~ "convessi."
+#~ msgstr "Usa un vettoriale di punti per produrre un vettoriale di poligoni convessi."
 
 #, fuzzy
 #~ msgid "Name of input vector points map"
