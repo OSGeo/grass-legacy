@@ -31,17 +31,12 @@ def unicodeValue(value):
         return value
     
     enc = UserSettings.Get(group = 'atm', key = 'encoding', subkey = 'value')
-    if enc:
-        value = unicode(value, enc)
-    elif 'GRASS_DB_ENCODING' in os.environ:
-        value = unicode(value, os.environ['GRASS_DB_ENCODING'])
+    if not enc and 'GRASS_DB_ENCODING' in os.environ:
+        enc = os.environ['GRASS_DB_ENCODING']
     else:
-        try:
-            value = unicode(value, 'ascii')
-        except UnicodeDecodeError:
-            value = _("Unable to decode value. Set encoding in GUI preferences ('Attributes').")
+        enc = 'utf-8'
     
-    return value
+    return unicode(value, enc, errors = 'replace')
 
 def createDbInfoDesc(panel, mapDBInfo, layer):
     """!Create database connection information content"""
