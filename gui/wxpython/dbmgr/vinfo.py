@@ -34,7 +34,7 @@ def unicodeValue(value):
     if not enc and 'GRASS_DB_ENCODING' in os.environ:
         enc = os.environ['GRASS_DB_ENCODING']
     else:
-        enc = 'ascii'
+        enc = 'utf-8'
     
     return unicode(value, enc, errors = 'replace')
 
