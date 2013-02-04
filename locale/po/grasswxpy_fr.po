@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 10:54+0100\n"
-"PO-Revision-Date: 2013-01-03 22:25+0100\n"
+"PO-Revision-Date: 2013-02-03 16:42+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -301,7 +301,7 @@ msgstr "style :"
 
 #: ../gui/wxpython/nviz/tools.py:732 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
-msgstr "treillis"
+msgstr "fil de fer"
 
 #: ../gui/wxpython/nviz/tools.py:733 ../gui/wxpython/nviz/preferences.py:425
 msgid "surface"
@@ -309,7 +309,7 @@ msgstr "surface"
 
 #: ../gui/wxpython/nviz/tools.py:745
 msgid "Change wire color"
-msgstr "Couleur du treillis"
+msgstr "Couleur du fil"
 
 #: ../gui/wxpython/nviz/tools.py:752 ../gui/wxpython/nviz/preferences.py:388
 msgid "Fine mode:"
@@ -670,9 +670,8 @@ msgid "Isosurface attributes"
 msgstr "Attributs de l'iso-surface"
 
 #: ../gui/wxpython/nviz/tools.py:2263
-#, fuzzy
 msgid "toggle normal direction"
-msgstr "Bascule de la direction normale"
+msgstr "Changer la direction normale"
 
 #: ../gui/wxpython/nviz/tools.py:2269
 msgid "Isosurface value"
@@ -868,7 +867,7 @@ msgstr "z : "
 
 #: ../gui/wxpython/nviz/preferences.py:436
 msgid "wire color:"
-msgstr "couleur du treillis :"
+msgstr "couleur du fil :"
 
 #: ../gui/wxpython/nviz/preferences.py:475
 #: ../gui/wxpython/gui_core/dialogs.py:2185
@@ -1094,7 +1093,7 @@ msgstr "Rechercher un module"
 #: ../gui/wxpython/lmgr/frame.py:273
 #: ../gui/wxpython/gui_core/preferences.py:324
 msgid "Python shell"
-msgstr "Shell Python"
+msgstr "Console Python"
 
 #: ../gui/wxpython/lmgr/frame.py:303 ../gui/wxpython/mapdisp/toolbars.py:84
 msgid "3D view"
@@ -1387,7 +1386,7 @@ msgstr "Restreindre la carte aux limites de la région ?"
 #: ../gui/wxpython/lmgr/pyshell.py:35
 #, python-format
 msgid "Welcome to wxGUI Interactive Python Shell %s"
-msgstr "Bienvenue dans le shell Python interactif wxGUI %s"
+msgstr "Bienvenue dans la console Python interactive wxGUI %s"
 
 #: ../gui/wxpython/lmgr/pyshell.py:36
 #, python-format
@@ -5718,16 +5717,14 @@ msgid "SIMWE Overland flow modeling"
 msgstr "Modélisation SIM&WE de l'écoulement de surface"
 
 #: ../gui/wxpython/menustrings.py:385
-#, fuzzy
 msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)."
-msgstr "Simulation de crue avec la méthode SIMWE."
+msgstr "Simulation d'innondation avec la méthode SIMWE."
 
 #: ../gui/wxpython/menustrings.py:386
 msgid "SIMWE Sediment flux modeling"
 msgstr "Modélisation SIMWE des flux de sédiments"
 
 #: ../gui/wxpython/menustrings.py:387
-#, fuzzy
 msgid "Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)."
 msgstr "Simulation de transport de sédiments et d'érosion/sédimentation avec la méthode SIMWE."
 
@@ -6494,7 +6491,7 @@ msgstr "Corriger et classifier les objets"
 
 #: ../gui/wxpython/menustrings.py:595
 msgid "Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering."
-msgstr ""
+msgstr "Correction de la sortie de v.lidar.growing. Il s'agit du dernier des trois algorithms pour le filtrage LIDAR."
 
 #: ../gui/wxpython/menustrings.py:596
 msgid "Linear referencing"
@@ -6526,11 +6523,11 @@ msgstr "Créer des points/segments à partir des lignes en entrée, un système 
 
 #: ../gui/wxpython/menustrings.py:603
 msgid "Find line id and offset"
-msgstr ""
+msgstr "Trouver l'id de ligne et le décalage"
 
 #: ../gui/wxpython/menustrings.py:604
 msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
-msgstr ""
+msgstr "Trouvez l'id de ligne et le km réel pour les points donnés de la carte vectorielle en utilisant un système de référence linéaire"
 
 #: ../gui/wxpython/menustrings.py:605
 msgid "Nearest features"
@@ -6557,8 +6554,9 @@ msgid "Allocate subnets"
 msgstr "Allouer des sous-réseaux"
 
 #: ../gui/wxpython/menustrings.py:611
+#, fuzzy
 msgid "Allocate subnets for nearest centres (direction from centre)."
-msgstr ""
+msgstr "Allouer des sous-réseaux pour les centres les plus proches (direction depuis le centre)."
 
 #: ../gui/wxpython/menustrings.py:612
 msgid "Split net"
@@ -7046,8 +7044,9 @@ msgid "Edge detection"
 msgstr "Détection des bordures"
 
 #: ../gui/wxpython/menustrings.py:738
+#, fuzzy
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
-msgstr ""
+msgstr "Fonction raster croisement de zéros de \"détection des angles\" pour l'analyse d'images."
 
 #: ../gui/wxpython/menustrings.py:739
 msgid "Matrix/convolving filter"
@@ -7218,9 +7217,8 @@ msgid "Cross section"
 msgstr "Coupe transversale"
 
 #: ../gui/wxpython/menustrings.py:785
-#, fuzzy
 msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
-msgstr "Créer une carte raster 2D de coupe transversale pour une carte raster 3D, basée sur une carte d'altitudes en 2D."
+msgstr "Créer une carte raster 2D de coupe transversale depuis une carte raster 3D, basée sur une carte d'altitudes en 2D."
 
 #: ../gui/wxpython/menustrings.py:787
 msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
