@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassnviz_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 10:54+0100\n"
-"PO-Revision-Date: 2013-01-27 14:44+0100\n"
+"PO-Revision-Date: 2013-02-03 16:56+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -52,7 +52,7 @@ msgstr "Inverser le masque"
 #: ../visualization/nviz/scripts/attPopup.tcl:106
 #: ../visualization/nviz/scripts/attPopup.tcl:115
 msgid "New constant"
-msgstr ""
+msgstr "Nouvelle constante"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:99
 msgid "use volume as color"
@@ -123,10 +123,9 @@ msgstr "Entrer une valeur :"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:449
 msgid "Use slider to select constant value :"
-msgstr ""
+msgstr "Utiliser le curseur pour sélectionner la valeure de constante :"
 
 #: ../visualization/nviz/scripts/panel_resize.tcl:27
-#, fuzzy
 msgid "Resize Draw Area"
 msgstr "Redimensionner la zone de dessin"
 
@@ -193,19 +192,19 @@ msgstr "Animation simple"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:104
 msgid "Simple Keyframe Animation Panel"
-msgstr ""
+msgstr "Panneau simple d'animation des images clefs"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:111
 msgid "Step backward frame by frame"
-msgstr ""
+msgstr "Retour image par image"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:114
 msgid "Pause playback"
-msgstr ""
+msgstr "Pause de la lecture"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:117
 msgid "Step forward frame by frame"
-msgstr ""
+msgstr "Avence image par image"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:120
 msgid "Run animation from beginning"
@@ -213,31 +212,31 @@ msgstr "Lire l'animation depuis le début"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:122
 msgid " set max frames:"
-msgstr ""
+msgstr " définir le maximum d'images :"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:136
 msgid "Key Frames"
-msgstr ""
+msgstr "Images-clefs"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:145
 msgid "Current frame:"
-msgstr ""
+msgstr "Image actuelle :"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:148
 msgid "Selected key frame:"
-msgstr ""
+msgstr "Sélectionner l'image-clef :"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:159
 msgid "Add frame"
-msgstr ""
+msgstr "Ajouter une image"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:161
 msgid "Clear all"
-msgstr ""
+msgstr "Tout effacer"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:170
 msgid "Show: "
-msgstr ""
+msgstr "Montrer :"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:171
 msgid "path"
@@ -271,15 +270,15 @@ msgstr "spline"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:200
 msgid "Run and save"
-msgstr ""
+msgstr "Lancer et enregistrer"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:202
 msgid "Run animation and save frames"
-msgstr ""
+msgstr "Lancer l'animation et enregistrer les images"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:222
 msgid "spline tension"
-msgstr ""
+msgstr "spline avec tension"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 #: ../visualization/nviz/scripts/panel_tst.tcl:21
@@ -295,7 +294,7 @@ msgstr "Vérifier"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:576
 msgid "Do you really want to delete this keyframe?"
-msgstr ""
+msgstr "Voulez-vous vraiment supprimer cette image clef ?"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:577
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
@@ -331,7 +330,7 @@ msgstr "Ok"
 #: ../visualization/nviz/scripts/script_play:32
 #: ../visualization/nviz/scripts/nviz2.2_script:1056
 msgid "Dismiss"
-msgstr ""
+msgstr "Annuler"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:601
 #: ../visualization/nviz/scripts/panel_animation.tcl:642
@@ -344,29 +343,29 @@ msgstr "Erreur interne"
 #: ../visualization/nviz/scripts/panel_animation.tcl:602
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:872
 msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr ""
+msgstr "Erreur interne - la suppression de l'image clef de la liste GK a échoué"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:643
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
 msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr ""
+msgstr "Erreur interne - le déplacement de l'image clef dans la liste GK a échoué"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:753
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
 msgid "Replace Key"
-msgstr ""
+msgstr "Remplacer la clef"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:754
 msgid "There is already a keyframe at this time, do you wish to replace it?"
-msgstr ""
+msgstr "Il y a déjà une image-clef à ce temps, voulez-vous la remplacer ?"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:800
 msgid "Do you really want to delete all keyframes?"
-msgstr ""
+msgstr "Voulez-vous vraiment supprimer toutes les images-clefs ?"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:928
 msgid "Save Animation Frames"
-msgstr ""
+msgstr "Enregistrer les iamges d'animation"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:934
 msgid "Prefix for images: "
@@ -374,7 +373,7 @@ msgstr "Préfix pour les images :"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:935
 msgid "Enter a prefix name for images to be created from animation frames"
-msgstr ""
+msgstr "Entrer un nom de préfix pour les images à créer depuis l'animation"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:940
 msgid "Output format: "
@@ -482,7 +481,7 @@ msgstr " Position de la source de lumière"
 
 #: ../visualization/nviz/scripts/panel_lights.tcl:58
 msgid "Follow surface viewpoint"
-msgstr ""
+msgstr "Suivre le point de vue en surface"
 
 #: ../visualization/nviz/scripts/panel_lights.tcl:60
 msgid "Show lighting model"
@@ -505,19 +504,19 @@ msgstr "Intensité lumineuse"
 #: ../visualization/nviz/scripts/nviz2.2_script:377
 #: ../visualization/nviz/scripts/nviz2.2_script:925
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:48
 msgid "Cutting Planes"
-msgstr ""
+msgstr "Plans de coupe"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:50
 msgid "Cutting Planes Panel"
-msgstr ""
+msgstr "Panneaux des plans de coupe"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:60
 msgid "Active cutting plane: "
-msgstr ""
+msgstr "Plan de coupe actif :"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:61
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:67
@@ -530,27 +529,27 @@ msgstr "Aucune"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:68
 msgid "Plane 0"
-msgstr ""
+msgstr "Plan 0"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:69
 msgid "Plane 1"
-msgstr ""
+msgstr "Plan 1"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:70
 msgid "Plane 2"
-msgstr ""
+msgstr "Plan 2"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:71
 msgid "Plane 3"
-msgstr ""
+msgstr "Plan 3"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:72
 msgid "Plane 4"
-msgstr ""
+msgstr "Plan 4"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:73
 msgid "Plane 5"
-msgstr ""
+msgstr "Plan 5"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:87
 #, fuzzy
@@ -567,7 +566,7 @@ msgstr "couleur du dessous"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:94
 msgid "blend"
-msgstr ""
+msgstr "mélange"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:96
 msgid "shaded"
@@ -576,7 +575,7 @@ msgstr "ombré"
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:98
 #: ../visualization/nviz/scripts/panel_vquery.tcl:426
 msgid "clear"
-msgstr ""
+msgstr "effacer"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:114
 #: ../visualization/nviz/scripts/panel_surf.tcl:702
@@ -609,7 +608,7 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:292
 #, tcl-format
 msgid "Plane %s"
-msgstr ""
+msgstr "Plan %s"
 
 #: ../visualization/nviz/scripts/panel_tst.tcl:31
 msgid "Test Panel"
@@ -626,7 +625,7 @@ msgstr "Panneau de légende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:71
 msgid "reverse legend"
-msgstr ""
+msgstr "inverser la légende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:73
 msgid "show values"
@@ -722,7 +721,7 @@ msgstr "Sélectionner la police"
 
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:30
 msgid "Select Wire Color"
-msgstr "Sélectionner la couleur du treillis"
+msgstr "Sélectionner la couleur du fil"
 
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:57
 msgid "use surface color"
@@ -770,7 +769,7 @@ msgstr "Champs :"
 
 #: ../visualization/nviz/scripts/script_file_tools:46
 msgid "State File: None"
-msgstr ""
+msgstr "Fichier d'état : aucun"
 
 #: ../visualization/nviz/scripts/script_file_tools:53
 msgid "Options:"
@@ -778,7 +777,7 @@ msgstr "Options :"
 
 #: ../visualization/nviz/scripts/script_file_tools:55
 msgid "Add To Script"
-msgstr ""
+msgstr "Ajouter au script"
 
 #: ../visualization/nviz/scripts/script_file_tools:56
 msgid "Build Script..."
@@ -794,7 +793,7 @@ msgstr "Enregistrer les champs ..."
 
 #: ../visualization/nviz/scripts/script_file_tools:75
 msgid "Frame"
-msgstr ""
+msgstr "Image"
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
@@ -863,9 +862,8 @@ msgid "ok"
 msgstr "ok"
 
 #: ../visualization/nviz/scripts/ACS_utils.tcl:331
-#, fuzzy
 msgid "dismiss"
-msgstr "oublier"
+msgstr "annuler"
 
 #: ../visualization/nviz/scripts/panel_site.tcl:44
 msgid "Vector Points"
@@ -933,7 +931,7 @@ msgstr "Attributs de surface ..."
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:88
 msgid "Wire Color"
-msgstr "Couleur du treillis"
+msgstr "Couleur du fil"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:92
 #: ../visualization/nviz/scripts/panel_pos.tcl:28
@@ -975,7 +973,7 @@ msgstr "Style grossier ..."
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:123
 msgid "Wire"
-msgstr "Treillis"
+msgstr "Fil de fer"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:128
 #: ../visualization/nviz/scripts/panel_vol.tcl:73
@@ -1050,19 +1048,19 @@ msgstr "Entrer une valeur :"
 
 #: ../visualization/nviz/scripts/attPopup.tcl:516
 msgid "Use slider to set value"
-msgstr ""
+msgstr "Utiliser le curseur pour définir la valeur"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:79
 msgid "Keyframe Animation"
-msgstr ""
+msgstr "Animation par image-clef"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:80
 msgid "Keyframe Animation Panel"
-msgstr ""
+msgstr "Panneau d'animation par image-clef"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:96
 msgid "Framerate :"
-msgstr ""
+msgstr "taux de rafraîchissement :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:105
 msgid "File: "
@@ -1086,12 +1084,14 @@ msgid "Run and Save"
 msgstr "Lancer et enregistrer"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:132
+#, fuzzy
 msgid "New Key Time:"
-msgstr ""
+msgstr "Nouvelle clef de temps"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:143
+#, fuzzy
 msgid "Show Feature"
-msgstr ""
+msgstr "Afficher les objets"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:146
 msgid "Path"
@@ -1099,11 +1099,11 @@ msgstr "Chemin"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:148
 msgid "Vect Lines/Polygons"
-msgstr ""
+msgstr "Lignes vect / Polygones"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:150
 msgid "Vect Points"
-msgstr ""
+msgstr "Points vect"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:152
 msgid "Volume"
@@ -1115,11 +1115,11 @@ msgstr "Étiquettes/Légende"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:159
 msgid "Interp."
-msgstr ""
+msgstr "Interp."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:168
 msgid "tension"
-msgstr ""
+msgstr "tension"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:230
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
@@ -1129,7 +1129,7 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:447
 msgid "New Key Time"
-msgstr ""
+msgstr "Nouvelle clef de temps"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:451
 msgid "Minute:"
@@ -1137,32 +1137,32 @@ msgstr "Minute :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:452
 msgid "Second:"
-msgstr ""
+msgstr "Seconde :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:453
 msgid "Frame:"
-msgstr ""
+msgstr "Image :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:496
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:504
 msgid "KeyTime Error"
-msgstr ""
+msgstr "Erreur sur la clef de temps"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:496
 msgid "Error - All values must be at least zero."
-msgstr ""
+msgstr "Erreur - Toutes les valeures doivent être au moins à zéro."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:504
 msgid "Error - Frame number must be less than frame rate."
-msgstr ""
+msgstr "Erreur - le numéro de l'image doit être inférieur au taux de rafraîchissement"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:540
 msgid "New Frame Rate"
-msgstr ""
+msgstr "Nouveaux taux de rafraîchissement"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:544
 msgid "Framerate:"
-msgstr ""
+msgstr "Taux de rafraîchissement :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:576
 msgid "Frame Rate Error"
@@ -1170,12 +1170,12 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:576
 msgid "Error - Frame rate must be at least 1."
-msgstr ""
+msgstr "Erreur - le taux de rafraîchissement doit être au moins de 1."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:677
 #, tcl-format
 msgid "Internal Error - Can't find channel %s for keyframe %s"
-msgstr ""
+msgstr "Erreur interne - Ne peut pas trouver le canal %s pour l'image-clef %s"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:856
 msgid "Delete Keys"
@@ -1187,11 +1187,11 @@ msgstr "Supprimer la clef sélectionnée ?"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1125
 msgid "There is already a keyframe at this time, replace it?"
-msgstr ""
+msgstr "Il y a déjà une image-clef à ce temps, la remplacer ?"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1221
 msgid "Keyframe Attributes"
-msgstr ""
+msgstr "Attributs de l'image-clef"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1699
 msgid "Enter a base name:"
@@ -1203,7 +1203,7 @@ msgstr "Rendu :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1703
 msgid "Wireframe"
-msgstr ""
+msgstr "Fil de fer"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1705
 msgid "Full Rendering"
@@ -1215,7 +1215,7 @@ msgstr "Image :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1716
 msgid "Start Frame:"
-msgstr ""
+msgstr "Image de début :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1718
 msgid "Off-Screen"
@@ -1452,7 +1452,6 @@ msgstr "Définir l'exagération verticale"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:207
 #: ../visualization/nviz/scripts/panel_main.tcl:208
-#, fuzzy
 msgid "Set eye height"
 msgstr "Définir la hauteur de vue"
 
@@ -1783,7 +1782,6 @@ msgid "Elevation"
 msgstr "Altitude"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Category of color map"
 msgstr "Catégorie de la carte de couleur"
 
