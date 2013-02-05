@@ -526,9 +526,15 @@ class GMConsole(wx.SplitterWindow):
                     return
                 
                 if layertype == 'barscale':
-                    self.parent.curr_page.maptree.GetMapDisplay().OnAddBarscale(None)
+                    if len(command) > 1: 
+                        self.parent.curr_page.maptree.GetMapDisplay().AddBarscale(cmd = command, showDialog = False)
+                    else:
+                        self.parent.curr_page.maptree.GetMapDisplay().AddBarscale(showDialog = True)
                 elif layertype == 'rastleg':
-                    self.parent.curr_page.maptree.GetMapDisplay().OnAddLegend(None)
+                    if len(command) > 1:
+                        self.parent.curr_page.maptree.GetMapDisplay().AddLegend(cmd = command, showDialog = False)
+                    else:
+                        self.parent.curr_page.maptree.GetMapDisplay().AddLegend(showDialog = True)
                 elif layertype == 'redraw':
                     self.parent.curr_page.maptree.GetMapDisplay().OnRender(None)
                 else:
