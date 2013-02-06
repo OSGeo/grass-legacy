@@ -16,6 +16,7 @@ This program is free software under the GNU General Public License
 @author Martin Landa <landa.martin gmail.com>
 """
 
+import sys
 import wx
 try:
     import wx.lib.agw.customtreectrl as CT
@@ -762,12 +763,9 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         
         if ltype == 'command':
             # generic command item
-            ctrl = wx.TextCtrl(self, id = wx.ID_ANY, value = '',
-                               pos = wx.DefaultPosition, size = (self.GetSize()[0]-100,25),
-                               # style = wx.TE_MULTILINE|wx.TE_WORDWRAP)
-                               style = wx.TE_PROCESS_ENTER | wx.TE_DONTWRAP)
+            ctrl = self._createCommandCtrl()
             ctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
-            # ctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
+
         elif ltype == 'group':
             # group item
             ctrl = None
@@ -1365,26 +1363,23 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         checked = self.IsItemChecked(dragItem)
         image   = self.GetItemImage(dragItem, 0)
         text    = self.GetItemText(dragItem)
-        if self.GetPyData(dragItem)[0]['ctrl']:
-            # recreate data layer
-            btnbmp = LMIcons["layerOptions"].GetBitmap((16,16))
-            newctrl = buttons.GenBitmapButton(self, id = wx.ID_ANY, bitmap = btnbmp, size = (24, 24))
-            newctrl.SetToolTipString(_("Click to edit layer settings"))
-            self.Bind(wx.EVT_BUTTON, self.OnLayerContextMenu, newctrl)
-            data    = self.GetPyData(dragItem)
-        
-        elif self.GetPyData(dragItem)[0]['type'] == 'command':
+
+        if self.GetPyData(dragItem)[0]['type'] == 'command':
             # recreate command layer
-            oldctrl = None
-            newctrl = wx.TextCtrl(self, id = wx.ID_ANY, value = '',
-                                  pos = wx.DefaultPosition, size = (250,25),
-                                  style = wx.TE_MULTILINE|wx.TE_WORDWRAP)
+            newctrl = self._createCommandCtrl()
             try:
                 newctrl.SetValue(self.GetPyData(dragItem)[0]['maplayer'].GetCmd(string = True))
             except:
                 pass
             newctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
-            newctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
+            data = self.GetPyData(dragItem)
+
+        elif self.GetPyData(dragItem)[0]['ctrl']:
+            # recreate data layer
+            btnbmp = LMIcons["layerOptions"].GetBitmap((16,16))
+            newctrl = buttons.GenBitmapButton(self, id = wx.ID_ANY, bitmap = btnbmp, size = (24, 24))
+            newctrl.SetToolTipString(_("Click to edit layer settings"))
+            self.Bind(wx.EVT_BUTTON, self.OnLayerContextMenu, newctrl)
             data    = self.GetPyData(dragItem)
 
         elif self.GetPyData(dragItem)[0]['type'] == 'group':
@@ -1650,3 +1645,13 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             item = self.GetNextSibling(item)
 
         return None
+
+    def _createCommandCtrl(self):
+        """!Creates text control for command layer"""
+        height = 25
+        if sys.platform in ('win32', 'darwin'):
+            height = 40
+        ctrl = wx.TextCtrl(self, id = wx.ID_ANY, value = '',
+                           size = (self.GetSize()[0]-100, height),
+                           style = wx.TE_PROCESS_ENTER | wx.TE_DONTWRAP)
+        return ctrl
