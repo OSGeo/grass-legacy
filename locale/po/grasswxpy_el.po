@@ -8,33 +8,33 @@ msgstr ""
 "Project-Id-Version: grasswxpy_el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 10:54+0100\n"
-"PO-Revision-Date: 2008-10-01 14:42+0300\n"
-"Last-Translator: Vasilios Antoniou <antoniou_v@yahoo.gr>\n"
+"PO-Revision-Date: 2013-02-07 20:23+0200\n"
+"Last-Translator: Nikos Ves <vesnikos@gmail.com>\n"
 "Language-Team: Greek <grass-translations@lists.osgeo.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-7\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../gui/wxpython/nviz/tools.py:83 ../gui/wxpython/nviz/preferences.py:55
 #: ../gui/wxpython/nviz/preferences.py:60
 msgid "View"
-msgstr ""
+msgstr "Προβολή"
 
 #: ../gui/wxpython/nviz/tools.py:87
 #: ../gui/wxpython/gmodeler/preferences.py:202
 msgid "Data"
-msgstr ""
+msgstr "Δεδομένα"
 
 #: ../gui/wxpython/nviz/tools.py:91
 #: ../gui/wxpython/gui_core/preferences.py:408
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνηση"
 
 #: ../gui/wxpython/nviz/tools.py:95
 msgid "Analysis"
-msgstr ""
+msgstr "Ανάλυση"
 
 #: ../gui/wxpython/nviz/tools.py:98 ../gui/wxpython/nviz/tools.py:378
 msgid "Animation"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/tools.py:1020
 msgid "Tilt:"
-msgstr ""
+msgstr "κλίση:"
 
 #: ../gui/wxpython/nviz/tools.py:263
 msgid ""
@@ -78,11 +78,12 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/preferences.py:295
 #: ../gui/wxpython/gmodeler/preferences.py:380
 msgid "Height:"
-msgstr ""
+msgstr "Ύψος:"
 
 #: ../gui/wxpython/nviz/tools.py:282 ../gui/wxpython/nviz/preferences.py:149
+#, fuzzy
 msgid "Z-exag:"
-msgstr ""
+msgstr "Ζ-"
 
 #: ../gui/wxpython/nviz/tools.py:295
 msgid "Look:"
@@ -90,7 +91,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:298
 msgid "here"
-msgstr ""
+msgstr "εδώ"
 
 #: ../gui/wxpython/nviz/tools.py:301
 msgid ""
@@ -100,15 +101,15 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:307
 msgid "center"
-msgstr ""
+msgstr "κέντρο"
 
 #: ../gui/wxpython/nviz/tools.py:310
 msgid "Resets the view to the original default center of view"
-msgstr ""
+msgstr "Επαναφορά της προβολής στην αρχική προκαθορισμένη θέση "
 
 #: ../gui/wxpython/nviz/tools.py:314
 msgid "top"
-msgstr ""
+msgstr "κατακόρυφο"
 
 #: ../gui/wxpython/nviz/tools.py:317
 msgid ""
@@ -118,11 +119,11 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:321
 msgid "reset"
-msgstr ""
+msgstr "επαναφορά"
 
 #: ../gui/wxpython/nviz/tools.py:322
 msgid "Reset to default view"
-msgstr ""
+msgstr "Επαναφορά στην αρχική προβολή"
 
 #: ../gui/wxpython/nviz/tools.py:340 ../gui/wxpython/nviz/preferences.py:171
 msgid "Image Appearance"
@@ -131,7 +132,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:348 ../gui/wxpython/nviz/preferences.py:178
 #: ../gui/wxpython/gui_core/preferences.py:676
 msgid "Background color:"
-msgstr ""
+msgstr "Χρώμα φόντου : "
 
 #: ../gui/wxpython/nviz/tools.py:385
 msgid ""
@@ -141,43 +142,43 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:396
 msgid "Record"
-msgstr ""
+msgstr "Εγραφή"
 
 #: ../gui/wxpython/nviz/tools.py:398
 msgid "Play"
-msgstr ""
+msgstr "Αναπαραγωγή"
 
 #: ../gui/wxpython/nviz/tools.py:400
 msgid "Pause"
-msgstr ""
+msgstr "Παύση"
 
 #: ../gui/wxpython/nviz/tools.py:402
 msgid "Stop"
-msgstr ""
+msgstr "Σταμάτημα"
 
 #: ../gui/wxpython/nviz/tools.py:414
 msgid "Total number of frames :"
-msgstr ""
+msgstr "Συνολικός αριθμός καρέ :"
 
 #: ../gui/wxpython/nviz/tools.py:418
 msgid "Frame rate (FPS):"
-msgstr ""
+msgstr "Ρυθμός καρέ (FPS) : "
 
 #: ../gui/wxpython/nviz/tools.py:424
 msgid "Frames are recorded with given frequency (FPS). "
-msgstr ""
+msgstr "Τα καρέ εγράφονται με την δεδομένη συχνότητα (FPS)."
 
 #: ../gui/wxpython/nviz/tools.py:467
 msgid "Save image sequence"
-msgstr ""
+msgstr "Αποθήκευση σειράς εικόνων : "
 
 #: ../gui/wxpython/nviz/tools.py:474 ../gui/wxpython/psmap/dialogs.py:4119
 msgid "Choose a directory:"
-msgstr ""
+msgstr "Επιλέξτε ενα φάκελο :"
 
 #: ../gui/wxpython/nviz/tools.py:475
 msgid "Choose a directory for images"
-msgstr ""
+msgstr "Επιλέξτε έναν φάκελο για τις εικόνες"
 
 #: ../gui/wxpython/nviz/tools.py:476 ../gui/wxpython/gui_core/gselect.py:877
 #: ../gui/wxpython/gui_core/gselect.py:1175
@@ -198,37 +199,38 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:479
 msgid "File prefix:"
-msgstr ""
+msgstr "Πρόθεμα αρχείου"
 
 #: ../gui/wxpython/nviz/tools.py:483
 msgid ""
 "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
 msgstr ""
+"Τα παραγωμενα αρχεία θα μοιάζουν κάπως έτσι : prefix_1.ppm, prefix_2.ppm, ..."
 
 #: ../gui/wxpython/nviz/tools.py:484
 msgid "File format:"
-msgstr ""
+msgstr "Φορμάτ αρχείου: "
 
 #: ../gui/wxpython/nviz/tools.py:542 ../gui/wxpython/nviz/tools.py:1766
 #: ../gui/wxpython/nviz/preferences.py:360
 msgid "Surface"
-msgstr ""
+msgstr "Επιφάνια"
 
 #: ../gui/wxpython/nviz/tools.py:548 ../gui/wxpython/nviz/tools.py:1079
 msgid "Constant surface"
-msgstr ""
+msgstr "Συνεχόμενη επιφάνεια"
 
 #: ../gui/wxpython/nviz/tools.py:553 ../gui/wxpython/nviz/preferences.py:462
 msgid "Vector"
-msgstr ""
+msgstr "Δυάνυσματικού"
 
 #: ../gui/wxpython/nviz/tools.py:559
 msgid "Volume"
-msgstr ""
+msgstr "Όγκος"
 
 #: ../gui/wxpython/nviz/tools.py:594 ../gui/wxpython/nviz/preferences.py:252
 msgid "Lighting"
-msgstr ""
+msgstr "Φωτισμός"
 
 #: ../gui/wxpython/nviz/tools.py:599
 msgid "Fringe"
@@ -245,12 +247,12 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:648 ../gui/wxpython/nviz/mapwindow.py:1611
 #: ../gui/wxpython/psmap/dialogs.py:1143
 msgid "Raster map"
-msgstr ""
+msgstr "Χάρτης raster"
 
 #: ../gui/wxpython/nviz/tools.py:671 ../gui/wxpython/nviz/tools.py:1467
 #: ../gui/wxpython/nviz/preferences.py:367
 msgid "Draw"
-msgstr ""
+msgstr "Σχεδίαση"
 
 #: ../gui/wxpython/nviz/tools.py:678 ../gui/wxpython/nviz/tools.py:1474
 #: ../gui/wxpython/nviz/preferences.py:373
@@ -272,12 +274,12 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:692 ../gui/wxpython/nviz/tools.py:953
 #: ../gui/wxpython/nviz/tools.py:1488
 msgid "Shading:"
-msgstr ""
+msgstr "Σκίαση :"
 
 #: ../gui/wxpython/nviz/tools.py:695 ../gui/wxpython/nviz/tools.py:1254
 #: ../gui/wxpython/nviz/tools.py:1491
 msgid "flat"
-msgstr ""
+msgstr "επίπεδο"
 
 #: ../gui/wxpython/nviz/tools.py:696 ../gui/wxpython/nviz/tools.py:1492
 msgid "gouraud"
@@ -299,11 +301,11 @@ msgstr ""
 #: ../gui/wxpython/nviz/preferences.py:392
 #: ../gui/wxpython/nviz/preferences.py:409
 msgid "resolution:"
-msgstr ""
+msgstr "ανάλυση: "
 
 #: ../gui/wxpython/nviz/tools.py:729 ../gui/wxpython/nviz/preferences.py:421
 msgid "style:"
-msgstr ""
+msgstr "στύλ:"
 
 #: ../gui/wxpython/nviz/tools.py:732 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
@@ -331,16 +333,16 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/preferences.py:88
 #: ../gui/wxpython/gmodeler/preferences.py:326
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2271
 #: ../gui/wxpython/menustrings.py:312 ../gui/wxpython/psmap/dialogs.py:1726
 msgid "Mask"
-msgstr ""
+msgstr "Μάσκα"
 
 #: ../gui/wxpython/nviz/tools.py:787 ../gui/wxpython/nviz/tools.py:2272
 msgid "Transparency"
-msgstr ""
+msgstr "Διαυγεια"
 
 #: ../gui/wxpython/nviz/tools.py:788 ../gui/wxpython/nviz/tools.py:2273
 msgid "Shininess"
@@ -348,7 +350,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:794 ../gui/wxpython/nviz/tools.py:2284
 msgid "map"
-msgstr ""
+msgstr "χάρτης"
 
 #: ../gui/wxpython/nviz/tools.py:797 ../gui/wxpython/nviz/tools.py:2289
 msgid "unset"
@@ -356,7 +358,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:802 ../gui/wxpython/nviz/tools.py:2294
 msgid "constant"
-msgstr ""
+msgstr "σταθερά"
 
 #: ../gui/wxpython/nviz/tools.py:853 ../gui/wxpython/nviz/tools.py:1583
 #: ../gui/wxpython/psmap/dialogs.py:2704 ../gui/wxpython/psmap/dialogs.py:3246
@@ -365,20 +367,21 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:4226 ../gui/wxpython/psmap/dialogs.py:4675
 #: ../gui/wxpython/psmap/dialogs.py:4680
 msgid "Position"
-msgstr ""
+msgstr "Θέση"
 
 #: ../gui/wxpython/nviz/tools.py:859
+#, fuzzy
 msgid "Changes the x, y, and z position of the current surface"
-msgstr ""
+msgstr "Αλλαγή των x,y και z συντεταγμένων της επιφάνειας"
 
 #: ../gui/wxpython/nviz/tools.py:869 ../gui/wxpython/nviz/tools.py:1055
 #: ../gui/wxpython/nviz/tools.py:1598 ../gui/wxpython/nviz/tools.py:2454
 msgid "Reset"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: ../gui/wxpython/nviz/tools.py:870 ../gui/wxpython/nviz/tools.py:1599
 msgid "Reset to default position"
-msgstr ""
+msgstr "Επαναφορά στην αρχική θέση"
 
 #: ../gui/wxpython/nviz/tools.py:943
 msgid "Active cutting plane:"
@@ -386,7 +389,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:955
 msgid "clear"
-msgstr ""
+msgstr "εκκαθάριση"
 
 #: ../gui/wxpython/nviz/tools.py:956
 msgid "top color"
@@ -398,7 +401,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:958
 msgid "blend"
-msgstr ""
+msgstr "Μίξη"
 
 #: ../gui/wxpython/nviz/tools.py:959
 msgid "shaded"
@@ -406,7 +409,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:971
 msgid "Horizontal X:"
-msgstr ""
+msgstr "Οριζόντεο Χ:"
 
 #: ../gui/wxpython/nviz/tools.py:973
 msgid "Sets the X coordinate of the current cutting plane"
@@ -414,7 +417,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:987
 msgid "Horizontal Y:"
-msgstr ""
+msgstr "Οριζόντιο Υ:"
 
 #: ../gui/wxpython/nviz/tools.py:989
 msgid "Sets the Y coordinate of the current cutting plane"
@@ -422,7 +425,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1004 ../gui/wxpython/gui_core/dialogs.py:756
 msgid "Rotation:"
-msgstr ""
+msgstr "Περιστροφή:"
 
 #: ../gui/wxpython/nviz/tools.py:1006
 msgid "Rotates the current cutting plane about vertical axis"
@@ -441,12 +444,12 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:1090 ../gui/wxpython/menustrings.py:4
 #: ../gui/wxpython/menustrings.py:858
 msgid "New"
-msgstr ""
+msgstr "Νέο"
 
 #: ../gui/wxpython/nviz/tools.py:1094 ../gui/wxpython/nviz/tools.py:1883
 #: ../gui/wxpython/menustrings.py:163 ../gui/wxpython/psmap/dialogs.py:1316
 msgid "Delete"
-msgstr ""
+msgstr "Διαγραφή"
 
 #: ../gui/wxpython/nviz/tools.py:1107
 msgid "Fine resolution:"
@@ -454,11 +457,11 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1119
 msgid "Value:"
-msgstr ""
+msgstr "Τιμη;"
 
 #: ../gui/wxpython/nviz/tools.py:1131 ../gui/wxpython/nviz/tools.py:2443
 msgid "Transparency:"
-msgstr ""
+msgstr "Διαύγεια"
 
 #: ../gui/wxpython/nviz/tools.py:1143 ../gui/wxpython/nviz/tools.py:1696
 #: ../gui/wxpython/nviz/tools.py:1817 ../gui/wxpython/nviz/preferences.py:333
@@ -468,11 +471,11 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:1776 ../gui/wxpython/psmap/dialogs.py:1879
 #: ../gui/wxpython/gcp/manager.py:2437
 msgid "Color:"
-msgstr ""
+msgstr "Χρώμα:"
 
 #: ../gui/wxpython/nviz/tools.py:1173 ../gui/wxpython/psmap/dialogs.py:2618
 msgid "Vector map"
-msgstr ""
+msgstr "Διανυσματικός Χάρτης"
 
 #: ../gui/wxpython/nviz/tools.py:1197
 msgid "Show vector lines"
@@ -480,19 +483,19 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1207 ../gui/wxpython/nviz/preferences.py:468
 msgid "Vector lines"
-msgstr ""
+msgstr "Διανυσματικές γραμμές"
 
 #: ../gui/wxpython/nviz/tools.py:1214
 msgid "Line:"
-msgstr ""
+msgstr "Γραμμή:"
 
 #: ../gui/wxpython/nviz/tools.py:1217
 msgid "width:"
-msgstr ""
+msgstr "πλάτος:"
 
 #: ../gui/wxpython/nviz/tools.py:1233 ../gui/wxpython/nviz/tools.py:1339
 msgid "color:"
-msgstr ""
+msgstr "χρώμα:"
 
 #: ../gui/wxpython/nviz/tools.py:1248
 #: ../gui/wxpython/vdigit/preferences.py:125
@@ -505,27 +508,27 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1263 ../gui/wxpython/nviz/tools.py:1390
 msgid "Height above surface:"
-msgstr ""
+msgstr "Ύψος πάνω απο την επιφάνεια;"
 
 #: ../gui/wxpython/nviz/tools.py:1298
 msgid "Show vector points"
-msgstr ""
+msgstr "Προβολή διανυσματικών σημείων"
 
 #: ../gui/wxpython/nviz/tools.py:1307 ../gui/wxpython/nviz/preferences.py:508
 msgid "Vector points"
-msgstr ""
+msgstr "Διανυσματικά σημεία"
 
 #: ../gui/wxpython/nviz/tools.py:1318
 msgid "Icon:"
-msgstr ""
+msgstr "Εικονίδιο:"
 
 #: ../gui/wxpython/nviz/tools.py:1321 ../gui/wxpython/psmap/dialogs.py:2000
 msgid "size:"
-msgstr ""
+msgstr "μεγεθος"
 
 #: ../gui/wxpython/nviz/tools.py:1371 ../gui/wxpython/psmap/dialogs.py:1958
 msgid "symbol:"
-msgstr ""
+msgstr "σύμβολο:"
 
 #: ../gui/wxpython/nviz/tools.py:1387
 msgid "Display on surface(s):"
@@ -533,7 +536,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1444
 msgid "3D raster map"
-msgstr ""
+msgstr "3D raster χάρτης"
 
 #: ../gui/wxpython/nviz/tools.py:1477
 msgid "isosurfaces"
@@ -545,7 +548,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1501
 msgid "Resolution:"
-msgstr ""
+msgstr "Ανάλυση:"
 
 #: ../gui/wxpython/nviz/tools.py:1523 ../gui/wxpython/nviz/tools.py:3508
 msgid "List of isosurfaces"
@@ -589,24 +592,24 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1782
 msgid "N && W"
-msgstr ""
+msgstr "Β && Δ"
 
 #: ../gui/wxpython/nviz/tools.py:1783
 msgid "N && E"
-msgstr ""
+msgstr "Β && Α"
 
 #: ../gui/wxpython/nviz/tools.py:1784
 msgid "S && W"
-msgstr ""
+msgstr "Ν && Δ"
 
 #: ../gui/wxpython/nviz/tools.py:1785
 msgid "S && E"
-msgstr ""
+msgstr "Ν && Α"
 
 #: ../gui/wxpython/nviz/tools.py:1799 ../gui/wxpython/gui_core/gselect.py:1101
 #: ../gui/wxpython/gui_core/toolbars.py:77
 msgid "Settings"
-msgstr ""
+msgstr "Επιλογές"
 
 #: ../gui/wxpython/nviz/tools.py:1805
 msgid "Elevation of fringe from bottom:"
@@ -632,23 +635,23 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1895 ../gui/wxpython/psmap/toolbars.py:81
 msgid "Scale bar"
-msgstr ""
+msgstr "Κλίμακα"
 
 #: ../gui/wxpython/nviz/tools.py:1900
 msgid "Scale bar length (in map units):"
-msgstr ""
+msgstr "Μήκος κλίμακας (σε μονάδες χάρτη)"
 
 #: ../gui/wxpython/nviz/tools.py:1910
 msgid "Scale bar color:"
-msgstr ""
+msgstr "Χρώμα κλίμακας:"
 
 #: ../gui/wxpython/nviz/tools.py:1919
 msgid "Place scalebar"
-msgstr ""
+msgstr "Τοποθέτηση κλίμακας"
 
 #: ../gui/wxpython/nviz/tools.py:1925
 msgid "Delete last"
-msgstr ""
+msgstr "Διαγραφή τελευταίου"
 
 #: ../gui/wxpython/nviz/tools.py:1958
 msgid "Do you want to record new animation without saving the previous one?"
@@ -660,18 +663,18 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:2123
 msgid "No file prefix given."
-msgstr ""
+msgstr "Δεν έχει δοθεί πρόθεμα."
 
 #: ../gui/wxpython/nviz/tools.py:2127
 #, python-format
 msgid "Directory %s does not exist."
-msgstr ""
+msgstr "Ο φάκελος %s δεν υπάρχει,"
 
 #: ../gui/wxpython/nviz/tools.py:2146 ../gui/wxpython/nviz/tools.py:2191
 #: ../gui/wxpython/nviz/tools.py:4286 ../gui/wxpython/nviz/mapwindow.py:2110
 #: ../gui/wxpython/nviz/mapwindow.py:2128
 msgid "constant#"
-msgstr ""
+msgstr "σταθερή#"
 
 #: ../gui/wxpython/nviz/tools.py:2257
 msgid "Isosurface attributes"
@@ -695,40 +698,40 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:2511
 msgid "W"
-msgstr ""
+msgstr "Δ"
 
 #: ../gui/wxpython/nviz/tools.py:2512
 msgid "N"
-msgstr ""
+msgstr "Β"
 
 #: ../gui/wxpython/nviz/tools.py:2513
 msgid "S"
-msgstr ""
+msgstr "Ν"
 
 #: ../gui/wxpython/nviz/tools.py:2514
 msgid "E"
-msgstr ""
+msgstr "Α"
 
 #: ../gui/wxpython/nviz/tools.py:2515
 msgid "NW"
-msgstr ""
+msgstr "ΒΔ"
 
 #: ../gui/wxpython/nviz/tools.py:2516
 msgid "NE"
-msgstr ""
+msgstr "ΒΑ"
 
 #: ../gui/wxpython/nviz/tools.py:2517
 msgid "SE"
-msgstr ""
+msgstr "ΝΑ"
 
 #: ../gui/wxpython/nviz/tools.py:2518
 msgid "SW"
-msgstr ""
+msgstr "ΝΔ"
 
 #: ../gui/wxpython/nviz/tools.py:3003 ../gui/wxpython/nviz/tools.py:3695
 #: ../gui/wxpython/nviz/tools.py:3697 ../gui/wxpython/nviz/tools.py:4614
 msgid "Level"
-msgstr ""
+msgstr "Επίπεδο"
 
 #: ../gui/wxpython/nviz/tools.py:3514
 msgid "List of slices"
@@ -741,19 +744,19 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:4292
 msgid "None"
-msgstr ""
+msgstr "ανένα"
 
 #: ../gui/wxpython/nviz/tools.py:4294 ../gui/wxpython/menustrings.py:462
 msgid "Plane"
-msgstr ""
+msgstr "Επίπεδο"
 
 #: ../gui/wxpython/nviz/tools.py:4477
 msgid "Vector map is 3D"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης είναι 3D"
 
 #: ../gui/wxpython/nviz/tools.py:4480
 msgid "Vector map is 2D"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης είναι 2D"
 
 #: ../gui/wxpython/nviz/tools.py:4482
 #, python-format
@@ -762,25 +765,25 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:4647
 msgid "range:"
-msgstr ""
+msgstr "όριο:"
 
 #: ../gui/wxpython/nviz/tools.py:4715 ../gui/wxpython/nviz/tools.py:4726
 msgid "North edge:"
-msgstr ""
+msgstr "Βόριο όριο:"
 
 #: ../gui/wxpython/nviz/tools.py:4716 ../gui/wxpython/nviz/tools.py:4727
 msgid "South edge:"
-msgstr ""
+msgstr "Νότιο όριο:"
 
 #: ../gui/wxpython/nviz/tools.py:4717 ../gui/wxpython/nviz/tools.py:4724
 #: ../gui/wxpython/nviz/tools.py:4733
 msgid "West edge:"
-msgstr ""
+msgstr "Δυτικό όριο:"
 
 #: ../gui/wxpython/nviz/tools.py:4718 ../gui/wxpython/nviz/tools.py:4725
 #: ../gui/wxpython/nviz/tools.py:4734
 msgid "East edge:"
-msgstr ""
+msgstr "Ανατολικό όριο:"
 
 #: ../gui/wxpython/nviz/tools.py:4720 ../gui/wxpython/nviz/tools.py:4731
 #: ../gui/wxpython/nviz/tools.py:4739
@@ -790,7 +793,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:4721 ../gui/wxpython/nviz/tools.py:4730
 #: ../gui/wxpython/nviz/tools.py:4740
 msgid "Height (Z):"
-msgstr ""
+msgstr "Υψόμετρο(Ζ)"
 
 #: ../gui/wxpython/nviz/tools.py:4722 ../gui/wxpython/nviz/tools.py:4729
 #: ../gui/wxpython/nviz/tools.py:4738
@@ -817,35 +820,37 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/preferences.py:31
 msgid "3D view settings"
-msgstr ""
+msgstr "Επιλογές 3D απεικόνισης"
 
 #: ../gui/wxpython/nviz/preferences.py:48
 msgid "Revert settings to default, changes are not applied"
 msgstr ""
+"Επαναφέρει τις επιλογές στις προεπιλεγμένες, δεν εφαρμόζει τις όποιες "
+"αλλαγές."
 
 #: ../gui/wxpython/nviz/preferences.py:71
 #: ../gui/wxpython/nviz/preferences.py:134
 #: ../gui/wxpython/nviz/preferences.py:152
 msgid "value:"
-msgstr ""
+msgstr "τιμη:"
 
 #: ../gui/wxpython/nviz/preferences.py:83
 msgid "step:"
-msgstr ""
+msgstr "βήμα:"
 
 #: ../gui/wxpython/nviz/preferences.py:98
 #: ../gui/wxpython/nviz/preferences.py:265
 msgid "Position:"
-msgstr ""
+msgstr "Θέση:"
 
 #: ../gui/wxpython/nviz/preferences.py:101
 #: ../gui/wxpython/nviz/preferences.py:268
 msgid "x:"
-msgstr ""
+msgstr "x:"
 
 #: ../gui/wxpython/nviz/preferences.py:131
 msgid "Twist:"
-msgstr ""
+msgstr "Περιστροφή:"
 
 #: ../gui/wxpython/nviz/preferences.py:204
 msgid "Fly-through"
@@ -866,11 +871,11 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/preferences.py:257
 msgid "Light"
-msgstr ""
+msgstr "Φωτισμός"
 
 #: ../gui/wxpython/nviz/preferences.py:292
 msgid "z:"
-msgstr ""
+msgstr "z: "
 
 #: ../gui/wxpython/nviz/preferences.py:436
 msgid "wire color:"
@@ -883,11 +888,11 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/preferences.py:277
 #: ../gui/wxpython/gmodeler/preferences.py:362
 msgid "Width:"
-msgstr ""
+msgstr "Πλάτος: "
 
 #: ../gui/wxpython/nviz/preferences.py:515
 msgid "Size:"
-msgstr ""
+msgstr "Μέγεθος:"
 
 #: ../gui/wxpython/nviz/preferences.py:530
 msgid "Marker:"
@@ -896,7 +901,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/preferences.py:628
 #, python-format
 msgid "3D view settings saved to file <%s>."
-msgstr ""
+msgstr "Οι επιλογες της 3D προβολής αποθηκεύτηκαν στο αρχείο <%s>."
 
 #: ../gui/wxpython/nviz/wxnviz.py:32 ../gui/wxpython/wxplot/profile.py:31
 msgid ""
@@ -905,6 +910,11 @@ msgid ""
 "distribution). See the Numeric Python site (http://numpy.scipy.org) for "
 "information on downloading source or binaries."
 msgstr ""
+"Αυτό το πρόσθετο απαιτεί το πρόσθετο NumPy, το οποίο δεν μπόρεσε να "
+"εισαχθεί. Πιθανότατα να μην είναι εγκατεστημένο (δεν είναι μέρος της γενικής "
+"διανομής της Python). Για περισσότερες πληροφορίες και για λήψη αρχείων προς "
+"εγκατάσταση καθώς και του πηγαίου κώδικα, απευθυνθήτε στην ιστοσελίδα της "
+"Numpy (http://numpy.scipy.org)."
 
 #: ../gui/wxpython/nviz/wxnviz.py:49
 #, python-format
@@ -925,7 +935,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/wxnviz.py:474 ../gui/wxpython/nviz/wxnviz.py:486
 #, python-format
 msgid "3d raster map <%s> not found"
-msgstr ""
+msgstr "Ο 3D raster χάρτης <%s> δεν βρέθηκε"
 
 #: ../gui/wxpython/nviz/mapwindow.py:506
 #, python-format
@@ -985,15 +995,15 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:1486
 msgid "Loading raster map"
-msgstr ""
+msgstr "Φόρτωση raster χάρτη"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1490
 msgid "Loading 3d raster map"
-msgstr ""
+msgstr "Φόρτωση 3D raster χάρτη"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1496
 msgid "failed"
-msgstr ""
+msgstr "απέτυχε"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1498
 #, python-format
@@ -1010,26 +1020,27 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:1616
 msgid "3d raster map"
-msgstr ""
+msgstr "3D raster χάρτη"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1626
 msgid "unloaded successfully"
-msgstr ""
+msgstr "επιτυχής απεφόρτωση"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1678
 #, python-format
 msgid "Loading vector map <%(name)s> (%(type)s) failed"
-msgstr ""
+msgstr "Η φορτωση του διανυσματικού χάρτη <%(name)s> (%(type)s) απέτυχε."
 
 #: ../gui/wxpython/nviz/mapwindow.py:1737
 #, python-format
 msgid "Unable to unload vector map <%(name)s> (%(type)s)"
 msgstr ""
+"Δεν ήταν δυνατή η φόρτωση του  του διανυσματικού χάρτη <%(name)s> (%(type)s)"
 
 #: ../gui/wxpython/nviz/mapwindow.py:1740
 #, python-format
 msgid "Vector map <%(name)s> (%(type)s) unloaded successfully"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης <%(name)s> (%(type)s) απεφορτώθηκε επιτυχώς."
 
 #: ../gui/wxpython/nviz/mapwindow.py:2073
 #, python-format
@@ -1051,7 +1062,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:2185
 msgid "At least one raster map required"
-msgstr ""
+msgstr "Απαιτείται τουλαχιστον ένας raster χάρτης "
 
 #: ../gui/wxpython/lmgr/frame.py:76
 msgid "GRASS GIS Layer Manager"
@@ -1059,23 +1070,23 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:119
 msgid "Workspace Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη Επιφάνειας Εργασίας"
 
 #: ../gui/wxpython/lmgr/frame.py:122
 msgid "Data Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη Δεδομένων"
 
 #: ../gui/wxpython/lmgr/frame.py:125
 msgid "Misc Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη Misc"
 
 #: ../gui/wxpython/lmgr/frame.py:128
 msgid "Tools Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη εργαλείων"
 
 #: ../gui/wxpython/lmgr/frame.py:131
 msgid "Vector Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη δυανυσμάτων"
 
 #: ../gui/wxpython/lmgr/frame.py:134
 msgid "3D view Toolbar"
@@ -1087,25 +1098,25 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:256
 msgid "Map layers"
-msgstr ""
+msgstr "Επίπεδα χαρτη"
 
 #: ../gui/wxpython/lmgr/frame.py:260 ../gui/wxpython/lmgr/frame.py:456
 msgid "Command console"
-msgstr ""
+msgstr "Κονσόλα Εντολών"
 
 #: ../gui/wxpython/lmgr/frame.py:266
 #: ../gui/wxpython/gui_core/preferences.py:314
 msgid "Search module"
-msgstr ""
+msgstr "Πρόσθετο Εύρεσης"
 
 #: ../gui/wxpython/lmgr/frame.py:273
 #: ../gui/wxpython/gui_core/preferences.py:324
 msgid "Python shell"
-msgstr ""
+msgstr "Τερματικό Python"
 
 #: ../gui/wxpython/lmgr/frame.py:303 ../gui/wxpython/mapdisp/toolbars.py:84
 msgid "3D view"
-msgstr ""
+msgstr "3D προβολή"
 
 #: ../gui/wxpython/lmgr/frame.py:338
 #, python-format
@@ -1114,10 +1125,13 @@ msgid ""
 "\n"
 "Do you want to switch to the new location?"
 msgstr ""
+"Η Τοποθεσία <%s> δημιουργήθηκε.\n"
+"\n"
+"Θέλετε να γίνει αλλαγή στην νέα Τοποθεσία;"
 
 #: ../gui/wxpython/lmgr/frame.py:341
 msgid "Switch to new location?"
-msgstr ""
+msgstr "Αλλαγή στην νέα Περιοχή;"
 
 #: ../gui/wxpython/lmgr/frame.py:354 ../gui/wxpython/lmgr/frame.py:678
 #, python-format
@@ -1125,32 +1139,36 @@ msgid ""
 "Current location is <%(loc)s>.\n"
 "Current mapset is <%(mapset)s>."
 msgstr ""
+"Η τρέχουσα Τοποθεσία ειναι <%(loc)s>.\n"
+"Η τρέχουσα Συλλογή Χαρτών είναι η <%(mapset)s>."
 
 #: ../gui/wxpython/lmgr/frame.py:360 ../gui/wxpython/gis_set.py:427
 msgid "Do you want to set the default region extents and resolution now?"
-msgstr ""
+msgstr "Θέλετε να θέσετε τα προεπιλεγμένα όρια και ανάλυση της Τοποθεσίας;"
 
 #: ../gui/wxpython/lmgr/frame.py:362 ../gui/wxpython/gis_set.py:429
 #, python-format
 msgid "Location <%s> created"
-msgstr ""
+msgstr "Η Τοποθεσία <%s> δημιουργήθηκε"
 
 #: ../gui/wxpython/lmgr/frame.py:411
 msgid "Choose model to run"
-msgstr ""
+msgstr "Επιλογή μοντέλων για επεξεργασία"
 
 #: ../gui/wxpython/lmgr/frame.py:413 ../gui/wxpython/gmodeler/frame.py:367
 #: ../gui/wxpython/gmodeler/frame.py:411
 msgid "GRASS Model File (*.gxm)|*.gxm"
-msgstr ""
+msgstr "Αρχείο Μοντέλου GRASS  (*.gxm)|*.gxm"
 
 #: ../gui/wxpython/lmgr/frame.py:470 ../gui/wxpython/lmgr/frame.py:1785
 msgid "Do you want to save changes in the workspace?"
-msgstr ""
+msgstr "Θέλετε να αποθηκεύσετε της αλλαγές στην Επιφάνεια Εργασίας;"
 
 #: ../gui/wxpython/lmgr/frame.py:472 ../gui/wxpython/lmgr/frame.py:1787
 msgid "Do you want to store current settings to workspace file?"
 msgstr ""
+"Θέλετε να αποθηκεύσετε τις τρέχουσες επιλογες στο αρχείο της Επιφάνεια "
+"Εργασίας;"
 
 #: ../gui/wxpython/lmgr/frame.py:480
 #, python-format
@@ -1159,7 +1177,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:581 ../gui/wxpython/lmgr/frame.py:1402
 msgid "Selected map layer is not vector."
-msgstr ""
+msgstr "Το επιλεγμένο επίπεδο χάρτη δεν είναι διανυσματικό."
 
 #: ../gui/wxpython/lmgr/frame.py:586
 msgid "Editing is allowed only for vector maps from the current mapset."
@@ -1171,7 +1189,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:603
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
-msgstr ""
+msgstr "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 
 #: ../gui/wxpython/lmgr/frame.py:614
 #, python-format
@@ -1236,27 +1254,27 @@ msgstr ""
 #: ../gui/wxpython/gui_core/goutput.py:850
 #: ../gui/wxpython/gmodeler/model.py:927 ../gui/wxpython/gmodeler/model.py:994
 msgid "unknown"
-msgstr ""
+msgstr "άγνωστο"
 
 #: ../gui/wxpython/lmgr/frame.py:765
 msgid "System Info"
-msgstr ""
+msgstr "Πληροφορίες Συστήματος"
 
 #: ../gui/wxpython/lmgr/frame.py:773
 msgid "GRASS version"
-msgstr ""
+msgstr "Έκδωση GRASS"
 
 #: ../gui/wxpython/lmgr/frame.py:774
 msgid "GRASS SVN Revision"
-msgstr ""
+msgstr "Aναθεώρηση GRASS SVN "
 
 #: ../gui/wxpython/lmgr/frame.py:775 ../gui/wxpython/gui_core/ghelp.py:439
 msgid "GIS Library Revision"
-msgstr ""
+msgstr "Αναθεώρηση βιβλιοθήκης GIS"
 
 #: ../gui/wxpython/lmgr/frame.py:779
 msgid "Platform"
-msgstr ""
+msgstr "Πλατφόρμα"
 
 #: ../gui/wxpython/lmgr/frame.py:831
 msgid ""
@@ -1270,7 +1288,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:860
 msgid "Choose workspace file"
-msgstr ""
+msgstr "Επιλέξτε αρχείο Επιφάνειας εργασίας"
 
 #: ../gui/wxpython/lmgr/frame.py:861 ../gui/wxpython/lmgr/frame.py:1052
 msgid "GRASS Workspace File (*.gxw)|*.gxw"
@@ -1285,7 +1303,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:900 ../gui/wxpython/lmgr/frame.py:1029
 msgid "Please wait, loading workspace..."
-msgstr ""
+msgstr "Παρακαλώ περιμένετε, φορτώνεται η Επιφάνεια Εργασίας..."
 
 #: ../gui/wxpython/lmgr/frame.py:1013
 msgid "Choose GRC file to load"
@@ -1303,6 +1321,8 @@ msgstr ""
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
 msgstr ""
+"Το αρχείο <%s> Επιφάνειας Εργασίας υπάρχει. Θέλετε να γίνει αντικατάσταση "
+"του αρχείο;"
 
 #: ../gui/wxpython/lmgr/frame.py:1068 ../gui/wxpython/lmgr/frame.py:1085
 #: ../gui/wxpython/menustrings.py:9
@@ -1321,7 +1341,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:1157
 msgid "Enter new name:"
-msgstr ""
+msgstr "Εισαγωγή νέου ονόματος:"
 
 #: ../gui/wxpython/lmgr/frame.py:1163
 #, python-format
@@ -1369,7 +1389,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:1794
 msgid "Quit GRASS GUI"
-msgstr ""
+msgstr "Έξοδος απο GRASS GUI"
 
 #: ../gui/wxpython/lmgr/frame.py:1825
 msgid "No map layer selected. Operation canceled."
@@ -1379,7 +1399,7 @@ msgstr ""
 #: ../gui/wxpython/gis_set.py:558 ../gui/wxpython/gui_core/ghelp.py:274
 #: ../gui/wxpython/core/gcmd.py:143
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #: ../gui/wxpython/lmgr/frame.py:1835
 msgid ""
@@ -1414,17 +1434,17 @@ msgstr ""
 #: ../gui/wxpython/lmgr/pyshell.py:96
 #, python-format
 msgid "Raster or vector map <%s> not found"
-msgstr ""
+msgstr "Ο raster χάρτης <%s> δεν βρέθηκε"
 
 #: ../gui/wxpython/lmgr/pyshell.py:103
 #, python-format
 msgid "Raster map <%s> added"
-msgstr ""
+msgstr "Ο raster χάρτης <%s> προστέθηκε"
 
 #: ../gui/wxpython/lmgr/pyshell.py:105
 #, python-format
 msgid "Vector map <%s> added"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης <%s> προστέθηκε"
 
 #: ../gui/wxpython/lmgr/toolbars.py:50
 msgid "Start new map display"
@@ -1448,7 +1468,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/toolbars.py:86
 msgid "Add raster map layer (Ctrl+Shift+R)"
-msgstr ""
+msgstr "Προσθήκη επιπέδου χάρτη Raster (Ctrl + Shift + R)"
 
 #: ../gui/wxpython/lmgr/toolbars.py:88
 msgid "Add various raster map layers (RGB, HIS, shaded relief...)"
@@ -1456,7 +1476,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/toolbars.py:89
 msgid "Add vector map layer (Ctrl+Shift+V)"
-msgstr ""
+msgstr "Προσθήκη επιπέδοθυ διανύσματικού χάρτη (Ctrl + Shift + V)"
 
 #: ../gui/wxpython/lmgr/toolbars.py:91
 msgid "Add various vector map layers (thematic, chart...)"
@@ -1492,15 +1512,15 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/toolbars.py:142 ../gui/wxpython/menustrings.py:196
 msgid "Cartographic Composer"
-msgstr ""
+msgstr "Χαρτογραφική Σύνθεση"
 
 #: ../gui/wxpython/lmgr/toolbars.py:173
 msgid "GUI settings"
-msgstr ""
+msgstr "επιλογές GUI"
 
 #: ../gui/wxpython/lmgr/toolbars.py:174
 msgid "GRASS manual"
-msgstr ""
+msgstr "Εγχειρίδιο GRASS"
 
 #: ../gui/wxpython/lmgr/toolbars.py:199
 msgid "Edit vector maps"
@@ -1533,7 +1553,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:50
 #: ../gui/wxpython/gui_core/dialogs.py:1681 ../gui/wxpython/menustrings.py:29
 msgid "Import raster data"
-msgstr ""
+msgstr "Εισαγωγή raster δεδομένων"
 
 #: ../gui/wxpython/lmgr/layertree.py:52
 #: ../gui/wxpython/gui_core/dialogs.py:1679 ../gui/wxpython/menustrings.py:150
@@ -1565,7 +1585,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:64
 #: ../gui/wxpython/gui_core/toolbars.py:66
 msgid "Quit"
-msgstr ""
+msgstr "Έξοδος"
 
 #: ../gui/wxpython/lmgr/layertree.py:66
 msgid "Add RGB map layer"
@@ -1636,11 +1656,11 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:334
 #: ../gui/wxpython/gmodeler/frame.py:1181
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #: ../gui/wxpython/lmgr/layertree.py:338 ../gui/wxpython/menustrings.py:161
 msgid "Rename"
-msgstr ""
+msgstr "Μετονομασία"
 
 #: ../gui/wxpython/lmgr/layertree.py:346
 msgid "Change opacity level"
@@ -1649,7 +1669,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:348
 #: ../gui/wxpython/gmodeler/frame.py:1213
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #: ../gui/wxpython/lmgr/layertree.py:356
 msgid "3D view properties"
@@ -1665,7 +1685,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:374 ../gui/wxpython/lmgr/layertree.py:447
 msgid "Export"
-msgstr ""
+msgstr "Εξαγωγή"
 
 #: ../gui/wxpython/lmgr/layertree.py:381 ../gui/wxpython/lmgr/layertree.py:453
 msgid "Set color table"
@@ -1694,7 +1714,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:428 ../gui/wxpython/lmgr/layertree.py:461
 #: ../gui/wxpython/gmodeler/preferences.py:428
 msgid "Metadata"
-msgstr ""
+msgstr "Μεταδεδομένα"
 
 #: ../gui/wxpython/lmgr/layertree.py:441
 msgid "Zoom to selected map(s) (ignore NULLs)"
@@ -1702,11 +1722,11 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:443
 msgid "Set computational region from selected map(s) (ignore NULLs)"
-msgstr ""
+msgstr " "
 
 #: ../gui/wxpython/lmgr/layertree.py:455 ../gui/wxpython/menustrings.py:717
 msgid "Histogram"
-msgstr ""
+msgstr "Ιστογραμμα"
 
 #: ../gui/wxpython/lmgr/layertree.py:457 ../gui/wxpython/menustrings.py:506
 msgid "Univariate raster statistics"
@@ -1714,11 +1734,11 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:459
 msgid "Profile"
-msgstr ""
+msgstr "Προφίλ"
 
 #: ../gui/wxpython/lmgr/layertree.py:551
 msgid "Unable to create profile of raster map."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η δημιουργεία προφίλ για τον raster χάρτη."
 
 #: ../gui/wxpython/lmgr/layertree.py:553 ../gui/wxpython/gis_set.py:208
 #: ../gui/wxpython/gis_set.py:535 ../gui/wxpython/gis_set.py:571
@@ -1741,11 +1761,12 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/frame.py:882 ../gui/wxpython/core/workspace.py:999
 #: ../gui/wxpython/core/gcmd.py:109
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #: ../gui/wxpython/lmgr/layertree.py:587
 msgid "Unable to display histogram of raster map. No map name defined."
 msgstr ""
+"Αδύνατη η εμφάνιση ιστογράμματος raster χάρτη. Δεν έχει οριστεί χάρτης."
 
 #: ../gui/wxpython/lmgr/layertree.py:667
 #, python-format
@@ -1763,27 +1784,27 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:821
 msgid "(double click to set properties)"
-msgstr ""
+msgstr "(Διπλό κλικ για να οριστούν οι ιδιότητες)"
 
 #: ../gui/wxpython/lmgr/layertree.py:824
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 #: ../gui/wxpython/psmap/dialogs.py:695 ../gui/wxpython/gcp/manager.py:314
 #: ../gui/wxpython/gmodeler/frame.py:1311
 msgid "raster"
-msgstr ""
+msgstr "raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:827
 #: ../gui/wxpython/gui_core/dialogs.py:1243
 msgid "3D raster"
-msgstr ""
+msgstr "3D raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:830
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../gui/wxpython/lmgr/layertree.py:833
 msgid "HIS"
-msgstr ""
+msgstr "HIS"
 
 #: ../gui/wxpython/lmgr/layertree.py:836
 msgid "shaded relief"
@@ -1795,7 +1816,7 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:842
 msgid "raster flow arrows"
-msgstr ""
+msgstr "δείκτες ροής raster"
 
 #: ../gui/wxpython/lmgr/layertree.py:845
 #: ../gui/wxpython/gui_core/dialogs.py:1243
@@ -1806,15 +1827,15 @@ msgstr ""
 
 #: ../gui/wxpython/lmgr/layertree.py:848
 msgid "thematic map"
-msgstr ""
+msgstr "Θεματικός χάρτης"
 
 #: ../gui/wxpython/lmgr/layertree.py:851
 msgid "thematic charts"
-msgstr ""
+msgstr "θεματικοί χάρτες"
 
 #: ../gui/wxpython/lmgr/layertree.py:854
 msgid "grid"
-msgstr ""
+msgstr "πλέγμα"
 
 #: ../gui/wxpython/lmgr/layertree.py:857
 msgid "geodesic line"
@@ -1831,16 +1852,16 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:1100
 #: ../gui/wxpython/lmgr/layertree.py:1159
 msgid "Please wait, updating data..."
-msgstr ""
+msgstr "Παρακαλώ περιμένετε. γίνεται ενημέρωση ..."
 
 #: ../gui/wxpython/lmgr/layertree.py:1458
 msgid "opacity:"
-msgstr ""
+msgstr "διαύγεια"
 
 #: ../gui/wxpython/lmgr/layertree.py:1475
 #, python-format
 msgid "Map <%s> not found."
-msgstr ""
+msgstr "Ο χάρτης <%s> δεν βρέθηκε."
 
 #: ../gui/wxpython/gis_set.py:95
 msgid "Choose project location and mapset"
@@ -1851,11 +1872,13 @@ msgid "Manage"
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:100
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Welcome to GRASS GIS %s\n"
 "The world's leading open source GIS"
 msgstr ""
+"Καλώς ορίσατε στο GRASS GIS %s\n"
+" To κορυφαίο GIS ΛΑΚ"
 
 #: ../gui/wxpython/gis_set.py:104
 msgid ""
@@ -1898,7 +1921,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:127
 msgid "Start &GRASS"
-msgstr ""
+msgstr "Εκκίνηση &GRASS"
 
 #: ../gui/wxpython/gis_set.py:133
 msgid "&Browse"
@@ -1936,7 +1959,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:185
 msgid "Welcome to GRASS GIS"
-msgstr ""
+msgstr "Καλώς ορίσατε στο GRASS GIS"
 
 #: ../gui/wxpython/gis_set.py:193
 msgid "Enter GRASS session"
@@ -1970,7 +1993,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:411
 msgid "Import data"
-msgstr ""
+msgstr "Εισαγωγή δεδομένων"
 
 #: ../gui/wxpython/gis_set.py:456
 #, python-format
@@ -2029,7 +2052,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:548
 msgid "Rename selected location"
-msgstr ""
+msgstr "Μετονομασία επιλεγμένης Τοποθεσίας"
 
 #: ../gui/wxpython/gis_set.py:559
 #, python-format
@@ -2065,11 +2088,11 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:593
 msgid "Delete selected mapset"
-msgstr ""
+msgstr "Διαγραγή επιλεγμένης Τοποθεσίας"
 
 #: ../gui/wxpython/gis_set.py:602
 msgid "Unable to delete mapset"
-msgstr ""
+msgstr "Αδυναμία διαγραφής Τοποθεσίας"
 
 #: ../gui/wxpython/gis_set.py:613
 #, python-format
@@ -2081,15 +2104,15 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:617
 msgid "Delete selected location"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένης Τοποθεσίας"
 
 #: ../gui/wxpython/gis_set.py:628
 msgid "Unable to delete location"
-msgstr ""
+msgstr "Αδυναμία διαγραφής επιλεγμένης Τοποθεσίας"
 
 #: ../gui/wxpython/gis_set.py:764 ../gui/wxpython/gui_core/gselect.py:876
 msgid "Choose GIS Data Directory"
-msgstr ""
+msgstr "Επιλογή φακέλου δεδομένων GIS "
 
 #: ../gui/wxpython/gis_set.py:787
 #, python-format
@@ -2124,6 +2147,11 @@ msgid ""
 "If you really are running another GRASS session doing this could corrupt "
 "your data. Have another look in the processor manager just to be sure..."
 msgstr ""
+"ΕΙΣΤΕ ΑΠΟΛΥΤΟΣ ΣΙΓΟΥΡΟΙ;\n"
+"\n"
+"Αν στην πραγματικότητα λειτουργεί και μια άλλη συνεδρία GRASS η ενέργεια "
+"αυτή μπορεί να διαφθείρει τα δεδομένά. Ελέγξτε ακόμια μια φορά της ενεργές "
+"διεργασίες για να είστε σίγουροι..."
 
 #: ../gui/wxpython/gis_set.py:846
 #, python-format
@@ -2135,7 +2163,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:946
 msgid "Starting GRASS for the first time"
-msgstr ""
+msgstr "Εκκίνηση GRASS για πρώτη φορά."
 
 #: ../gui/wxpython/gis_set.py:947
 msgid ""
@@ -2146,7 +2174,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:145
 msgid "Loading data..."
-msgstr ""
+msgstr "Φόρτωση δεδομένων..."
 
 #: ../gui/wxpython/dbmgr/manager.py:152
 #, python-format
@@ -2162,7 +2190,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:229
 msgid "Can display only 256 columns."
-msgstr ""
+msgstr "Γίνεται η προβολή μόνω 256 σειρών."
 
 #: ../gui/wxpython/dbmgr/manager.py:244
 #, python-format
@@ -2173,18 +2201,18 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:256
 msgid "Limit 100000 records."
-msgstr ""
+msgstr "Όριο 100000 εγραφών."
 
 #: ../gui/wxpython/dbmgr/manager.py:273 ../gui/wxpython/dbmgr/manager.py:827
 #: ../gui/wxpython/dbmgr/manager.py:1161 ../gui/wxpython/dbmgr/manager.py:1827
 #: ../gui/wxpython/dbmgr/manager.py:1849 ../gui/wxpython/dbmgr/manager.py:1993
 #, python-format
 msgid "Number of loaded records: %d"
-msgstr ""
+msgstr "Αριθμών φορτωμένων εγραφών: %d"
 
 #: ../gui/wxpython/dbmgr/manager.py:297
 msgid "Unknown value"
-msgstr ""
+msgstr "Άγνωστη τιμη"
 
 #: ../gui/wxpython/dbmgr/manager.py:303 ../gui/wxpython/dbmgr/vinfo.py:42
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
@@ -2209,15 +2237,15 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:398
 msgid "Calculate (only numeric columns)"
-msgstr ""
+msgstr "Υπολογισμός (μόνο αριθμικές στήλες)"
 
 #: ../gui/wxpython/dbmgr/manager.py:404
 msgid "Area size"
-msgstr ""
+msgstr "Μέγεθος περιοχής"
 
 #: ../gui/wxpython/dbmgr/manager.py:405
 msgid "Line length"
-msgstr ""
+msgstr "Μήκος γραμμής"
 
 #: ../gui/wxpython/dbmgr/manager.py:406
 msgid "Compactness of an area"
@@ -2229,7 +2257,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:408
 msgid "Perimeter length of an area"
-msgstr ""
+msgstr "Μήκος περιμέτρου μιας περιοχής"
 
 #: ../gui/wxpython/dbmgr/manager.py:409
 msgid "Number of features for each category"
@@ -2240,12 +2268,13 @@ msgid "Slope steepness of 3D line"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:411
+#, fuzzy
 msgid "Line sinuousity"
-msgstr ""
+msgstr "Καμπυλότητα γραμμής"
 
 #: ../gui/wxpython/dbmgr/manager.py:412
 msgid "Line azimuth"
-msgstr ""
+msgstr "Αζιμούθειο γραμμής"
 
 #: ../gui/wxpython/dbmgr/manager.py:571 ../gui/wxpython/dbmgr/manager.py:3106
 msgid "GRASS GIS Attribute Table Manager"
@@ -2286,16 +2315,16 @@ msgstr ""
 #: ../gui/wxpython/dbmgr/manager.py:2317 ../gui/wxpython/dbmgr/manager.py:2447
 #: ../gui/wxpython/dbmgr/manager.py:2701
 msgid "Table"
-msgstr ""
+msgstr "Πίνακας"
 
 #: ../gui/wxpython/dbmgr/manager.py:705 ../gui/wxpython/dbmgr/manager.py:845
 #: ../gui/wxpython/dbmgr/manager.py:1015
 msgid " (readonly)"
-msgstr ""
+msgstr "(μονο για ανάγνωση)"
 
 #: ../gui/wxpython/dbmgr/manager.py:713
 msgid "SQL Query"
-msgstr ""
+msgstr "ερώτηση SQL"
 
 #: ../gui/wxpython/dbmgr/manager.py:732
 msgid "Apply SELECT statement and reload data records"
@@ -2308,57 +2337,57 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:738
 msgid "Simple"
-msgstr ""
+msgstr "Απλή"
 
 #: ../gui/wxpython/dbmgr/manager.py:741
 msgid "Advanced"
-msgstr ""
+msgstr "Περίπλοκη"
 
 #: ../gui/wxpython/dbmgr/manager.py:755 ../gui/wxpython/dbmgr/manager.py:761
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:108
 #, python-format
 msgid "Example: %s"
-msgstr ""
+msgstr "Παράδειγμα: %s"
 
 #: ../gui/wxpython/dbmgr/manager.py:856 ../gui/wxpython/dbmgr/sqlbuilder.py:87
 msgid "Database connection"
-msgstr ""
+msgstr "Σύνδεση σε βάση δεδομένων"
 
 #: ../gui/wxpython/dbmgr/manager.py:868
 #, python-format
 msgid "Table <%s> - right-click to delete column(s)"
-msgstr ""
+msgstr "Πίνακας <%s> - δεξί-κλικ για την διαγραφή στηλης(-ών)"
 
 #: ../gui/wxpython/dbmgr/manager.py:879
 #: ../gui/wxpython/modules/colorrules.py:979
 msgid "Add column"
-msgstr ""
+msgstr "Προσθήκη στήλης"
 
 #: ../gui/wxpython/dbmgr/manager.py:887 ../gui/wxpython/dbmgr/manager.py:938
 msgid "Column"
-msgstr ""
+msgstr "Στηλη"
 
 #: ../gui/wxpython/dbmgr/manager.py:902
 #: ../gui/wxpython/gmodeler/preferences.py:207
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../gui/wxpython/dbmgr/manager.py:914
 msgid "Length"
-msgstr ""
+msgstr "Μήκος"
 
 #: ../gui/wxpython/dbmgr/manager.py:930 ../gui/wxpython/menustrings.py:838
 msgid "Rename column"
-msgstr ""
+msgstr "Μετονομασία στήλης"
 
 #: ../gui/wxpython/dbmgr/manager.py:950
 #: ../gui/wxpython/gmodeler/dialogs.py:265
 msgid "To"
-msgstr ""
+msgstr "Σε"
 
 #: ../gui/wxpython/dbmgr/manager.py:957
 msgid "&Rename"
-msgstr ""
+msgstr "Μετεονομασ&ία"
 
 #: ../gui/wxpython/dbmgr/manager.py:1013
 msgid "Layers of vector map"
@@ -2366,7 +2395,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1026
 msgid "List of layers"
-msgstr ""
+msgstr "Λίστα επιπέδων"
 
 #: ../gui/wxpython/dbmgr/manager.py:1126 ../gui/wxpython/core/settings.py:702
 msgid "Edit selected record"
@@ -2374,31 +2403,31 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1130 ../gui/wxpython/dbmgr/manager.py:1380
 msgid "Insert new record"
-msgstr ""
+msgstr "Εισαγωγή νέας εγραφής"
 
 #: ../gui/wxpython/dbmgr/manager.py:1131
 msgid "Delete selected record(s)"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένων εγγραφών"
 
 #: ../gui/wxpython/dbmgr/manager.py:1132
 msgid "Delete all records"
-msgstr ""
+msgstr "Διαγραφή όλων των εγγραφών"
 
 #: ../gui/wxpython/dbmgr/manager.py:1138
 #: ../gui/wxpython/gui_core/dialogs.py:1344
 #: ../gui/wxpython/gui_core/dialogs.py:1946
 msgid "Select all"
-msgstr ""
+msgstr "Επιλογή όλων"
 
 #: ../gui/wxpython/dbmgr/manager.py:1139
 #: ../gui/wxpython/gui_core/dialogs.py:1346
 #: ../gui/wxpython/gui_core/dialogs.py:1947
 msgid "Deselect all"
-msgstr ""
+msgstr "Αποεπιλογή όλων"
 
 #: ../gui/wxpython/dbmgr/manager.py:1141
 msgid "Highlight selected features"
-msgstr ""
+msgstr "Επισήμανση επιλεγμένων εγγραφών"
 
 #: ../gui/wxpython/dbmgr/manager.py:1142
 msgid "Highlight selected features and zoom"
@@ -2417,7 +2446,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:731
 #: ../gui/wxpython/gmodeler/dialogs.py:906
 msgid "Reload"
-msgstr ""
+msgstr "Επαναφόρτηση"
 
 #: ../gui/wxpython/dbmgr/manager.py:1187
 #, python-format
@@ -2429,7 +2458,7 @@ msgstr ""
 #: ../gui/wxpython/dbmgr/manager.py:1190 ../gui/wxpython/dbmgr/manager.py:1236
 #: ../gui/wxpython/gmodeler/dialogs.py:851
 msgid "Delete records"
-msgstr ""
+msgstr "Διαγραφή εγγραφών"
 
 #: ../gui/wxpython/dbmgr/manager.py:1233
 #, python-format
@@ -2459,6 +2488,8 @@ msgid ""
 "Unable to insert new record.\n"
 "%s"
 msgstr ""
+"Αδυναμία εισαγωγής νέων εγγραφών.\n"
+"%s"
 
 #: ../gui/wxpython/dbmgr/manager.py:1497
 msgid "Update existing record"
@@ -2544,11 +2575,11 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2088
 msgid "Nothing to extract."
-msgstr ""
+msgstr "Τίποτα προς εξαγωγή/"
 
 #: ../gui/wxpython/dbmgr/manager.py:2118
 msgid "Nothing to delete."
-msgstr ""
+msgstr "Τίποτα προς διαγραφή"
 
 #: ../gui/wxpython/dbmgr/manager.py:2208 ../gui/wxpython/dbmgr/manager.py:2623
 #: ../gui/wxpython/dbmgr/manager.py:3043
@@ -2558,17 +2589,17 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2263
 msgid "Column name"
-msgstr ""
+msgstr "Όνομα στήλης"
 
 #: ../gui/wxpython/dbmgr/manager.py:2263
 #: ../gui/wxpython/gmodeler/frame.py:1299
 #: ../gui/wxpython/gmodeler/frame.py:1349
 msgid "Data type"
-msgstr ""
+msgstr "Τύπος δεδομένων"
 
 #: ../gui/wxpython/dbmgr/manager.py:2263
 msgid "Data length"
-msgstr ""
+msgstr "Μήκος δεδομένων"
 
 #: ../gui/wxpython/dbmgr/manager.py:2317 ../gui/wxpython/dbmgr/manager.py:2430
 #: ../gui/wxpython/dbmgr/manager.py:2681 ../gui/wxpython/dbmgr/dialogs.py:483
@@ -2576,22 +2607,22 @@ msgstr ""
 #: ../gui/wxpython/vdigit/preferences.py:364
 #: ../gui/wxpython/vdigit/dialogs.py:111 ../gui/wxpython/vdigit/dialogs.py:555
 msgid "Layer"
-msgstr ""
+msgstr "Επίπεδο"
 
 #: ../gui/wxpython/dbmgr/manager.py:2317 ../gui/wxpython/dbmgr/manager.py:2436
 #: ../gui/wxpython/dbmgr/manager.py:2689
 msgid "Driver"
-msgstr ""
+msgstr "Οδηγός"
 
 #: ../gui/wxpython/dbmgr/manager.py:2317 ../gui/wxpython/dbmgr/manager.py:2441
 #: ../gui/wxpython/dbmgr/manager.py:2695
 #: ../gui/wxpython/gui_core/gselect.py:1130
 msgid "Database"
-msgstr ""
+msgstr "Βάση Δεδομένων"
 
 #: ../gui/wxpython/dbmgr/manager.py:2317
 msgid "Key"
-msgstr ""
+msgstr "Κλειδί"
 
 #: ../gui/wxpython/dbmgr/manager.py:2393
 msgid ""
@@ -2601,16 +2632,16 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2412
 msgid "Add layer"
-msgstr ""
+msgstr "Προσθήκη επιπέδου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2422
 msgid "Layer description"
-msgstr ""
+msgstr "Περιγραφή επιπέδου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2452 ../gui/wxpython/dbmgr/manager.py:2490
 #: ../gui/wxpython/dbmgr/manager.py:2707
 msgid "Key column"
-msgstr ""
+msgstr "Στήλη κλειδίου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2457
 msgid "Insert record for each category into table"
@@ -2622,19 +2653,19 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2477
 msgid "Table description"
-msgstr ""
+msgstr "Περιγραφή πίνακα"
 
 #: ../gui/wxpython/dbmgr/manager.py:2485
 msgid "Table name"
-msgstr ""
+msgstr "Όνομα πίνακα"
 
 #: ../gui/wxpython/dbmgr/manager.py:2498
 msgid "&Create table"
-msgstr ""
+msgstr "Δημιουργ&ία πίνακα"
 
 #: ../gui/wxpython/dbmgr/manager.py:2502
 msgid "&Add layer"
-msgstr ""
+msgstr "Δημιουργ&ία επιπέδου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2506
 msgid "&Set default"
@@ -2642,11 +2673,11 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2606
 msgid "Remove layer"
-msgstr ""
+msgstr "Αφαίρεση επιπέδου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2609
 msgid "Layer to remove"
-msgstr ""
+msgstr "Επίπεδο προς αφαίρεση"
 
 #: ../gui/wxpython/dbmgr/manager.py:2630
 msgid "&Remove layer"
@@ -2654,7 +2685,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2674
 msgid "Modify layer"
-msgstr ""
+msgstr "Μετατροπή επιπέδου"
 
 #: ../gui/wxpython/dbmgr/manager.py:2746
 msgid "&Modify layer"
@@ -2693,7 +2724,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:99 ../gui/wxpython/menustrings.py:820
 msgid "Query"
-msgstr ""
+msgstr "Ερώτημα"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:117
 msgid "Set SQL statement to default"
@@ -2701,55 +2732,56 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:119
 msgid "Verify"
-msgstr ""
+msgstr "Επαλήθευση"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:120
+#, fuzzy
 msgid "Verify SQL statement"
-msgstr ""
+msgstr "Επαλήθευση SQL δήλωσης"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:122
 msgid "Apply SQL statement and close the dialog"
-msgstr ""
+msgstr "Εφαρμογή δήλωσης SQL και κλείσιμο του διαλόγου"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:124
 msgid "Close the dialog"
-msgstr ""
+msgstr "Κλείσιμο του διαλόγου"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:173
 msgid "Columns"
-msgstr ""
+msgstr "Στήλες"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:183
 msgid "Add on double-click"
-msgstr ""
+msgstr "Προσθήκη σε διπλό κλικ"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:184
 msgid "columns"
-msgstr ""
+msgstr "στήλες"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:184
 msgid "values"
-msgstr ""
+msgstr "τιμές"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:195
 msgid "Values"
-msgstr ""
+msgstr "Τιμές"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:204
 msgid "Get all values"
-msgstr ""
+msgstr "Εμφάνιση όλων των τιμών"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:207
 msgid "Get sample"
-msgstr ""
+msgstr "Εμφάνιση δείγματος"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:227
 msgid "Close dialog on apply"
-msgstr ""
+msgstr "Κλείσιμο του διαλόγου στην εφαρμογή"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:423
 msgid "SQL statement is not valid"
-msgstr ""
+msgstr "Η δήλωση SQL δεν είναι έγκυρη"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:425
 #, python-format
@@ -2758,10 +2790,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Η δήλωση SQL δεν είναι έγκυρη.\n"
+"\n"
+"%s"
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:427
 msgid "SQL statement is valid"
-msgstr ""
+msgstr "Η δήλωση SQL είναι έγκυρη"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:71
 #, python-format
@@ -2774,7 +2809,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/dialogs.py:74
 msgid "Create table?"
-msgstr ""
+msgstr "Δημιουργία πίνακα;"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:94
 msgid "Close dialog on submit"
@@ -2815,13 +2850,13 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/dialogs.py:426
 msgid "Unknown"
-msgstr ""
+msgstr "Άγνωστο"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:484 ../gui/wxpython/dbmgr/dialogs.py:602
 #: ../gui/wxpython/vdigit/preferences.py:362
 #: ../gui/wxpython/vdigit/dialogs.py:118 ../gui/wxpython/vdigit/dialogs.py:556
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #: ../gui/wxpython/gui_core/prompt.py:393
 #, python-format
@@ -2839,7 +2874,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:57
 msgid "User settings"
-msgstr ""
+msgstr "Επιλογές Χρήστη"
 
 #: ../gui/wxpython/gui_core/preferences.py:77
 msgid "Set to default"
@@ -2877,27 +2912,29 @@ msgstr ""
 #: ../gui/wxpython/gui_core/preferences.py:175
 #, python-format
 msgid "Settings saved to file '%s'."
-msgstr ""
+msgstr "Οι επιλογές αποθηκεύτηκαν στο αρχείο '%s'."
 
 #: ../gui/wxpython/gui_core/preferences.py:210
 msgid "Key column cannot be empty string."
-msgstr ""
+msgstr "Η στήλη κλειδιού δενμπορεί να είναι άδεια."
 
 #: ../gui/wxpython/gui_core/preferences.py:219
 #, python-format
 msgid ""
 "Field separator must be ASCII character not <%s> (use e.g. ';', '&', '#')"
 msgstr ""
+"Ο διαχωρισμός των πεδίων πρέπει να είναι χαρακτήρας ASCII και οχι <%s> "
+"(χρησιμοποιηστε π.χ. ;', '&', '#')"
 
 #: ../gui/wxpython/gui_core/preferences.py:256
 msgid "GUI Settings"
-msgstr ""
+msgstr "Επιλογές GUI"
 
 #: ../gui/wxpython/gui_core/preferences.py:277
 #: ../gui/wxpython/vdigit/preferences.py:118
 #: ../gui/wxpython/gmodeler/preferences.py:45
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #: ../gui/wxpython/gui_core/preferences.py:283
 msgid "Layer Manager settings"
@@ -2908,8 +2945,9 @@ msgid "Ask when removing map layer from layer tree"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:304
+#, fuzzy
 msgid "Ask when quiting wxGUI or closing display"
-msgstr ""
+msgstr "Ερώτηση κατά την εξοδο του wxGIU ή στο κλείσιμο μιας οθόνης"
 
 #: ../gui/wxpython/gui_core/preferences.py:314
 #: ../gui/wxpython/gui_core/preferences.py:324
@@ -2967,7 +3005,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:450
 msgid "Choose language (requires to save and GRASS restart):"
-msgstr ""
+msgstr "Επιλογή γλώσσας (απαιτείται αποθήκευση και επανεκίνηση του GRASS)"
 
 #: ../gui/wxpython/gui_core/preferences.py:472
 msgid "Appearance settings"
@@ -3029,7 +3067,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:747
 msgid "Mouse wheel action:"
-msgstr ""
+msgstr "Ενέργεια ροδέλας ποντικίου:"
 
 #: ../gui/wxpython/gui_core/preferences.py:762
 msgid "Mouse scrolling direction:"
@@ -3040,7 +3078,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:392
 #: ../gui/wxpython/gmodeler/dialogs.py:494
 msgid "Command"
-msgstr ""
+msgstr "Εντολή"
 
 #: ../gui/wxpython/gui_core/preferences.py:797
 msgid "Command dialog settings"
@@ -3072,7 +3110,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:869
 msgid "Raster settings"
-msgstr ""
+msgstr "Ρυθμίσεις raster"
 
 #: ../gui/wxpython/gui_core/preferences.py:880
 msgid "Overlay raster maps"
@@ -3080,11 +3118,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:891
 msgid "Default color table"
-msgstr ""
+msgstr "Προκαθορισμένος χρωματικός πίνακας"
 
 #: ../gui/wxpython/gui_core/preferences.py:917
 msgid "Vector settings"
-msgstr ""
+msgstr "Επιλογές διανύσματος"
 
 #: ../gui/wxpython/gui_core/preferences.py:923
 msgid "Display:"
@@ -3097,11 +3135,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:954
 msgid "Highlighting"
-msgstr ""
+msgstr "Επισήμανση"
 
 #: ../gui/wxpython/gui_core/preferences.py:970
 msgid "Line width (in pixels):"
-msgstr ""
+msgstr "Μέγεθος γραμμής (σε pixel)"
 
 #: ../gui/wxpython/gui_core/preferences.py:993
 msgid "Data browser"
@@ -3125,17 +3163,17 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:1056
 msgid "Create table"
-msgstr ""
+msgstr "Δημιουργία πίνακα"
 
 #: ../gui/wxpython/gui_core/preferences.py:1063
 #: ../gui/wxpython/gui_core/dialogs.py:287
 msgid "Key column:"
-msgstr ""
+msgstr "Στήλη κλειδιού:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1090
 #: ../gui/wxpython/mapdisp/statusbar.py:681
 msgid "Projection"
-msgstr ""
+msgstr "Προβολή"
 
 #: ../gui/wxpython/gui_core/preferences.py:1097
 msgid "Projection statusbar settings"
@@ -3144,49 +3182,51 @@ msgstr ""
 #: ../gui/wxpython/gui_core/preferences.py:1106
 #: ../gui/wxpython/location_wizard/wizard.py:1257
 msgid "EPSG code:"
-msgstr ""
+msgstr "Κωδικός EPSG"
 
 #: ../gui/wxpython/gui_core/preferences.py:1123
 msgid "Proj.4 string (required):"
-msgstr ""
+msgstr "Proj.4 ορισμός (απαιτείται)"
 
 #: ../gui/wxpython/gui_core/preferences.py:1139
 msgid "EPSG file:"
-msgstr ""
+msgstr "Αρχείο EPSG:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1154
 msgid ""
 "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
 "directly."
 msgstr ""
+"Φόρτωση κωδικών EPSG (αναμείνατε), εισάγετε κωδικό EPSG ή απευθείας ορισμό "
+"Proj.4 "
 
 #: ../gui/wxpython/gui_core/preferences.py:1162
 msgid "&Load EPSG codes"
-msgstr ""
+msgstr "Φ&όρτωση κωδικών EPSG"
 
 #: ../gui/wxpython/gui_core/preferences.py:1173
 msgid "Coordinates format"
-msgstr ""
+msgstr "Φορματ συντενταγμένων"
 
 #: ../gui/wxpython/gui_core/preferences.py:1182
 msgid "LL projections"
-msgstr ""
+msgstr "Προβολές LL"
 
 #: ../gui/wxpython/gui_core/preferences.py:1201
 msgid "Precision:"
-msgstr ""
+msgstr "Ακρίβεια:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1239
 #, python-format
 msgid "Unable to read EPSG codes: %s"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης κωδικών EPSG : %s"
 
 #: ../gui/wxpython/gui_core/preferences.py:1268
 #: ../gui/wxpython/gui_core/preferences.py:1277
 #: ../gui/wxpython/gui_core/preferences.py:1286
 #, python-format
 msgid "EPSG code %s not found"
-msgstr ""
+msgstr "Ο κωδικός EPSG %s δεν βρέθηκε"
 
 #: ../gui/wxpython/gui_core/preferences.py:1294
 msgid "Select default display font"
@@ -3198,16 +3238,16 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:1397
 msgid "Select font:"
-msgstr ""
+msgstr "Επιλογή γραμματοσειράς:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1421
 msgid "Character encoding:"
-msgstr ""
+msgstr "Κωδικοποίηση χαρακτήρων:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1439
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3555
 msgid "Font size:"
-msgstr ""
+msgstr "Μέγεθος γραμματοσειράς:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1537
 msgid "Manage access to mapsets"
@@ -3260,15 +3300,15 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1122
 #: ../gui/wxpython/gui_core/forms.py:1289
 msgid "File"
-msgstr ""
+msgstr "Αρχείο"
 
 #: ../gui/wxpython/gui_core/gselect.py:1126
 msgid "Directory"
-msgstr ""
+msgstr "Φάκελος"
 
 #: ../gui/wxpython/gui_core/gselect.py:1134
 msgid "Protocol"
-msgstr ""
+msgstr "Πρωτόκολλο"
 
 #: ../gui/wxpython/gui_core/gselect.py:1148
 msgid "Save current settings"
@@ -3293,12 +3333,12 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1689
 #: ../gui/wxpython/gui_core/gselect.py:1691
 msgid "All files"
-msgstr ""
+msgstr "Όλα τα αρχεία"
 
 #: ../gui/wxpython/gui_core/gselect.py:1174
 #: ../gui/wxpython/gui_core/gselect.py:1507
 msgid "Choose file to import"
-msgstr ""
+msgstr "Επιλογή αρχείου προς εισαγωγή"
 
 #: ../gui/wxpython/gui_core/gselect.py:1183
 msgid "Choose input directory"
@@ -3307,11 +3347,11 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1192
 #: ../gui/wxpython/gui_core/gselect.py:1695
 msgid "Choose file"
-msgstr ""
+msgstr "Επιλογή Αρχείου"
 
 #: ../gui/wxpython/gui_core/gselect.py:1226
 msgid "File:"
-msgstr ""
+msgstr "Αρχείο:"
 
 #: ../gui/wxpython/gui_core/gselect.py:1229
 #: ../gui/wxpython/gui_core/gselect.py:1232
@@ -3319,11 +3359,11 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1381
 #: ../gui/wxpython/gmodeler/preferences.py:464
 msgid "Name:"
-msgstr ""
+msgstr "Όνομα"
 
 #: ../gui/wxpython/gui_core/gselect.py:1235
 msgid "Protocol:"
-msgstr ""
+msgstr "Πρωτόκολλο:"
 
 #: ../gui/wxpython/gui_core/gselect.py:1262
 msgid "Extension:"
@@ -3335,11 +3375,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/gselect.py:1311
 msgid "Format:"
-msgstr ""
+msgstr "Φορμά:"
 
 #: ../gui/wxpython/gui_core/gselect.py:1333
 msgid "Creation options:"
-msgstr ""
+msgstr "Επιλογές δημιουργίας:"
 
 #: ../gui/wxpython/gui_core/gselect.py:1370
 #, python-format
@@ -3457,19 +3497,19 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/toolbars.py:62
 msgid "Select font"
-msgstr ""
+msgstr "Επιλοφή γραμματοσηράς"
 
 #: ../gui/wxpython/gui_core/toolbars.py:64
 msgid "Show manual"
-msgstr ""
+msgstr "Εμφανιση εγχειριδιου"
 
 #: ../gui/wxpython/gui_core/toolbars.py:68
 msgid "Add raster map layer"
-msgstr ""
+msgstr "Προσθήκη επιπέδου χάρτη Raster"
 
 #: ../gui/wxpython/gui_core/toolbars.py:70
 msgid "Add vector map layer"
-msgstr ""
+msgstr "Προσθήκη επιπέδοθυ διανύσματικού χάρτη"
 
 #: ../gui/wxpython/gui_core/toolbars.py:72
 msgid "Add map elements"
@@ -3481,28 +3521,28 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/toolbars.py:75
 msgid "Create histogram with d.histogram"
-msgstr ""
+msgstr "Δημιουργεία ιστογράματος με το d.histogram"
 
 #: ../gui/wxpython/gui_core/ghelp.py:56 ../gui/wxpython/gui_core/ghelp.py:64
 msgid "description"
-msgstr ""
+msgstr "περιγραφή"
 
 #: ../gui/wxpython/gui_core/ghelp.py:57 ../gui/wxpython/gui_core/ghelp.py:66
 msgid "command"
-msgstr ""
+msgstr "εντολή"
 
 #: ../gui/wxpython/gui_core/ghelp.py:58 ../gui/wxpython/gui_core/ghelp.py:65
 msgid "keywords"
-msgstr ""
+msgstr "λέξεις κλειδιά"
 
 #: ../gui/wxpython/gui_core/ghelp.py:61
 msgid "Find module(s)"
-msgstr ""
+msgstr "Έυρεση προσθέτων (module)"
 
 #: ../gui/wxpython/gui_core/ghelp.py:133 ../gui/wxpython/gui_core/ghelp.py:166
 #, python-format
 msgid "%d modules found"
-msgstr ""
+msgstr "%d πρόσθετα βρέθηκαν"
 
 #: ../gui/wxpython/gui_core/ghelp.py:201
 msgid "Menu tree (double-click to run command)"
@@ -3533,27 +3573,27 @@ msgstr ""
 #: ../gui/wxpython/gui_core/ghelp.py:384 ../gui/wxpython/menustrings.py:853
 #: ../gui/wxpython/menustrings.py:854
 msgid "About GRASS GIS"
-msgstr ""
+msgstr "Σχετικα με το GRASS GIS"
 
 #: ../gui/wxpython/gui_core/ghelp.py:417
 msgid "Official GRASS site:"
-msgstr ""
+msgstr "Επίσημη σελίδα GRASS:"
 
 #: ../gui/wxpython/gui_core/ghelp.py:428
 msgid "SVN Revision"
-msgstr ""
+msgstr "SVN Έκδοση "
 
 #: ../gui/wxpython/gui_core/ghelp.py:477 ../gui/wxpython/gui_core/ghelp.py:710
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: ../gui/wxpython/gui_core/ghelp.py:497
 msgid "Info"
-msgstr ""
+msgstr "Περί"
 
 #: ../gui/wxpython/gui_core/ghelp.py:498
 msgid "Copyright"
-msgstr ""
+msgstr "Copyright"
 
 #: ../gui/wxpython/gui_core/ghelp.py:499
 msgid "License"
@@ -3561,11 +3601,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:500
 msgid "Authors"
-msgstr ""
+msgstr "Συγγραφείς"
 
 #: ../gui/wxpython/gui_core/ghelp.py:501
 msgid "Contributors"
-msgstr ""
+msgstr "Συντελεστές"
 
 #: ../gui/wxpython/gui_core/ghelp.py:502
 msgid "Extra contributors"
@@ -3573,23 +3613,23 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/ghelp.py:503
 msgid "Translators"
-msgstr ""
+msgstr "Μεταφραστές"
 
 #: ../gui/wxpython/gui_core/ghelp.py:537 ../gui/wxpython/gui_core/ghelp.py:561
 #: ../gui/wxpython/gui_core/ghelp.py:584 ../gui/wxpython/gui_core/ghelp.py:639
 #: ../gui/wxpython/gui_core/ghelp.py:698
 #, python-format
 msgid "%s file missing"
-msgstr ""
+msgstr "%s αρχείο λείπει"
 
 #: ../gui/wxpython/gui_core/ghelp.py:626 ../gui/wxpython/gui_core/ghelp.py:685
 #, python-format
 msgid "Error when reading file '%s'."
-msgstr ""
+msgstr "Σφάλμα κατα την ανάγνωση του αρχείου '%s'."
 
 #: ../gui/wxpython/gui_core/ghelp.py:627 ../gui/wxpython/gui_core/ghelp.py:686
 msgid "Lines:"
-msgstr ""
+msgstr "Γραμμές:"
 
 #: ../gui/wxpython/gui_core/ghelp.py:644 ../gui/wxpython/gui_core/ghelp.py:646
 #: ../gui/wxpython/gui_core/ghelp.py:706
@@ -3599,45 +3639,45 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:391
 #: ../gui/wxpython/gmodeler/dialogs.py:493
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: ../gui/wxpython/gui_core/ghelp.py:644 ../gui/wxpython/gui_core/ghelp.py:646
 #: ../gui/wxpython/gui_core/ghelp.py:708
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: ../gui/wxpython/gui_core/ghelp.py:646
 msgid "Country"
-msgstr ""
+msgstr "Χώρα"
 
 #: ../gui/wxpython/gui_core/ghelp.py:646
 msgid "OSGeo_ID"
-msgstr ""
+msgstr "OSGeo_ID"
 
 #: ../gui/wxpython/gui_core/ghelp.py:857
 msgid "&Next"
-msgstr ""
+msgstr "Eπ&όμενο"
 
 #: ../gui/wxpython/gui_core/ghelp.py:860
 msgid "&Previous"
-msgstr ""
+msgstr "Προηγο&ύμενο"
 
 #: ../gui/wxpython/gui_core/forms.py:134
 #: ../gui/wxpython/gui_core/forms.py:1249
 msgid "Select Color"
-msgstr ""
+msgstr "Επιλογή Χρώματος"
 
 #: ../gui/wxpython/gui_core/forms.py:424
 msgid "Enter parameters for '"
-msgstr ""
+msgstr "Εισάγετε παραμέτρους για '"
 
 #: ../gui/wxpython/gui_core/forms.py:435
 msgid "Close this window without executing the command (Ctrl+Q)"
-msgstr ""
+msgstr "Κλείσιμο αυτού του παραθύρου δίχως να εκτελεστεί η εντολή (Ctrl +Q)"
 
 #: ../gui/wxpython/gui_core/forms.py:456
 msgid "Run the command (Ctrl+R)"
-msgstr ""
+msgstr "Εκτέλεση της εντολής (Ctrl +R)"
 
 #: ../gui/wxpython/gui_core/forms.py:462 ../gui/wxpython/modules/vclean.py:159
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
@@ -3669,11 +3709,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/forms.py:745 ../gui/wxpython/gui_core/forms.py:758
 msgid "Required"
-msgstr ""
+msgstr "Απαιτούμενο"
 
 #: ../gui/wxpython/gui_core/forms.py:748 ../gui/wxpython/gui_core/forms.py:758
 msgid "Optional"
-msgstr ""
+msgstr "Προερετικό"
 
 #: ../gui/wxpython/gui_core/forms.py:784 ../gui/wxpython/scripts/vkrige.py:108
 #: ../gui/wxpython/gmodeler/frame.py:115
@@ -3682,7 +3722,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/forms.py:792
 msgid "Manual"
-msgstr ""
+msgstr "Εγχειρίδιο"
 
 #: ../gui/wxpython/gui_core/forms.py:832
 #: ../gui/wxpython/gui_core/forms.py:1341
@@ -3691,15 +3731,15 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/forms.py:907
 msgid "[multiple]"
-msgstr ""
+msgstr "[πολλαπλό]"
 
 #: ../gui/wxpython/gui_core/forms.py:954
 msgid "valid range"
-msgstr ""
+msgstr "Εγκυρα όριο"
 
 #: ../gui/wxpython/gui_core/forms.py:1268
 msgid "Transparent"
-msgstr ""
+msgstr "Διαφάνια"
 
 #: ../gui/wxpython/gui_core/forms.py:1288
 #, python-format
@@ -3746,7 +3786,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/forms.py:1985
 #, python-format
 msgid "usage: %s <grass command>"
-msgstr ""
+msgstr "χρήση: %s <grass command>"
 
 #: ../gui/wxpython/gui_core/goutput.py:234
 msgid "Click here to show search module engine"
@@ -3778,7 +3818,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/goutput.py:265
 msgid "Abort running command"
-msgstr ""
+msgstr "Τερματισμός εκτελούμενης εντολης"
 
 #: ../gui/wxpython/gui_core/goutput.py:268
 msgid "&Protocol"
@@ -3818,7 +3858,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/goutput.py:655
 #: ../gui/wxpython/gui_core/goutput.py:801
 msgid "Save file as..."
-msgstr ""
+msgstr "Αποθήκευση σρχείου ως..."
 
 #: ../gui/wxpython/gui_core/goutput.py:657
 #: ../gui/wxpython/gui_core/goutput.py:803
@@ -3829,12 +3869,12 @@ msgstr ""
 #: ../gui/wxpython/gui_core/goutput.py:658
 #: ../gui/wxpython/gui_core/goutput.py:804
 msgid "Text files"
-msgstr ""
+msgstr "Αρχεία κειμένου"
 
 #: ../gui/wxpython/gui_core/goutput.py:658
 #: ../gui/wxpython/gui_core/goutput.py:804
 msgid "Files"
-msgstr ""
+msgstr "Αρχεία"
 
 #: ../gui/wxpython/gui_core/goutput.py:670
 #, python-format
@@ -3857,12 +3897,12 @@ msgstr ""
 #: ../gui/wxpython/gui_core/goutput.py:843
 #, python-format
 msgid "%d sec"
-msgstr ""
+msgstr "%d δεύτερα"
 
 #: ../gui/wxpython/gui_core/goutput.py:846
 #, python-format
 msgid "%(min)d min %(sec)d sec"
-msgstr ""
+msgstr "%(min)d λεπ %(sec)d δευτ"
 
 #: ../gui/wxpython/gui_core/goutput.py:854
 msgid ""
@@ -3942,7 +3982,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:387
 msgid "Overwrite?"
-msgstr ""
+msgstr "Αντικατάσταση;"
 
 #: ../gui/wxpython/gui_core/dialogs.py:434
 #, python-format
@@ -3992,7 +4032,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/dialogs.py:740
 #: ../gui/wxpython/psmap/dialogs.py:3713
 msgid "Enter text:"
-msgstr ""
+msgstr "Εισαγωγή κειμένου:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:780
 msgid ""
@@ -4089,7 +4129,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:1238
 msgid "Map type:"
-msgstr ""
+msgstr "Τύπος χάρτη:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1261
 msgid "Select toggle"
@@ -4097,7 +4137,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:1268
 msgid "Mapset:"
-msgstr ""
+msgstr "Συλλογή χαρτών:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1278
 msgid "Pattern:"
@@ -4105,28 +4145,28 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:1290
 msgid "List of maps:"
-msgstr ""
+msgstr "Λίστα χαρτών:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1345
 msgid "Invert selection"
-msgstr ""
+msgstr "Αντιστροφή επιλογής"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1452
 msgid "Multiple import"
-msgstr ""
+msgstr "Πολλαπλή εισαγωγή"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1466
 #, python-format
 msgid " List of %s layers "
-msgstr ""
+msgstr "Λίστα απο %s επίπεδα"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1471
 msgid "Layer id"
-msgstr ""
+msgstr "ID επιπέδου"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1472
 msgid "Layer name"
-msgstr ""
+msgstr "Όνομα επιπέδου"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1473
 msgid "Name for GRASS map (editable)"
@@ -4135,25 +4175,25 @@ msgstr ""
 #: ../gui/wxpython/gui_core/dialogs.py:1478
 #: ../gui/wxpython/modules/extensions.py:68
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1519
 #: ../gui/wxpython/modules/ogc_services.py:76
 #: ../gui/wxpython/gcp/manager.py:2374
 msgid "Close dialog"
-msgstr ""
+msgstr "Κλείσιμο διαλόγου"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1522
 #: ../gui/wxpython/gui_core/dialogs.py:1701
 #: ../gui/wxpython/modules/ogc_services.py:84
 msgid "&Import"
-msgstr ""
+msgstr "&Εισαγωγή"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1523
 #: ../gui/wxpython/gui_core/dialogs.py:1702
 #: ../gui/wxpython/modules/ogc_services.py:85
 msgid "Import selected layers"
-msgstr ""
+msgstr "%Εισαγωγή επιλεγμένων επιπέδων."
 
 #: ../gui/wxpython/gui_core/dialogs.py:1529
 #: ../gui/wxpython/modules/extensions.py:102
@@ -4191,15 +4231,15 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:1715
 msgid "No layers selected. Operation canceled."
-msgstr ""
+msgstr "Δεν έχει επιλεχθεί κανένας επίπεδο. Η διεργασία ακυρώθηκε."
 
 #: ../gui/wxpython/gui_core/dialogs.py:1805
 msgid "Import DXF layers"
-msgstr ""
+msgstr "Εισαγωγή DXF επιπέδου"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1809
 msgid "Choose DXF file to import"
-msgstr ""
+msgstr "Επιλογή αρχείου DXF προς εξαγωγή"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2014
 msgid "Set Map Layer Opacity"
@@ -4209,11 +4249,11 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:4600 ../gui/wxpython/psmap/dialogs.py:4615
 #: ../gui/wxpython/psmap/dialogs.py:4854 ../gui/wxpython/psmap/dialogs.py:4875
 msgid "transparent"
-msgstr ""
+msgstr "διαφάνια"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2041
 msgid "opaque"
-msgstr ""
+msgstr "αδιαφάνεια"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2137
 msgid "Set image size"
@@ -4221,7 +4261,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:2146
 msgid "Image size"
-msgstr ""
+msgstr "Διαστασεις εικονας"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2193
 msgid "Template:"
@@ -4229,56 +4269,56 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:2234
 msgid "Symbols"
-msgstr ""
+msgstr "Σύμβολα"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2261
 msgid "Symbol directory:"
-msgstr ""
+msgstr "Φάκελος συμβόλων"
 
 #: ../gui/wxpython/gui_core/dialogs.py:2269
 msgid "Symbol name:"
-msgstr ""
+msgstr "Όνομα συμβόλων"
 
 #: ../gui/wxpython/menustrings.py:2 ../gui/wxpython/menustrings.py:857
 msgid "&File"
-msgstr ""
+msgstr "&Αρχείο"
 
 #: ../gui/wxpython/menustrings.py:3
 msgid "Workspace"
-msgstr ""
+msgstr "Επιφάνεια εργασίας"
 
 #: ../gui/wxpython/menustrings.py:5
 msgid "Create new workspace"
-msgstr ""
+msgstr "Δημιουργία νέας Επιφάνειας Εργασίας"
 
 #: ../gui/wxpython/menustrings.py:6 ../gui/wxpython/menustrings.py:860
 msgid "Open"
-msgstr ""
+msgstr "Αν&οιγμα"
 
 #: ../gui/wxpython/menustrings.py:7
 msgid "Load workspace from file"
-msgstr ""
+msgstr "Φόρτωση Επιφάνειας Εργασίας απο αρχείο"
 
 #: ../gui/wxpython/menustrings.py:8 ../gui/wxpython/menustrings.py:862
 #: ../gui/wxpython/modules/colorrules.py:406
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: ../gui/wxpython/menustrings.py:10 ../gui/wxpython/menustrings.py:864
 msgid "Save as"
-msgstr ""
+msgstr "Αποθήκευση ως"
 
 #: ../gui/wxpython/menustrings.py:11
 msgid "Save workspace to file"
-msgstr ""
+msgstr "Αποθήκευση Επιφάνειας εργασίας σε αρχείο"
 
 #: ../gui/wxpython/menustrings.py:12 ../gui/wxpython/menustrings.py:866
 msgid "Close"
-msgstr ""
+msgstr "Κλεισιμο"
 
 #: ../gui/wxpython/menustrings.py:13
 msgid "Close workspace file"
-msgstr ""
+msgstr "Κλείσιμο της επιφάνειας εργασίας"
 
 #: ../gui/wxpython/menustrings.py:14
 msgid "Load GRC file (Tcl/Tk GUI)"
@@ -4294,19 +4334,19 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:17
 msgid "Add raster"
-msgstr ""
+msgstr "Προσθήκη raster"
 
 #: ../gui/wxpython/menustrings.py:18
 msgid "Add raster map layer to current display"
-msgstr ""
+msgstr "Προσθήκη επιπέδου χάρτη Raster στην ενεργή προβολή"
 
 #: ../gui/wxpython/menustrings.py:19
 msgid "Add vector"
-msgstr ""
+msgstr "Προσθήκη διανύσματικού"
 
 #: ../gui/wxpython/menustrings.py:20
 msgid "Add vector map layer to current display"
-msgstr ""
+msgstr "Προσθήκη επιπέδοθυ διανύσματικού χάρτη στην ενεργή προβολή"
 
 #: ../gui/wxpython/menustrings.py:21
 msgid "Add multiple rasters or vectors"
@@ -4402,23 +4442,23 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:46
 msgid "SPOT NDVI import"
-msgstr ""
+msgstr "Εισαγωγή SPOT NDVI"
 
 #: ../gui/wxpython/menustrings.py:47
 msgid "Import of SPOT VGT NDVI file into a raster map"
-msgstr ""
+msgstr "Εισαγωγή ενός αρχείου SPOT VGT NDVI σε raster χάρτη"
 
 #: ../gui/wxpython/menustrings.py:48
 msgid "SRTM HGT import"
-msgstr ""
+msgstr "Εισαγωγή SRTM HGT"
 
 #: ../gui/wxpython/menustrings.py:49
 msgid "Import SRTM HGT files into GRASS"
-msgstr ""
+msgstr "Εισαγωγή αρχείων SRTM HGT στο GRASS"
 
 #: ../gui/wxpython/menustrings.py:50
 msgid "Terra ASTER HDF import"
-msgstr ""
+msgstr "Εισαγωγή terra ASTER HDF"
 
 #: ../gui/wxpython/menustrings.py:51
 msgid ""
@@ -4428,11 +4468,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:52
 msgid "WMS import"
-msgstr ""
+msgstr "Εισαγωγή WMS"
 
 #: ../gui/wxpython/menustrings.py:53
 msgid "Downloads and imports data from WMS servers"
-msgstr ""
+msgstr "Μεταφόρτωση και εισαγωγή δεδομένων απο διακομηστές WMS"
 
 #: ../gui/wxpython/menustrings.py:54
 msgid "Unpack raster map"
@@ -4486,7 +4526,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:67
 msgid "DXF import"
-msgstr ""
+msgstr "Εισαγωγή DXF"
 
 #: ../gui/wxpython/menustrings.py:68
 msgid "Converts files in DXF format to GRASS vector map format."
@@ -4494,7 +4534,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:69
 msgid "WFS"
-msgstr ""
+msgstr "WFS"
 
 #: ../gui/wxpython/menustrings.py:70
 msgid "Import GetFeature from WFS"
@@ -4502,31 +4542,35 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:71
 msgid "ESRI e00 import"
-msgstr ""
+msgstr "Εισαγωγή ESRI e00"
 
 #: ../gui/wxpython/menustrings.py:72
 msgid "Import E00 file into a vector map."
-msgstr ""
+msgstr "Εισαγωγή αρχείου ESRI e00 σε διανυσματικό χάρτη."
 
 #: ../gui/wxpython/menustrings.py:73
 msgid "Garmin GPS import"
-msgstr ""
+msgstr "Εισαγωγή Garmin GPS"
 
 #: ../gui/wxpython/menustrings.py:74
 msgid ""
 "Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
 "vector map."
 msgstr ""
+"Λήψη σημείων διεύλεσης, διαδρομών και ιχνών απο δέκτη Garmin GPS σε "
+"διανυσματικό χάρτη"
 
 #: ../gui/wxpython/menustrings.py:75
 msgid "GPSBabel GPS import"
-msgstr ""
+msgstr "Εισαγωγή απο GPS GPSBabel "
 
 #: ../gui/wxpython/menustrings.py:76
 msgid ""
 "Import waypoints, routes, and tracks from a GPS receiver or GPS download "
 "file into a vector map."
 msgstr ""
+"Εισαγωγή σημείων διεύλεσης, διαδρομών και ιχνών απο δέκτη Garmin GPS σε "
+"διανυσματικό χάρτη"
 
 #: ../gui/wxpython/menustrings.py:77
 msgid "Geonames import"
@@ -4538,7 +4582,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:79
 msgid "GEOnet import"
-msgstr ""
+msgstr "Εισαγωγή GEOnet"
 
 #: ../gui/wxpython/menustrings.py:80
 msgid ""
@@ -4556,11 +4600,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:83
 msgid "Import 3D raster data"
-msgstr ""
+msgstr "Εισαγωγή δεδομένων 3D raster."
 
 #: ../gui/wxpython/menustrings.py:84
 msgid "ASCII 3D import"
-msgstr ""
+msgstr "εισαγωγή 3D ASCII"
 
 #: ../gui/wxpython/menustrings.py:85
 msgid ""
@@ -4652,7 +4696,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:106
 msgid "MPEG-1 export"
-msgstr ""
+msgstr "εξαγωγή MPEG-1"
 
 #: ../gui/wxpython/menustrings.py:107
 msgid "Raster File Series to MPEG Conversion."
@@ -4660,7 +4704,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:108
 msgid "PNG export"
-msgstr ""
+msgstr "εξαγωγή PNG"
 
 #: ../gui/wxpython/menustrings.py:109
 msgid "Export GRASS raster as non-georeferenced PNG image."
@@ -4668,7 +4712,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:110
 msgid "PPM export"
-msgstr ""
+msgstr "εξαγωγή PPM"
 
 #: ../gui/wxpython/menustrings.py:111
 msgid ""
@@ -4688,7 +4732,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:114 ../gui/wxpython/menustrings.py:133
 msgid "POV-Ray export"
-msgstr ""
+msgstr "εξαγωγή POV-Ray"
 
 #: ../gui/wxpython/menustrings.py:115
 msgid "Converts a raster map layer into a height-field file for POVRAY."
@@ -4696,7 +4740,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:116
 msgid "TIFF export"
-msgstr ""
+msgstr "εξαγωγή TIFF"
 
 #: ../gui/wxpython/menustrings.py:117
 msgid ""
@@ -4706,7 +4750,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:118
 msgid "VRML export"
-msgstr ""
+msgstr "εξαγωγή VRML"
 
 #: ../gui/wxpython/menustrings.py:119
 msgid "Export a raster map to the Virtual Reality Modeling Language (VRML)"
@@ -4715,7 +4759,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:120 ../gui/wxpython/menustrings.py:137
 #: ../gui/wxpython/menustrings.py:144
 msgid "VTK export"
-msgstr ""
+msgstr "εξαγωγή VKT"
 
 #: ../gui/wxpython/menustrings.py:121
 msgid "Converts raster maps into the VTK-Ascii format"
@@ -4747,7 +4791,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:129
 msgid "DXF export"
-msgstr ""
+msgstr "εξαγωγή DXF"
 
 #: ../gui/wxpython/menustrings.py:130
 msgid "Exports GRASS vector map layers to DXF file format."
@@ -4768,7 +4812,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:135
 msgid "SVG export"
-msgstr ""
+msgstr "εξαγωγή SVG"
 
 #: ../gui/wxpython/menustrings.py:136
 msgid "Exports a GRASS vector map to SVG."
@@ -4784,7 +4828,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:140
 msgid "ASCII 3D export"
-msgstr ""
+msgstr "εξαγωγή ASCII 3D"
 
 #: ../gui/wxpython/menustrings.py:141
 msgid "Converts a 3D raster map layer into an ASCII text file."
@@ -4792,7 +4836,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:142
 msgid "Vis5D export"
-msgstr ""
+msgstr "εξαγωγή Vis5D"
 
 #: ../gui/wxpython/menustrings.py:143
 msgid "Exports GRASS 3D raster map to 3-dimensional Vis5D file."
@@ -4804,7 +4848,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:146
 msgid "Export database table"
-msgstr ""
+msgstr "εξαγωγή Βάση δεδομένων"
 
 #: ../gui/wxpython/menustrings.py:147
 msgid "Common export formats using OGR"
@@ -4832,7 +4876,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:155
 msgid "Copy"
-msgstr ""
+msgstr "Αντιγραφή"
 
 #: ../gui/wxpython/menustrings.py:156
 msgid ""
@@ -4843,7 +4887,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:157
 msgid "List"
-msgstr ""
+msgstr "Λίστα"
 
 #: ../gui/wxpython/menustrings.py:158
 msgid "Lists available GRASS data base files of the user-specified data type."
@@ -4878,7 +4922,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:168 ../gui/wxpython/menustrings.py:300
 msgid "Raster to vector"
-msgstr ""
+msgstr "Raster σε διανυσματικό"
 
 #: ../gui/wxpython/menustrings.py:169 ../gui/wxpython/menustrings.py:301
 msgid "Converts a raster map into a vector map layer."
@@ -4902,7 +4946,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:174 ../gui/wxpython/menustrings.py:579
 msgid "Vector to raster"
-msgstr ""
+msgstr "Διανυσματικό σε raster"
 
 #: ../gui/wxpython/menustrings.py:175 ../gui/wxpython/menustrings.py:580
 msgid "Converts (rasterize) a vector map into a raster map."
@@ -4968,7 +5012,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:190
 msgid "NVIZ (requires Tcl/Tk)"
-msgstr ""
+msgstr "NVIZ ( απαιτεί Τcl/Tk)"
 
 #: ../gui/wxpython/menustrings.py:191
 msgid "nviz - Visualization and animation tool for GRASS data."
@@ -5006,7 +5050,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:200
 msgid "Exit GUI"
-msgstr ""
+msgstr "Έξοδος απο το GUI"
 
 #: ../gui/wxpython/menustrings.py:201
 msgid "Quit wxGUI session"
@@ -5090,7 +5134,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:223
 msgid "Change default GUI"
-msgstr ""
+msgstr "Αλλαγή προεπιλεγμένου GUI"
 
 #: ../gui/wxpython/menustrings.py:224
 msgid "Changes the default GRASS graphical user interface (GUI) setting."
@@ -5110,7 +5154,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:229
 msgid "Version"
-msgstr ""
+msgstr "Έκδοση"
 
 #: ../gui/wxpython/menustrings.py:230
 msgid "Displays version and copyright information."
@@ -5118,7 +5162,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:231
 msgid "Map projections"
-msgstr ""
+msgstr "Προβολές Χάρτη"
 
 #: ../gui/wxpython/menustrings.py:232
 msgid "Display map projection"
@@ -5302,7 +5346,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:275
 msgid "Reproject raster map"
-msgstr ""
+msgstr "Επαναπροβολή raster χάρτη"
 
 #: ../gui/wxpython/menustrings.py:276
 msgid "Re-projects a raster map from one location to the current location."
@@ -5324,7 +5368,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:280 ../gui/wxpython/menustrings.py:564
 msgid "Color tables"
-msgstr ""
+msgstr "Χρωματικοί πίνακες"
 
 #: ../gui/wxpython/menustrings.py:281
 msgid "Creates/modifies the color table associated with a raster map layer."
@@ -5340,7 +5384,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:284 ../gui/wxpython/menustrings.py:566
 msgid "Color rules"
-msgstr ""
+msgstr "Χρωματικοί κανόνες"
 
 #: ../gui/wxpython/menustrings.py:285
 msgid "Interactive management of raster color tables."
@@ -5348,7 +5392,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:286
 msgid "Export color table"
-msgstr ""
+msgstr "Εξαγωγή χρωματικών κανόνων"
 
 #: ../gui/wxpython/menustrings.py:287
 msgid "Exports the color table associated with a raster map layer."
@@ -5356,7 +5400,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:288
 msgid "Blend 2 color rasters"
-msgstr ""
+msgstr "Μίξη 2 χρωμάτικών raster"
 
 #: ../gui/wxpython/menustrings.py:289
 msgid "Blends color components of two raster maps by a given ratio."
@@ -5364,7 +5408,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:290
 msgid "Create RGB"
-msgstr ""
+msgstr "Δημιοιυργία RGB"
 
 #: ../gui/wxpython/menustrings.py:291
 msgid ""
@@ -5373,7 +5417,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:292 ../gui/wxpython/menustrings.py:713
 msgid "RGB to HIS"
-msgstr ""
+msgstr "RGB σε HIS "
 
 #: ../gui/wxpython/menustrings.py:293
 msgid ""
@@ -5421,7 +5465,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:310
 msgid "Closest points"
-msgstr ""
+msgstr "Κοντινότερα σημεία"
 
 #: ../gui/wxpython/menustrings.py:311
 msgid "Locates the closest points between objects in two raster maps."
@@ -5432,12 +5476,13 @@ msgid "Creates a MASK for limiting raster operation."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:314
+#, fuzzy
 msgid "Raster map calculator"
-msgstr ""
+msgstr "Raster map calculator"
 
 #: ../gui/wxpython/menustrings.py:315
 msgid "Map calculator for raster map algebra."
-msgstr ""
+msgstr "Map calculator για χάρτες raster map"
 
 #: ../gui/wxpython/menustrings.py:316
 msgid "Neighborhood analysis"
@@ -5456,7 +5501,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:319
 msgid "Neighborhood points"
-msgstr ""
+msgstr "Γειτονικά σημεία"
 
 #: ../gui/wxpython/menustrings.py:320
 msgid ""
@@ -5481,7 +5526,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:324
 msgid "Raster series"
-msgstr ""
+msgstr "Σειρά raster"
 
 #: ../gui/wxpython/menustrings.py:325
 msgid ""
@@ -5491,7 +5536,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:326
 msgid "Patch raster maps"
-msgstr ""
+msgstr "Συραφή χαρτών raster"
 
 #: ../gui/wxpython/menustrings.py:327
 msgid ""
@@ -5735,7 +5780,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:382 ../gui/wxpython/menustrings.py:786
 msgid "Groundwater modeling"
-msgstr ""
+msgstr "Μοντελοποίηση υπογείων νερών"
 
 #: ../gui/wxpython/menustrings.py:383
 msgid ""
@@ -6135,7 +6180,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:473
 msgid "IDW from raster points"
-msgstr ""
+msgstr "IDW απο σημεία raster"
 
 #: ../gui/wxpython/menustrings.py:474
 msgid "Surface interpolation utility for raster map."
@@ -6151,7 +6196,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:477
 msgid "IDW from vector points"
-msgstr ""
+msgstr "IDW απο διανυσματικα σημεία"
 
 #: ../gui/wxpython/menustrings.py:478
 msgid ""
@@ -6218,7 +6263,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:492
 msgid "General statistics"
-msgstr ""
+msgstr "Γενικές στατιστικές"
 
 #: ../gui/wxpython/menustrings.py:493
 msgid "Generates area statistics for raster map layers."
@@ -6308,11 +6353,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:514
 msgid "Linear regression"
-msgstr ""
+msgstr "Γραμμική συσχέτιση"
 
 #: ../gui/wxpython/menustrings.py:515
 msgid "Calculates linear regression from two raster maps: y = a + b*x."
-msgstr ""
+msgstr "Υπολογίζει την γραμμικη συσχέτιση δυο raster: y = a + b*x"
 
 #: ../gui/wxpython/menustrings.py:516
 msgid "Mutual category occurrences"
@@ -6326,7 +6371,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:518
 msgid "&Vector"
-msgstr ""
+msgstr "&Διανυσματικό"
 
 #: ../gui/wxpython/menustrings.py:519
 msgid "Develop vector map"
@@ -6364,7 +6409,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:528
 msgid "Parallel lines"
-msgstr ""
+msgstr "Παράλληλες γραμμές"
 
 #: ../gui/wxpython/menustrings.py:529
 msgid "Creates parallel line to input vector lines."
@@ -6749,7 +6794,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:632
 msgid "Centrality"
-msgstr ""
+msgstr "Εκκεντρότητα"
 
 #: ../gui/wxpython/menustrings.py:633
 msgid ""
@@ -6759,7 +6804,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:634
 msgid "Steiner tree"
-msgstr ""
+msgstr "Δέντρο Steiner"
 
 #: ../gui/wxpython/menustrings.py:635
 msgid "Create Steiner tree for the network and given terminals"
@@ -6889,13 +6934,15 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:668
 msgid "Voronoi diagram/Thiessen polygons"
-msgstr ""
+msgstr "Διαγράμματα Voronoi/Πολύγωνα Thiessen"
 
 #: ../gui/wxpython/menustrings.py:669
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
 msgstr ""
+"Δημιουργεί ενα διάγραμμα Voronoi απο ενα εισαγόμενο διανυσματικό χάρτη που "
+"περιέχει σημεία η κεντροειδή."
 
 #: ../gui/wxpython/menustrings.py:670
 msgid "Generate grid"
@@ -6907,32 +6954,34 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:672
 msgid "Generate points"
-msgstr ""
+msgstr "Δημιουργία σημείων "
 
 #: ../gui/wxpython/menustrings.py:673
 msgid "Generate from database"
-msgstr ""
+msgstr "Δημιουργία απο βάση δεδομένων"
 
 #: ../gui/wxpython/menustrings.py:674
 msgid ""
 "Creates new vector (points) map from database table containing coordinates."
 msgstr ""
+"Δημιουργία νέο διανυσματικό χάρτη (σημειακό) απο μια βάση δεδομένων που "
+"περιέχει συντεταγμένες/"
 
 #: ../gui/wxpython/menustrings.py:675
 msgid "Generate points along lines"
-msgstr ""
+msgstr "Δημιουργία σημείων σε πάνω σε γραμμές"
 
 #: ../gui/wxpython/menustrings.py:676
 msgid "Create points along input lines in new vector with 2 layers."
-msgstr ""
+msgstr "Δημιουργία σημείων πάνω σε γραμμές σε νέο διάνυσμα με 2 επίπεδα."
 
 #: ../gui/wxpython/menustrings.py:677
 msgid "Generate random points"
-msgstr ""
+msgstr "Δημιουργία απο τυχαία σημεία"
 
 #: ../gui/wxpython/menustrings.py:678
 msgid "Randomly generate a 2D/3D vector points map."
-msgstr ""
+msgstr "Τυχαία δημιουργία ενός 2D/3D διανυσματικού χάρτη σημείων."
 
 #: ../gui/wxpython/menustrings.py:679
 msgid "Perturb points"
@@ -6964,7 +7013,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:686
 msgid "Basic vector metadata"
-msgstr ""
+msgstr "Βασικά διανυσματικά δεδομένα"
 
 #: ../gui/wxpython/menustrings.py:687
 msgid "Outputs basic information about a user-specified vector map."
@@ -7016,11 +7065,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:698
 msgid "Test normality"
-msgstr ""
+msgstr "Τεστ κανονικότητας"
 
 #: ../gui/wxpython/menustrings.py:699
 msgid "Tests for normality for points."
-msgstr ""
+msgstr "Τεστ για κανονικότητα για σημεία"
 
 #: ../gui/wxpython/menustrings.py:700
 msgid "&Imagery"
@@ -7032,11 +7081,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:702
 msgid "Create/edit group"
-msgstr ""
+msgstr "Δημιουργία/επεξεργασία ομάδων"
 
 #: ../gui/wxpython/menustrings.py:703
 msgid "Creates, edits, and lists groups of imagery files."
-msgstr ""
+msgstr "Δημιουργεί, επεξεργάζεται και εμφανίζει ομάδες εικόνων"
 
 #: ../gui/wxpython/menustrings.py:704
 msgid "Target group"
@@ -7044,43 +7093,49 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:705
 msgid "Targets an imagery group to a GRASS location and mapset."
-msgstr ""
+msgstr "Στοχεύει μια ομάδα εικόνων σε μια τοποθεσία και συλλογή χαρτών GRASS"
 
 #: ../gui/wxpython/menustrings.py:706
 msgid "Mosaic images"
-msgstr ""
+msgstr "Δημιουργία μοσαϊκού εικόνων"
 
 #: ../gui/wxpython/menustrings.py:707
 msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 msgstr ""
+"Δημιουργεί μοσαϊκό χρησιμοποιώντας έως και 4 εικόνες και επεκτείνει τη "
+"χρωμοπαλέτα· δημιουργεί χάρτη *.mosaic"
 
 #: ../gui/wxpython/menustrings.py:708
 msgid "Manage image colors"
-msgstr ""
+msgstr "Διαχείριση χρωμάτων εικόνων"
 
 #: ../gui/wxpython/menustrings.py:709
 msgid "Color balance for RGB"
-msgstr ""
+msgstr "Χρωματική προσαρμοργή των RGB"
 
 #: ../gui/wxpython/menustrings.py:710
 msgid "Performs auto-balancing of colors for LANDSAT images."
-msgstr ""
+msgstr "Εφαρμόζει αυτόματη προσαρμογή των χρωμάτων σε εικόνες LANDSAT"
 
 #: ../gui/wxpython/menustrings.py:711
 msgid "HIS to RGB"
-msgstr ""
+msgstr "HIS σε RGB"
 
 #: ../gui/wxpython/menustrings.py:712
 msgid ""
 "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
 "RGB (Red-Green-Blue) color space."
 msgstr ""
+"Μετατρέπει ψηφιδωτούς χάρτες από χρωματικό χώρο HIS (Hue-Intensity-"
+"Saturation) σε RGB (Red-Green-Blue)"
 
 #: ../gui/wxpython/menustrings.py:714
 msgid ""
 "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
 "Intensity-Saturation) color space."
 msgstr ""
+"Μετατρέπει ψηφιδωτούς χάρτες από χρωματικό χώρο RGB (Red-Green-Blue) σε HIS "
+"(Hue-Intensity-Saturation) "
 
 #: ../gui/wxpython/menustrings.py:715
 msgid "Rectify image or raster"
@@ -7156,7 +7211,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:732
 msgid "Input for supervised SMAP"
-msgstr ""
+msgstr "Εισαγωγή για επιβλεπόμενο SMAP"
 
 #: ../gui/wxpython/menustrings.py:733
 msgid "Generates statistics for i.smap from raster map."
@@ -7260,7 +7315,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:757
 msgid "Atmospheric correction"
-msgstr ""
+msgstr "ατμοσφαιρική διόρθωση"
 
 #: ../gui/wxpython/menustrings.py:758
 msgid "Performs atmospheric correction using the 6S algorithm."
@@ -7303,6 +7358,8 @@ msgid ""
 "Calculate error matrix and kappa parameter for accuracy assessment of "
 "classification result."
 msgstr ""
+"Υπολογίζει τον πίνακα σφάλματος και την παράμετρο k για την εκτίμηση "
+"ακρίβειας ενος αποτελέσματος ταξινόμησης."
 
 #: ../gui/wxpython/menustrings.py:769
 msgid "OIF for LandSat TM"
@@ -7338,7 +7395,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:780
 msgid "3D Mask"
-msgstr ""
+msgstr "3D μάσκα"
 
 #: ../gui/wxpython/menustrings.py:781
 msgid "Establishes the current working 3D raster mask."
@@ -7410,7 +7467,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:797
 msgid "&Database"
-msgstr ""
+msgstr "&Βάση δεδομένων"
 
 #: ../gui/wxpython/menustrings.py:798
 msgid "Database information"
@@ -7568,7 +7625,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:840
 msgid "Change values"
-msgstr ""
+msgstr "αλλαγή τιμών"
 
 #: ../gui/wxpython/menustrings.py:841
 msgid ""
@@ -7609,7 +7666,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:851
 msgid "About system"
-msgstr ""
+msgstr "Σχετικα με το σύστημα"
 
 #: ../gui/wxpython/menustrings.py:852
 msgid "Prints system information"
@@ -7706,7 +7763,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:887
 msgid "Adds condition (if/else) to model"
-msgstr ""
+msgstr "Προσθήκη όρου (if/else) στο μοντέλο"
 
 #: ../gui/wxpython/menustrings.py:888
 msgid "Remove item"
@@ -7755,7 +7812,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:901
 msgid "About Graphical Modeler"
-msgstr ""
+msgstr "Σχετικά για τον Graphical Modeler"
 
 #: ../gui/wxpython/menustrings.py:902
 msgid "Display information about Graphical Modeler"
@@ -7862,7 +7919,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/utils.py:93
 msgid "centimeter"
-msgstr ""
+msgstr "εκατοστό"
 
 #: ../gui/wxpython/psmap/utils.py:94
 msgid "millimeter"
@@ -7980,11 +8037,13 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/instructions.py:811
 #: ../gui/wxpython/psmap/instructions.py:1693
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
 "which is required by module ps.map."
 msgstr ""
+"Οι χαρακτήρες στην θέση %s δεν υποστητίζονται απο την κωδκοποίηση ISO-8859-1 "
+"(Latin 1) η οποία απαιτείται απο μερικά εργαλεία "
 
 #: ../gui/wxpython/psmap/instructions.py:815
 #: ../gui/wxpython/psmap/instructions.py:1697
@@ -8132,7 +8191,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:304
 msgid "Choose color:"
-msgstr ""
+msgstr "Επιλογή χρώματος:"
 
 #: ../gui/wxpython/psmap/dialogs.py:352
 msgid "Close dialog and apply changes"
@@ -8140,7 +8199,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:358 ../gui/wxpython/vdigit/dialogs.py:142
 msgid "Apply changes"
-msgstr ""
+msgstr "Εφαρμογή μετατροπών"
 
 #: ../gui/wxpython/psmap/dialogs.py:383
 msgid "Units"
@@ -8257,7 +8316,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:723
 msgid "Center:"
-msgstr ""
+msgstr "Κέντρο:"
 
 #: ../gui/wxpython/psmap/dialogs.py:724
 msgid "E:"
@@ -8273,7 +8332,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:729
 msgid "1 :"
-msgstr ""
+msgstr "1 :"
 
 #: ../gui/wxpython/psmap/dialogs.py:749
 msgid "Map max resolution (dpi):"
@@ -8281,7 +8340,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:762 ../gui/wxpython/psmap/dialogs.py:2653
 msgid "Border"
-msgstr ""
+msgstr "'Ορια"
 
 #: ../gui/wxpython/psmap/dialogs.py:766
 msgid "draw border around map frame"
@@ -8289,11 +8348,11 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:772
 msgid "border color:"
-msgstr ""
+msgstr "Χρώμα ορίων:"
 
 #: ../gui/wxpython/psmap/dialogs.py:773
 msgid "border width (pts):"
-msgstr ""
+msgstr "Πλάτος ορίων (pts):"
 
 #: ../gui/wxpython/psmap/dialogs.py:867
 msgid ""
@@ -8347,7 +8406,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:1287
 msgid "areas"
-msgstr ""
+msgstr "περιοχών"
 
 #: ../gui/wxpython/psmap/dialogs.py:1289
 msgid "Data Type"
@@ -8454,7 +8513,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:1802 ../gui/wxpython/psmap/dialogs.py:1905
 msgid "choose color:"
-msgstr ""
+msgstr "επιλογή χρώματος:"
 
 #: ../gui/wxpython/psmap/dialogs.py:1814 ../gui/wxpython/psmap/dialogs.py:1918
 msgid "color from map table column:"
@@ -8488,7 +8547,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:1972 ../gui/wxpython/psmap/dialogs.py:2161
 msgid "Choose a file"
-msgstr ""
+msgstr "Επιλογή αρχείου"
 
 #: ../gui/wxpython/psmap/dialogs.py:1995 ../gui/wxpython/psmap/dialogs.py:2706
 #: ../gui/wxpython/psmap/dialogs.py:3471 ../gui/wxpython/wxplot/dialogs.py:601
@@ -8800,7 +8859,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/dialogs.py:4120
 msgid "Choose a directory with images"
-msgstr ""
+msgstr "Επιλογή φακέλου για για τις εικόνες"
 
 #: ../gui/wxpython/psmap/dialogs.py:4152
 msgid "Note: only EPS format supported"
@@ -9131,7 +9190,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:71
 msgid "Check all"
-msgstr ""
+msgstr "Επιλογή όλων"
 
 #: ../gui/wxpython/modules/colorrules.py:74
 msgid "Clear all"
@@ -9163,7 +9222,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:394
 msgid "Choose file to load color table"
-msgstr ""
+msgstr "Επιλογή αρχείου για φόρτωση χρωμάτων"
 
 #: ../gui/wxpython/modules/colorrules.py:395
 msgid "Load"
@@ -9179,7 +9238,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:403
 msgid "Choose file to save color table"
-msgstr ""
+msgstr "Επιλογή αρχείου για αποθήκευση χρωματισμών"
 
 #: ../gui/wxpython/modules/colorrules.py:404
 msgid "Type filename or click to choose file and save color table"
@@ -9333,7 +9392,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1415
 msgid "Too many records"
-msgstr ""
+msgstr "Πάρα πολλές εγγραφές"
 
 #: ../gui/wxpython/modules/colorrules.py:1457
 #, python-format
@@ -9351,7 +9410,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1633
 msgid "No color column defined. Operation canceled."
-msgstr ""
+msgstr "Δεν έχει οριστεί χρωματική στήλη. Η ενέργεια απέτυχε."
 
 #: ../gui/wxpython/modules/extensions.py:43
 msgid "Fetch & install extension from GRASS Addons"
@@ -9359,11 +9418,11 @@ msgstr ""
 
 #: ../gui/wxpython/modules/extensions.py:53
 msgid "Repository"
-msgstr ""
+msgstr "Αποθήκη"
 
 #: ../gui/wxpython/modules/extensions.py:55
 msgid "List of extensions"
-msgstr ""
+msgstr "Λίστα επεκτάσεων"
 
 #: ../gui/wxpython/modules/extensions.py:59
 msgid "Fetch full info including description and keywords"
@@ -9433,7 +9492,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/extensions.py:491
 msgid "Extension"
-msgstr ""
+msgstr "Επέκταση"
 
 #: ../gui/wxpython/modules/vclean.py:31 ../gui/wxpython/modules/vclean.py:113
 msgid "Set up vector cleaning tools"
@@ -9517,12 +9576,12 @@ msgstr ""
 
 #: ../gui/wxpython/modules/vclean.py:197
 msgid "centroid"
-msgstr ""
+msgstr "κεντροειδές"
 
 #: ../gui/wxpython/modules/vclean.py:198
 #: ../gui/wxpython/vdigit/preferences.py:417
 msgid "area"
-msgstr ""
+msgstr "περιοχή"
 
 #: ../gui/wxpython/modules/vclean.py:199
 msgid "face"
@@ -9583,11 +9642,11 @@ msgstr ""
 
 #: ../gui/wxpython/modules/vclean.py:458
 msgid "Tools"
-msgstr ""
+msgstr "Εργαλεία"
 
 #: ../gui/wxpython/modules/vclean.py:459
 msgid "Threshold"
-msgstr ""
+msgstr "Όρια"
 
 #: ../gui/wxpython/modules/vclean.py:461
 #, python-format
@@ -9679,14 +9738,14 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:326
 msgid "Choose projection"
-msgstr ""
+msgstr "Επιλογή προβολής"
 
 #: ../gui/wxpython/location_wizard/wizard.py:342
 #: ../gui/wxpython/location_wizard/wizard.py:843
 #: ../gui/wxpython/location_wizard/wizard.py:1008
 #: ../gui/wxpython/location_wizard/wizard.py:1273
 msgid "Code"
-msgstr ""
+msgstr "Κωδικός"
 
 #: ../gui/wxpython/location_wizard/wizard.py:342
 #: ../gui/wxpython/location_wizard/wizard.py:843
@@ -9695,38 +9754,38 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/frame.py:1300
 #: ../gui/wxpython/gmodeler/frame.py:1362
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: ../gui/wxpython/location_wizard/wizard.py:347
 msgid "Projection code:"
-msgstr ""
+msgstr "Κωδικός Προβολής:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:355
 #: ../gui/wxpython/location_wizard/wizard.py:857
 #: ../gui/wxpython/location_wizard/wizard.py:1021
 msgid "Search in description:"
-msgstr ""
+msgstr "Ευρεση στην περιγραφή;"
 
 #: ../gui/wxpython/location_wizard/wizard.py:529
 #, python-format
 msgid "Unable to read list: %s"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης της λίστας : %s"
 
 #: ../gui/wxpython/location_wizard/wizard.py:632
 msgid "Choose projection parameters"
-msgstr ""
+msgstr "Επιλογή παραμέτρων προβολής:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:648
 msgid "Select datum or ellipsoid (next page)"
-msgstr ""
+msgstr "Επιλογή Datum η ελλειψοειδούς (επόμενη σελίδα)"
 
 #: ../gui/wxpython/location_wizard/wizard.py:654
 msgid "Datum with associated ellipsoid"
-msgstr ""
+msgstr "Datums με συσχετικά ελλειψοειδεί"
 
 #: ../gui/wxpython/location_wizard/wizard.py:657
 msgid "Ellipsoid only"
-msgstr ""
+msgstr "Ελλειψοειδεί μόν"
 
 #: ../gui/wxpython/location_wizard/wizard.py:714
 #, python-format
@@ -9741,11 +9800,11 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:767
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: ../gui/wxpython/location_wizard/wizard.py:767
 msgid "Yes"
-msgstr ""
+msgstr "Ναί"
 
 #: ../gui/wxpython/location_wizard/wizard.py:821
 msgid "Specify geodetic datum"
@@ -9753,11 +9812,11 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:843
 msgid "Ellipsoid"
-msgstr ""
+msgstr "ελλειψοειδή"
 
 #: ../gui/wxpython/location_wizard/wizard.py:848
 msgid "Datum code:"
-msgstr ""
+msgstr "Κωδικός Datum: "
 
 #: ../gui/wxpython/location_wizard/wizard.py:985
 msgid "Specify ellipsoid"
@@ -9779,15 +9838,15 @@ msgstr ""
 #: ../gui/wxpython/location_wizard/wizard.py:1176
 #: ../gui/wxpython/location_wizard/wizard.py:1233
 msgid "Select WKT file"
-msgstr ""
+msgstr "Επιλογή αρχείου WTK "
 
 #: ../gui/wxpython/location_wizard/wizard.py:1181
 msgid "WKT file:"
-msgstr ""
+msgstr "Αρχειο WKT: "
 
 #: ../gui/wxpython/location_wizard/wizard.py:1247
 msgid "Choose EPSG Code"
-msgstr ""
+msgstr "Επιλογή EPGS κωδικού:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1255
 msgid "Path to the EPSG-codes file:"
@@ -9795,16 +9854,16 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1273
 msgid "Parameters"
-msgstr ""
+msgstr "Παράμετροι"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1409
 msgid "Choose EPSG codes file"
-msgstr ""
+msgstr "Επιλογή αρχείου κοδικών EPSG "
 
 #: ../gui/wxpython/location_wizard/wizard.py:1438
 #, python-format
 msgid "Unable to read EPGS codes: %s"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης των EPGS κωδικών: %s"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1456
 msgid "Choose method of specifying georeferencing parameters"
@@ -9821,7 +9880,7 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1538
 msgid "Summary"
-msgstr ""
+msgstr "Περίληψη"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1583
 msgid "GRASS Database:"
@@ -9837,7 +9896,7 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1601
 msgid "Projection:"
-msgstr ""
+msgstr "Προβολή"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1607
 msgid "PROJ.4 definition:"
@@ -9885,7 +9944,7 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1985
 msgid "EPSG code missing."
-msgstr ""
+msgstr "Δεν υπάρχει ο κωδικός EPSG."
 
 #: ../gui/wxpython/location_wizard/wizard.py:1996
 #: ../gui/wxpython/location_wizard/wizard.py:2005
@@ -9921,25 +9980,25 @@ msgstr ""
 #: ../gui/wxpython/location_wizard/dialogs.py:465
 #, python-format
 msgid "Rows: %d"
-msgstr ""
+msgstr "Γραμμές: %d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:185
 #: ../gui/wxpython/location_wizard/dialogs.py:466
 #, python-format
 msgid "Cols: %d"
-msgstr ""
+msgstr "Στήλες: %d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:186
 #: ../gui/wxpython/location_wizard/dialogs.py:467
 #, python-format
 msgid "Cells: %d"
-msgstr ""
+msgstr "Κελιά: %d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:227
 #: ../gui/wxpython/location_wizard/dialogs.py:469
 #, python-format
 msgid "Depth: %d"
-msgstr ""
+msgstr "Βάθος: %d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:228
 #: ../gui/wxpython/location_wizard/dialogs.py:470
@@ -9953,27 +10012,27 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/dialogs.py:310
 msgid "North"
-msgstr ""
+msgstr "Βοράς"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:318
 msgid "West"
-msgstr ""
+msgstr "Δύση"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:338
 msgid "East"
-msgstr ""
+msgstr "Ανατολή"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:347
 msgid "South"
-msgstr ""
+msgstr "Νότος"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:351
 msgid "N-S resolution"
-msgstr ""
+msgstr "Ανάλυση Β-Ν"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:359
 msgid "E-W resolution"
-msgstr ""
+msgstr "Ανάλυση Α-Δ"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:437
 #, python-format
@@ -10011,15 +10070,15 @@ msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:94
 msgid "Kriging"
-msgstr ""
+msgstr "Kriging"
 
 #: ../gui/wxpython/scripts/vkrige.py:114
 msgid "Output"
-msgstr ""
+msgstr "Έξοδος"
 
 #: ../gui/wxpython/scripts/vkrige.py:118
 msgid "Name for the output raster map:"
-msgstr ""
+msgstr "Όνομα εξαγώμενου χάρτη raster"
 
 #: ../gui/wxpython/scripts/vkrige.py:126
 msgid "Export variance map as well: "
@@ -10031,7 +10090,7 @@ msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:271
 msgid "Ready."
-msgstr ""
+msgstr "Έτοιμο."
 
 #: ../gui/wxpython/scripts/vkrige.py:295
 msgid "Variogram fitting"
@@ -10043,7 +10102,7 @@ msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:316
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: ../gui/wxpython/scripts/vkrige.py:341
 msgid "Kriging techniques"
@@ -10063,7 +10122,7 @@ msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:496
 msgid "Work in progress! No functionality provided."
-msgstr ""
+msgstr "Εργασίες σε εξέλιξη! Δεν παρέχεται καμία λειτουργικοτητα."
 
 #: ../gui/wxpython/icons/icon.py:83
 #, python-format
@@ -10076,12 +10135,12 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/profile.py:64 ../gui/wxpython/wxplot/profile.py:153
 msgid "Profile of"
-msgstr ""
+msgstr "Προφίλ του"
 
 #: ../gui/wxpython/wxplot/profile.py:78
 #, python-format
 msgid "Distance (%s)"
-msgstr ""
+msgstr "Απόσταση (%s)"
 
 #: ../gui/wxpython/wxplot/profile.py:80
 msgid "Distance along transect"
@@ -10166,7 +10225,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/base.py:457
 msgid "Histogram text settings"
-msgstr ""
+msgstr "Επιλογές κειμένου ιστογράμματος"
 
 #: ../gui/wxpython/wxplot/dialogs.py:34
 msgid "Select raster maps to profile"
@@ -10178,11 +10237,11 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:110
 msgid "Statistics"
-msgstr ""
+msgstr "Στατιστικά"
 
 #: ../gui/wxpython/wxplot/dialogs.py:161
 msgid "C&opy"
-msgstr ""
+msgstr "Αντιγραφ&ή"
 
 #: ../gui/wxpython/wxplot/dialogs.py:162
 msgid "Copy regression statistics the clipboard (Ctrl+C)"
@@ -10194,7 +10253,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:254
 msgid "Profile title:"
-msgstr ""
+msgstr "Τίτλος προφίλ:"
 
 #: ../gui/wxpython/wxplot/dialogs.py:264
 msgid "Title font size (pts):"
@@ -10202,23 +10261,23 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:275
 msgid "X-axis label:"
-msgstr ""
+msgstr "ταμπέλα άξονα-Χ "
 
 #: ../gui/wxpython/wxplot/dialogs.py:285
 msgid "Y-axis label:"
-msgstr ""
+msgstr "ταμπέλα άξονα-Υ"
 
 #: ../gui/wxpython/wxplot/dialogs.py:295
 msgid "Label font size (pts):"
-msgstr ""
+msgstr "Μέγεθος ταμπλέλας (pts):"
 
 #: ../gui/wxpython/wxplot/dialogs.py:318
 msgid "Font family:"
-msgstr ""
+msgstr "Οικογένεια γραμματοσειράς:"
 
 #: ../gui/wxpython/wxplot/dialogs.py:332
 msgid "Style:"
-msgstr ""
+msgstr "Στύλ:"
 
 #: ../gui/wxpython/wxplot/dialogs.py:346
 msgid "Weight:"
@@ -10241,7 +10300,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/mapwindow.py:1675
 #: ../gui/wxpython/core/workspace.py:1015 ../gui/wxpython/core/gcmd.py:134
 msgid "Warning"
-msgstr ""
+msgstr "Προσοχή"
 
 #: ../gui/wxpython/wxplot/dialogs.py:523
 msgid "Map/image plotted"
@@ -10253,12 +10312,12 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:550
 msgid "Line color"
-msgstr ""
+msgstr "Χρώμα γραμμής"
 
 #: ../gui/wxpython/wxplot/dialogs.py:557
 #: ../gui/wxpython/vdigit/preferences.py:130
 msgid "Line width"
-msgstr ""
+msgstr "Πάχος γραμμής"
 
 #: ../gui/wxpython/wxplot/dialogs.py:590
 msgid "Transect segment marker settings"
@@ -10270,15 +10329,15 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:647
 msgid "X-Axis"
-msgstr ""
+msgstr "Χ-Άξονας"
 
 #: ../gui/wxpython/wxplot/dialogs.py:648
 msgid "Y-Axis"
-msgstr ""
+msgstr "Υ-Άξονας"
 
 #: ../gui/wxpython/wxplot/dialogs.py:657
 msgid "Scale"
-msgstr ""
+msgstr "Κλίμακα"
 
 #: ../gui/wxpython/wxplot/dialogs.py:662
 msgid ""
@@ -10295,7 +10354,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:683
 msgid "Log scale"
-msgstr ""
+msgstr "Λογαριθμική κλίμακα"
 
 #: ../gui/wxpython/wxplot/dialogs.py:707
 msgid "Grid and Legend settings"
@@ -10315,7 +10374,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxplot/dialogs.py:735
 msgid "Show legend"
-msgstr ""
+msgstr "Εμφάνηση υπομνήματος"
 
 #: ../gui/wxpython/wxplot/dialogs.py:857
 #, python-format
@@ -10360,19 +10419,19 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:434
 msgid "Select group:"
-msgstr ""
+msgstr "Επιλογή ομάδας:"
 
 #: ../gui/wxpython/gcp/manager.py:445
 msgid "Create group if none exists"
-msgstr ""
+msgstr "Δημιουργία ομάδος αν δεν υπάρχει"
 
 #: ../gui/wxpython/gcp/manager.py:449
 msgid "Create/edit group..."
-msgstr ""
+msgstr "Δημιουργία/τροποποίηση ομάδος..."
 
 #: ../gui/wxpython/gcp/manager.py:450
 msgid "Add vector map to group..."
-msgstr ""
+msgstr "Προσθήκη διανύσματικού χάρτη στην ομάδα"
 
 #: ../gui/wxpython/gcp/manager.py:462 ../gui/wxpython/gcp/manager.py:2618
 msgid "Extension for output maps:"
@@ -10411,7 +10470,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:719
 msgid "Manage Ground Control Points"
-msgstr ""
+msgstr "Διαχείριση φωτοσταθερών σημείων"
 
 #: ../gui/wxpython/gcp/manager.py:950
 #, python-format
@@ -10424,11 +10483,11 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1107
 msgid "source"
-msgstr ""
+msgstr "πηγή"
 
 #: ../gui/wxpython/gcp/manager.py:1109
 msgid "target"
-msgstr ""
+msgstr "στόχος"
 
 #: ../gui/wxpython/gcp/manager.py:1111
 msgid "Set GCP coordinates"
@@ -10515,7 +10574,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1524
 msgid "Save ground control points?"
-msgstr ""
+msgstr "Αποθήκευση φωτοσταθερών σημείων;"
 
 #: ../gui/wxpython/gcp/manager.py:1603
 msgid ""
@@ -10543,19 +10602,19 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1925 ../gui/wxpython/gcp/manager.py:1942
 msgid "source E"
-msgstr ""
+msgstr "αρχικό Α"
 
 #: ../gui/wxpython/gcp/manager.py:1926 ../gui/wxpython/gcp/manager.py:1943
 msgid "source N"
-msgstr ""
+msgstr "αρχικό Β"
 
 #: ../gui/wxpython/gcp/manager.py:1927 ../gui/wxpython/gcp/manager.py:1944
 msgid "target E"
-msgstr ""
+msgstr "τελικό Α"
 
 #: ../gui/wxpython/gcp/manager.py:1928 ../gui/wxpython/gcp/manager.py:1945
 msgid "target N"
-msgstr ""
+msgstr "τελικό Β"
 
 #: ../gui/wxpython/gcp/manager.py:1929 ../gui/wxpython/gcp/manager.py:1946
 msgid "Forward error"
@@ -10583,7 +10642,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:2248
 msgid "Ground Control Point No."
-msgstr ""
+msgstr "Φωτοσταθερό Νου:"
 
 #: ../gui/wxpython/gcp/manager.py:2267
 msgid "source E:"
@@ -10650,19 +10709,19 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:2592
 msgid "1st order"
-msgstr ""
+msgstr "1ης τάξης"
 
 #: ../gui/wxpython/gcp/manager.py:2592
 msgid "2nd order"
-msgstr ""
+msgstr "2ης Τάξης"
 
 #: ../gui/wxpython/gcp/manager.py:2592
 msgid "3rd order"
-msgstr ""
+msgstr "3ης Τάξης"
 
 #: ../gui/wxpython/gcp/manager.py:2601
 msgid "Select interpolation method:"
-msgstr ""
+msgstr "Επιλογή μεθόδους παρεμβολής:"
 
 #: ../gui/wxpython/gcp/manager.py:2612
 msgid "clip to computational region in target location"
@@ -10701,7 +10760,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/mapdisplay.py:222 ../gui/wxpython/mapdisp/frame.py:376
 msgid "Map Toolbar"
-msgstr ""
+msgstr "Εργαλειοθήκη Χάρτη"
 
 #: ../gui/wxpython/gcp/mapdisplay.py:235
 msgid "GCP Display toolbar"
@@ -10752,7 +10811,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/frame.py:260 ../gui/wxpython/mapdisp/frame.py:407
 #: ../gui/wxpython/mapdisp/toolbars.py:78
 msgid "2D view"
-msgstr ""
+msgstr "2D προβολή"
 
 #: ../gui/wxpython/mapdisp/frame.py:200
 msgid "Vector digitizer failed"
@@ -10803,7 +10862,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:808
 msgid "Nothing found."
-msgstr ""
+msgstr "Καμία Εύρεση"
 
 #: ../gui/wxpython/mapdisp/frame.py:936
 msgid ""
@@ -10828,19 +10887,19 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:983 ../gui/wxpython/mapdisp/frame.py:989
 msgid "segment"
-msgstr ""
+msgstr "Τμήμα"
 
 #: ../gui/wxpython/mapdisp/frame.py:984 ../gui/wxpython/mapdisp/frame.py:990
 msgid "total distance"
-msgstr ""
+msgstr "Συνολικη απόσταση"
 
 #: ../gui/wxpython/mapdisp/frame.py:985
 msgid "bearing"
-msgstr ""
+msgstr "κατεύθυνση"
 
 #: ../gui/wxpython/mapdisp/frame.py:985
 msgid "deg"
-msgstr ""
+msgstr "μοίρες"
 
 #: ../gui/wxpython/mapdisp/frame.py:1090
 msgid "Scale and North arrow"
@@ -10865,7 +10924,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/frame.py:1149
 #: ../gui/wxpython/mapdisp/toolbars.py:46
 msgid "Add text layer"
-msgstr ""
+msgstr "Προσθήκη επιπέδου κειμένου"
 
 #: ../gui/wxpython/mapdisp/frame.py:1252
 msgid "Set computational region from display extent"
@@ -10885,11 +10944,11 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:33
 msgid "Add legend"
-msgstr ""
+msgstr "Προσθήκη λεζάντας"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:37
 msgid "Analyze map"
-msgstr ""
+msgstr "Ανάλυση χάρτη"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:38
 msgid "Measuring, profiling, histogramming, ..."
@@ -10897,7 +10956,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/toolbars.py:40
 msgid "Measure distance"
-msgstr ""
+msgstr "Μέτρηση απόστασης"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:42
 msgid "Profile surface map"
@@ -10940,7 +10999,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/toolbars.py:106
 #, python-format
 msgid "Reason: %s"
-msgstr ""
+msgstr "Λόγος: %s"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:90
 msgid ""
@@ -10952,7 +11011,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/toolbars.py:98
 #: ../gui/wxpython/vdigit/toolbars.py:695
 msgid "Digitize"
-msgstr ""
+msgstr "ψηφιοποίηση"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:105
 msgid "Vector digitizer not available"
@@ -11010,7 +11069,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:483
 msgid "Map scale"
-msgstr ""
+msgstr "Κλίμακα χάρτη"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:497
 msgid ""
@@ -11020,7 +11079,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:550
 msgid "Go to"
-msgstr ""
+msgstr "Πήγαινε στο"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:571
 #: ../gui/wxpython/mapdisp/statusbar.py:635
@@ -11037,7 +11096,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:683
 msgid "Use defined projection"
-msgstr ""
+msgstr "Χρησιμοποιήσε καθορισμένη προβολή"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:695
 msgid ""
@@ -11047,35 +11106,35 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:720
 msgid "MASK"
-msgstr ""
+msgstr "ΜΑΣΚΑ"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:763
 msgid "Display geometry"
-msgstr ""
+msgstr "Εμφάνηση γεωμετρίας"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:779
 msgid "Coordinates"
-msgstr ""
+msgstr "Συντεταγμένες"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:833
 msgid "Extent"
-msgstr ""
+msgstr "Όρια"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:928
 msgid "Comp. region"
-msgstr ""
+msgstr "Υπολγ. Περιοχή"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:977
 msgid "Go to GCP No."
-msgstr ""
+msgstr "Πήγαινε στο GCP Νο."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:993
 msgid "Valid Range:"
-msgstr ""
+msgstr "Έγκυρα Όρια:"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:1055
 msgid "RMS error"
-msgstr ""
+msgstr "Σφάλμα RMS"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:1058
 #, python-format
@@ -11154,7 +11213,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:161
 msgid "map units"
-msgstr ""
+msgstr "μονάδες χάρτη"
 
 #: ../gui/wxpython/vdigit/preferences.py:170
 msgid "Snap also to vertex"
@@ -11199,11 +11258,11 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:248
 msgid "Save changes"
-msgstr ""
+msgstr "Αποθήκευση αλλαγών"
 
 #: ../gui/wxpython/vdigit/preferences.py:251
 msgid "Save changes on exit"
-msgstr ""
+msgstr "Αποθήκευση αλλαγών κατά την έξοδο"
 
 #: ../gui/wxpython/vdigit/preferences.py:263
 msgid "Query tool"
@@ -11220,7 +11279,7 @@ msgstr ""
 #: ../gui/wxpython/vdigit/preferences.py:284
 #: ../gui/wxpython/vdigit/preferences.py:416
 msgid "length"
-msgstr ""
+msgstr "μήκος"
 
 #: ../gui/wxpython/vdigit/preferences.py:289
 msgid "Select lines"
@@ -11229,12 +11288,12 @@ msgstr ""
 #: ../gui/wxpython/vdigit/preferences.py:291
 #: ../gui/wxpython/vdigit/preferences.py:314
 msgid "shorter than"
-msgstr ""
+msgstr "μικρότερο από"
 
 #: ../gui/wxpython/vdigit/preferences.py:291
 #: ../gui/wxpython/vdigit/preferences.py:314
 msgid "longer than"
-msgstr ""
+msgstr "μεγαλύτερο από"
 
 #: ../gui/wxpython/vdigit/preferences.py:307
 msgid "dangle"
@@ -11263,7 +11322,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:372
 msgid "Category number"
-msgstr ""
+msgstr "Αριθμός κατηγορίας"
 
 #: ../gui/wxpython/vdigit/preferences.py:382
 msgid "Category mode"
@@ -11291,7 +11350,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:418
 msgid "perimeter"
-msgstr ""
+msgstr "περίμετρος"
 
 #: ../gui/wxpython/vdigit/preferences.py:484
 msgid ""
@@ -11309,11 +11368,11 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:514
 msgid "Highlight"
-msgstr ""
+msgstr "Επισήμανση"
 
 #: ../gui/wxpython/vdigit/preferences.py:515
 msgid "Highlight (duplicates)"
-msgstr ""
+msgstr "Επισήμανση (διπλών)"
 
 #: ../gui/wxpython/vdigit/preferences.py:518
 msgid "Boundary (no area)"
@@ -11349,7 +11408,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:526
 msgid "Vertex"
-msgstr ""
+msgstr "Κόμβος"
 
 #: ../gui/wxpython/vdigit/preferences.py:527
 msgid "Area (closed boundary + centroid)"
@@ -11357,7 +11416,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:528
 msgid "Direction"
-msgstr ""
+msgstr "Κατεύθυνση"
 
 #: ../gui/wxpython/vdigit/preferences.py:596
 msgid "Snapping disabled"
@@ -11375,7 +11434,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/wxdigit.py:50
 msgid "Digitization Error"
-msgstr ""
+msgstr "Σφάλμα ψηφιοποίησης"
 
 #: ../gui/wxpython/vdigit/wxdigit.py:55
 #, python-format
@@ -11446,11 +11505,11 @@ msgstr ""
 #: ../gui/wxpython/vdigit/toolbars.py:85 ../gui/wxpython/vdigit/toolbars.py:94
 #: ../gui/wxpython/vdigit/toolbars.py:97
 msgid "Left: new point"
-msgstr ""
+msgstr "Αριστερά: νέο σημείο"
 
 #: ../gui/wxpython/vdigit/toolbars.py:87
 msgid "Digitize new line"
-msgstr ""
+msgstr "Ψηφιοποίηση νέας γραμμής"
 
 #: ../gui/wxpython/vdigit/toolbars.py:88 ../gui/wxpython/vdigit/toolbars.py:91
 #: ../gui/wxpython/vdigit/toolbars.py:112
@@ -11473,7 +11532,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:99
 msgid "Add new vertex"
-msgstr ""
+msgstr "Εισαγωγή νέου κόμβου"
 
 #: ../gui/wxpython/vdigit/toolbars.py:100
 #: ../gui/wxpython/vdigit/toolbars.py:103
@@ -11495,7 +11554,7 @@ msgstr ""
 #: ../gui/wxpython/vdigit/toolbars.py:106
 #: ../gui/wxpython/vdigit/toolbars.py:109
 msgid "Left: Select"
-msgstr ""
+msgstr "Αριστερά: Επιλογή"
 
 #: ../gui/wxpython/vdigit/toolbars.py:108
 msgid "Display/update categories"
@@ -11511,32 +11570,32 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:117
 msgid "Move vertex"
-msgstr ""
+msgstr "Μετακίνηση κόμβου"
 
 #: ../gui/wxpython/vdigit/toolbars.py:120
 msgid "Remove vertex"
-msgstr ""
+msgstr "Απομάκρυνση κόμβου"
 
 #: ../gui/wxpython/vdigit/toolbars.py:122
 #: ../gui/wxpython/vdigit/toolbars.py:377
 msgid "Digitization settings"
-msgstr ""
+msgstr "Επιλογές ψηφιοποιητή"
 
 #: ../gui/wxpython/vdigit/toolbars.py:123
 msgid "Quit digitizer"
-msgstr ""
+msgstr "Έξοδος απο τον ψηφιοποιητή"
 
 #: ../gui/wxpython/vdigit/toolbars.py:124
 msgid "Quit digitizer and save changes"
-msgstr ""
+msgstr "Έξοδος απο τον ψηφιοποιητή και αποθήκευση των αλλαγών"
 
 #: ../gui/wxpython/vdigit/toolbars.py:125
 msgid "Vector Digitizer manual"
-msgstr ""
+msgstr "Εγχειρίδιο διανυσματικού ψηφιοποιητή"
 
 #: ../gui/wxpython/vdigit/toolbars.py:126
 msgid "Show Vector Digitizer manual"
-msgstr ""
+msgstr "Εμφάνιση εγχειρίδιου διανυσματικού ψηφιοποιητή"
 
 #: ../gui/wxpython/vdigit/toolbars.py:128
 msgid "Additional tools (copy, flip, connect, etc.)"
@@ -11544,11 +11603,11 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:132
 msgid "Undo"
-msgstr ""
+msgstr "Αναίρεση"
 
 #: ../gui/wxpython/vdigit/toolbars.py:133
 msgid "Undo previous changes"
-msgstr ""
+msgstr "Αναίρεση προηγούμενων μεταβολών"
 
 #: ../gui/wxpython/vdigit/toolbars.py:393
 msgid "Break selected lines/boundaries at intersection"
@@ -11560,7 +11619,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:397
 msgid "Copy categories"
-msgstr ""
+msgstr "Αντιγραφή κατηγοριών"
 
 #: ../gui/wxpython/vdigit/toolbars.py:399
 msgid "Copy features from (background) vector map"
@@ -11600,27 +11659,28 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:571
 msgid "Vector map is not 3D. Operation canceled."
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης δεν είναι 3D. Η ενέργεια ακυρώθηκε."
 
 #: ../gui/wxpython/vdigit/toolbars.py:640
 #: ../gui/wxpython/vdigit/toolbars.py:723
 #: ../gui/wxpython/vdigit/toolbars.py:802
 msgid "Select vector map"
-msgstr ""
+msgstr "Επιλεξτε διανυσματικό χάρτη"
 
 #: ../gui/wxpython/vdigit/toolbars.py:678
 #, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
 msgstr ""
+"Παρακαλώ περιμένετε, άνοιγμα του διανυσματικού χάρτη <%s> προς επεξεργασία..."
 
 #: ../gui/wxpython/vdigit/toolbars.py:731
 #, python-format
 msgid "Do you want to save changes in vector map <%s>?"
-msgstr ""
+msgstr "Θέλετε να αποθηκευσετε τις αλλαγές στο διανυσματικό αρχείο <%s>;"
 
 #: ../gui/wxpython/vdigit/toolbars.py:733
 msgid "Save changes?"
-msgstr ""
+msgstr "Αποθήκευση αλλαγών;"
 
 #: ../gui/wxpython/vdigit/toolbars.py:740
 #, python-format
@@ -11630,12 +11690,12 @@ msgstr ""
 #: ../gui/wxpython/vdigit/toolbars.py:750
 #, python-format
 msgid "Editing of vector map <%s> successfully finished"
-msgstr ""
+msgstr "H eπεξεργασία του διανυσματικού χάρτη <%s> ολοκληρώθηκε με επιτυχία."
 
 #: ../gui/wxpython/vdigit/toolbars.py:808
 #: ../gui/wxpython/vdigit/toolbars.py:813
 msgid "New vector map"
-msgstr ""
+msgstr "Νέος διανυσματικός χαρτης"
 
 #: ../gui/wxpython/vdigit/mapwindow.py:371
 msgid "Update categories"
@@ -11656,11 +11716,11 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/dialogs.py:74
 msgid "List of categories - right-click to delete"
-msgstr ""
+msgstr "Λίστα κατηγοριών - δεξί κλικ για διαγραφή"
 
 #: ../gui/wxpython/vdigit/dialogs.py:105
 msgid "Add new category"
-msgstr ""
+msgstr "Εισαγωγή νέας κατηγορίας"
 
 #: ../gui/wxpython/vdigit/dialogs.py:144
 msgid "Ignore changes and close dialog"
@@ -11668,7 +11728,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/dialogs.py:146
 msgid "Apply changes and close dialog"
-msgstr ""
+msgstr "Εφαρμογή αλλαγών και κλείσιμο διαλόγου"
 
 #: ../gui/wxpython/vdigit/dialogs.py:236 ../gui/wxpython/vdigit/dialogs.py:455
 #, python-format
@@ -11682,17 +11742,17 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:724
 #: ../gui/wxpython/gmodeler/dialogs.py:898
 msgid "Delete selected"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένου"
 
 #: ../gui/wxpython/vdigit/dialogs.py:276
 #: ../gui/wxpython/gmodeler/dialogs.py:725
 #: ../gui/wxpython/gmodeler/dialogs.py:899
 msgid "Delete all"
-msgstr ""
+msgstr "Διαγραφή όλων"
 
 #: ../gui/wxpython/vdigit/dialogs.py:432
 msgid "Unable to update vector map."
-msgstr ""
+msgstr "Αδυναμία διαγραφής διανυσματικού χάρτη"
 
 #: ../gui/wxpython/vdigit/dialogs.py:592
 #, python-format
@@ -11709,7 +11769,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/dialogs.py:611
 msgid "Step"
-msgstr ""
+msgstr "Βήμα"
 
 #: ../gui/wxpython/vdigit/dialogs.py:641
 msgid "List of duplicates"
@@ -11729,16 +11789,16 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:111
 msgid "Model"
-msgstr ""
+msgstr "Μοντέλο"
 
 #: ../gui/wxpython/gmodeler/frame.py:112
 msgid "Items"
-msgstr ""
+msgstr "Αντικείμενα"
 
 #: ../gui/wxpython/gmodeler/frame.py:113
 #: ../gui/wxpython/gmodeler/model.py:2219
 msgid "Variables"
-msgstr ""
+msgstr "Μεταβλητές"
 
 #: ../gui/wxpython/gmodeler/frame.py:114
 msgid "Python editor"
@@ -11751,11 +11811,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:197
 msgid "Redrawing model..."
-msgstr ""
+msgstr "Επανασχεδίαση μοντέλου..."
 
 #: ../gui/wxpython/gmodeler/frame.py:232
 msgid "Do you want to save changes in the model?"
-msgstr ""
+msgstr "Θέλετε να αποθηκευσετε τις αλλαγές στο μοντέλο;"
 
 #: ../gui/wxpython/gmodeler/frame.py:234
 msgid "Do you want to store current model settings to model file?"
@@ -11763,25 +11823,25 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:240
 msgid "Quit Graphical Modeler"
-msgstr ""
+msgstr "Κλείσιμο Graphical Manager"
 
 #: ../gui/wxpython/gmodeler/frame.py:301
 msgid "No intermediate data to delete."
-msgstr ""
+msgstr "Δεν υπάρχουν ενδιάμεσα αρχεία προς διαγραφή"
 
 #: ../gui/wxpython/gmodeler/frame.py:305
 #, python-format
 msgid "Do you want to permanently delete data?%s"
-msgstr ""
+msgstr "Θέλετε να διαγράψετε οριστικά τα αρχεία;%s"
 
 #: ../gui/wxpython/gmodeler/frame.py:306
 msgid "Delete intermediate data?"
-msgstr ""
+msgstr "Διαγραφή ενδιάμεσων τιμών;"
 
 #: ../gui/wxpython/gmodeler/frame.py:320
 #, python-format
 msgid "%d maps deleted from current mapset"
-msgstr ""
+msgstr "%d χάρτες διαγράφηκαν απο τη ενεργή Συλογή Χαρτών"
 
 #: ../gui/wxpython/gmodeler/frame.py:335 ../gui/wxpython/gmodeler/frame.py:450
 msgid ""
@@ -11791,11 +11851,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:338 ../gui/wxpython/gmodeler/frame.py:453
 msgid "Create new model?"
-msgstr ""
+msgstr "Δημιουργεία νέα μοντέλου;"
 
 #: ../gui/wxpython/gmodeler/frame.py:365
 msgid "Choose model file"
-msgstr ""
+msgstr "Επιλογή αρχείου μοντέλου"
 
 #: ../gui/wxpython/gmodeler/frame.py:383
 #, python-format
@@ -11805,28 +11865,28 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/frame.py:390 ../gui/wxpython/gmodeler/frame.py:427
 #, python-format
 msgid "Model file <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
+msgstr "Το αρχείο Μοντέλου <%s> υπάρχει. Θέλετε να γίνει αντικατάσταση;"
 
 #: ../gui/wxpython/gmodeler/frame.py:400 ../gui/wxpython/gmodeler/frame.py:440
 #, python-format
 msgid "File <%s> saved"
-msgstr ""
+msgstr "Το αρχείο <%s> αποθηκεύτηκε"
 
 #: ../gui/wxpython/gmodeler/frame.py:409
 msgid "Choose file to save current model"
-msgstr ""
+msgstr "Επιλέξτε το αρχείο που θα αποθηκευτεί το μοντέλο"
 
 #: ../gui/wxpython/gmodeler/frame.py:429
 msgid "File already exists"
-msgstr ""
+msgstr "Το αρχείο υπάρχει."
 
 #: ../gui/wxpython/gmodeler/frame.py:498
 msgid "Model is empty. Nothing to validate."
-msgstr ""
+msgstr "Το μοντέλο είναι κενό. Τίποτα προς επικαιροποίηση."
 
 #: ../gui/wxpython/gmodeler/frame.py:502 ../gui/wxpython/gmodeler/model.py:511
 msgid "Validating model..."
-msgstr ""
+msgstr "Επικαιροποίησημοντέλου...."
 
 #: ../gui/wxpython/gmodeler/frame.py:508
 #, python-format
@@ -11835,19 +11895,22 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Το Μοντέλο είναι άκυρο.\n"
+"\n"
+"%s"
 
 #: ../gui/wxpython/gmodeler/frame.py:511
 msgid "Model is valid."
-msgstr ""
+msgstr "Το Μοντέλο είναι έγκυρο."
 
 #: ../gui/wxpython/gmodeler/frame.py:572 ../gui/wxpython/gmodeler/frame.py:579
 #, python-format
 msgid "Model exported to <%s>"
-msgstr ""
+msgstr "Το μονέλο εξάχθηκε στο <%s>"
 
 #: ../gui/wxpython/gmodeler/frame.py:704
 msgid "wxGUI Graphical Modeler"
-msgstr ""
+msgstr "wxGUI Graphical Modeler"
 
 #: ../gui/wxpython/gmodeler/frame.py:707
 #, python-format
@@ -11855,6 +11918,8 @@ msgid ""
 "(C) 2010-%s by the GRASS Development Team\n"
 "\n"
 msgstr ""
+"(C) 2010-%s απο την ομάδα Ανάπτυξης του GRASS\n"
+"\n"
 
 #: ../gui/wxpython/gmodeler/frame.py:805
 #, python-format
@@ -11862,10 +11927,12 @@ msgid ""
 "Reading model file <%s> failed.\n"
 "Invalid file, unable to parse XML document."
 msgstr ""
+"Αποτυχία ανάγνωσης αρχείου μοντέλου <%s>.\n"
+" Άγνωστο αρχείο, αδυναμία ανάλυσης εγράφου XML."
 
 #: ../gui/wxpython/gmodeler/frame.py:811
 msgid "Please wait, loading model..."
-msgstr ""
+msgstr "Παρακαλώ περιμένετε, φόρτωση μοντέλων..."
 
 #: ../gui/wxpython/gmodeler/frame.py:871
 msgid "Writing current settings to model file failed."
@@ -11873,11 +11940,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1185
 msgid "Disable"
-msgstr ""
+msgstr "Απενεργοποίηση"
 
 #: ../gui/wxpython/gmodeler/frame.py:1188
 msgid "Enable"
-msgstr ""
+msgstr "Ενεργοποίηση"
 
 #: ../gui/wxpython/gmodeler/frame.py:1193
 msgid "Add control point"
@@ -11893,24 +11960,24 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1296
 msgid "List of variables - right-click to delete"
-msgstr ""
+msgstr "Λίστα μεταβλητών - δεξί κλικ για διαγραφή"
 
 #: ../gui/wxpython/gmodeler/frame.py:1300
 #: ../gui/wxpython/gmodeler/frame.py:1355
 msgid "Default value"
-msgstr ""
+msgstr "Προκαθορισμένη τιμή"
 
 #: ../gui/wxpython/gmodeler/frame.py:1304
 msgid "Add new variable"
-msgstr ""
+msgstr "Προσθήκη νέας μεταβλητής"
 
 #: ../gui/wxpython/gmodeler/frame.py:1308
 msgid "integer"
-msgstr ""
+msgstr "integer"
 
 #: ../gui/wxpython/gmodeler/frame.py:1309
 msgid "float"
-msgstr ""
+msgstr "float"
 
 #: ../gui/wxpython/gmodeler/frame.py:1310
 msgid "string"
@@ -11922,11 +11989,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1314
 msgid "file"
-msgstr ""
+msgstr "αρχείο"
 
 #: ../gui/wxpython/gmodeler/frame.py:1321
 msgid "Add new variable to the model"
-msgstr ""
+msgstr "Προσθήκη νέας μεταβλητής στο μοντέλο"
 
 #: ../gui/wxpython/gmodeler/frame.py:1441
 msgid "List of items - right-click to delete"
@@ -11936,7 +12003,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:391
 #: ../gui/wxpython/gmodeler/dialogs.py:493
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../gui/wxpython/gmodeler/frame.py:1444
 msgid "In block"
@@ -11948,15 +12015,15 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1478
 msgid "Python script"
-msgstr ""
+msgstr "Python script"
 
 #: ../gui/wxpython/gmodeler/frame.py:1482
 msgid "Run python script"
-msgstr ""
+msgstr "Εκτέλεση Python Script"
 
 #: ../gui/wxpython/gmodeler/frame.py:1485
 msgid "Save python script to file"
-msgstr ""
+msgstr "Αποθήκευση Python script σε αρχείο"
 
 #: ../gui/wxpython/gmodeler/frame.py:1488
 msgid ""
@@ -11967,24 +12034,24 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/frame.py:1526
 #, python-format
 msgid "Unable to launch Python script. %s"
-msgstr ""
+msgstr "Αδυναμία εκτέλεσης Python Script. %s"
 
 #: ../gui/wxpython/gmodeler/frame.py:1551
 msgid "Choose file to save"
-msgstr ""
+msgstr "Επιλογή αρχείου για αποθήκευση"
 
 #: ../gui/wxpython/gmodeler/frame.py:1553
 msgid "Python script (*.py)|*.py"
-msgstr ""
+msgstr "Python script (*.py)|*.py"
 
 #: ../gui/wxpython/gmodeler/frame.py:1567
 #, python-format
 msgid "File <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
+msgstr "Το αρχείο <%s> υπάρχει. Θέλετε να γίνει αντικατάσταση του αρχείου;"
 
 #: ../gui/wxpython/gmodeler/frame.py:1569
 msgid "Save file"
-msgstr ""
+msgstr "Αποθηκευση αρχείου"
 
 #: ../gui/wxpython/gmodeler/frame.py:1604
 msgid ""
@@ -11994,28 +12061,28 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:1607
 msgid "Update"
-msgstr ""
+msgstr "Ανανέωση"
 
 #: ../gui/wxpython/gmodeler/model.py:58
 msgid "model"
-msgstr ""
+msgstr "μοντέλο"
 
 #: ../gui/wxpython/gmodeler/model.py:59
 msgid "Script generated by wxGUI Graphical Modeler."
-msgstr ""
+msgstr "Το script δημιουργήθηκε απο το wxGUI Graphical Modeler."
 
 #: ../gui/wxpython/gmodeler/model.py:388 ../gui/wxpython/gmodeler/model.py:450
 #, python-format
 msgid "undefined variable '%s'"
-msgstr ""
+msgstr "απροσδιόριστη μεταβλητή '%s'"
 
 #: ../gui/wxpython/gmodeler/model.py:483
 msgid "Running model..."
-msgstr ""
+msgstr "Εκτέλεση μοντέλου..."
 
 #: ../gui/wxpython/gmodeler/model.py:502
 msgid "Model is empty. Nothing to run."
-msgstr ""
+msgstr "Το μοντέλο είναι κενό. Δεν υπάρχει τίποτα προς εκτέλεση."
 
 #: ../gui/wxpython/gmodeler/model.py:517
 #, python-format
@@ -12024,10 +12091,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Το μοντέλο δεν είναι εγκυρο. Θέλετε να εκτελέσετε το μοντόλο πάραυτα;\n"
+"\n"
+"%s"
 
 #: ../gui/wxpython/gmodeler/model.py:519
 msgid "Run model?"
-msgstr ""
+msgstr "Εκτέλεση μοντέλου;"
 
 #: ../gui/wxpython/gmodeler/model.py:554
 msgid "Variables below not defined:"
@@ -12035,11 +12105,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/model.py:662
 msgid "Raster maps"
-msgstr ""
+msgstr "Χάρτες raster"
 
 #: ../gui/wxpython/gmodeler/model.py:665
 msgid "3D raster maps"
-msgstr ""
+msgstr "3D raster χάρτες"
 
 #: ../gui/wxpython/gmodeler/model.py:1242
 msgid "<not defined>"
@@ -12055,15 +12125,15 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/model.py:1415
 msgid "loop"
-msgstr ""
+msgstr "loop"
 
 #: ../gui/wxpython/gmodeler/model.py:1456
 msgid "if-else"
-msgstr ""
+msgstr "if-else"
 
 #: ../gui/wxpython/gmodeler/model.py:2150
 msgid "Model parameters"
-msgstr ""
+msgstr "Παράμετροι μοντέλου"
 
 #: ../gui/wxpython/gmodeler/model.py:2167
 msgid "Delete intermediate data when finish"
@@ -12075,7 +12145,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/preferences.py:58
 msgid "Disabled:"
-msgstr ""
+msgstr "Απενεργοποιημένο"
 
 #: ../gui/wxpython/gmodeler/preferences.py:83
 msgid "Action"
@@ -12084,15 +12154,15 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/preferences.py:96
 #: ../gui/wxpython/gmodeler/preferences.py:334
 msgid "Valid:"
-msgstr ""
+msgstr "Έγκυρο:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:113
 msgid "Invalid:"
-msgstr ""
+msgstr "Άκυρο:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:130
 msgid "Running:"
-msgstr ""
+msgstr "Εκτέλεση:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:150
 #: ../gui/wxpython/gmodeler/preferences.py:269
@@ -12102,23 +12172,24 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/preferences.py:215
 msgid "Raster:"
-msgstr ""
+msgstr "Raster:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:232
 msgid "3D raster:"
-msgstr ""
+msgstr "3D rasterQ"
 
 #: ../gui/wxpython/gmodeler/preferences.py:249
 msgid "Vector:"
-msgstr ""
+msgstr "Διανυσματικό:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:321
+#, fuzzy
 msgid "Loop"
-msgstr ""
+msgstr "Loop"
 
 #: ../gui/wxpython/gmodeler/preferences.py:430
 msgid "Commands"
-msgstr ""
+msgstr "Εντολές"
 
 #: ../gui/wxpython/gmodeler/preferences.py:450
 msgid "Apply properties"
@@ -12126,31 +12197,31 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/preferences.py:473
 msgid "Description:"
-msgstr ""
+msgstr "Περιγραφή:"
 
 #: ../gui/wxpython/gmodeler/preferences.py:482
 msgid "Author(s):"
-msgstr ""
+msgstr "Συγγραφέας(-είς)"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:47
 msgid "Data properties"
-msgstr ""
+msgstr "Ιδιότητες Δεδομένου"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:73
 msgid "Name of raster map:"
-msgstr ""
+msgstr "Όνομα raster χάρτη:"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:75
 msgid "Name of vector map:"
-msgstr ""
+msgstr "Όνομα διανυσματικού χάρτη:"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:78
 msgid "Name of element:"
-msgstr ""
+msgstr "Όνομα αντικειμένου"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:118
 msgid "Add new GRASS module to the model"
-msgstr ""
+msgstr "Προσθήκη νέου εγραλείου GRASS στο μοντέλο"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:205
 msgid ""
@@ -12166,39 +12237,46 @@ msgid ""
 "\n"
 "Unable to add new action to the model."
 msgstr ""
+"'%s' δεν είναι εργαλείο GRASS.\n"
+"\n"
+"Αδύνατον να προστεθεί η εντολή στο μοντέλο."
 
 #: ../gui/wxpython/gmodeler/dialogs.py:246
 msgid "Relation properties"
-msgstr ""
+msgstr "Ιδιότητες σχέσης"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:263
 msgid "From"
-msgstr ""
+msgstr "Από"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:307
 #, python-format
 msgid "Data: %s"
-msgstr ""
+msgstr "Δεδομένα: %s"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:313
 msgid "Command:"
-msgstr ""
+msgstr "Εντολές:"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:319
 msgid "Option:"
-msgstr ""
+msgstr "Επιλογές"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:334
 msgid ""
 "Relation doesn't start with data item.\n"
 "Unable to add relation."
 msgstr ""
+"Η σχέση δεν ξεκιναει με δεδομένα.\n"
+"Αδύναμια προσθήκης εντολής."
 
 #: ../gui/wxpython/gmodeler/dialogs.py:341
 msgid ""
 "Relation doesn't point to GRASS command.\n"
 "Unable to add relation."
 msgstr ""
+"Η σχέση δεν δείχνει σε εντολή του GRASS.\n"
+"Αδύναμια προσθήκης εντολής."
 
 #: ../gui/wxpython/gmodeler/dialogs.py:354
 msgid ""
@@ -12208,7 +12286,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:385
 msgid "Condition"
-msgstr ""
+msgstr "Όροι"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:410
 msgid "Loop properties"
@@ -12220,7 +12298,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:419
 msgid "Series"
-msgstr ""
+msgstr "Σειρά"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:420
 msgid "Define map series as condition for the loop"
@@ -12232,7 +12310,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:479
 msgid "If-else properties"
-msgstr ""
+msgstr "If-else ιδιότητες"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:485
 msgid "List of items in 'if' block"
@@ -12246,6 +12324,7 @@ msgstr ""
 #, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
 msgstr ""
+"Η μεταβλητή <%s> ήδη υπάρχει στο μοντέλο. Η προσθήκη μεταβλητής απέτυχε."
 
 #: ../gui/wxpython/gmodeler/dialogs.py:683
 msgid "Do you want to delete all variables from the model?"
@@ -12253,7 +12332,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:685
 msgid "Delete variables"
-msgstr ""
+msgstr "Διαγραφή μεταβλητών"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:848
 #, python-format
@@ -12264,7 +12343,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:905
 msgid "Normalize"
-msgstr ""
+msgstr "Κανονικοποίηση"
 
 #: ../gui/wxpython/core/render.py:125
 #, python-format
@@ -12279,7 +12358,7 @@ msgstr ""
 #: ../gui/wxpython/core/render.py:181
 #, python-format
 msgid "Details: %s\n"
-msgstr ""
+msgstr "Λεπτομέριες %s\n"
 
 #: ../gui/wxpython/core/render.py:280
 #, python-format
@@ -12303,7 +12382,7 @@ msgstr ""
 #: ../gui/wxpython/core/render.py:643 ../gui/wxpython/core/render.py:646
 #: ../gui/wxpython/core/gcmd.py:387
 msgid "Details:"
-msgstr ""
+msgstr "Λεπτομέριες:"
 
 #: ../gui/wxpython/core/render.py:645
 #, python-format
@@ -12341,23 +12420,23 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:695
 msgid "Collapse all except PERMANENT and current"
-msgstr ""
+msgstr "Συμπτυξη όλων εκτός του PERMANENT και του τρέχοντος"
 
 #: ../gui/wxpython/core/settings.py:696
 msgid "Collapse all except PERMANENT"
-msgstr ""
+msgstr "Συμπτυξη όλων εκτός του PERMANENT"
 
 #: ../gui/wxpython/core/settings.py:697
 msgid "Collapse all except current"
-msgstr ""
+msgstr "Συμπτυξη όλων εκτός του τρέχοντος"
 
 #: ../gui/wxpython/core/settings.py:698
 msgid "Collapse all"
-msgstr ""
+msgstr "Συμπτυξη όλων"
 
 #: ../gui/wxpython/core/settings.py:699
 msgid "Expand all"
-msgstr ""
+msgstr "Επέκταση όλων"
 
 #: ../gui/wxpython/core/settings.py:703
 msgid "Display selected"
@@ -12385,7 +12464,7 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:724
 msgid "Nothing"
-msgstr ""
+msgstr "Τίποτα"
 
 #: ../gui/wxpython/core/settings.py:725
 msgid "Scroll forward to zoom in"
@@ -12397,23 +12476,23 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:759
 msgid "box"
-msgstr ""
+msgstr "Κουτί"
 
 #: ../gui/wxpython/core/settings.py:760
 msgid "sphere"
-msgstr ""
+msgstr "σφαίρα"
 
 #: ../gui/wxpython/core/settings.py:761
 msgid "cube"
-msgstr ""
+msgstr "κύβος"
 
 #: ../gui/wxpython/core/settings.py:762
 msgid "diamond"
-msgstr ""
+msgstr "διαμάντι"
 
 #: ../gui/wxpython/core/settings.py:763
 msgid "aster"
-msgstr ""
+msgstr "aster"
 
 #: ../gui/wxpython/core/settings.py:764
 msgid "gyro"
@@ -12421,12 +12500,12 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:765
 msgid "histogram"
-msgstr ""
+msgstr "Ιστόγραμμα"
 
 #: ../gui/wxpython/core/settings.py:802
 #, python-format
 msgid "Unable to read settings file <%s>\n"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης αρχείου ρυθμίσεων:  <%s>\n"
 
 #: ../gui/wxpython/core/settings.py:826
 #, python-format
@@ -12438,7 +12517,7 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:845
 msgid "Unable to create settings directory"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας φακέλου ρυθμίσεων"
 
 #: ../gui/wxpython/core/settings.py:881
 #, python-format
@@ -12474,12 +12553,12 @@ msgstr ""
 #: ../gui/wxpython/core/utils.py:773
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
-msgstr ""
+msgstr "ΣΦΑΛΜΑ: Αδυναμία προσδιορισμού εκδοσης του GRASS. Πληροφορίες: %s "
 
 #: ../gui/wxpython/core/utils.py:809
 #, python-format
 msgid "Unable to open file '%s'\n"
-msgstr ""
+msgstr "Αδύνατον να ανοιχτεί το αρχείο '%s'\n"
 
 #: ../gui/wxpython/core/utils.py:816
 #, python-format
@@ -12491,17 +12570,17 @@ msgstr ""
 #: ../gui/wxpython/core/utils.py:821
 #, python-format
 msgid "Duplicated key: %s\n"
-msgstr ""
+msgstr "Διπλό κλειδί: %s\n"
 
 #: ../gui/wxpython/core/utils.py:836
 #, python-format
 msgid "Unable to create file '%s'\n"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας αρχείου '%s'\n"
 
 #: ../gui/wxpython/core/workspace.py:998
 #, python-format
 msgid "Unable to open file <%s> for reading."
-msgstr ""
+msgstr "Αδυναμία ανοίγματος αρχείου <%s> προς ανάγνωση."
 
 #: ../gui/wxpython/core/workspace.py:1011
 #, python-format
@@ -12515,26 +12594,26 @@ msgstr ""
 #: ../gui/wxpython/core/workspace.py:1229
 #, python-format
 msgid " row %d:"
-msgstr ""
+msgstr "Γραμμή %d:"
 
 #: ../gui/wxpython/core/gcmd.py:81
 #, python-format
 msgid "ERROR: %s\n"
-msgstr ""
+msgstr "ΣΦΑΛΜΑ: %s\n"
 
 #: ../gui/wxpython/core/gcmd.py:122
 msgid "Reason"
-msgstr ""
+msgstr "Λόγος"
 
 #: ../gui/wxpython/core/gcmd.py:384
 msgid "Execution failed:"
-msgstr ""
+msgstr "H εκτέλεση απέτυχε:"
 
 #: ../gui/wxpython/core/gcmd.py:389 ../gui/wxpython/core/gcmd.py:393
 msgid "Error: "
-msgstr ""
+msgstr "Σφάλμα:"
 
 #: ../gui/wxpython/core/gcmd.py:468
 #, python-format
 msgid "Unable to exectute command: '%s'"
-msgstr ""
+msgstr "Αδυναμία εκτέλεσης εντολής: '%s'"
