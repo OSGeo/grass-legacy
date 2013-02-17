@@ -551,6 +551,7 @@ def install_extension_other():
     
     makeCmd = ['make',
                'MODULE_TOPDIR=%s' % gisbase.replace(' ', '\ '),
+               'ARCH_BINDIR=%s' % dirs['bin'],
                'BIN=%s' % dirs['bin'],
                'HTMLDIR=%s' % dirs['html'],
                'MANDIR=%s' % dirs['man1'],
