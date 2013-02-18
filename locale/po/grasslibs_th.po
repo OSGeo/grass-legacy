@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-18 14:02+0100\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -294,51 +294,51 @@ msgstr ""
 msgid "Unable to process vector map - out of memory"
 msgstr "ไม่สามารถอ่านข้อมูลแผนที่เชิงเส้นได้ <%s%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:67
 #, fuzzy
 msgid "Unable to allocate stream"
 msgstr "ไม่สามารถจองหน่วยความจำได้\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:156
+#: ../lib/ogsf/gsd_img_mpeg.c:166
 #, fuzzy
 msgid "Video codec not found"
 msgstr "ไม่พบ ชื่อแผนที่เชิงเส้น <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:162
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 #, fuzzy
 msgid "Unable to open codec"
 msgstr "ไม่สามารถเปิดได้ %s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:181
+#: ../lib/ogsf/gsd_img_mpeg.c:195
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "ไม่สามารถจองหน่วยความจำได้\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:192
+#: ../lib/ogsf/gsd_img_mpeg.c:206
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "ไม่สามารถจองหน่วยความจำได้\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:252
+#: ../lib/ogsf/gsd_img_mpeg.c:266
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "เกิดข้อผิดพลาดขณะเขียน topo ไฟล์ "
 
-#: ../lib/ogsf/gsd_img_mpeg.c:298
+#: ../lib/ogsf/gsd_img_mpeg.c:312
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:306
+#: ../lib/ogsf/gsd_img_mpeg.c:320
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:310
+#: ../lib/ogsf/gsd_img_mpeg.c:324
 #, fuzzy
 msgid "Unable to find suitable output format"
 msgstr "ไม่สามารถค้นหาตาราง <%s> ที่เชื่อมกับข้อมูลเชิงเส้น <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:317 ../lib/vector/neta/centrality.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/vector/neta/centrality.c:63
 #: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
 #: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
 #: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/flow.c:64
@@ -358,18 +358,18 @@ msgstr "ไม่สามารถค้นหาตาราง <%s> ที่
 msgid "Out of memory"
 msgstr "G_malloc: หน่วยความจำไม่พอ"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:337
+#: ../lib/ogsf/gsd_img_mpeg.c:355
 #, fuzzy
 msgid "Invalid output format parameters"
 msgstr "ค่าตัวแปรเริ่มต้นการฉายแผนที่"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:351
+#: ../lib/ogsf/gsd_img_mpeg.c:377
 #, fuzzy, c-format
 msgid "Unable to open <%s>"
 msgstr "ไม่สามารถเปิดได้ %s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:361
-msgid "NVIZ has not been built with MPEG output support"
+#: ../lib/ogsf/gsd_img_mpeg.c:390
+msgid "OGSF library has not been built with MPEG output support"
 msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:245
@@ -899,160 +899,160 @@ msgstr "ไม่สามารถเปิดไฟล์ [%s] ของกล
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "ไม่สามารถสร้างไฟล์ [%s] ของกลุ่ม [%s ใน %s]"
 
-#: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
 msgid "Matrix dimensions out of range"
 msgstr "มิติของเมตริกซ์ ไม่ถูกต้อง"
 
-#: ../lib/gmath/la.c:153
+#: ../lib/gmath/la.c:149
 msgid "Matrix is not initialised fully."
 msgstr "เมตริกซ์ไม่ได้กำหนดค่าตั้งต้นทั้งหมด"
 
-#: ../lib/gmath/la.c:158
+#: ../lib/gmath/la.c:154
 msgid "Unable to allocate space for matrix copy"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับเมตริกซ์ เพื่อทำซ้ำได้"
 
-#: ../lib/gmath/la.c:247
+#: ../lib/gmath/la.c:243
 msgid "First scalar multiplier must be non-zero"
 msgstr "ค่าแรกของตัวคูณต้องไม่เป็น 0"
 
-#: ../lib/gmath/la.c:253 ../lib/gmath/la.c:261 ../lib/gmath/la.c:326
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
 msgid "One or both input matrices uninitialised"
 msgstr "หนึ่ง หรือ ทั้งสอง ของเมตริกซ์ ไม่ได้กำหนดค่าตั้งต้น"
 
-#: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
 msgid "Matrix order does not match"
 msgstr "กำลังของ เมตริกซ์ ไม่ตรง"
 
-#: ../lib/gmath/la.c:272
+#: ../lib/gmath/la.c:268
 msgid "Unable to allocate space for matrix sum"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับการบวกเมตริกซ์ ได้"
 
-#: ../lib/gmath/la.c:336
+#: ../lib/gmath/la.c:332
 msgid "Unable to allocate space for matrix product"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับเมตริกซ์ผลลัพธ์"
 
-#: ../lib/gmath/la.c:448
+#: ../lib/gmath/la.c:444
 msgid "Input: one or both data matrices uninitialised"
 msgstr "ค่านำเข้า: หนึ่ง หรือ ทั้งสอง ของเมตริกซ์ ไม่ได้กำหนดค่าตั้งต้น"
 
-#: ../lib/gmath/la.c:453
+#: ../lib/gmath/la.c:449
 msgid "Principal matrix is not properly dimensioned"
 msgstr "มิติของเมตริกซ์หลัก ไม่ถูกต้อง"
 
-#: ../lib/gmath/la.c:458
+#: ../lib/gmath/la.c:454
 msgid "Input: you must have at least one array to solve"
 msgstr "ค่านำเข้า: คุณต้องมีอย่างน้อย 1 กลุ่มลำดับเพื่อแก้ปัญหา"
 
-#: ../lib/gmath/la.c:464
+#: ../lib/gmath/la.c:460
 msgid "Could not allocate space for solution matrix"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับการแก้ปัญหาเมตริกซ์ ได้"
 
-#: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
 msgid "Could not allocate space for working matrix"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับ เมตริกซ์ที่กำลังทำงานได้"
 
-#: ../lib/gmath/la.c:531
+#: ../lib/gmath/la.c:527
 msgid "Matrix (or submatrix is singular). Solution undetermined"
 msgstr "เมตริกซ์ (หรือ เมตริกซ์ย่อย เมตริกซ์เดี่ยว). ไม่สามารถแก้ปัญหาได้"
 
-#: ../lib/gmath/la.c:535
+#: ../lib/gmath/la.c:531
 msgid "Problem in LA routine."
 msgstr "เกิดปัญหาใน ชุดคำสั่ง LA"
 
-#: ../lib/gmath/la.c:542
+#: ../lib/gmath/la.c:538
 msgid "Procedure not yet available for selected matrix type"
 msgstr "ไม่สามารถกำหนดขั้นตอนในการเลือกชนิดของ เมตริกซ์ ได้"
 
-#: ../lib/gmath/la.c:576
+#: ../lib/gmath/la.c:572
 msgid "Matrix is not square. Cannot determine inverse"
 msgstr "มิติเมตริกซ์ไม่เป็นจตุรัส ไม่สามารถหาส่วนกลับได้"
 
-#: ../lib/gmath/la.c:581
+#: ../lib/gmath/la.c:577
 msgid "Unable to allocate space for matrix"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับเมตริกซ์ ได้"
 
-#: ../lib/gmath/la.c:598
+#: ../lib/gmath/la.c:594
 msgid "Matrix is singular"
 msgstr "เมตริกซ์เป็น เมตริกซ์เดี่ยว"
 
-#: ../lib/gmath/la.c:603
+#: ../lib/gmath/la.c:599
 msgid "Problem in LA procedure."
 msgstr "เกิดปัญหาใน ชุดคำสั่ง LA"
 
-#: ../lib/gmath/la.c:691
+#: ../lib/gmath/la.c:687
 msgid "Element array has not been allocated"
 msgstr "ชิ้นส่วนของกลุ่มค่าไม่ได้ถูกกำหนด"
 
-#: ../lib/gmath/la.c:696
+#: ../lib/gmath/la.c:692
 msgid "Specified element is outside array bounds"
 msgstr "ชิ้นส่วนเฉพาะอยู่นอกขอบเขต"
 
-#: ../lib/gmath/la.c:750
+#: ../lib/gmath/la.c:746
 msgid "Specified matrix column index is outside range"
 msgstr "ช่องดัชนีเมตริกซ์เฉพาะอยู่นอกขอบเขต"
 
-#: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
-#: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
 msgid "Matrix is not initialised"
 msgstr "เมตริกซ์ไม่ได้ถูกกำหนดค่า"
 
-#: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
 msgid "Could not allocate space for vector structure"
 msgstr "ไม่สามารถกำหนดที่ว่างสำหรับ โครงสร้างข้อมูลเชิงเส้น"
 
-#: ../lib/gmath/la.c:791
+#: ../lib/gmath/la.c:787
 msgid "Specified matrix row index is outside range"
 msgstr "แถวดัชนีเมตริกซ์อยู่นอกขอบเขต"
 
-#: ../lib/gmath/la.c:831
+#: ../lib/gmath/la.c:827
 msgid "Specified row index is outside range"
 msgstr "แถวดัชนีอยู่นอกขอบเขต"
 
-#: ../lib/gmath/la.c:836
+#: ../lib/gmath/la.c:832
 msgid "Specified column index is outside range"
 msgstr "ช่องดัชนีอยู่นอกขอบเขต"
 
-#: ../lib/gmath/la.c:856
+#: ../lib/gmath/la.c:852
 msgid "Unknown vector type."
 msgstr "ไม่ทราบชนิดของข้อมูลเชิงเส้น"
 
-#: ../lib/gmath/la.c:981
+#: ../lib/gmath/la.c:977
 msgid "Output vector is uninitialized"
 msgstr "ไม่สามารถกำหนดค่า ผลลัพธ์ข้อมูลเชิงเส้น"
 
-#: ../lib/gmath/la.c:986
+#: ../lib/gmath/la.c:982
 msgid "Vectors are not of the same type"
 msgstr "ข้อมูลเชิงเส้นไม่ใช่ชนิดเดียวกัน"
 
-#: ../lib/gmath/la.c:991
+#: ../lib/gmath/la.c:987
 msgid "Output vector is of incorrect type"
 msgstr "ชนิดของข้อมูลผลลัพธ์เชิงเส้นไม่ถูกต้อง"
 
-#: ../lib/gmath/la.c:996
+#: ../lib/gmath/la.c:992
 msgid "Matrices not allowed"
 msgstr "เมตริกซ์ ไม่ยอมรับ"
 
-#: ../lib/gmath/la.c:1002
+#: ../lib/gmath/la.c:998
 msgid "Vectors have differing dimensions"
 msgstr "มิติของข้อมูลเชิงเส้นแตกต่าง"
 
-#: ../lib/gmath/la.c:1008
+#: ../lib/gmath/la.c:1004
 msgid "Output vector has incorrect dimension"
 msgstr "มิติของข้อมูลผลลัพธ์เชิงเส้นไม่ถูกต้อง"
 
-#: ../lib/gmath/la.c:1054
+#: ../lib/gmath/la.c:1050
 msgid "Vector dimensions out of range"
 msgstr "มิติของข้อมูลเชิงเส้นอยู่นอกช่วง"
 
-#: ../lib/gmath/la.c:1059
+#: ../lib/gmath/la.c:1055
 msgid "Row/column out of range"
 msgstr "แถว/ช่อง อยู่นอกช่วง"
 
-#: ../lib/gmath/la.c:1274
+#: ../lib/gmath/la.c:1270
 msgid "Vector structure is not initialised"
 msgstr "ผลลัพธ์ข้อมูลเชิงเส้น ยังไม่ได้กำหนดค่า"
 
-#: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
 msgid "Input format error"
 msgstr "รูปแบบข้อมูลที่จะนำเข้า ผิดพลาด"
 
@@ -1864,15 +1864,37 @@ msgstr "ชื่อผลลัพธ์แผนที่เชิงเส้
 msgid "Output vector map <%s> is used as input"
 msgstr "ชื่อผลลัพธ์แผนที่เชิงเส้น <%s> ซ้ำกับชื่อข้อมูลนำเข้า"
 
-#: ../lib/vector/Vlib/merge_lines.c:192
+#: ../lib/vector/Vlib/merge_lines.c:233
 #, c-format
 msgid "%d boundaries merged"
 msgstr ""
 
-#: ../lib/vector/Vlib/merge_lines.c:193
+#: ../lib/vector/Vlib/merge_lines.c:234
 #, c-format
 msgid "%d new boundaries"
 msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:148
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:202
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:271
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:451
+#, fuzzy, c-format
+msgid "Snapped vertices: %d"
+msgstr "ดูดเข้าหา จุดหัก"
+
+#: ../lib/vector/Vlib/snap.c:452
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "เพิ่ม จุดหัก"
 
 #: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/close.c:38
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/read.c:30
@@ -2414,33 +2436,33 @@ msgstr "การแนบ จุดศูนย์ถ่วง: "
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "ไม่พบ ชื่อแผนที่เชิงเส้น <%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:53
+#: ../lib/vector/Vlib/open_ogr.c:54
 msgid "OGR format cannot be updated"
 msgstr ""
 
-#: ../lib/vector/Vlib/open_ogr.c:65
+#: ../lib/vector/Vlib/open_ogr.c:66
 #, fuzzy, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "ไม่สามารถเปิด directory '%s' ได้"
 
-#: ../lib/vector/Vlib/open_ogr.c:85
+#: ../lib/vector/Vlib/open_ogr.c:86
 #, fuzzy, c-format
 msgid "Unable to open layer <%s>"
 msgstr "ไม่สามารถเปิดไฟล์ %s ได้"
 
-#: ../lib/vector/Vlib/open_ogr.c:129
+#: ../lib/vector/Vlib/open_ogr.c:139
 #, fuzzy, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
 msgstr "ไม่สามารถเปิด ไฟล์หมวดดัชนี สำหรับแผนที่เชิงเส้น <%s@%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:147
+#: ../lib/vector/Vlib/open_ogr.c:157
 #, c-format
 msgid ""
 "Feature index format version %d.%d is not supported by this release. Try to "
 "rebuild topology or upgrade GRASS."
 msgstr ""
 
-#: ../lib/vector/Vlib/open_ogr.c:152
+#: ../lib/vector/Vlib/open_ogr.c:162
 #, c-format
 msgid ""
 "Your GRASS version does not fully support feature index format %d.%d of the "
@@ -5031,12 +5053,6 @@ msgstr "อาจจะเกิดจากข้อผิดพลาดขอ
 
 #~ msgid "Snaps"
 #~ msgstr "ดูดเข้าหา"
-
-#~ msgid "Snapped vertices"
-#~ msgstr "ดูดเข้าหา จุดหัก"
-
-#~ msgid "New vertices"
-#~ msgstr "เพิ่ม จุดหัก"
 
 #, fuzzy
 #~ msgid "Duplicates"

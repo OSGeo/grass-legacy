@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Grass 6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-18 14:02+0100\n"
 "PO-Revision-Date: 2005-06-02 18:00+0530\n"
 "Last-Translator: Swapnil Hajare <dreamil@gmail.com>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -289,51 +289,51 @@ msgstr ""
 msgid "Unable to process vector map - out of memory"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:67
 #, fuzzy
 msgid "Unable to allocate stream"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:156
+#: ../lib/ogsf/gsd_img_mpeg.c:166
 #, fuzzy
 msgid "Video codec not found"
 msgstr "%s मिळाले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:162
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 #, fuzzy
 msgid "Unable to open codec"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:181
+#: ../lib/ogsf/gsd_img_mpeg.c:195
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:192
+#: ../lib/ogsf/gsd_img_mpeg.c:206
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:252
+#: ../lib/ogsf/gsd_img_mpeg.c:266
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "temp फाइल उघडता आली नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:298
+#: ../lib/ogsf/gsd_img_mpeg.c:312
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:306
+#: ../lib/ogsf/gsd_img_mpeg.c:320
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:310
+#: ../lib/ogsf/gsd_img_mpeg.c:324
 #, fuzzy
 msgid "Unable to find suitable output format"
 msgstr "temp फाइल उघडता आली नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:317 ../lib/vector/neta/centrality.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/vector/neta/centrality.c:63
 #: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
 #: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
 #: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/flow.c:64
@@ -352,18 +352,18 @@ msgstr "temp फाइल उघडता आली नाही"
 msgid "Out of memory"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:337
+#: ../lib/ogsf/gsd_img_mpeg.c:355
 #, fuzzy
 msgid "Invalid output format parameters"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:351
+#: ../lib/ogsf/gsd_img_mpeg.c:377
 #, fuzzy, c-format
 msgid "Unable to open <%s>"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:361
-msgid "NVIZ has not been built with MPEG output support"
+#: ../lib/ogsf/gsd_img_mpeg.c:390
+msgid "OGSF library has not been built with MPEG output support"
 msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:245
@@ -884,160 +884,160 @@ msgstr "उघडलेल्या फाइलचे नाव %s\n"
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
 msgid "Matrix dimensions out of range"
 msgstr ""
 
-#: ../lib/gmath/la.c:153
+#: ../lib/gmath/la.c:149
 msgid "Matrix is not initialised fully."
 msgstr ""
 
-#: ../lib/gmath/la.c:158
+#: ../lib/gmath/la.c:154
 msgid "Unable to allocate space for matrix copy"
 msgstr ""
 
-#: ../lib/gmath/la.c:247
+#: ../lib/gmath/la.c:243
 msgid "First scalar multiplier must be non-zero"
 msgstr ""
 
-#: ../lib/gmath/la.c:253 ../lib/gmath/la.c:261 ../lib/gmath/la.c:326
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
 msgid "One or both input matrices uninitialised"
 msgstr ""
 
-#: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
 msgid "Matrix order does not match"
 msgstr ""
 
-#: ../lib/gmath/la.c:272
+#: ../lib/gmath/la.c:268
 msgid "Unable to allocate space for matrix sum"
 msgstr ""
 
-#: ../lib/gmath/la.c:336
+#: ../lib/gmath/la.c:332
 msgid "Unable to allocate space for matrix product"
 msgstr ""
 
-#: ../lib/gmath/la.c:448
+#: ../lib/gmath/la.c:444
 msgid "Input: one or both data matrices uninitialised"
 msgstr ""
 
-#: ../lib/gmath/la.c:453
+#: ../lib/gmath/la.c:449
 msgid "Principal matrix is not properly dimensioned"
 msgstr ""
 
-#: ../lib/gmath/la.c:458
+#: ../lib/gmath/la.c:454
 msgid "Input: you must have at least one array to solve"
 msgstr ""
 
-#: ../lib/gmath/la.c:464
+#: ../lib/gmath/la.c:460
 msgid "Could not allocate space for solution matrix"
 msgstr ""
 
-#: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
 msgid "Could not allocate space for working matrix"
 msgstr ""
 
-#: ../lib/gmath/la.c:531
+#: ../lib/gmath/la.c:527
 msgid "Matrix (or submatrix is singular). Solution undetermined"
 msgstr ""
 
-#: ../lib/gmath/la.c:535
+#: ../lib/gmath/la.c:531
 msgid "Problem in LA routine."
 msgstr ""
 
-#: ../lib/gmath/la.c:542
+#: ../lib/gmath/la.c:538
 msgid "Procedure not yet available for selected matrix type"
 msgstr ""
 
-#: ../lib/gmath/la.c:576
+#: ../lib/gmath/la.c:572
 msgid "Matrix is not square. Cannot determine inverse"
 msgstr ""
 
-#: ../lib/gmath/la.c:581
+#: ../lib/gmath/la.c:577
 msgid "Unable to allocate space for matrix"
 msgstr ""
 
-#: ../lib/gmath/la.c:598
+#: ../lib/gmath/la.c:594
 msgid "Matrix is singular"
 msgstr ""
 
-#: ../lib/gmath/la.c:603
+#: ../lib/gmath/la.c:599
 msgid "Problem in LA procedure."
 msgstr ""
 
-#: ../lib/gmath/la.c:691
+#: ../lib/gmath/la.c:687
 msgid "Element array has not been allocated"
 msgstr ""
 
-#: ../lib/gmath/la.c:696
+#: ../lib/gmath/la.c:692
 msgid "Specified element is outside array bounds"
 msgstr ""
 
-#: ../lib/gmath/la.c:750
+#: ../lib/gmath/la.c:746
 msgid "Specified matrix column index is outside range"
 msgstr ""
 
-#: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
-#: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
 msgid "Matrix is not initialised"
 msgstr ""
 
-#: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
 msgid "Could not allocate space for vector structure"
 msgstr ""
 
-#: ../lib/gmath/la.c:791
+#: ../lib/gmath/la.c:787
 msgid "Specified matrix row index is outside range"
 msgstr ""
 
-#: ../lib/gmath/la.c:831
+#: ../lib/gmath/la.c:827
 msgid "Specified row index is outside range"
 msgstr ""
 
-#: ../lib/gmath/la.c:836
+#: ../lib/gmath/la.c:832
 msgid "Specified column index is outside range"
 msgstr ""
 
-#: ../lib/gmath/la.c:856
+#: ../lib/gmath/la.c:852
 msgid "Unknown vector type."
 msgstr ""
 
-#: ../lib/gmath/la.c:981
+#: ../lib/gmath/la.c:977
 msgid "Output vector is uninitialized"
 msgstr ""
 
-#: ../lib/gmath/la.c:986
+#: ../lib/gmath/la.c:982
 msgid "Vectors are not of the same type"
 msgstr ""
 
-#: ../lib/gmath/la.c:991
+#: ../lib/gmath/la.c:987
 msgid "Output vector is of incorrect type"
 msgstr ""
 
-#: ../lib/gmath/la.c:996
+#: ../lib/gmath/la.c:992
 msgid "Matrices not allowed"
 msgstr ""
 
-#: ../lib/gmath/la.c:1002
+#: ../lib/gmath/la.c:998
 msgid "Vectors have differing dimensions"
 msgstr ""
 
-#: ../lib/gmath/la.c:1008
+#: ../lib/gmath/la.c:1004
 msgid "Output vector has incorrect dimension"
 msgstr ""
 
-#: ../lib/gmath/la.c:1054
+#: ../lib/gmath/la.c:1050
 msgid "Vector dimensions out of range"
 msgstr ""
 
-#: ../lib/gmath/la.c:1059
+#: ../lib/gmath/la.c:1055
 msgid "Row/column out of range"
 msgstr ""
 
-#: ../lib/gmath/la.c:1274
+#: ../lib/gmath/la.c:1270
 msgid "Vector structure is not initialised"
 msgstr ""
 
-#: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
 msgid "Input format error"
 msgstr ""
 
@@ -1790,15 +1790,37 @@ msgstr ""
 msgid "Output vector map <%s> is used as input"
 msgstr ""
 
-#: ../lib/vector/Vlib/merge_lines.c:192
+#: ../lib/vector/Vlib/merge_lines.c:233
 #, c-format
 msgid "%d boundaries merged"
 msgstr ""
 
-#: ../lib/vector/Vlib/merge_lines.c:193
+#: ../lib/vector/Vlib/merge_lines.c:234
 #, c-format
 msgid "%d new boundaries"
 msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:148
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:202
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:271
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:451
+#, c-format
+msgid "Snapped vertices: %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:452
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/close.c:38
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/read.c:30
@@ -2320,33 +2342,33 @@ msgstr ""
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "%s मिळाले नाही"
 
-#: ../lib/vector/Vlib/open_ogr.c:53
+#: ../lib/vector/Vlib/open_ogr.c:54
 msgid "OGR format cannot be updated"
 msgstr ""
 
-#: ../lib/vector/Vlib/open_ogr.c:65
+#: ../lib/vector/Vlib/open_ogr.c:66
 #, fuzzy, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/vector/Vlib/open_ogr.c:85
+#: ../lib/vector/Vlib/open_ogr.c:86
 #, fuzzy, c-format
 msgid "Unable to open layer <%s>"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/vector/Vlib/open_ogr.c:129
+#: ../lib/vector/Vlib/open_ogr.c:139
 #, fuzzy, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
 msgstr "temp फाइल उघडता आली नाही"
 
-#: ../lib/vector/Vlib/open_ogr.c:147
+#: ../lib/vector/Vlib/open_ogr.c:157
 #, c-format
 msgid ""
 "Feature index format version %d.%d is not supported by this release. Try to "
 "rebuild topology or upgrade GRASS."
 msgstr ""
 
-#: ../lib/vector/Vlib/open_ogr.c:152
+#: ../lib/vector/Vlib/open_ogr.c:162
 #, c-format
 msgid ""
 "Your GRASS version does not fully support feature index format %d.%d of the "
