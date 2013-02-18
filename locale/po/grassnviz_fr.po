@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-18 14:02+0100\n"
 "PO-Revision-Date: 2013-02-03 16:56+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
@@ -343,12 +343,14 @@ msgstr "Erreur interne"
 #: ../visualization/nviz/scripts/panel_animation.tcl:602
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:872
 msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr "Erreur interne - la suppression de l'image clef de la liste GK a échoué"
+msgstr ""
+"Erreur interne - la suppression de l'image clef de la liste GK a échoué"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:643
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
 msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr "Erreur interne - le déplacement de l'image clef dans la liste GK a échoué"
+msgstr ""
+"Erreur interne - le déplacement de l'image clef dans la liste GK a échoué"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:753
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
@@ -643,7 +645,9 @@ msgstr "Police"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:79
 msgid "Select font family, size, and style for legend text"
-msgstr "Sélectionner la famille de police, la taille, et le style pour les texte de la légende"
+msgstr ""
+"Sélectionner la famille de police, la taille, et le style pour les texte de "
+"la légende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:86
 msgid "set value range "
@@ -666,8 +670,12 @@ msgid "Place legend"
 msgstr "Placer la légende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
-msgstr "Utilisez la souris pour placer la légende ; le boutton gauche définit le premier coin, le boutton droit définit le coin opposé."
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
+msgstr ""
+"Utilisez la souris pour placer la légende ; le boutton gauche définit le "
+"premier coin, le boutton droit définit le coin opposé."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -797,7 +805,9 @@ msgstr "Image"
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr "Les champs actuels ne peuvent pas être sauvegardés, voulez-vous vraiment charger de nouveau champs ?"
+msgstr ""
+"Les champs actuels ne peuvent pas être sauvegardés, voulez-vous vraiment "
+"charger de nouveau champs ?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
 #: ../visualization/nviz/scripts/nviz2.2_script:873
@@ -1154,7 +1164,8 @@ msgstr "Erreur - Toutes les valeures doivent être au moins à zéro."
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:504
 msgid "Error - Frame number must be less than frame rate."
-msgstr "Erreur - le numéro de l'image doit être inférieur au taux de rafraîchissement"
+msgstr ""
+"Erreur - le numéro de l'image doit être inférieur au taux de rafraîchissement"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:540
 msgid "New Frame Rate"
@@ -1803,7 +1814,9 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:93
 msgid "Select file to receive all future query results"
-msgstr "Sélectionner le fichier de réception des résultats de toutes les prochaines requêtes "
+msgstr ""
+"Sélectionner le fichier de réception des résultats de toutes les prochaines "
+"requêtes "
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:126
 #, tcl-format
@@ -1952,11 +1965,15 @@ msgid "set icon"
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
@@ -1988,7 +2005,9 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid "Automatically generate a color  table distributed across range of attribute values"
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-18 14:02+0100\n"
 "PO-Revision-Date: 2010-03-07 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Load previously saved state file"
 msgstr ""
 
-#: ../visualization/nviz/src/nviz_init.c:157 ../raster/r.cost/main.c:226
+#: ../visualization/nviz/src/nviz_init.c:157 ../raster/r.cost/main.c:238
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
 #: ../raster/r.out.tiff/r.out.tiff.c:144 ../raster/r.out.mat/main.c:90
 #: ../raster/r.in.mat/main.c:125 ../display/d.vect/main.c:367
@@ -204,19 +204,20 @@ msgstr "Čtu soubor [%s] ..."
 #: ../raster/r.sun2/main.c:869 ../raster/r.sun2/main.c:881
 #: ../raster/r.sun2/main.c:892 ../raster/r.sun2/main.c:904
 #: ../raster/r.sun2/main.c:916 ../raster/r.colors.out/main.c:88
-#: ../raster/r.drain/main.c:140 ../raster/r.param.scale/interface.c:172
+#: ../raster/r.drain/main.c:189 ../raster/r.drain/main.c:218
+#: ../raster/r.param.scale/interface.c:172
 #: ../raster/r.support/front/front.c:224
 #: ../raster/r.support/modcolr/modcolr.c:46 ../raster/r.cross/main.c:125
 #: ../raster/r.distance/parse.c:79 ../raster/r.distance/parse.c:86
 #: ../raster/r.out.mpeg/main.c:217 ../raster/r.patch/main.c:113
-#: ../raster/r.cost/main.c:322 ../raster/r.grow2/main.c:187
+#: ../raster/r.cost/main.c:340 ../raster/r.grow2/main.c:187
 #: ../raster/r.out.vtk/main.c:47 ../raster/r.out.vtk/main.c:60
 #: ../raster/r.recode/main.c:81 ../raster/r.statistics/main.c:79
 #: ../raster/r.statistics/main.c:85 ../raster/r.los/main.c:162
 #: ../raster/r.los/main.c:168 ../raster/r.his/main.c:127
 #: ../raster/r.his/main.c:164 ../raster/r.his/main.c:189
 #: ../raster/r.buffer/main.c:127 ../raster/r.resamp.stats/main.c:296
-#: ../raster/r.walk/main.c:523 ../raster/r.walk/main.c:526
+#: ../raster/r.walk/main.c:546 ../raster/r.walk/main.c:549
 #: ../raster/r.contour/main.c:158 ../raster/r.series/main.c:212
 #: ../raster/r.composite/main.c:155 ../raster/r.topidx/check_ready.c:11
 #: ../raster/r.fill.dir/main.c:172 ../raster/r.mfilter/main.c:121
@@ -272,8 +273,8 @@ msgstr "Čtu soubor [%s] ..."
 #: ../raster/r.mapcalc/map.c:377 ../raster/r.flow/io.c:65
 #: ../imagery/i.zc/main.c:111 ../imagery/i.landsat.acca/main.c:58
 #: ../imagery/i.landsat.acca/algorithm.c:387
-#: ../imagery/i.landsat.acca/tools.c:127 ../imagery/i.landsat.toar/main.c:327
-#: ../imagery/i.landsat.toar/main.c:460 ../imagery/i.class/main.c:127
+#: ../imagery/i.landsat.acca/tools.c:127 ../imagery/i.landsat.toar/main.c:304
+#: ../imagery/i.landsat.toar/main.c:437 ../imagery/i.class/main.c:127
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
 #: ../imagery/i.gensig/parse.c:36 ../imagery/i.his.rgb/openfiles.c:31
 #: ../imagery/i.his.rgb/openfiles.c:36 ../imagery/i.his.rgb/openfiles.c:41
@@ -306,7 +307,7 @@ msgstr "Rastrová mapa <%s> nenalezena"
 #: ../visualization/xganim/main.c:370 ../doc/raster/r.example/main.c:122
 #: ../raster/r.bilinear/main.c:94 ../raster/r.profile/main.c:144
 #: ../raster/r.support/front/front.c:227 ../raster/r.cross/main.c:129
-#: ../raster/r.cost/main.c:340 ../raster/r.cost/main.c:608
+#: ../raster/r.cost/main.c:370 ../raster/r.cost/main.c:675
 #: ../raster/r.grow2/main.c:203 ../raster/r.out.vtk/main.c:222
 #: ../raster/r.out.vtk/main.c:288 ../raster/r.out.vtk/main.c:317
 #: ../raster/r.out.vtk/main.c:364 ../raster/r.recode/recode.c:48
@@ -314,8 +315,8 @@ msgstr "Rastrová mapa <%s> nenalezena"
 #: ../raster/r.his/main.c:131 ../raster/r.his/main.c:154
 #: ../raster/r.his/main.c:179 ../raster/r.buffer/read_map.c:42
 #: ../raster/r.buffer/write_map.c:45 ../raster/r.resamp.stats/main.c:329
-#: ../raster/r.walk/main.c:545 ../raster/r.walk/main.c:548
-#: ../raster/r.walk/main.c:854 ../raster/r.contour/main.c:162
+#: ../raster/r.walk/main.c:573 ../raster/r.walk/main.c:576
+#: ../raster/r.walk/main.c:922 ../raster/r.contour/main.c:162
 #: ../raster/r.random.surface/init.c:134 ../raster/r.random.surface/main.c:54
 #: ../raster/r.composite/main.c:159 ../raster/r.out.arc/main.c:117
 #: ../raster/r.clump/main.c:94 ../raster/r.colors/stats.c:33
@@ -354,7 +355,7 @@ msgstr "Rastrová mapa <%s> nenalezena"
 #: ../imagery/i.landsat.acca/main.c:61
 #: ../imagery/i.landsat.acca/algorithm.c:389
 #: ../imagery/i.landsat.acca/tools.c:130 ../imagery/i.maxlik/open.c:41
-#: ../imagery/i.landsat.toar/main.c:331 ../imagery/i.landsat.toar/main.c:465
+#: ../imagery/i.landsat.toar/main.c:308 ../imagery/i.landsat.toar/main.c:442
 #: ../imagery/i.gensig/opencell.c:12 ../imagery/i.his.rgb/openfiles.c:33
 #: ../imagery/i.his.rgb/openfiles.c:38 ../imagery/i.his.rgb/openfiles.c:43
 #: ../imagery/i.modis.qc/main.c:221 ../imagery/i.gensigset/opencell.c:13
@@ -420,11 +421,13 @@ msgstr "Potichu"
 
 #: ../doc/raster/r.example/main.c:114 ../raster/r.mode/main.c:94
 #: ../raster/r.watershed/shed/com_line.c:231
-#: ../raster/r.watershed/shed/com_line.c:266 ../raster/r.cost/main.c:327
+#: ../raster/r.watershed/shed/com_line.c:266 ../raster/r.drain/main.c:206
+#: ../raster/r.cost/main.c:352 ../raster/r.cost/main.c:356
 #: ../raster/r.recode/main.c:84 ../raster/r.los/main.c:173
-#: ../raster/r.buffer/main.c:130 ../raster/r.walk/main.c:531
-#: ../raster/r.clump/main.c:90 ../raster/r.random/main.c:147
-#: ../raster/r.random/main.c:152 ../raster/wildfire/r.spread/main.c:380
+#: ../raster/r.buffer/main.c:130 ../raster/r.walk/main.c:554
+#: ../raster/r.walk/main.c:558 ../raster/r.clump/main.c:90
+#: ../raster/r.random/main.c:147 ../raster/r.random/main.c:152
+#: ../raster/wildfire/r.spread/main.c:380
 #: ../raster/wildfire/r.spread/main.c:389
 #: ../raster/wildfire/r.spread/main.c:399 ../raster/r.water.outlet/legal.c:10
 #: ../raster/r.surf.idw2/main.c:83 ../raster/r.in.mat/main.c:388
@@ -435,7 +438,7 @@ msgstr "Potichu"
 #: ../raster/r.surf.gauss/main.c:77 ../raster/r.in.ascii/main.c:203
 #: ../raster/r.surf.fractal/interface.c:79 ../raster/r.average/main.c:78
 #: ../raster/r.to.rast3elev/main.c:472 ../imagery/i.zc/main.c:119
-#: ../imagery/i.landsat.acca/main.c:189 ../imagery/i.landsat.toar/main.c:475
+#: ../imagery/i.landsat.acca/main.c:189 ../imagery/i.landsat.toar/main.c:452
 #: ../imagery/i.ifft/ifftmain.c:116 ../imagery/i.fft/fftmain.c:121
 #: ../imagery/i.fft/fftmain.c:124
 #: ../imagery/i.ortho.photo/i.photo.camera/main.c:91
@@ -480,7 +483,7 @@ msgstr "Nelze číst hlavičku souboru <%s>"
 #: ../imagery/i.landsat.acca/algorithm.c:234
 #: ../imagery/i.landsat.acca/algorithm.c:397
 #: ../imagery/i.landsat.acca/tools.c:140 ../imagery/i.maxlik/open.c:74
-#: ../imagery/i.landsat.toar/main.c:478 ../imagery/i.his.rgb/openfiles.c:15
+#: ../imagery/i.landsat.toar/main.c:455 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
 #: ../imagery/i.topo.corr/main.c:58 ../imagery/i.ifft/ifftmain.c:219
 #: ../imagery/i.modis.qc/main.c:235 ../imagery/i.rgb.his/openfiles.c:29
@@ -495,14 +498,14 @@ msgstr "Nejsem schopen vytvořit rastrovou mapu <%s>"
 #: ../doc/raster/r.example/main.c:154 ../raster/r.profile/read_rast.c:45
 #: ../raster/r.profile/read_rast.c:73 ../raster/r.profile/read_rast.c:101
 #: ../raster/r.patch/main.c:156 ../raster/r.patch/main.c:163
-#: ../raster/r.cost/main.c:405 ../raster/r.cost/main.c:624
-#: ../raster/r.cost/main.c:939 ../raster/r.cost/main.c:972
-#: ../raster/r.cost/main.c:1005 ../raster/r.los/main.c:264
+#: ../raster/r.cost/main.c:447 ../raster/r.cost/main.c:691
+#: ../raster/r.cost/main.c:1039 ../raster/r.cost/main.c:1072
+#: ../raster/r.cost/main.c:1105 ../raster/r.los/main.c:264
 #: ../raster/r.los/main.c:272 ../raster/r.buffer/read_map.c:63
-#: ../raster/r.buffer/write_map.c:61 ../raster/r.walk/main.c:697
-#: ../raster/r.walk/main.c:756 ../raster/r.walk/main.c:872
-#: ../raster/r.walk/main.c:1413 ../raster/r.walk/main.c:1448
-#: ../raster/r.walk/main.c:1483 ../raster/r.topidx/file_io.c:77
+#: ../raster/r.buffer/write_map.c:61 ../raster/r.walk/main.c:737
+#: ../raster/r.walk/main.c:796 ../raster/r.walk/main.c:940
+#: ../raster/r.walk/main.c:1514 ../raster/r.walk/main.c:1549
+#: ../raster/r.walk/main.c:1584 ../raster/r.topidx/file_io.c:77
 #: ../raster/r.colors/stats.c:46 ../raster/r.colors/stats.c:113
 #: ../raster/r.null/null.c:340 ../raster/r.sunmask/main.c:481
 #: ../raster/r.out.ppm/main.c:188 ../raster/r.bitpattern/main.c:135
@@ -537,7 +540,7 @@ msgid "My first vector module"
 msgstr "Můj první modul pro zpracování vektorových dat"
 
 #: ../doc/vector/v.example/main.c:73 ../misc/m.nviz.image/vector.c:81
-#: ../raster/r.drain/main.c:202 ../raster/r.cost/main.c:301
+#: ../raster/r.drain/main.c:284 ../raster/r.cost/main.c:319
 #: ../raster/r.carve/main.c:172 ../raster/r.region/main.c:237
 #: ../display/d.vect/main.c:451 ../display/d.what.vect/main.c:148
 #: ../display/d.vect.chart/main.c:246 ../display/d.zoom/main.c:245
@@ -546,7 +549,7 @@ msgstr "Můj první modul pro zpracování vektorových dat"
 #: ../general/g.mremove/do_remove.c:34 ../general/g.region/main.c:547
 #: ../vector/v.net.iso/main.c:181 ../vector/v.type/main.c:202
 #: ../vector/v.voronoi/vo_main.c:158 ../vector/v.voronoi/dt_main.c:77
-#: ../vector/v.net.steiner/main.c:428 ../vector/v.overlay/main.c:204
+#: ../vector/v.net.steiner/main.c:428 ../vector/v.overlay/main.c:225
 #: ../vector/v.kernel/main.c:275 ../vector/v.net/main.c:143
 #: ../vector/v.net/main.c:158 ../vector/v.label/main.c:270
 #: ../vector/v.buffer2/main.c:311 ../vector/v.univar/main.c:161
@@ -573,7 +576,8 @@ msgstr "Můj první modul pro zpracování vektorových dat"
 #: ../vector/v.out.ogr/main.c:196 ../vector/v.out.pov/main.c:94
 #: ../vector/v.select/main.c:103 ../vector/v.convert/att.c:30
 #: ../vector/v.convert/old2new.c:26 ../vector/v.clean/main.c:241
-#: ../vector/v.perturb/main.c:154 ../vector/v.class/main.c:95
+#: ../vector/v.perturb/main.c:154 ../vector/v.vect.stats/main.c:252
+#: ../vector/v.vect.stats/main.c:259 ../vector/v.class/main.c:95
 #: ../vector/v.info/main.c:103 ../vector/v.db.select/main.c:132
 #: ../vector/v.what.rast/main.c:120 ../vector/v.net.salesman/main.c:171
 #: ../vector/v.to.points/main.c:244 ../vector/v.extrude/main.c:144
@@ -611,15 +615,15 @@ msgstr "Nelze nastavit předvybranou vektorovou mapu na úrovni otevření"
 msgid "Unable to open vector map <%s>"
 msgstr "Nelze otevřít vektorovou mapu <%s>"
 
-#: ../doc/vector/v.example/main.c:96 ../raster/r.flow/io.c:176
-#: ../vector/v.net.centrality/main.c:194 ../vector/v.voronoi/vo_main.c:165
-#: ../vector/v.voronoi/dt_main.c:92 ../vector/v.voronoi/dt_main.c:98
-#: ../vector/v.buffer2/main.c:320 ../vector/v.net.distance/main.c:146
-#: ../vector/v.edit/main.c:106 ../vector/v.delaunay2/main.c:126
-#: ../vector/v.mkgrid/main.c:223 ../vector/v.net.bridge/main.c:86
-#: ../vector/v.net.flow/main.c:138 ../vector/v.net.flow/main.c:144
-#: ../vector/lidar/v.outlier/main.c:205 ../vector/lidar/v.outlier/main.c:210
-#: ../vector/lidar/v.outlier/main.c:216
+#: ../doc/vector/v.example/main.c:96 ../raster/r.drain/main.c:209
+#: ../raster/r.flow/io.c:176 ../vector/v.net.centrality/main.c:194
+#: ../vector/v.voronoi/vo_main.c:165 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/dt_main.c:98 ../vector/v.buffer2/main.c:320
+#: ../vector/v.net.distance/main.c:146 ../vector/v.edit/main.c:106
+#: ../vector/v.delaunay2/main.c:126 ../vector/v.mkgrid/main.c:223
+#: ../vector/v.net.bridge/main.c:86 ../vector/v.net.flow/main.c:138
+#: ../vector/v.net.flow/main.c:144 ../vector/lidar/v.outlier/main.c:205
+#: ../vector/lidar/v.outlier/main.c:210 ../vector/lidar/v.outlier/main.c:216
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
@@ -637,14 +641,15 @@ msgstr "Nelze vytvořit vektorovou mapu <%s>"
 
 #: ../doc/vector/v.example/main.c:103 ../display/d.vect/area.c:54
 #: ../display/d.vect/plot1.c:205 ../display/d.vect.chart/plot.c:38
-#: ../display/d.thematic.area/plot1.c:196 ../vector/v.overlay/main.c:287
+#: ../display/d.thematic.area/plot1.c:196 ../vector/v.overlay/main.c:345
 #: ../vector/v.buffer2/main.c:329 ../vector/v.univar/main.c:209
 #: ../vector/v.out.ascii/b2a.c:40 ../vector/v.edit/select.c:507
 #: ../vector/v.extract/main.c:278 ../vector/v.db.connect/main.c:208
 #: ../vector/v.sample/main.c:167 ../vector/v.distance/main.c:359
 #: ../vector/v.distance/main.c:395
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:119
-#: ../vector/v.reclass/main.c:122 ../vector/v.info/main.c:208
+#: ../vector/v.reclass/main.c:122 ../vector/v.vect.stats/main.c:303
+#: ../vector/v.vect.stats/main.c:379 ../vector/v.info/main.c:208
 #: ../vector/v.to.3d/trans3.c:47 ../vector/v.to.3d/trans2.c:45
 #: ../vector/v.db.select/main.c:149 ../vector/v.what.rast/main.c:127
 #: ../vector/v.extrude/main.c:163 ../vector/v.generalize/misc.c:163
@@ -676,7 +681,7 @@ msgstr "Nelze spustit ovladač <%s>"
 #: ../display/d.vect/area.c:60 ../display/d.vect/plot1.c:211
 #: ../display/d.vect.chart/plot.c:44 ../display/d.thematic.area/plot1.c:202
 #: ../vector/v.random/main.c:168 ../vector/v.net.centrality/main.c:220
-#: ../vector/v.overlay/main.c:186 ../vector/v.overlay/main.c:295
+#: ../vector/v.overlay/main.c:202 ../vector/v.overlay/main.c:353
 #: ../vector/v.label/main.c:282 ../vector/v.buffer2/main.c:334
 #: ../vector/v.net.distance/main.c:196 ../vector/v.lrs/v.lrs.create/main.c:287
 #: ../vector/v.lrs/v.lrs.create/main.c:295 ../vector/v.out.ascii/b2a.c:52
@@ -738,7 +743,7 @@ msgstr "Chyba během získání záznamu databáze pro kategorii %d"
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
 
-#: ../raster3d/r3.in.v5d/main.c:191 ../raster3d/r3.in.ascii/main.c:240
+#: ../raster3d/r3.in.v5d/main.c:191 ../raster3d/r3.in.ascii/main.c:253
 msgid "raster3d, voxel, import"
 msgstr "rastr3d, voxel, import"
 
@@ -748,7 +753,7 @@ msgid ""
 "time step)."
 msgstr ""
 
-#: ../raster3d/r3.in.v5d/main.c:213 ../raster3d/r3.in.ascii/main.c:268
+#: ../raster3d/r3.in.v5d/main.c:213 ../raster3d/r3.in.ascii/main.c:281
 #, fuzzy
 msgid "Unable to open 3D raster map"
 msgstr "Nelze otevřít rastrovou mapu <%s>"
@@ -758,7 +763,7 @@ msgstr "Nelze otevřít rastrovou mapu <%s>"
 #: ../raster3d/r3.out.v5d/main.c:326 ../raster3d/r3.to.rast/main.c:55
 #: ../raster3d/r3.to.rast/main.c:390 ../raster3d/r3.cross.rast/main.c:55
 #: ../raster3d/r3.out.vtk/main.c:254 ../raster3d/r3.out.vtk/main.c:339
-#: ../raster3d/r3.in.ascii/main.c:274
+#: ../raster3d/r3.in.ascii/main.c:287
 #, fuzzy
 msgid "Unable to close 3D raster map"
 msgstr "Nelze uzavřít rastrovou mapu"
@@ -1602,16 +1607,21 @@ msgstr ""
 "Textový řetězec reprezentující hodnotu NULL (použít 'none' v případě "
 "takovéto hodnoty)"
 
-#: ../raster3d/r3.in.ascii/main.c:174
+#: ../raster3d/r3.in.ascii/main.c:175
 #, c-format
 msgid "Loading data ...  (%dx%dx%d)"
 msgstr "Načítám data ...  (%dx%dx%d)"
 
-#: ../raster3d/r3.in.ascii/main.c:190
+#: ../raster3d/r3.in.ascii/main.c:192
 msgid "End of file reached while still loading data."
 msgstr "Konec rastru byl dosažen ještě při načítání dat."
 
-#: ../raster3d/r3.in.ascii/main.c:209
+#: ../raster3d/r3.in.ascii/main.c:205
+#, fuzzy
+msgid "Invalid value detected"
+msgstr "Špatná hodnota pro theta"
+
+#: ../raster3d/r3.in.ascii/main.c:222
 #, c-format
 msgid ""
 "Data exists in input file after fully importing expected data.  [%.4f ...]"
@@ -1619,7 +1629,7 @@ msgstr ""
 "Po plném importu očekávaných dat, některá data zbyla ve vstupním souboru "
 "[%.4f ...]"
 
-#: ../raster3d/r3.in.ascii/main.c:242
+#: ../raster3d/r3.in.ascii/main.c:255
 #, fuzzy
 msgid ""
 "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
@@ -1627,7 +1637,7 @@ msgstr ""
 "Převede 3D ASCII rastrový textový soubor na (binární) 3D rastrovou mapovou "
 "vrstvu "
 
-#: ../raster3d/r3.in.ascii/main.c:284
+#: ../raster3d/r3.in.ascii/main.c:297
 #, fuzzy
 msgid "Unable to close ASCII file"
 msgstr "Nelze otevřít vstupní soubor ASCII <%s>"
@@ -3871,7 +3881,7 @@ msgstr "<<%s>> příkaz selhal"
 msgid "unable to open output file"
 msgstr "Nelze otevřít výstupní soubor."
 
-#: ../raster/r.watershed/front/main.c:56 ../raster/r.drain/main.c:94
+#: ../raster/r.watershed/front/main.c:56 ../raster/r.drain/main.c:108
 #: ../raster/r.topmodel/main.c:55 ../raster/r.gwflow/main.c:189
 #: ../raster/r.topidx/main.c:37 ../raster/r.fill.dir/main.c:84
 #: ../raster/r.water.outlet/main.c:47 ../raster/r.carve/main.c:77
@@ -4046,78 +4056,128 @@ msgstr "Nelze načíst tabulku barev pro rastrovou mapu <%s>"
 msgid "Unable to open output file <%s>"
 msgstr "Nelze otevřít výstupní soubor <%s>"
 
-#: ../raster/r.drain/main.c:96
+#: ../raster/r.drain/main.c:110
 msgid "Traces a flow through an elevation model on a raster map."
 msgstr "Určí směr povrchového odtoku v rastrové mapě."
 
-#: ../raster/r.drain/main.c:109
+#: ../raster/r.drain/main.c:120
+msgid "Name of movement direction map associated with the cost surface"
+msgstr ""
+
+#: ../raster/r.drain/main.c:131
+msgid ""
+"Output drain vector map (recommended for cost surface made using knight's "
+"move)"
+msgstr ""
+
+#: ../raster/r.drain/main.c:139
 msgid "Map coordinates of starting point(s) (E,N)"
 msgstr "Mapa souřadnic počátečních bodů (V,S)"
 
-#: ../raster/r.drain/main.c:110 ../raster/r.drain/main.c:116
-#: ../raster/r.cost/main.c:141 ../raster/r.cost/main.c:153
-#: ../raster/r.cost/main.c:162 ../raster/r.cost/main.c:212
+#: ../raster/r.drain/main.c:140 ../raster/r.drain/main.c:146
+#: ../raster/r.cost/main.c:153 ../raster/r.cost/main.c:165
+#: ../raster/r.cost/main.c:174 ../raster/r.cost/main.c:224
 msgid "Start"
 msgstr "Start"
 
-#: ../raster/r.drain/main.c:115
+#: ../raster/r.drain/main.c:145
 msgid "Name of vector map(s) containing starting point(s)"
 msgstr "Jméno vektorové mapy, obsahující počáteční body"
 
-#: ../raster/r.drain/main.c:120
+#: ../raster/r.drain/main.c:150
 msgid "Copy input cell values on output"
 msgstr "Kopíruj vstupní hodnoty buněk na výstup"
 
-#: ../raster/r.drain/main.c:124
+#: ../raster/r.drain/main.c:154
 msgid "Accumulate input values along the path"
 msgstr "Proveď akumulaci hodnot ve směru pohybu/odtoku"
 
-#: ../raster/r.drain/main.c:128
+#: ../raster/r.drain/main.c:158
 msgid "Count cell numbers along the path"
 msgstr "Spočítej buňky ve směru pohybu/odtoku"
 
-#: ../raster/r.drain/main.c:149
+#: ../raster/r.drain/main.c:163
+msgid ""
+"The input surface is a cost surface (if checked, a direction surface must "
+"also be specified"
+msgstr ""
+
+#: ../raster/r.drain/main.c:175
+msgid "Directional drain selected... checking for direction raster"
+msgstr ""
+
+#: ../raster/r.drain/main.c:178
+msgid "Surface/Hydrology drain selected"
+msgstr ""
+
+#: ../raster/r.drain/main.c:184
+msgid ""
+"Direction raster not specified, if direction flag is on, a direction raster "
+"must be given"
+msgstr ""
+
+#: ../raster/r.drain/main.c:191
+#, fuzzy, c-format
+msgid "Direction raster found <%s>"
+msgstr "Zapisuji rastrovou mapu <%s>"
+
+#: ../raster/r.drain/main.c:198
+#, c-format
+msgid "Direction map <%s> should not be specified for Surface/Hydrology drains"
+msgstr ""
+
+#: ../raster/r.drain/main.c:204
+#, fuzzy
+msgid "Outputting a vector path"
+msgstr "Výstupní vektorový soubor drah odtoku"
+
+#: ../raster/r.drain/main.c:227
 msgid "Specify just one of the -c, -a and -n flags"
 msgstr "Pouze jedna z voleb -c, -a a -n"
 
-#: ../raster/r.drain/main.c:168
+#: ../raster/r.drain/main.c:250
 msgid "Metrics allocation"
 msgstr "Alokace metriky"
 
-#: ../raster/r.drain/main.c:179
+#: ../raster/r.drain/main.c:261
 #, c-format
 msgid "Starting point %d is outside the current region"
 msgstr "Počáteční bod %d je mimo současný region"
 
-#: ../raster/r.drain/main.c:187 ../raster/r.drain/main.c:228
+#: ../raster/r.drain/main.c:269 ../raster/r.drain/main.c:310
 msgid "Too many start points"
 msgstr "Příliš mnoho počátečních bodů"
 
-#: ../raster/r.drain/main.c:208 ../raster/r.cost/main.c:514
+#: ../raster/r.drain/main.c:290 ../raster/r.cost/main.c:581
 msgid "Failed to guess site file format"
 msgstr "Selhal jsem při hádání formátu bodů"
 
-#: ../raster/r.drain/main.c:234
+#: ../raster/r.drain/main.c:316
 #, c-format
 msgid "Starting vector map <%s> contains no points in the current region"
 msgstr ""
 "Počáteční vektorová mapa <%s> neobsahuje v současném regionu žádné body"
 
-#: ../raster/r.drain/main.c:240
+#: ../raster/r.drain/main.c:322
 msgid "No start/stop point(s) specified"
 msgstr "Nebyly specifikovány počáteční/koncové bod(y)"
 
-#: ../raster/r.drain/main.c:300
+#: ../raster/r.drain/main.c:397
 msgid "Calculating flow directions..."
 msgstr "Počítám směry odtoku...."
 
-#: ../raster/r.drain/main.c:362 ../raster/r.drain/main.c:415
-#: ../raster/r.cost/main.c:925 ../raster/r.random.surface/save.c:100
+#: ../raster/r.drain/main.c:466 ../raster/r.drain/main.c:519
+#: ../raster/r.cost/main.c:1025 ../raster/r.random.surface/save.c:100
 #: ../raster/r.composite/main.c:199 ../raster/r.random.cells/indep.c:137
 #: ../imagery/i.smap/shapiro/write_img.c:12
 #, c-format
 msgid "Writing raster map <%s>..."
 msgstr "Zapisuji rastrovou mapu <%s>..."
+
+#: ../raster/r.drain/main.c:684
+#, c-format
+msgid "direction read: %lf, neighbour found: %i"
+msgstr ""
 
 #: ../raster/r.param.scale/open_files.c:26 ../raster/r.topidx/file_io.c:17
 #: ../raster/r.mfilter/perform.c:38 ../raster/r.mfilter.fp/perform.c:38
@@ -4809,8 +4869,9 @@ msgid "Maps for computing inter-class distances"
 msgstr "Mapy pro počítání vzdáleností mezi třídami"
 
 #: ../raster/r.distance/parse.c:50 ../raster/r.stats/main.c:119
-#: ../raster/r.cats/main.c:72 ../vector/v.db.select/main.c:64
-#: ../db/base/select.c:214 ../locale/scriptstrings/r.tileset_to_translate.c:13
+#: ../raster/r.cats/main.c:72 ../vector/v.vect.stats/main.c:201
+#: ../vector/v.db.select/main.c:64 ../db/base/select.c:214
+#: ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Výstupní oddělovač sloupců"
 
@@ -5054,11 +5115,11 @@ msgstr "%s %f-%f vyšší náklad"
 msgid "%s higher above pointer wrong"
 msgstr "%s špatně výše nad počátkem"
 
-#: ../raster/r.cost/main.c:124 ../raster/r.walk/main.c:174
+#: ../raster/r.cost/main.c:128 ../raster/r.walk/main.c:177
 msgid "raster, cost surface, cumulative costs"
 msgstr "rastrová mapa, povrch nákladů, kumulativní náklady"
 
-#: ../raster/r.cost/main.c:126
+#: ../raster/r.cost/main.c:130
 msgid ""
 "Creates a raster map showing the cumulative cost of moving between different "
 "geographic locations on an input raster map whose cell category values "
@@ -5068,102 +5129,107 @@ msgstr ""
 "geografickými umístěními na rastrové mapě, jejíž hodnoty kategoií předsavují "
 "cenu."
 
-#: ../raster/r.cost/main.c:133
+#: ../raster/r.cost/main.c:137
 msgid "Name of raster map containing grid cell cost information"
 msgstr "Název rastrové mapy obsahující informace o nákladech"
 
-#: ../raster/r.cost/main.c:140
+#: ../raster/r.cost/main.c:147 ../raster/r.walk/main.c:214
+#, fuzzy
+msgid "Name of output raster map to contain movement directions"
+msgstr "Název existující rastrové mapy obsahující frikční hodnoty"
+
+#: ../raster/r.cost/main.c:152
 msgid "Name of starting vector points map"
 msgstr "Jméno vektorové mapy se startovními body"
 
-#: ../raster/r.cost/main.c:146
+#: ../raster/r.cost/main.c:158
 msgid "Name of stop vector points map"
 msgstr "Jméno vektorové mapy s koncovými body"
 
-#: ../raster/r.cost/main.c:147 ../raster/r.cost/main.c:171
+#: ../raster/r.cost/main.c:159 ../raster/r.cost/main.c:183
 msgid "Stop"
 msgstr "Stop"
 
-#: ../raster/r.cost/main.c:152
+#: ../raster/r.cost/main.c:164
 msgid "Name of starting raster points map"
 msgstr "Jméno rastrové mapy se startovními body"
 
-#: ../raster/r.cost/main.c:161
+#: ../raster/r.cost/main.c:173
 msgid "Map grid coordinates of a starting point (E,N)"
 msgstr "Souřadnice počátečního bodu (V,S)"
 
-#: ../raster/r.cost/main.c:170
+#: ../raster/r.cost/main.c:182
 msgid "Map grid coordinates of a stopping point (E,N)"
 msgstr "Souřadnice bodu pro zastavení (V,S)"
 
-#: ../raster/r.cost/main.c:180
+#: ../raster/r.cost/main.c:192
 msgid "Optional maximum cumulative cost"
 msgstr "Volitelná maximální cena"
 
-#: ../raster/r.cost/main.c:189 ../raster/r.walk/main.c:249
+#: ../raster/r.cost/main.c:201 ../raster/r.walk/main.c:260
 msgid "Cost assigned to null cells. By default, null cells are excluded"
 msgstr ""
 "Náklad přiřazený buňkám s hodnotou NULL. Při výchozím nastavení jsou tyto "
 "vynechány"
 
-#: ../raster/r.cost/main.c:198 ../raster/r.walk/main.c:257
+#: ../raster/r.cost/main.c:210 ../raster/r.walk/main.c:268
 #: ../raster/r.in.xyz/main.c:235
 msgid "Percent of map to keep in memory"
 msgstr "Část mapy v procentech, která má být uchována v paměti"
 
-#: ../raster/r.cost/main.c:203 ../raster/r.walk/main.c:299
+#: ../raster/r.cost/main.c:215 ../raster/r.walk/main.c:310
 msgid "Use the 'Knight's move'; slower, but more accurate"
 msgstr "Použij 'pohyb šachového koně'; pomalejší, ale přesnější"
 
-#: ../raster/r.cost/main.c:207
+#: ../raster/r.cost/main.c:219
 msgid "Keep null values in output raster map"
 msgstr "Ponechat nullové hodnoty v výstupní rastrové mapě"
 
-#: ../raster/r.cost/main.c:211 ../raster/r.walk/main.c:307
+#: ../raster/r.cost/main.c:223 ../raster/r.walk/main.c:318
 msgid "Start with values in raster map"
 msgstr "Začni s hodnotami v rastrové mapě"
 
-#: ../raster/r.cost/main.c:217 ../raster/wildfire/r.ros/main.c:301
+#: ../raster/r.cost/main.c:229 ../raster/wildfire/r.ros/main.c:301
 #: ../raster/wildfire/r.spreadpath/main.c:110 ../display/d.vect/main.c:314
 msgid "Run verbosely"
 msgstr "Rozšířený výpis"
 
-#: ../raster/r.cost/main.c:238 ../raster/r.walk/main.c:322
+#: ../raster/r.cost/main.c:256 ../raster/r.walk/main.c:339
 #: ../raster/wildfire/r.spread/main.c:338 ../raster/r.water.outlet/main.c:85
 msgid "Unable to read current window parameters"
 msgstr "Nelze přečíst parametry aktuálního okna"
 
-#: ../raster/r.cost/main.c:272
+#: ../raster/r.cost/main.c:290
 msgid "Must specify exactly one of start_points, start_rast or coordinate"
 msgstr ""
 "Alespoň jedna z voleb start_points, start_rast nebo coordinate musí být "
 "zadána"
 
-#: ../raster/r.cost/main.c:277 ../raster/r.cost/main.c:547
-#: ../raster/r.cost/main.c:653
+#: ../raster/r.cost/main.c:295 ../raster/r.cost/main.c:614
+#: ../raster/r.cost/main.c:720
 msgid "No start points"
 msgstr "Žádné počáteční body"
 
-#: ../raster/r.cost/main.c:284 ../raster/r.walk/main.c:351
+#: ../raster/r.cost/main.c:302 ../raster/r.walk/main.c:368
 #, c-format
 msgid "Inappropriate maximum cost: %d"
 msgstr "Nevhodné maximální náklady: %d"
 
-#: ../raster/r.cost/main.c:288 ../raster/r.walk/main.c:355
+#: ../raster/r.cost/main.c:306 ../raster/r.walk/main.c:372
 #, c-format
 msgid "Inappropriate percent memory: %d"
 msgstr "Nevhodné procento paměti: %d"
 
-#: ../raster/r.cost/main.c:306
+#: ../raster/r.cost/main.c:324
 msgid "Assigning negative cost to null cell. Null cells excluded."
 msgstr ""
 "Přiřazení záporné hodnoty nullovým buňkám. Nullové buňky budou vynechány"
 
-#: ../raster/r.cost/main.c:372 ../raster/r.walk/main.c:654
+#: ../raster/r.cost/main.c:402 ../raster/r.walk/main.c:682
 msgid "Creating some temporary files..."
 msgstr "Vytvářím nějaké dočasné soubory..."
 
-#: ../raster/r.cost/main.c:393 ../raster/r.cost/main.c:620
+#: ../raster/r.cost/main.c:435 ../raster/r.cost/main.c:687
 #: ../raster/r.series/main.c:214 ../raster/r.colors/stats.c:41
 #: ../raster/r.colors/stats.c:107 ../raster/r.grow.distance/main.c:259
 #: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.surf.idw/main.c:685
@@ -5171,59 +5237,69 @@ msgstr "Vytvářím nějaké dočasné soubory..."
 msgid "Reading raster map <%s>..."
 msgstr "Načítám rastrový soubor <%s>..."
 
-#: ../raster/r.cost/main.c:419 ../raster/r.cost/main.c:437
-#: ../raster/r.cost/main.c:456
+#: ../raster/r.cost/main.c:461 ../raster/r.cost/main.c:479
+#: ../raster/r.cost/main.c:498
 #, c-format
 msgid ""
 "Negative cell value found at row %d, col %d. Setting negative value to "
 "null_cost value"
 msgstr ""
 
-#: ../raster/r.cost/main.c:475
+#: ../raster/r.cost/main.c:517
 msgid "Initializing output..."
 msgstr "Inicializuji výstup..."
 
-#: ../raster/r.cost/main.c:564
+#: ../raster/r.cost/main.c:540 ../raster/r.walk/main.c:880
+#, fuzzy
+msgid "Initializing directional output "
+msgstr "Inicializuji výstup"
+
+#: ../raster/r.cost/main.c:631
 msgid "Failed to guess site file format\n"
 msgstr "Selhalo hledání formátu souboru s body\n"
 
-#: ../raster/r.cost/main.c:618 ../raster/r.texture/h_measure.c:770
+#: ../raster/r.cost/main.c:685 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "Nelze alokovat paměť."
 
-#: ../raster/r.cost/main.c:668 ../raster/r.walk/main.c:914
+#: ../raster/r.cost/main.c:735 ../raster/r.walk/main.c:982
 msgid "Specified starting location outside database window"
 msgstr "Zadaná počáteční pozice je mimo aktuální výřez"
 
-#: ../raster/r.cost/main.c:684
+#: ../raster/r.cost/main.c:751
 msgid "Finding cost path..."
 msgstr "Hledání nákladů cesty..."
 
-#: ../raster/r.cost/main.c:909
+#: ../raster/r.cost/main.c:1001
 msgid "No data"
 msgstr "Žádná data"
 
-#: ../raster/r.cost/main.c:913 ../raster/r.walk/main.c:1382
+#: ../raster/r.cost/main.c:1005 ../raster/r.walk/main.c:1475
 msgid "Error, ct == pres_cell"
 msgstr "Chyba, ct == pres_cell"
 
-#: ../raster/r.cost/main.c:1054
+#: ../raster/r.cost/main.c:1133 ../raster/r.walk/main.c:1611
+#, fuzzy, c-format
+msgid "Writing movement direction file %s..."
+msgstr "Zapisuji nový soubor..."
+
+#: ../raster/r.cost/main.c:1187
 #, c-format
 msgid "Peak cost value: %f."
 msgstr "nejvyšší hodnota ceny: %f."
 
-#: ../raster/r.cost/main.c:1076 ../raster/r.walk/main.c:1564
+#: ../raster/r.cost/main.c:1209 ../raster/r.walk/main.c:1697
 #, c-format
 msgid "Illegal x coordinate <%s>"
 msgstr "Neplatná souřadnice x <%s>"
 
-#: ../raster/r.cost/main.c:1078 ../raster/r.walk/main.c:1566
+#: ../raster/r.cost/main.c:1211 ../raster/r.walk/main.c:1699
 #, c-format
 msgid "Illegal y coordinate <%s>"
 msgstr "Neplatná souřadnice y <%s>"
 
-#: ../raster/r.cost/main.c:1082 ../raster/r.walk/main.c:1570
+#: ../raster/r.cost/main.c:1215 ../raster/r.walk/main.c:1703
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "Varování, ignoruji bod mimo okno: %.4f, %.4f"
@@ -5602,6 +5678,7 @@ msgstr "Tento modul zatím pracuje jenom pro mapy typu integer (CELL)"
 #: ../raster/r.neighbors/main.c:226 ../raster/r.proj/main.c:210
 #: ../imagery/i.rectify/main.c:156
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:149
+#: ../vector/v.vect.stats/main.c:276
 #, c-format
 msgid "<%s=%s> unknown %s"
 msgstr "<%s=%s> neznámé %s"
@@ -5920,7 +5997,7 @@ msgstr ""
 "Prosím zadejte minimální a/nebo maximální poloměr, když používáte přepínač "
 "pro vytvoření binární rastrové mapy"
 
-#: ../raster/r.walk/main.c:176
+#: ../raster/r.walk/main.c:179
 msgid ""
 "Outputs a raster map layer showing the anisotropic cumulative cost of moving "
 "between different geographic locations on an input elevation raster map "
@@ -5932,221 +6009,221 @@ msgstr ""
 "jejížhodnoty buněk reprezentují výšku kombinovanou s další mapou, jejíž "
 "hodnoty reprezentují frikční povrch."
 
-#: ../raster/r.walk/main.c:188
+#: ../raster/r.walk/main.c:191
 msgid "Name of elevation input raster map"
 msgstr "Název rastrové mapy s digitálním modelem terénu"
 
-#: ../raster/r.walk/main.c:196
+#: ../raster/r.walk/main.c:199
 msgid "Name of input raster map containing friction costs"
 msgstr "Název existující rastrové mapy obsahující frikční hodnoty"
 
-#: ../raster/r.walk/main.c:203 ../raster/r.water.outlet/main.c:62
+#: ../raster/r.walk/main.c:206 ../raster/r.water.outlet/main.c:62
 msgid "Name of raster map to contain results"
 msgstr "Jméno rastrové mapy, obsahující výsledky"
 
-#: ../raster/r.walk/main.c:210
+#: ../raster/r.walk/main.c:221
 msgid "Starting points vector map"
 msgstr "Vektorová mapa s počátečními body"
 
-#: ../raster/r.walk/main.c:217
+#: ../raster/r.walk/main.c:228
 msgid "Stop points vector map"
 msgstr "Vektorová mapa s cílovými body"
 
-#: ../raster/r.walk/main.c:225
+#: ../raster/r.walk/main.c:236
 msgid "The map E and N grid coordinates of a starting point (E,N)"
 msgstr "V a S souřadnice počátečního bodu (V,S)"
 
-#: ../raster/r.walk/main.c:233
+#: ../raster/r.walk/main.c:244
 msgid "The map E and N grid coordinates of a stopping point (E,N)"
 msgstr "V a S souřadnice cílového bodu (V,S)"
 
-#: ../raster/r.walk/main.c:241
+#: ../raster/r.walk/main.c:252
 msgid "An optional maximum cumulative cost"
 msgstr "Volitelné maximální kumulativní náklady"
 
-#: ../raster/r.walk/main.c:266
+#: ../raster/r.walk/main.c:277
 msgid "Number of the segment to create (segment library)"
 msgstr "Počet segmentů, které mají být vytvořeny (segment library)"
 
-#: ../raster/r.walk/main.c:276
+#: ../raster/r.walk/main.c:287
 msgid "Coefficients for walking energy formula parameters a,b,c,d"
 msgstr "Koeficienty pro rovnici energie chůze a,b,c,d"
 
-#: ../raster/r.walk/main.c:285
+#: ../raster/r.walk/main.c:296
 msgid "Lambda coefficients for combining walking energy and friction cost"
 msgstr "Koeficienty lambda pro kombinaci energie chůze a frikčního povrchu"
 
-#: ../raster/r.walk/main.c:294
+#: ../raster/r.walk/main.c:305
 msgid "Slope factor determines travel energy cost per height step"
 msgstr "Faktor sklonu svahu určuje energii přesunu podle velikosti sklonu"
 
-#: ../raster/r.walk/main.c:303
+#: ../raster/r.walk/main.c:314
 msgid "Keep null values in output map"
 msgstr "Nullové hodnoty ponechej ve výstupní mapě"
 
-#: ../raster/r.walk/main.c:360
+#: ../raster/r.walk/main.c:377
 #, c-format
 msgid "Missing required value: got %d instead of 4"
 msgstr "Chybí požadovaná hodnota: mám %d místo 4"
 
-#: ../raster/r.walk/main.c:364
+#: ../raster/r.walk/main.c:381
 #, c-format
 msgid "Walking costs are a=%lf b=%lf c=%lf d=%lf"
 msgstr "Náklady na chůzi jsou a=%lf b=%lf c=%lf d=%lf"
 
-#: ../raster/r.walk/main.c:369 ../raster/r.walk/main.c:377
-#: ../raster/r.walk/main.c:384
+#: ../raster/r.walk/main.c:386 ../raster/r.walk/main.c:394
+#: ../raster/r.walk/main.c:401
 #, c-format
 msgid "Missing required value: %d"
 msgstr "Chybí požadovaná hodnota: %d"
 
-#: ../raster/r.walk/main.c:372
+#: ../raster/r.walk/main.c:389
 #, c-format
 msgid "Lambda is %lf"
 msgstr "Lambda je %lf"
 
-#: ../raster/r.walk/main.c:380
+#: ../raster/r.walk/main.c:397
 #, c-format
 msgid "Slope_factor is %lf"
 msgstr "Slope_factor je %lf"
 
-#: ../raster/r.walk/main.c:387
+#: ../raster/r.walk/main.c:404
 #, c-format
 msgid "Nseg is %d"
 msgstr "Nseg je %d"
 
-#: ../raster/r.walk/main.c:393
+#: ../raster/r.walk/main.c:410
 msgid "Null cells excluded from cost evaluation."
 msgstr "Buňky bez hodnot jsou vyloučeny pro počítání nákladů"
 
-#: ../raster/r.walk/main.c:397
+#: ../raster/r.walk/main.c:414
 msgid "Input null cell will be retained into output map"
 msgstr "Vstupní buňky neobsahující hodnotu budou převedeny do výstupní mapy"
 
-#: ../raster/r.walk/main.c:409
+#: ../raster/r.walk/main.c:426
 #, c-format
 msgid "Unable to find starting vector <%s> "
 msgstr "Nelze nalézt počáteční vektor <%s> "
 
-#: ../raster/r.walk/main.c:456
+#: ../raster/r.walk/main.c:473
 #, c-format
 msgid "Unable to find stop vector <%s>"
 msgstr "Nelze nalézt koncový vektor <%s> "
 
-#: ../raster/r.walk/main.c:495
+#: ../raster/r.walk/main.c:512
 msgid "Warning: assigning negative cost to null cell. Null cells excluded."
 msgstr ""
 "Varování: přiřazuji negativní hodnotu nákladů pro buňku bez hodnoty. Buňky "
 "neobsahující hodnotu jsou vyloučeny."
 
-#: ../raster/r.walk/main.c:556 ../raster/r.walk/main.c:558
+#: ../raster/r.walk/main.c:584 ../raster/r.walk/main.c:586
 #, c-format
 msgid "Unable to read %s"
 msgstr "Nelze číst %s"
 
-#: ../raster/r.walk/main.c:563
+#: ../raster/r.walk/main.c:591
 msgid "Map with different projection"
 msgstr "Mapa v jiné projekci"
 
-#: ../raster/r.walk/main.c:575
+#: ../raster/r.walk/main.c:603
 msgid "DTM_Source map is: Integer cell type"
 msgstr "Mapa DMT_Source: celočíselný typ"
 
-#: ../raster/r.walk/main.c:578
+#: ../raster/r.walk/main.c:606
 msgid "DTM_Source map is: Floating point (float) cell type"
 msgstr "Mapa DTM_Source: Typ s plovoucí desetinnou čárkou (float)"
 
-#: ../raster/r.walk/main.c:581
+#: ../raster/r.walk/main.c:609
 msgid "DTM_Source map is: Floating point (double) cell type"
 msgstr "Mapa DTM_Source je: Typ s plovoucí desetinnou čárkou (double)"
 
-#: ../raster/r.walk/main.c:584 ../raster/r.walk/main.c:599
-#: ../raster/r.walk/main.c:636
+#: ../raster/r.walk/main.c:612 ../raster/r.walk/main.c:627
+#: ../raster/r.walk/main.c:664
 #, c-format
 msgid " %d rows, %d cols"
 msgstr "%d řádků, %d sloupců"
 
-#: ../raster/r.walk/main.c:590
+#: ../raster/r.walk/main.c:618
 msgid "COST_Source map is: Integer cell type"
 msgstr "Mapa COST_Source: Celočíselný typ"
 
-#: ../raster/r.walk/main.c:593
+#: ../raster/r.walk/main.c:621
 msgid "COST_Source map is: Floating point (float) cell type"
 msgstr "Mapa COST_Source: Typ s plovoucí desetinnou čárkou (float)"
 
-#: ../raster/r.walk/main.c:596
+#: ../raster/r.walk/main.c:624
 msgid "COST_Source map is: Floating point (double) cell type"
 msgstr "Mapa COST_Source: Typ s plovoucí desetinnou čárkou (double)"
 
-#: ../raster/r.walk/main.c:627
+#: ../raster/r.walk/main.c:655
 msgid "Output map is: Integer cell type"
 msgstr "Výstupní mapa: Celočíselný typ"
 
-#: ../raster/r.walk/main.c:630
+#: ../raster/r.walk/main.c:658
 msgid "Output map is: Floating point (float) cell type"
 msgstr "Výstupní mapa: Typ s plovoucí desetinnou čárkou (float)"
 
-#: ../raster/r.walk/main.c:633
+#: ../raster/r.walk/main.c:661
 msgid "Output map is: Floating point (double) cell type"
 msgstr "Výstupní mapa: Typ s plovoucí desetinnou čárkou (double)"
 
-#: ../raster/r.walk/main.c:638
+#: ../raster/r.walk/main.c:666
 #, c-format
 msgid " EW resolution %s (%lf)"
 msgstr "Rozlišení východ-západ %s (%lf)"
 
-#: ../raster/r.walk/main.c:640
+#: ../raster/r.walk/main.c:668
 #, c-format
 msgid " NS resolution %s (%lf)"
 msgstr "Rozlišení server-jih %s (%lf)"
 
-#: ../raster/r.walk/main.c:682 ../raster/r.walk/main.c:744
+#: ../raster/r.walk/main.c:722 ../raster/r.walk/main.c:784
 #: ../raster/wildfire/r.spread/main.c:514 ../raster/r.sum/main.c:74
 #, c-format
 msgid "Reading %s..."
 msgstr "Načítám %s..."
 
-#: ../raster/r.walk/main.c:812
+#: ../raster/r.walk/main.c:852
 msgid "Initializing output "
 msgstr "Inicializuji výstup"
 
-#: ../raster/r.walk/main.c:820
+#: ../raster/r.walk/main.c:860 ../raster/r.walk/main.c:889
 msgid "Unable to allocate memory for segment fbuff == NULL"
 msgstr "Nelze alokovat paměť pro segment fbuff == NULL"
 
-#: ../raster/r.walk/main.c:849
+#: ../raster/r.walk/main.c:917
 #, c-format
 msgid "Raster output map <%s> not found (no start_points given)"
 msgstr "Výstupní rastrová mapa <%s>  nenalezena (nebyly zadány start_points)"
 
-#: ../raster/r.walk/main.c:864
+#: ../raster/r.walk/main.c:932
 #, c-format
 msgid "Memory allocation error on reading start points from raster map %s"
 msgstr "Chyba při alokaci paměti při čtení počátečních bodů z rastrové mapy %s"
 
-#: ../raster/r.walk/main.c:867
+#: ../raster/r.walk/main.c:935
 #, c-format
 msgid "Reading %s... "
 msgstr "Načítám %s... "
 
-#: ../raster/r.walk/main.c:931
+#: ../raster/r.walk/main.c:999
 msgid "Finding cost path"
 msgstr "Hledám nákladovou cestu"
 
-#: ../raster/r.walk/main.c:1378
+#: ../raster/r.walk/main.c:1471
 msgid "End of map!"
 msgstr "Konec mapy!"
 
-#: ../raster/r.walk/main.c:1396
+#: ../raster/r.walk/main.c:1497
 #, c-format
 msgid "Writing output raster map %s... "
 msgstr "Zapisuji výslednou rastrovou mapu %s... "
 
-#: ../raster/r.walk/main.c:1400
+#: ../raster/r.walk/main.c:1501
 msgid "Will copy input map null values into output map"
 msgstr "Zkopíruje buňky bez hodnoty do výstupní mapy."
 
-#: ../raster/r.walk/main.c:1407
+#: ../raster/r.walk/main.c:1508
 msgid ""
 "Integer cell type.\n"
 "Writing..."
@@ -6154,7 +6231,7 @@ msgstr ""
 "Celočíselná mapa\n"
 "Zapisuji..."
 
-#: ../raster/r.walk/main.c:1442
+#: ../raster/r.walk/main.c:1543
 msgid ""
 "Float cell type.\n"
 "Writing..."
@@ -6162,7 +6239,7 @@ msgstr ""
 "Mapa s plovoucí desetinnou čárkou (float)\n"
 "Zapisuji..."
 
-#: ../raster/r.walk/main.c:1477
+#: ../raster/r.walk/main.c:1578
 msgid ""
 "Double cell type.\n"
 "Writing..."
@@ -6170,7 +6247,7 @@ msgstr ""
 "Mapa s plovoucí desetinnou čárkou (double)\n"
 "Zapisuji..."
 
-#: ../raster/r.walk/main.c:1513
+#: ../raster/r.walk/main.c:1628
 #, c-format
 msgid "Peak cost value: %f"
 msgstr "Nejvyšší náklady: %f"
@@ -6281,7 +6358,7 @@ msgid "Neither \"levels\" nor \"step\" parameter specified."
 msgstr "Nebyl zadán parametr \"levels\" ani \"step\"."
 
 #: ../raster/r.contour/main.c:196 ../vector/v.net.centrality/main.c:240
-#: ../vector/v.overlay/main.c:464 ../vector/v.in.ogr/main.c:788
+#: ../vector/v.overlay/main.c:525 ../vector/v.in.ogr/main.c:788
 #: ../vector/v.net.distance/main.c:208 ../vector/v.in.dwg/main.c:219
 #: ../vector/v.distance/main.c:835 ../vector/v.net.flow/main.c:168
 #: ../vector/v.surf.rst/main.c:613 ../vector/v.net.timetable/main.c:103
@@ -6302,7 +6379,7 @@ msgid "Unable to create index for table <%s>, key <%s>"
 msgstr "Nelze vytvořit index pro tabulku <%s>, klíč <%s>"
 
 #: ../raster/r.contour/main.c:206 ../raster/r.to.vect/main.c:204
-#: ../vector/v.random/main.c:204 ../vector/v.overlay/main.c:474
+#: ../vector/v.random/main.c:204 ../vector/v.overlay/main.c:535
 #: ../vector/v.in.ogr/main.c:799 ../vector/v.in.dwg/main.c:228
 #: ../vector/v.in.ascii/in.c:395 ../vector/v.sample/main.c:223
 #: ../vector/v.distance/main.c:840 ../vector/v.mkgrid/main.c:263
@@ -6313,8 +6390,8 @@ msgstr "Nelze vytvořit index pro tabulku <%s>, klíč <%s>"
 msgid "Unable to grant privileges on table <%s>"
 msgstr "Nelze poskytnou práva na tabulku <%s>"
 
-#: ../raster/r.contour/main.c:224 ../vector/v.overlay/area_area.c:238
-#: ../vector/v.overlay/line_area.c:217 ../vector/v.convert/att.c:110
+#: ../raster/r.contour/main.c:224 ../vector/v.overlay/area_area.c:345
+#: ../vector/v.overlay/line_area.c:218 ../vector/v.convert/att.c:110
 #: ../vector/v.to.points/main.c:63
 #, c-format
 msgid "Unable to insert new record: '%s'"
@@ -6961,8 +7038,8 @@ msgstr "Výstupní mapa topografického indexu:"
 
 #: ../raster/r.topidx/file_io.c:21 ../raster/r.out.tiff/r.out.tiff.c:169
 #: ../raster/r.null/null.c:163 ../raster/r.bitpattern/main.c:114
-#: ../raster/r.texture/main.c:240 ../imagery/i.landsat.toar/main.c:333
-#: ../imagery/i.landsat.toar/main.c:468 ../imagery/i.rectify/main.c:294
+#: ../raster/r.texture/main.c:240 ../imagery/i.landsat.toar/main.c:310
+#: ../imagery/i.landsat.toar/main.c:445 ../imagery/i.rectify/main.c:294
 #: ../imagery/i.rectify/main.c:300
 #, c-format
 msgid "Unable to read header of raster map <%s>"
@@ -11662,7 +11739,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "Převede rastrovou mapu na vektorovou."
 
 #: ../raster/r.to.vect/main.c:65 ../vector/v.to.db/parse.c:36
-#: ../vector/v.net.bridge/main.c:63
+#: ../vector/v.net.bridge/main.c:63 ../vector/v.vect.stats/main.c:145
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "Typ prvku"
@@ -11724,7 +11801,7 @@ msgstr ""
 msgid "Unable to create table: %s"
 msgstr "Neschopen vytvořit tabulku: %s"
 
-#: ../raster/r.to.vect/main.c:199 ../vector/v.overlay/main.c:469
+#: ../raster/r.to.vect/main.c:199 ../vector/v.overlay/main.c:530
 #: ../vector/v.mkgrid/main.c:259
 msgid "Unable to create index"
 msgstr "Nelze vytvořit index"
@@ -14658,24 +14735,9 @@ msgid "Signature %d is not valid (singular) - ignored"
 msgstr "Příznak %d není platný (singulární) - ignorován."
 
 #: ../imagery/i.landsat.toar/landsat_met.c:68
-#: ../imagery/i.landsat.toar/landsat_met.c:166
 #, fuzzy, c-format
 msgid "Metadata file <%s> not found"
 msgstr "GRASS site soubor <%s> nebyl nalezen"
-
-#: ../imagery/i.landsat.toar/landsat_met.c:87
-#, c-format
-msgid ""
-"Product creation date not in metadata file <%s>, input this data in the "
-"command line parameters"
-msgstr ""
-
-#: ../imagery/i.landsat.toar/landsat_met.c:95
-#, c-format
-msgid ""
-"Unable to read solar elevation from metadata file in metadata file <%s>, "
-"input this data in the command line parameters"
-msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:64
 msgid ""
@@ -14756,55 +14818,55 @@ msgstr ""
 msgid "Output at-sensor radiance for all bands"
 msgstr ""
 
-#: ../imagery/i.landsat.toar/main.c:200 ../imagery/i.landsat.toar/main.c:212
+#: ../imagery/i.landsat.toar/main.c:200 ../imagery/i.landsat.toar/main.c:208
 #, fuzzy, c-format
 msgid "Illegal date format: [%s] (yyyy-mm-dd)"
 msgstr "Neplatná hodnota pro '%s' (%s)"
 
-#: ../imagery/i.landsat.toar/main.c:246
+#: ../imagery/i.landsat.toar/main.c:227
 msgid "Failed to identify satellite"
 msgstr ""
 
-#: ../imagery/i.landsat.toar/main.c:256
+#: ../imagery/i.landsat.toar/main.c:237
 #, c-format
 msgid "Lacking '%s' or '%s' for this satellite"
 msgstr ""
 
-#: ../imagery/i.landsat.toar/main.c:266
+#: ../imagery/i.landsat.toar/main.c:244
 msgid "Landsat-7 requires band gain with 9 (H/L) data"
 msgstr ""
 
-#: ../imagery/i.landsat.toar/main.c:285
+#: ../imagery/i.landsat.toar/main.c:263
 #, fuzzy, c-format
 msgid "Unknown satellite type (defined by '%s')"
 msgstr "Neznámý typ: %d"
 
-#: ../imagery/i.landsat.toar/main.c:395
+#: ../imagery/i.landsat.toar/main.c:372
 #, fuzzy, c-format
 msgid "Unknown production date (defined by '%s')"
 msgstr "Neznámá volba v definici databáze pro "
 
-#: ../imagery/i.landsat.toar/main.c:453
+#: ../imagery/i.landsat.toar/main.c:430
 #, fuzzy
 msgid "Calculating..."
 msgstr "Počítám mapy ..."
 
-#: ../imagery/i.landsat.toar/main.c:487
+#: ../imagery/i.landsat.toar/main.c:464
 #, fuzzy, c-format
 msgid "Writing %s of <%s> to <%s>..."
 msgstr "Zapisuji %s z %s..."
 
-#: ../imagery/i.landsat.toar/main.c:488
+#: ../imagery/i.landsat.toar/main.c:465
 #, fuzzy
 msgid "radiance"
 msgstr "Variance"
 
-#: ../imagery/i.landsat.toar/main.c:490
+#: ../imagery/i.landsat.toar/main.c:467
 #, fuzzy
 msgid "temperature"
 msgstr "Prvky"
 
-#: ../imagery/i.landsat.toar/main.c:490
+#: ../imagery/i.landsat.toar/main.c:467
 #, fuzzy
 msgid "reflectance"
 msgstr "Výběr"
@@ -22419,7 +22481,7 @@ msgstr "Výpočet polohy středu..."
 msgid "Writing data into the table..."
 msgstr "Zapisuji data..."
 
-#: ../vector/v.type/main.c:47 ../vector/v.overlay/main.c:55
+#: ../vector/v.type/main.c:47 ../vector/v.overlay/main.c:60
 #: ../vector/v.parallel/main.c:39 ../vector/v.parallel2/main.c:45
 #: ../vector/v.mkgrid/main.c:63 ../vector/v.in.region/main.c:38
 #: ../vector/v.patch/main.c:68 ../vector/v.split/main.c:42
@@ -22495,7 +22557,7 @@ msgstr ""
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr "Výstup rozdělení jako graf (linie) ne plochy"
 
-#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:120
+#: ../vector/v.voronoi/vo_main.c:140 ../vector/v.overlay/main.c:132
 #: ../vector/v.in.ogr/main.c:215 ../vector/v.select/args.c:80
 #: ../vector/v.to.points/main.c:213
 msgid "Do not create attribute table"
@@ -22555,7 +22617,7 @@ msgstr "Použít pouze body v současném regionu"
 msgid "Output triangulation as a graph (lines), not areas"
 msgstr "Výstup triangulace jako graf (linie), ne plochy"
 
-#: ../vector/v.voronoi/dt_main.c:142 ../vector/v.overlay/area_area.c:68
+#: ../vector/v.voronoi/dt_main.c:142 ../vector/v.overlay/area_area.c:171
 #: ../vector/v.in.ogr/main.c:1051 ../vector/v.buffer2/main.c:594
 #: ../vector/v.buffer2/main.c:686 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
@@ -22643,76 +22705,91 @@ msgstr "Steinerův bod v uzlu[%d] byl přidán do vývodu (MST cena =%f)"
 msgid "No Steiner point found -> leaving cycle"
 msgstr "Nebyl nalezen žádný Steinerův bod -> opuštím cyklus"
 
-#: ../vector/v.overlay/area_area.c:39 ../vector/v.overlay/line_area.c:69
+#: ../vector/v.overlay/area_area.c:54
+#, fuzzy, c-format
+msgid "Snapping boundaries with %g ..."
+msgstr "Spojování hranic..."
+
+#: ../vector/v.overlay/area_area.c:102
+#, fuzzy, c-format
+msgid "%d boundaries snapped"
+msgstr "%d hranic uzavřeno"
+
+#: ../vector/v.overlay/area_area.c:110 ../vector/v.overlay/line_area.c:69
 msgid "Breaking lines..."
 msgstr "Lámu linie ... "
 
-#: ../vector/v.overlay/area_area.c:43 ../vector/v.buffer2/main.c:549
+#: ../vector/v.overlay/area_area.c:114 ../vector/v.buffer2/main.c:549
 #: ../vector/v.buffer2/main.c:556 ../vector/v.buffer/main.c:625
 msgid "Removing duplicates..."
 msgstr "Odstraňuji duplicitní centroidy ..."
 
-#: ../vector/v.overlay/area_area.c:46
+#: ../vector/v.overlay/area_area.c:117
 msgid "Cleaning boundaries at nodes..."
 msgstr "Čistím hranice v uzlech..."
 
-#: ../vector/v.overlay/area_area.c:55 ../vector/v.buffer2/main.c:574
+#: ../vector/v.overlay/area_area.c:153 ../vector/v.overlay/line_area.c:71
+#, fuzzy
+msgid "Merging lines..."
+msgstr "Bufer linií...."
+
+#: ../vector/v.overlay/area_area.c:157 ../vector/v.buffer2/main.c:574
 #: ../vector/v.buffer/main.c:637
 msgid "Attaching islands..."
 msgstr "Přidávám ostrovy..."
 
-#: ../vector/v.overlay/area_area.c:78
+#: ../vector/v.overlay/area_area.c:181
 #, c-format
 msgid "Querying vector map <%s>..."
 msgstr "Dotazuji vektorovou mapu <%s>..."
 
-#: ../vector/v.overlay/area_area.c:103 ../vector/v.overlay/area_area.c:183
-#: ../vector/v.overlay/area_area.c:211 ../vector/v.overlay/line_area.c:161
-#: ../vector/v.overlay/line_area.c:189
+#: ../vector/v.overlay/area_area.c:208 ../vector/v.overlay/area_area.c:290
+#: ../vector/v.overlay/area_area.c:318 ../vector/v.overlay/line_area.c:162
+#: ../vector/v.overlay/line_area.c:190
 msgid "Attribute not found"
 msgstr "Atribut(y) nenalezeny"
 
-#: ../vector/v.overlay/area_area.c:114
+#: ../vector/v.overlay/area_area.c:218
 msgid "Writing centroids..."
 msgstr "Zapisuji centroidy ..."
 
-#: ../vector/v.overlay/area_area.c:264 ../vector/v.buffer/main.c:760
+#: ../vector/v.overlay/area_area.c:372 ../vector/v.buffer/main.c:760
 msgid "Attaching centroids..."
 msgstr "Přidávám centroidy..."
 
-#: ../vector/v.overlay/main.c:56
+#: ../vector/v.overlay/main.c:61
 msgid "Overlays two vector maps."
 msgstr "Překrytí dvo vektorových map."
 
-#: ../vector/v.overlay/main.c:59 ../vector/v.select/args.c:10
+#: ../vector/v.overlay/main.c:64 ../vector/v.select/args.c:10
 msgid "Name of input vector map (A)"
 msgstr "Název vstupní vektorové mapy (A)"
 
-#: ../vector/v.overlay/main.c:63 ../vector/v.select/args.c:14
+#: ../vector/v.overlay/main.c:68 ../vector/v.select/args.c:14
 msgid "Feature type (vector map A)"
 msgstr "Typy prvků (vektorová mapa A)"
 
-#: ../vector/v.overlay/main.c:69 ../vector/v.select/args.c:19
+#: ../vector/v.overlay/main.c:74 ../vector/v.select/args.c:19
 msgid "Layer number (vector map A)"
 msgstr "Číslo vrstvy (vektorová mapa A)"
 
-#: ../vector/v.overlay/main.c:73 ../vector/v.select/args.c:24
+#: ../vector/v.overlay/main.c:78 ../vector/v.select/args.c:24
 msgid "Name of input vector map (B)"
 msgstr "Název vstupní vektorové mapy (B)"
 
-#: ../vector/v.overlay/main.c:77 ../vector/v.select/args.c:28
+#: ../vector/v.overlay/main.c:82 ../vector/v.select/args.c:28
 msgid "Feature type (vector map B)"
 msgstr "Typy prvků (vektorová mapa B)"
 
-#: ../vector/v.overlay/main.c:83 ../vector/v.select/args.c:33
+#: ../vector/v.overlay/main.c:88 ../vector/v.select/args.c:33
 msgid "Layer number (vector map B)"
 msgstr "Číslo vrstvy (vektorová mapa B)"
 
-#: ../vector/v.overlay/main.c:95
+#: ../vector/v.overlay/main.c:100
 msgid "Operator defines features written to output vector map"
 msgstr "Operátor definuje prvky zapisované do výstupní vektorové mapy"
 
-#: ../vector/v.overlay/main.c:98
+#: ../vector/v.overlay/main.c:103
 msgid ""
 "Feature is written to output if the result of operation 'ainput operator "
 "binput' is true. Input feature is considered to be true, if category of "
@@ -22722,7 +22799,7 @@ msgstr ""
 "binput' je vyhodnocen jako 'pravda'. Vstupní prvky jsou vyhodnoceny jako "
 "pravdivé, pokud kategorie zadaných vrstev je definována"
 
-#: ../vector/v.overlay/main.c:103
+#: ../vector/v.overlay/main.c:108
 msgid ""
 "and;also known as 'intersection' in GIS;or;also known as 'union' in GIS "
 "(only for atype=area);not;features from ainput not overlayed by features "
@@ -22734,62 +22811,76 @@ msgstr ""
 "vstupu 'b';xor;prvky ze vstupu 'a' ani 'b' nejsou prekryty (jenom pro "
 "typ=plocha)"
 
-#: ../vector/v.overlay/main.c:114
+#: ../vector/v.overlay/main.c:119
 msgid "Output layer for new category, ainput and binput"
 msgstr "Výstupní vrstva pro nové kategorie, vstup-a vstup-b"
 
-#: ../vector/v.overlay/main.c:115
+#: ../vector/v.overlay/main.c:120
 msgid "If 0 or not given, the category is not written"
 msgstr "Jestli 0 nebo nezadáno, categorie nebude zapsána"
 
-#: ../vector/v.overlay/main.c:152
+#: ../vector/v.overlay/main.c:125 ../vector/v.in.ogr/main.c:175
+msgid "Snapping threshold for boundaries"
+msgstr "Práh navázaní pro hranice"
+
+#: ../vector/v.overlay/main.c:126
+msgid "Disable snapping with snap <= 0"
+msgstr ""
+
+#: ../vector/v.overlay/main.c:160
+#, fuzzy, c-format
+msgid "Unknown operator '%s'"
+msgstr "Neznámá operace"
+
+#: ../vector/v.overlay/main.c:165
 #, c-format
 msgid "Operator '%s' is not supported for type line"
 msgstr "fOperátor '%s' není podporuje typ linie"
 
-#: ../vector/v.overlay/main.c:199
+#: ../vector/v.overlay/main.c:220
 #, c-format
 msgid "Copying vector objects from vector map <%s>..."
 msgstr "Kopírují objekty z vektorové mapy <%s> ..."
 
-#: ../vector/v.overlay/main.c:235
+#: ../vector/v.overlay/main.c:293
 #, fuzzy, c-format
 msgid "No %s features found in vector map <%s>. Verify '%s' parameter."
 msgstr ""
 "Nalezeno %d ploch, nebyly však požadovány pro export. Ověřte parametr 'type'."
 
-#: ../vector/v.overlay/main.c:269
+#: ../vector/v.overlay/main.c:327
 msgid "Collecting input attributes..."
 msgstr "Sbírám vstupní atributy ... "
 
-#: ../vector/v.overlay/main.c:304 ../vector/v.label/main.c:323
+#: ../vector/v.overlay/main.c:362 ../vector/v.label/main.c:323
 #: ../vector/v.label.sa/labels.c:174
 msgid "Unable to select attributes"
 msgstr "Nelze vybrat artibuty"
 
-#: ../vector/v.overlay/main.c:352
-#, c-format
-msgid "Unknown column type '%s'"
-msgstr "Neznámý typ sloupce '%s'"
+#: ../vector/v.overlay/main.c:413
+#, fuzzy, c-format
+msgid "Unknown column type '%s' of column '%s'"
+msgstr "Neznámý typ sloupce '%s' hodnoty ztraceny"
 
-#: ../vector/v.overlay/main.c:365 ../vector/v.lrs/v.lrs.label/main.c:347
+#: ../vector/v.overlay/main.c:426 ../vector/v.lrs/v.lrs.label/main.c:347
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.ogr/main.c:1066
 #: ../vector/v.out.vtk/writeVTK.c:580
 msgid "Unable to fetch data from table"
 msgstr "Nelze vybrat data z tabulky"
 
-#: ../vector/v.overlay/main.c:417
-#, c-format
-msgid "Unknown column type '%s' values lost"
+#: ../vector/v.overlay/main.c:478
+#, fuzzy, c-format
+msgid "Unknown column type '%s' of column '%s', values lost"
 msgstr "Neznámý typ sloupce '%s' hodnoty ztraceny"
 
-#: ../vector/v.overlay/main.c:482
-msgid "Building partial topology..."
-msgstr "Buduji částečnou topologiitopologii ... "
-
-#: ../vector/v.overlay/main.c:494 ../vector/v.buffer/main.c:223
+#: ../vector/v.overlay/main.c:551 ../vector/v.buffer/main.c:223
 msgid "Rebuilding topology..."
 msgstr "Přebudovávám topologii ... "
+
+#: ../vector/v.overlay/line_area.c:83
+#, fuzzy
+msgid "Selecting lines..."
+msgstr "Vybírám prvky...."
 
 #: ../vector/v.kernel/main.c:67
 #, c-format
@@ -23075,10 +23166,6 @@ msgstr ""
 "point;Importovat centroidy ploch jako body;line;Importovat hranice ploch "
 "jako linie;boundary;Importovat linie jako hranice ploch;centroid;Importovat "
 "body jako centroidy"
-
-#: ../vector/v.in.ogr/main.c:175
-msgid "Snapping threshold for boundaries"
-msgstr "Práh navázaní pro hranice"
 
 #: ../vector/v.in.ogr/main.c:177
 msgid "'-1' for no snap"
@@ -24468,7 +24555,8 @@ msgstr "Nelze vybrat záznam z tabulky <%s> (klíč %s sloupec %s)"
 
 #: ../vector/v.out.ascii/b2a.c:237 ../vector/v.distance/main.c:377
 #: ../vector/v.distance/main.c:419 ../vector/v.reclass/main.c:138
-#: ../vector/v.to.3d/trans3.c:62 ../vector/v.to.3d/trans2.c:60
+#: ../vector/v.vect.stats/main.c:394 ../vector/v.to.3d/trans3.c:62
+#: ../vector/v.to.3d/trans2.c:60
 #, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Sloupec <%s> nebyl nalezen v tabulce <%s>"
@@ -25809,7 +25897,8 @@ msgid "Removing duplicate centroids..."
 msgstr "Odstraňuji duplicitní centroidy ..."
 
 #: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:114
-#: ../vector/v.to.db/main.c:33 ../vector/v.db.select/main.c:53
+#: ../vector/v.to.db/main.c:33 ../vector/v.vect.stats/main.c:128
+#: ../vector/v.db.select/main.c:53
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
 #: ../locale/scriptstrings/v.db.join_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
@@ -26463,7 +26552,7 @@ msgstr "Příliš mnoho názvů sloupců"
 msgid "Not enough column names"
 msgstr "Nedostatek názvů sloupců"
 
-#: ../vector/v.distance/main.c:306
+#: ../vector/v.distance/main.c:306 ../vector/v.vect.stats/main.c:261
 #, c-format
 msgid "Vector map <%s> is not in user mapset and cannot be updated"
 msgstr "Vektorová mapa <%s> není v tomto mapsetu a nelze ji měnit"
@@ -26538,12 +26627,14 @@ msgstr "%d kategorií načtených z mapové vrstvy existuje v tabulce"
 msgid "%d categories read from the map don't exist in the table"
 msgstr "%d kategorií načtených z mapové vrstvy neexistuje v tabulce"
 
-#: ../vector/v.distance/main.c:1151 ../vector/v.what.rast/main.c:377
+#: ../vector/v.distance/main.c:1151 ../vector/v.vect.stats/main.c:709
+#: ../vector/v.what.rast/main.c:377
 #, c-format
 msgid "%d records updated"
 msgstr "%d záznamů aktualizováno"
 
-#: ../vector/v.distance/main.c:1153 ../vector/v.what.rast/main.c:378
+#: ../vector/v.distance/main.c:1153 ../vector/v.vect.stats/main.c:711
+#: ../vector/v.what.rast/main.c:378
 #, c-format
 msgid "%d update errors"
 msgstr "%d chyb při aktualizaci"
@@ -29612,6 +29703,133 @@ msgstr "Nelze dostat informace o odkazu na databázi"
 #: ../vector/v.perturb/normalsv.c:29
 msgid "normalsv: save of unitialized block"
 msgstr "normalsv: uložení neiniciovaného bloku"
+
+#: ../vector/v.vect.stats/main.c:129
+#, fuzzy
+msgid "Count points in areas, calculate statistics."
+msgstr "Jméno sloupce (musí být číselného typu)"
+
+#: ../vector/v.vect.stats/main.c:133
+#, fuzzy
+msgid "Name of existing vector map with points"
+msgstr "Jméno existující vektorové mapy (to)"
+
+#: ../vector/v.vect.stats/main.c:138
+#, fuzzy
+msgid "Name of existing vector map with areas"
+msgstr "Jméno existující vektorové mapy (to)"
+
+#: ../vector/v.vect.stats/main.c:150
+#, fuzzy
+msgid "Layer number for points map"
+msgstr "Číslo vrstvy (from)"
+
+#: ../vector/v.vect.stats/main.c:154
+#, fuzzy
+msgid "Layer number for area map"
+msgstr "Číslo vrstvy (vektorová mapa A)"
+
+#: ../vector/v.vect.stats/main.c:170
+#, fuzzy
+msgid "Method for aggregate statistics"
+msgstr "rastr, statistika"
+
+#: ../vector/v.vect.stats/main.c:177
+#, fuzzy
+msgid "Column name of points map to use for statistics"
+msgstr "Název rastrové mapy pro vložení do skupiny"
+
+#: ../vector/v.vect.stats/main.c:178
+#, fuzzy
+msgid "Column of points map must be numeric"
+msgstr "|Sloupec musí být číselnéh typu"
+
+#: ../vector/v.vect.stats/main.c:185
+#, fuzzy
+msgid "Column name to upload points count"
+msgstr "Jméno sloupce nebo výraz"
+
+#: ../vector/v.vect.stats/main.c:187
+msgid ""
+"Column to hold points count, must be of type integer, will be created if not "
+"existing"
+msgstr ""
+
+#: ../vector/v.vect.stats/main.c:194
+#, fuzzy
+msgid "Column name to upload statistics"
+msgstr "Jméno sloupce nebo výraz"
+
+#: ../vector/v.vect.stats/main.c:196
+msgid ""
+"Column to hold statistics, must be of type double, will be created if not "
+"existing"
+msgstr ""
+
+#: ../vector/v.vect.stats/main.c:206
+#, fuzzy
+msgid "Print output to stdout, do not update attribute table"
+msgstr "Vytiskni na standardní výstup, neměň atributovou tabulku."
+
+#: ../vector/v.vect.stats/main.c:207
+#, fuzzy
+msgid "First column is always area category"
+msgstr "První sloupec je vždy kategorie prvku 'from' zavolaná from_cat"
+
+#: ../vector/v.vect.stats/main.c:308 ../vector/v.vect.stats/main.c:384
+#, fuzzy, c-format
+msgid "Unable to open database <%s> with driver <%s>"
+msgstr "Nelze otevřít databázi <%s> ovladačem <%s>"
+
+#: ../vector/v.vect.stats/main.c:312
+#, fuzzy
+msgid "ccolumn is required to upload point counts"
+msgstr "pro mapu s plovoucí desetinnou čárkou je požadován argument vals!"
+
+#: ../vector/v.vect.stats/main.c:321
+#, fuzzy
+msgid "ccolumn must be of type integer"
+msgstr "Sloupec s klíčem musí být typu integer"
+
+#: ../vector/v.vect.stats/main.c:334 ../vector/v.vect.stats/main.c:364
+#, fuzzy, c-format
+msgid "Unable to add column <%s>"
+msgstr "Nelze použít sloupec <%s>"
+
+#: ../vector/v.vect.stats/main.c:340
+#, fuzzy
+msgid "scolumn is required to upload point stats"
+msgstr "pro mapu s plovoucí desetinnou čárkou je požadován argument vals!"
+
+#: ../vector/v.vect.stats/main.c:351
+#, fuzzy
+msgid "scolumn must be of type double"
+msgstr "sloupec x/y/z musí být integer nebo double"
+
+#: ../vector/v.vect.stats/main.c:375
+#, fuzzy
+msgid "collecting attributes from points vector..."
+msgstr "Sbírám vstupní atributy ... "
+
+#: ../vector/v.vect.stats/main.c:407
+#, fuzzy
+msgid "column for points vector must be numeric"
+msgstr "Sloupec s velikostí musí být číselného typu"
+
+#: ../vector/v.vect.stats/main.c:481
+#, fuzzy
+msgid "creating spatial index"
+msgstr "Vytvářím prostorový index ..."
+
+#: ../vector/v.vect.stats/main.c:484
+#, fuzzy
+msgid "Selecting points for each area..."
+msgstr "Vybírám prvky...."
+
+#: ../vector/v.vect.stats/main.c:581
+#, fuzzy, c-format
+msgid "could not find area category %d"
+msgstr "Žádný záznam pro kategorii [%d]"
 
 #: ../vector/v.class/main.c:47
 msgid "Classifies attribute data, e.g. for thematic mapping"
@@ -34472,6 +34690,12 @@ msgstr "Název rastrové mapy pro vložení do skupiny"
 #, fuzzy
 msgid "Percent to brighten"
 msgstr "Procentuální konvergence"
+
+#~ msgid "Unknown column type '%s'"
+#~ msgstr "Neznámý typ sloupce '%s'"
+
+#~ msgid "Building partial topology..."
+#~ msgstr "Buduji částečnou topologiitopologii ... "
 
 #, fuzzy
 #~ msgid "Create/Edit"
