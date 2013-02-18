@@ -561,7 +561,11 @@ class AttributeManager(wx.Frame):
             self.editable = True
         else:
             self.editable = False
-        
+
+        # FIXME: editing is currently broken on wingrass (bug #1270)
+        if sys.platform == 'win32':
+            self.editable = False
+
         self.cmdLog = log    # self.parent.goutput
         
         wx.Frame.__init__(self, parent, id, *kwargs)
