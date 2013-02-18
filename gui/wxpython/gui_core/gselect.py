@@ -703,8 +703,8 @@ class LayerSelect(wx.ComboBox):
         """!Reset value"""
         items = self.GetItems()
         if items:
-            if '-1' in items:
-                self.SetStringSelection('-1')
+            if self.default:
+                self.SetStringSelection(str(self.default))
             else:
                 self.SetSelection(0)
         else:
