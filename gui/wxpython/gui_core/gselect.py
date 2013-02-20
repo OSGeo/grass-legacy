@@ -48,7 +48,7 @@ from   grass.script import task as gtask
 
 from core.gcmd     import RunCommand, GError, GMessage
 from core.utils    import GetListOfLocations, GetListOfMapsets, GetFormats
-from core.utils    import GetSettingsPath, GetValidLayerName, ListSortLower, GetVectorNumberOfLayers
+from core.utils    import GetSettingsPath, GetValidLayerName, ListSortLower, GetAllVectorLayers
 from core.settings import UserSettings
 from core.debug    import Debug
 
@@ -681,7 +681,7 @@ class LayerSelect(wx.ComboBox):
         @param vector name of vector map
         """
         if vector:
-            layers = GetVectorNumberOfLayers(vector)
+            layers = GetAllVectorLayers(vector)
         else:
             layers = list()
         
