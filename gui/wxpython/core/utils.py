@@ -331,6 +331,51 @@ def GetVectorNumberOfLayers(vector, parent = None):
     
     return layers
 
+def GetAllVectorLayers(vector):
+    """!Returns list of all vector layers as strings.
+
+    @param vector name of vector map
+    """
+    layers = []
+    if not vector:
+        return layers
+    
+    fullname = grass.find_file(name = vector, element = 'vector')['fullname']
+    if not fullname:
+        Debug.msg(3, "utils.GetAllVectorLayers(): vector map <%s> not found" % vector)
+        return layers
+    
+    ret, out, msg = RunCommand('v.category',
+                               getErrorMsg = True,
+                               read = True,
+                               quiet = True,
+                               option = 'report',
+                               flags = 'g',
+                               input = fullname)
+    print out
+    if ret != 0:
+        sys.stderr.write(_("Vector map <%(map)s>: %(msg)s\n") % { 'map' : fullname, 'msg' : msg })
+        return layers
+    
+    Debug.msg(1, "utils.GetAllVectorLayers(): ret %s" % ret)
+
+    for line in out.splitlines():
+        if 'all' not in line:
+            continue
+        try:
+            layer = line.split(' ')[0]
+        except IndexError:
+            continue
+        # use this to get layer names
+        # but only when all modules use Vect_get_field2()
+        # which is not the case right now
+        layers.append(layer)
+
+    Debug.msg(3, "utils.GetAllVectorLayers(): vector=%s -> %s" % \
+                  (fullname, ','.join(layers)))
+
+    return layers
+
 def Deg2DMS(lon, lat, string = True, hemisphere = True, precision = 3):
     """!Convert deg value to dms string
 
