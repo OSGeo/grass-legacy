@@ -26,6 +26,7 @@
 #define O_SUM  5
 #define O_CHFIELD 6
 #define O_TYPE_REP 7		/* report number of features for each type */
+#define O_LYR 9
 
 #define FRTYPES 9		/* number of field report types */
 
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
     option_opt->type = TYPE_STRING;
     option_opt->required = NO;
     option_opt->multiple = NO;
-    option_opt->options = "add,del,chlayer,sum,report,print";
+    option_opt->options = "add,del,chlayer,sum,report,print,layers";
     option_opt->answer = "add";
     option_opt->description = _("Action to be done");
     option_opt->descriptions = _("add;add a new category;"
@@ -88,7 +89,8 @@ int main(int argc, char *argv[])
 				 "chlayer;change layer number (e.g. layer=3,1 changes layer 3 to layer 1);"
 				 "sum;add the value specified by cat option to the current category value;"
 				 "report;print report (statistics), in shell style: layer type count min max;"
-				 "print;print category values, more cats in the same layer are separated by '/'");
+				 "print;print category values, more cats in the same layer are separated by '/';"
+				 "layers;print only layer numbers");
 
     type_opt = G_define_standard_option(G_OPT_V3_TYPE);
     type_opt->guisection = _("Selection");
@@ -145,6 +147,33 @@ int main(int argc, char *argv[])
     case ('p'):
 	option = O_PRN;
 	break;
+    case ('l'):
+	option = O_LYR;
+	break;
+    }
+
+    if (option == O_LYR) {
+	/* print vector layer numbers */
+	/* open vector on level 2 head only, this is why this option
+	 * is processed here, all other options need (?) to fully open 
+	 * the input vector */
+	Vect_set_open_level(2);
+	if (Vect_open_old_head(&In, in_opt->answer, "") < 2) {
+	    G_fatal_error(_("Can not open vector <%s> on level %d"),
+			  Vect_get_full_name(&In), 2);
+	}
+	if (In.format == GV_FORMAT_NATIVE) {
+	    nfields = Vect_cidx_get_num_fields(&In);
+	    for (i = 0; i < nfields; i++) {
+		if ((field = Vect_cidx_get_field_number(&In, i)) > 0)
+		    fprintf(stdout, "%d\n", field);
+	    }
+	}
+	else
+	    fprintf(stdout, "%s\n", field_opt->answer);
+
+	Vect_close(&In);
+	exit(EXIT_SUCCESS);
     }
 
     cat = atoi(cat_opt->answer);
