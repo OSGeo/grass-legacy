@@ -217,7 +217,6 @@ class UpdateThread(Thread):
             if name == 'LayerSelect':
                 if map in cparams and not cparams[map]['layers']:
                     win.InsertLayers(vector = map)
-                    win.Reset()
                     cparams[map]['layers'] = win.GetItems()
             
             elif name == 'TableSelect':

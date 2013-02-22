@@ -672,6 +672,8 @@ class LayerSelect(wx.ComboBox):
 
         # default value
         self.default = default
+        self.current = None
+        self.Bind(wx.EVT_COMBOBOX, self._selectionChanged)
 
         self.InsertLayers(vector = vector)
         
@@ -695,15 +697,24 @@ class LayerSelect(wx.ComboBox):
                 layers.insert(0, str(self.default))
             elif self.default not in layers:
                 layers.append(self.default)
-        
+
         if len(layers) >= 1:
             self.SetItems(layers)
 
-    def Reset(self):
-        """!Reset value"""
+        self.Select()
+
+    def _selectionChanged(self, event):
+        """!Selection changed, store value."""
+        self.current = self.GetValue()
+        event.Skip()
+
+    def Select(self):
+        """!Select value (currently selected or default)"""
         items = self.GetItems()
         if items:
-            if self.default:
+            if self.current is not None and self.current in items:
+                self.SetStringSelection(self.current)
+            elif self.default:
                 self.SetStringSelection(str(self.default))
             else:
                 self.SetSelection(0)
