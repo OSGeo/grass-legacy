@@ -188,7 +188,7 @@ int construct_path(struct line_pnts *, double, int);
 int read_cell(char *, char *);
 
 /* read_cfg.c */
-int set_paper(char *pname);
+int set_paper(char *);
 void reset_map_location(void);
 void print_papers(void);
 
