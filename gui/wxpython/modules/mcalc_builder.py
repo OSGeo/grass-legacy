@@ -20,7 +20,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    sys.path.append(os.path.join(os.getenv('GISBASE'), 'etc', 'gui', 'wxpython'))
+    sys.path.append(os.path.join(os.getenv('GISBASE'), 'etc', 'wxpython'))
 from core import globalvar
 import wx
 
@@ -419,8 +419,11 @@ class MapCalcFrame(wx.Frame):
     def OnUpdateStatusBar(self, event):
         """!Update statusbar text"""
         expr = self.text_mcalc.GetValue().strip().replace("\n", " ")
-        self.SetStatusText("r.mapcalc '%s = %s'" % (self.newmaptxt.GetValue(),
-                                                    expr))
+        cmd = 'r.mapcalc'
+        if self.rast3d:
+            cmd = 'r3.mapcalc'
+        self.SetStatusText("%s '%s = %s'" % (cmd, self.newmaptxt.GetValue(),
+                                             expr))
         event.Skip()
         
     def _addSomething(self, what):
@@ -475,18 +478,23 @@ class MapCalcFrame(wx.Frame):
             self.parent.Raise()
         else:
             RunCommand(self.cmd,
-                       "%s=%s" % (name, expr))
-        
+                       **{name: expr})
+
     def OnDone(self, cmd, returncode):
         """!Add create map to the layer tree"""
         if not self.addbox.IsChecked():
             return
         name = self.newmaptxt.GetValue().strip(' "') + '@' + grass.gisenv()['MAPSET']
+        ltype = 'raster'
+        lcmd = 'd.rast'
+        if self.rast3d:
+            ltype = '3d-raster'
+            lcmd = 'd.rast3d.py'
         mapTree = self.parent.GetLayerTree()
         if not mapTree.GetMap().GetListOfLayers(l_name = name):
-            mapTree.AddLayer(ltype = 'raster',
+            mapTree.AddLayer(ltype = ltype,
                              lname = name,
-                             lcmd = ['d.rast', 'map=%s' % name],
+                             lcmd = [lcmd, 'map=%s' % name],
                              multiple = False)
         
         display = self.parent.GetLayerTree().GetMapDisplay()

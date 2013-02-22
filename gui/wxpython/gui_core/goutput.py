@@ -549,7 +549,7 @@ class GMConsole(wx.SplitterWindow):
             else:
                 # other GRASS commands (r|v|g|...)
                 hasParams = False
-                if command[0] != 'r.mapcalc':
+                if command[0] not in ('r.mapcalc', 'r3.mapcalc'):
                     try:
                         task = GUI(show = None).ParseCommand(command)
                     except GException, e:
@@ -880,7 +880,7 @@ class GMConsole(wx.SplitterWindow):
         if self.parent.GetName() == "LayerManager":
             self.btnCmdAbort.Enable(False)
             if event.cmd[0] not in globalvar.grassCmd or \
-                    event.cmd[0] == 'r.mapcalc':
+                    event.cmd[0] in ('r.mapcalc', 'r3.mapcalc'):
                 return
             
             tree = self.parent.GetLayerTree()
