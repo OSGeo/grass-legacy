@@ -103,27 +103,31 @@ int main(int argc, char *argv[])
     rflag = G_define_flag();
     rflag->key = 'r';
     rflag->description = _("Rotate plot 90 degrees");
+    rflag->guisection = _("Output settings");
 
     pflag = G_define_flag();
     pflag->key = 'p';
     pflag->description =
 	_("List paper formats ( name width height left right top bottom(margin) )");
+    pflag->guisection = _("Utility");
 
     eflag = G_define_flag();
     eflag->key = 'e';
     eflag->description =
 	_("Create EPS (Encapsulated PostScript) instead of PostScript file");
+    eflag->guisection = _("Output settings");
 
     bflag = G_define_flag();
     bflag->key = 'b';
     bflag->description =
 	_("Describe map-box's position on the page and exit (inches from top-left of paper)");
+    bflag->guisection = _("Utility");
 
     input_file = G_define_option();
     input_file->key = "input";
     input_file->type = TYPE_STRING;
-    input_file->description =
-	_("File containing mapping instructions (or use input=- to enter from keyboard)");
+    input_file->label = _("File containing mapping instructions");
+    input_file->description = _("Use '-' to enter instructions from keyboard");
     input_file->gisprompt = "old_file,file,input";
     input_file->required = NO;
 
@@ -132,7 +136,8 @@ int main(int argc, char *argv[])
     output_file->type = TYPE_STRING;
     output_file->gisprompt = "new_file,file,output";
     output_file->description = _("PostScript output file");
-    /*    output_file->required = YES;   Can omit for -p list page size & exit mode */
+    /* output_file->required = YES;   Can omit for -p list page size & exit mode */
+    output_file->guisection = _("Required");
 
     map_scale = G_define_option();
     map_scale->key = "scale";
@@ -140,6 +145,7 @@ int main(int argc, char *argv[])
     map_scale->type = TYPE_STRING;
     map_scale->description =
 	_("Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)");
+    map_scale->guisection = _("Output settings");
 
     copies = G_define_option();
     copies->key = "copies";
@@ -147,6 +153,7 @@ int main(int argc, char *argv[])
     copies->options = "1-20";
     copies->description = _("Number of copies to print");
     copies->required = NO;
+    copies->guisection = _("Output settings");
 
     if (!isatty(0))
 	G_disable_interactive();
@@ -179,9 +186,7 @@ int main(int argc, char *argv[])
     vector.x = vector.y = -1.0;
     ct.x = ct.y = -1.0;
     ct.width = -1.0;
-    hdr.color = BLACK;
     cmt.color = BLACK;
-    PS.grid_color = BLACK;
     m_info.font = G_store(def_font);
     vector.font = G_store(def_font);
     hdr.font = G_store(def_font);
@@ -222,8 +227,9 @@ int main(int argc, char *argv[])
     PS.num_psfiles = 0;
     PS.mask_color = 0;
 
-    /* PS.map_* variables are set to 0 (not defined) and then may be reset by 'maploc'.
-     * When script is read, main() should call reset_map_location() to reset map size to fit to paper */
+    /* PS.map_* variables are set to 0 (not defined) and then may be
+     * reset by 'maploc'. When script is read, main() should call
+     * reset_map_location() to reset map size to fit to paper */
 
     PS.map_width = 0;
     PS.map_height = 0;
@@ -246,13 +252,13 @@ int main(int argc, char *argv[])
 	if (check_scale(map_scale->answer))
 	    G_strcpy(PS.scaletext, map_scale->answer);
 	else
-	    error(map_scale->answer, "", "illegal scale request");
+	    error(map_scale->answer, "", _("illegal scale request"));
     }
 
     if (copies->answer) {
 	if (sscanf(copies->answer, "%d", &ps_copies) != 1) {
 	    ps_copies = 1;
-	    error(copies->answer, "", "illegal copies request");
+	    error(copies->answer, "", _("illegal copies request"));
 	}
 	copies_set = 1;
     }
@@ -560,7 +566,7 @@ int main(int argc, char *argv[])
 		strcpy(PS.scaletext, data);
 	    else {
 		PS.scaletext[0] = 0;
-		error(key, data, "illegal scale request");
+		error(key, data, _("illegal scale request"));
 	    }
 	    continue;
 	}
@@ -739,8 +745,8 @@ int main(int argc, char *argv[])
     ps_mask_file = G_tempfile();
     ps_map();
 
-    G_message(_("PostScript file [%s] successfully written."),
-	      output_file->answer);
+    G_done_msg(_("PostScript file '%s' successfully written."),
+	       output_file->answer);
 
     /* cleanup the tempfiles */
     unlink(ps_mask_file);

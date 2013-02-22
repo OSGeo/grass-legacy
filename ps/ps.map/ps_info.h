@@ -1,4 +1,5 @@
 #include <grass/gis.h>
+#include "clr.h"
 
 /* Font sizes */
 #define PS_FONT_MAX_SIZE      50
@@ -42,13 +43,15 @@ struct PS_data
     int do_border;
     int do_scalebar;
     int num_psfiles;
-    int grid, grid_color, grid_numbers, grid_numbers_color, grid_fontsize;
+    int grid, grid_numbers, grid_fontsize;
+    PSCOLOR grid_color, grid_numbers_color;
     float grid_cross;
     char geogridunit[64];
-    int geogrid, geogrid_color, geogrid_numbers;
-    int geogrid_numbers_color, geogrid_fontsize;
+    int geogrid, geogrid_numbers, geogrid_fontsize;
+    PSCOLOR geogrid_color, geogrid_numbers_color;
     double grid_width, geogrid_width;
-    int do_outline, outline_color;
+    int do_outline;
+    PSCOLOR outline_color;
     int cell_fd;
     int row_delta, col_delta;
     int cells_wide, cells_high;
