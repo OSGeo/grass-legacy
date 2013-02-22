@@ -2,7 +2,7 @@
 #  r.pack   --  pack up a raster map:
 #     collect raster map elements => gzip
 #
-#   (c) 2004-2008, 2012 GRASS Development Team
+#   (c) 2004-2013 GRASS Development Team
 #   AUTHOR: Hamish Bowman, Otago University, New Zealand
 #
 #   This program is free software under the GNU General Public License
@@ -52,7 +52,7 @@ if [ -z "`which gzip`" ] ; then
 fi
 
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
-   outfile="`echo $GIS_OPT_OUTPUT | cut -d'@' -f1`"
+   outfile="$GIS_OPT_OUTPUT"
 else
    outfile="`echo $GIS_OPT_INPUT | cut -d'@' -f1`.pack"
 fi
@@ -65,6 +65,9 @@ eval `g.findfile elem=cell file="$GIS_OPT_INPUT"`
 if [ -z "$name" ] ; then
    g.message -e "Map not found"
    exit 1
+else
+   # strip off mapset to remove fully qualified input
+   name=`echo "$name" | cut -d'@' -f1`
 fi
 
 
@@ -87,17 +90,15 @@ fi
 BASEDIR=`echo "$file" | sed -e 's+/cell/.*$++'`
 OLDDIR=`pwd`
 
-# strip off mapset to remove fully qualified input
-GIS_OPT_INPUT="`echo $GIS_OPT_INPUT | cut -d'@' -f1`"
 for ELEMENT in cats cell cellhd colr fcell grid3 hist ; do
-    if [ -e "$BASEDIR/$ELEMENT/$GIS_OPT_INPUT" ] ; then
-	cp "$BASEDIR/$ELEMENT/$GIS_OPT_INPUT" "$TMP_DIR/$ELEMENT"
+    if [ -e "$BASEDIR/$ELEMENT/$name" ] ; then
+	cp "$BASEDIR/$ELEMENT/$name" "$TMP_DIR/$ELEMENT"
     fi
 done
 
-if [ -d "$BASEDIR/cell_misc/$GIS_OPT_INPUT/" ] ; then
+if [ -d "$BASEDIR/cell_misc/$name/" ] ; then
     mkdir "$TMP_DIR/cell_misc/"
-    cp "$BASEDIR/cell_misc/$GIS_OPT_INPUT/"* "$TMP_DIR/cell_misc/"
+    cp "$BASEDIR/cell_misc/$name/"* "$TMP_DIR/cell_misc/"
 fi
 
 
@@ -110,7 +111,7 @@ fi
 #   (would prefer to use g.proj*, but this way is 5.3 and 5.7 compat)
 eval `g.gisenv`
 
-for SUPPORT in INFO UNITS ; do
+for SUPPORT in INFO UNITS EPSG ; do
    if [ -e "$GISDBASE/$LOCATION_NAME/PERMANENT/PROJ_$SUPPORT" ] ; then
        cp "$GISDBASE/$LOCATION_NAME/PERMANENT/PROJ_$SUPPORT" "$TMP_DIR"
    fi
