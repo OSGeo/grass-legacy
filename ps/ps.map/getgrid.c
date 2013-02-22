@@ -59,7 +59,7 @@ int getgrid(void)
 		/* unset_color(&color); */
 		error(key, data, _("Unsupported color request"));
 	    else
-		error(key, data, _("illegal color request")); 
+		error(key, data, _("illegal color request"));
 
 	    continue;
 	}
@@ -169,7 +169,7 @@ int getgeogrid(void)
 		/* unset_color(&color); */
 		error(key, data, _("Unsupported color request"));
 	    else
-		error(key, data, _("illegal color request")); 
+		error(key, data, _("illegal color request"));
 
 	    continue;
 	}

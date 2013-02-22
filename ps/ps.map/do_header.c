@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <string.h>
 #include "header.h"
-
 #include "local_proto.h"
 
 static double x, y, dy, fontsize;

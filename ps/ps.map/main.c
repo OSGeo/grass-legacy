@@ -2,7 +2,7 @@
 /****************************************************************************
  *
  * MODULE:       ps.map
- * AUTHOR(S):    Paul W. Carlson 1992 (original contributor)
+ * AUTHOR(S):    Paul W. Carlson	1992 (original contributor)
  *               Radim Blazek <radim.blazek gmail.com>
  *               Bob Covill <bcovill tekmap.ns.ca>
  *               Huidae Cho <grass4u gmail.com>
@@ -99,18 +99,18 @@ int main(int argc, char *argv[])
     bflag->description =
 	_("Describe map-box's position on the page and exit (inches from top-left of paper)");
     bflag->guisection = _("Utility");
-    
+
     input_file = G_define_standard_option(G_OPT_F_INPUT);
     input_file->label = _("File containing mapping instructions");
     input_file->description = _("Use '-' to enter instructions from keyboard)");
     input_file->required = NO;
     input_file->guisection = _("Required");
-    
+
     output_file = G_define_standard_option(G_OPT_F_OUTPUT);
     output_file->description = _("Name for PostScript output file");
     output_file->required = NO;
     output_file->guisection = _("Required");
-    
+
     map_scale = G_define_option();
     map_scale->key = "scale";
     map_scale->key_desc = "mapscale";
@@ -126,12 +126,12 @@ int main(int argc, char *argv[])
     copies->description = _("Number of copies to print");
     copies->required = NO;
     copies->guisection = _("Output settings");
-    
+
     if (!isatty(0))
 	G_disable_interactive();
     if (G_parser(argc, argv))
 	usage(0);
-    
+
     /* PS.map_* variables are set to 0 (not defined) and then may be
      * reset by 'maploc'.  When script is read, main() should call
      * reset_map_location() to reset map size to fit to paper */
@@ -211,9 +211,9 @@ int main(int argc, char *argv[])
 	if (check_scale(map_scale->answer))
 	    G_strcpy(PS.scaletext, map_scale->answer);
 	else
-	    error(map_scale->answer, "", "illegal scale request");
+	    error(map_scale->answer, "", _("illegal scale request"));
     }
-    
+
     if (copies->answer) {
 	if (sscanf(copies->answer, "%d", &ps_copies) != 1) {
 	    ps_copies = 1;
@@ -236,6 +236,7 @@ int main(int argc, char *argv[])
     else
 	PS.fp = NULL;
 
+
     /* get current mapset */
     PS.cell_mapset = G_mapset();
 
@@ -243,12 +244,12 @@ int main(int argc, char *argv[])
     G_get_set_window(&PS.w);
     if (G_set_window(&PS.w) == -1)
 	G_fatal_error(_("Current region cannot be set."));
-    
+
     read_instructions(copies_set, can_reset_scale);
 
     /* reset map location base on 'paper' on 'location' */
     reset_map_location();
-    
+
     if (bflag->answer) {
 	map_setup();
 	fprintf(stdout, "bbox=%.3f,%.3f,%.3f,%.3f\n", PS.map_left / 72.0,
