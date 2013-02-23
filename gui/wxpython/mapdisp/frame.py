@@ -40,7 +40,7 @@ from mapdisp.toolbars   import MapToolbar, NvizIcons
 from mapdisp.gprint     import PrintOptions
 from core.gcmd          import GError, GMessage, RunCommand
 from dbmgr.dialogs      import DisplayAttributesDialog
-from core.utils         import ListOfCatsToRange, GetLayerNameFromCmd
+from core.utils         import ListOfCatsToRange, GetLayerNameFromCmd, GetAllVectorLayers
 from gui_core.dialogs   import GetImageHandlers, ImageSizeDialog, DecorationDialog, TextLayerDialog, \
                                DECOR_DIALOG_LEGEND, DECOR_DIALOG_BARSCALE
 from core.debug         import Debug
@@ -674,6 +674,7 @@ class MapFrame(MapFrameBase):
         isRaster = False
         nVectors = 0
         isDbConnection = False
+        allLayersConnected = None
         for l in layers:
             maplayer = self.tree.GetPyData(l)[0]['maplayer']
             if maplayer.GetType() == 'raster':
@@ -682,9 +683,18 @@ class MapFrame(MapFrameBase):
             if maplayer.GetType() == 'vector':
                 nVectors += 1
                 isDbConnection = grass.vector_db(maplayer.GetName())
+                if isDbConnection:
+                    # check if all layers are connected to db
+                    # otherwise show output in command console instead of poping up attribute dialog
+                    # which is missing features from layers not connected to db
+                    allLayersConnected = True
+                    vLayersDb = sorted(isDbConnection.keys())
+                    vLayersAll = sorted(map(int, GetAllVectorLayers(maplayer.GetName())))
+                    if vLayersAll != vLayersDb:
+                        allLayersConnected = False
 
         if not self.IsPaneShown('3d'):
-            if isRaster or nVectors > 1 or not isDbConnection:
+            if isRaster or nVectors > 1 or not allLayersConnected:
                 self.QueryMap(east, north, qdist, layers)
             else:
                 self.QueryVector(east, north, qdist, posWindow, layers[0])
