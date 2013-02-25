@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 14:02+0100\n"
+"POT-Creation-Date: 2013-02-25 18:16+0100\n"
 "PO-Revision-Date: 2012-11-26 16:00+0100\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
@@ -209,7 +209,7 @@ msgstr "Lese Datei [%s]..."
 #: ../raster/r.contour/main.c:158 ../raster/r.series/main.c:212
 #: ../raster/r.composite/main.c:155 ../raster/r.topidx/check_ready.c:11
 #: ../raster/r.fill.dir/main.c:172 ../raster/r.mfilter/main.c:121
-#: ../raster/r.mfilter.fp/main.c:126 ../raster/r.out.arc/main.c:113
+#: ../raster/r.mfilter.fp/main.c:126 ../raster/r.out.arc/main.c:112
 #: ../raster/r.clump/main.c:87 ../raster/r.colors/main.c:306
 #: ../raster/r.colors/main.c:387 ../raster/r.kappa/main.c:161
 #: ../raster/r.kappa/stats.c:30 ../raster/r.kappa/stats.c:35
@@ -306,7 +306,7 @@ msgstr "Rasterkarte <%s> konnte nicht gefunden werden."
 #: ../raster/r.walk/main.c:573 ../raster/r.walk/main.c:576
 #: ../raster/r.walk/main.c:922 ../raster/r.contour/main.c:162
 #: ../raster/r.random.surface/init.c:134 ../raster/r.random.surface/main.c:54
-#: ../raster/r.composite/main.c:159 ../raster/r.out.arc/main.c:117
+#: ../raster/r.composite/main.c:159 ../raster/r.out.arc/main.c:116
 #: ../raster/r.clump/main.c:94 ../raster/r.colors/stats.c:33
 #: ../raster/r.to.rast3/main.c:366 ../raster/r.out.png/r.out.png.c:217
 #: ../raster/r.resamp.rst/main.c:402 ../raster/r.resamp.rst/main.c:434
@@ -532,7 +532,7 @@ msgstr "Mein erstes Vektormodul."
 #: ../raster/r.carve/main.c:172 ../raster/r.region/main.c:237
 #: ../display/d.vect/main.c:451 ../display/d.what.vect/main.c:148
 #: ../display/d.vect.chart/main.c:246 ../display/d.zoom/main.c:245
-#: ../display/d.thematic.area/main.c:212 ../display/d.path/main.c:193
+#: ../display/d.thematic.area/main.c:211 ../display/d.path/main.c:193
 #: ../display/d.extract/main.c:98 ../display/d.extend/main.c:97
 #: ../general/g.mremove/do_remove.c:34 ../general/g.region/main.c:547
 #: ../vector/v.net.iso/main.c:181 ../vector/v.type/main.c:202
@@ -552,7 +552,7 @@ msgstr "Mein erstes Vektormodul."
 #: ../vector/v.delaunay2/main.c:117 ../vector/v.sample/main.c:152
 #: ../vector/v.distance/main.c:303 ../vector/v.to.db/parse.c:128
 #: ../vector/v.build.polylines/main.c:145 ../vector/v.qcount/main.c:128
-#: ../vector/v.category/main.c:197 ../vector/v.buffer/main.c:365
+#: ../vector/v.category/main.c:226 ../vector/v.buffer/main.c:365
 #: ../vector/v.surf.rst/main.c:565 ../vector/v.transform/main.c:307
 #: ../vector/lidar/v.outlier/main.c:156
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
@@ -649,7 +649,7 @@ msgid "Database connection not defined for layer %d"
 msgstr "Die Datenbankverbindung für den Layer<%d> ist nicht definiert."
 
 #: ../doc/vector/v.example/main.c:123 ../display/d.vect/main.c:470
-#: ../display/d.thematic.area/main.c:231 ../vector/v.out.ascii/b2a.c:46
+#: ../display/d.thematic.area/main.c:230 ../vector/v.out.ascii/b2a.c:46
 #: ../vector/v.edit/select.c:514 ../vector/v.extract/main.c:286
 #: ../vector/v.db.connect/main.c:212 ../vector/v.db.connect/main.c:278
 #: ../vector/v.out.svg/main.c:141 ../vector/v.out.ogr/main.c:629
@@ -952,7 +952,7 @@ msgstr "Anzahl der Dezimalstellen für Fließkommazahlen"
 msgid "Char string to represent no data cell"
 msgstr "Zeichenkette, die NODATA-Zellen repräsentiert"
 
-#: ../raster3d/r3.out.ascii/main.c:103 ../raster/r.out.arc/main.c:81
+#: ../raster3d/r3.out.ascii/main.c:103 ../raster/r.out.arc/main.c:80
 #: ../raster/r.out.ascii/main.c:104
 msgid "Suppress printing of header information"
 msgstr "Unterdrücke Headerinformationen"
@@ -2356,9 +2356,9 @@ msgstr "Rasterdatei die verbunden werden soll."
 #: ../raster/r.recode/main.c:54 ../raster/r.colors/main.c:181
 #: ../raster/r.in.gdal/main.c:90 ../raster/r.in.gdal/main.c:94
 #: ../raster/r.out.gdal/main.c:148 ../raster/r.out.gdal/main.c:184
-#: ../display/d.rast.num/number.c:91 ../vector/v.in.ogr/main.c:116
-#: ../vector/v.in.ogr/main.c:120 ../vector/v.in.ascii/in.c:57
-#: ../vector/v.select/args.c:50
+#: ../ps/ps.map/main.c:140 ../display/d.rast.num/number.c:91
+#: ../vector/v.in.ogr/main.c:116 ../vector/v.in.ogr/main.c:120
+#: ../vector/v.in.ascii/in.c:57 ../vector/v.select/args.c:50
 msgid "Required"
 msgstr "Benötigt"
 
@@ -2602,7 +2602,7 @@ msgid "Using resolution [%g]"
 msgstr "Verwende Auflösung [%g]"
 
 #: ../raster/r.profile/main.c:157 ../raster/r.recode/main.c:93
-#: ../raster/r.out.arc/main.c:134 ../raster/r.out.ascii/main.c:172
+#: ../raster/r.out.arc/main.c:133 ../raster/r.out.ascii/main.c:172
 #: ../raster/r.cats/main.c:177 ../raster/r.out.ppm3/main.c:149
 #: ../display/d.nviz/main.c:204 ../general/g.transform/main.c:281
 #: ../general/g.pnmcomp/main.c:241 ../general/g.pnmcomp/main.c:258
@@ -7314,19 +7314,20 @@ msgstr "Filter nur auf NULL-Werte anwenden."
 msgid "Converts a raster map layer into an ESRI ARCGRID file."
 msgstr "Exportiert eine Rasterkarte in eine ESRI ARCGRID Datei."
 
-#: ../raster/r.out.arc/main.c:70
-msgid "Name of an output ARC-GRID map (use out=- for stdout)"
+#: ../raster/r.out.arc/main.c:69
+#, fuzzy
+msgid "Name for output ARC-GRID map (use out=- for stdout)"
 msgstr "Name der Ausgabe ARCGRID-Datei (verwende out=- für stdout)"
 
-#: ../raster/r.out.arc/main.c:77
+#: ../raster/r.out.arc/main.c:76
 msgid "Number of decimal places"
 msgstr "Anzahl der Dezimalstellen."
 
-#: ../raster/r.out.arc/main.c:87
+#: ../raster/r.out.arc/main.c:86
 msgid "List one entry per line instead of full row"
 msgstr "Gebe einen Eintrag pro Linie anstatt eine volle Zeile aus."
 
-#: ../raster/r.out.arc/main.c:93
+#: ../raster/r.out.arc/main.c:92
 msgid "Use cell center reference in header instead of cell corner"
 msgstr ""
 "Verwende als Referenz im Header den Zellmittelpunkt anstelle der Zellecke."
@@ -14300,7 +14301,7 @@ msgstr "Name der Bildgruppe, die registriert werden soll."
 #: ../display/d.frame/list.c:23 ../display/d.frame/select.c:36
 #: ../display/d.text.new/main.c:295 ../display/d.his/main.c:117
 #: ../display/d.geodesic/main.c:105 ../display/d.colortable/main.c:138
-#: ../display/d.rast/main.c:114 ../display/d.thematic.area/main.c:397
+#: ../display/d.rast/main.c:114 ../display/d.thematic.area/main.c:396
 #: ../display/d.font.freetype/main.c:103 ../display/d.graph/main.c:96
 #: ../display/d.rgb/main.c:83 ../display/d.path/main.c:159
 #: ../display/d.rast.arrow/arrow.c:245 ../display/d.extract/main.c:79
@@ -17043,11 +17044,17 @@ msgstr ""
 msgid "illegal where request"
 msgstr "Ungültige where-Anfrage."
 
-#: ../ps/ps.map/r_info.c:67
+#: ../ps/ps.map/r_info.c:67 ../ps/ps.map/ps_outline.c:86
+#: ../ps/ps.map/getgrid.c:61 ../ps/ps.map/getgrid.c:85
+#: ../ps/ps.map/getgrid.c:171 ../ps/ps.map/getgrid.c:195
+#: ../ps/ps.map/r_header.c:65
 msgid "Unsupported color request"
 msgstr "Nicht unterstützte Farbanfrage."
 
-#: ../ps/ps.map/r_info.c:69
+#: ../ps/ps.map/r_info.c:69 ../ps/ps.map/ps_outline.c:88
+#: ../ps/ps.map/getgrid.c:63 ../ps/ps.map/getgrid.c:87
+#: ../ps/ps.map/getgrid.c:173 ../ps/ps.map/getgrid.c:197
+#: ../ps/ps.map/r_header.c:67
 msgid "illegal color request"
 msgstr "Ungültige Farbanfrage."
 
@@ -17153,10 +17160,19 @@ msgstr ""
 "Die Kartierungsanweisung <%s> wird umbenannt in <%s> in zukünftigen "
 "Versionen von GRASS. Bitte verwenden Sie sattdessen <%s>."
 
-#: ../ps/ps.map/ps_outline.c:41
+#: ../ps/ps.map/ps_outline.c:42
 #, c-format
 msgid "Outlining areas in raster map <%s in %s> ..."
 msgstr "Zeichne die Umriße der Flächen der Rasterkarte <%s in %s> ..."
+
+#: ../ps/ps.map/ps_outline.c:99 ../ps/ps.map/r_colortable.c:69
+msgid "illegal width request"
+msgstr "Ungültige Weiten-Anfrage."
+
+#: ../ps/ps.map/ps_outline.c:106
+#, fuzzy
+msgid "illegal outline sub-request"
+msgstr "Ungültige colortabe sub-request"
 
 #: ../ps/ps.map/r_group.c:31
 msgid "Can't get group information"
@@ -17165,10 +17181,6 @@ msgstr "Kann keine Gruppen Informationen erhalten."
 #: ../ps/ps.map/scale.c:137
 msgid "PSmap: do_scale(): shouldn't happen"
 msgstr "PSmap: do_scale(): sollte nicht passieren."
-
-#: ../ps/ps.map/r_colortable.c:69
-msgid "illegal width request"
-msgstr "Ungültige Weiten-Anfrage."
 
 #: ../ps/ps.map/r_colortable.c:77
 msgid "illegal height request"
@@ -17229,6 +17241,26 @@ msgstr ""
 "Die X-Position der Farbtabelle liegt außerhalb der Seitenränder. Korrigiere "
 "dies."
 
+#: ../ps/ps.map/getgrid.c:95 ../ps/ps.map/getgrid.c:206
+#, fuzzy
+msgid "illegal numbers request"
+msgstr "Ungültige Spalten-Anfrage."
+
+#: ../ps/ps.map/getgrid.c:126 ../ps/ps.map/getgrid.c:234
+#, fuzzy
+msgid "illegal grid width request"
+msgstr "Ungültige Weiten-Anfrage."
+
+#: ../ps/ps.map/getgrid.c:132
+#, fuzzy
+msgid "illegal request (grid)"
+msgstr "Ungültige Wertebereichs-Anfrage."
+
+#: ../ps/ps.map/getgrid.c:240
+#, fuzzy
+msgid "illegal request (geogrid)"
+msgstr "Ungültige Farb-Anfrage (Farbtabelle)."
+
 #: ../ps/ps.map/r_plt.c:158
 msgid "Can't open eps file"
 msgstr "Kann die EPS-Datei nicht öffnen."
@@ -17247,6 +17279,11 @@ msgstr "Lese Vektorkarte <%s in %s> ..."
 #, c-format
 msgid "Reading vector points file <%s in %s> ..."
 msgstr "Lese Datei mit Vektorpunkten <%s in %s> ..."
+
+#: ../ps/ps.map/r_header.c:77
+#, fuzzy
+msgid "illegal header sub-request"
+msgstr "Ungültiges vlegend sub-request"
 
 #: ../ps/ps.map/do_labels.c:43
 #, c-format
@@ -17283,17 +17320,27 @@ msgstr "Erzeugt Ausgabekarten im PostScript-Format."
 msgid "Rotate plot 90 degrees"
 msgstr "Rotiere Zeichnung um 90 Grad"
 
-#: ../ps/ps.map/main.c:110
+#: ../ps/ps.map/main.c:106 ../ps/ps.map/main.c:118 ../ps/ps.map/main.c:148
+#: ../ps/ps.map/main.c:156
+#, fuzzy
+msgid "Output settings"
+msgstr "Wolkeneinstellungen"
+
+#: ../ps/ps.map/main.c:111
 msgid "List paper formats ( name width height left right top bottom(margin) )"
 msgstr ""
 "Gebe Liste der Papierformate aus (Name Breite Höhe links rechts oben unten"
 "(Rand) )."
 
-#: ../ps/ps.map/main.c:115
+#: ../ps/ps.map/main.c:112 ../ps/ps.map/main.c:124
+msgid "Utility"
+msgstr ""
+
+#: ../ps/ps.map/main.c:117
 msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
 msgstr "Erzeugt EPS (Encapsulated PostScript) anstatt PostScript-Dateien."
 
-#: ../ps/ps.map/main.c:120
+#: ../ps/ps.map/main.c:123
 msgid ""
 "Describe map-box's position on the page and exit (inches from top-left of "
 "paper)"
@@ -17301,28 +17348,30 @@ msgstr ""
 "Beschreibe die Position der Kartenrechtecks auf dem Papier und beendet sich "
 "(Inch von der linken-oberen Ecke). "
 
-#: ../ps/ps.map/main.c:126
-msgid ""
-"File containing mapping instructions (or use input=- to enter from keyboard)"
-msgstr ""
-"Datei die Instruktionen zum Kartenzeichnen enthält (Oder benutzen Sie "
-"input=- für eine interaktive Eingabe über die Tastatur)."
+#: ../ps/ps.map/main.c:129
+#, fuzzy
+msgid "File containing mapping instructions"
+msgstr "Datei die Gewichte enthält."
 
-#: ../ps/ps.map/main.c:134
+#: ../ps/ps.map/main.c:130
+msgid "Use '-' to enter instructions from keyboard"
+msgstr ""
+
+#: ../ps/ps.map/main.c:138
 msgid "PostScript output file"
 msgstr "PostScript Ausgabedatei"
 
-#: ../ps/ps.map/main.c:142
+#: ../ps/ps.map/main.c:147
 msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
 msgstr ""
 "Maßstab der Ausgabekarte, z.B. 1:25000 (standardmäßig: Anpassung an die "
 "Seite)"
 
-#: ../ps/ps.map/main.c:148
+#: ../ps/ps.map/main.c:154
 msgid "Number of copies to print"
 msgstr "Anzahl der Kopien."
 
-#: ../ps/ps.map/main.c:241
+#: ../ps/ps.map/main.c:247
 #, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
@@ -17333,7 +17382,17 @@ msgstr ""
 "Sie stattdessen die Kartierungsanweisung <%s>. Der Parameter <%s> wird in "
 "zukünftigen GRASS-Versionen nicht mehr vorhanden sein."
 
-#: ../ps/ps.map/main.c:267
+#: ../ps/ps.map/main.c:255 ../ps/ps.map/main.c:569
+#, fuzzy
+msgid "illegal scale request"
+msgstr "Ungültige Wertebereichs-Anfrage."
+
+#: ../ps/ps.map/main.c:261
+#, fuzzy
+msgid "illegal copies request"
+msgstr "Ungültige Spalten-Anfrage."
+
+#: ../ps/ps.map/main.c:273
 #, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -17342,15 +17401,15 @@ msgstr ""
 "FEHLER: Benötigter Parameter <%s> wurde nicht angegeben:\n"
 "\t(%s).\n"
 
-#: ../ps/ps.map/main.c:282
+#: ../ps/ps.map/main.c:288
 msgid "Current region cannot be set."
 msgstr "Aktuelle Region kann nicht gesetzt werden."
 
-#: ../ps/ps.map/main.c:291
+#: ../ps/ps.map/main.c:297
 msgid "Data exists after final 'end' instruction!"
 msgstr "Weitere Daten existieren nach der beendenden 'end'-Instruktion!"
 
-#: ../ps/ps.map/main.c:324
+#: ../ps/ps.map/main.c:330
 msgid ""
 "GRASS environment variable GRASS_VERBOSE is overwritten by VERBOSE mapping "
 "instruction. This mapping instruction is superseded and will be removed in "
@@ -17361,13 +17420,13 @@ msgstr ""
 "wird in zukünftigen GRASS_Versionen nicht mehr enthalten sein. Bitte "
 "verwenden Sie stattdessen '--verbose'."
 
-#: ../ps/ps.map/main.c:331
+#: ../ps/ps.map/main.c:337
 msgid "Cannot set GRASS_VERBOSE variable."
 msgstr "Kann die GRASS_VERBOSE Variable nicht setzen."
 
-#: ../ps/ps.map/main.c:742
-#, c-format
-msgid "PostScript file [%s] successfully written."
+#: ../ps/ps.map/main.c:748
+#, fuzzy, c-format
+msgid "PostScript file '%s' successfully written."
 msgstr "Die PostScript Datei [%s] wurde erfolgreich geschrieben."
 
 #: ../ps/ps.map/do_masking.c:23
@@ -17635,7 +17694,7 @@ msgstr ""
 #: ../display/d.vect/main.c:112 ../display/d.vect/main.c:115
 #: ../display/d.vect/main.c:333 ../display/d.rast/main.c:66
 #: ../display/d.rast/main.c:75 ../display/d.rast/main.c:94
-#: ../display/d.thematic.area/main.c:131 ../display/d.thematic.area/main.c:134
+#: ../display/d.thematic.area/main.c:130 ../display/d.thematic.area/main.c:133
 #: ../vector/v.net.centrality/main.c:107 ../vector/v.net.centrality/main.c:109
 #: ../vector/v.in.ogr/main.c:132 ../vector/v.in.ogr/main.c:146
 #: ../vector/v.in.ogr/main.c:168 ../vector/v.buffer2/main.c:160
@@ -17649,8 +17708,8 @@ msgstr ""
 #: ../vector/v.extract/main.c:117 ../vector/v.extract/main.c:123
 #: ../vector/v.extract/main.c:127 ../vector/v.extract/main.c:130
 #: ../vector/v.extract/main.c:138 ../vector/v.extract/main.c:148
-#: ../vector/v.category/main.c:92 ../vector/v.category/main.c:97
-#: ../vector/v.category/main.c:101 ../vector/v.surf.rst/main.c:193
+#: ../vector/v.category/main.c:94 ../vector/v.category/main.c:99
+#: ../vector/v.category/main.c:103 ../vector/v.surf.rst/main.c:193
 #: ../vector/v.surf.rst/main.c:219 ../vector/v.surf.rst/main.c:222
 #: ../vector/v.reclass/main.c:76 ../vector/v.reclass/main.c:79
 #: ../vector/v.select/args.c:16 ../vector/v.select/args.c:21
@@ -17800,7 +17859,7 @@ msgstr ""
 "Maximale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen "
 "der Karte."
 
-#: ../display/d.vect/main.c:303 ../display/d.thematic.area/main.c:158
+#: ../display/d.vect/main.c:303 ../display/d.thematic.area/main.c:157
 msgid "Rendering method for filled polygons"
 msgstr "Render-Methode für gefüllte Polygone."
 
@@ -17855,7 +17914,7 @@ msgstr ""
 "Die Schalter '-c' und '-a' können nicht gemeinsam verwendet werden. Der "
 "Schalter '-c' wird ignoriert!"
 
-#: ../display/d.vect/main.c:427 ../display/d.thematic.area/main.c:318
+#: ../display/d.vect/main.c:427 ../display/d.thematic.area/main.c:317
 #, c-format
 msgid "Unknown color: [%s]"
 msgstr "Unbekannte Farbe: [%s]."
@@ -17872,12 +17931,12 @@ msgstr ""
 "Parameter 'layer' muss > 0 sein, wenn der Parameter 'where' angegeben ist."
 
 #: ../display/d.vect/main.c:466 ../display/d.what.vect/what.c:446
-#: ../display/d.thematic.area/main.c:227 ../vector/v.db.connect/main.c:175
+#: ../display/d.thematic.area/main.c:226 ../vector/v.db.connect/main.c:175
 #, c-format
 msgid "Database connection not defined"
 msgstr "Datenbankverbindung nicht definiert."
 
-#: ../display/d.vect/main.c:475 ../display/d.thematic.area/main.c:236
+#: ../display/d.vect/main.c:475 ../display/d.thematic.area/main.c:235
 #: ../vector/v.convert/att.c:73 ../db/base/tables.c:51 ../db/base/execute.c:68
 #: ../db/base/describe.c:57 ../db/base/select.c:73
 #, c-format
@@ -17893,11 +17952,11 @@ msgstr "'Layer' muss > 0 sein für den Parameter 'cats'."
 msgid "%d errors in cat option"
 msgstr "%d Fehler in cat Option."
 
-#: ../display/d.vect/main.c:583 ../display/d.thematic.area/main.c:402
+#: ../display/d.vect/main.c:583 ../display/d.thematic.area/main.c:401
 msgid "Plotting ..."
 msgstr "Zeichne..."
 
-#: ../display/d.vect/main.c:591 ../display/d.thematic.area/main.c:409
+#: ../display/d.vect/main.c:591 ../display/d.thematic.area/main.c:408
 msgid ""
 "The bounding box of the map is outside the current region, nothing drawn."
 msgstr ""
@@ -17937,7 +17996,7 @@ msgstr ""
 #: ../display/d.vect/area.c:93 ../display/d.vect/area.c:136
 #: ../display/d.vect/plot1.c:243 ../display/d.vect/plot1.c:284
 #: ../display/d.vect/plot1.c:327 ../display/d.vect/plot1.c:370
-#: ../display/d.thematic.area/main.c:255
+#: ../display/d.thematic.area/main.c:254
 #: ../display/d.thematic.area/plot1.c:225
 #: ../display/d.thematic.area/plot1.c:253
 #, c-format
@@ -18821,7 +18880,7 @@ msgstr "Zentriert das Balkendiagramm um einen Datenpunkt."
 msgid "Maximum value used for bar plot reference"
 msgstr "Maximaler Wert wird für die Referenz des Balkenplots verwendet."
 
-#: ../display/d.vect.chart/main.c:148 ../display/d.thematic.area/main.c:174
+#: ../display/d.vect.chart/main.c:148 ../display/d.thematic.area/main.c:173
 msgid "Create legend information and send to stdout"
 msgstr "Erzeuge Legendeninformation und gebe sie auf stdout aus."
 
@@ -19746,23 +19805,23 @@ msgstr "Anzahl der zu bestimmenden Klassen"
 msgid "Colors (one per class)."
 msgstr "Farben (eine pro Klasse)."
 
-#: ../display/d.thematic.area/main.c:130
+#: ../display/d.thematic.area/main.c:129
 msgid "Layer number. If -1, all layers are displayed."
 msgstr "Layernummer: Wenn -1 angegeben wird, werden alle Layer dargestellt."
 
-#: ../display/d.thematic.area/main.c:140 ../display/d.thematic.area/main.c:148
+#: ../display/d.thematic.area/main.c:139 ../display/d.thematic.area/main.c:147
 msgid "Boundaries"
 msgstr "Grenzen"
 
-#: ../display/d.thematic.area/main.c:141
+#: ../display/d.thematic.area/main.c:140
 msgid "Boundary width"
 msgstr "Breite der Grenze"
 
-#: ../display/d.thematic.area/main.c:147
+#: ../display/d.thematic.area/main.c:146
 msgid "Boundary color"
 msgstr "Farbe der Grenze"
 
-#: ../display/d.thematic.area/main.c:160
+#: ../display/d.thematic.area/main.c:159
 msgid ""
 "d;use the display library basic functions (features: polylines);c;use the "
 "display library clipping functions (features: clipping);l;use the display "
@@ -19773,13 +19832,13 @@ msgstr ""
 "l;Verwende die Culling-Funkton der Displaybibliothek (Feature: Beschneiden, "
 "Polylinien)"
 
-#: ../display/d.thematic.area/main.c:168
+#: ../display/d.thematic.area/main.c:167
 msgid "File in which to save d.graph instructions for legend display"
 msgstr ""
 "Datei in der die d.grap-Anweisungen für die Darstellung der Legende "
 "gespeichert werden."
 
-#: ../display/d.thematic.area/main.c:179
+#: ../display/d.thematic.area/main.c:178
 msgid ""
 "When printing legend info , include extended statistical info from "
 "classification algorithm"
@@ -19787,32 +19846,32 @@ msgstr ""
 "Beim ausgeben der Legenden-Info auch die erweiterte Statistik des "
 "Klassifikationsalgorithmus ausgeben."
 
-#: ../display/d.thematic.area/main.c:183
+#: ../display/d.thematic.area/main.c:182
 msgid "Do not draw map, only output the legend"
 msgstr "Zeichne nicht die Karte, gebe nur die Legende aus."
 
-#: ../display/d.thematic.area/main.c:196
+#: ../display/d.thematic.area/main.c:195
 #, c-format
 msgid "Invalid rendering method <%s>"
 msgstr "Ungültige Render-Methode <%s>."
 
-#: ../display/d.thematic.area/main.c:218
+#: ../display/d.thematic.area/main.c:217
 #, c-format
 msgid "%s: You must build topology on vector map. Run v.build."
 msgstr ""
 "%s: Sie müssen die Topologie für die Vektorkarte erstellen. Führen Sie v."
 "build aus."
 
-#: ../display/d.thematic.area/main.c:225
+#: ../display/d.thematic.area/main.c:224
 msgid "'layer' must be > 0"
 msgstr "'layer' muss > 0 sein."
 
-#: ../display/d.thematic.area/main.c:251
+#: ../display/d.thematic.area/main.c:250
 #, c-format
 msgid "Data (%s) not numeric. Column must be numeric."
 msgstr "Daten (%s) nicht numerisch. Spalte muss numerisch sein."
 
-#: ../display/d.thematic.area/main.c:329
+#: ../display/d.thematic.area/main.c:328
 msgid ""
 "You gave both manual breaks and a classification algorithm or a number of "
 "classes. The manual breaks have precedence and will thus be used."
@@ -19821,13 +19880,13 @@ msgstr ""
 "Klassenanzahl angegeben. Die manuellen Klassengrenzen haben Vorrang und "
 "werden daher verwendet."
 
-#: ../display/d.thematic.area/main.c:366
+#: ../display/d.thematic.area/main.c:365
 msgid "You must either give classbreaks or a classification algorithm"
 msgstr ""
 "Sie müssen entweder Klassengrenzen oder einen Klassfikationsalgorithmus "
 "angeben."
 
-#: ../display/d.thematic.area/main.c:379
+#: ../display/d.thematic.area/main.c:378
 #, c-format
 msgid ""
 "Not enough colors or error in color specifications.\n"
@@ -19836,12 +19895,12 @@ msgstr ""
 "Nicht genügend Farben oder ein Fehler in der Farbspezifikation.\n"
 "Brauche %i Farben."
 
-#: ../display/d.thematic.area/main.c:384
+#: ../display/d.thematic.area/main.c:383
 #, c-format
 msgid "Error interpreting color %s"
 msgstr "Fehler beim Interpretieren der Farbe %s."
 
-#: ../display/d.thematic.area/main.c:458
+#: ../display/d.thematic.area/main.c:457
 #, c-format
 msgid ""
 "\n"
@@ -19850,27 +19909,27 @@ msgstr ""
 "\n"
 "Gesamtzahl der Datensätze: %.0f\n"
 
-#: ../display/d.thematic.area/main.c:460
+#: ../display/d.thematic.area/main.c:459
 #, c-format
 msgid "Classification of %s into %i classes\n"
 msgstr "Klassifikation von %s in %i Klassen\n"
 
-#: ../display/d.thematic.area/main.c:462 ../vector/v.class/main.c:195
+#: ../display/d.thematic.area/main.c:461 ../vector/v.class/main.c:195
 #, c-format
 msgid "Using algorithm: *** %s ***\n"
 msgstr "Verwende den Algorithmus: *** %s ***\n"
 
-#: ../display/d.thematic.area/main.c:464 ../vector/v.class/main.c:196
+#: ../display/d.thematic.area/main.c:463 ../vector/v.class/main.c:196
 #, c-format
 msgid "Mean: %f\tStandard deviation = %f\n"
 msgstr "Mittelwert: %f\tStandardabweichung = %f\n"
 
-#: ../display/d.thematic.area/main.c:468
+#: ../display/d.thematic.area/main.c:467
 #, c-format
 msgid "Last chi2 = %f\n"
 msgstr "Letztes chi^2 = %f\n"
 
-#: ../display/d.thematic.area/main.c:471 ../vector/v.class/main.c:203
+#: ../display/d.thematic.area/main.c:470 ../vector/v.class/main.c:203
 #, c-format
 msgid "Stdev multiplied by %.4f to define step\n"
 msgstr "Standardabweichung multipliziert mit %.4f definiert die Schrittweite\n"
@@ -22492,7 +22551,7 @@ msgstr "Ungerade Anzahl Typen."
 
 #: ../vector/v.type/main.c:234 ../vector/v.net/main.c:197
 #: ../vector/v.proj/main.c:296 ../vector/v.kcv/main.c:161
-#: ../vector/v.build.polylines/main.c:233 ../vector/v.category/main.c:527
+#: ../vector/v.build.polylines/main.c:233 ../vector/v.category/main.c:556
 #: ../vector/v.transform/main.c:361 ../vector/v.clean/main.c:281
 msgid "Failed to copy attribute table to output map"
 msgstr "Kopieren der Attributtabelle in die Ausgabekarte fehlgeschlagen."
@@ -24931,6 +24990,7 @@ msgid "Creating new DB connection based on default mapset settings..."
 msgstr "Erzeuge neue DB-Verbindung, basierend auf den Mapset-Einstellungen..."
 
 #: ../vector/v.edit/main.c:131 ../vector/v.kcv/main.c:137
+#: ../vector/v.category/main.c:160
 #, c-format
 msgid "Unable to open vector map <%s> at topological level %d"
 msgstr "Kann Vektorkarte <%s> auf der topologischen Ebene %d nicht öffnen"
@@ -26026,7 +26086,7 @@ msgstr "Schreibe Kanten..."
 msgid "Calculate area centroids..."
 msgstr "Berechne Flächenzentroide..."
 
-#: ../vector/v.delaunay2/main.c:172 ../vector/v.category/main.c:261
+#: ../vector/v.delaunay2/main.c:172 ../vector/v.category/main.c:290
 msgid "Unable to calculate area centroid"
 msgstr "Kann den Zentroid der Fläche nicht berechnen."
 
@@ -27009,26 +27069,28 @@ msgstr "Finde Quadrate..."
 msgid "Counting sites in quadrats..."
 msgstr "Zähle Sites in den Quadraten..."
 
-#: ../vector/v.category/main.c:67
+#: ../vector/v.category/main.c:68
 msgid "vector, category"
 msgstr "Vektor, Kategorie "
 
-#: ../vector/v.category/main.c:69
+#: ../vector/v.category/main.c:70
 msgid "Attach, delete or report vector categories to map geometry."
 msgstr ""
 "Füge hinzu, Lösche oder Berichte Vektorkategorien einer Kartengeometrie."
 
-#: ../vector/v.category/main.c:83
+#: ../vector/v.category/main.c:84
 msgid "Action to be done"
 msgstr "Aktion die ausgeführt werden soll."
 
-#: ../vector/v.category/main.c:84
+#: ../vector/v.category/main.c:85
+#, fuzzy
 msgid ""
 "add;add a new category;del;delete all categories of given layer;chlayer;"
 "change layer number (e.g. layer=3,1 changes layer 3 to layer 1);sum;add the "
 "value specified by cat option to the current category value;report;print "
 "report (statistics), in shell style: layer type count min max;print;print "
-"category values, more cats in the same layer are separated by '/'"
+"category values, more cats in the same layer are separated by '/';layers;"
+"print only layer numbers"
 msgstr ""
 "add;Füge eine neue Kategorie hinzu;del;Lösche alle Kategorien eines "
 "gegebenen Layers;chlayer;Ändere die Layer-Nummer (z.B. layer=3,1 ändert von "
@@ -27037,31 +27099,31 @@ msgstr ""
 "Shell-Skript-Stil: Layer Typ Anzahl Min Max;print;Gebe Kategoriewerte aus, "
 "mehere cats im selben Layer werden durch '/' getrennt"
 
-#: ../vector/v.category/main.c:100
+#: ../vector/v.category/main.c:102
 msgid "Feature ids (by default all features are processed)"
 msgstr "ID der Feature (standardmäßig werden alle Feature bearbeitet)."
 
-#: ../vector/v.category/main.c:112
+#: ../vector/v.category/main.c:114
 #: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "Inkrement für die Kategorienummern"
 
-#: ../vector/v.category/main.c:116
+#: ../vector/v.category/main.c:118
 msgid "Shell script style, currently only for report"
 msgstr "Shell-Skript-Stil, zur Zeit nur für den Bericht."
 
-#: ../vector/v.category/main.c:117
+#: ../vector/v.category/main.c:119
 msgid "Format: layer type count min max"
 msgstr "Format: Layer Typ Anzahl Min Max"
 
-#: ../vector/v.category/main.c:135
+#: ../vector/v.category/main.c:137
 msgid ""
 "Database connection and attribute tables for concerned layers are not changed"
 msgstr ""
 "Die Datenbankverbindung und die Attributtabellen der betroffenen Layer "
 "werden nicht geändert."
 
-#: ../vector/v.category/main.c:153
+#: ../vector/v.category/main.c:182
 msgid ""
 "Invalid category number (must be equal to or greater than 0). Normally "
 "category number starts at 1."
@@ -27069,74 +27131,74 @@ msgstr ""
 "Ungültige Kategorie (muss größer oder gleich 0 sein). Normalerweise beginnen "
 "die Kategorien bei 1."
 
-#: ../vector/v.category/main.c:162
+#: ../vector/v.category/main.c:191
 #, c-format
 msgid "%d errors in id option"
 msgstr "%d Fehler in id Option."
 
-#: ../vector/v.category/main.c:183
+#: ../vector/v.category/main.c:212
 msgid "Too many layers for this operation"
 msgstr "Zu viele Layer für diese Operation."
 
-#: ../vector/v.category/main.c:186
+#: ../vector/v.category/main.c:215
 msgid "2 layers must be specified"
 msgstr "2 Layer müssen angegeben werden."
 
-#: ../vector/v.category/main.c:190
+#: ../vector/v.category/main.c:219
 msgid "Output vector wasn't entered"
 msgstr "Ausgabe-Vektorkarte wurde nicht eingegeben."
 
-#: ../vector/v.category/main.c:229 ../vector/v.select/main.c:149
+#: ../vector/v.category/main.c:258 ../vector/v.select/main.c:149
 msgid "Processing features..."
 msgstr "Verarbeite Feature..."
 
-#: ../vector/v.category/main.c:274
+#: ../vector/v.category/main.c:303
 #, c-format
 msgid "%d new centroids placed in output map"
 msgstr "[%d] neue Zentroide sind in die Ausgabekarte gesetzt worden."
 
-#: ../vector/v.category/main.c:445
+#: ../vector/v.category/main.c:474
 msgid "Layer/table"
 msgstr "Layer/Tabelle"
 
-#: ../vector/v.category/main.c:449
+#: ../vector/v.category/main.c:478
 msgid "Layer"
 msgstr "Layer"
 
-#: ../vector/v.category/main.c:451
+#: ../vector/v.category/main.c:480
 #, c-format
 msgid "type       count        min        max\n"
 msgstr "Typ       Anzahl        Min        Max\n"
 
-#: ../vector/v.category/main.c:452
+#: ../vector/v.category/main.c:481
 msgid "point"
 msgstr "Punkt"
 
-#: ../vector/v.category/main.c:456
+#: ../vector/v.category/main.c:485
 msgid "line"
 msgstr "Linie"
 
-#: ../vector/v.category/main.c:460
+#: ../vector/v.category/main.c:489
 msgid "boundary"
 msgstr "Grenze"
 
-#: ../vector/v.category/main.c:464
+#: ../vector/v.category/main.c:493
 msgid "centroid"
 msgstr "Zentroid"
 
-#: ../vector/v.category/main.c:468
+#: ../vector/v.category/main.c:497
 msgid "area"
 msgstr "Fläche"
 
-#: ../vector/v.category/main.c:472
+#: ../vector/v.category/main.c:501
 msgid "all"
 msgstr "Alle"
 
-#: ../vector/v.category/main.c:525
+#: ../vector/v.category/main.c:554
 msgid "Copying attribute table(s)..."
 msgstr "Kopiere Attributtabelle(n)..."
 
-#: ../vector/v.category/main.c:531
+#: ../vector/v.category/main.c:560
 #, c-format
 msgid "%d features modified."
 msgstr "%d Feature verändert."
@@ -34657,6 +34719,13 @@ msgstr "Name der Rasterkarte die über das Relief drapiertwird."
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
 msgid "Percent to brighten"
 msgstr "Prozentuale Aufhellung."
+
+#~ msgid ""
+#~ "File containing mapping instructions (or use input=- to enter from "
+#~ "keyboard)"
+#~ msgstr ""
+#~ "Datei die Instruktionen zum Kartenzeichnen enthält (Oder benutzen Sie "
+#~ "input=- für eine interaktive Eingabe über die Tastatur)."
 
 #~ msgid ""
 #~ "Product creation date not in metadata file <%s>, input this data in the "
