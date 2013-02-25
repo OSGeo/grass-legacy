@@ -62,7 +62,9 @@ if [ ! -e "$GIS_OPT_INPUT" ] ; then
    exit 1
 fi
 
-eval `g.gisenv`
+MAPSET=`g.gisenv get=MAPSET`
+LOCATION_NAME=`g.gisenv get=LOCATION_NAME`
+GISDBASE=`g.gisenv get=GISDBASE`
 MSET_DIR="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 # create temporary directory to hold bits
@@ -71,8 +73,10 @@ if [ $? -ne 0 ] || [ -z "$TMP_DIR" ] ; then
    g.message -e "Unable to create temporary files"
    exit 1
 fi
+
 rm -f "$TMP_DIR"
 mkdir "$TMP_DIR"
+
 if [ ! -d "$TMP_DIR" ] ; then
    g.message -e "Unable to create temporary directory"
    exit 1
