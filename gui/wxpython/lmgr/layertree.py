@@ -956,8 +956,6 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 self.GetPyData(layer)[0]['propwin'] is not None:
             # recycle GUI dialogs
             win = self.GetPyData(layer)[0]['propwin']
-            # update properties (columns, layers)
-            win.notebookpanel.OnUpdateSelection(None)
             if win.IsShown():
                 win.SetFocus()
             else:
