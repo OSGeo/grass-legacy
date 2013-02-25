@@ -109,7 +109,8 @@ fi
 
 # copy projection info
 #   (would prefer to use g.proj*, but this way is 5.3 and 5.7 compat)
-eval `g.gisenv`
+LOCATION_NAME=`g.gisenv get=LOCATION_NAME`
+GISDBASE=`g.gisenv get=GISDBASE`
 
 for SUPPORT in INFO UNITS EPSG ; do
    if [ -e "$GISDBASE/$LOCATION_NAME/PERMANENT/PROJ_$SUPPORT" ] ; then
