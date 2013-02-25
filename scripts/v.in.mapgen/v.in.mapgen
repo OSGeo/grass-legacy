@@ -86,9 +86,6 @@ awk_tac()
           END { for (i = last; i > 0; i--) { print line[i]; } }'
 }
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 OPTS=""
 
@@ -188,9 +185,9 @@ else
 
     #### check success/failure
     if [ $? -eq 0 ] ; then
-	g.message message="\"$NAME@$MAPSET\" successfully created." 
+	g.message message="<$NAME> successfully created." 
     else
-	g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check"'!'
+	g.message -e "An error occured on creating <$NAME>, please check"'!'
     fi
 fi
 
