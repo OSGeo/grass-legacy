@@ -70,9 +70,6 @@ fi
 
 
 # Save old settings
-old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
-old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
-old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
 #setting variables (get rid of extra png)
@@ -120,17 +117,8 @@ eval "$dsave"
 d.mon stop=PNG
 
 #returning old settings
-d.mon select=$curr_mon
-GRASS_WIDTH=$old_GRASSW
-export GRASS_WIDTH
-GRASS_HEIGHT=$old_GRASSH
-export GRASS_HEIGHT
-GRASS_TRUECOLOR=$old_TRUECOLOR
-export GRASS_TRUECOLOR
-GRASS_PNGFILE=map.png
-export GRASS_PNGFILE
+d.mon select="$curr_mon"
 
 g.message "Done. (writing the file may take a small amount of time)"
-
 exit 0
 
