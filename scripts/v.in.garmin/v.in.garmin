@@ -105,9 +105,11 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
+### setup enviro vars ###
+MAPSET=`g.gisenv get=MAPSET`
+LOCATION_NAME=`g.gisenv get=LOCATION_NAME`
+GISDBASE=`g.gisenv get=GISDBASE`
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 PROG=`basename "$0"`
 
