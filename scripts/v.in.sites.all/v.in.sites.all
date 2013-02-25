@@ -32,9 +32,9 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
+
+MAPSET=`g.gisenv get=MAPSET`
+
 
 CONVERTEDMAPS=0
 for i in `g.mlist type=sites mapset=.`
