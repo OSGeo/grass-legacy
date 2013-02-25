@@ -467,14 +467,14 @@ REQUEST=""
 DOWNLOAD=""
 GDALWARP=""
 
-eval `g.gisenv`
-
 #Job number one: pick a folder
-if [ -z "${GIS_OPT_FOLDER}" ] ; then
-	GIS_OPT_FOLDER="${GISDBASE}/wms_download"
+if [ -z "$GIS_OPT_FOLDER" ] ; then
+    GISDBASE=`g.gisenv get=GISDBASE`
+    GIS_OPT_FOLDER="$GISDBASE/wms_download"
 fi
 
-PREFIX="${GIS_OPT_OUTPUT}"
+
+PREFIX="$GIS_OPT_OUTPUT"
 if [ -x "`which wget`" ] ; then
     REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget"
 else
