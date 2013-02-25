@@ -140,8 +140,7 @@ trap "cleanup" 2 3 15
 
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+MAPSET=`g.gisenv get=MAPSET`
 
 #### does map exist in CURRENT mapset?
 eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
