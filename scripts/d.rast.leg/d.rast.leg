@@ -117,15 +117,12 @@ else
 fi
 
 #for -n flag of d.legend
-eval `g.findfile el=cell file=$GIS_OPT_MAP`
+eval `g.findfile el=cell file="$GIS_OPT_MAP"`
 if [ ! "$file" ] ; then
    g.message -e "Raster map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
-filemapset="${mapset}"
-# would it be better to search for cats/ file ??
-eval `g.gisenv`
-HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
+
 eval `r.info -t "$GIS_OPT_MAP"`
 
 # for rast=
@@ -137,6 +134,12 @@ if [ -n "$GIS_OPT_RAST" ] ; then
     else
 	eval `r.info -t "$GIS_OPT_RAST"`
     fi
+
+    eval `g.findfile ele=cell_misc file="$GIS_OPT_RAST" | grep '^file='`
+    HSTGRM_DIR="$file"
+else
+    eval `g.findfile ele=cell_misc file="$GIS_OPT_MAP" | grep '^file='`
+    HSTGRM_DIR="$file"
 fi
 
 
@@ -167,14 +170,16 @@ if [ -z "$GIS_OPT_NUM_OF_LINES" ] ; then
     	d.frame -s at=0,90,$XPOS,100 frame=right
 	if [ -z "$GIS_OPT_RAST" ] ; then
 		g.message -d "No lines; own legend"
-		if test -f $HISTFILEDIR/$GIS_OPT_MAP/histogram ; then
+		# HB: I'm not sure this works as written. e.g. try erode.index@spearfish
+		# would it be better to search for cats/ file ??
+		if test -f "$HSTGRM_DIR/histogram" ; then
 	  	     d.legend $FLIP $SMOOTH -n map="$GIS_OPT_MAP" $LEG_AT
         	else
 	             d.legend $FLIP $SMOOTH $OMIT map="$GIS_OPT_MAP" $LEG_AT
         	fi
 	else
 		g.message -d "No lines; external legend"
-		if test -f $HISTFILEDIR/$GIS_OPT_RAST/histogram ; then
+		if test -f "$HSTGRM_DIR/histogram" ; then
 		     d.legend $FLIP $SMOOTH -n map="$GIS_OPT_RAST" $LEG_AT
 		else
 		     d.legend $FLIP $SMOOTH $OMIT map="$GIS_OPT_RAST" $LEG_AT
@@ -195,7 +200,7 @@ else
     	d.frame -s at=0,90,$XPOS,100 frame=right
 	if [ -z "$GIS_OPT_RAST" ] ; then
 		g.message -d message="Lines=$GIS_OPT_NUM_OF_LINES; own legend"
-		if test -f $HISTFILEDIR/$GIS_OPT_MAP/histogram ; then
+		if test -f "$HSTGRM_DIR/histogram" ; then
 	             d.legend $FLIP -n map="$GIS_OPT_MAP" \
 			lines="$GIS_OPT_NUM_OF_LINES" $LEG_AT
         	else
@@ -203,7 +208,7 @@ else
         	fi
 	else
 		g.message -d message="Lines=$GIS_OPT_NUM_OF_LINES; external legend"
-		if test -f $HISTFILEDIR/$GIS_OPT_RAST/histogram ; then
+		if test -f "$HSTGRM_DIR/histogram" ; then
 		     d.legend $FLIP -n map="$GIS_OPT_RAST" \
 			lines="$GIS_OPT_NUM_OF_LINES" $LEG_AT
 		else
