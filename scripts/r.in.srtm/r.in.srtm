@@ -102,15 +102,11 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
-PERM="$GISDBASE/$LOCATION_NAME/PERMANENT"
 
-grep -i 'proj: ll' "$PERM/PROJ_INFO" > /dev/null
-if [ $? -ne 0 ] ; then
+PROJ_TYPE=`g.region -p | grep '^proj' | cut -f2 -d" "`
+if [ "$PROJ_TYPE" -ne 3 ] ; then
     g.message -e "SRTM data are in Latitude/Longitude. The current\
-      location's projection differs. STOP."
+      location's projection differs. Quitting."
     exit 1
 fi
 
