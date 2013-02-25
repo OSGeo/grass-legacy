@@ -57,8 +57,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
-
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
     g.message -e "awk required, please install awk/gawk first"
@@ -69,10 +67,6 @@ fi
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
-
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 
 if [ -n "$GIS_OPT_INPUT" ] ; then
@@ -97,8 +91,8 @@ trap 'rm -f "${TMPFILE}" "${TMPFILE}_ascii.csv"' 2 3 15
 #are we in LatLong location?
 g.proj -p | grep -i name | grep -i Lon  > /dev/null
 if [ $? -eq 1 ] ; then
-  g.message -e "This module only operates in LatLong/WGS84 locations"
-  exit 1
+    g.message -e "This module only operates in LatLong/WGS84 locations"
+    exit 1
 fi
 
 # input test
@@ -110,7 +104,7 @@ fi
 # DBF doesn't support lengthy text fields
 driver=`db.connect -p | grep -i driver | cut -d':' -f2`
 if [ "$driver" = "dbf" ] ; then
-   g.message -w "Since DBF driver is used, the content of the 'alternatenames' column might be cut with respect to the original Geonames.org column content"
+    g.message -w "Since the DBF driver is used, the content of the 'alternatenames' column might be cut with respect to the original Geonames.org column content"
 fi
 
 
