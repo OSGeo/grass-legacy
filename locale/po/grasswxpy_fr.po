@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 14:02+0100\n"
+"POT-Creation-Date: 2013-02-25 18:16+0100\n"
 "PO-Revision-Date: 2013-02-03 16:42+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
@@ -192,13 +192,13 @@ msgstr "Choisir un répertoire :"
 msgid "Choose a directory for images"
 msgstr "Choisir un répertoire pour les images"
 
-#: ../gui/wxpython/nviz/tools.py:476 ../gui/wxpython/gui_core/gselect.py:877
-#: ../gui/wxpython/gui_core/gselect.py:1175
-#: ../gui/wxpython/gui_core/gselect.py:1184
-#: ../gui/wxpython/gui_core/gselect.py:1193
-#: ../gui/wxpython/gui_core/gselect.py:1508
-#: ../gui/wxpython/gui_core/gselect.py:1696
-#: ../gui/wxpython/gui_core/forms.py:1290
+#: ../gui/wxpython/nviz/tools.py:476 ../gui/wxpython/gui_core/gselect.py:888
+#: ../gui/wxpython/gui_core/gselect.py:1186
+#: ../gui/wxpython/gui_core/gselect.py:1195
+#: ../gui/wxpython/gui_core/gselect.py:1204
+#: ../gui/wxpython/gui_core/gselect.py:1519
+#: ../gui/wxpython/gui_core/gselect.py:1707
+#: ../gui/wxpython/gui_core/forms.py:1304
 #: ../gui/wxpython/gui_core/dialogs.py:1770
 #: ../gui/wxpython/psmap/dialogs.py:1971 ../gui/wxpython/psmap/dialogs.py:2160
 #: ../gui/wxpython/psmap/dialogs.py:4121
@@ -620,7 +620,7 @@ msgstr "S && O"
 msgid "S && E"
 msgstr "S && E"
 
-#: ../gui/wxpython/nviz/tools.py:1799 ../gui/wxpython/gui_core/gselect.py:1101
+#: ../gui/wxpython/nviz/tools.py:1799 ../gui/wxpython/gui_core/gselect.py:1112
 #: ../gui/wxpython/gui_core/toolbars.py:77
 msgid "Settings"
 msgstr "Paramètres"
@@ -1167,13 +1167,13 @@ msgstr ""
 "Le secteur courant est  <%(loc)s>.\n"
 "Le jeu de cartes courant est <%(mapset)s>."
 
-#: ../gui/wxpython/lmgr/frame.py:360 ../gui/wxpython/gis_set.py:427
+#: ../gui/wxpython/lmgr/frame.py:360 ../gui/wxpython/gis_set.py:434
 msgid "Do you want to set the default region extents and resolution now?"
 msgstr ""
 "Voulez-vous définir les limites et la résolution la région par défaut "
 "maintenant ?"
 
-#: ../gui/wxpython/lmgr/frame.py:362 ../gui/wxpython/gis_set.py:429
+#: ../gui/wxpython/lmgr/frame.py:362 ../gui/wxpython/gis_set.py:436
 #, python-format
 msgid "Location <%s> created"
 msgstr "Secteur <%s> créé"
@@ -1262,12 +1262,12 @@ msgstr "Lancement du script '%s'..."
 msgid "No location/mapset provided. Operation canceled."
 msgstr "Aucun secteur/jeux de carte sélectionné. Opération annulée."
 
-#: ../gui/wxpython/lmgr/frame.py:685 ../gui/wxpython/gis_set.py:780
+#: ../gui/wxpython/lmgr/frame.py:685 ../gui/wxpython/gis_set.py:785
 msgid "Enter name for new mapset:"
 msgstr "Entrer le nom du nouveau jeu de cartes :"
 
-#: ../gui/wxpython/lmgr/frame.py:686 ../gui/wxpython/gis_set.py:781
-#: ../gui/wxpython/menustrings.py:227
+#: ../gui/wxpython/lmgr/frame.py:686 ../gui/wxpython/gis_set.py:425
+#: ../gui/wxpython/gis_set.py:786 ../gui/wxpython/menustrings.py:227
 msgid "Create new mapset"
 msgstr "Créer un nouveau jeu de cartes"
 
@@ -1437,8 +1437,8 @@ msgstr "Quitter l'interface graphique GRASS"
 msgid "No map layer selected. Operation canceled."
 msgstr "Aucune ccouche sélectionnée. Opération annulée."
 
-#: ../gui/wxpython/lmgr/frame.py:1827 ../gui/wxpython/gis_set.py:523
-#: ../gui/wxpython/gis_set.py:558 ../gui/wxpython/gui_core/ghelp.py:274
+#: ../gui/wxpython/lmgr/frame.py:1827 ../gui/wxpython/gis_set.py:530
+#: ../gui/wxpython/gis_set.py:565 ../gui/wxpython/gui_core/ghelp.py:274
 #: ../gui/wxpython/core/gcmd.py:144
 msgid "Message"
 msgstr "Message"
@@ -1792,9 +1792,9 @@ msgstr "Profil"
 msgid "Unable to create profile of raster map."
 msgstr "Impossible de créer le profil de carte raster."
 
-#: ../gui/wxpython/lmgr/layertree.py:554 ../gui/wxpython/gis_set.py:208
-#: ../gui/wxpython/gis_set.py:535 ../gui/wxpython/gis_set.py:571
-#: ../gui/wxpython/gis_set.py:637 ../gui/wxpython/gui_core/preferences.py:211
+#: ../gui/wxpython/lmgr/layertree.py:554 ../gui/wxpython/gis_set.py:209
+#: ../gui/wxpython/gis_set.py:542 ../gui/wxpython/gis_set.py:578
+#: ../gui/wxpython/gis_set.py:644 ../gui/wxpython/gui_core/preferences.py:211
 #: ../gui/wxpython/gui_core/preferences.py:1240
 #: ../gui/wxpython/gui_core/preferences.py:1269
 #: ../gui/wxpython/gui_core/preferences.py:1278
@@ -1830,7 +1830,7 @@ msgid "Layer group:"
 msgstr "Groupe de couches :"
 
 #: ../gui/wxpython/lmgr/layertree.py:777
-#: ../gui/wxpython/lmgr/layertree.py:1381
+#: ../gui/wxpython/lmgr/layertree.py:1379
 msgid "Click to edit layer settings"
 msgstr "Cliquer pour éditer les réglages de couche"
 
@@ -1901,29 +1901,29 @@ msgstr "ligne loxodrome (direction constante)"
 msgid "vector labels"
 msgstr "étiquettes vecteur"
 
-#: ../gui/wxpython/lmgr/layertree.py:1098
-#: ../gui/wxpython/lmgr/layertree.py:1157
+#: ../gui/wxpython/lmgr/layertree.py:1096
+#: ../gui/wxpython/lmgr/layertree.py:1155
 msgid "Please wait, updating data..."
 msgstr "Merci d'attendre, mise à jour des données..."
 
-#: ../gui/wxpython/lmgr/layertree.py:1452
+#: ../gui/wxpython/lmgr/layertree.py:1450
 msgid "opacity:"
 msgstr "opacité :"
 
-#: ../gui/wxpython/lmgr/layertree.py:1469
+#: ../gui/wxpython/lmgr/layertree.py:1467
 #, python-format
 msgid "Map <%s> not found."
 msgstr "Carte <%s> non trouvée."
 
-#: ../gui/wxpython/gis_set.py:95
+#: ../gui/wxpython/gis_set.py:96
 msgid "Choose project location and mapset"
 msgstr "Choisir un secteur pour le projet et un jeu de cartes"
 
-#: ../gui/wxpython/gis_set.py:98
+#: ../gui/wxpython/gis_set.py:99
 msgid "Manage"
 msgstr "Gérer"
 
-#: ../gui/wxpython/gis_set.py:100
+#: ../gui/wxpython/gis_set.py:101
 #, python-format
 msgid ""
 "Welcome to GRASS GIS %s\n"
@@ -1932,7 +1932,7 @@ msgstr ""
 "Bienvenue dans le SIG GRASS %s\n"
 "Le SIG leader du monde open source"
 
-#: ../gui/wxpython/gis_set.py:104
+#: ../gui/wxpython/gis_set.py:105
 msgid ""
 "Select an existing project location and mapset\n"
 "or define a new location"
@@ -1940,12 +1940,12 @@ msgstr ""
 "Sélectionner un secteur et un jeu de cartes existants\n"
 "ou définir un nouveau secteur"
 
-#: ../gui/wxpython/gis_set.py:108
+#: ../gui/wxpython/gis_set.py:109
 #: ../gui/wxpython/location_wizard/wizard.py:109
 msgid "GIS Data Directory:"
 msgstr "Répertoire des données SIG :"
 
-#: ../gui/wxpython/gis_set.py:110
+#: ../gui/wxpython/gis_set.py:111
 msgid ""
 "Project location\n"
 "(projection/coordinate system)"
@@ -1953,7 +1953,7 @@ msgstr ""
 "Secteur du projet\n"
 "(projection/système de coordonnées)"
 
-#: ../gui/wxpython/gis_set.py:113
+#: ../gui/wxpython/gis_set.py:114
 msgid ""
 "Accessible mapsets\n"
 "(directories of GIS files)"
@@ -1961,7 +1961,7 @@ msgstr ""
 "Jeux de cartes accessibles\n"
 "(répertoires de fichiers SIG)"
 
-#: ../gui/wxpython/gis_set.py:116
+#: ../gui/wxpython/gis_set.py:117
 msgid ""
 "Create new mapset\n"
 "in selected location"
@@ -1969,11 +1969,11 @@ msgstr ""
 "Créer un nouveau jeu de cartes\n"
 "dans le secteur choisi"
 
-#: ../gui/wxpython/gis_set.py:119
+#: ../gui/wxpython/gis_set.py:120
 msgid "Define new location"
 msgstr "Définir un nouveau secteur"
 
-#: ../gui/wxpython/gis_set.py:122
+#: ../gui/wxpython/gis_set.py:123
 msgid ""
 "Rename/delete selected\n"
 "mapset or location"
@@ -1981,23 +1981,23 @@ msgstr ""
 "Renommer/Supprimer le secteur\n"
 "ou le jeu de cartes sélectionné"
 
-#: ../gui/wxpython/gis_set.py:127
+#: ../gui/wxpython/gis_set.py:128
 msgid "Start &GRASS"
 msgstr "Démarrer &GRASS"
 
-#: ../gui/wxpython/gis_set.py:133
+#: ../gui/wxpython/gis_set.py:134
 msgid "&Browse"
 msgstr "Parcourir"
 
-#: ../gui/wxpython/gis_set.py:135
+#: ../gui/wxpython/gis_set.py:136
 msgid "&Create mapset"
 msgstr "&Créer un jeu de cartes"
 
-#: ../gui/wxpython/gis_set.py:137
+#: ../gui/wxpython/gis_set.py:138
 msgid "&Location wizard"
 msgstr "Assistant de création de secteur"
 
-#: ../gui/wxpython/gis_set.py:138
+#: ../gui/wxpython/gis_set.py:139
 msgid ""
 "Start location wizard. After location is created successfully, GRASS session "
 "is started."
@@ -2005,52 +2005,52 @@ msgstr ""
 "Lancement de l'assistant. Une fois qu'un secteur est créé, la session GRASS "
 "sera lancée."
 
-#: ../gui/wxpython/gis_set.py:142
+#: ../gui/wxpython/gis_set.py:143
 msgid "Rename mapset"
 msgstr "Renommer le jeu de cartes"
 
-#: ../gui/wxpython/gis_set.py:142
+#: ../gui/wxpython/gis_set.py:143
 msgid "Rename location"
 msgstr "Renommer le secteur"
 
-#: ../gui/wxpython/gis_set.py:143
+#: ../gui/wxpython/gis_set.py:144
 msgid "Delete mapset"
 msgstr "Supprimer le jeu de cartes"
 
-#: ../gui/wxpython/gis_set.py:143
+#: ../gui/wxpython/gis_set.py:144
 msgid "Delete location"
 msgstr "Supprimer le secteur"
 
-#: ../gui/wxpython/gis_set.py:185
+#: ../gui/wxpython/gis_set.py:186
 msgid "Welcome to GRASS GIS"
 msgstr "Bienvenue dans le SIG GRASS"
 
-#: ../gui/wxpython/gis_set.py:193
+#: ../gui/wxpython/gis_set.py:194
 msgid "Enter GRASS session"
 msgstr "Démarrer une session GRASS"
 
-#: ../gui/wxpython/gis_set.py:209 ../gui/wxpython/gis_set.py:638
+#: ../gui/wxpython/gis_set.py:210 ../gui/wxpython/gis_set.py:645
 msgid "Unable to set GRASS database. Check your locale settings."
 msgstr ""
 "Impossible de déterminer la base de données GRASS. Vérifiez vos paramètres "
 "de langue."
 
-#: ../gui/wxpython/gis_set.py:227
+#: ../gui/wxpython/gis_set.py:228
 #, python-format
 msgid "ERROR: Location <%s> not found"
 msgstr "ERREUR : Secteur <%s> non trouvé"
 
-#: ../gui/wxpython/gis_set.py:239
+#: ../gui/wxpython/gis_set.py:240
 #, python-format
 msgid "ERROR: Mapset <%s> not found"
 msgstr "ERREUR : Jeu de cartes <%s> non trouvé"
 
-#: ../gui/wxpython/gis_set.py:378
+#: ../gui/wxpython/gis_set.py:379
 #, python-format
 msgid "Invalid line in GISRC file (%s):%s\n"
 msgstr "Ligne invalide dans le fichier GISRC (%s) : %s\n"
 
-#: ../gui/wxpython/gis_set.py:407
+#: ../gui/wxpython/gis_set.py:408
 #, python-format
 msgid ""
 "Do you want to import data source <%(name)s> to created location? Default "
@@ -2059,33 +2059,38 @@ msgstr ""
 "Voulez-vous importer la source de données <%(name)s> pour créer le secteur ? "
 "la région par défaut sera alignée sur la carte importée."
 
-#: ../gui/wxpython/gis_set.py:411
+#: ../gui/wxpython/gis_set.py:412
 msgid "Import data"
 msgstr "Importer des données"
 
-#: ../gui/wxpython/gis_set.py:456
+#: ../gui/wxpython/gis_set.py:424
+#, fuzzy
+msgid "Do you want to create new mapset?"
+msgstr "Voulez-vous créer le secteur GRASS <%s> ?"
+
+#: ../gui/wxpython/gis_set.py:463
 #, python-format
 msgid "Import of vector data source <%(name)s> failed."
 msgstr "Import de la carte vecteur <%(name)s> échoué."
 
-#: ../gui/wxpython/gis_set.py:460
+#: ../gui/wxpython/gis_set.py:467
 #, python-format
 msgid "Vector data source <%(name)s> imported successfully."
 msgstr "Déchargement de la carte vecteur <%(name)s> réussit."
 
-#: ../gui/wxpython/gis_set.py:475
+#: ../gui/wxpython/gis_set.py:482
 #, python-format
 msgid "Attempt to import data source <%(name)s> as raster or vector failed. "
 msgstr ""
 "L'import de la source de données <%(name)s> en tant que raster ou vecteur a "
 "échoué."
 
-#: ../gui/wxpython/gis_set.py:479
+#: ../gui/wxpython/gis_set.py:486
 #, python-format
 msgid "Raster data source <%(name)s> imported successfully."
 msgstr "Import de la carte raster <%(name)s> réussit."
 
-#: ../gui/wxpython/gis_set.py:507
+#: ../gui/wxpython/gis_set.py:514
 msgid ""
 "Mapset <PERMANENT> is required for valid GRASS location.\n"
 "\n"
@@ -2096,7 +2101,7 @@ msgstr ""
 "\n"
 "Ce jeu de cartes ne peut être renommé."
 
-#: ../gui/wxpython/gis_set.py:512 ../gui/wxpython/gis_set.py:547
+#: ../gui/wxpython/gis_set.py:519 ../gui/wxpython/gis_set.py:554
 #, python-format
 msgid ""
 "Current name: %s\n"
@@ -2107,11 +2112,11 @@ msgstr ""
 "\n"
 "Entrer le nouveau nom :"
 
-#: ../gui/wxpython/gis_set.py:513
+#: ../gui/wxpython/gis_set.py:520
 msgid "Rename selected mapset"
 msgstr "Renommer le jeu de cartes sélectionné"
 
-#: ../gui/wxpython/gis_set.py:524
+#: ../gui/wxpython/gis_set.py:531
 #, python-format
 msgid ""
 "Unable to rename mapset.\n"
@@ -2122,7 +2127,7 @@ msgstr ""
 "\n"
 "Le jeu de cartes <%s> existe déjà dans ce secteur."
 
-#: ../gui/wxpython/gis_set.py:536
+#: ../gui/wxpython/gis_set.py:543
 #, python-format
 msgid ""
 "Unable to rename mapset.\n"
@@ -2133,11 +2138,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gis_set.py:548
+#: ../gui/wxpython/gis_set.py:555
 msgid "Rename selected location"
 msgstr "Renommer le secteur sélectionné"
 
-#: ../gui/wxpython/gis_set.py:559
+#: ../gui/wxpython/gis_set.py:566
 #, python-format
 msgid ""
 "Unable to rename location.\n"
@@ -2148,7 +2153,7 @@ msgstr ""
 "\n"
 "Le secteur <%s> existe déjà dans la base de données GRASS."
 
-#: ../gui/wxpython/gis_set.py:572
+#: ../gui/wxpython/gis_set.py:579
 #, python-format
 msgid ""
 "Unable to rename location.\n"
@@ -2159,7 +2164,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gis_set.py:584
+#: ../gui/wxpython/gis_set.py:591
 msgid ""
 "Mapset <PERMANENT> is required for valid GRASS location.\n"
 "\n"
@@ -2170,7 +2175,7 @@ msgstr ""
 "\n"
 "Ce jeu de cartes ne peut être supprimé."
 
-#: ../gui/wxpython/gis_set.py:588
+#: ../gui/wxpython/gis_set.py:595
 #, python-format
 msgid ""
 "Do you want to continue with deleting mapset <%(mapset)s> from location <"
@@ -2184,15 +2189,15 @@ msgstr ""
 "TOUTES LES CARTES incluses dans ce jeu de cartes seront DÉFINITIVEMENT "
 "SUPPRIMÉES !"
 
-#: ../gui/wxpython/gis_set.py:593
+#: ../gui/wxpython/gis_set.py:600
 msgid "Delete selected mapset"
 msgstr "Effacer le jeu de cartes sélectionné"
 
-#: ../gui/wxpython/gis_set.py:602
+#: ../gui/wxpython/gis_set.py:609
 msgid "Unable to delete mapset"
 msgstr "Impossible d'effacer le jeu de cartes"
 
-#: ../gui/wxpython/gis_set.py:613
+#: ../gui/wxpython/gis_set.py:620
 #, python-format
 msgid ""
 "Do you want to continue with deleting location <%s>?\n"
@@ -2203,29 +2208,29 @@ msgstr ""
 "\n"
 "TOUTES LES CARTES incluses dans ce secteur seront DÉFINITIVEMENT SUPPRIMÉES !"
 
-#: ../gui/wxpython/gis_set.py:617
+#: ../gui/wxpython/gis_set.py:624
 msgid "Delete selected location"
 msgstr "Effacer le secteur sélectionné"
 
-#: ../gui/wxpython/gis_set.py:628
+#: ../gui/wxpython/gis_set.py:635
 msgid "Unable to delete location"
 msgstr "Impossible d'effacer le secteur"
 
-#: ../gui/wxpython/gis_set.py:764 ../gui/wxpython/gui_core/gselect.py:876
+#: ../gui/wxpython/gis_set.py:771 ../gui/wxpython/gui_core/gselect.py:887
 msgid "Choose GIS Data Directory"
 msgstr "Choisir le répertoire de données SIG"
 
-#: ../gui/wxpython/gis_set.py:787
+#: ../gui/wxpython/gis_set.py:798
 #, python-format
 msgid "Mapset <%s> already exists."
 msgstr "Le jeux de cartes <%s> existe déjà."
 
-#: ../gui/wxpython/gis_set.py:800
+#: ../gui/wxpython/gis_set.py:815
 #, python-format
 msgid "Unable to create new mapset: %s"
 msgstr "Impossible de créer le nouveau jeu de cartes : %s"
 
-#: ../gui/wxpython/gis_set.py:817
+#: ../gui/wxpython/gis_set.py:828
 #, python-format
 msgid ""
 "GRASS is already running in selected mapset <%(mapset)s>\n"
@@ -2244,11 +2249,11 @@ msgstr ""
 "Souhaitez-vous essayer de supprimer .gislock (notez qu'il vous faut disposer "
 "de droits pour cette opération) et continuer ?"
 
-#: ../gui/wxpython/gis_set.py:823 ../gui/wxpython/gis_set.py:835
+#: ../gui/wxpython/gis_set.py:834 ../gui/wxpython/gis_set.py:846
 msgid "Lock file found"
 msgstr "Ficher de verrouillage détecté"
 
-#: ../gui/wxpython/gis_set.py:831
+#: ../gui/wxpython/gis_set.py:842
 msgid ""
 "ARE YOU REALLY SURE?\n"
 "\n"
@@ -2260,7 +2265,7 @@ msgstr ""
 "Si vous avez une autre session GRASS en cours, vous risquez de corrompre vos "
 "données. Vérifiez dans votre gestionnaire de tâches pour en être sûr ..."
 
-#: ../gui/wxpython/gis_set.py:846
+#: ../gui/wxpython/gis_set.py:857
 #, python-format
 msgid ""
 "Unable to remove '%(lock)s'.\n"
@@ -2271,11 +2276,11 @@ msgstr ""
 "\n"
 "Détails : %(reason)s"
 
-#: ../gui/wxpython/gis_set.py:946
+#: ../gui/wxpython/gis_set.py:967
 msgid "Starting GRASS for the first time"
 msgstr "Démarrage de GRASS pour la première fois"
 
-#: ../gui/wxpython/gis_set.py:947
+#: ../gui/wxpython/gis_set.py:968
 msgid ""
 "GRASS needs a directory in which to store its data. Create one now if you "
 "have not already done so. A popular choice is \"grassdata\", located in your "
@@ -2769,7 +2774,7 @@ msgstr "Pilote"
 
 #: ../gui/wxpython/dbmgr/manager.py:2321 ../gui/wxpython/dbmgr/manager.py:2445
 #: ../gui/wxpython/dbmgr/manager.py:2699
-#: ../gui/wxpython/gui_core/gselect.py:1130
+#: ../gui/wxpython/gui_core/gselect.py:1141
 msgid "Database"
 msgstr "Base de données"
 
@@ -3466,134 +3471,134 @@ msgstr "Pas d'élément sélectionnable"
 msgid "GSelect: invalid item: %s"
 msgstr "GSelect : élément %s invalide"
 
-#: ../gui/wxpython/gui_core/gselect.py:1105
+#: ../gui/wxpython/gui_core/gselect.py:1116
 msgid "Output settings"
 msgstr "Paramètres de sortie"
 
-#: ../gui/wxpython/gui_core/gselect.py:1107
+#: ../gui/wxpython/gui_core/gselect.py:1118
 msgid "Source settings"
 msgstr "Paramètres de la source"
 
-#: ../gui/wxpython/gui_core/gselect.py:1118
+#: ../gui/wxpython/gui_core/gselect.py:1129
 msgid "Native"
 msgstr "Natif"
 
-#: ../gui/wxpython/gui_core/gselect.py:1122
-#: ../gui/wxpython/gui_core/forms.py:1289
+#: ../gui/wxpython/gui_core/gselect.py:1133
+#: ../gui/wxpython/gui_core/forms.py:1303
 msgid "File"
 msgstr "Fichier"
 
-#: ../gui/wxpython/gui_core/gselect.py:1126
+#: ../gui/wxpython/gui_core/gselect.py:1137
 msgid "Directory"
 msgstr "Répertoire"
 
-#: ../gui/wxpython/gui_core/gselect.py:1134
+#: ../gui/wxpython/gui_core/gselect.py:1145
 msgid "Protocol"
 msgstr "Protocole"
 
-#: ../gui/wxpython/gui_core/gselect.py:1148
+#: ../gui/wxpython/gui_core/gselect.py:1159
 msgid "Save current settings"
 msgstr "Enregistrer les paramètres"
 
-#: ../gui/wxpython/gui_core/gselect.py:1151
+#: ../gui/wxpython/gui_core/gselect.py:1162
 msgid "Delete currently selected settings"
 msgstr "Effacer le jeu de cartes sélectionné"
 
-#: ../gui/wxpython/gui_core/gselect.py:1157
+#: ../gui/wxpython/gui_core/gselect.py:1168
 msgid "Output type"
 msgstr "Type de la sortie"
 
-#: ../gui/wxpython/gui_core/gselect.py:1159
+#: ../gui/wxpython/gui_core/gselect.py:1170
 msgid "Source type"
 msgstr "Type de la source"
 
-#: ../gui/wxpython/gui_core/gselect.py:1167
-#: ../gui/wxpython/gui_core/gselect.py:1170
-#: ../gui/wxpython/gui_core/gselect.py:1501
-#: ../gui/wxpython/gui_core/gselect.py:1503
-#: ../gui/wxpython/gui_core/gselect.py:1689
-#: ../gui/wxpython/gui_core/gselect.py:1691
+#: ../gui/wxpython/gui_core/gselect.py:1178
+#: ../gui/wxpython/gui_core/gselect.py:1181
+#: ../gui/wxpython/gui_core/gselect.py:1512
+#: ../gui/wxpython/gui_core/gselect.py:1514
+#: ../gui/wxpython/gui_core/gselect.py:1700
+#: ../gui/wxpython/gui_core/gselect.py:1702
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: ../gui/wxpython/gui_core/gselect.py:1174
-#: ../gui/wxpython/gui_core/gselect.py:1507
+#: ../gui/wxpython/gui_core/gselect.py:1185
+#: ../gui/wxpython/gui_core/gselect.py:1518
 msgid "Choose file to import"
 msgstr "Choisir un fichier à importer"
 
-#: ../gui/wxpython/gui_core/gselect.py:1183
+#: ../gui/wxpython/gui_core/gselect.py:1194
 msgid "Choose input directory"
 msgstr "Choisir le répertoire d'entrée"
 
-#: ../gui/wxpython/gui_core/gselect.py:1192
-#: ../gui/wxpython/gui_core/gselect.py:1695
+#: ../gui/wxpython/gui_core/gselect.py:1203
+#: ../gui/wxpython/gui_core/gselect.py:1706
 msgid "Choose file"
 msgstr "Choisir un fichier"
 
-#: ../gui/wxpython/gui_core/gselect.py:1226
+#: ../gui/wxpython/gui_core/gselect.py:1237
 msgid "File:"
 msgstr "Fichier :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1229
-#: ../gui/wxpython/gui_core/gselect.py:1232
-#: ../gui/wxpython/gui_core/gselect.py:1241
-#: ../gui/wxpython/gui_core/gselect.py:1381
+#: ../gui/wxpython/gui_core/gselect.py:1240
+#: ../gui/wxpython/gui_core/gselect.py:1243
+#: ../gui/wxpython/gui_core/gselect.py:1252
+#: ../gui/wxpython/gui_core/gselect.py:1392
 #: ../gui/wxpython/gmodeler/preferences.py:464
 msgid "Name:"
 msgstr "Nom :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1235
+#: ../gui/wxpython/gui_core/gselect.py:1246
 msgid "Protocol:"
 msgstr "Protocole :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1262
+#: ../gui/wxpython/gui_core/gselect.py:1273
 msgid "Extension:"
 msgstr "Extension :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1290
+#: ../gui/wxpython/gui_core/gselect.py:1301
 msgid "Load settings:"
 msgstr "charger les paramètres :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1311
+#: ../gui/wxpython/gui_core/gselect.py:1322
 msgid "Format:"
 msgstr "Format :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1333
+#: ../gui/wxpython/gui_core/gselect.py:1344
 msgid "Creation options:"
 msgstr "Options de création :"
 
-#: ../gui/wxpython/gui_core/gselect.py:1370
+#: ../gui/wxpython/gui_core/gselect.py:1381
 #, python-format
 msgid "Settings <%s> not found"
 msgstr "Paramètres <%s> non trouvés"
 
-#: ../gui/wxpython/gui_core/gselect.py:1382
-#: ../gui/wxpython/gui_core/gselect.py:1403
+#: ../gui/wxpython/gui_core/gselect.py:1393
+#: ../gui/wxpython/gui_core/gselect.py:1414
 msgid "Save settings"
 msgstr "Enregistrer les paramètres"
 
-#: ../gui/wxpython/gui_core/gselect.py:1389
+#: ../gui/wxpython/gui_core/gselect.py:1400
 msgid "Name not given, settings is not saved."
 msgstr "Pas de nom fourni, les paramètres ne sont pas sauvegardés."
 
-#: ../gui/wxpython/gui_core/gselect.py:1394
+#: ../gui/wxpython/gui_core/gselect.py:1405
 msgid "No data source defined, settings is not saved."
 msgstr "Pas de source de données, les paramètres ne sont pas sauvegardés."
 
-#: ../gui/wxpython/gui_core/gselect.py:1401
+#: ../gui/wxpython/gui_core/gselect.py:1412
 #, python-format
 msgid "Settings <%s> already exists. Do you want to overwrite the settings?"
 msgstr "Le fichier <%s> existe déjà. Voulez-vous l'écraser ?"
 
-#: ../gui/wxpython/gui_core/gselect.py:1423
+#: ../gui/wxpython/gui_core/gselect.py:1434
 msgid "No settings is defined. Operation canceled."
 msgstr "Pas de paramètres définis. Opération annulée."
 
-#: ../gui/wxpython/gui_core/gselect.py:1442
+#: ../gui/wxpython/gui_core/gselect.py:1453
 msgid "Unable to save settings"
 msgstr "Impossible d'enregistrer les paramètres"
 
-#: ../gui/wxpython/gui_core/gselect.py:1587
+#: ../gui/wxpython/gui_core/gselect.py:1598
 #, python-format
 msgid "Database <%s> not accessible."
 msgstr "La base de données <%s> n'est pas eccessible."
@@ -3729,7 +3734,7 @@ msgstr "%d modules trouvés"
 msgid "Menu tree (double-click to run command)"
 msgstr "Arborescence de menu (double clic pour exécuter une commande)"
 
-#: ../gui/wxpython/gui_core/ghelp.py:210 ../gui/wxpython/gui_core/forms.py:455
+#: ../gui/wxpython/gui_core/ghelp.py:210 ../gui/wxpython/gui_core/forms.py:454
 #: ../gui/wxpython/modules/mcalc_builder.py:132
 #: ../gui/wxpython/modules/vclean.py:156 ../gui/wxpython/scripts/vkrige.py:152
 #: ../gui/wxpython/gmodeler/frame.py:1481
@@ -3845,40 +3850,40 @@ msgid "&Previous"
 msgstr "&Précédent"
 
 #: ../gui/wxpython/gui_core/forms.py:134
-#: ../gui/wxpython/gui_core/forms.py:1249
+#: ../gui/wxpython/gui_core/forms.py:1248
 msgid "Select Color"
 msgstr "Choisir la couleur"
 
-#: ../gui/wxpython/gui_core/forms.py:424
+#: ../gui/wxpython/gui_core/forms.py:423
 msgid "Enter parameters for '"
 msgstr "Entrer les paramètres pour '"
 
-#: ../gui/wxpython/gui_core/forms.py:435
+#: ../gui/wxpython/gui_core/forms.py:434
 msgid "Close this window without executing the command (Ctrl+Q)"
 msgstr "Fermer la fenêtre sans exécuter la commande (Ctrl+Q)"
 
-#: ../gui/wxpython/gui_core/forms.py:456
+#: ../gui/wxpython/gui_core/forms.py:455
 msgid "Run the command (Ctrl+R)"
 msgstr "Exécuter la commande (Ctrl+R)"
 
-#: ../gui/wxpython/gui_core/forms.py:462 ../gui/wxpython/modules/vclean.py:159
+#: ../gui/wxpython/gui_core/forms.py:461 ../gui/wxpython/modules/vclean.py:159
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
 msgstr "Copier la commande courante dans le presse-papier [Ctrl+C)"
 
-#: ../gui/wxpython/gui_core/forms.py:476
+#: ../gui/wxpython/gui_core/forms.py:475
 msgid "Show manual page of the command (Ctrl+H)"
 msgstr "Afficher la page de manuel pour la commande (Ctrl+H)"
 
-#: ../gui/wxpython/gui_core/forms.py:497
+#: ../gui/wxpython/gui_core/forms.py:496
 msgid "Add created map(s) into layer tree"
 msgstr "Ajouter la carte créée dans l'arborescence des couches"
 
-#: ../gui/wxpython/gui_core/forms.py:512
+#: ../gui/wxpython/gui_core/forms.py:511
 #: ../gui/wxpython/gui_core/dialogs.py:1471
 msgid "Close dialog on finish"
 msgstr "Fermer la boîte de dialogue après exécution"
 
-#: ../gui/wxpython/gui_core/forms.py:514
+#: ../gui/wxpython/gui_core/forms.py:513
 msgid ""
 "Close dialog when command is successfully finished. Change this settings in "
 "Preferences dialog ('Command' tab)."
@@ -3886,88 +3891,88 @@ msgstr ""
 "Fermer la fenêtre de dialogue quand la commande se termine avec succès. "
 "Modifier ce réglage dans les Préférences (onglet 'Commande')."
 
-#: ../gui/wxpython/gui_core/forms.py:682
+#: ../gui/wxpython/gui_core/forms.py:681
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr "'%s' copié dans le presse-papier"
 
-#: ../gui/wxpython/gui_core/forms.py:745 ../gui/wxpython/gui_core/forms.py:758
+#: ../gui/wxpython/gui_core/forms.py:744 ../gui/wxpython/gui_core/forms.py:757
 msgid "Required"
 msgstr "Requis"
 
-#: ../gui/wxpython/gui_core/forms.py:748 ../gui/wxpython/gui_core/forms.py:758
+#: ../gui/wxpython/gui_core/forms.py:747 ../gui/wxpython/gui_core/forms.py:757
 msgid "Optional"
 msgstr "Optionnel"
 
-#: ../gui/wxpython/gui_core/forms.py:784 ../gui/wxpython/scripts/vkrige.py:108
+#: ../gui/wxpython/gui_core/forms.py:783 ../gui/wxpython/scripts/vkrige.py:108
 #: ../gui/wxpython/gmodeler/frame.py:115
 msgid "Command output"
 msgstr "Messages de la commande"
 
-#: ../gui/wxpython/gui_core/forms.py:792
+#: ../gui/wxpython/gui_core/forms.py:791
 msgid "Manual"
 msgstr "Manuel"
 
-#: ../gui/wxpython/gui_core/forms.py:832
-#: ../gui/wxpython/gui_core/forms.py:1341
+#: ../gui/wxpython/gui_core/forms.py:831
+#: ../gui/wxpython/gui_core/forms.py:1355
 msgid "Parameterized in model"
 msgstr "Paramètré dans le modèle"
 
-#: ../gui/wxpython/gui_core/forms.py:907
+#: ../gui/wxpython/gui_core/forms.py:906
 msgid "[multiple]"
 msgstr "[multiple]"
 
-#: ../gui/wxpython/gui_core/forms.py:954
+#: ../gui/wxpython/gui_core/forms.py:953
 msgid "valid range"
 msgstr "plage de validité"
 
-#: ../gui/wxpython/gui_core/forms.py:1268
+#: ../gui/wxpython/gui_core/forms.py:1282
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../gui/wxpython/gui_core/forms.py:1288
+#: ../gui/wxpython/gui_core/forms.py:1302
 #, python-format
 msgid "Choose %s"
 msgstr "Choisir %s"
 
-#: ../gui/wxpython/gui_core/forms.py:1316
+#: ../gui/wxpython/gui_core/forms.py:1330
 #: ../gui/wxpython/modules/mcalc_builder.py:139
 msgid "&Load"
 msgstr "Charger"
 
-#: ../gui/wxpython/gui_core/forms.py:1322
+#: ../gui/wxpython/gui_core/forms.py:1336
 msgid "or enter values interactively"
 msgstr "ou entrer les valeurs de manière interactive"
 
-#: ../gui/wxpython/gui_core/forms.py:1502
+#: ../gui/wxpython/gui_core/forms.py:1516
 msgid "Nothing to load."
 msgstr "Rien à charger."
 
-#: ../gui/wxpython/gui_core/forms.py:1530
+#: ../gui/wxpython/gui_core/forms.py:1544
 #: ../gui/wxpython/modules/colorrules.py:567
 msgid "Nothing to save."
 msgstr "Rien à sauvegarder."
 
-#: ../gui/wxpython/gui_core/forms.py:1534
+#: ../gui/wxpython/gui_core/forms.py:1548
 msgid "Save input as..."
 msgstr "Enregistrer le fichier sous ..."
 
-#: ../gui/wxpython/gui_core/forms.py:1768
+#: ../gui/wxpython/gui_core/forms.py:1796
 #, python-format
 msgid "Error in %s"
 msgstr "Erreur dans %s"
 
-#: ../gui/wxpython/gui_core/forms.py:1872
+#: ../gui/wxpython/gui_core/forms.py:1900
 #, python-format
 msgid "Unable to parse command '%s'"
 msgstr "Impossible d'interpréter la commande '%s'"
 
-#: ../gui/wxpython/gui_core/forms.py:1878
+#: ../gui/wxpython/gui_core/forms.py:1906
 #, python-format
 msgid "%(cmd)s: parameter '%(key)s' not available"
 msgstr "%(cmd)s : paramètre '%(key)s' non disponible"
 
-#: ../gui/wxpython/gui_core/forms.py:1985
+#: ../gui/wxpython/gui_core/forms.py:2013
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "Utilisation : %s <grass command>"
@@ -8422,12 +8427,16 @@ msgstr "Merci de créer d'abord le cadre de carte."
 msgid "Scalebar is not appropriate for this projection"
 msgstr "La barre d'échelle n'est pas adaptée à cette  projection"
 
+#: ../gui/wxpython/psmap/frame.py:996
+msgid "Press button with green triangle icon to generate preview."
+msgstr ""
+
 # Le terme composeur en français désigne normalement le composeur-titreur (qui effectue les titrages/sous-titrages cinématographiques)
-#: ../gui/wxpython/psmap/frame.py:1018
+#: ../gui/wxpython/psmap/frame.py:1023
 msgid "wxGUI Cartographic Composer"
 msgstr "Composeur cartographique wxGUI"
 
-#: ../gui/wxpython/psmap/frame.py:1020
+#: ../gui/wxpython/psmap/frame.py:1025
 msgid ""
 "(C) 2011 by the GRASS Development Team\n"
 "\n"
@@ -8435,7 +8444,7 @@ msgstr ""
 "C) 2011 par l'équipe de développement de GRASS\n"
 "\n"
 
-#: ../gui/wxpython/psmap/frame.py:1021 ../gui/wxpython/gmodeler/frame.py:708
+#: ../gui/wxpython/psmap/frame.py:1026 ../gui/wxpython/gmodeler/frame.py:708
 msgid ""
 "This program is free software under the GNU General Public License(>=v2). "
 "Read the file COPYING that comes with GRASS for details."
@@ -8444,7 +8453,7 @@ msgstr ""
 "License (>=v2). Lisez le fichier COPYING fourni avec GRASS pour plus de "
 "détails."
 
-#: ../gui/wxpython/psmap/frame.py:1324
+#: ../gui/wxpython/psmap/frame.py:1332
 msgid "Click and drag to resize object"
 msgstr "Cliquez-déposez pour redimensionner l'objet"
 
@@ -9744,24 +9753,24 @@ msgstr "insérer une fonction mapcalc"
 msgid "Add created raster map into layer tree"
 msgstr "Ajouter la carte raster créée dans l'arborescence des couches"
 
-#: ../gui/wxpython/modules/mcalc_builder.py:458
+#: ../gui/wxpython/modules/mcalc_builder.py:461
 msgid "You must enter the name of a new raster map to create."
 msgstr "Vous devez entrer le nom de la nouvelle carte à créer."
 
-#: ../gui/wxpython/modules/mcalc_builder.py:468
+#: ../gui/wxpython/modules/mcalc_builder.py:471
 msgid "You must enter an expression to create a new raster map."
 msgstr "Vous devez entrer une expression pour créer une nouvelle carte."
 
-#: ../gui/wxpython/modules/mcalc_builder.py:503
+#: ../gui/wxpython/modules/mcalc_builder.py:511
 msgid "Choose a file name to save the expression"
 msgstr "Choisir un nom de fichier où enregistrer l'expression"
 
-#: ../gui/wxpython/modules/mcalc_builder.py:504
-#: ../gui/wxpython/modules/mcalc_builder.py:525
+#: ../gui/wxpython/modules/mcalc_builder.py:512
+#: ../gui/wxpython/modules/mcalc_builder.py:533
 msgid "Expression file (*)|*"
 msgstr "Fichier de formule (*)|*"
 
-#: ../gui/wxpython/modules/mcalc_builder.py:524
+#: ../gui/wxpython/modules/mcalc_builder.py:532
 msgid "Choose a file name to load the expression"
 msgstr "Choisir un fichier pour charger une formule"
 
@@ -11462,15 +11471,15 @@ msgstr "Barre d'outils du gestionnaire de points de contrôle"
 msgid "Nothing to render (empty map). Operation canceled."
 msgstr "Rien à afficher (carte vide). Opération annulée."
 
-#: ../gui/wxpython/gcp/mapdisplay.py:578 ../gui/wxpython/mapdisp/frame.py:1262
+#: ../gui/wxpython/gcp/mapdisplay.py:578 ../gui/wxpython/mapdisp/frame.py:1272
 msgid "Zoom to computational region (set with g.region)"
 msgstr "Zoomer sur la région de calcul (définie avec g.region)"
 
-#: ../gui/wxpython/gcp/mapdisplay.py:582 ../gui/wxpython/mapdisp/frame.py:1266
+#: ../gui/wxpython/gcp/mapdisplay.py:582 ../gui/wxpython/mapdisp/frame.py:1276
 msgid "Zoom to default region"
 msgstr "Zoom sur la région par défaut"
 
-#: ../gui/wxpython/gcp/mapdisplay.py:586 ../gui/wxpython/mapdisp/frame.py:1270
+#: ../gui/wxpython/gcp/mapdisplay.py:586 ../gui/wxpython/mapdisp/frame.py:1280
 msgid "Zoom to saved region"
 msgstr "Zoom sur la région sauvegardée"
 
@@ -11478,7 +11487,7 @@ msgstr "Zoom sur la région sauvegardée"
 msgid "Set computational region from display"
 msgstr "Définir la région calculée à partir de celle de l'écran"
 
-#: ../gui/wxpython/gcp/mapdisplay.py:594 ../gui/wxpython/mapdisp/frame.py:1278
+#: ../gui/wxpython/gcp/mapdisplay.py:594 ../gui/wxpython/mapdisp/frame.py:1288
 msgid "Save display geometry to named region"
 msgstr "Enregistrer la géométrie de l'écran dans un nom de région"
 
@@ -11549,20 +11558,20 @@ msgstr ""
 "Pas de carte rater ou couche de carte vecteur sélectionnée pour "
 "interrogation."
 
-#: ../gui/wxpython/mapdisp/frame.py:744
+#: ../gui/wxpython/mapdisp/frame.py:754
 #, python-format
 msgid "Vector map <%s> opened for editing - skipped."
 msgstr "Carte vectorielle <%s> ouverte pour édition - sautée."
 
-#: ../gui/wxpython/mapdisp/frame.py:749
+#: ../gui/wxpython/mapdisp/frame.py:759
 msgid "Nothing to query."
 msgstr "Rien à interroger."
 
-#: ../gui/wxpython/mapdisp/frame.py:817
+#: ../gui/wxpython/mapdisp/frame.py:827
 msgid "Nothing found."
 msgstr "Aucun résultat."
 
-#: ../gui/wxpython/mapdisp/frame.py:945
+#: ../gui/wxpython/mapdisp/frame.py:955
 msgid ""
 "Click and drag with left mouse button to measure.\n"
 "Double click with left button to clear."
@@ -11570,15 +11579,15 @@ msgstr ""
 "Cliquer et déplacer avec le bouton gauche de la souris pour mesurer.\n"
 "Double-cliquer avec le bouton gauche pour annuler."
 
-#: ../gui/wxpython/mapdisp/frame.py:951
+#: ../gui/wxpython/mapdisp/frame.py:961
 msgid "Measuring distance"
 msgstr "Mesure de la distance"
 
-#: ../gui/wxpython/mapdisp/frame.py:954
+#: ../gui/wxpython/mapdisp/frame.py:964
 msgid "Measuring distance:"
 msgstr "Mesure de la distance :"
 
-#: ../gui/wxpython/mapdisp/frame.py:964
+#: ../gui/wxpython/mapdisp/frame.py:974
 #, python-format
 msgid ""
 "Geodesic distance is not yet supported by this tool.\n"
@@ -11587,32 +11596,32 @@ msgstr ""
 "La distance géodésique n'est pas encore supportée par cet outil.\n"
 "Raison : %s"
 
-#: ../gui/wxpython/mapdisp/frame.py:992 ../gui/wxpython/mapdisp/frame.py:998
+#: ../gui/wxpython/mapdisp/frame.py:1002 ../gui/wxpython/mapdisp/frame.py:1008
 msgid "segment"
 msgstr "segment"
 
-#: ../gui/wxpython/mapdisp/frame.py:993 ../gui/wxpython/mapdisp/frame.py:999
+#: ../gui/wxpython/mapdisp/frame.py:1003 ../gui/wxpython/mapdisp/frame.py:1009
 msgid "total distance"
 msgstr "distance totale"
 
-#: ../gui/wxpython/mapdisp/frame.py:994
+#: ../gui/wxpython/mapdisp/frame.py:1004
 msgid "bearing"
 msgstr "gisement"
 
-#: ../gui/wxpython/mapdisp/frame.py:994
+#: ../gui/wxpython/mapdisp/frame.py:1004
 msgid "deg"
 msgstr "deg"
 
-#: ../gui/wxpython/mapdisp/frame.py:1109
+#: ../gui/wxpython/mapdisp/frame.py:1119
 msgid "Scale and North arrow"
 msgstr "Échelle et direction du Nord"
 
-#: ../gui/wxpython/mapdisp/frame.py:1171
+#: ../gui/wxpython/mapdisp/frame.py:1181
 #: ../gui/wxpython/mapdisp/toolbars.py:46
 msgid "Add text layer"
 msgstr "Ajouter une couche de texte"
 
-#: ../gui/wxpython/mapdisp/frame.py:1274
+#: ../gui/wxpython/mapdisp/frame.py:1284
 msgid "Set computational region from display extent"
 msgstr "Définir la région de calcul à partir de l'extension de l'affichage"
 
@@ -13301,27 +13310,27 @@ msgstr "Impossible de lire la configuration '%s'"
 msgid "Unknow tag"
 msgstr "Étiquette inconnue"
 
-#: ../gui/wxpython/core/utils.py:315
+#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
 #, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Carte vectorielle  <%(map)s> : %(msg)s\n"
 
-#: ../gui/wxpython/core/utils.py:540
+#: ../gui/wxpython/core/utils.py:575
 #, python-format
 msgid "failed to open '%s'"
 msgstr "Échec à l'ouverture de '%s'"
 
-#: ../gui/wxpython/core/utils.py:775
+#: ../gui/wxpython/core/utils.py:810
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr "ERREUR : impossible de déterminer la version de GRASS. Détails : %s"
 
-#: ../gui/wxpython/core/utils.py:811
+#: ../gui/wxpython/core/utils.py:846
 #, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "Impossible d'ouvrir le fichier '%s'\n"
 
-#: ../gui/wxpython/core/utils.py:818
+#: ../gui/wxpython/core/utils.py:853
 #, python-format
 msgid ""
 "%s: line skipped - unable to parse '%s'\n"
@@ -13330,12 +13339,12 @@ msgstr ""
 "%s : ligne sautée - impossible de lire '%s'\n"
 "Raison : %s\n"
 
-#: ../gui/wxpython/core/utils.py:823
+#: ../gui/wxpython/core/utils.py:858
 #, python-format
 msgid "Duplicated key: %s\n"
 msgstr "Paramètre en double : %s\n"
 
-#: ../gui/wxpython/core/utils.py:838
+#: ../gui/wxpython/core/utils.py:873
 #, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "Impossible de créer le fichier '%s'\n"
