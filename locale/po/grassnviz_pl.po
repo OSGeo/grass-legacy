@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_pl.po\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:54+0200\n"
+"POT-Creation-Date: 2013-02-26 09:58+0100\n"
 "PO-Revision-Date: 2012-08-30 00:46+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
@@ -663,7 +664,9 @@ msgid "Place legend"
 msgstr "Umieść legendę"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
 msgstr ""
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
@@ -1937,11 +1940,15 @@ msgid "set icon"
 msgstr "ustaw ikonę"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
@@ -1973,7 +1980,9 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid "Automatically generate a color  table distributed across range of attribute values"
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
 msgstr ""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:54+0200\n"
+"POT-Creation-Date: 2013-02-26 09:57+0100\n"
 "PO-Revision-Date: 2013-02-03 12:21+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
@@ -286,44 +286,44 @@ msgstr ""
 msgid "Unable to process vector map - out of memory"
 msgstr "Impossibile processare il vettoriale - memoria esaurita"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:67
 msgid "Unable to allocate stream"
 msgstr "Impossibile allocare il flusso"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:156
+#: ../lib/ogsf/gsd_img_mpeg.c:166
 msgid "Video codec not found"
 msgstr "Codec video non trovato"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:162
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 msgid "Unable to open codec"
 msgstr "Impossibile aprire il codec"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:181
+#: ../lib/ogsf/gsd_img_mpeg.c:195
 msgid "Unable to allocate picture"
 msgstr "Impossibile allocare l'immagine"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:192
+#: ../lib/ogsf/gsd_img_mpeg.c:206
 msgid "Unable to allocate temporary picture"
 msgstr "Impossibile allocare l'immagine temporanea"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:252
+#: ../lib/ogsf/gsd_img_mpeg.c:266
 msgid "Error while writing video frame"
 msgstr "Errore nella scrittura del frame del video"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:298
+#: ../lib/ogsf/gsd_img_mpeg.c:312
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr "Apertura flusso MPEG <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:306
+#: ../lib/ogsf/gsd_img_mpeg.c:320
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr "Impossibile ricavare il formato di output dall'estensione del file: si userà MPEG"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:310
+#: ../lib/ogsf/gsd_img_mpeg.c:324
 msgid "Unable to find suitable output format"
 msgstr "impossibile trovare un formato di output adeguato"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:317 ../lib/vector/neta/centrality.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/vector/neta/centrality.c:63
 #: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
 #: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
 #: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/flow.c:64
@@ -342,17 +342,18 @@ msgstr "impossibile trovare un formato di output adeguato"
 msgid "Out of memory"
 msgstr "Memoria esaurita"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:337
+#: ../lib/ogsf/gsd_img_mpeg.c:355
 msgid "Invalid output format parameters"
 msgstr "Parametro del formato di output non valido"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:351
+#: ../lib/ogsf/gsd_img_mpeg.c:377
 #, c-format
 msgid "Unable to open <%s>"
 msgstr "Impossibile aprire <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:361
-msgid "NVIZ has not been built with MPEG output support"
+#: ../lib/ogsf/gsd_img_mpeg.c:390
+#, fuzzy
+msgid "OGSF library has not been built with MPEG output support"
 msgstr "NVIZ non è stato compilato con il supporto di output MPEG"
 
 #: ../lib/ogsf/gsd_legend.c:245
@@ -491,22 +492,22 @@ msgstr "Datum <%s> è stato apparentemente riconosciuto da GRASS ma nessun param
 msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
 msgstr "Numero di trasformazione %d non valido; il range valido è da 1 a %d. I parametri di trasformazione del datum non vengono specificati."
 
-#: ../lib/proj/datum.c:251
+#: ../lib/proj/datum.c:250
 msgid "Unable to open temporary file"
 msgstr "Impossibile aprire il file temporaneo"
 
-#: ../lib/proj/datum.c:345 ../lib/gis/get_ell_name.c:45
+#: ../lib/proj/datum.c:344 ../lib/gis/get_ell_name.c:45
 #: ../lib/gis/get_projname.c:52 ../lib/gis/get_datum_name.c:58
 #, c-format
 msgid "Hit RETURN to cancel request\n"
 msgstr "Premi INVIO per annullare la richiesta\n"
 
-#: ../lib/proj/datum.c:419 ../lib/proj/datum.c:484
+#: ../lib/proj/datum.c:418 ../lib/proj/datum.c:498
 #, c-format
 msgid "Unable to open datum table file <%s>"
 msgstr "impossibile aprire il file tabella datum <%s>"
 
-#: ../lib/proj/datum.c:432 ../lib/proj/datum.c:498
+#: ../lib/proj/datum.c:431 ../lib/proj/datum.c:512
 #, c-format
 msgid "Error in datum table file <%s>, line %d"
 msgstr "Errore nel file tabella datum <%s>, linea %d"
@@ -863,160 +864,160 @@ msgstr "Formato non supportato nel file dei punti di controllo per il gruppo [%s
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "Impossibile creare il file dei punti di controllo per il gruppo [%s in %s]"
 
-#: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
 msgid "Matrix dimensions out of range"
 msgstr "Dimensioni della matrice fuori range."
 
-#: ../lib/gmath/la.c:153
+#: ../lib/gmath/la.c:149
 msgid "Matrix is not initialised fully."
 msgstr "La matrice non è completamente inizializzata."
 
-#: ../lib/gmath/la.c:158
+#: ../lib/gmath/la.c:154
 msgid "Unable to allocate space for matrix copy"
 msgstr "Impossibile allocare spazio per la copia della matrice"
 
-#: ../lib/gmath/la.c:247
+#: ../lib/gmath/la.c:243
 msgid "First scalar multiplier must be non-zero"
 msgstr "Il primo moltiplicatore scalare deve essere diverso da zero"
 
-#: ../lib/gmath/la.c:253 ../lib/gmath/la.c:261 ../lib/gmath/la.c:326
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
 msgid "One or both input matrices uninitialised"
 msgstr "Una o entrambe le matrici di dati non sono inizializzate"
 
-#: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
 msgid "Matrix order does not match"
 msgstr "L'ordine delle matrici non corrisponde"
 
-#: ../lib/gmath/la.c:272
+#: ../lib/gmath/la.c:268
 msgid "Unable to allocate space for matrix sum"
 msgstr "Impossibile allocare spazio per la somme della matrice"
 
-#: ../lib/gmath/la.c:336
+#: ../lib/gmath/la.c:332
 msgid "Unable to allocate space for matrix product"
 msgstr "Impossibile allocare spazio per il prodotto della matrice"
 
-#: ../lib/gmath/la.c:448
+#: ../lib/gmath/la.c:444
 msgid "Input: one or both data matrices uninitialised"
 msgstr "Input: una o entrambe le matrici di dati non sono inizializzate"
 
-#: ../lib/gmath/la.c:453
+#: ../lib/gmath/la.c:449
 msgid "Principal matrix is not properly dimensioned"
 msgstr "La matrice principale non è correttamente dimensionata."
 
-#: ../lib/gmath/la.c:458
+#: ../lib/gmath/la.c:454
 msgid "Input: you must have at least one array to solve"
 msgstr "Input: è necessario avere almeno un array da risolvere."
 
-#: ../lib/gmath/la.c:464
+#: ../lib/gmath/la.c:460
 msgid "Could not allocate space for solution matrix"
 msgstr "Impossibile allocare lo spazio per la matrice della soluzione"
 
-#: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
 msgid "Could not allocate space for working matrix"
 msgstr "Impossibile allocare lo spazio per la matrice di lavoro"
 
-#: ../lib/gmath/la.c:531
+#: ../lib/gmath/la.c:527
 msgid "Matrix (or submatrix is singular). Solution undetermined"
 msgstr "La matrice (o sottomatrice) presenta singolarità. La soluzione è indeterminata."
 
-#: ../lib/gmath/la.c:535
+#: ../lib/gmath/la.c:531
 msgid "Problem in LA routine."
 msgstr "Problema nella routine LA."
 
-#: ../lib/gmath/la.c:542
+#: ../lib/gmath/la.c:538
 msgid "Procedure not yet available for selected matrix type"
 msgstr "Procedura non ancora disponibile per la tipologia della matrice selezionata"
 
-#: ../lib/gmath/la.c:576
+#: ../lib/gmath/la.c:572
 msgid "Matrix is not square. Cannot determine inverse"
 msgstr "Matrice non è quadrato. Non si può determinare l'inverso"
 
-#: ../lib/gmath/la.c:581
+#: ../lib/gmath/la.c:577
 msgid "Unable to allocate space for matrix"
 msgstr "Impossibile allocare memoria per la matrice"
 
-#: ../lib/gmath/la.c:598
+#: ../lib/gmath/la.c:594
 msgid "Matrix is singular"
 msgstr "Matrice è singolare"
 
-#: ../lib/gmath/la.c:603
+#: ../lib/gmath/la.c:599
 msgid "Problem in LA procedure."
 msgstr "Problema nella procedura LA."
 
-#: ../lib/gmath/la.c:691
+#: ../lib/gmath/la.c:687
 msgid "Element array has not been allocated"
 msgstr "L'elemento dell'array non è stato allocato"
 
-#: ../lib/gmath/la.c:696
+#: ../lib/gmath/la.c:692
 msgid "Specified element is outside array bounds"
 msgstr "L'elemento specificato è fuori dai limiti dell'array"
 
-#: ../lib/gmath/la.c:750
+#: ../lib/gmath/la.c:746
 msgid "Specified matrix column index is outside range"
 msgstr "L'indice di colonna della matrice è fuori range."
 
-#: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
-#: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
 msgid "Matrix is not initialised"
 msgstr "La matrice non è inizializzata"
 
-#: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
 msgid "Could not allocate space for vector structure"
 msgstr "Non è possibile alloccare spazio per la struttura del vettoriale"
 
-#: ../lib/gmath/la.c:791
+#: ../lib/gmath/la.c:787
 msgid "Specified matrix row index is outside range"
 msgstr "L'indice di riga della matrice è fuori range."
 
-#: ../lib/gmath/la.c:831
+#: ../lib/gmath/la.c:827
 msgid "Specified row index is outside range"
 msgstr "L'indice della riga specificata è fuori dal range"
 
-#: ../lib/gmath/la.c:836
+#: ../lib/gmath/la.c:832
 msgid "Specified column index is outside range"
 msgstr "L'indice della colonna specificata è fuori dal range"
 
-#: ../lib/gmath/la.c:856
+#: ../lib/gmath/la.c:852
 msgid "Unknown vector type."
 msgstr "Tipologia di vettoria sconosciuto"
 
-#: ../lib/gmath/la.c:981
+#: ../lib/gmath/la.c:977
 msgid "Output vector is uninitialized"
 msgstr "Vettoriale di output non è inizializzato"
 
-#: ../lib/gmath/la.c:986
+#: ../lib/gmath/la.c:982
 msgid "Vectors are not of the same type"
 msgstr "Vettoriali non sono dello stesso tipo"
 
-#: ../lib/gmath/la.c:991
+#: ../lib/gmath/la.c:987
 msgid "Output vector is of incorrect type"
 msgstr "Il vettoriale di output ha una tipologia non corretta"
 
-#: ../lib/gmath/la.c:996
+#: ../lib/gmath/la.c:992
 msgid "Matrices not allowed"
 msgstr "Matrici non permesse"
 
-#: ../lib/gmath/la.c:1002
+#: ../lib/gmath/la.c:998
 msgid "Vectors have differing dimensions"
 msgstr "I vettori hanno dimensioni differenti"
 
-#: ../lib/gmath/la.c:1008
+#: ../lib/gmath/la.c:1004
 msgid "Output vector has incorrect dimension"
 msgstr "Il vettoriale di output ha dimensione non corretta"
 
-#: ../lib/gmath/la.c:1054
+#: ../lib/gmath/la.c:1050
 msgid "Vector dimensions out of range"
 msgstr "Dimensione del vettoriale fuori dal range"
 
-#: ../lib/gmath/la.c:1059
+#: ../lib/gmath/la.c:1055
 msgid "Row/column out of range"
 msgstr "Riga/colonna fuori dal range"
 
-#: ../lib/gmath/la.c:1274
+#: ../lib/gmath/la.c:1270
 msgid "Vector structure is not initialised"
 msgstr "La struttura del vettoriale non è inizializzato"
 
-#: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
 msgid "Input format error"
 msgstr "Errore nel formato di input"
 
@@ -1892,34 +1893,34 @@ msgstr "Il nome '%s' del vettoriale di output non è un nome valido"
 msgid "Output vector map <%s> is used as input"
 msgstr "Vettoriale <%s> di output è utilizzata come input"
 
-#: ../lib/vector/Vlib/merge_lines.c:192
+#: ../lib/vector/Vlib/merge_lines.c:233
 #, c-format
 msgid "%d boundaries merged"
 msgstr "%d perimetri uniti"
 
-#: ../lib/vector/Vlib/merge_lines.c:193
+#: ../lib/vector/Vlib/merge_lines.c:234
 #, c-format
 msgid "%d new boundaries"
 msgstr "%d aree nuove"
 
-#: ../lib/vector/Vlib/snap.c:118
+#: ../lib/vector/Vlib/snap.c:148
 msgid "Snap vertices Pass 1: select points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:172
+#: ../lib/vector/Vlib/snap.c:202
 msgid "Snap vertices Pass 2: assign anchor vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:241
+#: ../lib/vector/Vlib/snap.c:271
 msgid "Snap vertices Pass 3: snap to assigned points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:421
+#: ../lib/vector/Vlib/snap.c:451
 #, c-format
 msgid "Snapped vertices: %d"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:422
+#: ../lib/vector/Vlib/snap.c:452
 #, fuzzy, c-format
 msgid "New vertices: %d"
 msgstr "Numero di primitive:%d"
@@ -2424,31 +2425,31 @@ msgstr "Centroidi allegati..."
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "Il vettoriale <%s> non è aperto sul livello >= 2"
 
-#: ../lib/vector/Vlib/open_ogr.c:53
+#: ../lib/vector/Vlib/open_ogr.c:54
 msgid "OGR format cannot be updated"
 msgstr "Il formato OGR non può essere aggiornato"
 
-#: ../lib/vector/Vlib/open_ogr.c:65
+#: ../lib/vector/Vlib/open_ogr.c:66
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "Impossibile aprire la sorgente dei dati OGR '%s'"
 
-#: ../lib/vector/Vlib/open_ogr.c:85
+#: ../lib/vector/Vlib/open_ogr.c:86
 #, c-format
 msgid "Unable to open layer <%s>"
 msgstr "Impossibile aprire il layer <%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:129
+#: ../lib/vector/Vlib/open_ogr.c:139
 #, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
 msgstr "Impossibile aprire il file fixd per il vettoriale <%s@%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:147
+#: ../lib/vector/Vlib/open_ogr.c:157
 #, c-format
 msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
 msgstr "Versione %d.%d del formato dell'indice delle features non è supportata da questa release. Ricostruire la topologia o aggiornare GRASS."
 
-#: ../lib/vector/Vlib/open_ogr.c:152
+#: ../lib/vector/Vlib/open_ogr.c:162
 #, c-format
 msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
 msgstr "Questa versione di GRASS non supporta appieno il formato %d.%d dell'indice delle features del vettore. Si consiglia di ricostruire la topologia o aggiornare GRASS."
@@ -2794,7 +2795,7 @@ msgstr "Impossibile aprire il file %s delle definizioni del database vettoriale"
 msgid "Bug: attempt to update map which is not in current mapset"
 msgstr "Bug: attesa di aggiornamento di una mappa non presente nel mapset in uso"
 
-#: ../lib/vector/Vlib/remove_areas.c:94
+#: ../lib/vector/Vlib/remove_areas.c:96
 msgid "Area is composed of dead boundary"
 msgstr "L'area è composta di un boundary inesistente"
 
@@ -2831,7 +2832,7 @@ msgstr "Proiezione sconosciuta"
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "Impossibile impostare la categoria %d per (elemento id %d)"
 
-#: ../lib/vector/vedit/select.c:230
+#: ../lib/vector/vedit/select.c:232
 msgid "Unknown query tool"
 msgstr "Strumento di interrogazione sconosciuto"
 
@@ -3557,46 +3558,50 @@ msgstr "Nome per il file di output"
 msgid "Field separator"
 msgstr "Separatore dei campi"
 
-#: ../lib/gis/parser.c:664
+#: ../lib/gis/parser.c:654
+msgid "Special characters: newline, space, comma, tab"
+msgstr "Caratteri speciali: newline, spazio, virgola, tab"
+
+#: ../lib/gis/parser.c:665
 msgid "Color"
 msgstr "Colore"
 
-#: ../lib/gis/parser.c:665
+#: ../lib/gis/parser.c:666
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Sia un nome di colonna standard, sia una terna R:G:B"
 
-#: ../lib/gis/parser.c:674
+#: ../lib/gis/parser.c:675
 msgid "Background color"
 msgstr "Colore sfondo"
 
-#: ../lib/gis/parser.c:676
+#: ../lib/gis/parser.c:677
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Sia un colore standard GRASS, sia una terna R:G:B, sia \"none\""
 
-#: ../lib/gis/parser.c:817
+#: ../lib/gis/parser.c:818
 #, c-format
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "BUG nella descrizione, opzione '%s' in <%s> non esiste"
 
-#: ../lib/gis/parser.c:925
+#: ../lib/gis/parser.c:926
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr "Usare una sola delle due flag --quiet o --verbose, non entrambe. Scelta automatica: --verbose."
 
-#: ../lib/gis/parser.c:939
+#: ../lib/gis/parser.c:940
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr "Usare una sola delle due flag --quiet o --verbose, non entrambe. Scelta automatica: --quiet."
 
-#: ../lib/gis/parser.c:970
+#: ../lib/gis/parser.c:971
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Mi spiace <%s> non è una opzione valida\n"
 
-#: ../lib/gis/parser.c:997
+#: ../lib/gis/parser.c:998
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1077
+#: ../lib/gis/parser.c:1078
 #, c-format
 msgid ""
 "\n"
@@ -3605,7 +3610,7 @@ msgstr ""
 "\n"
 "Descrizione:\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -3614,7 +3619,7 @@ msgstr ""
 "\n"
 "Parole chiave:\n"
 
-#: ../lib/gis/parser.c:1088
+#: ../lib/gis/parser.c:1089
 #, c-format
 msgid ""
 "\n"
@@ -3625,7 +3630,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1156
+#: ../lib/gis/parser.c:1157
 #, c-format
 msgid ""
 "\n"
@@ -3634,20 +3639,20 @@ msgstr ""
 "\n"
 "Flags:\n"
 
-#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1503 ../lib/gis/parser.c:1663
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1180 ../lib/gis/parser.c:1504 ../lib/gis/parser.c:1664
+#: ../lib/gis/parser.c:1952
 msgid "Allow output files to overwrite existing files"
 msgstr "Permetti al file di output di sovrascrivere file esistenti"
 
-#: ../lib/gis/parser.c:1181 ../lib/gis/parser.c:1511 ../lib/gis/parser.c:1667
+#: ../lib/gis/parser.c:1182 ../lib/gis/parser.c:1512 ../lib/gis/parser.c:1668
 msgid "Verbose module output"
 msgstr "Output verboso del modulo"
 
-#: ../lib/gis/parser.c:1182 ../lib/gis/parser.c:1518 ../lib/gis/parser.c:1670
+#: ../lib/gis/parser.c:1183 ../lib/gis/parser.c:1519 ../lib/gis/parser.c:1671
 msgid "Quiet module output"
 msgstr "Output quieto del modulo"
 
-#: ../lib/gis/parser.c:1187
+#: ../lib/gis/parser.c:1188
 #, c-format
 msgid ""
 "\n"
@@ -3656,85 +3661,85 @@ msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1210
+#: ../lib/gis/parser.c:1211
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   predefinito: %s\n"
 
-#: ../lib/gis/parser.c:1554
+#: ../lib/gis/parser.c:1555
 msgid "NAME"
 msgstr "NOME"
 
-#: ../lib/gis/parser.c:1567
+#: ../lib/gis/parser.c:1568
 msgid "KEYWORDS"
 msgstr "PAROLE CHIAVE"
 
-#: ../lib/gis/parser.c:1572
+#: ../lib/gis/parser.c:1573
 msgid "SYNOPSIS"
 msgstr "SINOPSI"
 
-#: ../lib/gis/parser.c:1640
+#: ../lib/gis/parser.c:1641
 msgid "Flags"
 msgstr "Flag"
 
-#: ../lib/gis/parser.c:1678
+#: ../lib/gis/parser.c:1679
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../lib/gis/parser.c:1718
+#: ../lib/gis/parser.c:1719
 msgid "Options"
 msgstr "Opzioni"
 
-#: ../lib/gis/parser.c:1724
+#: ../lib/gis/parser.c:1725
 msgid "Default"
 msgstr "Default"
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1954
 msgid "Allow overwrite"
 msgstr "Permettere sovrascrivere"
 
-#: ../lib/gis/parser.c:1961
+#: ../lib/gis/parser.c:1962
 msgid "Run with minimal output messages"
 msgstr "Avvia con messaggi di output ridotte sul minimo"
 
-#: ../lib/gis/parser.c:1963
+#: ../lib/gis/parser.c:1964
 msgid "Run quietly"
 msgstr "Avvia in modo tranquillo"
 
-#: ../lib/gis/parser.c:1996
+#: ../lib/gis/parser.c:1997
 msgid "Unable to spawn the 'wish' program"
 msgstr "Impossibile avviare il programma 'wish'"
 
-#: ../lib/gis/parser.c:2015
+#: ../lib/gis/parser.c:2016
 msgid "Unable to determine program name"
 msgstr "Impossibile determinare il nome del programma"
 
-#: ../lib/gis/parser.c:2072
+#: ../lib/gis/parser.c:2073
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opzioni: "
 
-#: ../lib/gis/parser.c:2117 ../lib/gis/parser.c:2132
+#: ../lib/gis/parser.c:2118 ../lib/gis/parser.c:2133
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Mi spiace ma, <%c> non è un flag valido\n"
 
-#: ../lib/gis/parser.c:2198
+#: ../lib/gis/parser.c:2199
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Mi spiace, <%s=> è ambiguo\n"
 
-#: ../lib/gis/parser.c:2204
+#: ../lib/gis/parser.c:2205
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Spiacente <%s> non è un parametro valido\n"
 
-#: ../lib/gis/parser.c:2211
+#: ../lib/gis/parser.c:2212
 #, c-format
 msgid "Option <%s> does not accept multiple answers\n"
 msgstr "Opzione <%s> non accetta risposte multiple\n"
 
-#: ../lib/gis/parser.c:2289
+#: ../lib/gis/parser.c:2290
 #, c-format
 msgid ""
 "\n"
@@ -3743,12 +3748,12 @@ msgstr ""
 "\n"
 "ERRORE: intervallo di sintassi non valido per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:2290
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentato come: %s\n"
 
-#: ../lib/gis/parser.c:2294
+#: ../lib/gis/parser.c:2295
 #, c-format
 msgid ""
 "\n"
@@ -3757,12 +3762,12 @@ msgstr ""
 "\n"
 "ERRORE: il valore <%s> è fuori dall'intervallo atteso dal parametro<%s>\n"
 
-#: ../lib/gis/parser.c:2296
+#: ../lib/gis/parser.c:2297
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervallo valido: %s\n"
 
-#: ../lib/gis/parser.c:2299
+#: ../lib/gis/parser.c:2300
 #, c-format
 msgid ""
 "\n"
@@ -3771,7 +3776,7 @@ msgstr ""
 "\n"
 "ERRORE: Valore assente per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:2447
+#: ../lib/gis/parser.c:2448
 #, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -3780,7 +3785,7 @@ msgstr ""
 "ERRORE: Il parametro <%s> richiesto non è definito:\n"
 "\t(%s)\n"
 
-#: ../lib/gis/parser.c:2542
+#: ../lib/gis/parser.c:2543
 #, c-format
 msgid ""
 "\n"
@@ -3789,17 +3794,17 @@ msgstr ""
 "\n"
 "ERRORE: l'opzione <%s> deve essere fornita come multipli di %d\n"
 
-#: ../lib/gis/parser.c:2544
+#: ../lib/gis/parser.c:2545
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Hai fornito %d oggetti:\n"
 
-#: ../lib/gis/parser.c:2600
+#: ../lib/gis/parser.c:2601
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERRORE: l'opzione <%s>: <%s> esiste.\n"
 
-#: ../lib/gis/parser.c:2655
+#: ../lib/gis/parser.c:2656
 #, c-format
 msgid ""
 "\n"
@@ -3808,7 +3813,7 @@ msgstr ""
 "\n"
 "FLAG: Assegnare il seguente flag?\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2670
 #, c-format
 msgid ""
 "\n"
@@ -3817,51 +3822,51 @@ msgstr ""
 "\n"
 "OPZIONE:   %s\n"
 
-#: ../lib/gis/parser.c:2670
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid "     key: %s\n"
 msgstr "     chiave: %s\n"
 
-#: ../lib/gis/parser.c:2672
+#: ../lib/gis/parser.c:2673
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2674
+#: ../lib/gis/parser.c:2675
 #, c-format
 msgid " default: %s\n"
 msgstr " predefinito: %s\n"
 
-#: ../lib/gis/parser.c:2675
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid "required: %s\n"
 msgstr "richiesto: %s\n"
 
-#: ../lib/gis/parser.c:2677
+#: ../lib/gis/parser.c:2678
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiplo: %s\n"
 
-#: ../lib/gis/parser.c:2679
+#: ../lib/gis/parser.c:2680
 #, c-format
 msgid " options: %s\n"
 msgstr " optioni: %s\n"
 
-#: ../lib/gis/parser.c:2692
+#: ../lib/gis/parser.c:2693
 #, c-format
 msgid "enter option > "
 msgstr "inserisci opzione > "
 
-#: ../lib/gis/parser.c:2709 ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2710 ../lib/gis/parser.c:2720
 msgid "   Try again? "
 msgstr "   Provo ancora? "
 
-#: ../lib/gis/parser.c:2717
+#: ../lib/gis/parser.c:2718
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Spiacente, %s non è accettabile.\n"
 
-#: ../lib/gis/parser.c:2727
+#: ../lib/gis/parser.c:2728
 #, c-format
 msgid ""
 "\n"
@@ -3872,11 +3877,11 @@ msgstr ""
 "Hai selezionato:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2728
+#: ../lib/gis/parser.c:2729
 msgid "Is this correct? "
 msgstr "È corretto? "
 
-#: ../lib/gis/parser.c:2793
+#: ../lib/gis/parser.c:2794
 msgid "to accept the default"
 msgstr "per accettare i valori predefiniti"
 
@@ -4902,19 +4907,23 @@ msgstr "Tipo della colonna sconosciuto (colonna <%s>"
 msgid "Unable to describe table <%s>"
 msgstr "Impossibile descrivere la tabella <%s>"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr "Manca il nome della colonna"
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr "Manca il nome della colonna chiave"
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "Impossibile selezionare recod dalla tabella <%s>"
+
+#: ../lib/db/dbmi_client/select.c:333
+msgid "Key column type is not integer"
+msgstr "La tipologia della colonna <%s> non è intero"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
@@ -5000,9 +5009,3 @@ msgstr "G_realloc: impossibile allocare %lu bytes a %s:%d"
 
 #~ msgid "'%s' must be > 0 for '%s'"
 #~ msgstr "'%s' deve essere > 0 per '%s'"
-
-#~ msgid "Special characters: newline, space, comma, tab"
-#~ msgstr "Caratteri speciali: newline, spazio, virgola, tab"
-
-#~ msgid "Key column type is not integer"
-#~ msgstr "La tipologia della colonna <%s> non è intero"

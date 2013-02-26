@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-26 09:58+0100\n"
 "PO-Revision-Date: 2012-12-24 17:49+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
@@ -367,6 +367,10 @@ msgstr ""
 "Vérifier les droits du répertoire."
 
 #: ../lib/init/gis_set.tcl:936
+msgid "ERROR: unable to read GISRC"
+msgstr "ERREUR : impossible de lire le fichier GISRC"
+
+#: ../lib/init/gis_set.tcl:937
 #, tcl-format
 msgid ""
 "Something went wrong while processing GISRC file named \"%s\".\n"
@@ -374,20 +378,6 @@ msgid ""
 msgstr ""
 "Quelque chose s'est mal passé lors du traitement du fichier GISRC \"%s\".\n"
 "ceci est une erreur fatale. GRASS ne peut pas démarrertant que le problème ne sera pas résolu."
-
-#: ../lib/init/gis_set.tcl:938
-msgid ""
-"\n"
-"\n"
-"On MS-Windows systems failure might be caused by non-latin letter in GISRC file path.  Check that Your username doesn't contain non-latin letters.  Due to non-latin letter encoding handling in MS-Windows, it's not possible to run GRASS if username contains non-latin letters."
-msgstr ""
-"\n"
-"\n"
-"Sur les systèmes MS-Windows des erreurs peuvent être causées par des lettre non-latine dans le chemin du fichier GISRC. Vérifiez que votre nom d'utilisateur ne contien pas de lettres non-latines. La gestion de l'encodage des lettres non-latines de MS-Windows ne permet pas de lancer GRASS si le nom d'utilisateur en contient."
-
-#: ../lib/init/gis_set.tcl:942
-msgid "ERROR: unable to read GISRC"
-msgstr "ERREUR : impossible de lire le fichier GISRC"
 
 #: ../lib/init/epsg_option.tcl:91
 msgid "WARNING: cant get environmental variable"
@@ -6620,3 +6610,12 @@ msgstr "dessiner un gradient lissé"
 #: ../gui/tcltk/d.m/legend.tcl:177
 msgid "flip legend"
 msgstr "retourner la légende"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "On MS-Windows systems failure might be caused by non-latin letter in GISRC file path.  Check that Your username doesn't contain non-latin letters.  Due to non-latin letter encoding handling in MS-Windows, it's not possible to run GRASS if username contains non-latin letters."
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Sur les systèmes MS-Windows des erreurs peuvent être causées par des lettre non-latine dans le chemin du fichier GISRC. Vérifiez que votre nom d'utilisateur ne contien pas de lettres non-latines. La gestion de l'encodage des lettres non-latines de MS-Windows ne permet pas de lancer GRASS si le nom d'utilisateur en contient."

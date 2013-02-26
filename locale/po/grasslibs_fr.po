@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 10:54+0100\n"
+"POT-Creation-Date: 2013-02-26 09:57+0100\n"
 "PO-Revision-Date: 2013-01-26 13:45+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -120,12 +120,12 @@ msgid "Dev note: Adapted sites library used for vector points. (module should be
 msgstr ""
 
 #: ../lib/sites/sites.c:372 ../lib/vector/neta/utils.c:116
-#: ../lib/vector/neta/timetables.c:133 ../lib/vector/Vlib/map.c:271
-#: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
+#: ../lib/vector/neta/timetables.c:133 ../lib/vector/Vlib/map.c:272
+#: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
 #: ../lib/vector/Vlib/array.c:284 ../lib/rst/interp_float/vinput2d.c:88
-#: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/db/dbmi_client/db.c:46
-#: ../lib/db/dbmi_client/copy_tab.c:105 ../lib/db/dbmi_client/copy_tab.c:126
+#: ../lib/db/dbmi_client/db.c:46 ../lib/db/dbmi_client/copy_tab.c:105
+#: ../lib/db/dbmi_client/copy_tab.c:126
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Impossible d'ouvrir la base de données <%s> avec le driver <%s>"
@@ -206,7 +206,7 @@ msgstr ""
 
 #: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109
 #: ../lib/vector/Vlib/legal_vname.c:118 ../lib/vector/Vlib/legal_vname.c:121
-#: ../lib/vector/Vlib/map.c:327 ../lib/vector/Vlib/open.c:168
+#: ../lib/vector/Vlib/map.c:328 ../lib/vector/Vlib/open.c:168
 #, c-format
 msgid "Vector map <%s> not found"
 msgstr "La couche vectorielle <%s> n'a pas été trouvée"
@@ -236,8 +236,8 @@ msgstr "Carte vecteur <%s> chargée (%d objets)"
 msgid "Raster map <%s> not found"
 msgstr "La carte vecteur <%s> n'a pas été trouvée"
 
-#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
-#: ../lib/vector/Vlib/map.c:84
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:69
+#: ../lib/vector/Vlib/map.c:85
 #, c-format
 msgid "Unable to read vector map <%s>"
 msgstr "Impossible de lire la carte vecteur <%s>"
@@ -284,47 +284,47 @@ msgstr ""
 msgid "Unable to process vector map - out of memory"
 msgstr "Impossible de traiter la carte vecteur - mémoire saturée"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:67
 msgid "Unable to allocate stream"
 msgstr "Impossible d'allouer le flux"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:156
+#: ../lib/ogsf/gsd_img_mpeg.c:166
 msgid "Video codec not found"
 msgstr "Le codec video n'a pas été trouvé"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:162
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 msgid "Unable to open codec"
 msgstr "Impossible d'ouvrir le codec"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:181
+#: ../lib/ogsf/gsd_img_mpeg.c:195
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "Allocation mémoire impossible\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:192
+#: ../lib/ogsf/gsd_img_mpeg.c:206
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "Allocation mémoire impossible\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:252
+#: ../lib/ogsf/gsd_img_mpeg.c:266
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "Erreur lors de l'écriture du fichier vidéo"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:298
+#: ../lib/ogsf/gsd_img_mpeg.c:312
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr "Ouverture du flux MPEG <%s>..."
 
-#: ../lib/ogsf/gsd_img_mpeg.c:306
+#: ../lib/ogsf/gsd_img_mpeg.c:320
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr "Impossible de déduire le format de sortie de l'extension du fichier : utilisation de MPEG"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:310
+#: ../lib/ogsf/gsd_img_mpeg.c:324
 msgid "Unable to find suitable output format"
 msgstr "Impossible de  trouver un format de sortie adapté"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:317 ../lib/vector/neta/centrality.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/vector/neta/centrality.c:63
 #: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
 #: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
 #: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/flow.c:64
@@ -343,17 +343,18 @@ msgstr "Impossible de  trouver un format de sortie adapté"
 msgid "Out of memory"
 msgstr "Dépassement de mémoire"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:337
+#: ../lib/ogsf/gsd_img_mpeg.c:355
 msgid "Invalid output format parameters"
 msgstr "Paramètres de format de sortie non valides"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:351
+#: ../lib/ogsf/gsd_img_mpeg.c:377
 #, c-format
 msgid "Unable to open <%s>"
 msgstr "Impossible d'ouvrir <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:361
-msgid "NVIZ has not been built with MPEG output support"
+#: ../lib/ogsf/gsd_img_mpeg.c:390
+#, fuzzy
+msgid "OGSF library has not been built with MPEG output support"
 msgstr "NVIZ n'a pas été construit avec le support de sortie MPEG"
 
 #: ../lib/ogsf/gsd_legend.c:245
@@ -864,162 +865,182 @@ msgstr "Mauvais format dans le fichier de points de contrôle pour le groupe [%s
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "Impossible de créer le fichier de points de contrôle pour le groupe [%s dans %s]"
 
-#: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
 msgid "Matrix dimensions out of range"
 msgstr "Dimension de la matrice en dehors des limites"
 
-#: ../lib/gmath/la.c:153
+#: ../lib/gmath/la.c:149
 msgid "Matrix is not initialised fully."
 msgstr "La matrice n'est pas complètement initialisé."
 
-#: ../lib/gmath/la.c:158
+#: ../lib/gmath/la.c:154
 msgid "Unable to allocate space for matrix copy"
 msgstr "Allocation d'espace mémoire impossible pour la copie matricielle"
 
-#: ../lib/gmath/la.c:247
+#: ../lib/gmath/la.c:243
 msgid "First scalar multiplier must be non-zero"
 msgstr "Le première scalaire multiplicateur ne doit pas être à zéro"
 
-#: ../lib/gmath/la.c:253 ../lib/gmath/la.c:261 ../lib/gmath/la.c:326
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
 msgid "One or both input matrices uninitialised"
 msgstr "Une ou deux matrices d'entrée non initialisées"
 
-#: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
 msgid "Matrix order does not match"
 msgstr "L'ordre des matrices ne correspond pas"
 
-#: ../lib/gmath/la.c:272
+#: ../lib/gmath/la.c:268
 msgid "Unable to allocate space for matrix sum"
 msgstr "Allocation d'espace mémoire impossible pour la somme matricielle"
 
-#: ../lib/gmath/la.c:336
+#: ../lib/gmath/la.c:332
 msgid "Unable to allocate space for matrix product"
 msgstr "Allocation d'espace mémoire impossible pour le produit matriciel"
 
-#: ../lib/gmath/la.c:448
+#: ../lib/gmath/la.c:444
 msgid "Input: one or both data matrices uninitialised"
 msgstr "Entrée : une ou deux matrices de données non initialisées"
 
-#: ../lib/gmath/la.c:453
+#: ../lib/gmath/la.c:449
 msgid "Principal matrix is not properly dimensioned"
 msgstr "La matrice principale n'est pas correctement dimensionnée"
 
-#: ../lib/gmath/la.c:458
+#: ../lib/gmath/la.c:454
 msgid "Input: you must have at least one array to solve"
 msgstr "Entrée : vous devez disposer d'au moins un tableau à résoudre"
 
-#: ../lib/gmath/la.c:464
+#: ../lib/gmath/la.c:460
 msgid "Could not allocate space for solution matrix"
 msgstr "Impossible d'allouer de l'espace pour la matrice solution"
 
-#: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
 msgid "Could not allocate space for working matrix"
 msgstr "Impossible d'allouer de l'espace pour la matrice de travail"
 
-#: ../lib/gmath/la.c:531
+#: ../lib/gmath/la.c:527
 msgid "Matrix (or submatrix is singular). Solution undetermined"
 msgstr "Matrice (ou sous-matrice singulière). Solution indéterminée"
 
-#: ../lib/gmath/la.c:535
+#: ../lib/gmath/la.c:531
 msgid "Problem in LA routine."
 msgstr "Problème dans la routine LA"
 
-#: ../lib/gmath/la.c:542
+#: ../lib/gmath/la.c:538
 msgid "Procedure not yet available for selected matrix type"
 msgstr "Procédure pas encore disponibles pour certains type de matrice"
 
-#: ../lib/gmath/la.c:576
+#: ../lib/gmath/la.c:572
 msgid "Matrix is not square. Cannot determine inverse"
 msgstr "La matrice n'est pas carrée. Impossible de déterminer son inverse"
 
-#: ../lib/gmath/la.c:581
+#: ../lib/gmath/la.c:577
 msgid "Unable to allocate space for matrix"
 msgstr "Allocation d'espace mémoire impossible pour la matrice"
 
-#: ../lib/gmath/la.c:598
+#: ../lib/gmath/la.c:594
 msgid "Matrix is singular"
 msgstr "La matrice est singulière"
 
-#: ../lib/gmath/la.c:603
+#: ../lib/gmath/la.c:599
 msgid "Problem in LA procedure."
 msgstr "Problème dans la procédure LA."
 
-#: ../lib/gmath/la.c:691
+#: ../lib/gmath/la.c:687
 msgid "Element array has not been allocated"
 msgstr "Le tableau des éléments n'a pas été attribué"
 
-#: ../lib/gmath/la.c:696
+#: ../lib/gmath/la.c:692
 msgid "Specified element is outside array bounds"
 msgstr "L'élément spécifié est en dehors des limites du tableau"
 
-#: ../lib/gmath/la.c:750
+#: ../lib/gmath/la.c:746
 msgid "Specified matrix column index is outside range"
 msgstr "L'index de colonne de la matrice spécifié est en dehors de l'intervalle"
 
-#: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
-#: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
 msgid "Matrix is not initialised"
 msgstr "La matrice n'est pas initialisée"
 
-#: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
 msgid "Could not allocate space for vector structure"
 msgstr "Impossible d'allouer de l'espace pour le vecteur structure"
 
-#: ../lib/gmath/la.c:791
+#: ../lib/gmath/la.c:787
 msgid "Specified matrix row index is outside range"
 msgstr "L'index de ligne de la matrice spécifié est en dehors de l'intervalle"
 
-#: ../lib/gmath/la.c:831
+#: ../lib/gmath/la.c:827
 msgid "Specified row index is outside range"
 msgstr "L'index de la ligne spécifié est en dehors de l'intervalle"
 
-#: ../lib/gmath/la.c:836
+#: ../lib/gmath/la.c:832
 msgid "Specified column index is outside range"
 msgstr "l'index de la colonne spécifié est en dehors de l'intervalle"
 
-#: ../lib/gmath/la.c:856
+#: ../lib/gmath/la.c:852
 msgid "Unknown vector type."
 msgstr "Type vectoriel inconnu."
 
-#: ../lib/gmath/la.c:981
+#: ../lib/gmath/la.c:977
 msgid "Output vector is uninitialized"
 msgstr "Le vecteur de sortie n'est pas initialisé"
 
-#: ../lib/gmath/la.c:986
+#: ../lib/gmath/la.c:982
 msgid "Vectors are not of the same type"
 msgstr "Les vecteurs ne sont pas du même type"
 
-#: ../lib/gmath/la.c:991
+#: ../lib/gmath/la.c:987
 msgid "Output vector is of incorrect type"
 msgstr "Le vecteur de sortie est de type incorrect"
 
-#: ../lib/gmath/la.c:996
+#: ../lib/gmath/la.c:992
 msgid "Matrices not allowed"
 msgstr "Matrices non autorisées"
 
-#: ../lib/gmath/la.c:1002
+#: ../lib/gmath/la.c:998
 msgid "Vectors have differing dimensions"
 msgstr "Les vecteurs sont de dimensions différentes"
 
-#: ../lib/gmath/la.c:1008
+#: ../lib/gmath/la.c:1004
 msgid "Output vector has incorrect dimension"
 msgstr "Le vecteur de sorite est de dimension incorrecte"
 
-#: ../lib/gmath/la.c:1054
+#: ../lib/gmath/la.c:1050
 msgid "Vector dimensions out of range"
 msgstr "Dimension du vecteur en dehors des limites"
 
-#: ../lib/gmath/la.c:1059
+#: ../lib/gmath/la.c:1055
 msgid "Row/column out of range"
 msgstr "ligne/colonne en dehors de l'intervalle"
 
-#: ../lib/gmath/la.c:1274
+#: ../lib/gmath/la.c:1270
 msgid "Vector structure is not initialised"
 msgstr "La structure du vecteur n'est pas initialisée"
 
-#: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
 msgid "Input format error"
 msgstr "Erreur de format d'entrée"
+
+#: ../lib/gmath/solvers_classic_iter.c:84
+#, c-format
+msgid "sparse Jacobi -- iteration %5i error %g\n"
+msgstr "rares Jacobi -- itération %5i erreur %g\n"
+
+#: ../lib/gmath/solvers_classic_iter.c:156
+#, c-format
+msgid "sparse SOR -- iteration %5i error %g\n"
+msgstr "rares SOR -- itération %5i erreur %g\n"
+
+#: ../lib/gmath/solvers_classic_iter.c:218
+#, c-format
+msgid "Jacobi -- iteration %5i error %g\n"
+msgstr "Jacobi -- itération %5i erreur %g\n"
+
+#: ../lib/gmath/solvers_classic_iter.c:275
+#, c-format
+msgid "SOR -- iteration %5i error %g\n"
+msgstr "SOR -- itération %5i erreur %g\n"
 
 #: ../lib/gmath/del2g.c:50
 msgid "    taking FFT of image..."
@@ -1040,6 +1061,263 @@ msgstr "    transformations multiples..."
 #: ../lib/gmath/del2g.c:66
 msgid "    taking inverse FFT..."
 msgstr "    prenant FFT inverse..."
+
+#: ../lib/gmath/test/bench_blas2.c:35
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 2 benchmark ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/bench_blas3.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 3 benchmark ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_solvers.c:37
+msgid ""
+"\n"
+"++ Running solver unit tests ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_solvers.c:42
+msgid ""
+"\n"
+"-- Solver unit tests failure --"
+msgstr ""
+"\n"
+"-- Échec du solveur des tests unitaires --"
+
+#: ../lib/gmath/test/test_solvers.c:44
+msgid ""
+"\n"
+"-- Solver unit tests finished successfully --"
+msgstr ""
+"\n"
+"-- Tests unitaires du solveur terminés avec succés --"
+
+#: ../lib/gmath/test/bench_solver_direct.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running direct solver benchmark ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_blas1.c:40
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 1 unit tests ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_blas1.c:47
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 1 unit tests failure --"
+msgstr ""
+"\n"
+"-- Échec du solveur des tests unitaires --"
+
+#: ../lib/gmath/test/test_blas1.c:49
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 1 unit tests finished successfully --"
+msgstr ""
+"\n"
+"-- Tests unitaires du solveur terminés avec succés --"
+
+#: ../lib/gmath/test/test_main.c:47 ../lib/gpde/test/test_main.c:49
+msgid "Choose the unit tests to run"
+msgstr "Choisir les tests unitaires à éxécuter"
+
+#: ../lib/gmath/test/test_main.c:54 ../lib/gpde/test/test_main.c:56
+msgid "Choose the integration tests to run"
+msgstr "Choisir les tests d'intégration à éxécuter"
+
+#: ../lib/gmath/test/test_main.c:61
+msgid "The size of the matrices and vectors for benchmarking"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:68
+msgid "Choose solver benchmark"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:75
+msgid "Choose blas benchmark"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:79 ../lib/gpde/test/test_main.c:61
+msgid "Run all unit tests"
+msgstr "Éxécuter l'ensemble des tests unitaires"
+
+#: ../lib/gmath/test/test_main.c:83 ../lib/gpde/test/test_main.c:65
+msgid "Run all integration tests"
+msgstr "Éxécuter tous les tests d'intégration"
+
+#: ../lib/gmath/test/test_main.c:87 ../lib/gpde/test/test_main.c:69
+msgid "Run all unit and integration tests"
+msgstr "Éxécuter tous les tests unitaires et d'intégration"
+
+#: ../lib/gmath/test/test_main.c:105
+#, fuzzy
+msgid "test, gmath"
+msgstr "test, gpde"
+
+#: ../lib/gmath/test/test_main.c:107
+#, fuzzy
+msgid "Performs benchmarks, unit and integration tests for the gmath library"
+msgstr "Effectue les tests unitaires et d'intégration pour la librairie gpde"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:37
+#, fuzzy
+msgid ""
+"\n"
+"++ Running ccmath wrapper unit tests ++"
+msgstr ""
+"\n"
+"++ Éxécuter les tests unitaires des outils mathématiques ++"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:42
+#, fuzzy
+msgid ""
+"\n"
+"-- ccmath wrapper unit tests failure --"
+msgstr ""
+"\n"
+"-- Échec des tests unitaires des outils mathématiques --"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- ccmath wrapper unit tests finished successfully --"
+msgstr ""
+"\n"
+"-- tests unitaires des outils mathématiques terminés avec succés --"
+
+#: ../lib/gmath/test/bench_solver_krylov.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running krylov solver benchmark ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_blas3.c:38
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 3 unit tests ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_blas3.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 3 unit tests failure --"
+msgstr ""
+"\n"
+"-- Échec du solveur des tests unitaires --"
+
+#: ../lib/gmath/test/test_blas3.c:46
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 3 unit tests finished successfully --"
+msgstr ""
+"\n"
+"-- Tests unitaires du solveur terminés avec succés --"
+
+#: ../lib/gmath/test/test_blas2.c:38
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 2 unit tests ++"
+msgstr ""
+"\n"
+"++ Éxécution du solveur des tests unitaires ++"
+
+#: ../lib/gmath/test/test_blas2.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 2 unit tests failure --"
+msgstr ""
+"\n"
+"-- Échec du solveur des tests unitaires --"
+
+#: ../lib/gmath/test/test_blas2.c:46
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 2 unit tests finished successfully --"
+msgstr ""
+"\n"
+"-- Tests unitaires du solveur terminés avec succés --"
+
+#: ../lib/gmath/solvers_direct.c:45
+msgid "Starting direct gauss elimination solver"
+msgstr "Commencer directement la résolution par la méthode de gauss"
+
+#: ../lib/gmath/solvers_direct.c:73
+msgid "Starting direct lu decomposition solver"
+msgstr "Commencer directement la décomposition LU"
+
+#: ../lib/gmath/solvers_direct.c:130
+msgid "Starting cholesky decomposition solver"
+msgstr "Commencer la décomposition par la méthode de Cholesky"
+
+#: ../lib/gmath/solvers_direct.c:133 ../lib/gmath/solvers_krylov.c:219
+#: ../lib/gmath/solvers_krylov.c:413 ../lib/gmath/solvers_krylov.c:577
+msgid "Unable to solve the linear equation system"
+msgstr "Impossible de résoudre le système d'équations linéaires"
+
+#: ../lib/gmath/solvers_krylov.c:227
+#, c-format
+msgid "Sparse PCG -- iteration %i error  %g\n"
+msgstr "rares PCG -- itération %i erreur %g\n"
+
+#: ../lib/gmath/solvers_krylov.c:229
+#, c-format
+msgid "PCG -- iteration %i error  %g\n"
+msgstr "PCG -- itération %i erreur %g\n"
+
+#: ../lib/gmath/solvers_krylov.c:421
+#, c-format
+msgid "Sparse CG -- iteration %i error  %g\n"
+msgstr "rares PCG -- itération %i erreur %g\n"
+
+#: ../lib/gmath/solvers_krylov.c:423
+#, c-format
+msgid "CG -- iteration %i error  %g\n"
+msgstr "CG -- itération %i erreur %g\n"
+
+#: ../lib/gmath/solvers_krylov.c:626
+#, c-format
+msgid "Sparse BiCGStab -- iteration %i error  %g\n"
+msgstr "rares BICGStab -- itération %i erreur %g\n"
+
+#: ../lib/gmath/solvers_krylov.c:629
+#, c-format
+msgid "BiCGStab -- iteration %i error  %g\n"
+msgstr "BICGStab -- itération %i erreur %g\n"
 
 #: ../lib/display/tran_colr.c:129 ../lib/display/tran_colr.c:131
 #, c-format
@@ -1079,48 +1357,6 @@ msgstr "Commande inconnue : %d dernière : %d"
 msgid "Monitor: get_command: Premature EOF"
 msgstr "Moniteur : get_command : Fermeture de fichier prématurée"
 
-#: ../lib/gpde/N_solvers.c:50
-msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr "La résolution par la méthode de Gauss ne fonctionne pas avec les matrices creuses"
-
-#: ../lib/gpde/N_solvers.c:55 ../lib/gpde/N_solvers.c:93
-#: ../lib/gpde/N_solvers.c:160 ../lib/gpde/N_solvers_classic_iter.c:57
-#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers_krylov.c:78
-#: ../lib/gpde/N_solvers_krylov.c:255 ../lib/gpde/N_solvers_krylov.c:423
-#: ../lib/gpde/N_solvers_krylov.c:832
-msgid "The linear equation system is not quadratic"
-msgstr "Le système d'équations linéaires n'est pas quadratique"
-
-#: ../lib/gpde/N_solvers.c:60
-msgid "Starting direct gauss elimination solver"
-msgstr "Commencer directement la résolution par la méthode de gauss"
-
-#: ../lib/gpde/N_solvers.c:88
-msgid "The lu solver does not work with sparse matrices"
-msgstr "Le solveur LU ne fonctionne pas avec les matrices creuses"
-
-#: ../lib/gpde/N_solvers.c:98
-msgid "Starting direct lu decomposition solver"
-msgstr "Commencer directement la décomposition LU"
-
-#: ../lib/gpde/N_solvers.c:155
-msgid "The cholesky solver does not work with sparse matrices"
-msgstr "Le solveur de Cholesky ne fonctionne pas avec les matrices creuses"
-
-#: ../lib/gpde/N_solvers.c:166 ../lib/gpde/N_solvers_krylov.c:84
-#: ../lib/gpde/N_solvers_krylov.c:261
-msgid "Matrix is not symmetric!"
-msgstr "La matrice n'est pas symétrique!"
-
-#: ../lib/gpde/N_solvers.c:170
-msgid "Starting cholesky decomposition solver"
-msgstr "Commencer la décomposition par la méthode de Cholesky"
-
-#: ../lib/gpde/N_solvers.c:173 ../lib/gpde/N_solvers_krylov.c:190
-#: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
-msgid "Unable to solve the linear equation system"
-msgstr "Impossible de résoudre le système d'équations linéaires"
-
 #: ../lib/gpde/N_parse_options.c:59
 msgid "The type of solver which should solve the symmetric linear equation system"
 msgstr "Le type de solveur qui devrait résoudre le système d'équations linéaires symétrique"
@@ -1144,26 +1380,6 @@ msgstr "Les paramètres utilisés par le solveur pour les méthodes jacobi et so
 #: ../lib/gpde/N_parse_options.c:106
 msgid "The calculation time in seconds"
 msgstr "Le temps de calcul en millisecondes"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:152
-#, c-format
-msgid "sparse Jacobi -- iteration %5i error %g\n"
-msgstr "rares Jacobi -- itération %5i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:154
-#, c-format
-msgid "sparse SOR -- iteration %5i error %g\n"
-msgstr "rares SOR -- itération %5i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:197
-#, c-format
-msgid "Jacobi -- iteration %5i error %g\n"
-msgstr "Jacobi -- itération %5i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:235
-#, c-format
-msgid "SOR -- iteration %5i error %g\n"
-msgstr "SOR -- itération %5i erreur %g\n"
 
 #: ../lib/gpde/test/test_assemble.c:42
 msgid ""
@@ -1197,7 +1413,7 @@ msgstr ""
 "\n"
 "-- Succés des tests unitaires --"
 
-#: ../lib/gpde/test/test_les.c:34
+#: ../lib/gpde/test/test_les.c:35
 msgid ""
 "\n"
 "++ Running les creation unit tests ++"
@@ -1205,7 +1421,7 @@ msgstr ""
 "\n"
 "++ Exécuter les tests unitaires les de création ++"
 
-#: ../lib/gpde/test/test_les.c:39
+#: ../lib/gpde/test/test_les.c:40
 msgid ""
 "\n"
 "-- les creation unit tests failure --"
@@ -1213,7 +1429,7 @@ msgstr ""
 "\n"
 "-- Création des tests unitaires les en échec --"
 
-#: ../lib/gpde/test/test_les.c:41
+#: ../lib/gpde/test/test_les.c:42
 msgid ""
 "\n"
 "-- les creation unit tests finished successfully --"
@@ -1221,37 +1437,13 @@ msgstr ""
 "\n"
 "-- création des tests unitaires les terminés avec succés --"
 
-#: ../lib/gpde/test/test_les.c:95
+#: ../lib/gpde/test/test_les.c:96
 msgid "\t * testing les creation in parallel\n"
 msgstr "\t * création des test les en parallèle\n"
 
-#: ../lib/gpde/test/test_les.c:126
+#: ../lib/gpde/test/test_les.c:127
 msgid "\t * testing les creation in serial\n"
 msgstr "\t * création des tests les en série\n"
-
-#: ../lib/gpde/test/test_solvers.c:37
-msgid ""
-"\n"
-"++ Running solver unit tests ++"
-msgstr ""
-"\n"
-"++ Éxécution du solveur des tests unitaires ++"
-
-#: ../lib/gpde/test/test_solvers.c:42
-msgid ""
-"\n"
-"-- Solver unit tests failure --"
-msgstr ""
-"\n"
-"-- Échec du solveur des tests unitaires --"
-
-#: ../lib/gpde/test/test_solvers.c:44
-msgid ""
-"\n"
-"-- Solver unit tests finished successfully --"
-msgstr ""
-"\n"
-"-- Tests unitaires du solveur terminés avec succés --"
 
 #: ../lib/gpde/test/test_arrays.c:48
 msgid ""
@@ -1309,7 +1501,7 @@ msgstr ""
 "\n"
 "-- Succés des tests unitaires geom_data --"
 
-#: ../lib/gpde/test/test_gwflow.c:43
+#: ../lib/gpde/test/test_gwflow.c:46
 msgid ""
 "\n"
 "++ Running gwflow integration tests ++"
@@ -1317,15 +1509,15 @@ msgstr ""
 "\n"
 "++ Éxécuter les tests d'intégration gwflow ++"
 
-#: ../lib/gpde/test/test_gwflow.c:45
+#: ../lib/gpde/test/test_gwflow.c:48
 msgid "\t 1. testing 2d gwflow"
 msgstr "\t 1. test 2 gwflow"
 
-#: ../lib/gpde/test/test_gwflow.c:48
+#: ../lib/gpde/test/test_gwflow.c:51
 msgid "\t 2. testing 3d gwflow"
 msgstr "\t 3. test 3 gwflow"
 
-#: ../lib/gpde/test/test_gwflow.c:52
+#: ../lib/gpde/test/test_gwflow.c:55
 msgid ""
 "\n"
 "-- gwflow integration tests failure --"
@@ -1333,33 +1525,13 @@ msgstr ""
 "\n"
 "-- Échec des tests d'intégration gwflow --"
 
-#: ../lib/gpde/test/test_gwflow.c:54
+#: ../lib/gpde/test/test_gwflow.c:57
 msgid ""
 "\n"
 "-- gwflow integration tests finished successfully --"
 msgstr ""
 "\n"
 "-- tests gwflow terminé avec succès --"
-
-#: ../lib/gpde/test/test_main.c:49
-msgid "Choose the unit tests to run"
-msgstr "Choisir les tests unitaires à éxécuter"
-
-#: ../lib/gpde/test/test_main.c:56
-msgid "Choose the integration tests to run"
-msgstr "Choisir les tests d'intégration à éxécuter"
-
-#: ../lib/gpde/test/test_main.c:61
-msgid "Run all unit tests"
-msgstr "Éxécuter l'ensemble des tests unitaires"
-
-#: ../lib/gpde/test/test_main.c:65
-msgid "Run all integration tests"
-msgstr "Éxécuter tous les tests d'intégration"
-
-#: ../lib/gpde/test/test_main.c:69
-msgid "Run all unit and integration tests"
-msgstr "Éxécuter tous les tests unitaires et d'intégration"
 
 #: ../lib/gpde/test/test_main.c:85
 msgid "test, gpde"
@@ -1417,7 +1589,7 @@ msgstr ""
 "\n"
 "-- échec des tests d'intégration solute_transport --"
 
-#: ../lib/gpde/test/test_solute_transport.c:54
+#: ../lib/gpde/test/test_solute_transport.c:55
 msgid ""
 "\n"
 "-- solute_transport integration tests finished successfully --"
@@ -1488,36 +1660,6 @@ msgid ""
 msgstr ""
 "\n"
 "-- tests flux de chaleur terminé avec succès --"
-
-#: ../lib/gpde/N_solvers_krylov.c:198
-#, c-format
-msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr "rares PCG -- itération %i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_krylov.c:200
-#, c-format
-msgid "PCG -- iteration %i error  %g\n"
-msgstr "PCG -- itération %i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_krylov.c:365
-#, c-format
-msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr "rares PCG -- itération %i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_krylov.c:367
-#, c-format
-msgid "CG -- iteration %i error  %g\n"
-msgstr "CG -- itération %i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_krylov.c:530
-#, c-format
-msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr "rares BICGStab -- itération %i erreur %g\n"
-
-#: ../lib/gpde/N_solvers_krylov.c:533
-#, c-format
-msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr "BICGStab -- itération %i erreur %g\n"
 
 #: ../lib/gpde/N_arrays_io.c:97
 #, c-format
@@ -1590,20 +1732,20 @@ msgstr "%s : Erreur dans l'algorithme de classification"
 msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
 msgstr ""
 
-#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
-#, c-format
-msgid "'%s' must be > 0 for '%s'"
+#: ../lib/vector/neta/utils.c:221
+#, fuzzy, c-format
+msgid "'%s' must be > 0"
 msgstr "'%s' doit être > 0 pour '%s'"
 
-#: ../lib/vector/neta/utils.c:221
+#: ../lib/vector/neta/utils.c:230
 msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
 msgstr "les paramètres 'where' et 'cats' ont été fournis, cat sera ignoré"
 
-#: ../lib/vector/neta/utils.c:225
+#: ../lib/vector/neta/utils.c:233
 msgid "Unable to load data from database"
 msgstr "Impossible de charger des données depuis la base de données"
 
-#: ../lib/vector/neta/utils.c:236
+#: ../lib/vector/neta/utils.c:240
 msgid "Problem loading category values"
 msgstr "Problème de chargement des valeurs de catégories"
 
@@ -1805,15 +1947,37 @@ msgstr "Le nom de sortie de la couche vectorielle <%s> n'est pas un nom de couch
 msgid "Output vector map <%s> is used as input"
 msgstr "La couche vectorielle de sortie <%s> est utilisée en entrée"
 
-#: ../lib/vector/Vlib/merge_lines.c:192
+#: ../lib/vector/Vlib/merge_lines.c:233
 #, c-format
 msgid "%d boundaries merged"
 msgstr "%d contours fusionnés"
 
-#: ../lib/vector/Vlib/merge_lines.c:193
+#: ../lib/vector/Vlib/merge_lines.c:234
 #, c-format
 msgid "%d new boundaries"
 msgstr "%d nouveaux contours"
+
+#: ../lib/vector/Vlib/snap.c:148
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:202
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:271
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:451
+#, c-format
+msgid "Snapped vertices: %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:452
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "Nombre de primitives : %d"
 
 #: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/close.c:38
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/read.c:30
@@ -1965,104 +2129,104 @@ msgstr "Impossible de fermer la carte vecteur <%s>"
 msgid "Attempt to read dead line"
 msgstr "Tentative de lecture d'une ligne morte"
 
-#: ../lib/vector/Vlib/map.c:55
+#: ../lib/vector/Vlib/map.c:56
 msgid "input vector map is not open"
 msgstr "La carte vecteur en entrée n'est pas ouverte"
 
-#: ../lib/vector/Vlib/map.c:178 ../lib/vector/Vlib/map.c:314
+#: ../lib/vector/Vlib/map.c:179 ../lib/vector/Vlib/map.c:315
 #: ../lib/vector/Vlib/open.c:540
 #, c-format
 msgid "Vector map name is not SQL compliant"
 msgstr "Le nom de la couche  vectorielle n'est pas compatible avec le SQL"
 
-#: ../lib/vector/Vlib/map.c:182
+#: ../lib/vector/Vlib/map.c:183
 #, c-format
 msgid "Unable to find vector map <%s> in <%s>"
 msgstr "Impossible de trouver la carte vecteur <%s> dans <%s>"
 
-#: ../lib/vector/Vlib/map.c:189 ../lib/vector/Vlib/map.c:318
+#: ../lib/vector/Vlib/map.c:190 ../lib/vector/Vlib/map.c:319
 #: ../lib/vector/Vlib/open.c:547
 #, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "La couche vectorielle <%s> existe déjà et va être écrasé"
 
-#: ../lib/vector/Vlib/map.c:193 ../lib/vector/Vlib/open.c:552
+#: ../lib/vector/Vlib/map.c:194 ../lib/vector/Vlib/open.c:552
 #, c-format
 msgid "Unable to delete vector map <%s>"
 msgstr "Impossible de supprimer la couche vectorielle <%s>"
 
-#: ../lib/vector/Vlib/map.c:213 ../lib/vector/Vlib/map.c:331
+#: ../lib/vector/Vlib/map.c:214 ../lib/vector/Vlib/map.c:332
 #, c-format
 msgid "Unable to copy vector map <%s> to <%s>"
 msgstr "Impossible de copier la couche vectorielle <%s> vers <%s>"
 
-#: ../lib/vector/Vlib/map.c:243 ../lib/vector/Vlib/map.c:364
-#: ../lib/vector/Vlib/map.c:470 ../lib/vector/Vlib/map.c:588
-#: ../lib/vector/Vlib/map.c:686 ../lib/vector/Vlib/net.c:179
+#: ../lib/vector/Vlib/map.c:244 ../lib/vector/Vlib/map.c:365
+#: ../lib/vector/Vlib/map.c:471 ../lib/vector/Vlib/map.c:589
+#: ../lib/vector/Vlib/map.c:687 ../lib/vector/Vlib/net.c:179
 #: ../lib/vector/Vlib/net.c:350 ../lib/vector/Vlib/array.c:278
 #: ../lib/rst/interp_float/vinput2d.c:79
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "Connexion à la base de données indéfinie pour la couche %d"
 
-#: ../lib/vector/Vlib/map.c:260 ../lib/vector/Vlib/map.c:381
-#: ../lib/vector/Vlib/map.c:613 ../lib/vector/Vlib/map.c:720
+#: ../lib/vector/Vlib/map.c:261 ../lib/vector/Vlib/map.c:382
+#: ../lib/vector/Vlib/map.c:614 ../lib/vector/Vlib/map.c:721
 #, c-format
 msgid "Unable to copy table <%s>"
 msgstr "Impossible de copier la table <%s>"
 
-#: ../lib/vector/Vlib/map.c:276 ../lib/vector/Vlib/map.c:410
-#: ../lib/vector/Vlib/map.c:626
+#: ../lib/vector/Vlib/map.c:277 ../lib/vector/Vlib/map.c:411
+#: ../lib/vector/Vlib/map.c:627
 #, c-format
 msgid "Unable to create index for table <%s>, key <%s>"
 msgstr "Impossible de créer l'index de la table <%s>, clef <%s>"
 
-#: ../lib/vector/Vlib/map.c:395 ../lib/vector/Vlib/map.c:490
+#: ../lib/vector/Vlib/map.c:396 ../lib/vector/Vlib/map.c:491
 #, c-format
 msgid "Unable to delete table <%s>"
 msgstr "Impossible de supprimer la table <%s>"
 
-#: ../lib/vector/Vlib/map.c:444
+#: ../lib/vector/Vlib/map.c:445
 #, c-format
 msgid "Invalid vector map name <%s>"
 msgstr "Nom de carte vecteur non valide <%s>"
 
-#: ../lib/vector/Vlib/map.c:458
+#: ../lib/vector/Vlib/map.c:459
 #, c-format
 msgid "Unable to open header file for vector map <%s>"
 msgstr "Impossible d'ouvrir le fichier d'historique pour la carte vecteur <%s>"
 
-#: ../lib/vector/Vlib/map.c:480
+#: ../lib/vector/Vlib/map.c:481
 #, c-format
 msgid "Unable to find table <%s> linked to vector map <%s>"
 msgstr "Impossible de trouver la table <%s> liée à la couche vectorielle <%s>"
 
-#: ../lib/vector/Vlib/map.c:497
+#: ../lib/vector/Vlib/map.c:498
 #, c-format
 msgid "Table <%s> linked to vector map <%s> does not exist"
 msgstr "La table <%s> liée à la carte vecteur <%s> n'existe pas "
 
-#: ../lib/vector/Vlib/map.c:511
+#: ../lib/vector/Vlib/map.c:512
 #, c-format
 msgid "Unable to open directory '%s'"
 msgstr "Impossible d'ouvrir le répertoire '%s'"
 
-#: ../lib/vector/Vlib/map.c:525
-#, c-format
-msgid "Unable to delete file '%s'"
+#: ../lib/vector/Vlib/map.c:526
+#, fuzzy, c-format
+msgid "Unable to delete file '%s'. Reason: %s"
 msgstr "Impossible de supprimer le fichier <%s>"
 
-#: ../lib/vector/Vlib/map.c:542
-#, c-format
-msgid "Unable to rename directory '%s' to '%s'"
+#: ../lib/vector/Vlib/map.c:543
+#, fuzzy, c-format
+msgid "Unable to rename directory '%s' to '%s'. Reason: %s"
 msgstr "Impossible de renommer le répertoire '%s' en '%s'"
 
-#: ../lib/vector/Vlib/map.c:550
-#, c-format
-msgid "Unable to remove directory '%s'"
+#: ../lib/vector/Vlib/map.c:551
+#, fuzzy, c-format
+msgid "Unable to remove directory '%s'. Reason: %s"
 msgstr "Impossible de supprimer le répertoire '%s'"
 
-#: ../lib/vector/Vlib/map.c:604 ../lib/vector/Vlib/map.c:705
+#: ../lib/vector/Vlib/map.c:605 ../lib/vector/Vlib/map.c:706
 #, c-format
 msgid "Unable to add database link for vector map <%s>"
 msgstr "Impossible de lier la base de données à la carte vectorielle <%s>"
@@ -2268,78 +2432,78 @@ msgstr "Surface de taille = 0.0 ignorée"
 msgid "Request to find area outside nonexistent isle"
 msgstr ""
 
-#: ../lib/vector/Vlib/build_nat.c:516
+#: ../lib/vector/Vlib/build_nat.c:514
 msgid "Registering primitives..."
 msgstr "Enregistrement des primitives ... "
 
-#: ../lib/vector/Vlib/build_nat.c:525
+#: ../lib/vector/Vlib/build_nat.c:523
 msgid "Unable to read vector map"
 msgstr "Impossible de lire la carte vectorielle"
 
-#: ../lib/vector/Vlib/build_nat.c:569
+#: ../lib/vector/Vlib/build_nat.c:567
 #, c-format
 msgid "%d primitives registered"
 msgstr "%d primitives enregistrées"
 
-#: ../lib/vector/Vlib/build_nat.c:570
+#: ../lib/vector/Vlib/build_nat.c:568
 #, c-format
 msgid "%d vertices registered"
 msgstr "%d sommets enregistrés"
 
-#: ../lib/vector/Vlib/build_nat.c:581
+#: ../lib/vector/Vlib/build_nat.c:579
 msgid "Building areas..."
 msgstr "Construction des surfaces ..."
 
-#: ../lib/vector/Vlib/build_nat.c:604
+#: ../lib/vector/Vlib/build_nat.c:602
 #, c-format
 msgid "%d areas built"
 msgstr "%d surfaces construites"
 
-#: ../lib/vector/Vlib/build_nat.c:605
+#: ../lib/vector/Vlib/build_nat.c:603
 #, c-format
 msgid "%d isles built"
 msgstr "%d îles construites"
 
-#: ../lib/vector/Vlib/build_nat.c:614
+#: ../lib/vector/Vlib/build_nat.c:612
 msgid "Attaching islands..."
 msgstr "Attachement des îles ..."
 
-#: ../lib/vector/Vlib/build_nat.c:629
+#: ../lib/vector/Vlib/build_nat.c:627
 msgid "Attaching centroids..."
 msgstr "Attachement des centroïdes ..."
 
-#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
-#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
-#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
+#: ../lib/vector/Vlib/level_two.c:251 ../lib/vector/Vlib/level_two.c:276
+#: ../lib/vector/Vlib/level_two.c:300 ../lib/vector/Vlib/level_two.c:319
+#: ../lib/vector/Vlib/level_two.c:337 ../lib/vector/Vlib/level_two.c:356
 #, c-format
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "La carte vectorielle <%s> n'ets pas ouverte au niveau >= 2"
 
-#: ../lib/vector/Vlib/open_ogr.c:53
+#: ../lib/vector/Vlib/open_ogr.c:54
 msgid "OGR format cannot be updated"
 msgstr "Le format OGR ne peut pas être mis à jour"
 
-#: ../lib/vector/Vlib/open_ogr.c:65
+#: ../lib/vector/Vlib/open_ogr.c:66
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "Impossible d'ouvrir la source de données OGR '%s'"
 
-#: ../lib/vector/Vlib/open_ogr.c:85
+#: ../lib/vector/Vlib/open_ogr.c:86
 #, c-format
 msgid "Unable to open layer <%s>"
 msgstr "Impossible d'ouvrir la couche <%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:129
+#: ../lib/vector/Vlib/open_ogr.c:139
 #, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
 msgstr "Impossible d'ouvrir le fichier fidx pour la couche vectorielle <%s@%s>"
 
-#: ../lib/vector/Vlib/open_ogr.c:147
+#: ../lib/vector/Vlib/open_ogr.c:157
 #, c-format
 msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
 msgstr "Le format d'index %d.%d n'est pas supporté par cette version. Essayez de reconstruire la topologie ou de mettre à jour GRASS."
 
-#: ../lib/vector/Vlib/open_ogr.c:152
+#: ../lib/vector/Vlib/open_ogr.c:162
 #, c-format
 msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
 msgstr "Votre version de GRASS ne supporte pas complétement le format d'index %d.%d pour le vecteur. Reconstruisez la topologie ou faites une mise à jour de GRASS."
@@ -2468,6 +2632,14 @@ msgstr "Vect_segment_intersection() ERREUR (segments verticaux non colinéaires)
 #: ../lib/vector/Vlib/intersect.c:1202
 msgid "Error while adding point to array. Out of memory"
 msgstr "Erreur lors de l'ajout du point au tableau. Dépassement de mémoire"
+
+#: ../lib/vector/Vlib/break_polygons.c:120
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:248
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
 
 #: ../lib/vector/Vlib/buffer2.c:364
 msgid "Line is not looped"
@@ -2705,7 +2877,7 @@ msgstr "Ligne corrompue dans l'en-tête : %s"
 msgid "Unknown keyword %s in vector head"
 msgstr "Mot-clef %s inconnu dans l'en-tête du vecteur"
 
-#: ../lib/vector/Vlib/header.c:512 ../lib/gis/proj3.c:64
+#: ../lib/vector/Vlib/header.c:516 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
 msgstr "Projection inconnue"
 
@@ -3142,7 +3314,7 @@ msgstr "Impossible d'ouvrir le masque (MASK) automatique du fichier"
 msgid "Unable to locate symbol <%s>"
 msgstr "Impossible de localiser le symbole <%s>"
 
-#: ../lib/gis/gdal.c:114
+#: ../lib/gis/gdal.c:116
 msgid "Unable to load GDAL library"
 msgstr "Impossible de charger la librairie GDAL"
 
@@ -3268,11 +3440,11 @@ msgstr "mauvaise règle (%s) : [%s]"
 msgid "Unable to load color rules <%s>"
 msgstr "Impossible de charger les règles de couleurs <%s>"
 
-#: ../lib/gis/error.c:257
+#: ../lib/gis/error.c:262
 msgid "WARNING: "
 msgstr "ATTENTION : "
 
-#: ../lib/gis/error.c:258
+#: ../lib/gis/error.c:263
 msgid "ERROR: "
 msgstr "ERREUR :"
 
@@ -3487,7 +3659,12 @@ msgstr "Utiliser le drapeau soit --quiet soit --verbose, pas les deux ; --quiet 
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Désolé, <%s> n'est pas une option valide\n"
 
-#: ../lib/gis/parser.c:1075
+#: ../lib/gis/parser.c:998
+#, c-format
+msgid "Error in usage. Call `%s --help` for assistance."
+msgstr ""
+
+#: ../lib/gis/parser.c:1078
 #, c-format
 msgid ""
 "\n"
@@ -3496,7 +3673,7 @@ msgstr ""
 "\n"
 "Description :\n"
 
-#: ../lib/gis/parser.c:1082
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -3505,7 +3682,7 @@ msgstr ""
 "\n"
 "Mots-clés :\n"
 
-#: ../lib/gis/parser.c:1086
+#: ../lib/gis/parser.c:1089
 #, c-format
 msgid ""
 "\n"
@@ -3516,7 +3693,7 @@ msgstr ""
 "Utilisation :\n"
 " "
 
-#: ../lib/gis/parser.c:1154
+#: ../lib/gis/parser.c:1157
 #, c-format
 msgid ""
 "\n"
@@ -3525,20 +3702,20 @@ msgstr ""
 "\n"
 "Drapeaux :\n"
 
-#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1501 ../lib/gis/parser.c:1661
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1180 ../lib/gis/parser.c:1504 ../lib/gis/parser.c:1664
+#: ../lib/gis/parser.c:1952
 msgid "Allow output files to overwrite existing files"
 msgstr "Autoriser les fichiers de sortie à écraser les fichiers existants"
 
-#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1509 ../lib/gis/parser.c:1665
+#: ../lib/gis/parser.c:1182 ../lib/gis/parser.c:1512 ../lib/gis/parser.c:1668
 msgid "Verbose module output"
 msgstr "Module de sortie en mode bavard"
 
-#: ../lib/gis/parser.c:1180 ../lib/gis/parser.c:1516 ../lib/gis/parser.c:1668
+#: ../lib/gis/parser.c:1183 ../lib/gis/parser.c:1519 ../lib/gis/parser.c:1671
 msgid "Quiet module output"
 msgstr "Moduel de sortie en mode silence"
 
-#: ../lib/gis/parser.c:1185
+#: ../lib/gis/parser.c:1188
 #, c-format
 msgid ""
 "\n"
@@ -3547,85 +3724,85 @@ msgstr ""
 "\n"
 "Paramètres :\n"
 
-#: ../lib/gis/parser.c:1208
+#: ../lib/gis/parser.c:1211
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   par défaut : %s\n"
 
-#: ../lib/gis/parser.c:1552
+#: ../lib/gis/parser.c:1555
 msgid "NAME"
 msgstr "NOM"
 
-#: ../lib/gis/parser.c:1565
+#: ../lib/gis/parser.c:1568
 msgid "KEYWORDS"
 msgstr "MOTS CLES"
 
-#: ../lib/gis/parser.c:1570
+#: ../lib/gis/parser.c:1573
 msgid "SYNOPSIS"
 msgstr "SYNOPSIS"
 
-#: ../lib/gis/parser.c:1638
+#: ../lib/gis/parser.c:1641
 msgid "Flags"
 msgstr "Drapeaux"
 
-#: ../lib/gis/parser.c:1676
+#: ../lib/gis/parser.c:1679
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: ../lib/gis/parser.c:1716
+#: ../lib/gis/parser.c:1719
 msgid "Options"
 msgstr "Options"
 
-#: ../lib/gis/parser.c:1722
+#: ../lib/gis/parser.c:1725
 msgid "Default"
 msgstr "Défaut"
 
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1954
 msgid "Allow overwrite"
 msgstr "Autoriser d'écraser"
 
-#: ../lib/gis/parser.c:1959
+#: ../lib/gis/parser.c:1962
 msgid "Run with minimal output messages"
 msgstr "Exécuter avec un minimum des messages en sortie"
 
-#: ../lib/gis/parser.c:1961
+#: ../lib/gis/parser.c:1964
 msgid "Run quietly"
 msgstr "Exécuter en silence"
 
-#: ../lib/gis/parser.c:1994
+#: ../lib/gis/parser.c:1997
 msgid "Unable to spawn the 'wish' program"
 msgstr ""
 
-#: ../lib/gis/parser.c:2013
+#: ../lib/gis/parser.c:2016
 msgid "Unable to determine program name"
 msgstr "impossible de déterminer le nom du programme"
 
-#: ../lib/gis/parser.c:2070
+#: ../lib/gis/parser.c:2073
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   options : "
 
-#: ../lib/gis/parser.c:2115 ../lib/gis/parser.c:2130
+#: ../lib/gis/parser.c:2118 ../lib/gis/parser.c:2133
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Désolé, <%c> n'est pas un drapeau valide\n"
 
-#: ../lib/gis/parser.c:2196
+#: ../lib/gis/parser.c:2199
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Désolé, <%s=> est ambigu\n"
 
-#: ../lib/gis/parser.c:2202
+#: ../lib/gis/parser.c:2205
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Désolé, <%s> n'est pas un paramètre valide\n"
 
-#: ../lib/gis/parser.c:2209
+#: ../lib/gis/parser.c:2212
 #, c-format
 msgid "Option <%s> does not accept multiple answers\n"
 msgstr "L'option <%s> n'accepte pas de réponses multiples\n"
 
-#: ../lib/gis/parser.c:2287
+#: ../lib/gis/parser.c:2290
 #, c-format
 msgid ""
 "\n"
@@ -3634,12 +3811,12 @@ msgstr ""
 "\n"
 "ERREUR : syntaxe de l'intervalle illégale pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2288
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Présenté comme : %s\n"
 
-#: ../lib/gis/parser.c:2292
+#: ../lib/gis/parser.c:2295
 #, c-format
 msgid ""
 "\n"
@@ -3648,12 +3825,12 @@ msgstr ""
 "\n"
 "ERREUR : valeur <%s> en dehors de l'intervalle pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2294
+#: ../lib/gis/parser.c:2297
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalle : %s\n"
 
-#: ../lib/gis/parser.c:2297
+#: ../lib/gis/parser.c:2300
 #, c-format
 msgid ""
 "\n"
@@ -3662,7 +3839,7 @@ msgstr ""
 "\n"
 "ERREUR : Valeur manquante pour le paramètre <%s>\n"
 
-#: ../lib/gis/parser.c:2445
+#: ../lib/gis/parser.c:2448
 #, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -3671,7 +3848,7 @@ msgstr ""
 "ERREUR : Le paramètre obligatoire <%s> n'est pas définit :\n"
 "\t(%s)\n"
 
-#: ../lib/gis/parser.c:2540
+#: ../lib/gis/parser.c:2543
 #, c-format
 msgid ""
 "\n"
@@ -3680,17 +3857,17 @@ msgstr ""
 "\n"
 "ERREUR : l'option <%s> doit être un multiple de %d\n"
 
-#: ../lib/gis/parser.c:2542
+#: ../lib/gis/parser.c:2545
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Vous avez fourni %d éléments :\n"
 
-#: ../lib/gis/parser.c:2598
+#: ../lib/gis/parser.c:2601
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERREUR : option <%s> : <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2653
+#: ../lib/gis/parser.c:2656
 #, c-format
 msgid ""
 "\n"
@@ -3699,7 +3876,7 @@ msgstr ""
 "\n"
 "DRAPEAU : Avez-vous placé ce drapeau?\n"
 
-#: ../lib/gis/parser.c:2667
+#: ../lib/gis/parser.c:2670
 #, c-format
 msgid ""
 "\n"
@@ -3708,51 +3885,51 @@ msgstr ""
 "\n"
 "OPTION :   %s\n"
 
-#: ../lib/gis/parser.c:2668
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clé : %s\n"
 
-#: ../lib/gis/parser.c:2670
+#: ../lib/gis/parser.c:2673
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format : %s\n"
 
-#: ../lib/gis/parser.c:2672
+#: ../lib/gis/parser.c:2675
 #, c-format
 msgid " default: %s\n"
 msgstr " par défaut : %s\n"
 
-#: ../lib/gis/parser.c:2673
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid "required: %s\n"
 msgstr "obligatoire : %s\n"
 
-#: ../lib/gis/parser.c:2675
+#: ../lib/gis/parser.c:2678
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiple : %s\n"
 
-#: ../lib/gis/parser.c:2677
+#: ../lib/gis/parser.c:2680
 #, c-format
 msgid " options: %s\n"
 msgstr " options : %s\n"
 
-#: ../lib/gis/parser.c:2690
+#: ../lib/gis/parser.c:2693
 #, c-format
 msgid "enter option > "
 msgstr "entrez une option > "
 
-#: ../lib/gis/parser.c:2707 ../lib/gis/parser.c:2717
+#: ../lib/gis/parser.c:2710 ../lib/gis/parser.c:2720
 msgid "   Try again? "
 msgstr "   Essayer à nouveau? "
 
-#: ../lib/gis/parser.c:2715
+#: ../lib/gis/parser.c:2718
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Désolé, %s n'est pas acceptée.\n"
 
-#: ../lib/gis/parser.c:2725
+#: ../lib/gis/parser.c:2728
 #, c-format
 msgid ""
 "\n"
@@ -3763,11 +3940,11 @@ msgstr ""
 "Vous avez choisi :\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2726
+#: ../lib/gis/parser.c:2729
 msgid "Is this correct? "
 msgstr "Est-ce correct? "
 
-#: ../lib/gis/parser.c:2791
+#: ../lib/gis/parser.c:2794
 msgid "to accept the default"
 msgstr "pour accepter le choix par défaut"
 
@@ -3950,23 +4127,11 @@ msgstr "G__open(read): mapset <%s> ne correspond pas à xmapset <%s>"
 msgid "G__open(write): xmapset <%s> != G_mapset() <%s>"
 msgstr "G__open(write): xmapset <%s> != G_mapset() <%s>"
 
-#: ../lib/gis/null_val.c:91
+#: ../lib/gis/null_val.c:68
 msgid "EmbedGivenNulls: wrong data type!"
 msgstr "EmbedGivenNulls : mauvais type de donnée!"
 
-#: ../lib/gis/null_val.c:112
-msgid "Null values have not been initialized. "
-msgstr "La valeur nulle n'a pas été initialisée. "
-
-#: ../lib/gis/null_val.c:113
-msgid "G_gisinit() must be called first. "
-msgstr "G_gisinit() doit être préalablement appelée. "
-
-#: ../lib/gis/null_val.c:114
-msgid "Please advise GRASS developers of this error.\n"
-msgstr "Veuillez avertir les développeurs GRASS de cette erreur.\n"
-
-#: ../lib/gis/null_val.c:223
+#: ../lib/gis/null_val.c:128
 msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value : mauvais type de donnée!"
 
@@ -3974,60 +4139,60 @@ msgstr "G_set_null_value : mauvais type de donnée!"
 msgid "Unable to get GIS_LOCK environment variable value"
 msgstr "Impossible d'obtenir la variable d'environnement GIS_LOCK"
 
-#: ../lib/gis/spawn.c:385
+#: ../lib/gis/spawn.c:386
 #, c-format
 msgid "CreateProcess() failed: error = %d"
 msgstr "CreateProcess() a échoué : erreur = %d"
 
-#: ../lib/gis/spawn.c:416
+#: ../lib/gis/spawn.c:421
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn : impossible de rediriger le descripteur %d"
 
-#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
+#: ../lib/gis/spawn.c:429 ../lib/gis/spawn.c:619
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn : impossible d'ouvrir le fichier %s"
 
-#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
+#: ../lib/gis/spawn.c:503 ../lib/gis/spawn.c:689
 msgid "Unable to execute command"
 msgstr "Impossible d'exécuter la commande"
 
-#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
+#: ../lib/gis/spawn.c:528 ../lib/gis/spawn.c:536
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn : impossible de restaurer le signal %d"
 
-#: ../lib/gis/spawn.c:557
+#: ../lib/gis/spawn.c:567
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn : impossible de réinitialiser le signal %d"
 
-#: ../lib/gis/spawn.c:566
+#: ../lib/gis/spawn.c:576
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn : impossible d'ignorer le signal %d"
 
-#: ../lib/gis/spawn.c:577
+#: ../lib/gis/spawn.c:587
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn : impossible d'ignorer le signal %d"
 
-#: ../lib/gis/spawn.c:585
+#: ../lib/gis/spawn.c:595
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn : impossible de débloquer le signal %d"
 
-#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
+#: ../lib/gis/spawn.c:624 ../lib/gis/spawn.c:633
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn : impossible de dupliquer le descripteur %d vers %d"
 
-#: ../lib/gis/spawn.c:656
+#: ../lib/gis/spawn.c:666
 msgid "Unable to create a new process"
 msgstr "Impossible de créer un nouveau processus"
 
-#: ../lib/gis/spawn.c:671
+#: ../lib/gis/spawn.c:681
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Impossible de changer de répertoire pour aller dans %s"
@@ -4641,35 +4806,93 @@ msgstr "fichier d'histogramme invalide pour [%s dans %s]"
 msgid "can't create histogram for [%s in %s]"
 msgstr "impossible de créer l'histogramme pour [%s dans %s]"
 
-#: ../lib/gis/closecell.c:228
-#, c-format
-msgid ""
-"closecell: can't move %s\n"
-"to null file %s"
+#: ../lib/gis/closecell.c:196
+#, fuzzy
+msgid "Unable to delete prior null-cells file"
+msgstr "Impossible de supprimer le fichier <%s>"
+
+#: ../lib/gis/closecell.c:226
+#, fuzzy
+msgid "Unable to close the null-cells file"
+msgstr "Impossible d'écrire l'en-tête du fichier plus"
+
+#: ../lib/gis/closecell.c:229
+#, fuzzy, c-format
+msgid "closecell: can't move [%s] to null-cells file [%s]"
 msgstr ""
 "closecell : impossible de se déplacer %s\n"
 "jusqu'au fichier nul %s"
 
-#: ../lib/gis/closecell.c:250
+#: ../lib/gis/closecell.c:236
+#, fuzzy
+msgid "Unable to delete the temporary null-cells file"
+msgstr "impossible de trouver un fichier temporaire null %s"
+
+#: ../lib/gis/closecell.c:243
+#, fuzzy
+msgid "Unable to delete the empty temporary null-cells file"
+msgstr "impossible de trouver un fichier temporaire null %s"
+
+#: ../lib/gis/closecell.c:247
+#, fuzzy
+msgid "Unable to delete the prior null-cells file"
+msgstr "Impossible d'écrire l'en-tête du fichier plus"
+
+#: ../lib/gis/closecell.c:261
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr "Erreur lors de l'écriture en virgule flottante dans le fichier au format de la couche %s"
 
+#: ../lib/gis/closecell.c:272
+#, fuzzy
+msgid "Unable to close the 'cell' file"
+msgstr "Impossible de lire le fichier d'en-tête"
+
+#: ../lib/gis/closecell.c:282
+#, fuzzy
+msgid "Unable to delete prior 'fcell' file"
+msgstr "Impossible de supprimer le fichier <%s>"
+
+#: ../lib/gis/closecell.c:291
+#, fuzzy, c-format
+msgid "Unable to delete the prior %s file"
+msgstr "Impossible de supprimer la table <%s>"
+
 #: ../lib/gis/closecell.c:300
-#, c-format
-msgid ""
-"closecell: can't move %s\n"
-"to cell file %s"
+#, fuzzy
+msgid "Unable to close file"
+msgstr "Impossible d'ouvrir le fichier %s"
+
+#: ../lib/gis/closecell.c:327
+#, fuzzy
+msgid "Unable to delete the prior 'cell' file"
+msgstr "Impossible d'écrire l'en-tête du fichier plus"
+
+#: ../lib/gis/closecell.c:332
+#, fuzzy, c-format
+msgid "closecell: can't move [%s] to cell file [%s]"
 msgstr ""
 "closecell : impossible de se déplacer %s\n"
 "à la cellule du fichier %s"
 
-#: ../lib/gis/closecell.c:355
-msgid "unable to write quant file!"
+#: ../lib/gis/closecell.c:339
+#, fuzzy
+msgid "Unable to delete the temporary 'cell' file"
+msgstr "Impossible d'ouvrir le fichier temporaire"
+
+#: ../lib/gis/closecell.c:390
+#, fuzzy
+msgid "Unable to write quant file!"
 msgstr "pas en mesure d'écrire le fichier!"
 
-#: ../lib/gis/closecell.c:406
-msgid "unable to write f_format file for CELL maps"
+#: ../lib/gis/closecell.c:398
+#, fuzzy, c-format
+msgid "Unable to delete the %s file"
+msgstr "Impossible de supprimer la table <%s>"
+
+#: ../lib/gis/closecell.c:444
+#, fuzzy
+msgid "Unable to write f_format file for CELL maps"
 msgstr "pas en mesure d'écrire des fichiers f_format pour des couches de cellules"
 
 #: ../lib/gis/mapset.c:39
@@ -4696,12 +4919,12 @@ msgstr "'%s/%s' trouvé dans plusieurs jeux de cartes (également trouvé dans <
 msgid "Using <%s@%s>"
 msgstr "Utilisation de <%s@%s>"
 
-#: ../lib/db/dbmi_client/delete_tab.c:44
+#: ../lib/db/dbmi_client/delete_tab.c:40 ../lib/db/dbmi_client/table.c:46
 #, c-format
-msgid "Unable to open driver <%s>"
-msgstr "Impossible d'ouvrir le pilote <%s>"
+msgid "Unable open database <%s> by driver <%s>"
+msgstr "Impossible d'ouvrir la base de données <%s> avec le driver <%s>"
 
-#: ../lib/db/dbmi_client/delete_tab.c:62
+#: ../lib/db/dbmi_client/delete_tab.c:53
 #, c-format
 msgid "Unable to drop table: '%s'"
 msgstr "Impossible de dupprimer la table : '%s'"
@@ -4747,11 +4970,6 @@ msgstr "Type de colonne inconnu (colonne <%s>)"
 msgid "Unable to describe table <%s>"
 msgstr "Impossible de décrire la table <%s>"
 
-#: ../lib/db/dbmi_client/table.c:46
-#, c-format
-msgid "Unable open database <%s> by driver <%s>"
-msgstr "Impossible d'ouvrir la base de données <%s> avec le driver <%s>"
-
 #: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
 #: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
@@ -4792,3 +5010,62 @@ msgstr "Nom de couche table illégal <%s>. Le caractère <%c> n'est pas autoris�
 #: ../lib/db/dbmi_base/default_name.c:127
 msgid "Programmer error"
 msgstr "Erreur de programmation"
+
+#~ msgid "The gauss elimination solver does not work with sparse matrices"
+#~ msgstr "La résolution par la méthode de Gauss ne fonctionne pas avec les matrices creuses"
+
+#~ msgid "The linear equation system is not quadratic"
+#~ msgstr "Le système d'équations linéaires n'est pas quadratique"
+
+#~ msgid "The lu solver does not work with sparse matrices"
+#~ msgstr "Le solveur LU ne fonctionne pas avec les matrices creuses"
+
+#~ msgid "The cholesky solver does not work with sparse matrices"
+#~ msgstr "Le solveur de Cholesky ne fonctionne pas avec les matrices creuses"
+
+#~ msgid "Matrix is not symmetric!"
+#~ msgstr "La matrice n'est pas symétrique!"
+
+#~ msgid "Null values have not been initialized. "
+#~ msgstr "La valeur nulle n'a pas été initialisée. "
+
+#~ msgid "G_gisinit() must be called first. "
+#~ msgstr "G_gisinit() doit être préalablement appelée. "
+
+#~ msgid "Please advise GRASS developers of this error.\n"
+#~ msgstr "Veuillez avertir les développeurs GRASS de cette erreur.\n"
+
+#~ msgid "Unable to open driver <%s>"
+#~ msgstr "Impossible d'ouvrir le pilote <%s>"
+
+#~ msgid "'%s' must be > 0 for '%s'"
+#~ msgstr "'%s' doit être > 0 pour '%s'"
+
+#~ msgid "Unable to delete file '%s'"
+#~ msgstr "Impossible de supprimer le fichier <%s>"
+
+#~ msgid "Unable to rename directory '%s' to '%s'"
+#~ msgstr "Impossible de renommer le répertoire '%s' en '%s'"
+
+#~ msgid "Unable to remove directory '%s'"
+#~ msgstr "Impossible de supprimer le répertoire '%s'"
+
+#~ msgid ""
+#~ "closecell: can't move %s\n"
+#~ "to null file %s"
+#~ msgstr ""
+#~ "closecell : impossible de se déplacer %s\n"
+#~ "jusqu'au fichier nul %s"
+
+#~ msgid ""
+#~ "closecell: can't move %s\n"
+#~ "to cell file %s"
+#~ msgstr ""
+#~ "closecell : impossible de se déplacer %s\n"
+#~ "à la cellule du fichier %s"
+
+#~ msgid "unable to write quant file!"
+#~ msgstr "pas en mesure d'écrire le fichier!"
+
+#~ msgid "unable to write f_format file for CELL maps"
+#~ msgstr "pas en mesure d'écrire des fichiers f_format pour des couches de cellules"

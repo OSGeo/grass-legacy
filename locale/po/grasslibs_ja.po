@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 15:54+0200\n"
+"POT-Creation-Date: 2013-02-26 09:57+0100\n"
 "PO-Revision-Date: 2012-03-05 12:14+0900\n"
 "Last-Translator: Naoki Ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -296,44 +296,44 @@ msgstr ""
 msgid "Unable to process vector map - out of memory"
 msgstr "ベクトルマップを処理できません - メモリ不足"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:67
 msgid "Unable to allocate stream"
 msgstr "ストリームを割り当てられません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:156
+#: ../lib/ogsf/gsd_img_mpeg.c:166
 msgid "Video codec not found"
 msgstr "ビデオコーデックが見つかりません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:162
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 msgid "Unable to open codec"
 msgstr "こーデックを開けません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:181
+#: ../lib/ogsf/gsd_img_mpeg.c:195
 msgid "Unable to allocate picture"
 msgstr "画像を割り当てられません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:192
+#: ../lib/ogsf/gsd_img_mpeg.c:206
 msgid "Unable to allocate temporary picture"
 msgstr "仮の画像を割り当てられません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:252
+#: ../lib/ogsf/gsd_img_mpeg.c:266
 msgid "Error while writing video frame"
 msgstr "ビデオフレーム書き込み中にエラーが発生しました"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:298
+#: ../lib/ogsf/gsd_img_mpeg.c:312
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr "MPEGストリームを開いています<%s>..."
 
-#: ../lib/ogsf/gsd_img_mpeg.c:306
+#: ../lib/ogsf/gsd_img_mpeg.c:320
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr "ファイル拡張から出力フォーマットを推定できません: MPEGを使用しています"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:310
+#: ../lib/ogsf/gsd_img_mpeg.c:324
 msgid "Unable to find suitable output format"
 msgstr "適切な出力フォーマットを見つけられません"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:317 ../lib/vector/neta/centrality.c:63
+#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/vector/neta/centrality.c:63
 #: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
 #: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
 #: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/flow.c:64
@@ -352,17 +352,18 @@ msgstr "適切な出力フォーマットを見つけられません"
 msgid "Out of memory"
 msgstr "メモリ不足"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:337
+#: ../lib/ogsf/gsd_img_mpeg.c:355
 msgid "Invalid output format parameters"
 msgstr "不正な出力フォーマットパラメーター"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:351
+#: ../lib/ogsf/gsd_img_mpeg.c:377
 #, c-format
 msgid "Unable to open <%s>"
 msgstr "開けません <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:361
-msgid "NVIZ has not been built with MPEG output support"
+#: ../lib/ogsf/gsd_img_mpeg.c:390
+#, fuzzy
+msgid "OGSF library has not been built with MPEG output support"
 msgstr "NVIZはMPEG出力サポートで作成されていません"
 
 #: ../lib/ogsf/gsd_legend.c:245
@@ -514,22 +515,22 @@ msgstr ""
 "無効な変換数です %d; 有効な範囲は1から %dです。データム変換パラメータを詳細不"
 "明のままにしておいてください。"
 
-#: ../lib/proj/datum.c:251
+#: ../lib/proj/datum.c:250
 msgid "Unable to open temporary file"
 msgstr "一時ファイルが開けません"
 
-#: ../lib/proj/datum.c:345 ../lib/gis/get_ell_name.c:45
+#: ../lib/proj/datum.c:344 ../lib/gis/get_ell_name.c:45
 #: ../lib/gis/get_projname.c:52 ../lib/gis/get_datum_name.c:58
 #, c-format
 msgid "Hit RETURN to cancel request\n"
 msgstr "要求をキャンセルするためにリターンを押す\n"
 
-#: ../lib/proj/datum.c:419 ../lib/proj/datum.c:484
+#: ../lib/proj/datum.c:418 ../lib/proj/datum.c:498
 #, c-format
 msgid "Unable to open datum table file <%s>"
 msgstr "データムテーブルファイルが開けません <%s>"
 
-#: ../lib/proj/datum.c:432 ../lib/proj/datum.c:498
+#: ../lib/proj/datum.c:431 ../lib/proj/datum.c:512
 #, c-format
 msgid "Error in datum table file <%s>, line %d"
 msgstr "データムテーブルファイルにエラーがあります <%s>, ライン %d"
@@ -894,161 +895,161 @@ msgstr "グループ [%s in %s] の制御ポイントファイルにおける不
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "グループ [%s in %s] の制御ポイントファイルを作成できません"
 
-#: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
 msgid "Matrix dimensions out of range"
 msgstr "マトリックスディメンションは範囲外です"
 
-#: ../lib/gmath/la.c:153
+#: ../lib/gmath/la.c:149
 msgid "Matrix is not initialised fully."
 msgstr "マトリックスは完全に初期化されていません"
 
-#: ../lib/gmath/la.c:158
+#: ../lib/gmath/la.c:154
 msgid "Unable to allocate space for matrix copy"
 msgstr "マトリックスコピーのスペースを割り当てられません"
 
-#: ../lib/gmath/la.c:247
+#: ../lib/gmath/la.c:243
 msgid "First scalar multiplier must be non-zero"
 msgstr "最初のスカラーマルチプライヤーはゼロ以外でなければなりません"
 
-#: ../lib/gmath/la.c:253 ../lib/gmath/la.c:261 ../lib/gmath/la.c:326
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
 msgid "One or both input matrices uninitialised"
 msgstr "片方または両方の入力マトリックスは初期化解除されています"
 
-#: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
 msgid "Matrix order does not match"
 msgstr "マトリックスオーダーが不一致です"
 
-#: ../lib/gmath/la.c:272
+#: ../lib/gmath/la.c:268
 msgid "Unable to allocate space for matrix sum"
 msgstr "マトリックス集計にスペースを割り当てられません"
 
-#: ../lib/gmath/la.c:336
+#: ../lib/gmath/la.c:332
 msgid "Unable to allocate space for matrix product"
 msgstr "行列積のためのスペースを割り当てることができません"
 
-#: ../lib/gmath/la.c:448
+#: ../lib/gmath/la.c:444
 msgid "Input: one or both data matrices uninitialised"
 msgstr "入力: ひとつまたは両方のデータマトリックスは初期化されていません"
 
-#: ../lib/gmath/la.c:453
+#: ../lib/gmath/la.c:449
 msgid "Principal matrix is not properly dimensioned"
 msgstr "主要マトリックスの次元数が正しくありません"
 
-#: ../lib/gmath/la.c:458
+#: ../lib/gmath/la.c:454
 msgid "Input: you must have at least one array to solve"
 msgstr "入力: 少なくとも一つの配列を選んでください"
 
-#: ../lib/gmath/la.c:464
+#: ../lib/gmath/la.c:460
 msgid "Could not allocate space for solution matrix"
 msgstr "ソリューションマトリックスのスペースを割り当てることができませんでした"
 
-#: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
 msgid "Could not allocate space for working matrix"
 msgstr "作業マトリックスにスペースを割り当てられませんでした"
 
-#: ../lib/gmath/la.c:531
+#: ../lib/gmath/la.c:527
 msgid "Matrix (or submatrix is singular). Solution undetermined"
 msgstr ""
 "マトリックス (,またはサブマトリックスは単数です). 解決策は確定していません"
 
-#: ../lib/gmath/la.c:535
+#: ../lib/gmath/la.c:531
 msgid "Problem in LA routine."
 msgstr "LA ルーチンに問題があります."
 
-#: ../lib/gmath/la.c:542
+#: ../lib/gmath/la.c:538
 msgid "Procedure not yet available for selected matrix type"
 msgstr "プロシージャは指定されたマトリックスタイプにまだ利用可能ではありません"
 
-#: ../lib/gmath/la.c:576
+#: ../lib/gmath/la.c:572
 msgid "Matrix is not square. Cannot determine inverse"
 msgstr "マトリックスは平方ではありません. 逆関数を決定できません"
 
-#: ../lib/gmath/la.c:581
+#: ../lib/gmath/la.c:577
 msgid "Unable to allocate space for matrix"
 msgstr "マトリックスにスペースを割り当てられません"
 
-#: ../lib/gmath/la.c:598
+#: ../lib/gmath/la.c:594
 msgid "Matrix is singular"
 msgstr "マトリックスは単数です"
 
-#: ../lib/gmath/la.c:603
+#: ../lib/gmath/la.c:599
 msgid "Problem in LA procedure."
 msgstr "LA プロシージャに問題があります"
 
-#: ../lib/gmath/la.c:691
+#: ../lib/gmath/la.c:687
 msgid "Element array has not been allocated"
 msgstr "要素配列は割り当てられていません"
 
-#: ../lib/gmath/la.c:696
+#: ../lib/gmath/la.c:692
 msgid "Specified element is outside array bounds"
 msgstr "指定された要素は配列の範囲外です"
 
-#: ../lib/gmath/la.c:750
+#: ../lib/gmath/la.c:746
 msgid "Specified matrix column index is outside range"
 msgstr "指定されたマトリックス列索引は範囲外です"
 
-#: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
-#: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
 msgid "Matrix is not initialised"
 msgstr "マトリックスは初期化されていません"
 
-#: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
 msgid "Could not allocate space for vector structure"
 msgstr "ベクトル構造にスペースを割り当てられませんでした"
 
-#: ../lib/gmath/la.c:791
+#: ../lib/gmath/la.c:787
 msgid "Specified matrix row index is outside range"
 msgstr "指定されたマトリックス行索引は範囲外です"
 
-#: ../lib/gmath/la.c:831
+#: ../lib/gmath/la.c:827
 msgid "Specified row index is outside range"
 msgstr "指定された行索引は範囲外です"
 
-#: ../lib/gmath/la.c:836
+#: ../lib/gmath/la.c:832
 msgid "Specified column index is outside range"
 msgstr "指定された列索引は範囲外です"
 
-#: ../lib/gmath/la.c:856
+#: ../lib/gmath/la.c:852
 msgid "Unknown vector type."
 msgstr "不明なベクトルタイプ"
 
-#: ../lib/gmath/la.c:981
+#: ../lib/gmath/la.c:977
 msgid "Output vector is uninitialized"
 msgstr "出力ベクトルは初期化解除されています"
 
-#: ../lib/gmath/la.c:986
+#: ../lib/gmath/la.c:982
 msgid "Vectors are not of the same type"
 msgstr "ベクトルは同じタイプではありません"
 
-#: ../lib/gmath/la.c:991
+#: ../lib/gmath/la.c:987
 msgid "Output vector is of incorrect type"
 msgstr "出力ベクトルのタイプが間違っています"
 
-#: ../lib/gmath/la.c:996
+#: ../lib/gmath/la.c:992
 msgid "Matrices not allowed"
 msgstr "マトリックスは許可されていません"
 
-#: ../lib/gmath/la.c:1002
+#: ../lib/gmath/la.c:998
 msgid "Vectors have differing dimensions"
 msgstr "ベクトルは異なる次元を持っています"
 
-#: ../lib/gmath/la.c:1008
+#: ../lib/gmath/la.c:1004
 msgid "Output vector has incorrect dimension"
 msgstr "出力ベクトルのディメンションは誤りです"
 
-#: ../lib/gmath/la.c:1054
+#: ../lib/gmath/la.c:1050
 msgid "Vector dimensions out of range"
 msgstr "ベクトル次元は範囲外です"
 
-#: ../lib/gmath/la.c:1059
+#: ../lib/gmath/la.c:1055
 msgid "Row/column out of range"
 msgstr "行/列 は範囲外です"
 
-#: ../lib/gmath/la.c:1274
+#: ../lib/gmath/la.c:1270
 msgid "Vector structure is not initialised"
 msgstr "ベクトル構造は初期化されていません"
 
-#: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
 msgid "Input format error"
 msgstr "入力フォーマットエラー"
 
@@ -1949,34 +1950,34 @@ msgstr "出力するベクトルマップ名　<%s>　は無効です"
 msgid "Output vector map <%s> is used as input"
 msgstr "出力したベクトルマップ <%s> は入力として使われます"
 
-#: ../lib/vector/Vlib/merge_lines.c:192
+#: ../lib/vector/Vlib/merge_lines.c:233
 #, c-format
 msgid "%d boundaries merged"
 msgstr "%d 個の境界を結合しました"
 
-#: ../lib/vector/Vlib/merge_lines.c:193
+#: ../lib/vector/Vlib/merge_lines.c:234
 #, c-format
 msgid "%d new boundaries"
 msgstr "%d 個の新しい境界"
 
-#: ../lib/vector/Vlib/snap.c:118
+#: ../lib/vector/Vlib/snap.c:148
 msgid "Snap vertices Pass 1: select points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:172
+#: ../lib/vector/Vlib/snap.c:202
 msgid "Snap vertices Pass 2: assign anchor vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:241
+#: ../lib/vector/Vlib/snap.c:271
 msgid "Snap vertices Pass 3: snap to assigned points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:421
+#: ../lib/vector/Vlib/snap.c:451
 #, c-format
 msgid "Snapped vertices: %d"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:422
+#: ../lib/vector/Vlib/snap.c:452
 #, fuzzy, c-format
 msgid "New vertices: %d"
 msgstr "プリミティブの数: %d"
@@ -2511,26 +2512,26 @@ msgstr "セントロイドを接続しています..."
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "ベクトルマップ <%s> はレベル >= 2 で開かれていません"
 
-#: ../lib/vector/Vlib/open_ogr.c:53
+#: ../lib/vector/Vlib/open_ogr.c:54
 msgid "OGR format cannot be updated"
 msgstr "OGRフォーマットは更新できません"
 
-#: ../lib/vector/Vlib/open_ogr.c:65
+#: ../lib/vector/Vlib/open_ogr.c:66
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "OGR データソース '%s' を開けません"
 
-#: ../lib/vector/Vlib/open_ogr.c:85
+#: ../lib/vector/Vlib/open_ogr.c:86
 #, c-format
 msgid "Unable to open layer <%s>"
 msgstr "レイヤー <%s> を開けません"
 
-#: ../lib/vector/Vlib/open_ogr.c:129
+#: ../lib/vector/Vlib/open_ogr.c:139
 #, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
 msgstr "ベクトルマップ <%s@%s> のためにfidx ファイル を開くことができません"
 
-#: ../lib/vector/Vlib/open_ogr.c:147
+#: ../lib/vector/Vlib/open_ogr.c:157
 #, c-format
 msgid ""
 "Feature index format version %d.%d is not supported by this release. Try to "
@@ -2539,7 +2540,7 @@ msgstr ""
 "フィーチャー索引フォーマットバージョン %d.　%d はこのリリースでサポートされて"
 "いません. トポロジーを再作成するかGRASSをアップデートしてください."
 
-#: ../lib/vector/Vlib/open_ogr.c:152
+#: ../lib/vector/Vlib/open_ogr.c:162
 #, c-format
 msgid ""
 "Your GRASS version does not fully support feature index format %d.%d of the "
@@ -2920,7 +2921,7 @@ msgstr "ベクトル データベース 定義ファイル '%s' を開けませ�
 msgid "Bug: attempt to update map which is not in current mapset"
 msgstr "バグ: このマップセットにないマップをアップデートしようとしています"
 
-#: ../lib/vector/Vlib/remove_areas.c:94
+#: ../lib/vector/Vlib/remove_areas.c:96
 msgid "Area is composed of dead boundary"
 msgstr "エリアは不要な境界で構成されています"
 
@@ -2957,7 +2958,7 @@ msgstr "不明な投影法"
 msgid "Unable to set category %d for (feature id %d)"
 msgstr "(feature id %d) にカテゴリー %d をセットできません"
 
-#: ../lib/vector/vedit/select.c:230
+#: ../lib/vector/vedit/select.c:232
 msgid "Unknown query tool"
 msgstr "不明な問い合わせツール"
 
@@ -3714,46 +3715,50 @@ msgstr "出力するファイル名"
 msgid "Field separator"
 msgstr "フィールドセパレーター"
 
-#: ../lib/gis/parser.c:664
+#: ../lib/gis/parser.c:654
+msgid "Special characters: newline, space, comma, tab"
+msgstr ""
+
+#: ../lib/gis/parser.c:665
 msgid "Color"
 msgstr "色"
 
-#: ../lib/gis/parser.c:665
+#: ../lib/gis/parser.c:666
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "標準色名あるいは赤：緑：青"
 
-#: ../lib/gis/parser.c:674
+#: ../lib/gis/parser.c:675
 msgid "Background color"
 msgstr "背景の色"
 
-#: ../lib/gis/parser.c:676
+#: ../lib/gis/parser.c:677
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "標準のGRASSカラー、赤：緑：青、あるいは \"none\""
 
-#: ../lib/gis/parser.c:817
+#: ../lib/gis/parser.c:818
 #, c-format
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "説明内のバグ, <%s>内のオプション '%s' は存在しません"
 
-#: ../lib/gis/parser.c:925
+#: ../lib/gis/parser.c:926
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr " --quiet --verboseのいずれかを使用します。 --verboseと仮定します"
 
-#: ../lib/gis/parser.c:939
+#: ../lib/gis/parser.c:940
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr " --quiet --verboseのいずれかを使用します。 --quietと仮定します"
 
-#: ../lib/gis/parser.c:970
+#: ../lib/gis/parser.c:971
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "<%s> オプションは無効です\n"
 
-#: ../lib/gis/parser.c:997
+#: ../lib/gis/parser.c:998
 #, c-format
 msgid "Error in usage. Call `%s --help` for assistance."
 msgstr ""
 
-#: ../lib/gis/parser.c:1077
+#: ../lib/gis/parser.c:1078
 #, c-format
 msgid ""
 "\n"
@@ -3762,7 +3767,7 @@ msgstr ""
 "\n"
 "説明:\n"
 
-#: ../lib/gis/parser.c:1084
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -3771,7 +3776,7 @@ msgstr ""
 "\n"
 "キーワード:\n"
 
-#: ../lib/gis/parser.c:1088
+#: ../lib/gis/parser.c:1089
 #, c-format
 msgid ""
 "\n"
@@ -3782,7 +3787,7 @@ msgstr ""
 "用例:\n"
 " "
 
-#: ../lib/gis/parser.c:1156
+#: ../lib/gis/parser.c:1157
 #, c-format
 msgid ""
 "\n"
@@ -3791,20 +3796,20 @@ msgstr ""
 "\n"
 "フラッグ:\n"
 
-#: ../lib/gis/parser.c:1179 ../lib/gis/parser.c:1503 ../lib/gis/parser.c:1663
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1180 ../lib/gis/parser.c:1504 ../lib/gis/parser.c:1664
+#: ../lib/gis/parser.c:1952
 msgid "Allow output files to overwrite existing files"
 msgstr "既存のファイルに上書きする"
 
-#: ../lib/gis/parser.c:1181 ../lib/gis/parser.c:1511 ../lib/gis/parser.c:1667
+#: ../lib/gis/parser.c:1182 ../lib/gis/parser.c:1512 ../lib/gis/parser.c:1668
 msgid "Verbose module output"
 msgstr "詳細モジュール出力"
 
-#: ../lib/gis/parser.c:1182 ../lib/gis/parser.c:1518 ../lib/gis/parser.c:1670
+#: ../lib/gis/parser.c:1183 ../lib/gis/parser.c:1519 ../lib/gis/parser.c:1671
 msgid "Quiet module output"
 msgstr "モジュールを出力"
 
-#: ../lib/gis/parser.c:1187
+#: ../lib/gis/parser.c:1188
 #, c-format
 msgid ""
 "\n"
@@ -3813,85 +3818,85 @@ msgstr ""
 "\n"
 "パラメータ:\n"
 
-#: ../lib/gis/parser.c:1210
+#: ../lib/gis/parser.c:1211
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   デフォルト: %s\n"
 
-#: ../lib/gis/parser.c:1554
+#: ../lib/gis/parser.c:1555
 msgid "NAME"
 msgstr "名前"
 
-#: ../lib/gis/parser.c:1567
+#: ../lib/gis/parser.c:1568
 msgid "KEYWORDS"
 msgstr "キーワード"
 
-#: ../lib/gis/parser.c:1572
+#: ../lib/gis/parser.c:1573
 msgid "SYNOPSIS"
 msgstr "概要"
 
-#: ../lib/gis/parser.c:1640
+#: ../lib/gis/parser.c:1641
 msgid "Flags"
 msgstr "フラッグ"
 
-#: ../lib/gis/parser.c:1678
+#: ../lib/gis/parser.c:1679
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: ../lib/gis/parser.c:1718
+#: ../lib/gis/parser.c:1719
 msgid "Options"
 msgstr "オプション"
 
-#: ../lib/gis/parser.c:1724
+#: ../lib/gis/parser.c:1725
 msgid "Default"
 msgstr "デフォルト"
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1954
 msgid "Allow overwrite"
 msgstr "上書き"
 
-#: ../lib/gis/parser.c:1961
+#: ../lib/gis/parser.c:1962
 msgid "Run with minimal output messages"
 msgstr "最小限の出力メッセージで実行"
 
-#: ../lib/gis/parser.c:1963
+#: ../lib/gis/parser.c:1964
 msgid "Run quietly"
 msgstr "実行"
 
-#: ../lib/gis/parser.c:1996
+#: ../lib/gis/parser.c:1997
 msgid "Unable to spawn the 'wish' program"
 msgstr " 'wish'プログラムを作成できません"
 
-#: ../lib/gis/parser.c:2015
+#: ../lib/gis/parser.c:2016
 msgid "Unable to determine program name"
 msgstr "プログラム名を決定できません"
 
-#: ../lib/gis/parser.c:2072
+#: ../lib/gis/parser.c:2073
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   オプション: "
 
-#: ../lib/gis/parser.c:2117 ../lib/gis/parser.c:2132
+#: ../lib/gis/parser.c:2118 ../lib/gis/parser.c:2133
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "<%c> フラッグは無効です\n"
 
-#: ../lib/gis/parser.c:2198
+#: ../lib/gis/parser.c:2199
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "<%s=>は不明瞭です\n"
 
-#: ../lib/gis/parser.c:2204
+#: ../lib/gis/parser.c:2205
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "<%s> パラメータは無効です\n"
 
-#: ../lib/gis/parser.c:2211
+#: ../lib/gis/parser.c:2212
 #, c-format
 msgid "Option <%s> does not accept multiple answers\n"
 msgstr "オプション <%s> では複数の選択肢を選択できません\n"
 
-#: ../lib/gis/parser.c:2289
+#: ../lib/gis/parser.c:2290
 #, c-format
 msgid ""
 "\n"
@@ -3900,12 +3905,12 @@ msgstr ""
 "\n"
 "エラー: パラメータの無効な範囲の構文 <%s>\n"
 
-#: ../lib/gis/parser.c:2290
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       存在します: %s\n"
 
-#: ../lib/gis/parser.c:2294
+#: ../lib/gis/parser.c:2295
 #, c-format
 msgid ""
 "\n"
@@ -3914,12 +3919,12 @@ msgstr ""
 "\n"
 "エラー: 値<%s>はパラメーターの範囲外です<%s>\n"
 
-#: ../lib/gis/parser.c:2296
+#: ../lib/gis/parser.c:2297
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       有効な領域: %s\n"
 
-#: ../lib/gis/parser.c:2299
+#: ../lib/gis/parser.c:2300
 #, c-format
 msgid ""
 "\n"
@@ -3928,7 +3933,7 @@ msgstr ""
 "\n"
 "エラー: パラメータ値が見つかりません <%s>\n"
 
-#: ../lib/gis/parser.c:2447
+#: ../lib/gis/parser.c:2448
 #, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -3937,7 +3942,7 @@ msgstr ""
 "エラー: 要求されたパラメータ <%s> が設定されていません:\n"
 "\t(%s)\n"
 
-#: ../lib/gis/parser.c:2542
+#: ../lib/gis/parser.c:2543
 #, c-format
 msgid ""
 "\n"
@@ -3946,17 +3951,17 @@ msgstr ""
 "\n"
 "エラー: オプション <%s> は%dの倍数でなければなりません\n"
 
-#: ../lib/gis/parser.c:2544
+#: ../lib/gis/parser.c:2545
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "        %d アイテムを提供しました:\n"
 
-#: ../lib/gis/parser.c:2600
+#: ../lib/gis/parser.c:2601
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "エラー: オプション <%s>: <%s> 存在します.\n"
 
-#: ../lib/gis/parser.c:2655
+#: ../lib/gis/parser.c:2656
 #, c-format
 msgid ""
 "\n"
@@ -3965,7 +3970,7 @@ msgstr ""
 "\n"
 "フラッグ: 次のフラッグに設定する?\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2670
 #, c-format
 msgid ""
 "\n"
@@ -3974,51 +3979,51 @@ msgstr ""
 "\n"
 "オプション:   %s\n"
 
-#: ../lib/gis/parser.c:2670
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid "     key: %s\n"
 msgstr "     キー: %s\n"
 
-#: ../lib/gis/parser.c:2672
+#: ../lib/gis/parser.c:2673
 #, c-format
 msgid "  format: %s\n"
 msgstr "  フォーマット: %s\n"
 
-#: ../lib/gis/parser.c:2674
+#: ../lib/gis/parser.c:2675
 #, c-format
 msgid " default: %s\n"
 msgstr " デフォルト: %s\n"
 
-#: ../lib/gis/parser.c:2675
+#: ../lib/gis/parser.c:2676
 #, c-format
 msgid "required: %s\n"
 msgstr "要求: %s\n"
 
-#: ../lib/gis/parser.c:2677
+#: ../lib/gis/parser.c:2678
 #, c-format
 msgid "multiple: %s\n"
 msgstr "複数: %s\n"
 
-#: ../lib/gis/parser.c:2679
+#: ../lib/gis/parser.c:2680
 #, c-format
 msgid " options: %s\n"
 msgstr " オプション: %s\n"
 
-#: ../lib/gis/parser.c:2692
+#: ../lib/gis/parser.c:2693
 #, c-format
 msgid "enter option > "
 msgstr "オプションを開く >  "
 
-#: ../lib/gis/parser.c:2709 ../lib/gis/parser.c:2719
+#: ../lib/gis/parser.c:2710 ../lib/gis/parser.c:2720
 msgid "   Try again? "
 msgstr "   再試行?  "
 
-#: ../lib/gis/parser.c:2717
+#: ../lib/gis/parser.c:2718
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr " %s は承認できません.\n"
 
-#: ../lib/gis/parser.c:2727
+#: ../lib/gis/parser.c:2728
 #, c-format
 msgid ""
 "\n"
@@ -4029,11 +4034,11 @@ msgstr ""
 "選択しました:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2728
+#: ../lib/gis/parser.c:2729
 msgid "Is this correct? "
 msgstr "これで間違いないですか?  "
 
-#: ../lib/gis/parser.c:2793
+#: ../lib/gis/parser.c:2794
 msgid "to accept the default"
 msgstr "デフォルトの許可"
 
@@ -5088,19 +5093,24 @@ msgstr "不明な列タイプ (列 <%s>)"
 msgid "Unable to describe table <%s>"
 msgstr "テーブル <%s>を記述できません"
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
-#: ../lib/db/dbmi_client/select.c:283
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
 msgid "Missing column name"
 msgstr "カラム名がありません"
 
-#: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
 msgid "Missing key column name"
 msgstr "キーカラム名がありません"
 
-#: ../lib/db/dbmi_client/select.c:305
+#: ../lib/db/dbmi_client/select.c:317
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "テーブル <%s> からレコードを選択できません"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "列 <%s> は整数型ではありません"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
