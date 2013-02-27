@@ -94,14 +94,6 @@ clean:
 		done ; \
 	fi
 
-# default install rules
-install:
-	-if [ "$(INSTALL_SUBDIRS)" != "" ] ; then \
-		for dir in $(INSTALL_SUBDIRS) ; do \
-			$(MAKE) -C $$dir install ; \
-		done ; \
-	fi
-
 # HTML page rules:
 include $(MODULE_TOPDIR)/include/Make/Html.make
 
