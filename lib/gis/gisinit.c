@@ -63,7 +63,7 @@ int G__gisinit(const char *version, const char *pgm)
 	G_fatal_error(_("MAPSET %s - permission denied"), mapset);
 	break;
     default:
-	G_fatal_error(_("MAPSET %s not found"), mapset);
+	G_fatal_error(_("MAPSET %s not found at %s"), mapset, G_location_path());
 	break;
     }
 
