@@ -8,6 +8,8 @@ EXTRA_CLEAN_FILES = GRASS-Packager.bat GRASS-Installer.nsi
 
 ifneq ($(MINGW),)
 default: GRASS-Packager.bat GRASS-Installer.nsi
+else
+default:
 endif	
 
 GRASS-Packager.bat: GRASS-Packager.bat.tmpl
