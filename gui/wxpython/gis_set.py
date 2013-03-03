@@ -43,6 +43,10 @@ from gui_core.ghelp import HelpFrame
 from core.gcmd      import GMessage, GError, DecodeString, RunCommand
 from core.utils     import GetListOfLocations, GetListOfMapsets
 from location_wizard.dialogs import RegionDef
+from gui_core.dialogs import TextEntryDialog
+from gui_core.widgets import GenericValidator
+
+from grass.script import core as grass
 
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
@@ -420,10 +424,12 @@ class GRASSStartup(wx.Frame):
             else:
                 self.SetDefaultRegion(location = gWizard.location)
 
-            dlg = wx.TextEntryDialog(parent=self,
-                                     message=_("Do you want to create new mapset?"),
-                                     caption=_("Create new mapset"),
-                                     defaultValue=self._getDefaultMapsetName())
+            dlg = TextEntryDialog(parent=self,
+                                  message=_("Do you want to create new mapset?"),
+                                  caption=_("Create new mapset"),
+                                  defaultValue=self._getDefaultMapsetName(),
+                                  validator=GenericValidator(grass.legal_name, self._nameValidationFailed))
+
             if dlg.ShowModal() == wx.ID_OK:
                 mapsetName = dlg.GetValue()
                 self.CreateNewMapset(mapsetName)
@@ -515,9 +521,10 @@ class GRASSStartup(wx.Frame):
                                  'This mapset cannot be renamed.'))
             return
         
-        dlg = wx.TextEntryDialog(parent = self,
-                                 message = _('Current name: %s\n\nEnter new name:') % mapset,
-                                 caption = _('Rename selected mapset'))
+        dlg = TextEntryDialog(parent = self,
+                              message = _('Current name: %s\n\nEnter new name:') % mapset,
+                              caption = _('Rename selected mapset'),
+                              validator = GenericValidator(grass.legal_name, self._nameValidationFailed))
         
         if dlg.ShowModal() ==  wx.ID_OK:
             newmapset = dlg.GetValue()
@@ -550,9 +557,10 @@ class GRASSStartup(wx.Frame):
         """
         location = self.listOfLocations[self.lblocations.GetSelection()]
 
-        dlg = wx.TextEntryDialog(parent = self,
-                                 message = _('Current name: %s\n\nEnter new name:') % location,
-                                 caption = _('Rename selected location'))
+        dlg = TextEntryDialog(parent = self,
+                              message = _('Current name: %s\n\nEnter new name:') % location,
+                              caption = _('Rename selected location'),
+                              validator = GenericValidator(grass.legal_name, self._nameValidationFailed))
 
         if dlg.ShowModal() ==  wx.ID_OK:
             newlocation = dlg.GetValue()
@@ -781,10 +789,11 @@ class GRASSStartup(wx.Frame):
     def OnCreateMapset(self, event):
         """!Create new mapset"""
 
-        dlg = wx.TextEntryDialog(parent = self,
+        dlg = TextEntryDialog(parent = self,
                                  message = _('Enter name for new mapset:'),
                                  caption = _('Create new mapset'),
-                                 defaultValue = self._getDefaultMapsetName())
+                                 defaultValue = self._getDefaultMapsetName(),
+                                 validator = GenericValidator(grass.legal_name, self._nameValidationFailed))
 
         if dlg.ShowModal() == wx.ID_OK:
             mapset = dlg.GetValue()
@@ -902,6 +911,12 @@ class GRASSStartup(wx.Frame):
         """!Close window event"""
         event.Skip()
         sys.exit(2)
+
+    def _nameValidationFailed(self, ctrl):
+        message = _("Name <%(name)s> is not a valid name for location or mapset. "
+                    "Please use only ASCII characters excluding %(chars)s "
+                    "and space.") % {'name': ctrl.GetValue(), 'chars': '/"\'@,=*~'}
+        GError(parent=self, message=message, caption=_("Invalid name"))
 
 class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
     """!Use wx.ListCtrl instead of wx.ListBox, different style for
