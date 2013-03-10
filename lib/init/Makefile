@@ -105,6 +105,7 @@ $(ETC)/Init.bat: init.bat
 	-e \"s#CONFIG_PROJSHARE#$(PROJSHARE)#\" \
 	$< > $@"
 	chmod +x $@
+	unix2dos $@
 
 $(ETC)/set_data$(EXE): $(SET_DATA)
 	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(EDITLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
