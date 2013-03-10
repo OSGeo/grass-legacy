@@ -2364,7 +2364,8 @@ class TextEntryDialog(wx.Dialog):
     It differs from wx.TextEntryDialog because it allows adding validator.
     """
     def __init__(self, parent, message, caption='',
-                 defaultValue='', pos=wx.DefaultPosition, validator=wx.DefaultValidator):
+                 defaultValue='', pos=wx.DefaultPosition, validator=wx.DefaultValidator,
+                 style=wx.OK | wx.CANCEL):
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=caption, pos=pos)
 
         vbox = wx.BoxSizer(wx.VERTICAL)
@@ -2377,7 +2378,7 @@ class TextEntryDialog(wx.Dialog):
         vbox.Add(item=self._textCtrl, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
         self._textCtrl.SetFocus()
 
-        sizer = self.CreateSeparatedButtonSizer(wx.CANCEL | wx.OK)
+        sizer = self.CreateSeparatedButtonSizer(style)
         vbox.Add(item=sizer, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
 
         self.SetSizerAndFit(vbox)

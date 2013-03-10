@@ -428,8 +428,10 @@ class GRASSStartup(wx.Frame):
                                   message=_("Do you want to create new mapset?"),
                                   caption=_("Create new mapset"),
                                   defaultValue=self._getDefaultMapsetName(),
-                                  validator=GenericValidator(grass.legal_name, self._nameValidationFailed))
-
+                                  validator=GenericValidator(grass.legal_name, self._nameValidationFailed),
+                                  style=wx.OK | wx.CANCEL | wx.HELP)
+            help = dlg.FindWindowById(wx.ID_HELP)
+            help.Bind(wx.EVT_BUTTON, self.OnHelp)
             if dlg.ShowModal() == wx.ID_OK:
                 mapsetName = dlg.GetValue()
                 self.CreateNewMapset(mapsetName)
