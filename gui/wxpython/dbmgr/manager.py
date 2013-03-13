@@ -1901,17 +1901,18 @@ class AttributeManager(wx.Frame):
         
         # perform SQL non-select statements (e.g. 'delete from table where cat=1')
         if len(self.listOfSQLStatements) > 0:
-            sqlFile = tempfile.NamedTemporaryFile(mode = "wt")
+            fd, sqlFilePath = tempfile.mkstemp(text=True)
+            sqlFile = open(sqlFilePath, 'w')
             for sql in self.listOfSQLStatements:
                 enc = UserSettings.Get(group = 'atm', key = 'encoding', subkey = 'value')
                 if not enc and 'GRASS_DB_ENCODING' in os.environ:
                     enc = os.environ['GRASS_DB_ENCODING']
                 if enc:
-                    sqlFile.file.write(sql.encode(enc) + ';')
+                    sqlFile.write(sql.encode(enc) + ';')
                 else:
-                    sqlFile.file.write(sql + ';')
-                sqlFile.file.write(os.linesep)
-                sqlFile.file.flush()
+                    sqlFile.write(sql + ';')
+                sqlFile.write(os.linesep)
+                sqlFile.close()
 
             driver   = self.mapDBInfo.layers[self.layer]["driver"]
             database = self.mapDBInfo.layers[self.layer]["database"]
@@ -1921,10 +1922,12 @@ class AttributeManager(wx.Frame):
             
             RunCommand('db.execute',
                        parent = self,
-                       input = sqlFile.name,
+                       input = sqlFilePath,
                        driver = driver,
                        database = database)
             
+            os.close(fd)
+            os.remove(sqlFilePath)
             # reset list of statements
             self.listOfSQLStatements = []
             
