@@ -30,14 +30,14 @@ typedef struct
 
     double wavemax, wavemin;	/* Wavelength in µm              */
 
+    double esun;		/* Mean solar irradiance         */
     double lmax, lmin;		/* Spectral radiance             */
     double qcalmax, qcalmin;	/* Quantized calibrated pixel    */
-    double esun;		/* Mean solar irradiance         */
 
     char thermal;		/* Flag to thermal band          */
     double gain, bias;		/* Gain and Bias of sensor       */
-    double K1, K2;		/* Thermal calibration constants,
-				   or Rad2Ref constants          */
+    double K1, K2;		/* Thermal calibration or
+				   Rad2Ref constants */
 
 } band_data;
 
@@ -48,8 +48,9 @@ typedef struct
 
     char creation[11];		/* Image production date         */
     char date[11];		/* Image acquisition date        */
+
     double dist_es;		/* Distance Earth-Sun            */
-    double sun_elev;		/* Solar elevation               */
+    double sun_elev;		/* Sun elevation                 */
 
     char sensor[10];		/* Type of sensor: MSS, TM, ETM+, OLI/TIRS */
     int bands;			/* Total number of bands         */
