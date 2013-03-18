@@ -91,26 +91,26 @@ int G__make_location(const char *location_name,
  * This function creates a new location in the current database,
  * initializes the projection, default window and current window.  
  *
- * \param char * location_name
+ * \param location_name
  *                      The name of the new location.  Should not include
  *                      the full path, the location will be created within
  *                      the current database.
- * \param struct Cell_head *wind
+ * \param wind
  *                      Contains the default window setting for the
  *                      new location.  All fields should be set in this
  *                      structure, and care should be taken to ensure that
  *                      the proj/zone fields match the definition in the
  *                      proj_info parameter (see G_set_cellhd_from_projinfo()).
  *
- * \param struct Key_Value *proj_info
+ * \param proj_info
  *                      Projection definition suitable to write to the
  *                      PROJ_INFO file, or NULL for PROJECTION_XY.
  *
- * \param struct Key_Value *proj_units
+ * \param proj_units
  *                      Projection units suitable to write to the PROJ_UNITS
  *                      file, or NULL.
  *
- * \param FILE *report_file 
+ * \param report_file 
  *                      File to which creation information should be written
  *                      (can be stdout).  Currently not used.
  *
@@ -155,8 +155,10 @@ int G_make_location(const char *location_name,
  *  \param proj_info2
  *  \param proj_units2
  *  \return -1 if not the same projection, -2 if linear unit translation to 
- *          meters fails, -4 if not the same ellipsoid, -5 if UTM zone differs
- *         else TRUE if projections match.
+ *          meters fails, -4 if not the same ellipsoid,
+ *          -5 if UTM zone differs, -6 if UTM hemisphere differs,
+ *          -7 if false easting differs, -8 if false northing differs,
+ *          else TRUE if projections match.
  *          
  */
 
@@ -232,6 +234,14 @@ G_compare_projections(const struct Key_Value *proj_info1,
 	return -5;
 
     /* -------------------------------------------------------------------- */
+    /*      Hemisphere check specially for UTM                              */
+    /* -------------------------------------------------------------------- */
+    if (!strcmp(proj1, "utm") && !strcmp(proj2, "utm")
+	&& !!G_find_key_value("south", proj_info1)
+	!= !!G_find_key_value("south", proj_info2))
+	return -6;
+
+    /* -------------------------------------------------------------------- */
     /*      Do they both have the same false easting?                       */
     /* -------------------------------------------------------------------- */
 
@@ -242,7 +252,7 @@ G_compare_projections(const struct Key_Value *proj_info1,
 	x_0_2 = G_find_key_value("x_0", proj_info2);
 
 	if (x_0_1 && x_0_2 && (fabs(atof(x_0_1) - atof(x_0_2)) > 0.000001))
-	    return -6;
+	    return -7;
     }
 
     /* -------------------------------------------------------------------- */
@@ -256,7 +266,7 @@ G_compare_projections(const struct Key_Value *proj_info1,
 	y_0_2 = G_find_key_value("y_0", proj_info2);
 
 	if (y_0_1 && y_0_2 && (fabs(atof(y_0_1) - atof(y_0_2)) > 0.000001))
-	    return -7;
+	    return -8;
     }
 
     /* -------------------------------------------------------------------- */
