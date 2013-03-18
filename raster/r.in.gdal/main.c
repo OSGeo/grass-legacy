@@ -9,7 +9,7 @@
  * PURPOSE:      Imports many GIS/image formats into GRASS utilizing the GDAL
  *               library.
  *
- * COPYRIGHT:    (C) 2001 by Frank Warmerdam
+ * COPYRIGHT:    (C) 2001-2011 by Frank Warmerdam, and the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -403,6 +403,15 @@ int main(int argc, char *argv[])
 			break;
 		    case -5:
 			strcat(error_msg, "zone\n");
+			break;
+		    case -6:
+			strcat(error_msg, "south\n");
+			break;
+		    case -7:
+			strcat(error_msg, "x_0\n");
+			break;
+		    case -8:
+			strcat(error_msg, "y_0\n");
 			break;
 		    }
 		}
