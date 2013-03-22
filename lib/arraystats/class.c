@@ -337,12 +337,12 @@ double class_discont(double *data, int count, int nbreaks,
 		dmax = d;
 		nmax = k;
 	    }
-	    nd--;		//A VERIFIER!
+	    nd--;		/* A VERIFIER! */
 	    if (x[nf] != x[nd]) {
 		if (nd != 0)
 		    co[j] = (xn[nf] - xn[nd]) / (x[nf] - x[nd]);
 		else
-		    co[j] = (xn[nf]) / (x[nf]);	//A VERIFIER!
+		    co[j] = (xn[nf]) / (x[nf]);	/* A VERIFIER! */
 	    }
 	}
 	if (i == 1)
