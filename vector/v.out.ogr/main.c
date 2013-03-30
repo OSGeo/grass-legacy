@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     int type, cat;
 
     /* Attributes */
-    int doatt = 0, ncol = 0, colsqltype, colctype, keycol = -1;
+    int doatt = 0, ncol = 0, colsqltype, colctype, colwidth, keycol = -1;
     struct field_info *Fi = NULL;
     dbDriver *Driver = NULL;
     dbHandle handle;
@@ -647,6 +647,10 @@ int main(int argc, char *argv[])
 		G_debug(2, "col %d: %s (%s)", i, db_get_column_name(Column),
 			db_sqltype_name(colsqltype));
 		colctype = db_sqltype_to_Ctype(colsqltype);
+                colwidth = db_get_column_length(Column);
+                G_debug(3, "col %d: %s sqltype=%d ctype=%d width=%d",
+                        i, db_get_column_name(Column), colsqltype, 
+                        colctype, colwidth);
 
 		switch (colctype) {
 		case DB_C_TYPE_INT:
@@ -676,6 +680,8 @@ int main(int argc, char *argv[])
 		if (!nocat_flag->answer) {
 		    Ogr_field =
 			OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
+                    if (ogr_ftype == OFTString && colwidth > 0) 
+                        OGR_Fld_SetWidth(Ogr_field, colwidth);
 		    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
 		    OGR_Fld_Destroy(Ogr_field);
 		}
