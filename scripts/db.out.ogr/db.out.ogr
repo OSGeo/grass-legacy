@@ -100,11 +100,11 @@ if [ -e "$GIS_OPT_INPUT.dbf" ] ; then
 fi
 
 if [ -n "$OLAYER" ] ; then
-   v.out.ogr input="$GIS_OPT_INPUT" dsn="$GIS_OPT_DSN" \
-      "$OLAYER" format="$GIS_OPT_FORMAT" type=point --quiet
+   v.out.ogr -c input="$GIS_OPT_INPUT" dsn="$GIS_OPT_DSN" \
+      "$OLAYER" format="$GIS_OPT_FORMAT" type=point,line,area --quiet
 else
-   v.out.ogr input="$GIS_OPT_INPUT" dsn="$GIS_OPT_DSN" \
-      format="$GIS_OPT_FORMAT" type=point --quiet
+   v.out.ogr -c input="$GIS_OPT_INPUT" dsn="$GIS_OPT_DSN" \
+      format="$GIS_OPT_FORMAT" type=point,line,area --quiet
 fi
 
 if [ $? -ne 0 ] ;  then
