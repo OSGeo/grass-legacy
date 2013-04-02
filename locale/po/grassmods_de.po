@@ -28756,7 +28756,7 @@ msgstr "Der Objekttyp der Eingabekarte konnte nicht bestimmt werden."
 #: ../vector/v.out.ogr/main.c:312
 msgid "The combination of types is not supported by all formats."
 msgstr ""
-"Die Die Kombination von Typen wird nicht von allen Formaten unterstützt."
+"Die Kombination von Typen wird nicht von allen Formaten unterstützt."
 
 #: ../vector/v.out.ogr/main.c:326
 msgid ""
