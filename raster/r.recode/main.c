@@ -111,6 +111,6 @@ int main(int argc, char *argv[])
 
     G_done_msg(_("Raster map <%s> created."),
 	       result);
-    
+
     exit(EXIT_SUCCESS);
 }
