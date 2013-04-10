@@ -5,11 +5,19 @@ It is using two passes.
 
 <h2>EXAMPLE</h2>
 
-Calculation of elevation quantiles:
+Calculation of elevation quantiles (printed to standard-out):
 
 <div class="code"><pre>
-g.region rast=elevation.dem -p
-r.quantile input=elevation.dem percentiles=0.1,1,10,25,50,75,90,99,99.9
+g.region rast=elevation -p
+r.quantile input=elevation percentiles=0.1,1,10,25,50,75,90,99,99.9
+</pre></div>
+
+The output of <em>r.quantile</em> can be used for quantile classification:
+
+<div class="code"><pre>
+g.region rast=elevation -p
+r.quantile elevation quantiles=5 -r --quiet | r.recode elevation \
+           out=elev_quant5 rules=-
 </pre></div>
 
 <h2>SEE ALSO</h2>
@@ -21,6 +29,6 @@ r.quantile input=elevation.dem percentiles=0.1,1,10,25,50,75,90,99,99.9
 
 <h2>AUTHOR</h2>
 
-Glynn Clements <glynn gclements.plus.com>
+Glynn Clements
 <p>
 <i>Last changed: $Date$</i>
