@@ -39,6 +39,7 @@ from psmap.toolbars     import PsMapToolbar
 from core.gcmd          import RunCommand, GError, GMessage
 from core.settings      import UserSettings
 from gui_core.forms     import GUI
+from gui_core.dialogs   import HyperlinkDialog
 from psmap.menudata     import PsMapData
 
 from psmap.dialogs      import *
@@ -320,8 +321,13 @@ class PsMapFrame(wx.Frame):
                 im.save(self.imgName, format = 'PNG')
                 
             except IOError, e:
-                GError(parent = self,
-                       message = _("Unable to generate preview. %s") % e)
+                del busy
+                dlg = HyperlinkDialog(self, title=_("Preview not available"),
+                                      message=_("Preview is not available probably due to missing Ghostscript."),
+                                      hyperlink='http://trac.osgeo.org/grass/wiki/CompileOnWindows#Ghostscript',
+                                      hyperlinkLabel=_("Please follow instructions on GRASS Trac Wiki."))
+                dlg.ShowModal()
+                dlg.Destroy()
                 return
             
                 
