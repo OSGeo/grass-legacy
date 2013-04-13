@@ -136,6 +136,7 @@ int main(int argc, char **argv)
     if (D_do_conversions(&window, t, b, l, r))
 	G_fatal_error(_("Error in calculating conversions"));
 
+    width = mwidth = 0;
     if (rast) {
 	for (i = 0; rast[i]; i++) ;
 	nrasts = i;
@@ -146,7 +147,6 @@ int main(int argc, char **argv)
 	cats =
 	    (struct Categories *)G_malloc(nrasts * sizeof(struct Categories));
 
-	width = mwidth = 0;
 	for (i = 0; i < nrasts; i++) {
 	    name[i] = (char *)G_malloc(GNAME_MAX);
 	    mapset[i] = (char *)G_malloc(GMAPSET_MAX);
