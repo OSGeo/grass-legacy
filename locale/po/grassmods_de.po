@@ -21530,12 +21530,12 @@ msgstr "Kopiert die vorhandenen Daten in die aktuelle Mapset/Location."
 #: ../general/manage/cmd/copy.c:58
 #, c-format
 msgid "%s file(s) to be copied"
-msgstr "%s Dateien müssen kopiert werden."
+msgstr "Zu kopierende %s Dateien"
 
 #: ../general/manage/cmd/copy.c:74
 #, c-format
 msgid "<%s> not found"
-msgstr "<%s> nicht gefunden werden."
+msgstr "<%s> nicht gefunden"
 
 #: ../general/manage/cmd/copy.c:79
 #, c-format
