@@ -36,11 +36,11 @@ int main(int argc, char **argv)
     int colort = 0;
     double size = 0., gsize = 0.;	/* initialize to zero */
     double east, north;
-    int do_text, fontsize, mark_type;
+    int do_text, fontsize, mark_type, line_width;
     struct GModule *module;
-    struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor;
+    struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor, *lwidth;
     struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84, *cross,
-	*fiducial;
+	*fiducial, *dot;
     struct pj_info info_in;	/* Proj structures */
     struct pj_info info_out;	/* Proj structures */
 
@@ -69,6 +69,12 @@ int main(int argc, char **argv)
     opt3->answer = "0,0";
     opt3->multiple = NO;
     opt3->description = _("Lines of the grid pass through this coordinate");
+
+    lwidth = G_define_option();
+    lwidth->key = "width";
+    lwidth->type = TYPE_DOUBLE;
+    lwidth->required = NO;
+    lwidth->description = _("Grid line width");
 
     opt1 = G_define_standard_option(G_OPT_C_FG);
     opt1->answer = "gray";
@@ -107,6 +113,10 @@ int main(int argc, char **argv)
     cross = G_define_flag();
     cross->key = 'c';
     cross->description = _("Draw '+' marks instead of grid lines");
+
+    dot = G_define_flag();
+    dot->key = 'd';
+    dot->description = _("Draw '.' marks instead of grid lines");
 
     fiducial = G_define_flag();
     fiducial->key = 'f';
@@ -147,15 +157,25 @@ int main(int argc, char **argv)
     else
 	do_text = TRUE;
 
+    if (lwidth->answer) {
+	line_width = atoi(lwidth->answer);
+	if(line_width < 0 || line_width > 1e3)
+	    G_fatal_error("Invalid line width.");
+    }
+    else
+	line_width = 0;
+
     fontsize = atoi(fsize->answer);
 
     mark_type = MARK_GRID;
-    if (cross->answer && fiducial->answer)
+    if (cross->answer + fiducial->answer + dot->answer > 1)
 	G_fatal_error(_("Choose a single mark style"));
     if (cross->answer)
 	mark_type = MARK_CROSS;
     if (fiducial->answer)
 	mark_type = MARK_FIDUCIAL;
+    if (dot->answer)
+	mark_type = MARK_DOT;
 
     /* get grid size */
     if (geogrid->answer) {
@@ -202,12 +222,12 @@ int main(int argc, char **argv)
 	    /* initialzie proj stuff */
 	    init_proj(&info_in, &info_out, wgs84->answer);
 	    plot_geogrid(gsize, info_in, info_out, do_text, colorg, colort,
-			 fontsize, mark_type);
+			 fontsize, mark_type, line_width);
 	}
 	else {
 	    /* Do the grid plotting */
 	    plot_grid(size, east, north, do_text, colorg, colort, fontsize,
-		      mark_type);
+		      mark_type, line_width);
 	}
     }
 
