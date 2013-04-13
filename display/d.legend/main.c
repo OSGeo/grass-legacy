@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     int thin;
     int i, j, k;
     int lines, steps;
-    int new_colr, fp;
+    int fp;
     int t, b, l, r;
     int hide_catnum, hide_catstr, hide_nodata, do_smooth, use_mouse;
     char *cstr;
@@ -91,12 +91,8 @@ int main(int argc, char **argv)
     opt1 = G_define_standard_option(G_OPT_R_MAP);
     opt1->description = _("Name of raster map");
 
-    opt2 = G_define_option();
-    opt2->key = "color";
-    opt2->type = TYPE_STRING;
-    opt2->answer = DEFAULT_FG_COLOR;
-    opt2->options = D_color_list();
-    opt2->description = _("Sets the legend's text color");
+    opt2 = G_define_standard_option(G_OPT_C_FG);
+    opt2->label = _("Text color");
 
     opt4 = G_define_option();
     opt4->key = "lines";
@@ -189,6 +185,7 @@ int main(int argc, char **argv)
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     map_name = opt1->answer;
 
     hide_catstr = hidestr->answer;	/* note hide_catstr gets changed and re-read below */
@@ -198,13 +195,7 @@ int main(int argc, char **argv)
     use_mouse = mouse->answer;
     flip = flipit->answer;
 
-    color = 0;			/* if only to get rid of the compiler warning  */
-    if (opt2->answer != NULL) {
-	new_colr = D_translate_color(opt2->answer);
-	if (new_colr == 0)
-	    G_fatal_error(_("Don't know the color %s"), opt2->answer);
-	color = new_colr;
-    }
+    color = D_parse_color(opt2->answer, TRUE);
 
     if (opt4->answer != NULL)
 	sscanf(opt4->answer, "%d", &lines);
@@ -290,7 +281,7 @@ int main(int argc, char **argv)
 	if (!get_legend_box(&x0, &x1, &y0, &y1))
 	    exit(EXIT_SUCCESS);
 	G_debug(1, "mouse placement as percentage of display window "
-		"[bottom,top,left,right]:\n  \"at=%.1f,%.1f,%.1f,%.1f\"",
+		"[bottom,top,left,right]:\n  \"at=%.2f,%.2f,%.2f,%.2f\"",
 		100. * (b - y1) / (b - t), 100. * (b - y0) / (b - t),
 		100. * x0 / (r - l), 100. * x1 / (r - l));
 
@@ -689,7 +680,7 @@ int main(int argc, char **argv)
 		txsiz = 0;	/* keep it sane */
 
 	    R_text_size(txsiz, txsiz);
-	    R_standard_color(color);
+	    D_raster_use_color(color);
 
 	    ppl = (lleg) / (steps - 1);
 
@@ -716,7 +707,8 @@ int main(int argc, char **argv)
 			       y1 + 4 + txsiz);
 	    }
 
-	    R_text(buff);
+	    if(color)
+		R_text(buff);
 
 	}			/*for */
 
@@ -857,7 +849,7 @@ int main(int argc, char **argv)
 	    R_polygon_rel(x_box, y_box, 5);
 
 	    /* Draw text */
-	    R_standard_color(color);
+	    D_raster_use_color(color);
 
 	    if (!fp) {
 		/* nothing, box only */
@@ -894,7 +886,9 @@ int main(int argc, char **argv)
 	    }
 
 	    R_move_abs((l + 3 + dots_per_line), (cur_dot_row) - 3);
-	    R_text(buff);
+
+	    if(color)
+		R_text(buff);
 	}
 
 	if (0 == k)
@@ -916,14 +910,15 @@ int main(int argc, char **argv)
 	    }
 	    R_standard_color(white);
 	    R_move_abs((l + 3 + dots_per_line), (cur_dot_row));
-	    R_text(buff);
+	    if(color)
+		R_text(buff);
 	}
     }
     if (use_mouse) {
 	char buf[512];
 
 	mouse->answer = 0;
-	sprintf(buf, "%s at=%.1f,%.1f,%.1f,%.1f", G_recreate_command(),
+	sprintf(buf, "%s at=%.2f,%.2f,%.2f,%.2f", G_recreate_command(),
 		Y1, Y0, X0, X1);
 	D_add_to_list(buf);
     }
