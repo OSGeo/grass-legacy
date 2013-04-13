@@ -17,6 +17,7 @@ int WriteProfile(char *raster, char *mapset,
     char *buf2 = G_calloc(UCAT_STR_SIZE, sizeof(char));
     char *outfile = G_calloc(strlen(fname) + 3, sizeof(char));
     char coords[4][80];
+    char outfmt[24];
     FILE *outFile;
     struct ProfileNode *ptr;
 
@@ -55,10 +56,15 @@ int WriteProfile(char *raster, char *mapset,
 	    _fmt_ucat(&profile->MaxCat, &profile->MinCat, buf2));
     fprintf(outFile, "# dist value east north\n");
 
+
+    if (G_projection() == PROJECTION_LL)
+	strcpy(outfmt, "%f %s %.8f %.8f\n");
+    else
+	strcpy(outfmt, "%f %s %.3f %.3f\n");
+
     /* Now loop through the nodes, one value per line */
     for (ptr = profile->ptr; ptr != NULL; ptr = ptr->next) {
-	fprintf(outFile, "%f %s %f %f\n",
-		ptr->dist,
+	fprintf(outFile, outfmt, ptr->dist,
 		_fmt_ucat(&ptr->cat, &profile->MinCat, buf),
 		ptr->east, ptr->north);
     }
