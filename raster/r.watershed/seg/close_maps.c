@@ -139,7 +139,7 @@ int close_maps(void)
 	G_write_colors(asp_name, this_mapset, &colors);
     }
     cseg_close(&asp);
-    /* visual ouput no longer needed */
+    /* visual output no longer needed */
     if (dis_flag) {
 	if (bas_thres <= 0)
 	    bas_thres = 60;
