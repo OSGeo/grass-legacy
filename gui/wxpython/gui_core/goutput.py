@@ -508,7 +508,7 @@ class GMConsole(wx.SplitterWindow):
                                  'd.rast3d'       : '3d-raster',
                                  'd.rgb'          : 'rgb',
                                  'd.his'          : 'his',
-                                 'd.shaded'       : 'shaded',
+                                 'd.shadedmap'    : 'shaded',
                                  'd.legend'       : 'rastleg',
                                  'd.rast.arrow'   : 'rastarrow',
                                  'd.rast.num'     : 'rastnum',
