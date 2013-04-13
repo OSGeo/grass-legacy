@@ -172,9 +172,9 @@ int main(int argc, char **argv)
 	D_add_to_list(G_recreate_command());
     }
     else if (mouse_query(top->answer, fontsize)) {
-	char cmdbuf[255];
+	char cmdbuf[512];
 
-	sprintf(cmdbuf, "%s at=%f,%f", argv[0], east, north);
+	sprintf(cmdbuf, "%s at=%.2f,%.2f", argv[0], east, north);
 
 	sprintf(cmdbuf, "%s bcolor=%s", cmdbuf, opt1->answer);
 	sprintf(cmdbuf, "%s tcolor=%s", cmdbuf, opt2->answer);
