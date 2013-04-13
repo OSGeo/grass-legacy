@@ -74,7 +74,18 @@ WFS_URL="$GIS_OPT_WFS"
 g.message "Retrieving data ..."
 curl "$WFS_URL" > "$TEMPFILE.xml"
 
-v.in.ogr dsn="$TEMPFILE.xml" out=$OUT -o
+# check for errors:
+grep "ExceptionText" "$TEMPFILE.xml" > /dev/null
+if [ $? -eq 0 ] ; then
+  g.message -e "WFS server error:"
+  grep "ExceptionText" "$TEMPFILE.xml" | cut -d'>' -f2- | cut -d'<' -f1
+exit 1
+fi
+
+# cp "$TEMPFILE.xml" /tmp/
+
+# TODO: sure to override projection check?
+v.in.ogr dsn="$TEMPFILE.xml" output=$OUT -o
 if [ $? -ne 0 ] ; then
   g.message -e "WFS-XML file not readable. Check if xerces-c support is compiled into GDAL/OGR library."
   rm -f "$TEMPFILE.xml" "$TEMPFILE" "$TEMPFILE.gfs"
