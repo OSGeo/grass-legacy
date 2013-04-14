@@ -9,7 +9,7 @@
  *               Andreas Lange <andreas.lange rhein-main.de>,
  *               Huidae Cho <grass4u gmail.com>,
  *               Cedric Shock <cedricgrass shockfamily.net>
- *               Hamish Bowman <hamish_nospam yahoo.com>
+ *               Hamish Bowman <hamish_b yahoo.com>
  * PURPOSE:      driver to create PNG and PPM images
  * COPYRIGHT:    (C) 2001-2006 by the GRASS Development Team
  *
