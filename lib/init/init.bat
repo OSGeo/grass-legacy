@@ -142,9 +142,11 @@ goto exitinit
 
 set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python;%GISBASE%\etc\wxpython
 
-python "%GISBASE%/etc/wxpython/gis_set.py"
+if "%GRASS_PYTHON%"=="" set GRASS_PYTHON=python
+
+"%GRASS_PYTHON%" "%GISBASE%/etc/wxpython/gis_set.py"
 if %errorlevel% == 2 goto exitinit
-python "%GISBASE%/etc/wxpython/wxgui.py"
+"%GRASS_PYTHON%" "%GISBASE%/etc/wxpython/wxgui.py"
 
 goto exitinit
 
