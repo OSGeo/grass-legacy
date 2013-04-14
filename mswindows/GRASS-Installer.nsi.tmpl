@@ -1,6 +1,6 @@
 ;----------------------------------------------------------------------------------------------------------------------------
 
-;GRASS Installer for Windows
+;GRASS GIS Installer for Windows
 ;Written by Marco Pasetti
 ;Updated for OSGeo4W by Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
 ;Last Update: $Id$
@@ -10,7 +10,7 @@
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass6_devel\demolocation"
+!define DEMOLOCATION_PATH "c:\OSGeo4W\usr\src\grass6_devel\demolocation"
 
 ;Define the source of the patched msys.bat
 
@@ -510,7 +510,7 @@ Section "GRASS" SecGRASS
 	;Set the GIS_DATABASE directory
 	SetShellVarContext current
 	Var /GLOBAL GIS_DATABASE	
-	StrCpy $GIS_DATABASE "$DOCUMENTS\GIS DataBase"
+	StrCpy $GIS_DATABASE "$DOCUMENTS\grassdata"
 	
 	;Create the GIS_DATABASE directory
 	CreateDirectory "$GIS_DATABASE"
