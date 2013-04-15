@@ -983,7 +983,7 @@ class MapFrame(MapFrameBase):
         
         if self.Map.projinfo['proj'] == 'xy' or 'degree' not in self.Map.projinfo['unit']:
             angle = int(math.degrees(math.atan2(north,east)) + 0.5)
-            # uncomment below (or flip order back of atan2(y,x) above) to use
+            # uncomment below (or flip order of atan2(y,x) above) to use
             #   the mathematical theta convention (CCW from +x axis)
             #angle = 90 - angle
             if angle < 0:
