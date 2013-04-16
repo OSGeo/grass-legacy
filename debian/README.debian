@@ -3,7 +3,7 @@
 # to construct the .deb files.
 
 # Make sure git and the debian build scripts are installed:
-  sudo apt-get install git-core devscripts subversion
+  sudo apt-get install git subversion devscripts
 
 
 # and download the latest svn copy of GRASS:
