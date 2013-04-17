@@ -113,8 +113,8 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 			      double *y2, double *z2, int with_z)
 {
     static int first_3d = 1;
-    double d, d1, d2, r1, r2, dtol, t;
-    int switched = 0;
+    double d, d1, d2, r1, dtol, t;
+    int switched;
 
     /* TODO: Works for points ? */
 
@@ -128,7 +128,7 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	first_3d = 0;
     }
 
-    /* Check identical lines */
+    /* Check identical segments */
     if ((ax1 == bx1 && ay1 == by1 && ax2 == bx2 && ay2 == by2) ||
 	(ax1 == bx2 && ay1 == by2 && ax2 == bx1 && ay2 == by1)) {
 	G_debug(2, " -> identical segments");
@@ -141,34 +141,46 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	return 5;
     }
 
-    /*  'Sort' lines by x1, x2, y1, y2 */
-    if (bx1 < ax1)
+    /*  'Sort' lines by x, y 
+     *   MUST happen before D, D1, D2 are calculated */
+    switched = 0;
+    if (bx2 < bx1)
 	switched = 1;
-    else if (bx1 == ax1) {
-	if (bx2 < ax2)
+    else if (bx2 == bx1) {
+	if (by2 < by1)
 	    switched = 1;
-	else if (bx2 == ax2) {
-	    if (by1 < ay1)
-		switched = 1;
-	    else if (by1 == ay1) {
-		if (by2 < ay2)
-		    switched = 1;	/* by2 != ay2 (would be identical */
-	    }
-	}
     }
+
+    if (switched) {
+	t = bx1;
+	bx1 = bx2;
+	bx2 = t;
+	t = by1;
+	by1 = by2;
+	by2 = t;
+	t = bz1;
+	bz1 = bz2;
+	bz2 = t;
+    }
+
+    switched = 0;
+    if (ax2 < ax1)
+	switched = 1;
+    else if (ax2 == ax1) {
+	if (ay2 < ay1)
+	    switched = 1;
+    }
+
     if (switched) {
 	t = ax1;
-	ax1 = bx1;
-	bx1 = t;
+	ax1 = ax2;
+	ax2 = t;
 	t = ay1;
-	ay1 = by1;
-	by1 = t;
-	t = ax2;
-	ax2 = bx2;
-	bx2 = t;
-	t = ay2;
-	ay2 = by2;
-	by2 = t;
+	ay1 = ay2;
+	ay2 = t;
+	t = az1;
+	az1 = az2;
+	az2 = t;
     }
 
     d = D;
@@ -182,15 +194,22 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
      *       Can it be a problem to set the tolerance to 0.0 ? */
     dtol = 0.0;
     if (fabs(d) > dtol) {
-	r1 = D1 / d;
-	r2 = D2 / d;
 
-	G_debug(2, " -> not parallel/collinear: r1 = %f, r2 = %f", r1, r2);
-
-	if (r1 < 0 || r1 > 1 || r2 < 0 || r2 > 1) {
-	    G_debug(2, "  -> no intersection");
-	    return 0;
+	G_debug(2, " -> not parallel/collinear: d1 = %f, d2 = %f", d1, d2);
+	if (d > 0) {
+	    if (d1 < 0 || d1 > d || d2 < 0 || d2 > d) {
+		G_debug(2, "  -> no intersection");
+		return 0;
+	    }
 	}
+	else {
+	    if (d1 < d || d1 > 0 || d2 < d || d2 > 0) {
+		G_debug(2, "  -> no intersection");
+		return 0;
+	    }
+	}
+
+	r1 = d1 / d;
 
 	*x1 = ax1 + r1 * (ax2 - ax1);
 	*y1 = ay1 + r1 * (ay2 - ay1);
@@ -203,7 +222,7 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
     /* segments are parallel or collinear */
     G_debug(3, " -> parallel/collinear");
 
-    if (D1 || D2) {		/* lines are parallel */
+    if (d1 || d2) {		/* lines are parallel */
 	G_debug(2, "  -> parallel");
 	return 0;
     }
@@ -213,18 +232,8 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
     /* Collinear vertical */
     /* original code assumed lines were not both vertical
      *  so there is a special case if they are */
-    if (ax1 == ax2 && bx1 == bx2 && ax1 == bx1) {
+    if (ax1 == ax2) {
 	G_debug(2, "  -> collinear vertical");
-	if (ay1 > ay2) {
-	    t = ay1;
-	    ay1 = ay2;
-	    ay2 = t;
-	}			/* to be sure that ay1 < ay2 */
-	if (by1 > by2) {
-	    t = by1;
-	    by1 = by2;
-	    by2 = t;
-	}			/* to be sure that by1 < by2 */
 	if (ay1 > by2 || ay2 < by1) {
 	    G_debug(2, "   -> no intersection");
 	    return 0;
@@ -232,21 +241,23 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 
 	/* end points */
 	if (ay1 == by2) {
+	    G_debug(2, "   -> connected by end points");
 	    *x1 = ax1;
 	    *y1 = ay1;
 	    *z1 = 0;
-	    G_debug(2, "   -> connected by end points");
+
 	    return 1;		/* endpoints only */
 	}
 	if (ay2 == by1) {
+	    G_debug(2, "    -> connected by end points");
 	    *x1 = ax2;
 	    *y1 = ay2;
 	    *z1 = 0;
-	    G_debug(2, "    -> connected by end points");
+
 	    return 1;		/* endpoints only */
 	}
 
-	/* heneral overlap */
+	/* general overlap */
 	G_debug(3, "   -> vertical overlap");
 	/* a contains b */
 	if (ay1 <= by1 && ay2 >= by2) {
@@ -257,10 +268,8 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	    *x2 = bx2;
 	    *y2 = by2;
 	    *z2 = 0;
-	    if (!switched)
-		return 3;
-	    else
-		return 4;
+
+	    return 3;
 	}
 	/* b contains a */
 	if (ay1 >= by1 && ay2 <= by2) {
@@ -271,69 +280,54 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	    *x2 = ax2;
 	    *y2 = ay2;
 	    *z2 = 0;
-	    if (!switched)
-		return 4;
-	    else
-		return 3;
+
+	    return 4;
 	}
 
 	/* general overlap, 2 intersection points */
 	G_debug(2, "    -> partial overlap");
 	if (by1 > ay1 && by1 < ay2) {	/* b1 in a */
-	    if (!switched) {
-		*x1 = bx1;
-		*y1 = by1;
-		*z1 = 0;
-		*x2 = ax2;
-		*y2 = ay2;
-		*z2 = 0;
-	    }
-	    else {
-		*x1 = ax2;
-		*y1 = ay2;
-		*z1 = 0;
-		*x2 = bx1;
-		*y2 = by1;
-		*z2 = 0;
-	    }
+	    G_debug(2, "    -> b1 in a");
+	    *x1 = bx1;
+	    *y1 = by1;
+	    *z1 = 0;
+	    *x2 = ax2;
+	    *y2 = ay2;
+	    *z2 = 0;
+
 	    return 2;
 	}
 	if (by2 > ay1 && by2 < ay2) {	/* b2 in a */
-	    if (!switched) {
-		*x1 = bx2;
-		*y1 = by2;
-		*z1 = 0;
-		*x2 = ax1;
-		*y2 = ay1;
-		*z2 = 0;
-	    }
-	    else {
-		*x1 = ax1;
-		*y1 = ay1;
-		*z1 = 0;
-		*x2 = bx2;
-		*y2 = by2;
-		*z2 = 0;
-	    }
+	    G_debug(2, "    -> b2 in a");
+	    *x1 = ax1;
+	    *y1 = ay1;
+	    *z1 = 0;
+	    *x2 = bx2;
+	    *y2 = by2;
+	    *z2 = 0;
+
 	    return 2;
 	}
 
 	/* should not be reached */
 	G_warning(_("Vect_segment_intersection() ERROR (collinear vertical segments)"));
+	G_warning("a");
 	G_warning("%.15g %.15g", ax1, ay1);
 	G_warning("%.15g %.15g", ax2, ay2);
-	G_warning("x");
+	G_warning("b");
 	G_warning("%.15g %.15g", bx1, by1);
 	G_warning("%.15g %.15g", bx2, by2);
 
 	return 0;
     }
 
+    /* Collinear non vertical */
+
     G_debug(2, "   -> collinear non vertical");
 
-    /* Collinear non vertical */
-    if ((bx1 > ax1 && bx2 > ax1 && bx1 > ax2 && bx2 > ax2) ||
-	(bx1 < ax1 && bx2 < ax1 && bx1 < ax2 && bx2 < ax2)) {
+    /* b is to the left or right of a */
+    if ((bx1 > ax2) || (bx2 < ax1)) {
+	/* should not happen if segments are selected from rtree */
 	G_debug(2, "   -> no intersection");
 	return 0;
     }
@@ -342,37 +336,22 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
     G_debug(2, "   -> overlap/connected end points");
 
     /* end points */
-    if ((ax1 == bx1 && ay1 == by1) || (ax1 == bx2 && ay1 == by2)) {
+    if (ax1 == bx2 && ay1 == by2) {
+	G_debug(2, "    -> connected by end points");
 	*x1 = ax1;
 	*y1 = ay1;
 	*z1 = 0;
-	G_debug(2, "    -> connected by end points");
+
 	return 1;
     }
-    if ((ax2 == bx1 && ay2 == by1) || (ax2 == bx2 && ay2 == by2)) {
+    if (ax2 == bx1 && ay2 == by1) {
+	G_debug(2, "    -> connected by end points");
 	*x1 = ax2;
 	*y1 = ay2;
 	*z1 = 0;
-	G_debug(2, "    -> connected by end points");
+
 	return 1;
     }
-
-    if (ax1 > ax2) {
-	t = ax1;
-	ax1 = ax2;
-	ax2 = t;
-	t = ay1;
-	ay1 = ay2;
-	ay2 = t;
-    }				/* to be sure that ax1 < ax2 */
-    if (bx1 > bx2) {
-	t = bx1;
-	bx1 = bx2;
-	bx2 = t;
-	t = by1;
-	by1 = by2;
-	by2 = t;
-    }				/* to be sure that bx1 < bx2 */
 
     /* a contains b */
     if (ax1 <= bx1 && ax2 >= bx2) {
@@ -383,10 +362,8 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	*x2 = bx2;
 	*y2 = by2;
 	*z2 = 0;
-	if (!switched)
-	    return 3;
-	else
-	    return 4;
+
+	return 3;
     }
     /* b contains a */
     if (ax1 >= bx1 && ax2 <= bx2) {
@@ -397,58 +374,41 @@ int Vect_segment_intersection(double ax1, double ay1, double az1, double ax2,
 	*x2 = ax2;
 	*y2 = ay2;
 	*z2 = 0;
-	if (!switched)
-	    return 4;
-	else
-	    return 3;
+
+	return 4;
     }
 
     /* general overlap, 2 intersection points (lines are not vertical) */
     G_debug(2, "    -> partial overlap");
     if (bx1 > ax1 && bx1 < ax2) {	/* b1 is in a */
-	if (!switched) {
-	    *x1 = bx1;
-	    *y1 = by1;
-	    *z1 = 0;
-	    *x2 = ax2;
-	    *y2 = ay2;
-	    *z2 = 0;
-	}
-	else {
-	    *x1 = ax2;
-	    *y1 = ay2;
-	    *z1 = 0;
-	    *x2 = bx1;
-	    *y2 = by1;
-	    *z2 = 0;
-	}
+	G_debug(2, "    -> b1 in a");
+	*x1 = bx1;
+	*y1 = by1;
+	*z1 = 0;
+	*x2 = ax2;
+	*y2 = ay2;
+	*z2 = 0;
+
 	return 2;
     }
     if (bx2 > ax1 && bx2 < ax2) {	/* b2 is in a */
-	if (!switched) {
-	    *x1 = bx2;
-	    *y1 = by2;
-	    *z1 = 0;
-	    *x2 = ax1;
-	    *y2 = ay1;
-	    *z2 = 0;
-	}
-	else {
-	    *x1 = ax1;
-	    *y1 = ay1;
-	    *z1 = 0;
-	    *x2 = bx2;
-	    *y2 = by2;
-	    *z2 = 0;
-	}
+	G_debug(2, "    -> b2 in a");
+	*x1 = ax1;
+	*y1 = ay1;
+	*z1 = 0;
+	*x2 = bx2;
+	*y2 = by2;
+	*z2 = 0;
+
 	return 2;
     }
 
     /* should not be reached */
     G_warning(_("Vect_segment_intersection() ERROR (collinear non vertical segments)"));
+    G_warning("a");
     G_warning("%.15g %.15g", ax1, ay1);
     G_warning("%.15g %.15g", ax2, ay2);
-    G_warning("x");
+    G_warning("b");
     G_warning("%.15g %.15g", bx1, by1);
     G_warning("%.15g %.15g", bx2, by2);
 
