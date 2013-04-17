@@ -838,12 +838,21 @@ int main(int argc, char *argv[])
 
     /* save= */
     if ((name = parm.save->answer)) {
-	if (G_legal_filename(name) < 0)
-	    G_fatal_error(_("<%s> is an illegal region name"), name);
+	char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
+
+	G_unqualified_name(name, "", xname, xmapset);
+
+	if(strlen(xmapset) && strcmp(G_mapset(), xmapset) != 0)
+	    G_fatal_error(_("You can only save to the current mapset"));
+
+	if (G_legal_filename(xname) < 0)
+	    G_fatal_error(_("<%s> is an illegal region name"), xname);
+
 	G_copy(&temp_window, &window, sizeof(window));
 	adjust_window(&temp_window, 0, 0, 0);
-	if (G__put_window(&temp_window, "windows", name) < 0)
-	    G_fatal_error(_("Unable to set region <%s>"), name);
+
+	if (G__put_window(&temp_window, "windows", xname) < 0)
+	    G_fatal_error(_("Unable to set region <%s>"), xname);
     }
 
     adjust_window(&window, row_flag, col_flag, 0);
