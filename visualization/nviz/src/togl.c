@@ -3545,6 +3545,7 @@ generateEPS(const char *filename, int inColor,
 
     fp = fopen(filename, "w");
     if (fp == NULL) {
+	free(pixels);
         return 2;
     }
     (void) fprintf(fp, "%%!PS-Adobe-2.0 EPSF-1.2\n");
