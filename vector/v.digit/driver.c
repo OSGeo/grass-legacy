@@ -2,6 +2,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/colors.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -78,7 +79,7 @@ static void setup(void)
     /* Set the map region associated with graphics frame */
     G_get_set_window(&region);
     if (G_set_window(&region) < 0)
-	G_fatal_error("Invalid graphics coordinates");
+	G_fatal_error(_("Can't set window"));
 
     /* Determine conversion factors */
     if (D_do_conversions(&region, t, b, l, r))
