@@ -18,6 +18,7 @@ This program is free software under the GNU General Public License
 
 import os
 import sys
+import re
 
 if __name__ == "__main__":
     sys.path.append(os.path.join(os.getenv('GISBASE'), 'etc', 'wxpython'))
@@ -444,11 +445,15 @@ class MapCalcFrame(wx.Frame):
             pass
         
         newmcalcstr += what + ' ' + mcalcstr[position:]
-        position_offset += len(what)
         
         self.text_mcalc.SetValue(newmcalcstr)
-        if len(what) > 1 and what[-2:] == '()':
-            position_offset -= 1
+        if len(what) > 1:
+            match = re.search(pattern="\(.*\)", string=what)
+            if match:
+                position_offset += match.start() + 1
+            else:
+                position_offset += len(what)
+
         self.text_mcalc.SetInsertionPoint(position + position_offset)
         self.text_mcalc.Update()
         
