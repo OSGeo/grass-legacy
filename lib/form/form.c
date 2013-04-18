@@ -6,8 +6,6 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-/* hack for tcl 8.6 */
-#define USE_INTERP_RESULT
 #include <tcl.h>
 #include <tk.h>
 
@@ -197,7 +195,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 		    TCL_ERROR) {
 		    G_warning
 			("Could not set Tcl system encoding to '%s' (%s)",
-			 Columns[i].value, interp->result);
+			 Columns[i].value, Tcl_GetStringResult(interp));
 		}
 	    }
 	    continue;
