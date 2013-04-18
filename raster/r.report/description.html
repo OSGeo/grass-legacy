@@ -34,6 +34,7 @@ Following is the result of a <em>r.report</em> run on the raster map layer
 units expressed in square miles and acres. Here, <em>r.report</em> output is
 directed into the file <em>report.file</em>.
 
+
 <h2>EXAMPLE:</h2>
 <dl>
 <dd>
@@ -71,7 +72,9 @@ directed into the file <em>report.file</em>.
 |__________________________________|___________|_____________|
 </pre>
 
+
 <h2>NOTES</h2>
+
 If the user runs <em>r.report</em> interactively and saves the report output
 in a file, this file will be placed into the user's current working
 directory.
@@ -80,6 +83,13 @@ directory.
 If the user runs <em>r.report</em> non-interactively, report output can be
 saved by redirecting it to a file or a printer using the UNIX redirection
 mechanism.
+
+<p>
+To output computer-friendly data suitable for importing into a spreadsheet
+use the <em>r.stats</em> module. In fact <em>r.report</em> is running
+<em>r.stats</em> in the background and reformatting the results to be
+more human-friendly.
+
 
 <h2>SEE ALSO</h2>
 
@@ -91,8 +101,11 @@ mechanism.
 <a href="r.univar.html">r.univar</a>
 </em>
 
+
 <h2>AUTHOR</h2>
+
 Michael Shapiro,
 U.S. Army Construction Engineering Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
