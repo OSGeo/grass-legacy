@@ -25,6 +25,7 @@ $(SCRIPT): $(PGM)
 
 $(BIN)/$(PGM).bat: $(MODULE_TOPDIR)/scripts/windows_launch.bat
 	sed -e "s#SCRIPT_NAME#$(PGM)#" $(MODULE_TOPDIR)/scripts/windows_launch.bat > $@
+	unix2dos $@
 
 # Make strings in a fake .c file so that they get picked up by the internationalizer stuff.
 # These are only the options (parser.c) type things.
