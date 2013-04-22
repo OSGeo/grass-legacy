@@ -728,27 +728,27 @@ class GMConsole(wx.SplitterWindow):
         self.cmdOutput.GotoPos(p1)
         
         if '\b' in message:
-            if self.linepos < 0:
-                self.linepos = p1
+            if self.linePos < 0:
+                self.linePos = p1
             last_c = ''
             for c in message:
                 if c == '\b':
-                    self.linepos -= 1
+                    self.linePos -= 1
                 else:
                     if c == '\r':
                         pos = self.cmdOutput.GetCurLine()[1]
                         # self.cmdOutput.SetCurrentPos(pos)
                     else:
-                        self.cmdOutput.SetCurrentPos(self.linepos)
+                        self.cmdOutput.SetCurrentPos(self.linePos)
                     self.cmdOutput.ReplaceSelection(c)
-                    self.linepos = self.cmdOutput.GetCurrentPos()
+                    self.linePos = self.cmdOutput.GetCurrentPos()
                     if c != ' ':
                         last_c = c
             if last_c not in ('0123456789'):
                 self.cmdOutput.AddTextWrapped('\n', wrap = None)
-                self.linepos = -1
+                self.linePos = -1
         else:
-            self.linepos = -1 # don't force position
+            self.linePos = -1 # don't force position
             if '\n' not in message:
                 self.cmdOutput.AddTextWrapped(message, wrap = 60)
             else:
