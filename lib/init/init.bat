@@ -23,8 +23,10 @@ rem
 rem #########################################################################
 
 set SAVEPATH=%PATH%
-rem DON'T include scripts directory in PATH - .bat files in bin directory
-rem are used to run scripts on Windows
+rem
+rem DON'T include the scripts/ directory in PATH -- The .bat files in the
+rem   bin/ directory are what execute the scripts on Windows.
+rem
 
 if exist "%APPDATA%\GRASS6\env.bat" (
    	call %APPDATA%\GRASS6\env.bat
@@ -113,6 +115,12 @@ if "%HAVE_GISRC%"=="true" (
 )
 set HAVE_GISRC=
 
+if "%PYTHONPATH%"="" (
+	set PYTHONPATH=%GISBASE%\etc\python
+) else (
+	set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python
+)
+
 if "%GRASS_GUI%"=="text" goto text
 if "%GRASS_GUI%"=="wxpython" goto wxpython
 
@@ -140,7 +148,7 @@ goto exitinit
 
 :wxpython
 
-set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python;%GISBASE%\etc\wxpython
+set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\wxpython
 
 if "%GRASS_PYTHON%"=="" set GRASS_PYTHON=python
 
@@ -167,6 +175,7 @@ type "%GISBASE%\etc\welcome"
 "%GISBASE%\etc\echo" "When ready to quit enter:                exit"
 "%GISBASE%\etc\echo" "Help is available with the command:      g.manual -i"
 "%GISBASE%\etc\echo" "See the licence terms with:              g.version -c"
+rem                  "Start the GUI with:                      g.gui wxpython"
 "%GISBASE%\etc\echo" ""
 
 prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F$G 
