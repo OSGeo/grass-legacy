@@ -252,6 +252,12 @@ else
     fi
 fi
 
+# in case of fire, break glass
+dos2unix_path()
+{
+   echo "$1" | sed -e 's|^\([A-Za-z]\):|/\1|' -e 's|\\|/|g'
+}
+
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC="$GISBASE/etc"
 
@@ -266,12 +272,13 @@ fi
 # if it doesn't exist set it to something so that g.extension's default is reasonable
 if [ -z "$GRASS_ADDON_PATH" ] ; then
     if [ "$MINGW" ] ; then
-	GRASS_ADDON_PATH="$APPDATA/GRASS6/addons"
+	APPDATA_UNIX=`dos2unix_path "$APPDATA"`
+	GRASS_ADDON_PATH="$APPDATA_UNIX/GRASS6/addons"
     else
 	GRASS_ADDON_PATH="$HOME/.grass6/addons"
     fi
+    export GRASS_ADDON_PATH
 fi
-export GRASS_ADDON_PATH
 PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
 export PATH
 
