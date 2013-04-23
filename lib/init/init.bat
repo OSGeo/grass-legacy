@@ -115,7 +115,7 @@ if "%HAVE_GISRC%"=="true" (
 )
 set HAVE_GISRC=
 
-if "%PYTHONPATH%"="" (
+if "%PYTHONPATH%" == "" (
 	set PYTHONPATH=%GISBASE%\etc\python
 ) else (
 	set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python
