@@ -383,29 +383,20 @@ int main(int argc, char *argv[])
 	}
 
 	if (KEY("setcolor")) {
-	    float R, G, B;
-	    int r, g, b;
-	    int color;
+	    int ret, r, g, b;
 	    int count;
 	    DCELL *val_list;
 	    DCELL dmin, dmax;
 	    char colorbuf[100];
 	    char catsbuf[100];
 
-	    if (PS.cell_fd < 0) {
-		error(key, data, "no raster map selected yet");
-		continue;
-	    }
+	    if (PS.cell_fd < 0)
+		error(key, data, _("no raster map selected yet"));
+
 	    if (sscanf(data, "%s %[^\n]", catsbuf, colorbuf) == 2) {
-		color = get_color_number(colorbuf);
-		if (color < 0) {
-		    error(key, data, "illegal color");
-		    continue;
-		}
-		get_color_rgb(color, &R, &G, &B);
-		r = 255.0 * R;
-		g = 255.0 * G;
-		b = 255.0 * B;
+		ret = G_str_to_color(colorbuf, &r, &g, &b);
+		if (ret != 1)
+		    error(key, colorbuf, _("illegal color request"));
 
 		if (strncmp(catsbuf, "null", 4) == 0) {
 		    G_set_null_value_color(r, g, b, &PS.colors);
@@ -415,15 +406,14 @@ int main(int argc, char *argv[])
 		    G_set_default_color(r, g, b, &PS.colors);
 		    continue;
 		}
-		if ((count = parse_val_list(catsbuf, &val_list)) < 0) {
-		    error(key, data, "illegal value list");
-		    continue;
-		}
+		if ((count = parse_val_list(catsbuf, &val_list)) < 0)
+		    error(key, data, _("illegal value list"));
+
 		for (i = 0; i < count; i += 2) {
 		    dmin = val_list[i];
 		    dmax = val_list[i + 1];
-		    G_add_d_raster_color_rule(&dmin, r, g, b, &dmax, r, g, b,
-					      &PS.colors);
+		    G_add_d_raster_color_rule(&dmin, r, g, b, &dmax,
+					      r, g, b, &PS.colors);
 		}
 		G_free(val_list);
 	    }
