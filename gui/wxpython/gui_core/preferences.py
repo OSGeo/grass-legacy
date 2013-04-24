@@ -49,6 +49,7 @@ from core          import globalvar
 from core.gcmd     import RunCommand, GError
 from core.utils    import ListOfMapsets, GetColorTables, ReadEpsgCodes, GetSettingsPath
 from core.settings import UserSettings
+from gui_core.widgets import IntegerValidator
 
 wxSettingsChanged, EVT_SETTINGS_CHANGED = NewEvent()
 
@@ -775,6 +776,36 @@ class PreferencesDialog(PreferencesBaseDialog):
 
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
+        
+        
+        #
+        # advanced
+        #
+        
+        # see initialization of nviz GLWindow
+        if globalvar.CheckWxVersion(version=[2, 8, 11]) and \
+           sys.platform not in ('win32', 'darwin'):
+            box   = wx.StaticBox (parent = panel, id = wx.ID_ANY, label = " %s " % _("Advanced display settings"))
+            sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+    
+            gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
+            row = 0
+            gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                               label = _("3D view depth buffer (possible values are 16, 24, 32):")),
+                          flag = wx.ALIGN_LEFT |
+                          wx.ALIGN_CENTER_VERTICAL,
+                          pos = (row, 0))
+            value = self.settings.Get(group='display', key='nvizDepthBuffer', subkey='value')
+            textCtrl = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=str(value), validator=IntegerValidator())
+            self.winId['display:nvizDepthBuffer:value'] = textCtrl.GetId()
+            gridSizer.Add(item = textCtrl,
+                          flag = wx.ALIGN_RIGHT |
+                          wx.ALIGN_CENTER_VERTICAL,
+                          pos = (row, 1))
+    
+            gridSizer.AddGrowableCol(0)
+            sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
+            border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
         
         panel.SetSizer(border)
                 
