@@ -591,7 +591,10 @@ class TaskFrame(wx.Frame):
         if self.parent.GetName() ==  'LayerTree':
             display = self.parent.GetMapDisplay()
         else: # Layer Manager
-            display = self.parent.GetLayerTree().GetMapDisplay()
+            display = None
+            tree = self.parent.GetLayerTree()
+            if tree:
+                display = tree.GetMapDisplay()
             
         if not display or not display.IsAutoRendered():
             return
