@@ -834,13 +834,13 @@ Section "GRASS" SecGRASS
 	;${StrReplace} "$UNIX_LIKE_GIS_DATABASE_PATH" "\" "/" "$GIS_DATABASE"
 
 	SetShellVarContext current  
-	${If} ${FileExists} "$APPDATA\GRASS@GRASS_VERSION_MAJOR@\rc"
-	      DetailPrint "File $APPDATA\GRASS@GRASS_VERSION_MAJOR@\rc already exists. Skipping."
+	${If} ${FileExists} "$APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6"
+	      DetailPrint "File $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6 already exists. Skipping."
 	${Else}
-	      ;create $APPDATA\GRASS@GRASS_VERSION_MAJOR@\rc
+	      ;create $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6
 	      ClearErrors
 	      CreateDirectory	$APPDATA\GRASS@GRASS_VERSION_MAJOR@
-	      FileOpen $0 $APPDATA\GRASS@GRASS_VERSION_MAJOR@\rc w
+	      FileOpen $0 $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6 w
 	      IfErrors done_create_grass_rc
 	      FileWrite $0 'GISDBASE: $GIS_DATABASE$\r$\n'
 	      FileWrite $0 'LOCATION_NAME: demolocation$\r$\n'
@@ -998,7 +998,7 @@ Function DownloadInstallMSRuntime
 	ExecWait "$TEMP\$ORIGINAL_UNTAR_FOLDER\bin\vcredist_2010_x86.exe /q"
 	CopyFiles "$TEMP\$ORIGINAL_UNTAR_FOLDER\bin\*.dll" "$INSTDIR\extralib"
 	Delete "$TEMP\$ARCHIVE_NAME"
-	Delete "$TEMP\$ORIGINAL_UNTAR_FOLDER"
+	RMDir /r "$TEMP\$ORIGINAL_UNTAR_FOLDER"
 	Goto end
 	
 	download_failed:
