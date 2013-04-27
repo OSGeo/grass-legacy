@@ -999,6 +999,7 @@ Function DownloadInstallMSRuntime
 	CopyFiles "$TEMP\$ORIGINAL_UNTAR_FOLDER\bin\*.dll" "$INSTDIR\extralib"
 	Delete "$TEMP\$ARCHIVE_NAME"
 	RMDir /r "$TEMP\$ORIGINAL_UNTAR_FOLDER"
+	RMDir "$TEMP\$ORIGINAL_UNTAR_FOLDER"
 	Goto end
 	
 	download_failed:
