@@ -834,13 +834,13 @@ Section "GRASS" SecGRASS
 	;${StrReplace} "$UNIX_LIKE_GIS_DATABASE_PATH" "\" "/" "$GIS_DATABASE"
 
 	SetShellVarContext current  
-	${If} ${FileExists} "$APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc@GRASS_VERSION_MAJOR@"
-	      DetailPrint "File $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc@GRASS_VERSION_MAJOR@ already exists. Skipping."
+	${If} ${FileExists} "$APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6"
+	      DetailPrint "File $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6 already exists. Skipping."
 	${Else}
-	      ;create $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc@GRASS_VERSION_MAJOR@
+	      ;create $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6
 	      ClearErrors
 	      CreateDirectory	$APPDATA\GRASS@GRASS_VERSION_MAJOR@
-	      FileOpen $0 $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc@GRASS_VERSION_MAJOR@ w
+	      FileOpen $0 $APPDATA\GRASS@GRASS_VERSION_MAJOR@\grassrc6 w
 	      IfErrors done_create_grass_rc
 	      FileWrite $0 'GISDBASE: $GIS_DATABASE$\r$\n'
 	      FileWrite $0 'LOCATION_NAME: demolocation$\r$\n'
