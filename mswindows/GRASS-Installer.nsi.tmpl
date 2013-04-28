@@ -863,6 +863,8 @@ Section "GRASS" SecGRASS
                  
 SectionEnd
 
+;--------------------------------------------------------------------------
+
 Function DownloadDataSet
 
 	IntOp $ARCHIVE_SIZE_MB $ARCHIVE_SIZE_KB / 1024
@@ -870,9 +872,9 @@ Function DownloadDataSet
 	StrCpy $DOWNLOAD_MESSAGE_ "The installer will download the $EXTENDED_ARCHIVE_NAME sample data set.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The archive is about $ARCHIVE_SIZE_MB MB and may take"
-	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_ several minutes to be downloaded.$\r$\n"
+	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_ several minutes to download.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
-	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The $EXTENDED_ARCHIVE_NAME will be copyed to:$\r$\n"
+	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The $EXTENDED_ARCHIVE_NAME dataset will be copied to:$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$GIS_DATABASE\$CUSTOM_UNTAR_FOLDER.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_Press OK to continue or Cancel to skip the download and complete the GRASS"
@@ -950,9 +952,6 @@ Section /O "South Dakota (Spearfish County) Data Set" SecSpearfishSDB
 
 SectionEnd
 
-;----------------------------------------------------------------------------------------------------------------------------
-
-
 Function DownloadInstallMSRuntime
 
 	IntOp $ARCHIVE_SIZE_MB $ARCHIVE_SIZE_KB / 1024
@@ -968,9 +967,9 @@ Function DownloadInstallMSRuntime
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_ or MSVCP100.dll'.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The archive is about $ARCHIVE_SIZE_MB MB and may take"
-	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_ several minutes to be downloaded.$\r$\n"
+	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_ several minutes to download.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
-	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The $EXTENDED_ARCHIVE_NAME will be copyed to:$\r$\n"
+	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_The $EXTENDED_ARCHIVE_NAME will be copied to:$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$TEMP\$CUSTOM_UNTAR_FOLDER.$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_$\r$\n"
 	StrCpy $DOWNLOAD_MESSAGE_ "$DOWNLOAD_MESSAGE_Press OK to continue and install the runtimes, or Cancel"
@@ -999,7 +998,7 @@ Function DownloadInstallMSRuntime
 	CopyFiles "$TEMP\$ORIGINAL_UNTAR_FOLDER\bin\*.dll" "$INSTDIR\extralib"
 	Delete "$TEMP\$ARCHIVE_NAME"
 	RMDir /r "$TEMP\$ORIGINAL_UNTAR_FOLDER"
-	RMDir "$TEMP\$ORIGINAL_UNTAR_FOLDER"
+	Delete "$TEMP\$ORIGINAL_UNTAR_FOLDER"
 	Goto end
 	
 	download_failed:
@@ -1035,7 +1034,7 @@ Section /O "Important Microsoft Runtime DLLs" SecMSRuntime
 
 SectionEnd
 
-;----------------------------------------------------------------------------------------------------------------------------
+;--------------------------------------------------------------------------
 
 ;Uninstaller Section
 
@@ -1065,14 +1064,14 @@ Section "Uninstall"
 
 SectionEnd
 
-;----------------------------------------------------------------------------------------------------------------------------
+;--------------------------------------------------------------------------
 
 ;Installer Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 	!insertmacro MUI_DESCRIPTION_TEXT ${SecGRASS} "Install GRASS ${VERSION_NUMBER}"
-	!insertmacro MUI_DESCRIPTION_TEXT ${SecMSRuntime} "Some software included in this installer (e.g. GDAL, Python) may need Microsoft's Visual C++ redistributable system libraries.$\r$\nDownload and install the Redistributable Package"	
-	!insertmacro MUI_DESCRIPTION_TEXT ${SecNorthCarolinaSDB} "Download and install the North Carolina (Wake County) sample data set"
-	!insertmacro MUI_DESCRIPTION_TEXT ${SecSpearfishSDB} "Download and install the South Dakota (Spearfish County) sample data set"
+	!insertmacro MUI_DESCRIPTION_TEXT ${SecMSRuntime} "Some software included in this installer (e.g. GDAL, Python) may need Microsoft's Visual C++ redistributable system libraries.$\r$\nDownload and install the Redistributable Package. (12 MB)"
+	!insertmacro MUI_DESCRIPTION_TEXT ${SecNorthCarolinaSDB} "Download and install the North Carolina (Wake County) sample data set. (135 MB)"
+	!insertmacro MUI_DESCRIPTION_TEXT ${SecSpearfishSDB} "Download and install the South Dakota (Spearfish County) sample data set. (20 MB)"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
-;----------------------------------------------------------------------------------------------------------------------------
+;--------------------------------------------------------------------------
