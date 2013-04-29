@@ -82,6 +82,7 @@ void Cairo_end_scaled_raster(void)
     cairo_translate(cairo, dst_l, dst_t);
     cairo_scale(cairo, (double)dst_w / (double)src_w,
 		(double)dst_h / (double)src_h);
+    cairo_surface_mark_dirty(src_surf);
     cairo_set_source_surface(cairo, src_surf, 0, 0);
     cairo_paint(cairo);
     cairo_restore(cairo);
