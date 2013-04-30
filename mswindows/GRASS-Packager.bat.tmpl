@@ -102,17 +102,6 @@ copy %OSGEO4W_DIR%\lib\sqlite3_i.lib %PACKAGE_DIR%\sqlite\lib
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
-@echo Copy GPSBABEL executable and dll to PACKAGE_DIR\gpsbabel
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo.
-
-mkdir %PACKAGE_DIR%\gpsbabel
-
-copy %OSGEO4W_DIR%\gpsbabel.exe %PACKAGE_DIR%\gpsbabel
-rem copy %OSGEO4W_DIR%\libexpat.dll %PACKAGE_DIR%\gpsbabel
-
-@echo.
-@echo -----------------------------------------------------------------------------------------------------------------------
 @echo Copy shared PROJ.4 files to PACKAGE_DIR\proj
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
