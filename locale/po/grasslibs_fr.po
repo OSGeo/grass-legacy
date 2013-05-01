@@ -1989,7 +1989,7 @@ msgstr "Le format demandé n'est pas compatible avec cette version"
 #: ../lib/vector/Vlib/build.c:123
 #, c-format
 msgid "Building topology for vector map <%s>..."
-msgstr "Construction de la topologie pour la crate vectorielle <%s>..."
+msgstr "Construction de la topologie pour la carte vectorielle <%s>..."
 
 #: ../lib/vector/Vlib/build.c:141
 msgid "Topology was built"
@@ -5069,3 +5069,7 @@ msgstr "Erreur de programmation"
 
 #~ msgid "unable to write f_format file for CELL maps"
 #~ msgstr "pas en mesure d'écrire des fichiers f_format pour des couches de cellules"
+
+#, fuzzy
+#~ msgid "MAPSET %s not found at %s"
+#~ msgstr "Jeu de données (MAPSET) %s n'a pas été trouvé"

@@ -35190,6 +35190,14 @@ msgstr "Nom de la couche raster d'angle"
 msgid "Percent to brighten"
 msgstr "Pourcentage de convergence"
 
+#, fuzzy
+msgid "Name of real-sky beam radiation coefficient input raster map [-]"
+msgstr "Couche raster du coefficient de rayonnement en plein ciel [-]"
+
+#, fuzzy
+msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
+msgstr "Couche raster du coefficient de rayonnement diffus en plein ciel [-]"
+
 #~ msgid "Entering script mode ..."
 #~ msgstr "Entrant dans le mode script..."
 
@@ -35350,14 +35358,6 @@ msgstr "Pourcentage de convergence"
 #, fuzzy
 #~ msgid "Neither %s nor %s was given"
 #~ msgstr "L'une des options, soit texte soit -c, doit être sélectionnée."
-
-#, fuzzy
-#~ msgid "Name of real-sky beam radiation coefficient input raster map [-]"
-#~ msgstr "Couche raster du coefficient de rayonnement en plein ciel [-]"
-
-#, fuzzy
-#~ msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
-#~ msgstr "Couche raster du coefficient de rayonnement diffus en plein ciel [-]"
 
 #~ msgid "Watershed basin analysis program."
 #~ msgstr "Programme d'analyse de bassin versant."
@@ -35628,3 +35628,15 @@ msgstr "Pourcentage de convergence"
 
 #~ msgid "4th map for mosaic."
 #~ msgstr "4ème couche pour la mosaïque."
+
+#, fuzzy
+#~ msgid "Sun elevation in degrees"
+#~ msgstr "Fichier raster d'altitude"
+
+#, fuzzy
+#~ msgid "Joins a database table to a vector map table."
+#~ msgstr "nom de la table attributaire existante (par défaut : nom de la couche vecteur)"
+
+#, fuzzy
+#~ msgid "Updates a column in the attribute table connected to a vector map."
+#~ msgstr "permet d'affecter une nouvelle valeur à la colonne de la table attributaire connectée à la table"
