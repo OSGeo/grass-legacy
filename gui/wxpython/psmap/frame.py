@@ -319,11 +319,15 @@ class PsMapFrame(wx.Frame):
                     GMessage(parent = self,
                              message = _("%(prg)s exited with return code %(code)s") % {'prg': command[0],
                                                                                         'code': ret})
-
+                else:
+                    self.SetStatusText(_('PDF generated'), 0)
             except OSError, e:
                 GError(parent = self,
                        message = _("Program ps2pdf is not available. Please install it to create PDF.\n\n %s") % e)
-                
+
+        elif not event.userData['temp']:
+            self.SetStatusText(_('PostScript file generated'), 0)
+
         # show preview only when user doesn't want to create ps or pdf 
         if havePILImage and event.userData['temp'] and not event.userData['pdfname']:
             RunCommand('g.region', cols = event.userData['regionOld']['cols'], rows = event.userData['regionOld']['rows'])
@@ -363,7 +367,9 @@ class PsMapFrame(wx.Frame):
         grass.try_remove(event.userData['instrFile'])
         if event.userData['temp']:
             grass.try_remove(event.userData['filename'])
-        
+            
+        wx.CallLater(4000, lambda: self.SetStatusText("", 0))
+
     def getFile(self, wildcard):
         suffix = []
         for filter in wildcard.split('|')[1::2]:
@@ -1128,6 +1134,7 @@ class PsMapBufferedWindow(wx.Window):
         self.idLinePointsTmp = (wx.NewId(), wx.NewId()) # ids of marks for moving line vertices
 
         self.resizeBoxSize = wx.Size(8, 8)
+        self.showResizeHelp = False # helper for correctly working statusbar
         
         
 
@@ -1356,9 +1363,12 @@ class PsMapBufferedWindow(wx.Window):
             if foundResize and foundResize[0] in (self.idResizeBoxTmp,) + self.idLinePointsTmp:
                 self.SetCursor(self.cursors["sizenwse"])
                 self.parent.SetStatusText(_('Click and drag to resize object'), 0)
+                self.showResizeHelp = True
             else:
-                self.parent.SetStatusText('', 0)
-                self.SetCursor(self.cursors["default"])
+                if self.showResizeHelp:
+                    self.parent.SetStatusText('', 0)
+                    self.SetCursor(self.cursors["default"])
+                    self.showResizeHelp = False
                 
     def OnLeftDown(self, event):
         """!Left mouse button pressed.
