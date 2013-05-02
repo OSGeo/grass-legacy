@@ -24,8 +24,10 @@ rem #########################################################################
 
 set SAVEPATH=%PATH%
 rem
-rem DON'T include the scripts/ directory in PATH -- The .bat files in the
-rem   bin/ directory are what execute the scripts on Windows.
+rem The .bat files in the \bin directory are what execute the scripts
+rem  on Windows. The \scripts dir is added to the PATH automatically by
+rem  the wxGUI; for Command Line mode and GIS.m, shell scripts called from
+rem  other shell scripts need to have %GISBASE%\scripts in the PATH.
 rem
 
 if exist "%APPDATA%\GRASS6\env.bat" (
@@ -121,9 +123,12 @@ if "%PYTHONPATH%" == "" (
 	set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python
 )
 
-if "%GRASS_GUI%"=="text" goto text
 if "%GRASS_GUI%"=="wxpython" goto wxpython
 
+PATH=%PATH%;%GISBASE%\scripts
+if "%GRASS_GUI%"=="text" goto text
+
+rem Tcl/Tk GUI setup
 if not "%GRASS_WISH%"=="" (
 	"%GRASS_WISH%" "%GISBASE%\etc\gis_set.tcl"
 ) else (
