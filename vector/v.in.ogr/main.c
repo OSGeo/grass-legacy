@@ -283,8 +283,11 @@ int main(int argc, char *argv[])
     ncnames = 0;
     if (cnames_opt->answers) {
 	i = 0;
-	while (cnames_opt->answers[i++]) {
+	while (cnames_opt->answers[i]) {
+	    G_strip(cnames_opt->answers[i]);
+	    G_strchg(cnames_opt->answers[i], ' ', '\0');
 	    ncnames++;
+	    i++;
 	}
     }
 
