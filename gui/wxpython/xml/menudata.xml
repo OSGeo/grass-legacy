@@ -724,7 +724,7 @@
         <separator />
         <menuitem>
           <label>Exit GUI</label>
-          <help>Quit wxGUI session</help>
+          <help>Quit the GRASS GUI session.</help>
           <handler>OnCloseWindow</handler>
           <shortcut>Ctrl+Q</shortcut>
           <id>ID_EXIT</id>
