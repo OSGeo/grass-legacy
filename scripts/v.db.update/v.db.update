@@ -43,14 +43,16 @@
 #%option
 #% key: value
 #% type: string
-#% description: Literal value to update the column with
+#% label: Literal value to update the column with
+#% description: Varchar values must be in single quotes, e.g. 'grass'
 #% required : no
 #%end
 #%option
 #% key: qcolumn
 #% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
 #% type: string
-#% description: Name of other attribute column to query, can be combination of columns (e.g. col1+col2)
+#% label: Name of attribute column to query
+#% description: Can be a combination of columns, e.g. col1+col2
 #% required : no
 #%end
 #%option
