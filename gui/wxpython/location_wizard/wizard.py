@@ -21,7 +21,7 @@ Classes:
  - wizard::LocationWizard
  - wizard::WizardWithHelpButton
 
-(C) 2007-2011 by the GRASS Development Team
+(C) 2007-2013 by the GRASS Development Team
 
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -1494,11 +1494,13 @@ class CustomPage(TitledPage):
 
     def OnPageChanging(self, event):
         if event.GetDirection():
-        # check for datum tranforms            
+        # check for datum tranforms
+        # FIXME: -t flag is a hack-around for trac bug #1849
             ret, out, err = RunCommand('g.proj',
                                        read = True, getErrorMsg = True,
                                        proj4 = self.customstring, 
-                                       datumtrans = '-1')
+                                       datumtrans = '-1',
+                                       flags = 't')
             if ret != 0:
                 wx.MessageBox(parent = self,
                               message = err,
