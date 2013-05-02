@@ -187,6 +187,9 @@ static void parse_command_line(int argc, char **argv)
     /* Initialize the GIS calls */
     G_gisinit(argv[0]);
 
+    table = G_define_standard_option(G_OPT_TABLE);
+    table->guisection = _("Connection"); 
+
     sql = G_define_option();
     sql->key = "sql";
     sql->type = TYPE_STRING;
@@ -200,9 +203,6 @@ static void parse_command_line(int argc, char **argv)
     input->required = NO;
     input->description = _("Name of file with SQL select statement(s)");
     input->guisection = _("Query");
-
-    table = G_define_standard_option(G_OPT_TABLE);
-    table->guisection = _("Connection"); 
 
     database = G_define_standard_option(G_OPT_DATABASE);
     if ((db = db_get_default_database_name()))
