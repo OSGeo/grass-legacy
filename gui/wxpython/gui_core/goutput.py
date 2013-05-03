@@ -265,10 +265,10 @@ class GMConsole(wx.SplitterWindow):
         self.btnCmdAbort.SetToolTipString(_("Abort running command"))
         self.btnCmdAbort.Enable(False)
         self.btnCmdProtocol = wx.ToggleButton(parent = self.panelOutput, id = wx.ID_ANY,
-                                              label = _("&Protocol"),
+                                              label = _("&Log file"),
                                               size = self.btnCmdClear.GetSize())
-        self.btnCmdProtocol.SetToolTipString(_("Toggle to save list of executed commands into file; "
-                                               "content saved when switching off."))
+        self.btnCmdProtocol.SetToolTipString(_("Toggle to save list of executed commands into "
+                                               "a file; content saved when switching off."))
         
         if self.parent.GetName() != 'LayerManager':
             self.btnCmdClear.Hide()
@@ -673,7 +673,7 @@ class GMConsole(wx.SplitterWindow):
                 GError(_("Unable to write file '%(path)s'.\n\nDetails: %(error)s") % {'path': path, 'error': e})
             finally:
                 output.close()
-            self.parent.SetStatusText(_("Commands output saved into '%s'") % path)
+            self.parent.SetStatusText(_("Command output saved into '%s'") % path)
         
         dlg.Destroy()
 
@@ -772,12 +772,12 @@ class GMConsole(wx.SplitterWindow):
         self.progressbar.SetValue(event.value)
 
     def CmdProtocolSave(self):
-        """Save commands protocol into the file"""
+        """Save list of manually entered commands into a text log file"""
         if not hasattr(self, 'cmdFileProtocol'):
             return # it should not happen
         
         try:
-            output = open(self.cmdFileProtocol, "w")
+            output = open(self.cmdFileProtocol, "a")
             cmds = self.cmdPrompt.GetCommands()
             output.write('\n'.join(cmds))
             if len(cmds) > 0:
@@ -788,7 +788,7 @@ class GMConsole(wx.SplitterWindow):
         finally:
             output.close()
             
-        self.parent.SetStatusText(_("Commands protocol saved into '%s'") % self.cmdFileProtocol)
+        self.parent.SetStatusText(_("Command log saved to '%s'") % self.cmdFileProtocol)
         del self.cmdFileProtocol
         
     def OnCmdProtocol(self, event = None):
@@ -802,10 +802,10 @@ class GMConsole(wx.SplitterWindow):
             self.cmdPrompt.ClearCommands()
             # ask for the file
             dlg = wx.FileDialog(self, message = _("Save file as..."),
-                                defaultFile = "grass_cmd_protocol.txt",
+                                defaultFile = "grass_cmd_log.txt",
                                 wildcard = _("%(txt)s (*.txt)|*.txt|%(files)s (*)|*") % 
                                             {'txt': _("Text files"), 'files': _("Files")},
-                                style = wx.SAVE | wx.FD_OVERWRITE_PROMPT)
+                                style = wx.SAVE)
             if dlg.ShowModal() == wx.ID_OK:
                 self.cmdFileProtocol = dlg.GetPath()
             else:
