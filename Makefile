@@ -389,6 +389,13 @@ srclibsdist: FORCE distclean
 builddemolocation:
 	test -d ${ARCH_DISTDIR} || ${MAKE_DIR_CMD} ${ARCH_DISTDIR}
 	-tar cBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
+	-(cd ${ARCH_DISTDIR}/demolocation ; \
+		rm -rf ".svn" ; \
+		rm -rf "PERMANENT/.svn" ; \
+		rm -rf "PERMANENT/vector/.svn" ; \
+		rm -rf "PERMANENT/vector/mysites/.svn" ; \
+		rm -rf "PERMANENT/vector/point/.svn" ; \
+		rm -rf "PERMANENT/dbf/.svn" )
 	@ echo "GISDBASE: ${RUN_GISBASE}" > ${RUN_GISRC}
 	@ echo "LOCATION_NAME: demolocation" >> ${RUN_GISRC}
 	@ echo "MAPSET: PERMANENT" >> ${RUN_GISRC}
