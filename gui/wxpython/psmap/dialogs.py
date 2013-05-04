@@ -4383,10 +4383,10 @@ class ImageDialog(PsmapDialog):
         dc.SelectObject(buffer)
         dc.SetBrush(wx.WHITE_BRUSH)
         dc.Clear()
+        dc.SelectObject(wx.NullBitmap)
         mask = wx.Mask(buffer, wx.WHITE)
         buffer.SetMask(mask)
         self.imagePanel.image['preview'].SetBitmap(buffer)
-        dc.SelectObject(wx.NullBitmap)
         
     def update(self): 
         # epsfile
