@@ -4371,6 +4371,7 @@ class ImageDialog(PsmapDialog):
             dc.SelectObject(wx.NullBitmap)
         else:
             self.imagePanel.image['preview'].SetBitmap(bitmap)
+        self.imagePanel.Refresh()
             
     def SetSizeInfoLabel(self, image):
         """!Update image size label"""
