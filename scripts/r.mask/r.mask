@@ -6,7 +6,7 @@
 # AUTHOR(S):	Michael Barton, Arizona State University
 #               Markus Neteler
 # PURPOSE:	    Facilitates creation of raster MASK using r.reclass
-# COPYRIGHT:	(C) 2005, 2007-2009 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005-2013 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -96,11 +96,13 @@ if [ -n "$GIS_OPT_INPUT" ]; then
    fi
 fi
 
-if [ -n "$GIS_OPT_MASKCATS" -a "$GIS_FLAG_R" -eq 0 ]; then
-   eval `r.info -t $GIS_OPT_INPUT`
-   if [ "$datatype" != "CELL" ] ; then
-      g.message -e "Raster map <$GIS_OPT_INPUT> must be integer for maskcats parameter"
-      exit 1
+if [ "$GIS_FLAG_R" -eq 0 ] ; then
+   if [ -n "$GIS_OPT_MASKCATS" -a "$GIS_OPT_MASKCATS" != '*' ] ; then
+      eval `r.info -t $GIS_OPT_INPUT`
+      if [ "$datatype" != "CELL" ] ; then
+         g.message -e "Raster map <$GIS_OPT_INPUT> must be integer for maskcats parameter"
+         exit 1
+      fi
    fi
 fi
 
