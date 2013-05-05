@@ -2004,6 +2004,11 @@ class PsMapBufferedWindow(wx.Window):
     def DrawBitmap(self, pdc, filePath, rotation, bbox):
         """!Draw bitmap using PIL"""
         pImg = PILImage.open(filePath)
+        if sys.platform == 'win32' and \
+           'eps' in os.path.splitext(filePath)[1].lower():
+               import types
+               pImg.load = types.MethodType(loadPSForWindows, pImg)
+        
         if rotation:
             # get rid of black background
             pImg = pImg.convert("RGBA")
