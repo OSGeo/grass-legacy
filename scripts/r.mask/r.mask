@@ -6,7 +6,7 @@
 # AUTHOR(S):	Michael Barton, Arizona State University
 #               Markus Neteler
 # PURPOSE:	    Facilitates creation of raster MASK using r.reclass
-# COPYRIGHT:	(C) 2005, 2007-2009 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005-2013 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -29,7 +29,8 @@
 #%option
 #% key: maskcats
 #% type: string
-#% description: Category values to use for MASK (format: 1 2 3 thru 7 *)
+#% label: Category values to use for MASK
+#% description: format: 1 2 3 thru 7 *
 #% answer: *
 #% guisection: Create
 #%end
@@ -49,12 +50,12 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+   echo "You must be in GRASS GIS to run this program." >&2
+   exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+   exec g.parser "$0" "$@"
 fi
 
 if [ -n "$GRASS_OVERWRITE" ] && [ "$GRASS_OVERWRITE" -eq 1 ] ; then
@@ -62,32 +63,32 @@ if [ -n "$GRASS_OVERWRITE" ] && [ "$GRASS_OVERWRITE" -eq 1 ] ; then
 fi
 
 if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -le 2 ] ; then
-  BEQUIET="--quiet"
+   BEQUIET="--quiet"
 else
-  BEQUIET=""
+   BEQUIET=""
 fi
 
 # temp file
-TEMPRAST="r_mask_$$"
+TEMPRAST="tmp_r_mask_$$"
 
 cleanup()
 {
- g.remove --q rast="$TEMPRAST"
+   g.remove --quiet rast="$TEMPRAST"
 }
 
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
- cleanup
- exit 1
+   g.message -e 'User break!'
+   cleanup
+   exit 1
 }
 
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
 
-# if map is given check if existing
-if [ -n "$GIS_OPT_INPUT" ]; then
+# if input map is given, check if it exists
+if [ -n "$GIS_OPT_INPUT" ] ; then
    eval `g.findfile element=cell file="$GIS_OPT_INPUT"`
    filename="$fullname"
    if [ -z "$filename" ] ; then
@@ -96,50 +97,57 @@ if [ -n "$GIS_OPT_INPUT" ]; then
    fi
 fi
 
-if [ -n "$GIS_OPT_MASKCATS" -a "$GIS_FLAG_R" -eq 0 ]; then
-   eval `r.info -t $GIS_OPT_INPUT`
+if [ "$GIS_FLAG_R" -eq 1 ] ; then
+   # remove existing MASK from current mapset
+   if test -f "`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK" ; then
+      g.remove rast=MASK
+      g.message $BEQUIET "Raster MASK removed"
+   else
+      g.message $BEQUIET -w "No existing MASK to remove"
+   fi
+   exit 0
+fi
+
+
+# create new MASK
+if [ -n "$GIS_OPT_MASKCATS" -a "$GIS_OPT_MASKCATS" != '*' ] ; then
+   # test for compatibility
+   eval `r.info -t "$GIS_OPT_INPUT"`
    if [ "$datatype" != "CELL" ] ; then
-      g.message -e "Raster map <$GIS_OPT_INPUT> must be integer for maskcats parameter"
+      g.message -e "The raster map <$GIS_OPT_INPUT> must be integer (CELL type) \
+		    in order to use the 'maskcats' parameter"
       exit 1
    fi
 fi
 
-if [ "$GIS_FLAG_R" -eq 1 ]; then
-	if test -f "`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK" ; then
- 		g.remove rast=MASK
- 		g.message $BEQUIET "Raster MASK removed"
- 	else
- 		g.message $BEQUIET -w "No existing MASK to remove"
-	fi
-else
-	if [ -z "$GIS_OPT_INPUT" ]; then
-		g.message $BEQUIET -w "No raster map for MASK provided"
-		exit 1;
-	fi
-	if [ "$GIS_FLAG_O" -eq 1 ]; then
-		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK --o
-	else 
-		# does map exist in CURRENT mapset?
-		eval `g.findfile element=cell file=MASK mapset="$MAPSET"`
-		if [ -n "$file" ] ; then
-		   g.message -e "MASK already found in current mapset. Delete first or overwrite"
-		   exit 1
-		fi
-
-		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK
-	fi
-
-        if [ "$GIS_FLAG_I" -eq 1 ]; then
-		g.rename --q rast=MASK,"$TEMPRAST"
-		r.mapcalc "MASK = if(isnull($TEMPRAST),1,null())"
-		g.remove --q rast="$TEMPRAST"
-		g.message $BEQUIET "Inverted MASK created. All subsequent raster operations"
-	else
-	  g.message $BEQUIET "MASK created. All subsequent raster operations"
-	fi
-        g.message $BEQUIET "will be limited to MASK area"
-        g.message $BEQUIET "Removing or renaming raster file named MASK will"
-        g.message $BEQUIET "restore raster operations to normal"
+if [ -z "$GIS_OPT_INPUT" ] ; then
+   g.message $BEQUIET -w "No raster map for MASK provided"
+   exit 1
 fi
+
+if [ "$GIS_FLAG_O" -eq 1 ] ; then
+   echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK --o
+else 
+   # does map exist in CURRENT mapset?
+   eval `g.findfile element=cell file=MASK mapset="$MAPSET"`
+   if [ -n "$file" ] ; then
+      g.message -e "MASK already found in current mapset. Delete first or overwrite"
+      exit 1
+   fi
+
+   echo "$GIS_OPT_MASKCATS = 1" | r.reclass input="$GIS_OPT_INPUT" output=MASK
+fi
+
+if [ "$GIS_FLAG_I" -eq 1 ] ; then
+   g.rename --quiet rast=MASK,"$TEMPRAST"
+   r.mapcalc "MASK = if(isnull($TEMPRAST),1,null())"
+   g.remove --quiet rast="$TEMPRAST"
+   g.message $BEQUIET "Inverted MASK created. All subsequent raster operations"
+else
+   g.message $BEQUIET "MASK created. All subsequent raster operations"
+fi
+g.message $BEQUIET "will be limited to the MASK area."
+g.message $BEQUIET "Removing or renaming the raster map named 'MASK' will \
+                    restore raster operations to normal."
 
 exit 0

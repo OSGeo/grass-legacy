@@ -39,14 +39,14 @@ areas outside the MASK will be ignored until the MASK map
 is removed.
 <p>
 
-The mask is read as an integer map. If MASK is actually a
+The MASK is read as an integer map. If MASK is actually a
 floating-point map, the values will be converted to integers using the
 map's quantisation rules (this defaults to round-to-nearest, but can
 be changed with r.quant).
 <p>
 
 <em>r.mask</em> uses <em>r.reclass</em> to create a reclassification of an
-existing raster map and name it MASK. A reclass map takes up less space, but
+existing raster map and name it <tt>MASK</tt>. A reclass map takes up less space, but
 is affected by any changes to the underlying map from which it was created.
 The user can select category values from the input raster to use in the MASK
 with the <em>maskcats</em> parameter; if <em>r.mask</em> is run from the
@@ -57,6 +57,7 @@ command line, the category values listed in <em>maskcats</em> must be quoted
 Somewhat similar program functions to those performed by
 <em>r.mask</em> can be done using <em>r.mapcalc</em>, 
 <em>g.region</em>, and other commands.
+
 
 <h2>EXAMPLES</h2>
 
@@ -84,6 +85,7 @@ d.erase
 d.rast geology_30m
 </pre></div>
 
+
 <h2>SEE ALSO</h2>
 <em>
 <a href="g.region.html">g.region</a>,
@@ -92,6 +94,7 @@ d.rast geology_30m
 <a href="g.remove.html">g.remove</a>,
 <a href="g.rename.html">g.rename</a>
 </em>
+
 
 <h2>AUTHOR</h2>
 
