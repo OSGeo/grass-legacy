@@ -944,7 +944,7 @@ class GMConsole(wx.SplitterWindow):
                     mapTree = None
                 
                 cmd = dialog.notebookpanel.createCmd(ignoreErrors = True)
-                if hasattr(dialog, "addbox") and dialog.addbox.IsChecked():
+                if mapTree and hasattr(dialog, "addbox") and dialog.addbox.IsChecked():
                     # add created maps into layer tree
                     for p in dialog.task.get_options()['params']:
                         prompt = p.get('prompt', '')
