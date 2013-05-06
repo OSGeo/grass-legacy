@@ -117,16 +117,16 @@ if "%HAVE_GISRC%"=="true" (
 )
 set HAVE_GISRC=
 
-if "%PYTHONPATH%" == "" (
-	set PYTHONPATH=%GISBASE%\etc\python
-) else (
-	set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python
-)
+rem why doesn't it like if () else ()?
+if not "%PYTHONPATH%" == "" set PYTHONPATH=%PYTHONPATH%;%GISBASE%\etc\python
+if "%PYTHONPATH%" == "" set PYTHONPATH=%GISBASE%\etc\python
+
 
 if "%GRASS_GUI%"=="wxpython" goto wxpython
 
 PATH=%PATH%;%GISBASE%\scripts
 if "%GRASS_GUI%"=="text" goto text
+
 
 rem Tcl/Tk GUI setup
 if not "%GRASS_WISH%"=="" (
