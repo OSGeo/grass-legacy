@@ -902,7 +902,8 @@ class DatumPage(TitledPage):
                                  read = True,
                                  proj4 = '%s' % proj,
                                  datum = '%s' % self.datum, 
-                                 datumtrans = '-1')
+                                 datumtrans = '-1',
+                                 flags = 't')
 #                wx.Messagebox('here')
                 if ret != '':
                     dtrans = ''
@@ -1346,7 +1347,8 @@ class EPSGPage(TitledPage):
                 ret = RunCommand('g.proj',
                                  read = True,
                                  epsg = self.epsgcode,
-                                 datumtrans = '-1')
+                                 datumtrans = '-1',
+                                 flags = 't')
                 
                 if ret != '':
                     dtrans = ''
