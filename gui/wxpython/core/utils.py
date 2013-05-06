@@ -331,6 +331,41 @@ def GetVectorNumberOfLayers(vector, parent = None):
     
     return layers
 
+def GetAllVectorLayers(vector):
+    """!Returns list of all vector layers as strings.
+
+    @param vector name of vector map
+    """
+    layers = []
+    if not vector:
+        return layers
+    
+    fullname = grass.find_file(name = vector, element = 'vector')['fullname']
+    if not fullname:
+        Debug.msg(3, "utils.GetAllVectorLayers(): vector map <%s> not found" % vector)
+        return layers
+    
+    ret, out, msg = RunCommand('v.category',
+                               getErrorMsg = True,
+                               read = True,
+                               quiet = True,
+                               option = 'layers',
+                               input = fullname)
+
+    if ret != 0:
+        sys.stderr.write(_("Vector map <%(map)s>: %(msg)s\n") % { 'map' : fullname, 'msg' : msg })
+        return layers
+    
+    Debug.msg(1, "utils.GetAllVectorLayers(): ret %s" % ret)
+
+    for layer in out.splitlines():
+        layers.append(layer)
+
+    Debug.msg(3, "utils.GetAllVectorLayers(): vector=%s -> %s" % \
+                  (fullname, ','.join(layers)))
+
+    return layers
+
 def Deg2DMS(lon, lat, string = True, hemisphere = True, precision = 3):
     """!Convert deg value to dms string
 
