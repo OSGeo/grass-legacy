@@ -1638,13 +1638,12 @@ class SummaryPage(TitledPage):
         if coordsys in ('proj', 'epsg'):
             if coordsys == 'proj':
                 addl_opts = {}
-                dtover_flag = ''
-                if 'datum' == '':
+                if len(datum) > 0:
                     addl_opts['datum'] = '%s' % datum
                     addl_opts['datumtrans'] = dtrans
-                    dtover_flag = 't'
+
                 ret, projlabel, err = RunCommand('g.proj',
-                                                 flags = 'jf' + dtover_flag,
+                                                 flags = 'jf',
                                                  proj4 = proj4string,
                                                  location = location,
                                                  getErrorMsg = True,
