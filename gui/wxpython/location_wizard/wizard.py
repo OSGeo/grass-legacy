@@ -891,7 +891,7 @@ class DatumPage(TitledPage):
     def OnPageChanging(self, event):
         self.proj4params = ''
         proj = self.parent.projpage.p4proj
-                
+        
         if event.GetDirection():
             if self.datum not in self.parent.datums:
                 event.Veto()
@@ -994,7 +994,7 @@ class EllipsePage(TitledPage):
         TitledPage.__init__(self, wizard, _("Specify ellipsoid"))
 
         self.parent = parent
-        
+
         self.ellipse = ''
         self.ellipsedesc = ''
         self.ellipseparams = ''
@@ -1342,9 +1342,9 @@ class EPSGPage(TitledPage):
             if not self.epsgcode:
                 event.Veto()
                 return
-            else:              
+            else:
                 # check for datum transforms
-                ret = RunCommand('g.proj',
+		ret = RunCommand('g.proj',
                                  read = True,
                                  epsg = self.epsgcode,
                                  datumtrans = '-1',
@@ -1518,7 +1518,7 @@ class CustomPage(TitledPage):
                 
                 if dlg.ShowModal() == wx.ID_OK:
                     dtrans = dlg.GetTransform()
-                    if len(dtrans) == 0:
+                    if dtrans == '':
                         dlg.Destroy()
                         event.Veto()
                         return _('Datum transform is required.')
@@ -1637,14 +1637,19 @@ class SummaryPage(TitledPage):
         global coordsys
         if coordsys in ('proj', 'epsg'):
             if coordsys == 'proj':
+                addl_opts = {}
+                dtover_flag = ''
+                if 'datum' == '':
+                    addl_opts['datum'] = '%s' % datum
+                    addl_opts['datumtrans'] = dtrans
+                    dtover_flag = 't'
                 ret, projlabel, err = RunCommand('g.proj',
-                                                 flags = 'jf',
+                                                 flags = 'jf' + dtover_flag,
                                                  proj4 = proj4string,
-                                                 datum = datum,
-                                                 datumtrans = dtrans,
                                                  location = location,
                                                  getErrorMsg = True,
-                                                 read = True)
+                                                 read = True,
+                                                 **addl_opts)
             elif coordsys == 'epsg':
                 ret, projlabel, err = RunCommand('g.proj',
                                                  flags = 'jf',
