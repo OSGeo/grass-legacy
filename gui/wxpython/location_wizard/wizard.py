@@ -1496,39 +1496,54 @@ class CustomPage(TitledPage):
 
     def OnPageChanging(self, event):
         if event.GetDirection():
-            if self.customstring.find('+datum=') >= 0:
-                # check for datum tranforms
-                # FIXME: -t flag is a hack-around for trac bug #1849
-                ret, out, err = RunCommand('g.proj',
-                                           read = True, getErrorMsg = True,
-                                           proj4 = self.customstring, 
-                                           datumtrans = '-1',
-                                           flags = 't')
-                if ret != 0:
-                    wx.MessageBox(parent = self,
-                                  message = err,
-                                  caption = _("Error"),
-                                  style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
-                    event.Veto()
-                    return
-            
-                if out:
-                    dtrans = ''
-                    # open a dialog to select datum transform number
-                    dlg = SelectTransformDialog(self.parent.parent, transforms = out)
-                
-                    if dlg.ShowModal() == wx.ID_OK:
-                        dtrans = dlg.GetTransform()
-                        if dtrans == '':
-                            dlg.Destroy()
-                            event.Veto()
-                            return _('Datum transform is required.')
-                    else:
+            if self.customstring.find('+datum=') < 0:
+                self.GetNext().SetPrev(self)
+                return
+
+            # check for datum tranforms
+            # FIXME: -t flag is a hack-around for trac bug #1849
+            print "...here3 [%s]\n" % self.customstring
+            ret, out, err = RunCommand('g.proj',
+                                       read = True, getErrorMsg = True,
+                                       proj4 = self.customstring, 
+                                       datumtrans = '-1',
+                                       flags = 't')
+            if ret != 0:
+                wx.MessageBox(parent = self,
+                              message = err,
+                              caption = _("Error"),
+                              style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                event.Veto()
+                return
+        
+            if out:
+                dtrans = ''
+                # open a dialog to select datum transform number
+                dlg = SelectTransformDialog(self.parent.parent, transforms = out)
+                if dlg.ShowModal() == wx.ID_OK:
+                    dtrans = dlg.GetTransform()
+                    if dtrans == '':
                         dlg.Destroy()
                         event.Veto()
                         return _('Datum transform is required.')
-                
-                    self.parent.datumtrans = dtrans
+                else:
+                    dlg.Destroy()
+                    event.Veto()
+                    return _('Datum transform is required.')
+            
+                self.parent.datumtrans = dtrans
+# TODO: add +nadgrids or +towgs84 terms to Summary page.
+# first get them:
+#                ret, projlabel, err = RunCommand('g.proj',
+#                                                 flags = 'jf',
+#                                                 proj4 = self.customstring,
+#                                                 datumtrans = dtrans,
+#                                                 getErrorMsg = True,
+#                                                 read = True)
+#                print "... [%s]\n" % projlabel
+#		self.customstring = projlabel
+# possibly a better way to do it: split() the result, pick out str.find(+nad,+towgs) and
+# manually add them as + a second string to the list in the print.
 
         self.GetNext().SetPrev(self)
             
@@ -1993,10 +2008,15 @@ class LocationWizard(wx.Object):
                                       datumtrans = self.datumtrans,
                                       desc = self.startpage.locTitle)
             elif coordsys == 'custom':
+                addl_opts = {}
+                if self.datumtrans is not None:
+                    addl_opts['datumtrans'] = self.datumtrans
+
                 grass.create_location(dbase = self.startpage.grassdatabase,
                                       location = self.startpage.location,
                                       proj4 = self.custompage.customstring,
-                                      desc = self.startpage.locTitle)
+                                      desc = self.startpage.locTitle,
+                                      **addl_opts)
             elif coordsys == "epsg":
                 if not self.epsgpage.epsgcode:
                     return _('EPSG code missing.')
@@ -2047,12 +2067,12 @@ class LocationWizard(wx.Object):
         ellipse = self.ellipsepage.ellipse
         ellipsedesc = self.ellipsepage.ellipsedesc
         ellipseparams = self.ellipsepage.ellipseparams
-                
+        
         #
         # creating PROJ.4 string
         #
         proj4string = '%s %s' % (proj, proj4params)
-                            
+
         # set ellipsoid parameters
         if ellipse != '':
             proj4string = '%s +ellps=%s' % (proj4string, ellipse)
@@ -2062,14 +2082,14 @@ class LocationWizard(wx.Object):
             else:
                 item = ' +' + item
             proj4string = '%s %s' % (proj4string, item)
-            
+        
         # set datum transform parameters if relevant
         if datumparams:
             for item in datumparams:
                 proj4string = '%s +%s' % (proj4string,item)
 
         proj4string = '%s +no_defs' % proj4string
-        
+
         return proj4string
 
     def OnHelp(self, event):
