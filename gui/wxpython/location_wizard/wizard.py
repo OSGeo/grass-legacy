@@ -1344,7 +1344,7 @@ class EPSGPage(TitledPage):
                 return
             else:
                 # check for datum transforms
-		ret = RunCommand('g.proj',
+                ret = RunCommand('g.proj',
                                  read = True,
                                  epsg = self.epsgcode,
                                  datumtrans = '-1',
@@ -1496,6 +1496,8 @@ class CustomPage(TitledPage):
 
     def OnPageChanging(self, event):
         if event.GetDirection():
+            self.custom_dtrans_string = ''
+
             if self.customstring.find('+datum=') < 0:
                 self.GetNext().SetPrev(self)
                 return
@@ -1531,18 +1533,19 @@ class CustomPage(TitledPage):
                     return _('Datum transform is required.')
             
                 self.parent.datumtrans = dtrans
-# TODO: add +nadgrids or +towgs84 terms to Summary page.
-# first get them:
-#                ret, projlabel, err = RunCommand('g.proj',
-#                                                 flags = 'jf',
-#                                                 proj4 = self.customstring,
-#                                                 datumtrans = dtrans,
-#                                                 getErrorMsg = True,
-#                                                 read = True)
-#                print "... [%s]\n" % projlabel
-#		self.customstring = projlabel
-# possibly a better way to do it: split() the result, pick out str.find(+nad,+towgs) and
-# manually add them as + a second string to the list in the print.
+
+                # prepare +nadgrids or +towgs84 terms for Summary page. first convert them:
+                ret, projlabel, err = RunCommand('g.proj',
+                                                 flags = 'jf',
+                                                 proj4 = self.customstring,
+                                                 datumtrans = dtrans,
+                                                 getErrorMsg = True,
+                                                 read = True)
+                # splitting on space alone would break for grid files with space in pathname
+                for projterm in projlabel.split(' +'):
+                    if projterm.find("towgs84=") != -1 or projterm.find("nadgrids=") != -1:
+                        self.custom_dtrans_string = ' +%s' % projterm
+                        break
 
         self.GetNext().SetPrev(self)
             
@@ -1707,7 +1710,8 @@ class SummaryPage(TitledPage):
             self.lproj4string.SetLabel("")
         elif coordsys == 'custom':
             label = _("custom")
-            self.lproj4string.SetLabel(('%s' % self.parent.custompage.customstring.replace(' ', os.linesep)))
+            combo_str = self.parent.custompage.customstring + self.parent.custompage.custom_dtrans_string
+            self.lproj4string.SetLabel(('%s' % combo_str.replace(' ', os.linesep)))
         self.lprojection.SetLabel(label)
         
     def OnFinish(self, event):
