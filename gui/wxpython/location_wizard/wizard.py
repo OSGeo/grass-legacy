@@ -1496,39 +1496,40 @@ class CustomPage(TitledPage):
 
     def OnPageChanging(self, event):
         if event.GetDirection():
-        # check for datum tranforms
-        # FIXME: -t flag is a hack-around for trac bug #1849
-            ret, out, err = RunCommand('g.proj',
-                                       read = True, getErrorMsg = True,
-                                       proj4 = self.customstring, 
-                                       datumtrans = '-1',
-                                       flags = 't')
-            if ret != 0:
-                wx.MessageBox(parent = self,
-                              message = err,
-                              caption = _("Error"),
-                              style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
-                event.Veto()
-                return
+            if self.customstring.find('+datum=') >= 0:
+                # check for datum tranforms
+                # FIXME: -t flag is a hack-around for trac bug #1849
+                ret, out, err = RunCommand('g.proj',
+                                           read = True, getErrorMsg = True,
+                                           proj4 = self.customstring, 
+                                           datumtrans = '-1',
+                                           flags = 't')
+                if ret != 0:
+                    wx.MessageBox(parent = self,
+                                  message = err,
+                                  caption = _("Error"),
+                                  style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                    event.Veto()
+                    return
             
-            if out:
-                dtrans = ''
-                # open a dialog to select datum transform number
-                dlg = SelectTransformDialog(self.parent.parent, transforms = out)
+                if out:
+                    dtrans = ''
+                    # open a dialog to select datum transform number
+                    dlg = SelectTransformDialog(self.parent.parent, transforms = out)
                 
-                if dlg.ShowModal() == wx.ID_OK:
-                    dtrans = dlg.GetTransform()
-                    if dtrans == '':
+                    if dlg.ShowModal() == wx.ID_OK:
+                        dtrans = dlg.GetTransform()
+                        if dtrans == '':
+                            dlg.Destroy()
+                            event.Veto()
+                            return _('Datum transform is required.')
+                    else:
                         dlg.Destroy()
                         event.Veto()
                         return _('Datum transform is required.')
-                else:
-                    dlg.Destroy()
-                    event.Veto()
-                    return _('Datum transform is required.')
                 
-                self.parent.datumtrans = dtrans
-        
+                    self.parent.datumtrans = dtrans
+
         self.GetNext().SetPrev(self)
             
     def GetProjstring(self, event):
