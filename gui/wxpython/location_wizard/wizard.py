@@ -1502,7 +1502,6 @@ class CustomPage(TitledPage):
 
             # check for datum tranforms
             # FIXME: -t flag is a hack-around for trac bug #1849
-            print "...here3 [%s]\n" % self.customstring
             ret, out, err = RunCommand('g.proj',
                                        read = True, getErrorMsg = True,
                                        proj4 = self.customstring, 
