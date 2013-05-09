@@ -1680,7 +1680,7 @@ class SummaryPage(TitledPage):
             if ret == 0:
                 if datum != '':
                     projlabel = projlabel + ' ' + 'datum=%s' % datum
-                self.lproj4string.SetLabel(projlabel.replace(' ', os.linesep))
+                self.lproj4string.SetLabel(projlabel.replace(' +', os.linesep + '+'))
                 finishButton.Enable(True)
             else:
                 GError(err, parent = self)
@@ -1711,7 +1711,7 @@ class SummaryPage(TitledPage):
         elif coordsys == 'custom':
             label = _("custom")
             combo_str = self.parent.custompage.customstring + self.parent.custompage.custom_dtrans_string
-            self.lproj4string.SetLabel(('%s' % combo_str.replace(' ', os.linesep)))
+            self.lproj4string.SetLabel(('%s' % combo_str.replace(' +', os.linesep + '+')))
         self.lprojection.SetLabel(label)
         
     def OnFinish(self, event):
