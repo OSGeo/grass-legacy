@@ -673,7 +673,11 @@ class GMConsole(wx.SplitterWindow):
                 GError(_("Unable to write file '%(path)s'.\n\nDetails: %(error)s") % {'path': path, 'error': e})
             finally:
                 output.close()
-            self.parent.SetStatusText(_("Command output saved into '%s'") % path)
+            message = _("Command output saved into '%s'") % path
+            if hasattr(self.parent, 'SetStatusText'):
+                self.parent.SetStatusText(message)
+            else:
+                self.parent.parent.SetStatusText(message)
         
         dlg.Destroy()
 
