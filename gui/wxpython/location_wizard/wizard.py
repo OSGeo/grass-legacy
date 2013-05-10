@@ -1536,7 +1536,7 @@ class CustomPage(TitledPage):
 
                 # prepare +nadgrids or +towgs84 terms for Summary page. first convert them:
                 ret, projlabel, err = RunCommand('g.proj',
-                                                 flags = 'jf',
+                                                 flags = 'jft',
                                                  proj4 = self.customstring,
                                                  datumtrans = dtrans,
                                                  getErrorMsg = True,
@@ -1669,7 +1669,7 @@ class SummaryPage(TitledPage):
                                                  **addl_opts)
             elif coordsys == 'epsg':
                 ret, projlabel, err = RunCommand('g.proj',
-                                                 flags = 'jf',
+                                                 flags = 'jft',
                                                  epsg = epsgcode,
                                                  datumtrans = dtrans,
                                                  location = location,
