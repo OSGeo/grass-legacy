@@ -1084,6 +1084,7 @@ def create_location(dbase, location,
     if epsg:
         ps = pipe_command('g.proj',
                           quiet = True,
+                          flags = 't',
                           epsg = epsg,
                           location = location,
                           stderr = PIPE,
