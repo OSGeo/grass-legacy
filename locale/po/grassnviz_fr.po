@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassnviz_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-26 09:58+0100\n"
-"PO-Revision-Date: 2013-02-25 20:04+0100\n"
+"PO-Revision-Date: 2013-05-12 16:57+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -421,15 +421,15 @@ msgstr "OK"
 #: ../visualization/nviz/scripts/panel_fringe.tcl:43
 #: ../visualization/nviz/scripts/panel_main.tcl:164
 msgid "Fringe"
-msgstr ""
+msgstr "Bordures"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:45
 msgid "Fringe Panel"
-msgstr ""
+msgstr "Panneau des bordures"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:48
 msgid "Edges with fringe: "
-msgstr ""
+msgstr "Angles avec bordures :"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:51
 msgid "N&W"
@@ -449,7 +449,7 @@ msgstr "S&E"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:68
 msgid "Elevation of fringe bottom: "
-msgstr ""
+msgstr "Altitude du bas de la bordure :"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:69
 #: ../visualization/nviz/scripts/panel_scale.tcl:60
@@ -464,7 +464,7 @@ msgstr "Couleur"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:80
 msgid "Draw Fringe"
-msgstr ""
+msgstr "Afficher les bordures"
 
 #: ../visualization/nviz/scripts/panel_lights.tcl:25
 msgid "Lighting"
@@ -551,7 +551,6 @@ msgid "Plane 5"
 msgstr "Plan 5"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:87
-#, fuzzy
 msgid "set shading"
 msgstr "définir l'ombrage"
 
@@ -602,7 +601,7 @@ msgstr "Pivoter"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:184
 msgid "All Off"
-msgstr ""
+msgstr "Tout désactiver"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:292
 #, tcl-format
@@ -912,9 +911,8 @@ msgid "display on surface(s):"
 msgstr "afficher sur la surface :"
 
 #: ../visualization/nviz/scripts/panel_site.tcl:182
-#, fuzzy
 msgid "thematic mapping for vector points"
-msgstr "cartographie thématique pour le vecteur de points"
+msgstr "cartographie thématique pour les points vecteurs"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:51
 msgid "Raster Surfaces"
@@ -1088,7 +1086,6 @@ msgid "New Key Time:"
 msgstr "Nouvelle clef de temps"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:143
-#, fuzzy
 msgid "Show Feature"
 msgstr "Afficher les objets"
 
@@ -1788,7 +1785,6 @@ msgid "Dist along surface"
 msgstr "Dist suivant la surface"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:78
-#, fuzzy
 msgid "Dist along exag surface"
 msgstr "Dist suivant la surface exag"
 
@@ -1853,9 +1849,9 @@ msgid "Distance along surface: \t%15.4f\n"
 msgstr "Distance suivant la surface : \t%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_rquery.tcl:252
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Distance along exag. surface:%15.4f\n"
-msgstr "Distance suivant la surface d'exagération : \t%15.4f\n"
+msgstr "Distance suivant la surface exag. : \t%15.4f\n"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:51
 msgid "Vector Query"
@@ -1870,17 +1866,14 @@ msgid "Choose map(s)"
 msgstr "Choisir la(les) carte(s)"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:88
-#, fuzzy
 msgid "Select/unselect vector map(s) to query"
 msgstr "Sélectionner/désélectionner la(les) carte(s) vecteur pour la requête"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:98
-#, fuzzy
 msgid "Set threshold distance for selecting objects"
 msgstr "Définir la distance d'accroche pour les objets sélectionnés"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:100
-#, fuzzy
 msgid "threshold dist"
 msgstr "dist d'accroche"
 
@@ -1889,9 +1882,8 @@ msgid "show hyperlink"
 msgstr "afficher l'hyperlien"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:113
-#, fuzzy
 msgid "Highlight queried vector points with..."
-msgstr "Surligner les vecteurs requêtés avec ..."
+msgstr "Surligner les points vecteurs sélectionnés avec ..."
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:118
 msgid "color"
@@ -1976,7 +1968,6 @@ msgid "Attribute type: %s"
 msgstr "Type d'attribut : %s"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:474
-#, fuzzy
 msgid "Apply current thematic preferences to point display"
 msgstr "Appliquer les préférences thématiques actuelles au point affiché"
 
@@ -2215,7 +2206,6 @@ msgid "Volume Panel"
 msgstr "Panneau de volume"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:63
-#, fuzzy
 msgid "Visualization type..."
 msgstr "Type de visualisation ..."
 
@@ -2338,7 +2328,7 @@ msgstr "Démarrer"
 #: ../visualization/nviz/scripts/nviz2.2_script:281
 #: ../visualization/nviz/scripts/nviz2.2_script:290
 msgid "Togl canvas initialization failed. Is Your OpenGL working fine?"
-msgstr ""
+msgstr "L'initialisation du canevas Togl a échoué. Est-ce que OpenGL fonctionne correctement ?"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:349
 msgid "Please Wait..."
@@ -2374,7 +2364,7 @@ msgstr "Enregistre l'état"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:371
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "Définir la taille de canevas"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:373
 msgid "Load 3d Settings"
@@ -2458,7 +2448,7 @@ msgstr "Surface de référence :"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:58
 msgid "Set difference between reference surface and others"
-msgstr ""
+msgstr "Définir la différence entre la surface de référence et les autres"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:66
 msgid "unselect reference surface"
