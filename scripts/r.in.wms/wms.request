@@ -133,6 +133,26 @@ fi
 g.message -d "[wms.request]"
 
 
+# Get the system name
+SYSTEM=`uname -s`
+case $SYSTEM in
+MINGW* | MSYS*)
+        MINGW=1
+        ;;
+CYGWIN*)
+        CYGWIN=1
+        ;;
+Darwin*)
+        MACOSX=1
+        ;;
+esac
+
+# in case of fire, break glass
+dos2unix_path()
+{
+   echo "$1" | sed -e 's|^\([A-Za-z]\):|/\1|' -e 's|\\|/|g'
+}
+
 # Remember the intial field seperator
 defaultIFS="$IFS"
 
@@ -227,7 +247,13 @@ GetTiles() {
 	SIZE="bbox=$w,$s,$e,$n&width=$cols&height=$rows"
 	message 1 "$SIZE"
 	IMAGEFILE="${FOLDERPLUS}_$NUMBER_OF_TILES"
-	OUTPUT_FILE="${IMAGEFILE}${FILE_EXTENT}"
+
+	if [ "$MINGW" ] ; then
+	    OUTPUT_FILE=`dos2unix_path "${IMAGEFILE}${FILE_EXTENT}"`
+	else
+	    OUTPUT_FILE="${IMAGEFILE}${FILE_EXTENT}"
+	fi
+
 	# We could add world files here to help out gdalwarp.
 	# And here it is:
 	# Displacement from top left cell to the one to the right of it and to the one below it:
@@ -245,7 +271,7 @@ GetTiles() {
 	echo "$top_left_cell_center_y" >> "${IMAGEFILE}${WORLDFILE}"
 	#Make the requestt for data:
 	STRING="request=GetMap&layers=${GIS_OPT_LAYERS}&styles=${GIS_OPT_STYLES}&srs=${SRS}&${SIZE}&format=${FORMAT}&${TRANSPARENCY}&${WMS_QUERY}"
-	echo "OUTPUT_FILE=\"${OUTPUT_FILE}\";SERVER=\"${SERVER}\";STRING=\"${STRING}\"" >> "${REQUESTFILE}"
+	echo "OUTPUT_FILE=\"$OUTPUT_FILE\";SERVER=\"$SERVER\";STRING=\"$STRING\"" >> "$REQUESTFILE"
 
 	NUMBER_OF_TILES=`expr "$NUMBER_OF_TILES" + 1`
   done
