@@ -178,7 +178,7 @@ GetTiles() {
 
 
   #Calculate the number of tiles and set up the arrays
-  message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"
+  message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=$MAXCOLS maxrows=$MAXROWS $TILESET_OPTIONS"
   TILES=`eval "GRASS_VERBOSE=1 r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"`
   if [ $? -ne 0 ] ; then
      g.message -e "r.tileset failure"
