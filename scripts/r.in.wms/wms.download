@@ -91,9 +91,9 @@ defaultIFS=$IFS
 #
 exitprocedure()
 {
-	g.message -e 'User break!'
-	rm -f "$TEMPFILE"*
-	exit 1
+    g.message -e 'User break!'
+    rm -f "$TEMPFILE"*
+    exit 1
 }
 trap "exitprocedure" 2 3 15
 
@@ -114,20 +114,23 @@ calculate() {
 ################################################################
 # Download the tiles!!
 GetTiles() {
-  g.message "Downloading tiles"
+    g.message "Downloading tiles"
 
-  # init POST-data vs. GET URL method variable
-  if [ "$GIS_FLAG_G" -eq 0 ] ; then
-     POST_DATA_OK=1
-  else
-     POST_DATA_OK=0
-  fi
+    # init POST-data vs. GET URL method variable
+    if [ "$GIS_FLAG_G" -eq 0 ] ; then
+	POST_DATA_OK=1
+    else
+	POST_DATA_OK=0
+    fi
 
-  CONTENTS=`cat "$REQUESTFILE"`
+    NUMBER_OF_TILES=0
 
-  NUMBER_OF_TILES=0
-  for line in $CONTENTS ; do
+    while read line ; do
 	g.message -d message="wget command: [$line]" debug=2
+	if [ -z "$line" ] ; then
+	    continue
+	fi
+
 	eval "$line"
 
 	emptyness=`file "$OUTPUT_FILE" | grep empty$`
@@ -137,18 +140,18 @@ GetTiles() {
 	else
 	   GetData
 	   if [ $? -ne 0 ] ; then
-              NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+		NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
            fi
 	fi
-  done
+    done < "$REQUESTFILE"
 
-  if [ $NUMBER_OF_TILES -ne 0 ] ; then
-    g.message -w "$NUMBER_OF_TILES failed to download"
-    return 1
-  else
-    g.message "All tiles downloaded successfully"
-    return 0
-  fi
+    if [ "$NUMBER_OF_TILES" -ne 0 ] ; then
+	g.message -w "$NUMBER_OF_TILES tiles failed to download"
+	return 1
+    else
+	g.message "All tiles downloaded successfully"
+	return 0
+    fi
 }
 
 ##################################

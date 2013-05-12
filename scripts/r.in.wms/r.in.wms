@@ -458,9 +458,9 @@ fi
 #### Exit if there is no map
 # It would be a good idea to test if the map already exists here too
 
-if [ -z "${GIS_OPT_OUTPUT}" ] ; then
-	g.message -e "No output map specified"
-	exit 1;
+if [ -z "$GIS_OPT_OUTPUT" ] ; then
+    g.message -e "No output map specified"
+    exit 1
 fi
 
 REQUEST=""
@@ -530,19 +530,22 @@ eval "\"$GISBASE/etc/r.in.wms/wms.download\" $DOWNLOAD"
 
 # Job 2: make list of files
 
-CONTENTS=`cat "$REQUESTFILE"`
-
 FILES=""
 COUNT=0
-for line in $CONTENTS ; do
-	eval "$line"
-	if [ $COUNT -eq 0 ] ; then
-		FILES="$OUTPUT_FILE"
-	else
-		FILES="$FILES,$OUTPUT_FILE"
-	fi
-	COUNT=`expr $COUNT + 1`
-done
+
+while read line ; do
+    if [ -z "$line" ] ; then
+	continue
+    fi
+    eval "$line"
+    if [ "$COUNT" -eq 0 ] ; then
+	FILES="$OUTPUT_FILE"
+    else
+	FILES="$FILES,$OUTPUT_FILE"
+    fi
+    COUNT=`expr "$COUNT" + 1`
+done < "$REQUESTFILE"
+
 
 addflag GDALWARP c 1
 addflag GDALWARP k "$GIS_FLAG_K"
