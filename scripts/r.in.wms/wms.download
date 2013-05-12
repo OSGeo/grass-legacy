@@ -58,7 +58,7 @@ if  [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 g.message -d "[wms.download]"
@@ -92,7 +92,7 @@ defaultIFS=$IFS
 exitprocedure()
 {
 	g.message -e 'User break!'
-	rm -f "${TEMPFILE}"*
+	rm -f "$TEMPFILE"*
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -106,9 +106,9 @@ BCARGS="-l"
 # usage: varname "expr"
 
 calculate() {
-	g.message message="$2"
-	c_tmp=`echo "$2" | $BC $BCARGS`
-	eval $1=$c_tmp
+    g.message message="$2"
+    c_tmp=`echo "$2" | $BC $BCARGS`
+    eval $1=$c_tmp
 }
 
 ################################################################
@@ -123,7 +123,7 @@ GetTiles() {
      POST_DATA_OK=0
   fi
 
-  CONTENTS=`cat "${REQUESTFILE}"`
+  CONTENTS=`cat "$REQUESTFILE"`
 
   NUMBER_OF_TILES=0
   for line in $CONTENTS ; do
@@ -186,9 +186,9 @@ GetData() {
    if [ "$POST_DATA_OK" -eq 0 ] ; then
       g.message -v message=""
       if [ "$USE_WGET" ] ; then
-	 wget ${WGET_OPTIONS} "${SERVER}?${STRING}" -O "${OUTPUT_FILE}"
+	 wget $WGET_OPTIONS "${SERVER}?${STRING}" -O "$OUTPUT_FILE"
       else
-	 curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" "${SERVER}?${STRING}"
+	 curl $CURL_OPTIONS -o "$OUTPUT_FILE" "${SERVER}?${STRING}"
       fi
       if [ $? -ne 0 ] ; then
          g.message -e "Failed while downloading the data"
@@ -205,13 +205,13 @@ GetData() {
 
 # Initialize variables:
 #wget has many options
-WGET_OPTIONS="${GIS_OPT_WGETOPTIONS}"
-CURL_OPTIONS="${GIS_OPT_CURLOPTIONS}"
-REQUESTFILE="${GIS_OPT_REQUESTFILE}"
+WGET_OPTIONS="$GIS_OPT_WGETOPTIONS"
+CURL_OPTIONS="$GIS_OPT_CURLOPTIONS"
+REQUESTFILE="$GIS_OPT_REQUESTFILE"
 
 #Get all the data
 GetTiles
 
 # Clean up:
-rm -f "${TEMPFILE}"*
+rm -f "$TEMPFILE"*
 

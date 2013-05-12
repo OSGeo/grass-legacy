@@ -263,10 +263,10 @@ defaultIFS="$IFS"
 # usage: message level text
 
 message () {
-	if [ $1 -lt $GIS_OPT_V ] ; then
-		shift
-		echo "$@" 1>&2
-	fi
+    if [ "$1" -lt "$GIS_OPT_V" ] ; then
+	shift
+	echo "$@" 1>&2
+    fi
 }
 
 #######################################################################
@@ -275,9 +275,9 @@ message () {
 #
 exitprocedure()
 {
-	g.message -e 'User break!'
-	\rm -f "${TEMPFILE}"*
-	exit 1
+    g.message -e 'User break!'
+    rm -f "$TEMPFILE"*
+    exit 1
 }
 trap "exitprocedure" 2 3 15
 
@@ -289,11 +289,11 @@ BCARGS="-l"
 # purpose:  make arguments for a sub command
 #
 addargument() {
-	if [ -z "$3" ] ; then
-		message 1 "Skipping argument for $2"
- 	else
-		eval "$1=\"\$$1 '$2=$3'\""
-	fi
+    if [ -z "$3" ] ; then
+	message 1 "Skipping argument for $2"
+    else
+	eval "$1=\"\$$1 '$2=$3'\""
+    fi
 }
 
 #######################################################################
@@ -301,9 +301,9 @@ addargument() {
 # purpose:  make arguments for a sub command
 #
 addflag() {
-	if [ $3 -eq 1 ] ; then
-		eval "$1=\"\$$1 -$2\""
-	fi
+    if [ $3 -eq 1 ] ; then
+	eval "$1=\"\$$1 -$2\""
+    fi
 }
 
 ######################
@@ -312,9 +312,9 @@ addflag() {
 # usage: varname "expr"
 
 calculate() {
-	message 3 "$2"
-	c_tmp=`echo "$2" | $BC $BCARGS`
-	eval $1=$c_tmp
+    message 3 "$2"
+    c_tmp=`echo "$2" | "$BC" "$BCARGS"`
+    eval $1=$c_tmp
 }
 
 
@@ -347,7 +347,7 @@ listLayers() {
 
 	    if [ ! -e "$CAPABILITIES_FILE" ] ; then
 		g.message -e "Downloading XML file"
-		\rm "$TEMPFILE"
+		rm -f "$TEMPFILE"
 		exit 1
 	    fi
 
@@ -375,13 +375,13 @@ listLayers() {
 
 	if [ ! -e "$CAPABILITIES_FILE" ] ; then
 	    g.message -e "Downloading XML file"
-	    \rm "$TEMPFILE"
+	    rm -f "$TEMPFILE"
 	    exit 1
 	fi
 
 	if [ `wc -c < "$CAPABILITIES_FILE"` -eq 0 ] ; then
 	     g.message -e "Downloaded XML file was empty"
-	     \rm -f "$CAPABILITIES_FILE" "$TEMPFILE"
+	     rm -f "$CAPABILITIES_FILE" "$TEMPFILE"
 	     exit 1
 	fi
 
@@ -476,9 +476,9 @@ fi
 
 PREFIX="$GIS_OPT_OUTPUT"
 if [ -x "`which wget`" ] ; then
-    REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget"
+    REQUESTFILE="$GIS_OPT_FOLDER/${PREFIX}_$GIS_OPT_REGION.wget"
 else
-    REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.curl"
+    REQUESTFILE="$GIS_OPT_FOLDER/${PREFIX}_$GIS_OPT_REGION.curl"
 fi
 
 if [ ! -z "$GIS_OPT_REGION" ] ; then
@@ -494,21 +494,21 @@ fi
 LAYERS=`echo ${GIS_OPT_LAYERS} | sed -e 's/ /%20/g'`
 
 
-addflag REQUEST o ${GIS_FLAG_O}
-addflag REQUEST c ${GIS_FLAG_C}
-addflag REQUEST p ${GIS_FLAG_P}
-addargument REQUEST folder "${GIS_OPT_FOLDER}"
-addargument REQUEST prefix "${PREFIX}"
-addargument REQUEST region "${GIS_OPT_REGION}"
-addargument REQUEST mapserver "${GIS_OPT_MAPSERVER}"
-addargument REQUEST layers "${LAYERS}"
-addargument REQUEST styles "${GIS_OPT_STYLES}"
-addargument REQUEST srs "${GIS_OPT_SRS}"
-addargument REQUEST format "${GIS_OPT_FORMAT}"
-addargument REQUEST wmsquery "${GIS_OPT_WMSQUERY}"
-addargument REQUEST maxcols "${GIS_OPT_MAXCOLS}"
-addargument REQUEST maxrows "${GIS_OPT_MAXROWS}"
-addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
+addflag REQUEST o "$GIS_FLAG_O"
+addflag REQUEST c "$GIS_FLAG_C"
+addflag REQUEST p "$GIS_FLAG_P"
+addargument REQUEST folder "$GIS_OPT_FOLDER"
+addargument REQUEST prefix "$PREFIX"
+addargument REQUEST region "$GIS_OPT_REGION"
+addargument REQUEST mapserver "$GIS_OPT_MAPSERVER"
+addargument REQUEST layers "$LAYERS"
+addargument REQUEST styles "$GIS_OPT_STYLES"
+addargument REQUEST srs "$GIS_OPT_SRS"
+addargument REQUEST format "$GIS_OPT_FORMAT"
+addargument REQUEST wmsquery "$GIS_OPT_WMSQUERY"
+addargument REQUEST maxcols "$GIS_OPT_MAXCOLS"
+addargument REQUEST maxrows "$GIS_OPT_MAXROWS"
+addargument REQUEST tileoptions "$GIS_OPT_TILEOPTIONS"
 
 if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 1 "wms.request $REQUEST"
@@ -519,17 +519,18 @@ if [ $GIS_FLAG_D -eq 0 ] ; then
 	fi
 fi
 
-addflag DOWNLOAD g ${GIS_FLAG_G}
-addargument DOWNLOAD requestfile "${REQUESTFILE}"
-addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
-addargument DOWNLOAD curloptions "${GIS_OPT_CURLOPTIONS}"
+addflag DOWNLOAD g "$GIS_FLAG_G"
+addargument DOWNLOAD requestfile "$REQUESTFILE"
+addargument DOWNLOAD wgetoptions "$GIS_OPT_WGETOPTIONS"
+addargument DOWNLOAD curloptions "$GIS_OPT_CURLOPTIONS"
 
 message 1 "wms.download $DOWNLOAD"
 eval "\"$GISBASE/etc/r.in.wms/wms.download\" $DOWNLOAD"
 
+
 # Job 2: make list of files
 
-CONTENTS=`cat "${REQUESTFILE}"`
+CONTENTS=`cat "$REQUESTFILE"`
 
 FILES=""
 COUNT=0
@@ -544,19 +545,19 @@ for line in $CONTENTS ; do
 done
 
 addflag GDALWARP c 1
-addflag GDALWARP k ${GIS_FLAG_K}
-addflag GDALWARP p ${GIS_FLAG_P}
+addflag GDALWARP k "$GIS_FLAG_K"
+addflag GDALWARP p "$GIS_FLAG_P"
 addargument GDALWARP input "$FILES"
-addargument GDALWARP output "${GIS_OPT_OUTPUT}"
-addargument GDALWARP method "${GIS_OPT_METHOD}"
-addargument GDALWARP s_srs "${GIS_OPT_SRS}"
+addargument GDALWARP output "$GIS_OPT_OUTPUT"
+addargument GDALWARP method "$GIS_OPT_METHOD"
+addargument GDALWARP s_srs "$GIS_OPT_SRS"
 
 # check for error like 'Service Exception Report'
 if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
   g.message "#################################"
   cat "$FILES"
   g.message message=""
-  \rm -f "${TEMPFILE}"*
+  rm -f "$TEMPFILE"*
   exit 1
 fi
 
@@ -579,20 +580,20 @@ LAY_LEN="echo "$GIS_OPT_LAYERS" | wc -c"
 
 r.support map="$GIS_OPT_OUTPUT" history="layers: $GIS_OPT_LAYERS"
 if [ -n "$GIS_OPT_STYLES" ] ; then
-   r.support map="$GIS_OPT_OUTPUT" history="styles: $GIS_OPT_STYLES"
+    r.support map="$GIS_OPT_OUTPUT" history="styles: $GIS_OPT_STYLES"
 fi
 r.support map="$GIS_OPT_OUTPUT" history=""
 r.support map="$GIS_OPT_OUTPUT" history="Source projection: $GIS_OPT_SRS"
 if [ "$GIS_FLAG_P" -eq 1 ] ; then
-   r.support map="$GIS_OPT_OUTPUT" history="  (imported without reprojection)"
+    r.support map="$GIS_OPT_OUTPUT" history="  (imported without reprojection)"
 fi
 r.support map="$GIS_OPT_OUTPUT" description="generated by r.in.wms" history=""
 r.support map="$GIS_OPT_OUTPUT" history="$CMDLINE"
 
 
-g.message -v message="Map <${GIS_OPT_OUTPUT}> written"
+g.message -v message="Map <$GIS_OPT_OUTPUT> written"
 
 # Clean up:
-\rm -f "${TEMPFILE}"*
+rm -f "$TEMPFILE"*
 
 exit
