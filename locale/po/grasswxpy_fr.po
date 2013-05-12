@@ -1,6 +1,6 @@
 # translation of grasswxpy_fr.po to french
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2006-2012 GRASS Development Team
+# Copyright (C) 2006-2013 GRASS Development Team
 #
 # Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2006.
 # Vincent Bain <bain toraval.fr>, 2007, 2012.
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-20 15:43+0200\n"
-"PO-Revision-Date: 2013-04-29 20:11+0100\n"
+"PO-Revision-Date: 2013-05-12 16:42+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -1460,9 +1460,8 @@ msgid "Add grid or vector labels overlay"
 msgstr "Ajouter une couche d'étiquettes"
 
 #: ../gui/wxpython/lmgr/toolbars.py:97
-#, fuzzy
 msgid "Remove selected map layer(s) from layer tree"
-msgstr "Voulez-vous retirer la(les) carte(s) sélectionnée(s) de l'arborescence des couches ?"
+msgstr "Supprimer la(les) carte(s) sélectionnée(s) de l'arborescence des couches"
 
 #: ../gui/wxpython/lmgr/toolbars.py:134
 msgid "Import/link raster or vector data"
@@ -1971,9 +1970,8 @@ msgid "Import data"
 msgstr "Importer des données"
 
 #: ../gui/wxpython/gis_set.py:428
-#, fuzzy
 msgid "Do you want to create new mapset?"
-msgstr "Voulez-vous créer le secteur GRASS <%s> ?"
+msgstr "Voulez-vous créer un nouveau jeux de données ?"
 
 #: ../gui/wxpython/gis_set.py:471
 #, python-format
@@ -2178,9 +2176,8 @@ msgid "Name <%(name)s> is not a valid name for location or mapset. Please use on
 msgstr "le nom <%(name)s> n'ets pas un nom valide pour un secteur ou un jeu de cartes. Merci de n'utiliser que des caractères ASCII sans %(chars)s ni espaces."
 
 #: ../gui/wxpython/gis_set.py:921
-#, fuzzy
 msgid "Invalid name"
-msgstr "Entrée non valide"
+msgstr "Nom invalide"
 
 #: ../gui/wxpython/gis_set.py:984
 msgid "Starting GRASS for the first time"
@@ -3836,7 +3833,7 @@ msgstr "Protocole"
 
 #: ../gui/wxpython/gui_core/goutput.py:270
 msgid "Toggle to save list of executed commands into file; content saved when switching off."
-msgstr ""
+msgstr "Activer pour enregistrer dans un fichier la liste des commandes exécutées; le contenu sera enregistré lorsque désactivé."
 
 #: ../gui/wxpython/gui_core/goutput.py:486
 #: ../gui/wxpython/gui_core/goutput.py:789
@@ -4021,22 +4018,21 @@ msgid "Click and drag on the map display to set legend size and position and the
 msgstr "Cliquer et déplacer dans la fenêtre de carte pour définir la taille et la position de la légende, puis appuyer sur OK."
 
 #: ../gui/wxpython/gui_core/dialogs.py:544
-#, fuzzy
 msgid ""
 "Drag legend object with mouse in pointer mode to position.\n"
 "Double-click to change options.\n"
 "Define raster map name for legend in properties dialog."
 msgstr ""
-"Glisser le texte avec la souris en mode pointeur.\n"
-"Double-clic pour modifier les options."
+"Déplacer l'objet légende avec la souris.\n"
+"Double-clic pour modifier les options.\n"
+"Définir le nom de la carte raster dans la boite de dialogue."
 
 #: ../gui/wxpython/gui_core/dialogs.py:548
-#, fuzzy
 msgid ""
 "Drag scale object with mouse in pointer mode to position.\n"
 "Double-click to change options."
 msgstr ""
-"Glisser %s avec la souris en mode pointeur.\n"
+"Déplacer l'objet échelle avec la souris.\n"
 "Double-clic pour modifier les options."
 
 #: ../gui/wxpython/gui_core/dialogs.py:596
@@ -5660,7 +5656,6 @@ msgid "Fill lake"
 msgstr "Remplir un lac"
 
 #: ../gui/wxpython/menustrings.py:369
-#, fuzzy
 msgid "Fills lake at given point to given level."
 msgstr "Remplit le lac depuis un point d'origine jusqu'à un niveau donné."
 
@@ -5947,7 +5942,7 @@ msgstr "Reclasser en fonction de la taille"
 
 #: ../gui/wxpython/menustrings.py:441
 msgid "Reclasses a raster map greater or less than user specified area size (in hectares)."
-msgstr ""
+msgstr "Reclasser une carte raster pour une taille supérieure ou égale à la taille spécifiée par l'utilisateur (en hectares)."
 
 #: ../gui/wxpython/menustrings.py:442 ../gui/wxpython/menustrings.py:648
 msgid "Reclassify"
@@ -6511,7 +6506,6 @@ msgid "Create LRS"
 msgstr "Créer LRS"
 
 #: ../gui/wxpython/menustrings.py:598
-#, fuzzy
 msgid "Creates Linear Reference System"
 msgstr "Créer un système de référence linéaire"
 
@@ -6520,7 +6514,6 @@ msgid "Create stationing"
 msgstr "Créer des placements"
 
 #: ../gui/wxpython/menustrings.py:600
-#, fuzzy
 msgid "Creates stationing from input lines, and linear reference system"
 msgstr "Créer des placement à partir de lignes, et d'un système de référence linéaire"
 
@@ -6565,7 +6558,6 @@ msgid "Allocate subnets"
 msgstr "Allouer des sous-réseaux"
 
 #: ../gui/wxpython/menustrings.py:611
-#, fuzzy
 msgid "Allocate subnets for nearest centres (direction from centre)."
 msgstr "Allouer des sous-réseaux pour les centres les plus proches (direction depuis le centre)."
 
@@ -6758,9 +6750,8 @@ msgid "Generate area for current region"
 msgstr "Générer une surface pour la région courante"
 
 #: ../gui/wxpython/menustrings.py:662
-#, fuzzy
 msgid "Creates a vector polygon from the current region extent."
-msgstr "Créer une nouvelle carte vecteur à partir de la région courante."
+msgstr "Créer un polygone couvrant l'étendue de la région courante."
 
 #: ../gui/wxpython/menustrings.py:663
 msgid "Generate areas from points"
@@ -7669,22 +7660,20 @@ msgstr ""
 " %s"
 
 #: ../gui/wxpython/psmap/frame.py:314
-#, fuzzy
 msgid "Generating preview, wait please"
 msgstr "Génération de l'aperçu en cours ..."
 
 #: ../gui/wxpython/psmap/frame.py:328
-#, fuzzy
 msgid "Preview not available"
-msgstr "Vue 3D non disponible"
+msgstr "Aperçu non disponible"
 
 #: ../gui/wxpython/psmap/frame.py:329
 msgid "Preview is not available probably due to missing Ghostscript."
-msgstr ""
+msgstr "L'aperçu n'est pas disponible, probablement parce qu'il manque Ghostscript."
 
 #: ../gui/wxpython/psmap/frame.py:331
 msgid "Please follow instructions on GRASS Trac Wiki."
-msgstr ""
+msgstr "Merci de suivre les instructions sur le Wiki du Trac GRASS."
 
 #: ../gui/wxpython/psmap/frame.py:342
 msgid "Preview generated"
@@ -7710,7 +7699,7 @@ msgstr "La barre d'échelle n'est pas adaptée à cette  projection"
 
 #: ../gui/wxpython/psmap/frame.py:1005
 msgid "Press button with green triangle icon to generate preview."
-msgstr ""
+msgstr "Cliquer sur le bouton avec un triangle vert pour générer l'aperçu."
 
 # Le terme composeur en français désigne normalement le composeur-titreur (qui effectue les titrages/sous-titrages cinématographiques)
 #: ../gui/wxpython/psmap/frame.py:1032
@@ -9540,12 +9529,11 @@ msgstr "Titre de secteur optionnel, vous pouvez laisser ce champ vide."
 #: ../gui/wxpython/location_wizard/wizard.py:159
 #, python-format
 msgid "Name <%(name)s> is not a valid name for location. Please use only ASCII characters excluding %(chars)s and space."
-msgstr ""
+msgstr "Le nom <%(name)s> n'est pas un nom valide pour un secteur. Merci de n'utiliser que des caractères ASCII à l'exclusion de %(chars)s et des espaces."
 
 #: ../gui/wxpython/location_wizard/wizard.py:162
-#, fuzzy
 msgid "Invalid location name"
-msgstr "Secteur sélectionné non valide."
+msgstr "Non de secteur invalide"
 
 #: ../gui/wxpython/location_wizard/wizard.py:177
 msgid "Choose GRASS data directory:"
@@ -10024,9 +10012,8 @@ msgid "Nothing to profile"
 msgstr "Rien à profiler"
 
 #: ../gui/wxpython/wxplot/profile.py:333
-#, fuzzy
 msgid "Choose prefix for file(s) where to save profile values..."
-msgstr "Chemin et préfixe (du nom de carte raster) pour sauvegarder les valeurs du profil..."
+msgstr "Choisir le préfixe des fichiers où enregistrer les valeurs du profil ..."
 
 #: ../gui/wxpython/wxplot/profile.py:335
 msgid "Comma separated value (*.csv)|*.csv"
@@ -10039,16 +10026,17 @@ msgid "File <%s> already exists. Do you want to overwrite this file?"
 msgstr "Le fichier <%s> existe déjà. Voulez-vous écraser ce fichier ?"
 
 #: ../gui/wxpython/wxplot/profile.py:345
-#, fuzzy
 msgid "Overwrite file?"
-msgstr "Écraser ?"
+msgstr "Écraser le fichier ?"
 
 #: ../gui/wxpython/wxplot/profile.py:356
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Unable to open file <%s> for writing.\n"
 "Reason: %s"
-msgstr "Impossible d'écrire dans le fichier <%s>."
+msgstr ""
+"Impossible d'ouvrir le fichier <%s> en écriture.\n"
+"Raison: %s"
 
 #: ../gui/wxpython/wxplot/profile.py:368
 #, python-format
@@ -10056,11 +10044,12 @@ msgid ""
 "%d files created:\n"
 "%s"
 msgstr ""
+"%d fichiers crées : \n"
+"%s"
 
 #: ../gui/wxpython/wxplot/profile.py:370
-#, fuzzy
 msgid "No files generated."
-msgstr "Aperçu généré"
+msgstr "Pas de fichier généré."
 
 #: ../gui/wxpython/wxplot/profile.py:378
 msgid "Statistics for Profile(s)"
@@ -10812,7 +10801,7 @@ msgstr "gisement"
 
 #: ../gui/wxpython/mapdisp/frame.py:1006
 msgid "degrees (clockwise from grid-north)"
-msgstr ""
+msgstr "degrés (sens horaire)"
 
 #: ../gui/wxpython/mapdisp/frame.py:1121
 msgid "Scale and North arrow"
