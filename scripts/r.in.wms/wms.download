@@ -58,7 +58,7 @@ if  [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 g.message -d "[wms.download]"
@@ -91,9 +91,9 @@ defaultIFS=$IFS
 #
 exitprocedure()
 {
-	g.message -e 'User break!'
-	rm -f "${TEMPFILE}"*
-	exit 1
+    g.message -e 'User break!'
+    rm -f "$TEMPFILE"*
+    exit 1
 }
 trap "exitprocedure" 2 3 15
 
@@ -106,28 +106,31 @@ BCARGS="-l"
 # usage: varname "expr"
 
 calculate() {
-	g.message message="$2"
-	c_tmp=`echo "$2" | $BC $BCARGS`
-	eval $1=$c_tmp
+    g.message message="$2"
+    c_tmp=`echo "$2" | $BC $BCARGS`
+    eval $1=$c_tmp
 }
 
 ################################################################
 # Download the tiles!!
 GetTiles() {
-  g.message "Downloading tiles"
+    g.message "Downloading tiles"
 
-  # init POST-data vs. GET URL method variable
-  if [ "$GIS_FLAG_G" -eq 0 ] ; then
-     POST_DATA_OK=1
-  else
-     POST_DATA_OK=0
-  fi
+    # init POST-data vs. GET URL method variable
+    if [ "$GIS_FLAG_G" -eq 0 ] ; then
+	POST_DATA_OK=1
+    else
+	POST_DATA_OK=0
+    fi
 
-  CONTENTS=`cat "${REQUESTFILE}"`
+    NUMBER_OF_TILES=0
 
-  NUMBER_OF_TILES=0
-  for line in $CONTENTS ; do
+    while read line ; do
 	g.message -d message="wget command: [$line]" debug=2
+	if [ -z "$line" ] ; then
+	    continue
+	fi
+
 	eval "$line"
 
 	emptyness=`file "$OUTPUT_FILE" | grep empty$`
@@ -137,25 +140,25 @@ GetTiles() {
 	else
 	   GetData
 	   if [ $? -ne 0 ] ; then
-              NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+		NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
            fi
 	fi
-  done
+    done < "$REQUESTFILE"
 
-  if [ $NUMBER_OF_TILES -ne 0 ] ; then
-    g.message -w "$NUMBER_OF_TILES failed to download"
-    return 1
-  else
-    g.message "All tiles downloaded successfully"
-    return 0
-  fi
+    if [ "$NUMBER_OF_TILES" -ne 0 ] ; then
+	g.message -w "$NUMBER_OF_TILES tiles failed to download"
+	return 1
+    else
+	g.message "All tiles downloaded successfully"
+	return 0
+    fi
 }
 
 ##################################
 #Get the data from the WMS server
 GetData() {
    g.message "Downloading data"
-   g.message -v message="Requesting Data from <${SERVER}>:"
+   g.message -v message="Requesting data from <$SERVER>:"
    g.message -v message="$STRING"
 
    if [ "$POST_DATA_OK" -eq 1 ] ; then
@@ -186,9 +189,9 @@ GetData() {
    if [ "$POST_DATA_OK" -eq 0 ] ; then
       g.message -v message=""
       if [ "$USE_WGET" ] ; then
-	 wget ${WGET_OPTIONS} "${SERVER}?${STRING}" -O "${OUTPUT_FILE}"
+	 wget $WGET_OPTIONS "${SERVER}?${STRING}" -O "$OUTPUT_FILE"
       else
-	 curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" "${SERVER}?${STRING}"
+	 curl $CURL_OPTIONS -o "$OUTPUT_FILE" "${SERVER}?${STRING}"
       fi
       if [ $? -ne 0 ] ; then
          g.message -e "Failed while downloading the data"
@@ -205,13 +208,13 @@ GetData() {
 
 # Initialize variables:
 #wget has many options
-WGET_OPTIONS="${GIS_OPT_WGETOPTIONS}"
-CURL_OPTIONS="${GIS_OPT_CURLOPTIONS}"
-REQUESTFILE="${GIS_OPT_REQUESTFILE}"
+WGET_OPTIONS="$GIS_OPT_WGETOPTIONS"
+CURL_OPTIONS="$GIS_OPT_CURLOPTIONS"
+REQUESTFILE="$GIS_OPT_REQUESTFILE"
 
 #Get all the data
 GetTiles
 
 # Clean up:
-rm -f "${TEMPFILE}"*
+rm -f "$TEMPFILE"*
 
