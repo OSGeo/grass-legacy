@@ -82,6 +82,8 @@ fi
 
 g.message -d "[r.in.gdalwarp]"
 
+PROG=`basename "$0"`
+
 #### setup temporary file
 TEMPFILE="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
@@ -128,7 +130,7 @@ warpimport () {
 	   "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
 	if [ $? -ne 0 ] ; then
-	    g.message -e message="`basename $0`: gdalwarp failure."
+	    g.message -e message="$PROG: gdalwarp failure."
 	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
@@ -136,7 +138,7 @@ warpimport () {
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME" --quiet
 	if [ $? -ne 0 ] ; then
-	    g.message -e message="`basename $0`: r.in.gdal failure."
+	    g.message -e message="$PROG: r.in.gdal failure."
 	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
@@ -161,17 +163,17 @@ warpimport () {
 	SUFFIXES=`echo "$SUFFIXES
 $CHANNEL_SUFFIXES" | sort -u`
 
-	IFS=$defaultIFS
+	IFS="$defaultIFS"
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
-		LAST_SUFFIX=$sfx
+		LAST_SUFFIX="$sfx"
 	done
 
 	# Find the alpha layer
 	if [ $GIS_FLAG_K -eq 1 ] ; then
-		ALPHALAYER=${TMPMAPNAME}${LAST_SUFFIX}
+	    ALPHALAYER="${TMPMAPNAME}${LAST_SUFFIX}"
 	else
-		ALPHALAYER=${TMPMAPNAME}.alpha
+	    ALPHALAYER="${TMPMAPNAME}.alpha"
 	fi
 	# test to see if the alpha map exists
 	g.findfile element=cell file="$ALPHALAYER" > /dev/null
@@ -204,7 +206,7 @@ $CHANNEL_SUFFIXES" | sort -u`
 		fi		  
 
 		# Copy the color tables:
-		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx} --quiet
+		r.colors map="${MAP}${sfx}" rast="${TMPMAPNAME}${sfx}" --quiet
 
 		# Make patch lists:
 		sfx2=`echo $sfx | sed "s/\./_/"`
@@ -236,7 +238,7 @@ nowarpimport () {
 
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP" --quiet
 	if [ $? -ne 0 ] ; then
-	    g.message -e message="`basename $0`: r.in.gdal failure."
+	    g.message -e message="$PROG: r.in.gdal failure."
 	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi

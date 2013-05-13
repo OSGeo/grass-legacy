@@ -133,6 +133,26 @@ fi
 g.message -d "[wms.request]"
 
 
+# Get the system name
+SYSTEM=`uname -s`
+case $SYSTEM in
+MINGW* | MSYS*)
+        MINGW=1
+        ;;
+CYGWIN*)
+        CYGWIN=1
+        ;;
+Darwin*)
+        MACOSX=1
+        ;;
+esac
+
+# in case of fire, break glass
+dos2unix_path()
+{
+   echo "$1" | sed -e 's|^\([A-Za-z]\):|/\1|' -e 's|\\|/|g'
+}
+
 # Remember the intial field seperator
 defaultIFS="$IFS"
 
@@ -143,10 +163,10 @@ defaultIFS="$IFS"
 # usage: message level text
 
 message () {
-	if [ $1 -lt $GIS_OPT_V ] ; then
-		shift
-		echo "$@"  
-	fi
+    if [ "$1" -lt "$GIS_OPT_V" ] ; then
+	shift
+	echo "$@"  
+    fi
 }
 
 
@@ -159,9 +179,9 @@ BCARGS="-l"
 # usage: varname "expr"
 
 calculate() {
-	message 3 "$2"
-	c_tmp=`echo "$2" | $BC $BCARGS`
-	eval $1=$c_tmp
+    message 3 "$2"
+    c_tmp=`echo "$2" | "$BC" "$BCARGS"`
+    eval $1=$c_tmp
 }
 
 ####################################
@@ -173,12 +193,12 @@ GetTiles() {
   #################################################
   # ############## TILE SETTINGS ################ #
   #################################################
-  MAXCOLS=${GIS_OPT_MAXCOLS} #The maximum cols of the biggest tile 
-  MAXROWS=${GIS_OPT_MAXROWS} #The maximum rows of the biggest tile 
+  MAXCOLS="$GIS_OPT_MAXCOLS"   #The maximum cols of the biggest tile 
+  MAXROWS="$GIS_OPT_MAXROWS"   #The maximum rows of the biggest tile 
 
 
   #Calculate the number of tiles and set up the arrays
-  message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"
+  message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=$MAXCOLS maxrows=$MAXROWS $TILESET_OPTIONS"
   TILES=`eval "GRASS_VERBOSE=1 r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"`
   if [ $? -ne 0 ] ; then
      g.message -e "r.tileset failure"
@@ -188,10 +208,10 @@ GetTiles() {
   NUMBER_OF_TILES=0 #The number of the tiles 
   #Calculate the number of tiles
   for i in $TILES ; do
-	NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+	NUMBER_OF_TILES=`expr "$NUMBER_OF_TILES" + 1`
   done
 
-  g.message "Requesting ${NUMBER_OF_TILES} tiles."
+  g.message "Requesting $NUMBER_OF_TILES tiles."
   if [ "$NUMBER_OF_TILES" -gt 200 ] ; then
      g.message -w "Proceed with care. This number of tiles may exceed \
        the maximum command line argument length available from your \
@@ -202,9 +222,9 @@ GetTiles() {
 
   NUMBER_OF_TILES=0 #The number of the tiles 
 
-  mkdir -p "${GIS_OPT_FOLDER}"
+  mkdir -p "$GIS_OPT_FOLDER"
 
-  FOLDERPLUS="${GIS_OPT_FOLDER}/${GIS_OPT_PREFIX}_${GIS_OPT_REGION}"
+  FOLDERPLUS="$GIS_OPT_FOLDER/${GIS_OPT_PREFIX}_$GIS_OPT_REGION"
 
   if [ $GIS_FLAG_C -eq 1 ] ; then
     g.message -v message="Removing files <${FOLDERPLUS}*>"
@@ -212,22 +232,28 @@ GetTiles() {
   fi
 
   if [ -x "`which wget`" ] ; then
-    REQUESTFILE="${FOLDERPLUS}.wget"
+    REQUESTFILE="$FOLDERPLUS.wget"
   else
-    REQUESTFILE="${FOLDERPLUS}.curl"
+    REQUESTFILE="$FOLDERPLUS.curl"
   fi
 
   #reset the requestfile
-  echo > "${REQUESTFILE}"
+  echo > "$REQUESTFILE"
 
-  echo "$PROJ4_SRS" > "${FOLDERPLUS}.proj4"
+  echo "$PROJ4_SRS" > "$FOLDERPLUS.proj4"
 
   for i in $TILES ; do
 	eval "$i"
 	SIZE="bbox=$w,$s,$e,$n&width=$cols&height=$rows"
 	message 1 "$SIZE"
-	IMAGEFILE="${FOLDERPLUS}_${NUMBER_OF_TILES}"
-	OUTPUT_FILE="${IMAGEFILE}${FILE_EXTENT}"
+	IMAGEFILE="${FOLDERPLUS}_$NUMBER_OF_TILES"
+
+	if [ "$MINGW" ] ; then
+	    OUTPUT_FILE=`dos2unix_path "${IMAGEFILE}${FILE_EXTENT}"`
+	else
+	    OUTPUT_FILE="${IMAGEFILE}${FILE_EXTENT}"
+	fi
+
 	# We could add world files here to help out gdalwarp.
 	# And here it is:
 	# Displacement from top left cell to the one to the right of it and to the one below it:
@@ -245,19 +271,19 @@ GetTiles() {
 	echo "$top_left_cell_center_y" >> "${IMAGEFILE}${WORLDFILE}"
 	#Make the requestt for data:
 	STRING="request=GetMap&layers=${GIS_OPT_LAYERS}&styles=${GIS_OPT_STYLES}&srs=${SRS}&${SIZE}&format=${FORMAT}&${TRANSPARENCY}&${WMS_QUERY}"
-	echo "OUTPUT_FILE=\"${OUTPUT_FILE}\";SERVER=\"${SERVER}\";STRING=\"${STRING}\"" >> "${REQUESTFILE}"
+	echo "OUTPUT_FILE=\"$OUTPUT_FILE\";SERVER=\"$SERVER\";STRING=\"$STRING\"" >> "$REQUESTFILE"
 
-	NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+	NUMBER_OF_TILES=`expr "$NUMBER_OF_TILES" + 1`
   done
 }
 
 
 # Initialize variables:
 
-SERVER="${GIS_OPT_MAPSERVER}"
-SRS="${GIS_OPT_SRS}"
+SERVER="$GIS_OPT_MAPSERVER"
+SRS="$GIS_OPT_SRS"
 # use `tr '[:upper:]' '[:lower:]'` instead?
-SRS_lower=`echo $SRS | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"`
+SRS_lower=`echo "$SRS" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"`
 
 
 # If the user asserts that this projection is the same as the source
@@ -279,7 +305,7 @@ else
     SRS_SCALE=1
 fi
 
-WMS_QUERY="${GIS_OPT_WMSQUERY}"
+WMS_QUERY="$GIS_OPT_WMSQUERY"
 
 if [ -z "$GIS_OPT_REGION" ] ; then
 	TILESET_OPTIONS="$GIS_OPT_TILEOPTIONS"
@@ -287,13 +313,13 @@ else
 	TILESET_OPTIONS="region=$GIS_OPT_REGION $GIS_OPT_TILEOPTIONS"
 fi
 
-if [ $GIS_FLAG_O -eq 1 ] ; then
+if [ "$GIS_FLAG_O" -eq 1 ] ; then
 	TRANSPARENCY="transparent=FALSE"
 else
 	TRANSPARENCY="transparent=TRUE"
 fi
 
-case "${GIS_OPT_FORMAT}" in
+case "$GIS_OPT_FORMAT" in
     "geotiff") FORMAT="image/geotiff"
                WORLDFILE=".tfw"
                FILE_EXTENT=".geotiff"

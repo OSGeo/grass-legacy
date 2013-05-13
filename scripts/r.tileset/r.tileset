@@ -126,6 +126,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+g.message -d "[r.tileset]"
+
 # Program locations:
 BC="bc"
 BCARGS="-l"
@@ -372,14 +374,13 @@ bboxesIntersect() {
 }
 
 ### Fetch destination projection and region
-
-SOURCE_PROJ=$GIS_OPT_SOURCEPROJ
-SOURCE_SCALE=$GIS_OPT_SOURCESCALE
+SOURCE_PROJ="$GIS_OPT_SOURCEPROJ"
+SOURCE_SCALE="$GIS_OPT_SOURCESCALE"
 
 # Take into account those extra pixels we'll be a addin'
 #MAX_COLS=$GIS_OPT_MAXCOLS
 #MAX_ROWS=$GIS_OPT_MAXROWS
-OVERLAP=$GIS_OPT_OVERLAP
+OVERLAP="$GIS_OPT_OVERLAP"
 calculate MAX_COLS "$GIS_OPT_MAXCOLS - $OVERLAP"
 calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 
