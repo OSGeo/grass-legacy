@@ -28,7 +28,7 @@ This program is free software under the GNU General Public License
 
 @author Michael Barton
 @author Jachym Cepicky
-@author Martin Landa <landa.martin gmail.com>   
+@author Martin Landa <landa.martin gmail.com>
 """
 import os
 import locale
@@ -747,7 +747,7 @@ class ProjParamsPage(TitledPage):
             paramSBSizer.Fit(self.panel)
             self.panel.SetSizer(self.prjParamSizer)
                     
-        if event.GetDirection(): 
+        if event.GetDirection():
             self.prjParamSizer.Clear(True)
             self.paramSBox.SetLabel(_(" Enter parameters for %s projection ") % self.projdesc)
             self.pparam = dict()
@@ -762,7 +762,7 @@ class ProjParamsPage(TitledPage):
                 # default values
                 if param['type'] == 'bool':
                     param['value'] = 0
-                elif param['type'] == 'zone': 
+                elif param['type'] == 'zone':
                     param['value'] = 30 
                     param['desc'] += ' (1-60)'
                 else:
@@ -1043,10 +1043,10 @@ class EllipsePage(TitledPage):
                        wx.ALL, border = 5, pos = (3, 1), span = (1, 4))
 
         # events
-        self.ellipselist.Bind(wx.EVT_LIST_ITEM_SELECTED,    self.OnItemSelected)
+        self.ellipselist.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         self.tellipse.Bind(wx.EVT_TEXT, self.OnText)
         self.tellipse.Bind(wx.EVT_TEXT_ENTER, self.OnText)
-        self.searchb.Bind(wx.EVT_TEXT_ENTER,    self.OnSearch)
+        self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnSearch)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnEnterPage)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChanging)
 
@@ -1182,12 +1182,12 @@ class WKTPage(TitledPage):
     for setting coordinate system parameters"""
 
     def __init__(self, wizard, parent):
-        TitledPage.__init__(self, wizard, _("Select WKT file"))
+        TitledPage.__init__(self, wizard, _("Select WKT or PRJ file"))
 
         self.wktfile = ''
 
         # create controls
-        self.lfile= self.MakeLabel(_("WKT file:"))
+        self.lfile= self.MakeLabel(_("WKT or PRJ file:"))
         self.tfile = self.MakeTextCtrl(size = (300,-1))
         self.bbrowse = self.MakeButton(_("Browse"))
 
@@ -1239,8 +1239,11 @@ class WKTPage(TitledPage):
     def OnBrowse(self, event):
         """!Choose file"""
         dlg = wx.FileDialog(self,
-                            _("Select WKT file"),
-                            os.getcwd(), "", "*.*", wx.OPEN)
+                            message = _("Select WKT or PRJ file"),
+                            defaultDir = os.getcwd(),
+                            wildcard = "PRJ files (*.prj)|*.prj|Files (*.*)|*.*",
+                            style = wx.OPEN)
+
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             self.tfile.SetValue(path)
@@ -1398,7 +1401,7 @@ class EPSGPage(TitledPage):
             self.tcode.SetValue('')
             self.searchb.SetValue('')
             self.OnBrowseCodes(None)
-        else:    
+        else:
             try:
                 self.epsgcode, self.epsgdesc, self.epsgparams = \
                         self.epsglist.Search(index=[0,1,2], pattern=value)
@@ -1847,7 +1850,7 @@ class LocationWizard(wx.Object):
                 self.grassdatabase = self.startpage.grassdatabase
                 self.georeffile = self.filepage.georeffile
                 # FIXME here was code for setting default region, what for is this if:
-                # if self.altdb == False: 
+                # if self.altdb == False:
                     
             else: # -> error
                 self.wizard.Destroy()
