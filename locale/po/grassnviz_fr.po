@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassnviz_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-20 15:43+0200\n"
-"PO-Revision-Date: 2013-05-12 16:57+0100\n"
+"PO-Revision-Date: 2013-05-18 12:46+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -711,7 +711,7 @@ msgstr "Fini"
 #: ../visualization/nviz/scripts/panel_arrow.tcl:119
 #: ../visualization/nviz/scripts/panel_label.tcl:177
 msgid "The quick brown fox jumps over the lazy dog"
-msgstr ""
+msgstr "Le renard roux agile saute par dessus le chien fainéant"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:220
 #: ../visualization/nviz/scripts/panel_arrow.tcl:119
@@ -761,7 +761,7 @@ msgstr "Choisir la couleur"
 
 #: ../visualization/nviz/scripts/script_file_tools:36
 msgid "Map Object File Sequencing"
-msgstr ""
+msgstr "Séquençage du fichier d'objet carte"
 
 #: ../visualization/nviz/scripts/script_file_tools:43
 msgid "Fields:"
@@ -893,7 +893,7 @@ msgstr "Nouveau"
 #: ../visualization/nviz/scripts/panel_vect.tcl:82
 #: ../visualization/nviz/scripts/panel_vol.tcl:115
 msgid "DRAW CURRENT"
-msgstr ""
+msgstr "Actualiser le rendu"
 
 #: ../visualization/nviz/scripts/panel_site.tcl:133
 msgid "icon size"
@@ -1083,9 +1083,8 @@ msgid "Run and Save"
 msgstr "Lancer et enregistrer"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:132
-#, fuzzy
 msgid "New Key Time:"
-msgstr "Nouvelle clef de temps"
+msgstr "Nouvelle clef de temps :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:143
 msgid "Show Feature"
@@ -1164,7 +1163,7 @@ msgstr "Taux de rafraîchissement :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:576
 msgid "Frame Rate Error"
-msgstr ""
+msgstr "Erreur de taux de rafraichissement"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:576
 msgid "Error - Frame rate must be at least 1."
@@ -1217,7 +1216,7 @@ msgstr "Image de début :"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1718
 msgid "Off-Screen"
-msgstr ""
+msgstr "Hors-écran"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1909
 msgid "Warning - Current animation has not been saved, continue?"
@@ -1266,7 +1265,7 @@ msgstr "boussole"
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "aster"
-msgstr "aster"
+msgstr "étoile"
 
 #: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
@@ -1310,7 +1309,6 @@ msgstr "Vecteur"
 #: ../visualization/nviz/scripts/mapBrowser.tcl:214
 #: ../visualization/nviz/scripts/filemapBrowser.tcl:158
 #: ../visualization/nviz/scripts/multimapBrowser.tcl:159
-#, fuzzy
 msgid "Site"
 msgstr "Site"
 
@@ -1359,7 +1357,7 @@ msgstr "DESSINER"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:107
 msgid "Draw selected features"
-msgstr ""
+msgstr "Dessiner les objets sélectionnés"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:109
 #: ../visualization/nviz/scripts/panel_rquery.tcl:66
@@ -1374,7 +1372,7 @@ msgstr "Effacre l'affichage NVIZ"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:113
 msgid "Cancel current draw"
-msgstr ""
+msgstr "Annuler l'actualisation du rendu"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:119
 msgid "Automatically render display:"
@@ -1386,11 +1384,11 @@ msgstr "rendu automatique après modification des paramètres"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:128
 msgid "Show features:"
-msgstr ""
+msgstr "Afficher les objets :"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:131
 msgid "Main features..."
-msgstr ""
+msgstr "Objet principal ..."
 
 #: ../visualization/nviz/scripts/panel_main.tcl:136
 msgid "Decorations..."
@@ -1401,7 +1399,6 @@ msgid "Vectors"
 msgstr "Vecteurs"
 
 #: ../visualization/nviz/scripts/panel_main.tcl:148
-#, fuzzy
 msgid "Sites"
 msgstr "Sites"
 
@@ -1654,7 +1651,7 @@ msgstr "Vers (surface) :"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:49
 msgid "Range/bearing:"
-msgstr ""
+msgstr "Distance/Gisement"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:52
 msgid "East"
@@ -1662,7 +1659,7 @@ msgstr "Est"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:56
 msgid "Range"
-msgstr ""
+msgstr "Distance"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:60
 msgid "North"
@@ -1909,9 +1906,8 @@ msgid "icon size  X"
 msgstr "taille d'icône X"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:130
-#, fuzzy
 msgid "Choose size in multiples of default to indicate point queried"
-msgstr "Choisir la taille en multiples du défaut pour indiquer les points requêtés"
+msgstr "Choisir le multiple de la taille  pour indiquer les points sélectionnés"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:137
 msgid "specific icon"
@@ -1966,7 +1962,7 @@ msgstr "ATTENTION : pas de préférences de carte thématique définies pour %s 
 #: ../visualization/nviz/scripts/site_attr.tcl:447
 #, tcl-format
 msgid "Vary point %s"
-msgstr ""
+msgstr "Point variable %s"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:451
 #, tcl-format
@@ -2086,7 +2082,7 @@ msgstr "Type : %s"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1436
 msgid "Save thematic prefs in file"
-msgstr "Enregistrer les préfs thémqtiques dans le fichier"
+msgstr "Enregistrer les préfs thématiques dans le fichier"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1439
 msgid "Clear current thematic prefs"
@@ -2102,12 +2098,12 @@ msgstr "Charger le fichier"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1577
 msgid "Save thematic prefs"
-msgstr "Enregistrer les rpéfs thématiques"
+msgstr "Enregistrer les préfs thématiques"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1582
 #, tcl-format
 msgid "Old LUT \"%s\" deleted"
-msgstr ""
+msgstr "Old LUT \"%s\" deleted"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1607
 #, tcl-format
@@ -2145,7 +2141,7 @@ msgid "WARNING: field %s NOT FOUND"
 msgstr "ATTENTION : champ %s NON TROUVÉ"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1798
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "WARNING: lut file %s NOT FOUND"
 msgstr "ATTENTION : fichier lut %s NON TROUVÉ"
 
@@ -2188,7 +2184,6 @@ msgid "Close Loop"
 msgstr "Fermer la boucle"
 
 #: ../visualization/nviz/scripts/script_tools:37
-#, fuzzy
 msgid "Open File Seq. Loop"
 msgstr "Ouvrir une boucle de fichiers"
 
@@ -2262,9 +2257,8 @@ msgstr "longueur"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:459
 #: ../visualization/nviz/scripts/panel_vol.tcl:737
-#, fuzzy
 msgid "tilt"
-msgstr "pencher"
+msgstr "basculer"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:493
 msgid "Add new slice"
@@ -2298,7 +2292,7 @@ msgstr "Attributs d'iso-surface ..."
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:839
 msgid "toggle normal direction"
-msgstr ""
+msgstr "Activer la direction normale"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:861
 msgid "Add new isosurface"
@@ -2395,7 +2389,7 @@ msgstr "Quitter"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:410
 msgid "Scripting"
-msgstr ""
+msgstr "Scripts"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:420
 msgid "Create New Scriptfile"
@@ -2439,7 +2433,7 @@ msgstr "Apparence"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:800
 msgid "Set Size of Display Canvas"
-msgstr ""
+msgstr "Définir la taille du cadre d'affichage"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:803
 msgid "Width"
@@ -2455,11 +2449,11 @@ msgstr "Voulez-vous réellement réinitialiser NVIZ ?"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:39
 msgid "Scaled Difference"
-msgstr ""
+msgstr "Différences"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:45
 msgid "Scaled Difference Panel"
-msgstr ""
+msgstr "Panneau de mise en évidence des différences"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:54
 msgid "Reference surface:"
