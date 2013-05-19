@@ -883,7 +883,7 @@ class Map(object):
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
-            os.environ["GRASS_COMPRESSION"] = "0"
+            os.environ["GRASS_PNG_COMPRESSION"] = "0"
             os.environ["GRASS_TRUECOLOR"] = "TRUE"
             os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
         
