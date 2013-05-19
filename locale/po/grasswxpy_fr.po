@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-20 15:43+0200\n"
-"PO-Revision-Date: 2013-05-12 16:42+0100\n"
+"PO-Revision-Date: 2013-05-18 23:03+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -5712,7 +5712,6 @@ msgid "Groundwater modeling"
 msgstr "Modélisation d'hydro-géologie"
 
 #: ../gui/wxpython/menustrings.py:383
-#, fuzzy
 msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
 msgstr "Calcul numérique pour les eaux souterraines transitoires, confinées et non confinées, en deux dimensions."
 
@@ -5810,7 +5809,7 @@ msgstr "Contraste pondérée de la densité du bord"
 
 #: ../gui/wxpython/menustrings.py:407
 msgid "Calculates contrast weighted edge density index on a raster map"
-msgstr ""
+msgstr "Calculer l'index de densité de bords pondérée par le contraste sur une carte raster"
 
 #: ../gui/wxpython/menustrings.py:408
 msgid "Patch area mean"
@@ -5906,7 +5905,7 @@ msgstr "Taux de propagation"
 
 #: ../gui/wxpython/menustrings.py:432
 msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
-msgstr ""
+msgstr "Génère trois ou quatre couches raster montrant 1) la la vitesse de propagation de base (ROS), 2) la propagation maximale, 3) la direction dela propagation maximale, et en option 4) la distance potentielle maximale de propagation."
 
 #: ../gui/wxpython/menustrings.py:433
 msgid "Least-cost spread paths"
@@ -5914,7 +5913,7 @@ msgstr "Propagation par chemins de moindre coût "
 
 #: ../gui/wxpython/menustrings.py:434
 msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
-msgstr ""
+msgstr "Trace de façon récursive le plus court chemin vers les cellules pour lequelles le coût cumulé est déterminé."
 
 #: ../gui/wxpython/menustrings.py:435
 msgid "Anisotropic spread simulation"
@@ -5922,7 +5921,7 @@ msgstr "Simulation de diffusion anisotrope"
 
 #: ../gui/wxpython/menustrings.py:436
 msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."
-msgstr ""
+msgstr "Simule une propagation elliptique anisotropique sur une fenêtre graphique et génère une couche raster du temps cumulé de propagation, à partir de couches raster contenant des taux (ROS), directions, et origine des propagations."
 
 #: ../gui/wxpython/menustrings.py:437
 msgid "Change category values and labels"
@@ -5974,7 +5973,7 @@ msgstr "Recalculer l'échelle des valeurs par histogramme"
 
 #: ../gui/wxpython/menustrings.py:449
 msgid "Rescales histogram equalized the range of category values in a raster map layer."
-msgstr ""
+msgstr "Rééchelonne l'histogramme sur l'étendue des valeurs de catégories de la couche raster."
 
 #: ../gui/wxpython/menustrings.py:450
 msgid "Generate random cells"
@@ -6010,11 +6009,11 @@ msgstr "Créer une surface fractale à partir d'une dimension fractale donnée."
 
 #: ../gui/wxpython/menustrings.py:458
 msgid "Gaussian kernel density surface"
-msgstr ""
+msgstr "Surface avec un noyau de densité gaussienne"
 
 #: ../gui/wxpython/menustrings.py:459
 msgid "Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network."
-msgstr ""
+msgstr "Génère une carte raster de densité à partir de données vecteurs points en utilisant un noyau mouvant et optionnellement génère une carte de densité sur un réseau vectoriel."
 
 #: ../gui/wxpython/menustrings.py:460
 msgid "Gaussian deviates surface"
@@ -6035,7 +6034,7 @@ msgstr "Déviance aléatoire de surface"
 
 #: ../gui/wxpython/menustrings.py:465
 msgid "Produces a raster map of uniform random deviates whose range can be expressed by the user."
-msgstr ""
+msgstr "Produit une couche raster de données aléatoires uniformément réparties dans un gamme donnée par l'utilisateur."
 
 #: ../gui/wxpython/menustrings.py:466
 msgid "Random surface with spatial dependence"
@@ -6183,11 +6182,11 @@ msgstr "Rend compte des statistique de cartes raster."
 
 #: ../gui/wxpython/menustrings.py:502
 msgid "Statistics for clumped cells"
-msgstr ""
+msgstr "Statistiques pour des amas de cellules"
 
 #: ../gui/wxpython/menustrings.py:503
 msgid "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS vector points map containing the calculated centroids of these clumps."
-msgstr ""
+msgstr "Calcul le volume de données en amas et produit (en option) une couche vectorielle de points contenant les centroïdes de ces amas."
 
 #: ../gui/wxpython/menustrings.py:504
 msgid "Total corrected area"
@@ -6223,7 +6222,7 @@ msgstr "Covariance/corrélation"
 
 #: ../gui/wxpython/menustrings.py:513
 msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
-msgstr ""
+msgstr "Sortir la matrice de covariance/corrélation pour des"
 
 #: ../gui/wxpython/menustrings.py:514
 msgid "Linear regression"
@@ -6235,11 +6234,11 @@ msgstr "Calcule une régression linéaire depuis deux cartes raster : y = a + b*
 
 #: ../gui/wxpython/menustrings.py:516
 msgid "Mutual category occurrences"
-msgstr ""
+msgstr "Occurences mutelles de catégories"
 
 #: ../gui/wxpython/menustrings.py:517
 msgid "Tabulates the mutual occurrence (coincidence) of categories for two raster map layers."
-msgstr ""
+msgstr "Tabuler les occurences mutuelles (coincidence) des catégories de deux rasters"
 
 #: ../gui/wxpython/menustrings.py:518
 msgid "&Vector"
@@ -6487,7 +6486,7 @@ msgstr "Détecter intérieurs"
 
 #: ../gui/wxpython/menustrings.py:593
 msgid "Building contour determination and Region Growing algorithm for determining the building inside"
-msgstr ""
+msgstr "Détermination des contours de bâtiments et algorithme d'agrandissement de la région pour déterminer les bâtiments à l'intérieur"
 
 #: ../gui/wxpython/menustrings.py:594
 msgid "Correct and reclassify objects"
@@ -7047,9 +7046,8 @@ msgid "Edge detection"
 msgstr "Détection des bordures"
 
 #: ../gui/wxpython/menustrings.py:738
-#, fuzzy
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
-msgstr "Fonction raster croisement de zéros de \"détection des angles\" pour l'analyse d'images."
+msgstr "Fonction raster de \"détection des bords\" sans croisement pour l'analyse d'images."
 
 #: ../gui/wxpython/menustrings.py:739
 msgid "Matrix/convolving filter"
