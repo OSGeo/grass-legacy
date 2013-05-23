@@ -496,6 +496,7 @@ class SingleSymbolPanel(wx.Panel):
         """!Panel selected, background changes"""
         self.selected = True
         self.SetBackgroundColour(self.selectColor)
+        self.Refresh()
         event.Skip()
         
         event = wxSymbolSelectionChanged(name = self.GetName(), doubleClick = False)
@@ -509,9 +510,11 @@ class SingleSymbolPanel(wx.Panel):
         """!Panel deselected, background changes back to default"""
         self.selected = False
         self.SetBackgroundColour(self.deselectColor)
+        self.Refresh()
         
     def Select(self):
         """!Select panel, no event emitted"""
         self.selected = True
         self.SetBackgroundColour(self.selectColor)
+        self.Refresh()
         
