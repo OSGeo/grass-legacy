@@ -1921,9 +1921,9 @@ msgid "Snapped vertices: %d"
 msgstr ""
 
 #: ../lib/vector/Vlib/snap.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "New vertices: %d"
-msgstr "Numero di primitive:%d"
+msgstr "Numero di vertici: %d"
 
 #: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/close.c:38
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/read.c:30
@@ -1949,67 +1949,67 @@ msgstr "Numero di nodi: %d"
 #: ../lib/vector/Vlib/build.c:154
 #, c-format
 msgid "Number of primitives: %d"
-msgstr "Numero di primitive:%d"
+msgstr "Numero di primitive: %d"
 
 #: ../lib/vector/Vlib/build.c:155
 #, c-format
 msgid "Number of points: %d"
-msgstr "Numero di punti:%d"
+msgstr "Numero di punti: %d"
 
 #: ../lib/vector/Vlib/build.c:156
 #, c-format
 msgid "Number of lines: %d"
-msgstr "Numero di linee:%d"
+msgstr "Numero di linee: %d"
 
 #: ../lib/vector/Vlib/build.c:157
 #, c-format
 msgid "Number of boundaries: %d"
-msgstr "Numero di confini:%d"
+msgstr "Numero di confini: %d"
 
 #: ../lib/vector/Vlib/build.c:158
 #, c-format
 msgid "Number of centroids: %d"
-msgstr "Numero di centroidi:%d"
+msgstr "Numero di centroidi: %d"
 
 #: ../lib/vector/Vlib/build.c:161
 #, c-format
 msgid "Number of faces: %d"
-msgstr "Numero di facce:%d"
+msgstr "Numero di facce: %d"
 
 #: ../lib/vector/Vlib/build.c:164
 #, c-format
 msgid "Number of kernels: %d"
-msgstr "Numero di kernel:%d"
+msgstr "Numero di kernel: %d"
 
 #: ../lib/vector/Vlib/build.c:205
 #, c-format
 msgid "Number of areas: %d"
-msgstr "Numero di aree:%d"
+msgstr "Numero di aree: %d"
 
 #: ../lib/vector/Vlib/build.c:206
 #, c-format
 msgid "Number of isles: %d"
-msgstr "Numero di isole:%d"
+msgstr "Numero di isole: %d"
 
 #: ../lib/vector/Vlib/build.c:209
 #, c-format
 msgid "Number of incorrect boundaries: %d"
-msgstr "Numero di confini non corretti:%d"
+msgstr "Numero di confini non corretti: %d"
 
 #: ../lib/vector/Vlib/build.c:213
 #, c-format
 msgid "Number of centroids outside area: %d"
-msgstr "Numero di centroidi al di fuori dell'area:%d"
+msgstr "Numero di centroidi al di fuori dell'area: %d"
 
 #: ../lib/vector/Vlib/build.c:217
 #, c-format
 msgid "Number of duplicate centroids: %d"
-msgstr "Numero di centroidi duplicati:%d"
+msgstr "Numero di centroidi duplicati: %d"
 
 #: ../lib/vector/Vlib/build.c:221
 #, c-format
 msgid "Number of areas without centroid: %d"
-msgstr "Numero di aree senza centroide:%d"
+msgstr "Numero di aree senza centroide: %d"
 
 #: ../lib/vector/Vlib/build.c:226
 msgid "Number of areas: -"
@@ -2017,7 +2017,7 @@ msgstr "Numero di aree: -"
 
 #: ../lib/vector/Vlib/build.c:227
 msgid "Number of isles: -"
-msgstr "Numero di isole:-"
+msgstr "Numero di isole: -"
 
 #: ../lib/vector/Vlib/build.c:256
 #, c-format
@@ -2043,7 +2043,7 @@ msgstr "operatore sconosciuto"
 
 #: ../lib/vector/Vlib/overlay.c:123
 msgid "Overlay: line/boundary types not supported by AND operator"
-msgstr "Intersezione: tipologie linea/confine non supportano l'operatore AND "
+msgstr "Intersezione: tipologie linea/confine non supportano l'operatore AND"
 
 #: ../lib/vector/Vlib/overlay.c:126
 msgid "Overlay: area x area types not supported by AND operator"
@@ -2059,7 +2059,7 @@ msgstr "La struttura della mappa è stata chiusa"
 
 #: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 msgid "Index out of range in"
-msgstr "Indice fuori dal range in "
+msgstr "Indice fuori dal range in"
 
 #: ../lib/vector/Vlib/line.c:529
 msgid "Segment outside line, no segment created"
@@ -2212,7 +2212,7 @@ msgstr "Vect_read_area_geos(): impossibile leggere l'isola con id %d nell' area 
 #: ../lib/vector/Vlib/geos.c:203
 #, c-format
 msgid "Unable to read line offset %ld"
-msgstr "Impossibile leggere l'offset %ld della linea "
+msgstr "Impossibile leggere l'offset %ld della linea"
 
 #: ../lib/vector/Vlib/geos.c:410
 #, c-format
@@ -5009,3 +5009,7 @@ msgstr "G_realloc: impossibile allocare %lu bytes a %s:%d"
 
 #~ msgid "'%s' must be > 0 for '%s'"
 #~ msgstr "'%s' deve essere > 0 per '%s'"
+
+#, fuzzy
+#~ msgid "MAPSET %s not found at %s"
+#~ msgstr "MAPSET %s non trovato"
