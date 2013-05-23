@@ -22,13 +22,19 @@ Nodes and arcs can be closed using cost = -1.
 <p>
 Least cost paths are written to the output vector map with an 
 attached attribute table.
-<p>
-Nodes can be piped into the program from file or from stdin. The
-syntax is as follows:
+<p>Nodes can be
+<ul>
+<li> piped into the program from file or from stdin, or
+<li> defined in the graphical user interface ("enter values interactively").
+</ul>
+
+The syntax is as follows:
 <div class="code"><pre>
 id start_point_category end_point_category
 </pre></div>
 
+(Example: 1 1 2)
+<p>
 or
 
 <div class="code"><pre>
@@ -45,17 +51,17 @@ pair is used.
 <p>
 The attribute table will contain the following attributes:
 
-</ul>
+<ul>
     <li>cat  - path unique category assigned by module</li>
     <li>id   - path id (read from input)</li>
     <li>fcat - from point category</li>
     <li>tcat - to point category</li>
     <li>sp - result status:
-    </ul>
+    <ul>
         <li>     0 - OK, path found</li>
         <li>     1 - node is not reachable</li>
         <li>     2 - point of given category does not exist</li>
-    </ul></li>
+    </ul>
     <li>cost - travelling costs (on the network, not to/from network)</li>
     <li>fdist - the distance from first point to the network</li>
     <li>tdist - the distance from the network to second point</li>
@@ -72,9 +78,9 @@ When using attributes, the length of segments is not used. To get
 accurate results, the line length must be taken into account when 
 assigning costs as attributes. For example, to get the <b>fastest path</b>, 
 the columns 'max_speed' and 'length' are required. The correct fastest 
-path can then be found by specifying <tt>afcol=length/max_speed</tt>. If needed,
-the line length can be calculated and written to the attributes table 
-by <em>v.to.db</em>.
+path can then be found by specifying <tt>afcol=length/max_speed</tt>. If not yet
+existing, the column containing the line length ("length") has to added to the
+attributes table using <em>v.to.db</em>.
 
 <h2>EXAMPLE</h2>
 
