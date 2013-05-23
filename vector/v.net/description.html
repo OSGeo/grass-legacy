@@ -1,16 +1,17 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.net</em> is used for network preparation and maintenance. Its main
-use is to create a vector network from vector lines (<em>arcs</em>) and points 
-(<em>nodes</em>) by creating nodes from intersections in a map of vector 
-lines (<em>node</em> operator), by connecting a vector lines map with a points map 
-(<em>connect</em> operator), and by creating new lines between pairs of vector points 
+<em>v.net</em> is used for network preparation and maintenance. Its 
+main use is to create a vector network from vector lines (<em>arcs
+</em>) and points (<em>nodes</em>) by creating nodes from 
+intersections in a map of vector lines (<em>node</em> operator), by 
+connecting a vector lines map with a points map (<em>connect</em> 
+operator), and by creating new lines between pairs of vector points
 (<em>arcs</em> operator).
 
 <p>
 A GIS network consists of topologically correct lines (arcs). That is, 
 the lines must be connected by shared vertices where real connections exist.
-In GRASS you also can add nodes to the network. These are specially 
+In GRASS GIS you also can add nodes to the network. These are specially 
 designated vertices used for analyzing network properties or computing 
 cost/distance measures. That is, not all vertices are treated as nodes by
 default. Only <em><a href="v.net.path.html">v.net.path</a></em> can use a 
@@ -55,7 +56,7 @@ For nodes created using the <em>nodes</em> operation
 (method 2 above), it is possible to create an attribute table for the 
 new nodes in layer 2 using the attribute table manager and connect it to
 layer 2 ("manage layers" tab) or to create a table with
-<em><a href="v.db.addtable.html">v.db.addtable</a>, 
+<em><a href="v.db.addtable.html">v.db.addtable</a></em>, 
 connect it to layer 2 with <em><a href="v.db.connect.html">v.db.connect</a></em>,
 and update the new table with cat values with <em><a href="v.to.db.html">v.to.db</a></em>. 
 
@@ -115,17 +116,20 @@ v.net input=streets_wake output=streets_node operation=nodes
 Merge in nodes from a separate map within given threshold:
 
 <div class="code"><pre>
-v.net input=streets_wake points=firestations out=streets_net operation=connect thresh=500
+v.net input=streets_wake points=firestations out=streets_net \
+      operation=connect thresh=500
 </pre></div>
 
-For generating network for given vector point map is required input file in format
+For generating network for given vector point map is required input 
+file in format:
 
 <div class="code"><pre>
 [category of edge] [category of start node] [category of end node]
 </pre></div>
 
 <div class="code"><pre>
-v.net points=geodetic_swwake_pts output=geodetic_swwake_pts_net operation=arcs file=- << EOF
+v.net points=geodetic_swwake_pts output=geodetic_swwake_pts_net \
+      operation=arcs file=- &lt;&lt; EOF
 > 1 28000 28005
 > 2 27945 27958
 > 3 27886 27897
@@ -136,7 +140,11 @@ v.net points=geodetic_swwake_pts output=geodetic_swwake_pts_net operation=arcs f
 
 <em>
 <a href="wxGUI.Vector_Digitizer.html">wxGUI vector digitizer</a>,
-<a href="v.edit.html">v.edit</a>,<br>
+<a href="v.edit.html">v.edit</a>
+</em>
+
+<p>
+<em>
 <a href="v.net.alloc.html">v.net.alloc</a>,
 <a href="v.net.allpairs.html">v.net.allpairs</a>,
 <a href="v.net.bridge.html">v.net.bridge</a>,
