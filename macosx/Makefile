@@ -98,6 +98,12 @@ install-basic-macosx:
 	-cd ${GISBASE} ; tar cBf - tools | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null ; fi
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
+	-sed -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" \
+		-e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" \
+		${GISBASE}/include/Make/Platform.make > ${INST_DIR_TARGET}/include/Make/Platform.make
+	-sed -e "s#^\(ARCH_DISTDIR.[^=]*\).*#\1= ${INST_DIR}#" \
+		-e "s#^\(ARCH_BINDIR.[^=]*\).*#\1= ${UNIX_BIN}#" \
+		${GISBASE}/include/Make/Grass.make > ${INST_DIR_TARGET}/include/Make/Grass.make
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR_TARGET}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR_TARGET}/etc/monitorcap
 	-chmod -R a+rX ${PREFIX_TARGET}/${MACOSX_APP_NAME} 2>/dev/null
