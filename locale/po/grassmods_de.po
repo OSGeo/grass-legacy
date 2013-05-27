@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-26 09:58+0100\n"
-"PO-Revision-Date: 2013-05-03 15:33+0200\n"
+"PO-Revision-Date: 2013-05-27 14:15+0200\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
@@ -11024,11 +11024,11 @@ msgstr "Konvertiert eine Rasterkarte in eine Vektorkarte."
 #: ../vector/v.net.bridge/main.c:63 ../vector/v.vect.stats/main.c:145
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
-msgstr "Art des Vektorobjekts."
+msgstr "Art des Vektorobjekts"
 
 #: ../raster/r.to.vect/main.c:69
 msgid "Smooth corners of area features"
-msgstr "Glätte Ecken der flächenhaften Objekte."
+msgstr "Glättet Ecken flächenhafter Objekte"
 
 #: ../raster/r.to.vect/main.c:74
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
@@ -21206,12 +21206,12 @@ msgstr "Keine Steiner-Punkte gefunden -> verlasse die Schleife"
 #: ../vector/v.overlay/area_area.c:54
 #, c-format
 msgid "Snapping boundaries with %g ..."
-msgstr "Grenzen ausrichten mit %g ..."
+msgstr "Fange Grenzen mit %g ..."
 
 #: ../vector/v.overlay/area_area.c:102
 #, c-format
 msgid "%d boundaries snapped"
-msgstr "%d Grenzen ausgerichtet"
+msgstr "%d Grenzen gefangen"
 
 #: ../vector/v.overlay/area_area.c:110 ../vector/v.overlay/line_area.c:69
 msgid "Breaking lines..."
@@ -21596,7 +21596,7 @@ msgstr "Kleinste zu importierende Fläche (in Flächeneinheiten)"
 
 #: ../vector/v.in.ogr/main.c:155 ../vector/v.in.ogr/main.c:176
 msgid "Min-area & snap"
-msgstr "Min-Fläche & Ausrichten"
+msgstr "Min-Fläche & Fangen"
 
 #: ../vector/v.in.ogr/main.c:156
 msgid "Smaller areas and islands are ignored. Should be greater than snap^2"
@@ -21612,7 +21612,7 @@ msgstr "point;Importiere Zentroide als Punkte;line;Importiere Grenzen als Linien
 
 #: ../vector/v.in.ogr/main.c:177
 msgid "'-1' for no snap"
-msgstr "'-1' für kein Ausrichten"
+msgstr "'-1' für kein Fangen"
 
 #: ../vector/v.in.ogr/main.c:191
 msgid "List of column names to be used instead of original names, first is used for category column"
@@ -21767,7 +21767,7 @@ msgstr "Säubere Polygone; für das Resultat wird nicht garantiert!"
 #: ../vector/v.in.ogr/main.c:970
 #, c-format
 msgid "Snap boundaries (threshold = %.3e):"
-msgstr "Grenzen ausrichten (Schwellwert = %.3e):"
+msgstr "Grenzen fangen (Schwellwert = %.3e):"
 
 #: ../vector/v.in.ogr/main.c:984
 msgid "Break polygons:"
@@ -22292,7 +22292,7 @@ msgstr "Erstelle Teile der Topologie..."
 
 #: ../vector/v.buffer2/main.c:542 ../vector/v.buffer/main.c:661
 msgid "Snapping boundaries..."
-msgstr "Richte Grenzen aus..."
+msgstr "Fange Grenzen..."
 
 #: ../vector/v.buffer2/main.c:545 ../vector/v.buffer/main.c:664
 msgid "Breaking polygons..."
@@ -23215,11 +23215,11 @@ msgstr "Name der Hintergrund-Vektorkarte(n)."
 
 #: ../vector/v.edit/args.c:190
 msgid "Snap added or modified features in the given threshold to the nearest existing feature"
-msgstr "Richte hinzugefügte oder veränderte Objekte, innerhalb des gegebenen Schwellwertes, am nächsten Objekt aus."
+msgstr "Hinzugefügte oder veränderte Objekte, innerhalb der Toleranz, am nächsten Objekt fangen"
 
 #: ../vector/v.edit/args.c:192
 msgid "no;Not apply snapping;node;Snap only to node;vertex;Allow snapping also to vertex"
-msgstr "no; Kein Ausrichten; node; nur an Knoten Ausrichten; vertex; Erlaube Ausrichten auch an Vertices"
+msgstr "no; Kein Fangen; node; Nur an Knoten Fangen; vertex; Erlaube Fangen auch an Vertices"
 
 #: ../vector/v.edit/args.c:200
 msgid "Starting value and step for z bulk-labeling"
@@ -23333,7 +23333,7 @@ msgstr "%d Objekte hinzugefügt"
 #: ../vector/v.edit/main.c:360
 #, c-format
 msgid "Threshold value for snapping is %.2f"
-msgstr "Schwellwert für Ausrichten ist %.2f."
+msgstr "Fangtoleranz ist %.2f."
 
 #: ../vector/v.edit/main.c:278
 #, c-format
@@ -26980,7 +26980,7 @@ msgstr "Erstelle Topologie für die Vektorkarte <%s>..."
 
 #: ../vector/v.patch/main.c:370
 msgid "Intersections at borders will have to be snapped"
-msgstr "Überschneidungen an den Grenzen müssen ausgerichtet werden"
+msgstr "Überschneidungen an den Grenzen müssen gefangen werden"
 
 #: ../vector/v.patch/main.c:371
 msgid "Lines common between files will have to be edited"
@@ -27510,7 +27510,7 @@ msgstr "Werkzeug: Entferne doppelte Zentroide"
 
 #: ../vector/v.clean/main.c:341
 msgid "Tool: Snap line to vertex in threshold"
-msgstr "Werkzeug: Richte Linie an Vertices innerhalb des Schwellwertes aus"
+msgstr "Werkzeug: Fange Linie an Vertices innerhalb der Toleranz"
 
 #: ../vector/v.clean/main.c:345
 msgid "Tool: Break polygons"
@@ -29216,7 +29216,7 @@ msgstr "Werde Z auf diesen Wert setzen, wenn der Wert der Rasterkarte nicht gele
 
 #: ../vector/v.drape/main.c:305
 msgid "No features match Your query"
-msgstr "Keine Objekte passen zu Ihrer Abfrage."
+msgstr "Zu Ihrer Abfrage passen keine Objekte"
 
 #: ../vector/v.drape/main.c:407 ../vector/v.drape/main.c:417
 msgid "Due to error attribute data to new map are not transferred"
@@ -31735,7 +31735,7 @@ msgstr "Exportiere als Tracks."
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
 msgid "Feature type(s)"
-msgstr "Art des Vektorobjekts."
+msgstr "Art des Vektorobjekts"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
 msgid "Name for output file or GPS device"
@@ -32766,7 +32766,7 @@ msgstr "Eingabe-Rasterkarte mit dem Koeffizient der diffusen 'real-sky' Sonnenei
 #~ msgstr " %-10.5f| %-12.4f| %-12.4f|"
 
 #~ msgid "create;Create new (empty) vector map;add;Add new features to existing vector map;delete;Delete selected features from vector map;move;Move selected features in vector map;vertexmove;Move vertex of selected vector lines;vertexdel;Remove vertex from selected vector lines;vertexadd;Add new vertex to selected vector lines;merge;Merge selected vector lines;break;Break/split vector lines;select;Select lines and print their ID's;catadd;Set new categories to selected vector features for defined layer;catdel;Delete categories from selected vector features for defined layer;copy;Copy selected features;snap;Snap vector features in given threshold;flip;Flip direction of selected vector lines;connect;Connect two lines;zbulk;Z bulk-labeling (automated assignment of z coordinate to vector lines);chtype;Change feature type (point<->centroid, line<->boundary)"
-#~ msgstr "create;Erzeuge ein neue (leere) Vektorkarte;add;Fügt neue Objekte zu einer existierenden Vektorkarte hinzu;delete;Entfernt selektierte Objekte von einer Vektorkarte;move;Verschiebt selektierte Objekte in einer Vektorkarte;vertexmove;Verschiebt einen Vertex selektierter Vektorlinien;vertexdel;Entfernt einen Vertex aus selektierten Vektorlinien;vertexadd;Fügt einen neuen Vertex zu selektierten Vektorlinien hinzu;merge;Vereinigt selektierte Vektorlinien;break;Teilt Vektorlinien;select;Selektiert Linien und gibt ihre ID aus;catadd;Vergibt neue Kategorien für selektierte Vektorobjekte eines bestimmten Layers;catdel;Löscht Kategorien von selektierten Vektorobjekten eines bestimmten Layers;copy;Kopiert selektierte Feature;snap;Fange Vektorobjekt innerhalb des angegebenen Schwellwertes;flip;Drehe die Richtung selektierter Vektorlinien um;connect;Verbinde zwei Linien;zbulk;Z-Massen-Beschriftung (automatisierte Zuweisung der Z Koordinate zu Vektorlinien);chtype;Ändere den Typ des Features(Punkt<->Zentroid, Linie<->Grenze)"
+#~ msgstr "create;Erzeuge ein neue (leere) Vektorkarte;add;Fügt neue Objekte zu einer existierenden Vektorkarte hinzu;delete;Entfernt selektierte Objekte von einer Vektorkarte;move;Verschiebt selektierte Objekte in einer Vektorkarte;vertexmove;Verschiebt einen Vertex selektierter Vektorlinien;vertexdel;Entfernt einen Vertex aus selektierten Vektorlinien;vertexadd;Fügt einen neuen Vertex zu selektierten Vektorlinien hinzu;merge;Vereinigt selektierte Vektorlinien;break;Teilt Vektorlinien;select;Selektiert Linien und gibt ihre ID aus;catadd;Vergibt neue Kategorien für selektierte Vektorobjekte eines bestimmten Layers;catdel;Löscht Kategorien von selektierten Vektorobjekten eines bestimmten Layers;copy;Kopiert selektierte Feature;snap;Fange Vektorobjekt innerhalb des angegebenen Toleranz;flip;Drehe die Richtung selektierter Vektorlinien um;connect;Verbinde zwei Linien;zbulk;Z-Massen-Beschriftung (automatisierte Zuweisung der Z Koordinate zu Vektorlinien);chtype;Ändere den Typ des Features(Punkt<->Zentroid, Linie<->Grenze)"
 
 #~ msgid "        Projection: %s (zone %d)"
 #~ msgstr "        Projektion: %s (Zone %d)"

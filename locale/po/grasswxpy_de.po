@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-26 09:58+0100\n"
-"PO-Revision-Date: 2013-05-06 10:40+0200\n"
+"PO-Revision-Date: 2013-05-25 13:40+0200\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
@@ -9358,7 +9358,7 @@ msgstr "Ändere Brücken zu Linien"
 
 #: ../gui/wxpython/modules/vclean.py:74
 msgid "snap lines/boundaries"
-msgstr "Snap Linien/Flächengrenzen"
+msgstr "Fange Linien/Flächengrenzen"
 
 #: ../gui/wxpython/modules/vclean.py:75
 msgid "remove duplicate area centroids"
@@ -11090,11 +11090,11 @@ msgstr "Beende den Dialog und speichere die Änderungen in Datei mit Benutzerein
 
 #: ../gui/wxpython/vdigit/preferences.py:148
 msgid "Snapping"
-msgstr "Snapping"
+msgstr "Fangen"
 
 #: ../gui/wxpython/vdigit/preferences.py:154
 msgid "Snapping threshold"
-msgstr "Schwellwert für Snapping"
+msgstr "Fangtoleranz"
 
 #: ../gui/wxpython/vdigit/preferences.py:161
 msgid "screen pixels"
@@ -11106,7 +11106,7 @@ msgstr "Karteneinheiten"
 
 #: ../gui/wxpython/vdigit/preferences.py:170
 msgid "Snap also to vertex"
-msgstr "Snape auch auf Vertices"
+msgstr "Fange auch an Vertices"
 
 #: ../gui/wxpython/vdigit/preferences.py:175
 #: ../gui/wxpython/vdigit/preferences.py:603
@@ -11114,7 +11114,7 @@ msgstr "Snape auch auf Vertices"
 #: ../gui/wxpython/vdigit/preferences.py:621
 #, python-format
 msgid "Snapping threshold is %(value).1f %(units)s"
-msgstr "Snapping Schwellwert ist %(value).1f %(units)s"
+msgstr "Fangtoleranz ist %(value).1f %(units)s"
 
 #: ../gui/wxpython/vdigit/preferences.py:188
 msgid "Select vector features"
@@ -11306,12 +11306,12 @@ msgstr "Richtung"
 
 #: ../gui/wxpython/vdigit/preferences.py:596
 msgid "Snapping disabled"
-msgstr "Snapping ausgeschaltet"
+msgstr "Fangen ausgeschaltet"
 
 #: ../gui/wxpython/vdigit/preferences.py:598
 #, python-format
 msgid "Snapping threshold is %(value).1f %(units)s (based on comp. resolution)"
-msgstr "Snapping Schwellwert ist %(value).1f %(units)s (basiert auf Auflösung des Arbeitsbereichs)"
+msgstr "Fangtoleranz ist %(value).1f %(units)s (basiert auf Auflösung des Arbeitsbereichs)"
 
 #: ../gui/wxpython/vdigit/preferences.py:654
 #, python-format
@@ -11526,7 +11526,7 @@ msgstr "Führe selektierte Linien/Grenzen zusammen"
 
 #: ../gui/wxpython/vdigit/toolbars.py:409
 msgid "Snap selected lines/boundaries (only to nodes)"
-msgstr "Snap selektierte Linien/Grenzen (nur Knoten)"
+msgstr "Fange selektierte Linien/Grenzen (nur an Knoten)"
 
 #: ../gui/wxpython/vdigit/toolbars.py:411
 msgid "Split line/boundary"
