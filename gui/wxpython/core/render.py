@@ -87,13 +87,14 @@ class Layer(object):
                         self.opacity, self.hidden))
         
         # generated file for each layer
-        self.gtemp = tempfile.mkstemp()[1]
-        self.maskfile = self.gtemp + ".pgm"
         if self.type == 'overlay':
-            self.mapfile  = self.gtemp + ".png"
+            tempfile_sfx =".png"
         else:
-            self.mapfile  = self.gtemp + ".ppm"
-        
+            tempfile_sfx =".ppm"
+        self.mapfile = tempfile.mkstemp(suffix = tempfile_sfx)[1]
+        # do we need to `touch` the maskfile so it exists?
+        self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
+
     def __del__(self):
         Debug.msg (3, "Layer.__del__(): layer=%s, cmd='%s'" %
                    (self.name, self.GetCmd(string = True)))
@@ -124,17 +125,18 @@ class Layer(object):
         if self.type not in layertypes:
             raise GException(_("<%(name)s>: layer type <%(type)s> is not supported") % \
                                  {'type' : self.type, 'name' : self.name})
-        
-        # start monitor
-        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-            if not self.mapfile:
-                self.gtemp = tempfile.mkstemp()[1]
-                self.maskfile = self.gtemp + ".pgm"
-                if self.type == 'overlay':
-                    self.mapfile  = self.gtemp + ".png"
-                else:
-                    self.mapfile  = self.gtemp + ".ppm"
 
+        # start monitor
+        if not self.mapfile:
+            if self.type == 'overlay':
+                tempfile_sfx =".png"
+            else:
+                tempfile_sfx =".ppm"
+            self.mapfile = tempfile.mkstemp(suffix = tempfile_sfx)[1]
+            # do we need to `touch` the maskfile so it exists?
+            self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
+
+        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             if self.mapfile:
                 os.environ["GRASS_CAIROFILE"] = self.mapfile
 
@@ -142,16 +144,7 @@ class Layer(object):
 #        the first one works as expected.
 #            if 'cairo' not in RunCommand('d.mon', flags='p', read = True):
 #                RunCommand('d.mon', start = 'cairo', select = 'cairo')
-
         else:
-            if not self.mapfile:
-                self.gtemp = tempfile.mkstemp()[1]
-                self.maskfile = self.gtemp + ".pgm"
-                if self.type == 'overlay':
-                    self.mapfile  = self.gtemp + ".png"
-                else:
-                    self.mapfile  = self.gtemp + ".ppm"
-
             if self.mapfile:
                 os.environ["GRASS_PNGFILE"] = self.mapfile
         
