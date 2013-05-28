@@ -127,12 +127,6 @@ class Layer(object):
         
         # start monitor
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-#            os.environ["GRASS_CAIROFILE"] = self.mapfile
-#            if 'cairo' not in gcmd.RunCommand('d.mon',
-#                                              flags='p',
-#                                              read = True):
-#                gcmd.RunCommand('d.mon',
-#                                start = 'cairo')
             if not self.mapfile:
                 self.gtemp = tempfile.mkstemp()[1]
                 self.maskfile = self.gtemp + ".pgm"
@@ -143,6 +137,12 @@ class Layer(object):
 
             if self.mapfile:
                 os.environ["GRASS_CAIROFILE"] = self.mapfile
+
+# FIXME: the second RunCommand() here locks up the GUI, need to use 'xkill' to recover.
+#        the first one works as expected.
+#            if 'cairo' not in RunCommand('d.mon', flags='p', read = True):
+#                RunCommand('d.mon', start = 'cairo', select = 'cairo')
+
         else:
             if not self.mapfile:
                 self.gtemp = tempfile.mkstemp()[1]
@@ -195,9 +195,14 @@ class Layer(object):
         
         # stop monitor
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-#            gcmd.RunCommand('d.mon',
-#                            stop = 'cairo')
+# FIXME:
+#            ret, msg = RunCommand('d.mon', stop = 'cairo', getErrorMsg = True)
+#            if ret != 0:
+#                sys.stderr.write(_("Closing Cairo driver failed\n"))
+#                if msg:
+#                    sys.stderr.write(_("Details: %s\n") % msg)
             del os.environ["GRASS_CAIROFILE"]
+
         elif "GRASS_PNGFILE" in os.environ:
             del os.environ["GRASS_PNGFILE"]
         
@@ -880,9 +885,9 @@ class Map(object):
         os.environ["GRASS_HEIGHT"] = str(self.height)
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             os.environ["GRASS_AUTO_WRITE"] = "TRUE"
+            # in GRASS 6, RENDER_IMMEDIATE always triggers the PNG driver
             if "GRASS_RENDER_IMMEDIATE" in os.environ:
                 del os.environ["GRASS_RENDER_IMMEDIATE"]
-            os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
