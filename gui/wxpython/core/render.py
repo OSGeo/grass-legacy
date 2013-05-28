@@ -88,9 +88,9 @@ class Layer(object):
         
         # generated file for each layer
         if self.type == 'overlay':
-            tempfile_sfx =".png"
+            tempfile_sfx = ".png"
         else:
-            tempfile_sfx =".ppm"
+            tempfile_sfx = ".ppm"
         self.mapfile = tempfile.mkstemp(suffix = tempfile_sfx)[1]
         # do we need to `touch` the maskfile so it exists?
         self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
