@@ -57,14 +57,13 @@ int load_vectors(const struct Option *elev_map,
 		 const struct Option *position,
 		 int map_obj_type, nv_data * data)
 {
-    int i, id;
-    int nvects;
-
+    int i, j, id;
+    int nvects, num_with_posn;
     char *mapset;
-    
     double x, y, z;
-    
-    if ((!elev_map->answer || elev_const->answer) && GS_num_surfs() == 0) {	/* load base surface if no loaded */
+
+    /* load base surface if none is loaded */
+    if ((!elev_map->answer || elev_const->answer) && GS_num_surfs() == 0) {
 	int *surf_list, nsurf;
 
 	Nviz_new_map_obj(MAP_OBJ_SURF, NULL, 0.0, data);
@@ -74,8 +73,13 @@ int load_vectors(const struct Option *elev_map,
     }
 
     nvects = 0;
+    x = y = z = 0.0;
+
+    for (j = 0; position->answers[j]; j++) ;
+	num_with_posn = j / 3;
 
     for (i = 0; vect->answers[i]; i++) {
+	G_debug(3, "loading [%s] ... i=%d", vect->answers[i], i);
 	mapset = G_find_vector2(vect->answers[i], "");
 	if (mapset == NULL) {
 	    G_fatal_error(_("Vector map <%s> not found"), vect->answers[i]);
@@ -85,9 +89,14 @@ int load_vectors(const struct Option *elev_map,
 			      0.0, data);
 
 	/* set position */
-	x = atof(position->answers[i*3+0]);
-	y = atof(position->answers[i*3+1]);
-	z = atof(position->answers[i*3+2]);
+	if(i+1 <= num_with_posn) {
+	    if (position->answers[i*3+0])
+		x = atof(position->answers[i*3+0]);
+	    if (position->answers[i*3+1])
+		y = atof(position->answers[i*3+1]);
+	    if (position->answers[i*3+2])
+		z = atof(position->answers[i*3+2]);
+	}
 
 	if (map_obj_type == MAP_OBJ_VECT)
 	    GV_set_trans(id, x, y, z);
@@ -117,17 +126,23 @@ int vlines_set_attrb(const struct GParams *params)
 
     for (i = 0; i < nvects; i++) {
 	/* mode -- use memory by default */
-	color = Nviz_color_from_str(params->vline_color->answers[i]);
-	width = atoi(params->vline_width->answers[i]);
-	if (strcmp(params->vline_mode->answers[i], "flat") == 0)
-	    flat = 1;
-	else
-	    flat = 0;
+	if (params->vline_color->answers[i])
+	    color = Nviz_color_from_str(params->vline_color->answers[i]);
+	if (params->vline_width->answers[i])
+	    width = atoi(params->vline_width->answers[i]);
+	if (params->vline_mode->answers[i]) {
+	    if (strcmp(params->vline_mode->answers[i], "flat") == 0)
+		flat = 1;
+	    else
+		flat = 0;
+	}
+
 	if (GV_set_vectmode(vect_list[i], 1, color, width, flat) < 0)
 	    return 0;
 
 	/* height */
-	height = atoi(params->vline_height->answers[i]);
+	if (params->vline_height->answers[i])
+	    height = atoi(params->vline_height->answers[i]);
 	if (height > 0)
 	    GV_set_trans(vect_list[i], 0.0, 0.0, height);
     }
@@ -147,23 +162,33 @@ int vpoints_set_attrb(const struct GParams *params)
 {
     int i;
     int *site_list, nsites;
-    int marker, color, width;
+    int marker, color, width, do_3d;
     float size;
     char *marker_str;
 
     site_list = GP_get_site_list(&nsites);
 
     for (i = 0; i < nsites; i++) {
-	color = Nviz_color_from_str(params->vpoint_color->answers[i]);
-	size = atof(params->vpoint_size->answers[i]);
-	width = atoi(params->vpoint_width->answers[i]);
-	marker_str = params->vpoint_marker->answers[i];
+	if (params->vpoint_color->answers[i])
+	    color = Nviz_color_from_str(params->vpoint_color->answers[i]);
+	if (params->vpoint_size->answers[i])
+	    size = atof(params->vpoint_size->answers[i]);
+	if (params->vpoint_width->answers[i])
+	    width = atoi(params->vpoint_width->answers[i]);
+	if (params->vpoint_marker->answers[i])
+	    marker_str = params->vpoint_marker->answers[i];
+	if (params->vpoint_mode->answers[i]) {
+	    if (strcmp(params->vpoint_mode->answers[i], "3D") == 0)
+		do_3d = TRUE;	/* respect z-value of 3D points */
+				/* if you pass this a 2D map it drapes on DEM */
+	    else
+		do_3d = FALSE;	/* drape points on raster surface */
+	}
 
-	if (strcmp(params->vpoint_mode->answers[i], "3D") == 0)
-	    GP_set_zmode(site_list[i], 1);  /* respect z-value of 3D points */
-					    /* if you pass this a 2D map it drapes on DEM */
+	if(do_3d)
+	    GP_set_zmode(site_list[i], 1);
 	else
-	    GP_set_zmode(site_list[i], 0);  /* drape points on raster surface */
+	    GP_set_zmode(site_list[i], 0);
 
 	if (strcmp(marker_str, "x") == 0)
 	    marker = ST_X;
