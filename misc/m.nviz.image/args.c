@@ -339,6 +339,8 @@ void args_vline(struct GParams *params)
     params->vline_mode->multiple = YES;
     params->vline_mode->description = _("Vector line display mode");
     params->vline_mode->options = "surface,flat";
+    params->vline_mode->descriptions = _("surface;drape on raster surface;"
+					 "flat;draw at constant elevation");
     params->vline_mode->answer = "surface";
     params->vline_mode->guisection = _("Vector lines");
 
@@ -411,6 +413,21 @@ void args_vpoint(struct GParams *params)
     params->vpoint_color->guisection = _("Vector points");
 
     /* point mode */
+    params->vpoint_mode = G_define_option();
+    params->vpoint_mode->key = "vpoint_mode";
+    params->vpoint_mode->key_desc = "string";
+    params->vpoint_mode->type = TYPE_STRING;
+    params->vpoint_mode->required = NO;
+    params->vpoint_mode->multiple = YES;
+    params->vpoint_mode->description = _("Vector point display mode");
+    params->vpoint_mode->options = "surface,3D";
+    params->vpoint_mode->descriptions = _("surface;drape on raster surface;"
+					  "3D;place at 3D point's z-elevation");
+					  /* TODO: "flat", place at a constant elevation */
+    params->vpoint_mode->answer = "surface";
+    params->vpoint_mode->guisection = _("Vector points");
+
+    /* point icon type */
     params->vpoint_marker = G_define_option();
     params->vpoint_marker->key = "vpoint_marker";
     params->vpoint_marker->key_desc = "string";

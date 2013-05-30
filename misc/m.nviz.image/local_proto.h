@@ -18,7 +18,8 @@ struct GParams
     /* vector lines */
 	*vlines, *vline_width, *vline_color, *vline_mode, *vline_height, *vline_pos,
     /* vector points */
-	*vpoints, *vpoint_size, *vpoint_marker, *vpoint_color, *vpoint_width, *vpoint_pos,
+	*vpoints, *vpoint_size, *vpoint_mode, *vpoint_marker, *vpoint_color,
+	*vpoint_width, *vpoint_pos,
     /* volumes */
 	*volume, *volume_mode, *volume_shade, *volume_pos, *volume_res, *isosurf_level,
 	*isosurf_color_map, *isosurf_color_const, *isosurf_transp_map, *isosurf_transp_const,

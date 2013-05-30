@@ -159,6 +159,12 @@ int vpoints_set_attrb(const struct GParams *params)
 	width = atoi(params->vpoint_width->answers[i]);
 	marker_str = params->vpoint_marker->answers[i];
 
+	if (strcmp(params->vpoint_mode->answers[i], "3D") == 0)
+	    GP_set_zmode(site_list[i], 1);  /* respect z-value of 3D points */
+					    /* if you pass this a 2D map it drapes on DEM */
+	else
+	    GP_set_zmode(site_list[i], 0);  /* drape points on raster surface */
+
 	if (strcmp(marker_str, "x") == 0)
 	    marker = ST_X;
 	else if (strcmp(marker_str, "sphere") == 0)
