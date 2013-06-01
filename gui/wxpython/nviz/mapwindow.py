@@ -1300,17 +1300,12 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                 elif type ==  '3d-raster':
                     self.LoadRaster3d(item)
                 elif type ==  'vector':
-                    # data = self.tree.GetPyData(item)[0]['nviz']
-                    # vecType = []
-                    # if data and 'vector' in data:
-                    #     for v in ('lines', 'points'):
-                    #         if data['vector'][v]:
-                    #             vecType.append(v)
                     layer = self.tree.GetPyData(item)[0]['maplayer']
-                    npoints, nlines, nfeatures, mapIs3D = self.lmgr.nviz.VectorInfo(layer)
-                    if npoints > 0:
+                    vInfo = grass.vector_info_topo(layer.GetName())
+                    if (vInfo['points']) > 0:
+                        # include vInfo['centroids'] to initially load centroids 
                         self.LoadVector(item, points = True)
-                    if nlines > 0 or mapIs3D:
+                    if (vInfo['lines'] + vInfo['boundaries']) > 0 or vInfo['map3d']:
                         self.LoadVector(item, points = False)
                     
             except GException, e:
@@ -1349,10 +1344,10 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                     self.UnloadRaster3d(layer) 
                 elif ltype ==  'vector':
                     maplayer = self.tree.GetPyData(layer)[0]['maplayer']
-                    npoints, nlines, nfeatures, mapIs3D = self.lmgr.nviz.VectorInfo(maplayer)
-                    if npoints > 0:
+                    vInfo = grass.vector_info_topo(maplayer.GetName())
+                    if (vInfo['points'] + vInfo['centroids']) > 0:
                         self.UnloadVector(layer, points = True)
-                    if nlines > 0:
+                    if (vInfo['lines'] + vInfo['boundaries']) > 0 or vInfo['map3d']:
                         self.UnloadVector(layer, points = False)
                         
             except GException, e:
@@ -2187,10 +2182,10 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             if type == 'raster':
                 self.nvizDefault.SetSurfaceDefaultProp(data['surface'])
             if type == 'vector':
-                npoints, nlines, nfeatures, mapIs3D = self.lmgr.nviz.VectorInfo(layer)
-                if npoints > 0:
+                vInfo = grass.vector_info_topo(layer.GetName())
+                if (vInfo['points'] + vInfo['centroids']) > 0:
                     self.nvizDefault.SetVectorPointsDefaultProp(data['vector']['points'])
-                if nlines > 0:
+                if (vInfo['lines'] + vInfo['boundaries']) > 0:
                     self.nvizDefault.SetVectorLinesDefaultProp(data['vector']['lines'])
             
     def NvizCmdCommand(self):
@@ -2309,17 +2304,17 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             markers = ['x', 'box', 'sphere', 'cube', 'diamond',
                        'dec_tree', 'con_tree', 'aster', 'gyro', 'histogram']
             for vector in vectors:
-                npoints, nlines, nfeatures, mapIs3D = self.lmgr.nviz.VectorInfo(
-                                                      self.tree.GetPyData(vector)[0]['maplayer'])
+                layerName = self.tree.GetPyData(vector)[0]['maplayer'].GetName()
+                vInfo = grass.vector_info_topo(layerName)
                 nvizData = self.tree.GetPyData(vector)[0]['nviz']['vector']
-                if nlines > 0:
+                if (vInfo['lines'] + vInfo['boundaries']) > 0:
                     cmdLines += "%s," % self.tree.GetPyData(vector)[0]['maplayer'].GetName()
                     cmdLWidth += "%d," % nvizData['lines']['width']['value']
                     cmdLHeight += "%d," % nvizData['lines']['height']['value']
                     cmdLColor += "%s," % nvizData['lines']['color']['value']
                     cmdLMode += "%s," % nvizData['lines']['mode']['type']
                     cmdLPos += "0,0,%d," % nvizData['lines']['height']['value']
-                if npoints > 0:    
+                if (vInfo['points'] + vInfo['centroids']) > 0:    
                     cmdPoints += "%s," % self.tree.GetPyData(vector)[0]['maplayer'].GetName()
                     cmdPWidth += "%d," % nvizData['points']['width']['value']
                     cmdPSize += "%d," % nvizData['points']['size']['value']
