@@ -142,7 +142,6 @@ geoline *Gv_load_vect(const char *grassname, int *nlines)
 
 	}
 
-	gln->cats = NULL;
 	gln->next = (geoline *) G_malloc(sizeof(geoline));	/* G_fatal_error */
 	if (!gln->next) {
 	    return (NULL);
