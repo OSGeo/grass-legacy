@@ -4264,13 +4264,16 @@ class NvizToolWindow(FN.FlatNotebook):
             if data:
                 if pageId == 'surface':
                     layer = self.mapWindow.GetLayerByName(name, mapType = 'raster')
-                    self.UpdateSurfacePage(layer, data['surface'])
+                    if layer:
+                        self.UpdateSurfacePage(layer, data['surface'])
                 elif pageId == 'vector':
                     layer = self.mapWindow.GetLayerByName(name, mapType = 'vector')
-                    self.UpdateVectorPage(layer, data['vector'])
+                    if layer:
+                        self.UpdateVectorPage(layer, data['vector'])
                 elif pageId == 'volume':
                     layer = self.mapWindow.GetLayerByName(name, mapType = '3d-raster')
-                    self.UpdateVolumePage(layer, data['volume'])
+                    if layer:
+                        self.UpdateVolumePage(layer, data['volume'])
         elif pageId == 'light':
             zval = self.mapWindow.light['position']['z']
             bval = self.mapWindow.light['bright']
