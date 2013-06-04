@@ -167,28 +167,16 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                                    |wx.TR_FULL_ROW_HIGHLIGHT)
         self.seltree.Bind(wx.EVT_KEY_UP, self.OnKeyUp)
         self.seltree.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.seltree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-        self.seltree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.mapsetExpanded)
-        self.seltree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.mapsetCollapsed)
-        self.seltree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.mapsetActivated)
-        self.seltree.Bind(wx.EVT_TREE_SEL_CHANGED, self.mapsetSelected)
+        self.seltree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)        
+        # the following dummy handler are needed to keep tree events
+        # from propagating up to the parent GIS Manager layer tree
+        self.seltree.Bind(wx.EVT_TREE_ITEM_EXPANDING, lambda x: None)
+        self.seltree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, lambda x: None)
+        self.seltree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, lambda x: None)
+        self.seltree.Bind(wx.EVT_TREE_SEL_CHANGED, lambda x: None)
         self.seltree.Bind(wx.EVT_TREE_DELETE_ITEM, lambda x: None)
         self.seltree.Bind(wx.EVT_TREE_BEGIN_DRAG, lambda x: None)
-        
-    # the following dummy handler are needed to keep tree events from propagating up to
-    # the parent GIS Manager layer tree
-    def mapsetExpanded(self, event):
-        pass
-
-    def mapsetCollapsed(self, event):
-        pass
-
-    def mapsetActivated(self, event):
-        pass
-
-    def mapsetSelected(self, event):
-        pass
-    # end of dummy events
+        self.seltree.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, lambda x: None)
 
     def GetControl(self):
         return self.seltree
