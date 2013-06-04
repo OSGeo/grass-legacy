@@ -19,7 +19,7 @@
 
 /*============================= Include Files ==============================*/
 
-/* none */
+#include <sys/types.h>	/* for off_t */
 
 /*=========================== Constants/Defines ============================*/
 
@@ -1085,8 +1085,8 @@ void G_rotate_around_point(double, double, double *, double *, double);
 void G_rotate_around_point_int(int, int, int *, int *, double);
 
 /* seek.c */
-int G_ftell(FILE *);
-void G_fseek(FILE *, int, int);
+off_t G_ftell(FILE *);
+void G_fseek(FILE *, off_t, int);
 
 /* sample.c */
 DCELL G_get_raster_sample_nearest(
