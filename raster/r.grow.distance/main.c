@@ -304,7 +304,7 @@ int main(int argc, char **argv)
     G_set_c_null_value(old_x_row, ncols);
     G_set_c_null_value(old_y_row, ncols);
 
-    G_message(_("Writing output raster maps..."), opt.in->answer);
+    G_message(_("Writing output raster maps..."));
     for (row = 0; row < nrows; row++) {
 	int irow = nrows - 1 - row;
 	off_t offset =
