@@ -1,4 +1,5 @@
 # subprocess - Subprocesses with accessible I/O streams
+#   [circa Python 2.4, maybe a little earlier]
 #
 # For more information about this module, see PEP 324.
 #
