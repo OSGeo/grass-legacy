@@ -27,6 +27,12 @@
 #ifdef HAVE_FFMPEG
 #include <avformat.h>
 #include <avio.h>
+#if LIBAVUTIL_VERSION_MAJOR < 51
+#include <avutil.h>
+#else
+/* libavutil 51.22.1's avutil.h doesn't include libavutil/mathematics.h */
+#include <mathematics.h>
+#endif
 
 /* 5 seconds stream duration */
 #define STREAM_DURATION   5.0
@@ -58,7 +64,7 @@ static AVStream *add_video_stream(AVFormatContext * oc, int codec_id, int w,
     AVCodecContext *c;
     AVStream *st;
 
-#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(52, 100, 0)
+#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(53, 0, 0)
     st = av_new_stream(oc, 0);
 #else
     st = avformat_new_stream(oc, NULL);
@@ -369,7 +375,7 @@ int gsd_init_mpeg(const char *filename)
 
     /* open the output file, if needed */
     if (!(fmt->flags & AVFMT_NOFILE)) {
-#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(52, 100, 0)
+#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(53, 0, 0)
         if (url_fopen(&oc->pb, filename, URL_WRONLY) < 0) { 
 #else
 	if (avio_open(&oc->pb, filename, AVIO_FLAG_WRITE) < 0) {
