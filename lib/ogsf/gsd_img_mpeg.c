@@ -263,7 +263,11 @@ static void write_video_frame(AVFormatContext * oc, AVStream * st)
 		av_rescale_q(c->coded_frame->pts, c->time_base,
 			     st->time_base);
 	    if (c->coded_frame->key_frame)
+#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(52, 32, 0)
+		pkt.flags |= PKT_FLAG_KEY;
+#else
 		pkt.flags |= AV_PKT_FLAG_KEY;
+#endif
 	    pkt.stream_index = st->index;
 	    pkt.data = video_outbuf;
 	    pkt.size = out_size;
@@ -335,7 +339,11 @@ int gsd_init_mpeg(const char *filename)
 #endif
     if (!fmt) {
 	G_warning(_("Unable to deduce output format from file extension: using MPEG"));
+#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(52, 32, 0)
+	fmt = guess_format("mpeg", NULL, NULL);
+#else
 	fmt = av_guess_format("mpeg", NULL, NULL);
+#endif
     }
     if (!fmt) {
 	G_warning(_("Unable to find suitable output format"));
