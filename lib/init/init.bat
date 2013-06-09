@@ -180,7 +180,7 @@ type "%GISBASE%\etc\welcome"
 "%GISBASE%\etc\echo" "When ready to quit enter:                exit"
 "%GISBASE%\etc\echo" "Help is available with the command:      g.manual -i"
 "%GISBASE%\etc\echo" "See the licence terms with:              g.version -c"
-rem                  "Start the GUI with:                      g.gui wxpython"
+"%GISBASE%\etc\echo" "Start the GUI with:                      g.gui wxpython"
 "%GISBASE%\etc\echo" ""
 
 prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F$G 
