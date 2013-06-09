@@ -15562,6 +15562,57 @@ else
   fi
 fi
 
+for ac_declaration in \
+   ''\
+   '#include <stdlib.h>' \
+   'extern "C" void std::exit (int) throw (); using std::exit;' \
+   'extern "C" void std::exit (int); using std::exit;' \
+   'extern "C" void exit (int) throw ();' \
+   'extern "C" void exit (int);' \
+   'void exit (int);'
+do
+  cat > conftest.$ac_ext <<EOF
+#line 15576 "configure"
+#include "confdefs.h"
+#include <stdlib.h>
+$ac_declaration
+int main() {
+exit (42);
+; return 0; }
+EOF
+if { (eval echo configure:15584: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+  :
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  continue
+fi
+rm -f conftest*
+  cat > conftest.$ac_ext <<EOF
+#line 15594 "configure"
+#include "confdefs.h"
+$ac_declaration
+int main() {
+exit (42);
+; return 0; }
+EOF
+if { (eval echo configure:15601: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+  rm -rf conftest*
+  break
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+fi
+rm -f conftest*
+done
+if test -n "$ac_declaration"; then
+  echo '#ifdef __cplusplus' >>confdefs.h
+  echo $ac_declaration      >>confdefs.h
+  echo '#endif'             >>confdefs.h
+fi
+
+
 else
 	CXX=
 	CXXFLAGS=
@@ -15575,7 +15626,7 @@ fi
 
 
 echo $ac_n "checking whether to use openDWG""... $ac_c" 1>&6
-echo "configure:15579: checking whether to use openDWG" >&5
+echo "configure:15630: checking whether to use openDWG" >&5
 echo "$ac_t"""$with_opendwg"" 1>&6
 case "$with_opendwg" in
 	"no")	USE_OPENDWG=	;;
@@ -15595,7 +15646,7 @@ if test -n "${USE_OPENDWG}"; then
 
 
 echo $ac_n "checking for location of openDGW includes""... $ac_c" 1>&6
-echo "configure:15599: checking for location of openDGW includes" >&5
+echo "configure:15650: checking for location of openDGW includes" >&5
 case "$with_opendwg_includes" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-includes." 1>&2; exit 1; }
@@ -15621,15 +15672,15 @@ for ac_hdr in ad2.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:15625: checking for $ac_hdr" >&5
+echo "configure:15676: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 15628 "configure"
+#line 15679 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:15633: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:15684: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -15663,7 +15714,7 @@ CPPFLAGS=$ac_save_cppflags
 
 
 echo $ac_n "checking for location of openDWG library""... $ac_c" 1>&6
-echo "configure:15667: checking for location of openDWG library" >&5
+echo "configure:15718: checking for location of openDWG library" >&5
 case "$with_opendwg_libs" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-libs." 1>&2; exit 1; }
@@ -15710,7 +15761,7 @@ fi
    if test "$enable_largefile" = yes; then
 
      echo $ac_n "checking for special C compiler options needed for large files""... $ac_c" 1>&6
-echo "configure:15714: checking for special C compiler options needed for large files" >&5
+echo "configure:15765: checking for special C compiler options needed for large files" >&5
 
 ac_cv_sys_largefile_CC=no
         largefile_cc_opt=""
@@ -15718,7 +15769,7 @@ ac_cv_sys_largefile_CC=no
 	  # IRIX 6.2 and later do not support large files by default,
 	  # so use the C compiler's -n32 option if that helps.
 	  cat > conftest.$ac_ext <<EOF
-#line 15722 "configure"
+#line 15773 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -15734,7 +15785,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15738: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15789: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
@@ -15743,7 +15794,7 @@ else
   ac_save_CC="${CC-cc}"
 	     CC="$CC -n32"
 	     cat > conftest.$ac_ext <<EOF
-#line 15747 "configure"
+#line 15798 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -15759,7 +15810,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15763: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15814: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_largefile_CC=' -n32'
 else
@@ -15779,11 +15830,11 @@ echo "$ac_t""$ac_cv_sys_largefile_CC" 1>&6
      fi
 
      echo $ac_n "checking for _FILE_OFFSET_BITS value needed for large files""... $ac_c" 1>&6
-echo "configure:15783: checking for _FILE_OFFSET_BITS value needed for large files" >&5
+echo "configure:15834: checking for _FILE_OFFSET_BITS value needed for large files" >&5
 
 ac_cv_sys_file_offset_bits=no
       cat > conftest.$ac_ext <<EOF
-#line 15787 "configure"
+#line 15838 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -15799,14 +15850,14 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15803: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15854: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 15810 "configure"
+#line 15861 "configure"
 #include "confdefs.h"
 #define _FILE_OFFSET_BITS 64
 #include <sys/types.h>
@@ -15824,7 +15875,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15828: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15879: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_file_offset_bits=64
 else
@@ -15843,11 +15894,11 @@ EOF
 
    fi
      echo $ac_n "checking for _LARGE_FILES value needed for large files""... $ac_c" 1>&6
-echo "configure:15847: checking for _LARGE_FILES value needed for large files" >&5
+echo "configure:15898: checking for _LARGE_FILES value needed for large files" >&5
 
 ac_cv_sys_large_files=no
       cat > conftest.$ac_ext <<EOF
-#line 15851 "configure"
+#line 15902 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -15863,14 +15914,14 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15867: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15918: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 15874 "configure"
+#line 15925 "configure"
 #include "confdefs.h"
 #define _LARGE_FILES 1
 #include <sys/types.h>
@@ -15888,7 +15939,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:15892: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15943: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_large_files=1
 else
@@ -15907,25 +15958,25 @@ EOF
 
    fi
      echo $ac_n "checking for _LARGEFILE_SOURCE value needed for large files""... $ac_c" 1>&6
-echo "configure:15911: checking for _LARGEFILE_SOURCE value needed for large files" >&5
+echo "configure:15962: checking for _LARGEFILE_SOURCE value needed for large files" >&5
 
 ac_cv_sys_largefile_source=no
       cat > conftest.$ac_ext <<EOF
-#line 15915 "configure"
+#line 15966 "configure"
 #include "confdefs.h"
 #include <stdio.h>
 int main() {
 return !fseeko;
 ; return 0; }
 EOF
-if { (eval echo configure:15922: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15973: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 15929 "configure"
+#line 15980 "configure"
 #include "confdefs.h"
 #define _LARGEFILE_SOURCE 1
 #include <stdio.h>
@@ -15934,7 +15985,7 @@ int main() {
 return !fseeko;
 ; return 0; }
 EOF
-if { (eval echo configure:15938: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:15989: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_largefile_source=1
 else
@@ -15955,10 +16006,10 @@ EOF
    fi
   
 echo $ac_n "checking if system supports Large Files at all""... $ac_c" 1>&6
-echo "configure:15959: checking if system supports Large Files at all" >&5
+echo "configure:16010: checking if system supports Large Files at all" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 15962 "configure"
+#line 16013 "configure"
 #include "confdefs.h"
 #include <stdio.h>
 #include <sys/types.h>
@@ -15990,7 +16041,7 @@ return !ftello;
 #endif
 ; return 0; }
 EOF
-if { (eval echo configure:15994: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:16045: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_largefiles=yes
 else
@@ -16019,7 +16070,7 @@ fi
 # Python check
 
 echo $ac_n "checking whether to use Python""... $ac_c" 1>&6
-echo "configure:16023: checking whether to use Python" >&5
+echo "configure:16074: checking whether to use Python" >&5
 
 PYTHONINC=
 PYTHONCFLAGS=
@@ -16039,7 +16090,7 @@ else
   # Extract the first word of "python-config", so it can be a program name with args.
 set dummy python-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:16043: checking for $ac_word" >&5
+echo "configure:16094: checking for $ac_word" >&5
 
 case "$PY_CONFIG" in
   /*)
@@ -16081,15 +16132,15 @@ for ac_hdr in Python.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:16085: checking for $ac_hdr" >&5
+echo "configure:16136: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 16088 "configure"
+#line 16139 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:16093: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:16144: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -16159,7 +16210,7 @@ fi # Done checking Python
 # Enable wxWidgets support (for wxGUI)
 
 echo $ac_n "checking whether to use wxWidgets""... $ac_c" 1>&6
-echo "configure:16163: checking whether to use wxWidgets" >&5
+echo "configure:16214: checking whether to use wxWidgets" >&5
 
 WXVERSION=
 WXWIDGETSCXXFLAGS= 
@@ -16180,7 +16231,7 @@ else
   # Extract the first word of "wx-config", so it can be a program name with args.
 set dummy wx-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:16184: checking for $ac_word" >&5
+echo "configure:16235: checking for $ac_word" >&5
 
 case "$WX_CONFIG" in
   /*)
@@ -16228,7 +16279,7 @@ fi
  REQWX="2.8.1"
 
  echo $ac_n "checking wxWidgets version""... $ac_c" 1>&6
-echo "configure:16232: checking wxWidgets version" >&5
+echo "configure:16283: checking wxWidgets version" >&5
  if WXVERSION=`"$WX_CONFIG" --version`; then
    echo "$ac_t""$WXVERSION" 1>&6
  else
@@ -16251,15 +16302,15 @@ for ac_hdr in wx/wxprec.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:16255: checking for $ac_hdr" >&5
+echo "configure:16306: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 16258 "configure"
+#line 16309 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:16263: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:16314: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
