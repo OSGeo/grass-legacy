@@ -21,6 +21,18 @@ Contents
         ( cd doc/raster/r.example/ ; make )
         ( cd doc/vector/v.example/ ; make )
       still compile; fix otherwise
+ 
+   - Check that autoconf scripts are up-to-date (to do only in RC cycle!):
+
+      rm -f config.guess config.sub
+      wget http://git.savannah.gnu.org/cgit/config.git/plain/config.guess
+      wget http://git.savannah.gnu.org/cgit/config.git/plain/config.sub
+      svn diff config.guess config.sub
+      autoconf-2.13
+      # check and submit to SVN:
+      svn ci -m"config.guess + config.sub: updated from http://git.savannah.gnu.org/cgit/config.git/plain/" config.guess config.sub configure
+      # test by running ./configure 
+
    - make distclean
 
    - cleanup rubbish:
