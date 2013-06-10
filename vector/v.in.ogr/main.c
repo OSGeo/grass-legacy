@@ -1205,7 +1205,7 @@ int main(int argc, char *argv[])
 	    if (xmax < ymax)
 		xmax = ymax;
 
-	    new_snap = log2(xmax) - 52;
+	    new_snap = log(xmax)/log(2) - 52;
 	    new_snap = pow(2, new_snap);
 	    new_snap = log10(new_snap);
 	    if (new_snap < 0)
