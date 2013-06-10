@@ -1183,13 +1183,14 @@ int main(int argc, char *argv[])
 
     Vect_build(&Map);
 
-    if (n_polygons) {
+    if (n_polygons && nlayers == 1) {
 	ncentr = Vect_get_num_primitives(&Map, GV_CENTROID);
 	/* this test is not perfect:
 	 * small gaps (areas without centroid) are not detected
 	 * because they may be true gaps */
 	if (ncentr != n_polygons || n_overlaps) {
 	    double new_snap;
+	    int exp;
 
 	    Vect_get_map_box(&Map, &box);
 	    
@@ -1205,8 +1206,9 @@ int main(int argc, char *argv[])
 	    if (xmax < ymax)
 		xmax = ymax;
 
-	    new_snap = log(xmax)/log(2) - 52;
-	    new_snap = pow(2, new_snap);
+	    new_snap = frexp(xmax, &exp);
+	    exp -= 52;
+	    new_snap = ldexp(new_snap, exp);
 	    new_snap = log10(new_snap);
 	    if (new_snap < 0)
 		new_snap = (int)new_snap;
