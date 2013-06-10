@@ -636,7 +636,8 @@ class PreferencesDialog(PreferencesBaseDialog):
                                    flags = 'l',
                                    read = True).splitlines():
                 if 'cairo' in line:
-                    listOfDrivers.append('cairo')
+                    # FIXME: commented out, d.mon<->cairo driver<->wxgui hangs the GUI: #943
+                    #listOfDrivers.append('cairo')
                     break
         
         driver = wx.Choice(parent=panel, id=wx.ID_ANY, size=(150, -1),
