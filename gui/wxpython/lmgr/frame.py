@@ -399,7 +399,7 @@ class GMFrame(wx.Frame):
         win.Show()
         
     def OnDone(self, cmd, returncode):
-        """Command execution finised"""
+        """Command execution finished"""
         if hasattr(self, "model"):
             self.model.DeleteIntermediateData(log = self.goutput)
             del self.model
