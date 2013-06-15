@@ -107,13 +107,11 @@ fi
 #let draw area
 if [ $GIS_FLAG_c -eq 1 ] ; then
     cp $f_path/circle.txt $$.txt 
-    echo "$$" >> $$.txt 
 else
     cp $f_path/polygon.txt  $$.txt 
-    echo "$$" >> $$.txt
 fi
  
-r.digit < $$.txt
+r.digit output="$$" < "$$.txt"
 
 #show the selected area
 d.rast -o map=$$ 
