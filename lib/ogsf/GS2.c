@@ -3344,7 +3344,6 @@ int GS_load_3dview(const char *vname, int surfid)
  */
 void GS_init_view(void)
 {
-    int i;
     static int first = 1;
 
     G_debug(3, "GS_init_view");
