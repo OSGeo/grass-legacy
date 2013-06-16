@@ -68,21 +68,25 @@ int patch_density(int fd, char **par, area_des ad, double *result)
     double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
     int mask_fd = -1, *mask_buf, *mask_sup, null_count = 0;
 
+    G_debug(1, "begin patch_density() index");
+
     G_set_c_null_value(&complete_value, 1);
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
 	return 0;
-    sup = G_allocate_cell_buf();
 
     /* open mask if needed */
     if (ad->mask == 1) {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
 	    return 0;
+
 	mask_buf = malloc(ad->cl * sizeof(int));
 	mask_sup = malloc(ad->cl * sizeof(int));
     }
 
-    /*calculate distance */
+    sup = G_allocate_cell_buf();
+
+    /* calculate distance */
     G_begin_distance_calculations();
     /* EW Dist at North edge */
     EW_DIST1 = G_distance(hd.east, hd.north, hd.west, hd.north);
@@ -94,15 +98,15 @@ int patch_density(int fd, char **par, area_des ad, double *result)
     NS_DIST2 = G_distance(hd.west, hd.north, hd.west, hd.south);
 
 
-
-
-    /*calculate number of patch */
+    /* calculate number of patch */
 
     for (i = 0; i < ad->rl; i++) {
 	buf = RLI_get_cell_raster_row(fd, i + ad->y, ad);
+
 	if (i > 0) {
 	    sup = RLI_get_cell_raster_row(fd, i - 1 + ad->y, ad);
 	}
+
 	/* mask values */
 	if (ad->mask == 1) {
 	    int k;
@@ -201,5 +205,6 @@ int patch_density(int fd, char **par, area_des ad, double *result)
 	*result = -1;
 
     G_free(sup);
+
     return RLI_OK;
 }
