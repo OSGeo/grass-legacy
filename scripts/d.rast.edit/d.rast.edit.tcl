@@ -12,7 +12,11 @@ if {$tcl_platform(platform) == "windows"} {
 
 set outmap $env(GIS_OPT_OUTPUT)
 set inmap $env(GIS_OPT_INPUT)
-set aspect $env(GIS_OPT_ASPECT)
+if {[info exists env(GIS_OPT_ASPECT)]} {
+    set aspect $env(GIS_OPT_ASPECT)
+} else {
+    set aspect ""
+}
 set width $env(GIS_OPT_WIDTH)
 set height $env(GIS_OPT_HEIGHT)
 set size $env(GIS_OPT_SIZE)
