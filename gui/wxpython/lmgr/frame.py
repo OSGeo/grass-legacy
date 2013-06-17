@@ -39,7 +39,7 @@ except ImportError:
 sys.path.append(os.path.join(globalvar.ETCDIR, "python"))
 from grass.script          import core as grass
 
-from core.gcmd             import RunCommand, GError, GMessage
+from core.gcmd             import Command, RunCommand, GError, GMessage
 from core.settings         import UserSettings
 from core.utils            import SetAddOnPath
 from gui_core.preferences  import MapsetAccess, PreferencesDialog, EVT_SETTINGS_CHANGED
@@ -1192,7 +1192,8 @@ class GMFrame(wx.Frame):
         @param need_xmon True to start X monitor
         """
         # unset display mode
-        del os.environ['GRASS_RENDER_IMMEDIATE']
+        if os.getenv('GRASS_RENDER_IMMEDIATE'):
+            del os.environ['GRASS_RENDER_IMMEDIATE']
         
         if need_xmon:
             # open next available xmon
