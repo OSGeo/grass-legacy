@@ -22,15 +22,13 @@ int update_hist(char *raster_name, char *vector_name,
     if (raster_name == NULL)
 	return (-1);
 
-    if (G_read_history(raster_name, G_mapset(), &hist) < 0)
-	return -1;
+    G_short_history(raster_name, "raster", &hist);
 
-    strcpy(hist.title, raster_name);
-
-    /* store information from digit file into history */
-    sprintf(hist.datsrc_1, "Vector Map: %s in mapset %s", vector_name,
-	    vector_mapset);
-    sprintf(hist.datsrc_2, "Original scale from vector map: 1:%ld", scale);	/* 4.0 */
+    /* store information from vector map's digit file into history */
+    G_snprintf(hist.datsrc_1, RECORD_LEN-1, "Vector Map: %s in mapset %s",
+	      vector_name, vector_mapset);
+    G_snprintf(hist.datsrc_2, RECORD_LEN-1,
+	      "Original scale from vector map: 1:%ld", scale);	/* 4.0 */
 
     /* store command line options */
     G_command_history(&hist);
@@ -276,7 +274,7 @@ int update_labels(char *rast_name, char *vector_map, int field,
 		break;
 	    }
 
-	    G_set_raster_cats_title("Labels", &rast_cats);
+	    G_set_raster_cats_title("Rasterized vector map from labels", &rast_cats);
 
 	    /* open vector map and database driver */
 	    Vect_set_open_level(1);
@@ -387,7 +385,7 @@ int update_labels(char *rast_name, char *vector_map, int field,
 	    struct Range range;
 
 	    map_type = G_raster_map_type(rast_name, G_mapset());
-	    G_set_raster_cats_title("Values", &rast_cats);
+	    G_set_raster_cats_title("Rasterized vector map from values", &rast_cats);
 
 	    if (map_type == CELL_TYPE) {
 		CELL min, max;
@@ -426,7 +424,7 @@ int update_labels(char *rast_name, char *vector_map, int field,
 
 	    if (label_column) {
 
-		G_set_raster_cats_title("Labels", &rast_cats);
+		G_set_raster_cats_title("Rasterized vector map from labels", &rast_cats);
 
 		/* open vector map and database driver */
 		Vect_set_open_level(1);
@@ -516,7 +514,7 @@ int update_labels(char *rast_name, char *vector_map, int field,
 		    G_fatal_error(_("Cannot allocate memory for row buffer"));
 
 		G_init_cell_stats(&stats);
-		G_set_raster_cats_title("Categories", &rast_cats);
+		G_set_raster_cats_title("Rasterized vector map from categories", &rast_cats);
 
 		rows = G_window_rows();
 
@@ -551,7 +549,8 @@ int update_labels(char *rast_name, char *vector_map, int field,
 
 	    mapset = G_mapset();
 	    map_type = G_raster_map_type(rast_name, mapset);
-	    G_set_raster_cats_title("Degrees", &rast_cats);
+	    G_set_raster_cats_title("Rasterized vector map from line direction", &rast_cats);
+	    G_write_raster_units(rast_name, "degrees CCW from +x");
 
 	    for (i = 1; i <= 360; i++) {
 		sprintf(msg, "%d degrees", i);
