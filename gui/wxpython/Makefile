@@ -9,14 +9,17 @@ include $(MODULE_TOPDIR)/include/Make/Python.make
 
 ETCDIR = $(ETC)/wxpython
 
-SRCFILES := $(wildcard compat/* icons/*.* scripts/* xml/*) \
-	$(wildcard core/* dbmgr/* gcp/* gmodeler/* gui_core/* lmgr/* location_wizard/* \
-	mapdisp/* modules/* nviz/* psmap/* vdigit/* wxplot/* ) \
-	gis_set.py wxgui.py README
-DSTFILES := $(patsubst %,$(ETCDIR)/%,$(SRCFILES)) $(patsubst %.py,$(ETCDIR)/%.pyc,$(filter %.py,$(SRCFILES)))
+SRCFILES := $(wildcard compat/*.py icons/*.py scripts/*.py xml/*) \
+	$(wildcard core/*.py dbmgr/*.py gcp/*.py gmodeler/*.py gui_core/*.py \
+	lmgr/*.py location_wizard/*.py mapdisp/*.py modules/*.py nviz/*.py \
+	psmap/*.py vdigit/*.py wxplot/*.py ) gis_set.py wxgui.py README
 
-PYDSTDIRS := $(patsubst %,$(ETCDIR)/%,core dbmgr gcp gmodeler gui_core lmgr location_wizard \
-	mapdisp modules nviz psmap vdigit wxplot)
+DSTFILES := $(patsubst %,$(ETCDIR)/%,$(SRCFILES)) \
+	$(patsubst %.py,$(ETCDIR)/%.pyc,$(filter %.py,$(SRCFILES)))
+
+PYDSTDIRS := $(patsubst %,$(ETCDIR)/%,core dbmgr gcp gmodeler gui_core \
+	lmgr location_wizard mapdisp modules nviz psmap vdigit wxplot)
+
 DSTDIRS := $(patsubst %,$(ETCDIR)/%,compat icons scripts xml)
 
 default: $(DSTFILES) menustrings.py
