@@ -164,7 +164,9 @@ class WMSDialog(wx.Dialog):
         # 'r.in.wms -l' output changes depending on the parser used.
         # the parsing below depends on the cleaner `xml2` version.
         if not find_program('xml2'):
-            GError(_("The 'xml2' parser is required, please install it first"))
+            GError(_("The 'xml2' parser is required, please install it "
+                     "first. You may also try running r.in.wms directly "
+                     "from the command line."))
             return
 
         server = self.server.GetValue()
