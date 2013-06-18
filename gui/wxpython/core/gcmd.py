@@ -525,7 +525,7 @@ class CommandThread(Thread):
         
         self.startTime = time.time()
         
-        # TODO: replace ugly hack bellow
+        # TODO: replace ugly hack below
         args = self.cmd
         if sys.platform == 'win32' and os.path.splitext(self.cmd[0])[1] == '.py':
             # Python GUI script should be replaced by Shell scripts
@@ -535,8 +535,12 @@ class CommandThread(Thread):
                 self.cmd[0] in globalvar.grassScripts[globalvar.SCT_EXT]:
             args[0] = self.cmd[0] + globalvar.SCT_EXT
             env = copy.deepcopy(self.env)
-            env['PATH'] = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts') + \
-                os.pathsep + env['PATH']
+            # FIXME: env is None?  hmph. borrow sys.path instead.
+            #env['PATH'] = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts') + \
+            #    os.pathsep + env['PATH']
+            scriptdir = os.path.join(os.getenv('GISBASE').replace('/', '\\'), 'scripts')
+            if scriptdir not in sys.path:
+                sys.path.append(scriptdir)
         else:
             env = self.env
         
