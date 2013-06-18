@@ -54,6 +54,7 @@ import copy
 import locale
 from threading import Thread
 import Queue
+import re
 
 gisbase = os.getenv("GISBASE")
 if gisbase is None:
