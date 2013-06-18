@@ -7,14 +7,14 @@ rem
 rem  PURPOSE:  	The source file for this batch script is lib/init/init.bat.
 rem             It sets up some environment variables, default GISRC file
 rem             if necessary, etc. prior to starting GRASS proper.
-rem             It is intended to be a native Windows replacement for Init.bat,
+rem             It is intended to be a native Windows replacement for Init.sh,
 rem             but does not (yet) contain all the same functionality.
 rem
 rem             In particular also, GUI mode prints nothing to the terminal
 rem             and does not expect or provide an interactive terminal
 rem             running in addition to the GUI display.
 rem 
-rem  COPYRIGHT: (C) 2006, 2011 by the GRASS Development Team
+rem  COPYRIGHT: (C) 2006-2013 by the GRASS Development Team
 rem
 rem             This program is free software under the GNU General Public
 rem   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -55,7 +55,6 @@ if not "%LANG%"=="" goto langset
 FOR /F "usebackq delims==" %%i IN (`"%GISBASE%\etc\winlocale"`) DO @set LANG=%%i
 :langset
 
-set GRASS_PAGER=more
 if "%GRASS_WISH%"=="" set GRASS_WISH=wish.exe
 if "%GRASS_SH%"=="" set GRASS_SH=c:\msys\1.0\bin\sh.exe
 

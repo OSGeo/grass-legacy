@@ -5,6 +5,7 @@ set GRASS_PYTHON=%GISBASE%\extrabin\python.exe
 set GRASS_PROJSHARE=%GISBASE%\proj
 set GRASS_HTML_BROWSER=explorer
 set GRASS_SH=%GISBASE%\msys\bin\sh.exe
+set GRASS_PAGER=more
 
 set PYTHONHOME=%GISBASE%\Python27
 set GDAL_DATA=%GISBASE%\share\gdal
