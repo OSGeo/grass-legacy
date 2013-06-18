@@ -118,7 +118,7 @@ Import as a vector points map:
 <p>
 Shell script to import as a vector line map:
 <div class="code"><pre>
-    m.cogo -l in=cogo.dat | tac | awk '
+   m.cogo -l in=cogo.dat | tac | awk '
        BEGIN { FS=" " ; R=0 }
        $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
        END { printf("L %d\n", R) }' | tac | \
