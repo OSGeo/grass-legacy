@@ -80,7 +80,6 @@ int G_list_element(const char *element,
     if (desc == 0 || *desc == 0)
 	desc = element;
 
-#ifndef __MINGW32__
     /*
      * popen() the more command to page the output
      */
@@ -94,8 +93,8 @@ int G_list_element(const char *element,
 	    more = stdout;
     }
     else
-#endif
 	more = stdout;
+
     fprintf(more, "----------------------------------------------\n");
 
     /*
