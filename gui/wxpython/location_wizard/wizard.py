@@ -1637,7 +1637,7 @@ class SummaryPage(TitledPage):
         self.sizer.Add(item = self.panelProj,
                        flag = wx.ALIGN_LEFT | wx.ALL | wx.EXPAND,
                        border = 0, pos = (4, 1))
-        self.sizer.Add(item = self.MakeLabel(_("PROJ.4 definition:")),
+        self.sizer.Add(item = self.MakeLabel(_("PROJ.4 definition:\n (non-definitive)")),
                        flag = wx.ALIGN_LEFT | wx.ALL,
                        border = 5, pos = (5, 0))
         self.sizer.Add(item = self.panelProj4string,
@@ -1710,7 +1710,7 @@ class SummaryPage(TitledPage):
         
         label = ''
         if coordsys == 'epsg':
-            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode, 
+            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode,
                                            self.parent.epsgpage.epsgdesc)
 
         elif coordsys == 'file':
