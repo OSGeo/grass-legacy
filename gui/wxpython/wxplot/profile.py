@@ -353,8 +353,9 @@ class ProfileFrame(BasePlotFrame):
                     fd = open(pfile[-1], "w")
                 except IOError, e:
                     GError(parent = self,
-                           message = _("Unable to open file <%s> for writing.\n"
-                                       "Reason: %s") % (pfile[-1], e))
+                           message = _("Unable to open file <%(file)s> for "
+                                       "writing.\nReason: %(e)s") % {'file': pfile[-1],
+                                                                     'e': e})
                     dlg.Destroy()
                     return
                 
@@ -365,7 +366,8 @@ class ProfileFrame(BasePlotFrame):
         
         dlg.Destroy()
         if pfile:
-            message = _("%d files created:\n%s") % (len(pfile), '\n'.join(pfile))
+            message = _("%(l)d files created:\n%(p)s") % {'l': len(pfile),
+                                                          'p':'\n'.join(pfile)}
         else:
             message = _("No files generated.")
         
