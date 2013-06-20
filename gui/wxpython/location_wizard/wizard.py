@@ -225,7 +225,7 @@ class CoordinateSystemPage(TitledPage):
                                              "georeferenced data file"))
         self.radio4 = wx.RadioButton(parent = self, id = wx.ID_ANY,
                                      label = _("Read projection and datum terms from a "
-                                             "WKT or PRJ file"))
+                                             "Well Known Text (WKT) .prj file"))
         self.radio5 = wx.RadioButton(parent = self, id = wx.ID_ANY,
                                      label = _("Specify projection and datum terms using custom "
                                              "PROJ.4 parameters"))
@@ -1182,12 +1182,12 @@ class WKTPage(TitledPage):
     for setting coordinate system parameters"""
 
     def __init__(self, wizard, parent):
-        TitledPage.__init__(self, wizard, _("Select WKT or PRJ file"))
+        TitledPage.__init__(self, wizard, _("Select Well Known Text (WKT) .prj file"))
 
         self.wktfile = ''
 
         # create controls
-        self.lfile= self.MakeLabel(_("WKT or PRJ file:"))
+        self.lfile= self.MakeLabel(_("WKT .prj file:"))
         self.tfile = self.MakeTextCtrl(size = (300,-1))
         self.bbrowse = self.MakeButton(_("Browse"))
 
@@ -1239,7 +1239,7 @@ class WKTPage(TitledPage):
     def OnBrowse(self, event):
         """!Choose file"""
         dlg = wx.FileDialog(self,
-                            message = _("Select WKT or PRJ file"),
+                            message = _("Select Well Known Text (WKT) .prj file"),
                             defaultDir = os.getcwd(),
                             wildcard = "PRJ files (*.prj)|*.prj|Files (*.*)|*.*",
                             style = wx.OPEN)
@@ -1656,28 +1656,39 @@ class SummaryPage(TitledPage):
         dtrans = self.parent.datumtrans
         
         global coordsys
-        if coordsys in ('proj', 'epsg'):
+
+        if coordsys in ('proj', 'epsg', 'wkt', 'file'):
+            extra_opts = {}
+            extra_opts['location'] = 'location'
+            extra_opts['getErrorMsg'] = True
+            extra_opts['read'] = True
+
             if coordsys == 'proj':
                 addl_opts = {}
                 if len(datum) > 0:
-                    addl_opts['datum'] = '%s' % datum
-                    addl_opts['datumtrans'] = dtrans
+                    extra_opts['datum'] = '%s' % datum
+                    extra_opts['datumtrans'] = dtrans
 
                 ret, projlabel, err = RunCommand('g.proj',
                                                  flags = 'jf',
                                                  proj4 = proj4string,
-                                                 location = location,
-                                                 getErrorMsg = True,
-                                                 read = True,
-                                                 **addl_opts)
+                                                 **extra_opts)
             elif coordsys == 'epsg':
                 ret, projlabel, err = RunCommand('g.proj',
                                                  flags = 'jft',
                                                  epsg = epsgcode,
                                                  datumtrans = dtrans,
-                                                 location = location,
-                                                 getErrorMsg = True,
-                                                 read = True)
+                                                 **extra_opts)
+            elif coordsys == 'file':
+                ret, projlabel, err = RunCommand('g.proj',
+                                                 flags = 'jft',
+                                                 georef = self.parent.filepage.georeffile,
+                                                 **extra_opts)
+            elif coordsys == 'wkt':
+                ret, projlabel, err = RunCommand('g.proj',
+                                                 flags = 'jft',
+                                                 wkt = self.parent.wktpage.wktfile,
+                                                 **extra_opts)
 
             finishButton = wx.FindWindowById(wx.ID_FORWARD)
             if ret == 0:
@@ -1699,23 +1710,30 @@ class SummaryPage(TitledPage):
         
         label = ''
         if coordsys == 'epsg':
-            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode, self.parent.epsgpage.epsgdesc)
+            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode,
+                                           self.parent.epsgpage.epsgdesc)
+
         elif coordsys == 'file':
             label = 'matches file %s' % self.parent.filepage.georeffile
-            self.lproj4string.SetLabel("")
+
         elif coordsys == 'wkt':
             label = 'matches file %s' % self.parent.wktpage.wktfile
-            self.lproj4string.SetLabel("")
+
         elif coordsys == 'proj':
             label = ('%s, %s %s' % (projdesc, datumdesc, ellipsedesc))
+
         elif coordsys == 'xy':
             label = ('XY coordinate system (not projected).')
             self.lproj4string.SetLabel("")
+
         elif coordsys == 'custom':
             label = _("custom")
-            combo_str = self.parent.custompage.customstring + self.parent.custompage.custom_dtrans_string
+            combo_str = self.parent.custompage.customstring + \
+                        self.parent.custompage.custom_dtrans_string
             self.lproj4string.SetLabel(('%s' % combo_str.replace(' +', os.linesep + '+')))
+
         self.lprojection.SetLabel(label)
+
         
     def OnFinish(self, event):
         dlg = wx.MessageDialog(parent = self.wizard,
@@ -1763,7 +1781,8 @@ class LocationWizard(wx.Object):
         #
         # define wizard pages
         #
-        self.wizard = WizardWithHelpButton(parent, id = wx.ID_ANY, title = _("Define new GRASS Location"),
+        self.wizard = WizardWithHelpButton(parent, id = wx.ID_ANY,
+                                           title = _("Define new GRASS Location"),
                                            bitmap = wizbmp)
         self.wizard.Bind(wiz.EVT_WIZARD_HELP, self.OnHelp)
 
