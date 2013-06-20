@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2009-05-15 00:23-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -223,7 +223,7 @@ msgstr "Растровый слой <%s> не найден"
 #: ../visualization/xganim/main.c:370 ../vector/v.extrude/main.c:184
 #: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.what.rast/main.c:142
-#: ../vector/v.to.rast/support.c:267 ../vector/v.to.rast/support.c:513
+#: ../vector/v.to.rast/support.c:265 ../vector/v.to.rast/support.c:511
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Невозможно открыть растровый слой <%s>"
@@ -804,7 +804,7 @@ msgstr "Чтение растрового слоя <%s>..."
 #: ../imagery/i.landsat.acca/algorithm.c:414
 #: ../imagery/i.gensigset/get_train.c:36 ../imagery/i.gensig/get_train.c:32
 #: ../vector/v.what.rast/main.c:276 ../vector/v.what.rast/main.c:281
-#: ../vector/v.to.rast/support.c:525
+#: ../vector/v.to.rast/support.c:523
 #, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "Не могу прочесть растровый слой <%s>, строка %d"
@@ -7427,8 +7427,8 @@ msgstr "Ошибка программирования в get_stats/switch"
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:128
 #: ../vector/v.lrs/v.lrs.create/main.c:287
 #: ../vector/v.lrs/v.lrs.create/main.c:295 ../vector/v.reclass/main.c:127
-#: ../vector/v.to.rast/vect2rast.c:56 ../vector/v.to.rast/support.c:131
-#: ../vector/v.to.rast/support.c:295 ../vector/v.to.rast/support.c:445
+#: ../vector/v.to.rast/vect2rast.c:56 ../vector/v.to.rast/support.c:129
+#: ../vector/v.to.rast/support.c:293 ../vector/v.to.rast/support.c:443
 #: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.net.components/main.c:137
 #: ../vector/v.net.centrality/main.c:220 ../vector/v.random/main.c:168
@@ -7846,13 +7846,13 @@ msgid "Error in pj_do_proj (can't re-projection GCP %i)"
 msgstr "Ошибка в pj_do_proj (невозможно перепроектировать GCP %i)"
 
 #: ../raster/r.in.gdal/main.c:633 ../raster/r.external/main.c:264
-#: ../vector/v.in.ogr/main.c:1254
+#: ../vector/v.in.ogr/main.c:1256
 #, fuzzy
 msgid "Default region for this location updated"
 msgstr "Информация о проекте обновлена!"
 
 #: ../raster/r.in.gdal/main.c:636 ../raster/r.external/main.c:267
-#: ../vector/v.in.ogr/main.c:1257
+#: ../vector/v.in.ogr/main.c:1259
 #, fuzzy
 msgid "Region for the current mapset updated"
 msgstr "<%s> уже является текущим набором"
@@ -14901,8 +14901,8 @@ msgstr "Невозможно открыть векторный слой <%s>"
 #: ../vector/v.edit/select.c:507 ../vector/v.what.rast/main.c:127
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:119
 #: ../vector/v.reclass/main.c:122 ../vector/v.to.rast/vect2rast.c:51
-#: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:287
-#: ../vector/v.to.rast/support.c:437 ../vector/v.db.connect/main.c:208
+#: ../vector/v.to.rast/support.c:124 ../vector/v.to.rast/support.c:285
+#: ../vector/v.to.rast/support.c:435 ../vector/v.db.connect/main.c:208
 #: ../vector/v.generalize/misc.c:163
 #, c-format
 msgid "Database connection not defined for layer %d"
@@ -22812,9 +22812,6 @@ msgid "Rectify all raster maps in group"
 msgstr "Трансформировать все растровые слои группы"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:177
-#: ../imagery/i.cluster/open_files.c:17 ../imagery/i.maxlik/open.c:16
-#: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
-#: ../imagery/i.gensig/parse.c:39
 #, c-format
 msgid "Group <%s> not found"
 msgstr "Группа <%s> не найдена"
@@ -23561,7 +23558,16 @@ msgstr " стандартное отклонение"
 msgid "class distribution"
 msgstr "распределения классов"
 
+#: ../imagery/i.cluster/open_files.c:17 ../imagery/i.maxlik/open.c:16
+#: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
+#: ../imagery/i.gensig/parse.c:39
+#, fuzzy, c-format
+msgid "Group <%s> not found in current mapset"
+msgstr "Растровый слой <%s> не найден в текущем наборе"
+
 #: ../imagery/i.cluster/open_files.c:21 ../imagery/i.maxlik/open.c:19
+#: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.gensigset/parse.c:48
+#: ../imagery/i.gensig/parse.c:42
 #, c-format
 msgid "Subgroup <%s> in group <%s> not found"
 msgstr "Подгруппа <%s> в группе <%s> не найдена"
@@ -24138,12 +24144,6 @@ msgstr "Размер субматрицы обрабатываемый един�
 #: ../imagery/i.smap/shapiro/parse.c:39
 msgid "Use maximum likelihood estimation (instead of smap)"
 msgstr "Использовать оценку максимального подобия (вместо smap)"
-
-#: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.gensigset/parse.c:48
-#: ../imagery/i.gensig/parse.c:42
-#, c-format
-msgid "Subgroup <%s> not found"
-msgstr "Подгруппа <%s> не найдена"
 
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
@@ -29378,6 +29378,7 @@ msgid "Cleaning tool"
 msgstr "Инструмент очистки"
 
 #: ../vector/v.clean/main.c:66
+#, fuzzy
 msgid ""
 "break;break lines at each intersection;rmdupl;remove duplicate geometry "
 "features (pay attention to categories!);rmdangle;remove dangles, threshold "
@@ -29390,11 +29391,11 @@ msgid ""
 "topological format, like ShapeFile). Boundaries are broken on each point "
 "shared between 2 and more polygons where angles of segments are different;"
 "prune;remove vertices in threshold from lines and boundaries, boundary is "
-"pruned only if topology is not damaged (new intersection, changed "
-"attachement of centroid), first and last segment of the boundary is never "
-"changed;rmarea;remove small areas, the longest boundary with adjacent area "
-"is removed;rmline;remove all lines or boundaries of zero length, threshold "
-"is ignored;rmsa;remove small angles between lines at nodes"
+"pruned only if topology is not damaged (new intersection, changed attachment "
+"of centroid), first and last segment of the boundary is never changed;rmarea;"
+"remove small areas, the longest boundary with adjacent area is removed;"
+"rmline;remove all lines or boundaries of zero length, threshold is ignored;"
+"rmsa;remove small angles between lines at nodes"
 msgstr ""
 "break;разрывает линию в каждом пересечении;rmdupl;удаляет дублирующиеся "
 "геометрические объекты (помните про категории!);rmdangle;удаляет висящие "
@@ -32256,7 +32257,7 @@ msgid "Column name (will be updated by raster values)"
 msgstr "Имя столбца  (будет обновлено значениями растра)"
 
 #: ../vector/v.what.rast/main.c:160 ../vector/v.to.rast/vect2rast.c:64
-#: ../vector/v.to.rast/support.c:317 ../vector/v.to.rast/support.c:469
+#: ../vector/v.to.rast/support.c:315 ../vector/v.to.rast/support.c:467
 #, c-format
 msgid "Column <%s> not found"
 msgstr "Столбец <%s> не найден"
@@ -33600,8 +33601,8 @@ msgid "Either 'rules' or 'col' must be specified"
 msgstr "Должны быть выбраны либо 'rules' либо 'col'"
 
 #: ../vector/v.reclass/main.c:224 ../vector/v.to.rast/vect2rast.c:73
-#: ../vector/v.to.rast/support.c:145 ../vector/v.to.rast/support.c:306
-#: ../vector/v.to.rast/support.c:456
+#: ../vector/v.to.rast/support.c:143 ../vector/v.to.rast/support.c:304
+#: ../vector/v.to.rast/support.c:454
 #, c-format
 msgid "No records selected from table <%s>"
 msgstr "Не выбрано записей из таблицы <%s>"
@@ -33762,7 +33763,7 @@ msgstr "Тип поля (%s) не поддерживается (имелось �
 msgid "Unable to use column <%s>"
 msgstr "Невозможно использовать столбец <%s>"
 
-#: ../vector/v.to.rast/vect2rast.c:119 ../vector/v.to.rast/support.c:579
+#: ../vector/v.to.rast/vect2rast.c:119 ../vector/v.to.rast/support.c:578
 #, c-format
 msgid "Unknown use type: %d"
 msgstr "Неизвестный тип: %d"
@@ -33829,45 +33830,45 @@ msgstr "Полигон без центроида (возможно для ост
 msgid "Area centroid without category"
 msgstr "Центроид полигона без категории"
 
-#: ../vector/v.to.rast/support.c:141 ../vector/v.to.rast/support.c:302
-#: ../vector/v.to.rast/support.c:452
+#: ../vector/v.to.rast/support.c:139 ../vector/v.to.rast/support.c:300
+#: ../vector/v.to.rast/support.c:450
 #, c-format
 msgid "Unknown column <%s> in table <%s>"
 msgstr "Неизвестное поле <%s> в таблице <%s>"
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
+#: ../vector/v.to.rast/support.c:160 ../vector/v.to.rast/support.c:326
 msgid "No records selected"
 msgstr "Записи не выбраны"
 
-#: ../vector/v.to.rast/support.c:175
+#: ../vector/v.to.rast/support.c:173
 #, c-format
 msgid "Error in color definition column (%s) with cat %d: colorstring [%s]"
 msgstr ""
 "Ошибка в столбце определителе цвета (%s) с категорией %d: строка цвета [%s]"
 
-#: ../vector/v.to.rast/support.c:178
+#: ../vector/v.to.rast/support.c:176
 msgid "Color set to [200:200:200]"
 msgstr "Цвет установлен в [200:200:200]"
 
-#: ../vector/v.to.rast/support.c:183
+#: ../vector/v.to.rast/support.c:181
 #, c-format
 msgid "Error in color definition column (%s), with cat %d"
 msgstr "Ошибка в столбце определителя цвета (%s) с категорией %d"
 
-#: ../vector/v.to.rast/support.c:275
+#: ../vector/v.to.rast/support.c:273
 msgid "Label column was not specified, no labels will be written"
 msgstr "Столбец подписей не задан, подписи не созданы"
 
-#: ../vector/v.to.rast/support.c:351 ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:349 ../vector/v.to.rast/support.c:496
 #, c-format
 msgid "Column type (%s) not supported"
 msgstr "Тип поля (%s) не поддерживается "
 
-#: ../vector/v.to.rast/support.c:516
+#: ../vector/v.to.rast/support.c:514
 msgid "Cannot allocate memory for row buffer"
 msgstr "Невозможно выделить память для буфера строк"
 
-#: ../vector/v.to.rast/support.c:585
+#: ../vector/v.to.rast/support.c:584
 #, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "Невозможно записать категории для растрового слоя <%s>"
@@ -34382,16 +34383,16 @@ msgstr "Полигоны без категорий: %e (%d полигонов)"
 msgid "Area without category: %G (%d areas)"
 msgstr "Полигоны без категорий: %e (%d полигонов)"
 
-#: ../vector/v.in.ogr/main.c:1219
+#: ../vector/v.in.ogr/main.c:1221
 msgid "Errors were encountered during the import"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1220
+#: ../vector/v.in.ogr/main.c:1222
 #, c-format
 msgid "Try to import again, snapping with at least %g: 'snap=%g'"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1261
+#: ../vector/v.in.ogr/main.c:1263
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector"
@@ -34840,9 +34841,8 @@ msgstr "Создание точек..."
 msgid "vector, raster, aggregation"
 msgstr "вектор, растр, аггрегация"
 
-#, fuzzy
-#~ msgid "Group <%s> not found in current mapset"
-#~ msgstr "Растровый слой <%s> не найден в текущем наборе"
+#~ msgid "Subgroup <%s> not found"
+#~ msgstr "Подгруппа <%s> не найдена"
 
 #, fuzzy
 #~ msgid "Subgroup <%s> not found in current mapset"

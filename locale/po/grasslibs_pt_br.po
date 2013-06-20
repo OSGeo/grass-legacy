@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2007-05-20 10:44-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -226,51 +226,51 @@ msgstr "Impossível mudar de diretório para %s"
 msgid "Max. number of labels reached!"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:67
+#: ../lib/ogsf/gsd_img_mpeg.c:73
 #, fuzzy
 msgid "Unable to allocate stream"
 msgstr "não consegui alocar memória\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:166
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 #, fuzzy
 msgid "Video codec not found"
 msgstr "Vetor de entrada '%s' não encontrado"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:176
+#: ../lib/ogsf/gsd_img_mpeg.c:186
 #, fuzzy
 msgid "Unable to open codec"
 msgstr "não consegui abrir [%s]"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:195
+#: ../lib/ogsf/gsd_img_mpeg.c:205
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "não consegui alocar memória\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:206
+#: ../lib/ogsf/gsd_img_mpeg.c:216
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "não consegui alocar memória\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:266
+#: ../lib/ogsf/gsd_img_mpeg.c:283
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "Erro na escrita do arquivo topo\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:312
+#: ../lib/ogsf/gsd_img_mpeg.c:329
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:320
+#: ../lib/ogsf/gsd_img_mpeg.c:341
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:324
+#: ../lib/ogsf/gsd_img_mpeg.c:349
 #, fuzzy
 msgid "Unable to find suitable output format"
 msgstr "Não consegui abrir histórico para o vetor %s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/rst/interp_float/interp2d.c:119
+#: ../lib/ogsf/gsd_img_mpeg.c:356 ../lib/rst/interp_float/interp2d.c:119
 #: ../lib/rst/interp_float/interp2d.c:125
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
@@ -289,17 +289,17 @@ msgstr "Não consegui abrir histórico para o vetor %s"
 msgid "Out of memory"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:355
+#: ../lib/ogsf/gsd_img_mpeg.c:380
 #, fuzzy
 msgid "Invalid output format parameters"
 msgstr "Impossível mudar de diretório para %s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:377
+#: ../lib/ogsf/gsd_img_mpeg.c:402
 #, fuzzy, c-format
 msgid "Unable to open <%s>"
 msgstr "não consegui abrir [%s]"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:390
+#: ../lib/ogsf/gsd_img_mpeg.c:415
 msgid "OGSF library has not been built with MPEG output support"
 msgstr ""
 
@@ -1100,7 +1100,7 @@ msgstr ""
 #: ../lib/vector/neta/timetables.c:133 ../lib/vector/neta/utils.c:116
 #: ../lib/vector/Vlib/map.c:271 ../lib/vector/Vlib/map.c:405
 #: ../lib/vector/Vlib/map.c:621 ../lib/vector/Vlib/array.c:284
-#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/net.c:186 ../lib/vector/Vlib/net.c:356
 #, fuzzy, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "não consegui abrir banco de dados %s"
@@ -2320,27 +2320,27 @@ msgstr "não consegui ler arquivo de intervalo para [%s em %s]"
 msgid "can't write range file for [%s in %s]"
 msgstr "não consegui escrever arquivo de intervalo para [%s em %s]"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, fuzzy, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "não há arquivos %s disponíveis no mapset ativo\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, fuzzy, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "não há arquivos %s disponíveis no mapset %s\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "Pressione ENTER para continuar -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, fuzzy, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s arquivos disponíveis no mapset %s:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 #, fuzzy
 msgid "G_list: Unknown element type"
 msgstr "Tipo de vetor desconhecido"
@@ -3558,8 +3558,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:243
 #: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
 #: ../lib/vector/Vlib/map.c:588 ../lib/vector/Vlib/map.c:686
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr ""
@@ -3906,7 +3906,7 @@ msgstr "não consegui calcular centróide para área %d"
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr ""
@@ -4156,85 +4156,85 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 #, fuzzy
 msgid "Building graph..."
 msgstr "Criando topologia ...\n"
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 #, fuzzy
 msgid "Unable to build network graph"
 msgstr "não consegui encontrar vetor %s"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, fuzzy, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Impossível descrever tabela <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, fuzzy, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr "Tipo da coluna z não é suportado (deve ser inteiro ou double)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 #, fuzzy
 msgid "Registering arcs..."
 msgstr "Registrando linhas: "
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
 "(forward/both direction(s) of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
 "(direction of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 #, fuzzy
 msgid "Cannot add network arc"
 msgstr "não consegui calcular centróide para área %d"
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, fuzzy, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr "Registro no banco de dados para categoria %d não encontrado"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 #, fuzzy
 msgid "Flattening the graph..."
 msgstr "Criando topologia ...\n"
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 #, fuzzy
 msgid "Graph was built"
 msgstr "A topologia foi criada.\n"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
