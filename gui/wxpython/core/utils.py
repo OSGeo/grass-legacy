@@ -850,8 +850,10 @@ def StoreEnvVariable(key, value = None, envFile = None):
             try:
                 k, v = map(lambda x: x.strip(), line.split(' ', 1)[1].split('=', 1))
             except StandardError, e:
-                sys.stderr.write(_("%s: line skipped - unable to parse '%s'\n"
-                                   "Reason: %s\n") % (envFile, line, e))
+                
+                sys.stderr.write(_("%(env)s: line skipped - unable to parse "
+                                   "Reason: %(e)s\n") % {'env': envFile, 
+                                                         'line': line, 'e': e})
                 lineSkipped.append(line)
                 continue
             if k in environ:
