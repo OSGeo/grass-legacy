@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2013-01-26 13:45+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -214,49 +214,49 @@ msgstr "Impossible de traiter la carte vecteur - mémoire saturée"
 msgid "Max. number of labels reached!"
 msgstr "Nombre maximal d'étiquettes atteint !"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:67
+#: ../lib/ogsf/gsd_img_mpeg.c:73
 msgid "Unable to allocate stream"
 msgstr "Impossible d'allouer le flux"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:166
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 msgid "Video codec not found"
 msgstr "Le codec video n'a pas été trouvé"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:176
+#: ../lib/ogsf/gsd_img_mpeg.c:186
 msgid "Unable to open codec"
 msgstr "Impossible d'ouvrir le codec"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:195
+#: ../lib/ogsf/gsd_img_mpeg.c:205
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "Allocation mémoire impossible\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:206
+#: ../lib/ogsf/gsd_img_mpeg.c:216
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "Allocation mémoire impossible\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:266
+#: ../lib/ogsf/gsd_img_mpeg.c:283
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "Erreur lors de l'écriture du fichier vidéo"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:312
+#: ../lib/ogsf/gsd_img_mpeg.c:329
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr "Ouverture du flux MPEG <%s>..."
 
-#: ../lib/ogsf/gsd_img_mpeg.c:320
+#: ../lib/ogsf/gsd_img_mpeg.c:341
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 "Impossible de déduire le format de sortie de l'extension du fichier: "
 "utilisation de MPEG"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:324
+#: ../lib/ogsf/gsd_img_mpeg.c:349
 msgid "Unable to find suitable output format"
 msgstr "Impossible de  trouver un format de sortie adapté"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/rst/interp_float/interp2d.c:119
+#: ../lib/ogsf/gsd_img_mpeg.c:356 ../lib/rst/interp_float/interp2d.c:119
 #: ../lib/rst/interp_float/interp2d.c:125
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
@@ -275,16 +275,16 @@ msgstr "Impossible de  trouver un format de sortie adapté"
 msgid "Out of memory"
 msgstr "Dépassement de mémoire"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:355
+#: ../lib/ogsf/gsd_img_mpeg.c:380
 msgid "Invalid output format parameters"
 msgstr "Paramètres de format de sortie non valides"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:377
+#: ../lib/ogsf/gsd_img_mpeg.c:402
 #, c-format
 msgid "Unable to open <%s>"
 msgstr "Impossible d'ouvrir <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:390
+#: ../lib/ogsf/gsd_img_mpeg.c:415
 #, fuzzy
 msgid "OGSF library has not been built with MPEG output support"
 msgstr "NVIZ n'a pas été construit avec le support de sortie MPEG"
@@ -1151,7 +1151,7 @@ msgstr ""
 #: ../lib/vector/neta/timetables.c:133 ../lib/vector/neta/utils.c:116
 #: ../lib/vector/Vlib/map.c:271 ../lib/vector/Vlib/map.c:405
 #: ../lib/vector/Vlib/map.c:621 ../lib/vector/Vlib/array.c:284
-#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/net.c:186 ../lib/vector/Vlib/net.c:356
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Impossible d'ouvrir la base de données <%s> avec le driver <%s>"
@@ -2397,27 +2397,27 @@ msgstr "impossible de lire le fichier de limites pour [%s dans %s]"
 msgid "can't write range file for [%s in %s]"
 msgstr "impossible d'écrire le fichier de limites pour [%s dans %s]"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "pas de fichier %s disponible dans le jeu de données actuel\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "pas de fichier %s disponible dans le jeu de données <%s>\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "pressez RETOUR pour continuer -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s fichiers disponibles dans le jeu de données <%s> :\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: type d'élément inconnu"
 
@@ -3652,8 +3652,8 @@ msgstr "Chargement des données de la table attributaire..."
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:243
 #: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
 #: ../lib/vector/Vlib/map.c:588 ../lib/vector/Vlib/map.c:686
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "Connexion à la base de données indéfinie pour la couche %d"
@@ -4012,7 +4012,7 @@ msgstr ""
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "Erreur GngFlatten"
@@ -4267,40 +4267,40 @@ msgstr "%d contours fusionnés"
 msgid "%d new boundaries"
 msgstr "%d nouveaux contours"
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 msgid "Building graph..."
 msgstr "Construction du graphique ..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 msgid "Unable to build network graph"
 msgstr "Impossible de construire le graphe de réseau"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "La colonne des coûts transférés n'est pas spécifiée"
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "Arc < 1"
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Colonne <%s> non trouvée dans la table <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr ""
 "Type de données de la colonne <%s> non pris en charge (doit être numeric)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 msgid "Registering arcs..."
 msgstr "Enregistrement des arcs ... "
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -4309,7 +4309,7 @@ msgstr ""
 "L'enregistrement de la base de données de la ligne %d (cat = %d, avant/"
 "toutes directions) introuvable (avant/toutes directions de la ligne sautée)"
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
@@ -4318,36 +4318,36 @@ msgstr ""
 "L'enregistrement de la base de données de la ligne %d (cat = %d, direction "
 "arrière) introuvable (direction de la ligne sautée)"
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "Impossible d'ajouter un arc de réseau"
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr "Réglage des coûts du noeud ..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 "L'enregistrement de la base de données pour le noeud %d (cat = %d) n'a pas "
 "été trouvé (coût fixé à 0)"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 #, fuzzy
 msgid "Flattening the graph..."
 msgstr "Aplanir le graphique..."
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "Le graphique a été construit"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "erreur de dglShortestPath: %s"
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Mauvaise ligne de direction dans Vect_net_get_line_cost()"
 

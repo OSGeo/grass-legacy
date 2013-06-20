@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2013-04-09 16:21+0100\n"
 "Last-Translator: anna\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
@@ -235,7 +235,7 @@ msgstr "Mappa raster <%s> non trovata"
 #: ../visualization/xganim/main.c:370 ../vector/v.extrude/main.c:184
 #: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.drape/main.c:250 ../vector/v.what.rast/main.c:142
-#: ../vector/v.to.rast/support.c:267 ../vector/v.to.rast/support.c:513
+#: ../vector/v.to.rast/support.c:265 ../vector/v.to.rast/support.c:511
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Impossibile aprire la mappa raster <%s>"
@@ -815,7 +815,7 @@ msgstr "Lettura della mappa raster <%s> in corso..."
 #: ../imagery/i.landsat.acca/algorithm.c:414
 #: ../imagery/i.gensigset/get_train.c:36 ../imagery/i.gensig/get_train.c:32
 #: ../vector/v.what.rast/main.c:276 ../vector/v.what.rast/main.c:281
-#: ../vector/v.to.rast/support.c:525
+#: ../vector/v.to.rast/support.c:523
 #, c-format
 msgid "Unable to read raster map <%s> row %d"
 msgstr "Non è possibile leggere la mappa raster <%s> riga %d"
@@ -7390,8 +7390,8 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:128
 #: ../vector/v.lrs/v.lrs.create/main.c:287
 #: ../vector/v.lrs/v.lrs.create/main.c:295 ../vector/v.reclass/main.c:127
-#: ../vector/v.to.rast/vect2rast.c:56 ../vector/v.to.rast/support.c:131
-#: ../vector/v.to.rast/support.c:295 ../vector/v.to.rast/support.c:445
+#: ../vector/v.to.rast/vect2rast.c:56 ../vector/v.to.rast/support.c:129
+#: ../vector/v.to.rast/support.c:293 ../vector/v.to.rast/support.c:443
 #: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.net.components/main.c:137
 #: ../vector/v.net.centrality/main.c:220 ../vector/v.random/main.c:168
@@ -7812,12 +7812,12 @@ msgid "Error in pj_do_proj (can't re-projection GCP %i)"
 msgstr "Errore in pj_do_proj (non è possibile riproiettare GCP %i)"
 
 #: ../raster/r.in.gdal/main.c:633 ../raster/r.external/main.c:264
-#: ../vector/v.in.ogr/main.c:1254
+#: ../vector/v.in.ogr/main.c:1256
 msgid "Default region for this location updated"
 msgstr "La regione predefinita per questa location è stata aggiornata"
 
 #: ../raster/r.in.gdal/main.c:636 ../raster/r.external/main.c:267
-#: ../vector/v.in.ogr/main.c:1257
+#: ../vector/v.in.ogr/main.c:1259
 msgid "Region for the current mapset updated"
 msgstr "La regione per questa location è stata aggiornata"
 
@@ -14638,8 +14638,8 @@ msgstr "Impossibile aprire la mappa vettoriale <%s>"
 #: ../vector/v.edit/select.c:507 ../vector/v.what.rast/main.c:127
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:119
 #: ../vector/v.reclass/main.c:122 ../vector/v.to.rast/vect2rast.c:51
-#: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:287
-#: ../vector/v.to.rast/support.c:437 ../vector/v.db.connect/main.c:208
+#: ../vector/v.to.rast/support.c:124 ../vector/v.to.rast/support.c:285
+#: ../vector/v.to.rast/support.c:435 ../vector/v.db.connect/main.c:208
 #: ../vector/v.generalize/misc.c:163
 #, c-format
 msgid "Database connection not defined for layer %d"
@@ -22199,9 +22199,6 @@ msgid "Rectify all raster maps in group"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:177
-#: ../imagery/i.cluster/open_files.c:17 ../imagery/i.maxlik/open.c:16
-#: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
-#: ../imagery/i.gensig/parse.c:39
 #, c-format
 msgid "Group <%s> not found"
 msgstr "Gruppo <%s> non trovato"
@@ -22893,7 +22890,16 @@ msgstr ""
 msgid "class distribution"
 msgstr ""
 
+#: ../imagery/i.cluster/open_files.c:17 ../imagery/i.maxlik/open.c:16
+#: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
+#: ../imagery/i.gensig/parse.c:39
+#, fuzzy, c-format
+msgid "Group <%s> not found in current mapset"
+msgstr "Mappa raster <%s> non trovata nel mapset corrente"
+
 #: ../imagery/i.cluster/open_files.c:21 ../imagery/i.maxlik/open.c:19
+#: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.gensigset/parse.c:48
+#: ../imagery/i.gensig/parse.c:42
 #, c-format
 msgid "Subgroup <%s> in group <%s> not found"
 msgstr "Sottogruppo <%s> non trovato nel gruppo <%s>"
@@ -23441,12 +23447,6 @@ msgstr ""
 #: ../imagery/i.smap/shapiro/parse.c:39
 msgid "Use maximum likelihood estimation (instead of smap)"
 msgstr ""
-
-#: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.gensigset/parse.c:48
-#: ../imagery/i.gensig/parse.c:42
-#, c-format
-msgid "Subgroup <%s> not found"
-msgstr "Sottogruppo <%s> non trovato"
 
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
@@ -28521,11 +28521,11 @@ msgid ""
 "topological format, like ShapeFile). Boundaries are broken on each point "
 "shared between 2 and more polygons where angles of segments are different;"
 "prune;remove vertices in threshold from lines and boundaries, boundary is "
-"pruned only if topology is not damaged (new intersection, changed "
-"attachement of centroid), first and last segment of the boundary is never "
-"changed;rmarea;remove small areas, the longest boundary with adjacent area "
-"is removed;rmline;remove all lines or boundaries of zero length, threshold "
-"is ignored;rmsa;remove small angles between lines at nodes"
+"pruned only if topology is not damaged (new intersection, changed attachment "
+"of centroid), first and last segment of the boundary is never changed;rmarea;"
+"remove small areas, the longest boundary with adjacent area is removed;"
+"rmline;remove all lines or boundaries of zero length, threshold is ignored;"
+"rmsa;remove small angles between lines at nodes"
 msgstr ""
 
 #: ../vector/v.clean/main.c:94
@@ -31261,7 +31261,7 @@ msgid "Column name (will be updated by raster values)"
 msgstr "Nome della colonna (che sarà aggiornata con i valori raster)"
 
 #: ../vector/v.what.rast/main.c:160 ../vector/v.to.rast/vect2rast.c:64
-#: ../vector/v.to.rast/support.c:317 ../vector/v.to.rast/support.c:469
+#: ../vector/v.to.rast/support.c:315 ../vector/v.to.rast/support.c:467
 #, c-format
 msgid "Column <%s> not found"
 msgstr "Colonna <%s> non trovata"
@@ -32543,8 +32543,8 @@ msgid "Either 'rules' or 'col' must be specified"
 msgstr "Dev'essere specificato il parametro 'rules' o 'col'"
 
 #: ../vector/v.reclass/main.c:224 ../vector/v.to.rast/vect2rast.c:73
-#: ../vector/v.to.rast/support.c:145 ../vector/v.to.rast/support.c:306
-#: ../vector/v.to.rast/support.c:456
+#: ../vector/v.to.rast/support.c:143 ../vector/v.to.rast/support.c:304
+#: ../vector/v.to.rast/support.c:454
 #, c-format
 msgid "No records selected from table <%s>"
 msgstr "Nessun record selezionato dalla tabella <%s>"
@@ -32699,7 +32699,7 @@ msgstr ""
 msgid "Unable to use column <%s>"
 msgstr "Impossibile usare la colonna <%s>"
 
-#: ../vector/v.to.rast/vect2rast.c:119 ../vector/v.to.rast/support.c:579
+#: ../vector/v.to.rast/vect2rast.c:119 ../vector/v.to.rast/support.c:578
 #, c-format
 msgid "Unknown use type: %d"
 msgstr "Tipo sconosciuto: %d"
@@ -32764,46 +32764,46 @@ msgstr "Aree senza centroide (OK per isole)"
 msgid "Area centroid without category"
 msgstr "Centroidi di area senza categoria"
 
-#: ../vector/v.to.rast/support.c:141 ../vector/v.to.rast/support.c:302
-#: ../vector/v.to.rast/support.c:452
+#: ../vector/v.to.rast/support.c:139 ../vector/v.to.rast/support.c:300
+#: ../vector/v.to.rast/support.c:450
 #, c-format
 msgid "Unknown column <%s> in table <%s>"
 msgstr "Colonna sconosciuta <%s> nella tabella <%s>"
 
-#: ../vector/v.to.rast/support.c:162 ../vector/v.to.rast/support.c:328
+#: ../vector/v.to.rast/support.c:160 ../vector/v.to.rast/support.c:326
 msgid "No records selected"
 msgstr "Nessun record selezionato"
 
-#: ../vector/v.to.rast/support.c:175
+#: ../vector/v.to.rast/support.c:173
 #, c-format
 msgid "Error in color definition column (%s) with cat %d: colorstring [%s]"
 msgstr ""
 "Errore nella colonna di definizione del colore (%s) con cat %d: colorstring "
 "[%s]"
 
-#: ../vector/v.to.rast/support.c:178
+#: ../vector/v.to.rast/support.c:176
 msgid "Color set to [200:200:200]"
 msgstr "Colore impostato su [200:200:200]"
 
-#: ../vector/v.to.rast/support.c:183
+#: ../vector/v.to.rast/support.c:181
 #, c-format
 msgid "Error in color definition column (%s), with cat %d"
 msgstr "Errore nella colonna di definizione del colore (%s), con cat %d"
 
-#: ../vector/v.to.rast/support.c:275
+#: ../vector/v.to.rast/support.c:273
 msgid "Label column was not specified, no labels will be written"
 msgstr "Etichette di colonne non specificate, nessuna etichetta sarà scritta"
 
-#: ../vector/v.to.rast/support.c:351 ../vector/v.to.rast/support.c:498
+#: ../vector/v.to.rast/support.c:349 ../vector/v.to.rast/support.c:496
 #, c-format
 msgid "Column type (%s) not supported"
 msgstr "Tipo di colonna (%s) non supportata"
 
-#: ../vector/v.to.rast/support.c:516
+#: ../vector/v.to.rast/support.c:514
 msgid "Cannot allocate memory for row buffer"
 msgstr ""
 
-#: ../vector/v.to.rast/support.c:585
+#: ../vector/v.to.rast/support.c:584
 #, c-format
 msgid "Unable to write categories for raster map <%s>"
 msgstr "Impossibile scrivere le categorie per la mappa rster <%s>"
@@ -33295,16 +33295,16 @@ msgstr "Aree senza categoria: %G (%d aree)\n"
 msgid "Area without category: %G (%d areas)"
 msgstr "Aree senza categoria: %G (%d aree)"
 
-#: ../vector/v.in.ogr/main.c:1219
+#: ../vector/v.in.ogr/main.c:1221
 msgid "Errors were encountered during the import"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1220
+#: ../vector/v.in.ogr/main.c:1222
 #, c-format
 msgid "Try to import again, snapping with at least %g: 'snap=%g'"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1261
+#: ../vector/v.in.ogr/main.c:1263
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector"
@@ -33726,9 +33726,8 @@ msgstr "Sto generando punti..."
 msgid "vector, raster, aggregation"
 msgstr "vettoriale, raster, aggregazione"
 
-#, fuzzy
-#~ msgid "Group <%s> not found in current mapset"
-#~ msgstr "Mappa raster <%s> non trovata nel mapset corrente"
+#~ msgid "Subgroup <%s> not found"
+#~ msgstr "Sottogruppo <%s> non trovato"
 
 #, fuzzy
 #~ msgid "Subgroup <%s> not found in current mapset"

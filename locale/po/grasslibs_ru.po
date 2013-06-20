@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2009-01-27 22:58-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -208,45 +208,45 @@ msgstr "Невозможно обработать векторный слой - 
 msgid "Max. number of labels reached!"
 msgstr "Достигнуто максимальное значение подписей!"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:67
+#: ../lib/ogsf/gsd_img_mpeg.c:73
 msgid "Unable to allocate stream"
 msgstr "Невозможно выделить поток"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:166
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 msgid "Video codec not found"
 msgstr "Не найден видео кодэк"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:176
+#: ../lib/ogsf/gsd_img_mpeg.c:186
 msgid "Unable to open codec"
 msgstr "Невозможно открыть кодэк"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:195
+#: ../lib/ogsf/gsd_img_mpeg.c:205
 msgid "Unable to allocate picture"
 msgstr "Невозможно разместить изображение"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:206
+#: ../lib/ogsf/gsd_img_mpeg.c:216
 msgid "Unable to allocate temporary picture"
 msgstr "Невозможно разместить временное изображение"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:266
+#: ../lib/ogsf/gsd_img_mpeg.c:283
 msgid "Error while writing video frame"
 msgstr "Ошибка записи видео фрэйма"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:312
+#: ../lib/ogsf/gsd_img_mpeg.c:329
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr "Открыть поток MPEG <%s>..."
 
-#: ../lib/ogsf/gsd_img_mpeg.c:320
+#: ../lib/ogsf/gsd_img_mpeg.c:341
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 "Невозможно определить выходной формат по расширению файла: использую MPEG"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:324
+#: ../lib/ogsf/gsd_img_mpeg.c:349
 msgid "Unable to find suitable output format"
 msgstr "Невозможно найти подходящий выходной формат"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/rst/interp_float/interp2d.c:119
+#: ../lib/ogsf/gsd_img_mpeg.c:356 ../lib/rst/interp_float/interp2d.c:119
 #: ../lib/rst/interp_float/interp2d.c:125
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
@@ -265,16 +265,16 @@ msgstr "Невозможно найти подходящий выходной ф
 msgid "Out of memory"
 msgstr "Нет памяти"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:355
+#: ../lib/ogsf/gsd_img_mpeg.c:380
 msgid "Invalid output format parameters"
 msgstr "Неправильные параметры выходного формата"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:377
+#: ../lib/ogsf/gsd_img_mpeg.c:402
 #, c-format
 msgid "Unable to open <%s>"
 msgstr "Невозможно открыть <%s>"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:390
+#: ../lib/ogsf/gsd_img_mpeg.c:415
 #, fuzzy
 msgid "OGSF library has not been built with MPEG output support"
 msgstr "NVIZ был собран без поддержки выходного формата MPEG"
@@ -1139,7 +1139,7 @@ msgstr ""
 #: ../lib/vector/neta/timetables.c:133 ../lib/vector/neta/utils.c:116
 #: ../lib/vector/Vlib/map.c:271 ../lib/vector/Vlib/map.c:405
 #: ../lib/vector/Vlib/map.c:621 ../lib/vector/Vlib/array.c:284
-#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/net.c:186 ../lib/vector/Vlib/net.c:356
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Невозможно открыть БД <%s> с помощью драйвера <%s>"
@@ -2355,27 +2355,27 @@ msgstr "невозможно прочитать файл диапазона дл
 msgid "can't write range file for [%s in %s]"
 msgstr "невозможно записать файл диапазона для [%s в %s]"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "в текущем наборе файлы %s недоступны\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "файлы %s недоступны в наборе <%s>\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "нажмите RETURN для продолжения -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s файлы доступны в наборе <%s>:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: Неизвестный тип элемента"
 
@@ -3591,8 +3591,8 @@ msgstr "Загружаются данные из таблицы аттрибут
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:243
 #: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
 #: ../lib/vector/Vlib/map.c:588 ../lib/vector/Vlib/map.c:686
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "Для слоя %d не определено соединение с базой данных"
@@ -3929,7 +3929,7 @@ msgstr "Попытка удалить информацию об острове %
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "ошибка GngFlatten"
@@ -4180,39 +4180,39 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 msgid "Building graph..."
 msgstr "Построение графа..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 msgid "Unable to build network graph"
 msgstr "Невозможно построить сетевой граф"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "Не выбран столбец forward costs"
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "поле Arc < 1"
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Поле <%s> не найдено в таблице <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr "Тип данных поля <%s> не поддерживается (должен быть числовым)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 msgid "Registering arcs..."
 msgstr "Регистрируются дуги..."
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -4221,7 +4221,7 @@ msgstr ""
 "Запись в БД для линии %d (cat = %d, вперед/оба направления) не найден "
 "(вперед/оба направления линии пропущены)"
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
@@ -4230,33 +4230,33 @@ msgstr ""
 "Запись в БД для линии %d (cat = %d, направление назад) не найден "
 "(направление назад пропущено)"
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "Невозможно добавить сетевую дугу "
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr "Устанавливается стоимость для узлов..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr "Запись в БД для узла  %d (cat = %d) не найдена (стоимость = 0)"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 msgid "Flattening the graph..."
 msgstr "Выпрямление графа"
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "Граф построен"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "ошибка dglShortestPath : %s"
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Неправильное направление линии в Vect_net_get_line_cost()"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:14+0200\n"
+"POT-Creation-Date: 2013-06-20 11:39+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -224,51 +224,51 @@ msgstr "无法将目录改变到%s"
 msgid "Max. number of labels reached!"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:67
+#: ../lib/ogsf/gsd_img_mpeg.c:73
 #, fuzzy
 msgid "Unable to allocate stream"
 msgstr "无法分配内存\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:166
+#: ../lib/ogsf/gsd_img_mpeg.c:176
 #, fuzzy
 msgid "Video codec not found"
 msgstr "输入矢量'%s'未找到"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:176
+#: ../lib/ogsf/gsd_img_mpeg.c:186
 #, fuzzy
 msgid "Unable to open codec"
 msgstr "无法打开%s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:195
+#: ../lib/ogsf/gsd_img_mpeg.c:205
 #, fuzzy
 msgid "Unable to allocate picture"
 msgstr "无法分配内存\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:206
+#: ../lib/ogsf/gsd_img_mpeg.c:216
 #, fuzzy
 msgid "Unable to allocate temporary picture"
 msgstr "无法分配内存\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:266
+#: ../lib/ogsf/gsd_img_mpeg.c:283
 #, fuzzy
 msgid "Error while writing video frame"
 msgstr "写拓扑文件时出错。\n"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:312
+#: ../lib/ogsf/gsd_img_mpeg.c:329
 #, c-format
 msgid "Opening MPEG stream <%s>..."
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:320
+#: ../lib/ogsf/gsd_img_mpeg.c:341
 msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 
-#: ../lib/ogsf/gsd_img_mpeg.c:324
+#: ../lib/ogsf/gsd_img_mpeg.c:349
 #, fuzzy
 msgid "Unable to find suitable output format"
 msgstr "无法猜测站点格式！"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:331 ../lib/rst/interp_float/interp2d.c:119
+#: ../lib/ogsf/gsd_img_mpeg.c:356 ../lib/rst/interp_float/interp2d.c:119
 #: ../lib/rst/interp_float/interp2d.c:125
 #: ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
@@ -288,17 +288,17 @@ msgstr "无法猜测站点格式！"
 msgid "Out of memory"
 msgstr "G_malloc：内存溢出"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:355
+#: ../lib/ogsf/gsd_img_mpeg.c:380
 #, fuzzy
 msgid "Invalid output format parameters"
 msgstr "输入投影参数"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:377
+#: ../lib/ogsf/gsd_img_mpeg.c:402
 #, fuzzy, c-format
 msgid "Unable to open <%s>"
 msgstr "无法打开%s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:390
+#: ../lib/ogsf/gsd_img_mpeg.c:415
 msgid "OGSF library has not been built with MPEG output support"
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgstr ""
 #: ../lib/vector/neta/timetables.c:133 ../lib/vector/neta/utils.c:116
 #: ../lib/vector/Vlib/map.c:271 ../lib/vector/Vlib/map.c:405
 #: ../lib/vector/Vlib/map.c:621 ../lib/vector/Vlib/array.c:284
-#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/net.c:186 ../lib/vector/Vlib/net.c:356
 #, fuzzy, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "无法打开数据库 %s"
@@ -2380,27 +2380,27 @@ msgstr "无法为[%s在%s中]读取范围文件"
 msgid "can't write range file for [%s in %s]"
 msgstr "无法为[%s在%s中]写入范围文件"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, fuzzy, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "当前地图集中没有 %s 文件\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "在地图集 %s 中没有可用的 %s 文件\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "按回车键继续 -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "在地图集 %s 中可用的 %s 文件：\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list:未知元素类型"
 
@@ -3622,8 +3622,8 @@ msgstr "从属性表中载入数据..."
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:243
 #: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
 #: ../lib/vector/Vlib/map.c:588 ../lib/vector/Vlib/map.c:686
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr ""
@@ -3967,7 +3967,7 @@ msgstr "无法为区域 %d 计算质心"
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr ""
@@ -4217,85 +4217,85 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 #, fuzzy
 msgid "Building graph..."
 msgstr "建立拓扑...\n"
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 #, fuzzy
 msgid "Unable to build network graph"
 msgstr "无法找到矢量%s"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, fuzzy, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "无法打开数据库表 <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, fuzzy, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr "z 值字段的类型不支持 (必须为整型或双精度)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 #, fuzzy
 msgid "Registering arcs..."
 msgstr "注册线： "
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
 "(forward/both direction(s) of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
 "(direction of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 #, fuzzy
 msgid "Cannot add network arc"
 msgstr "无法为区域 %d 计算质心"
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, fuzzy, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr "类型为 %d 的记录未找到"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 #, fuzzy
 msgid "Flattening the graph..."
 msgstr "建立拓扑...\n"
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 #, fuzzy
 msgid "Graph was built"
 msgstr "拓扑建立完成。\n"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
