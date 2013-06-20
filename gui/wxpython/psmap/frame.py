@@ -368,7 +368,7 @@ class PsMapFrame(wx.Frame):
         if event.userData['temp']:
             grass.try_remove(event.userData['filename'])
             
-        wx.CallLater(4000, lambda: self.SetStatusText("", 0))
+        self.delayedCall = wx.CallLater(4000, lambda: self.SetStatusText("", 0))
 
     def getFile(self, wildcard):
         suffix = []
@@ -1067,6 +1067,8 @@ class PsMapFrame(wx.Frame):
         except OSError:
             pass
         grass.set_raise_on_error(False)
+        if hasattr(self, 'delayedCall') and self.delayedCall.IsRunning():
+            self.delayedCall.Stop()
         self.Destroy()
 
 
