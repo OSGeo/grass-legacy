@@ -56,7 +56,7 @@ static const struct scale
 	"100 miles", 160934.400, 1000000., 10}, {
 	"500 miles", 804672.000, 2000000., 5}, {
 	"1000 miles", 1609344.000, 10000000., 10}, {
-    "5000 miles", 8046720.000, 20000000., 5},}
+	"5000 miles", 8046720.000, 20000000., 5},}
 };
 
 int draw_scale(char *save, int toptext, int size)
@@ -137,6 +137,10 @@ int draw_scale(char *save, int toptext, int size)
 
     if (!incr)
 	return (-1);
+
+    /* beyond the maximum just make the longest scale narrower */
+    if (incr >= NUMSCALES)
+	incr = NUMSCALES - 1;
 
     line_len = D_get_u_to_d_xconv() * scales[incr].size
 	/ G_database_units_to_meters_factor();

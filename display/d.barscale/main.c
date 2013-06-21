@@ -175,7 +175,6 @@ int main(int argc, char **argv)
 	char cmdbuf[512];
 
 	sprintf(cmdbuf, "%s at=%.2f,%.2f", argv[0], east, north);
-
 	sprintf(cmdbuf, "%s bcolor=%s", cmdbuf, opt1->answer);
 	sprintf(cmdbuf, "%s tcolor=%s", cmdbuf, opt2->answer);
 	if (top->answer)
