@@ -173,7 +173,7 @@ int main(int argc, char **argv)
     else if (mouse_query(top->answer, fontsize)) {
 	char cmdbuf[512];
 
-	sprintf(cmdbuf, "%s at=%.2f,%.2f bcolor=%s tcolor=%s fontsize=%s",
+	sprintf(cmdbuf, "%s at=%.2f,%.2f bcolor=\"%s\" tcolor=\"%s\" fontsize=%s",
 		argv[0], east, north, opt1->answer, opt2->answer, fsize->answer);
 
 	if (top->answer)
