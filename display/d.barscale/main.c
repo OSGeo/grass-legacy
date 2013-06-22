@@ -1,4 +1,3 @@
-
 /****************************************************************************
  *
  * MODULE:       d.barscale
@@ -174,9 +173,9 @@ int main(int argc, char **argv)
     else if (mouse_query(top->answer, fontsize)) {
 	char cmdbuf[512];
 
-	sprintf(cmdbuf, "%s at=%.2f,%.2f", argv[0], east, north);
-	sprintf(cmdbuf, "%s bcolor=%s", cmdbuf, opt1->answer);
-	sprintf(cmdbuf, "%s tcolor=%s", cmdbuf, opt2->answer);
+	sprintf(cmdbuf, "%s at=%.2f,%.2f bcolor=%s tcolor=%s fontsize=%s",
+		argv[0], east, north, opt1->answer, opt2->answer, fsize->answer);
+
 	if (top->answer)
 	    strcat(cmdbuf, " -t");
 	if (feet->answer)
