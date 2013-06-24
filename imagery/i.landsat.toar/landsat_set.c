@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include <grass/gis.h>
@@ -15,7 +15,7 @@ void sensor_MSS(lsat_data * lsat)
 
     /* green, red, near infrared, near infrared */
     int band[] = { 1, 2, 3, 4 };
-    int code[] = { 4, 5, 6, 7 };	/* corrected for MSS4 y MSS5 to 1,2,3,4 */
+    int code[] = { 4, 5, 6, 7 };	/* corrected for MSS4 and MSS5 to 1,2,3,4 */
     double wmin[] = { 0.5, 0.6, 0.7, 0.8 };
     double wmax[] = { 0.6, 0.7, 0.8, 1.1 };
     /* original: 79x57, now all 60 m */
@@ -65,11 +65,11 @@ void sensor_ETM(lsat_data * lsat)
 {
     int i;
 
-    /* blue, green red, near infrared, shortwave IR, thermal IR, shortwave IR, panchromatic */
+    /* blue, green, red, near infrared, shortwave IR, thermal IR, shortwave IR, panchromatic */
     int band[] = { 1, 2, 3, 4, 5, 6, 6, 7, 8 };
     int code[] = { 1, 2, 3, 4, 5, 61, 62, 7, 8 };
-    double wmin[] = { 0.450, 0.525, 0.630, 0.75, 1.55, 10.40, 2.09, 0.52 };
-    double wmax[] = { 0.515, 0.605, 0.690, 0.90, 1.75, 12.50, 2.35, 0.90 };
+    double wmin[] = { 0.450, 0.525, 0.630, 0.75, 1.55, 10.40, 10.40, 2.09, 0.52 };
+    double wmax[] = { 0.515, 0.605, 0.690, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90 };
     /* 30, 30, 30, 30, 30, 60 (after Feb. 25, 2010: 30), 30, 15 */
 
     strcpy(lsat->sensor, "ETM+");
@@ -95,12 +95,8 @@ void sensor_LDCM(lsat_data * lsat)
      * cirrus, thermal infrared (TIR) 1, TIR 2 */
     int band[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
     int code[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-    double wmin[] =
-	{ 0.433, 0.450, 0.525, 0.630, 0.845, 1.560, 2.100, 0.500, 1.360, 10.3,
-11.5 };
-    double wmax[] =
-	{ 0.453, 0.515, 0.600, 0.680, 0.885, 1.660, 2.300, 0.680, 1.390, 11.3,
-12.5 };
+    double wmin[] = { 0.433, 0.450, 0.525, 0.630, 0.845, 1.560, 2.100, 0.500, 1.360, 10.3, 11.5 };
+    double wmax[] = { 0.453, 0.515, 0.600, 0.680, 0.885, 1.660, 2.300, 0.680, 1.390, 11.3, 12.5 };
     /* 30, 30, 30, 30, 30, 30, 30, 15, 30, 100, 100 */
 
     strcpy(lsat->sensor, "OLI/TIRS");
@@ -559,17 +555,20 @@ void set_ETM(lsat_data * lsat, char gain[])
 void set_LDCM(lsat_data * lsat)
 {
     int i, j;
-    double julian, *lmax, *lmin;
+    double *lmax, *lmin;
 
     /* Spectral radiances at detector */
+    
+    /* uncorrected values */ 
     double Lmax[][11] = {
-	{0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.}	// <<<<<<<<<<<<<< valores incorrectos
+	{0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.}
     };
     double Lmin[][11] = {
-	{0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.}	// <<<<<<<<<<<<<< valores incorrectos
+	{0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.}
     };
     /* Solar exoatmospheric spectral irradiances */
-    double esun[] = { 2062., 21931., 1990., 1688., 1037., 268.6, 94.6, 1892., 399.0, 0., 0. };	// <<<<<<<<<<<<<< estimados
+    /* estimates */
+    double esun[] = { 2062., 21931., 1990., 1688., 1037., 268.6, 94.6, 1892., 399.0, 0., 0. };
 
     lmax = Lmax[0];
     lmin = Lmin[0];

@@ -37,7 +37,7 @@ typedef struct
     char thermal;		/* Flag to thermal band          */
     double gain, bias;		/* Gain and Bias of sensor       */
     double K1, K2;		/* Thermal calibration or
-				   Rad2Ref constants */
+				   Rad2Ref constants             */
 
 } band_data;
 
@@ -51,6 +51,8 @@ typedef struct
 
     double dist_es;		/* Distance Earth-Sun            */
     double sun_elev;		/* Sun elevation                 */
+    double sun_az;		/* Sun Azimuth                   */
+    double time;		/* Image Acquisition Time        */
 
     char sensor[10];		/* Type of sensor: MSS, TM, ETM+, OLI/TIRS */
     int bands;			/* Total number of bands         */

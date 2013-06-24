@@ -19,5 +19,4 @@ void set_ETM(lsat_data *, char[]);
 
 void set_LDCM(lsat_data *);
 
-
 #endif

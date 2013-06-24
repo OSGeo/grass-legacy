@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
     atmo->key = "rayleigh";
     atmo->type = TYPE_DOUBLE;
     atmo->required = NO;
-    atmo->description = _("Rayleigh atmosphere (diffuse sky irradiance)");	/* scattering coefficient? */
+    atmo->label = _("Rayleigh atmosphere (diffuse sky irradiance)");	/* scattering coefficient? */
     atmo->description = _("Required only if 'method' is DOS3");
     atmo->answer = "0.0";
     atmo->guisection = _("Settings");
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
     frad = G_define_flag();
     frad->key = 'r';
     frad->description =
-	_("Output at-sensor radiance instead reflectance for all bands");
+	_("Output at-sensor radiance instead of reflectance for all bands");
 
     named = G_define_flag();
     named->key = 'n';
@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
     rayleigh = atof(atmo->answer);
 
     /* Data from metadata file */
-    /* Unnecessary because G_zero filled, but by sanity */
+    /* Unnecessary because G_zero filled, but for sanity */
     lsat.flag = NOMETADATAFILE;
     if (met != NULL) {
 	lsat.flag = METADATAFILE;
