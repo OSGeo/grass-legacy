@@ -108,7 +108,7 @@ if not os.environ.has_key("GISBASE"):
     print "You must be in GRASS GIS to run this program."
     sys.exit(1)
 
-GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
+GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "modules")
 sys.path.append(GUIModulesPath)
 
 GUIPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "scripts")

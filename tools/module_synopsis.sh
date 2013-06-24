@@ -59,7 +59,7 @@ cd "$GISBASE"
 
 
 ### generate menu hierarchy
-MDPY="$GISBASE/etc/wxpython/gui_modules/menudata.py"
+MDPY="$GISBASE/etc/wxpython/core/menudata.py"
 # python menudata.py commands
 # python menudata.py tree
 # python menudata.py strings
