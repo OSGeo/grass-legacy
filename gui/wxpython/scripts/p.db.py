@@ -37,7 +37,7 @@ import grass.script as grass
 def main():
     table = options["table"]
 
-    os.spawnlp(os.P_NOWAIT, os.environ["GRASS_PYTHON"], os.environ["GRASS_PYTHON"], "%s/etc/wxpython/gui_modules/dbm.py" % os.environ["GISBASE"], table)
+    os.spawnlp(os.P_NOWAIT, os.environ["GRASS_PYTHON"], os.environ["GRASS_PYTHON"], "%s/etc/wxpython/dbmgr/manager.py" % os.environ["GISBASE"], table)
 
 if __name__ == "__main__":
     options, flags = grass.parser()
