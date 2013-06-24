@@ -63,7 +63,8 @@ void lsat_bandctes(lsat_data * lsat, int i, char method,
     cos_v = (double)(cos(D2R * (lsat->number < 4 ? 9.2 : 8.2)));
 
     /** Global irradiance on the sensor.
-        Radiance to reflectance coefficient, only NO thermal bands.
+	Radiance to reflectance coefficient, only NO thermal bands.
+	K1 and K2 variables are also utilized as thermal constants
     */
     if (lsat->band[i].thermal == 0) {
 	switch (method) {

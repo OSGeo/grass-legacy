@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include <grass/gis.h>
@@ -29,10 +29,11 @@ inline void chrncpy(char *dest, char src[], int n)
 void get_metformat(const char metadata[], char *key, char value[])
 {
     int i = 0;
-    char *ptr = strstr(metadata, key);
+    char *ptrmet = strstr(metadata, key);
+    char *ptr;
 
-    if (ptr != NULL) {
-	ptr = strstr(ptr, " VALUE ");
+    if (ptrmet != NULL) {
+	ptr = strstr(ptrmet, " VALUE ");
 	if (ptr != NULL) {
 	    while (*ptr++ != '=') ;
 	    while (*ptr <= ' ')
@@ -128,6 +129,11 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	G_warning
 	    ("Using production date from the command line 'product_date'");
 
+    get_mtldata(mtldata, "SUN_AZIMUTH", value);
+    lsat->sun_az = atof(value);
+    if (lsat->sun_az == 0.)
+        G_warning("Sun azimuth is %f", lsat->sun_az);
+
     get_mtldata(mtldata, "SUN_ELEVATION", value);
     if (value[0] == '\0') {
 	get_mtldata(mtldata, "SolarElevation", value);
@@ -135,6 +141,17 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
     lsat->sun_elev = atof(value);
     if (lsat->sun_elev == 0.)
 	G_warning("Sun elevation is %f", lsat->sun_elev);
+
+    get_mtldata(mtldata, "SCENE_CENTER_TIME", value);
+    if (value[0] == '\0') {
+        get_mtldata(mtldata, "SCENE_CENTER_SCAN_TIME", value);
+    }
+    /* Remove trailing 'z'*/
+    value[strlen(value) - 1]='\0';
+    /* Cast from hh:mm:ss into hh.hhh*/
+    G_llres_scan(value, &lsat->time);
+    if (lsat->time == 0.)
+        G_warning("Time is %f", lsat->time);
 
     /* Fill the data with the basic/default sensor parameters */
     switch (lsat->number) {
@@ -321,8 +338,8 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	    get_mtldata(mtldata, "EARTH_SUN_DISTANCE", value);
 	    if (value[0] != '\0') {
 		lsat->dist_es = atof(value);
-		G_verbose_message(1,
-				  "ESUN evaluate from REFLECTANCE_ADDITIVE_FACTOR_BAND of the metadata file");
+		G_verbose_message
+		    ("ESUN evaluate from REFLECTANCE_ADDITIVE_FACTOR_BAND of the metadata file");
 	    }
 	}
     }
