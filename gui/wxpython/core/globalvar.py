@@ -25,6 +25,9 @@ ETCWXDIR = os.path.join(ETCDIR, "wxpython")
 ETCIMGDIR = os.path.join(ETCDIR, "gui", "images")
 ETCSYMBOLDIR = os.path.join(ETCDIR, "gui", "images", "symbols")
 
+wxgui_path = os.path.join(ETCDIR, "wxpython")
+if wxgui_path not in sys.path:
+    sys.path.append(wxgui_path)
 from core.debug import Debug
 
 sys.path.append(os.path.join(ETCDIR, "python"))
