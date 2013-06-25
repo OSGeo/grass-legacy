@@ -33,14 +33,14 @@ except ImportError:
     sys.exit(_("No GRASS-python library found."))
 ### wxGUI imports
 
-GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
+GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_core")
 sys.path.append(GUIModulesPath)
 
 import globalvar
 import gselect
 import goutput
-import menuform
-from preferences import globalSettings as UserSettings
+import forms
+from settings import UserSettings
 #import help
 
 import wx
@@ -101,7 +101,7 @@ class KrigingPanel(wx.Panel):
         for Rpackage in ["gstat"]: # , "geoR"]: #@TODO: enable it if/when it'll be implemented.
             self.CreatePage(package = Rpackage, Rinstance = Rinstance, controller = controller)
         
-        ## Command output. From menuform module, cmdPanel class
+        ## Command output. From forms.py module, cmdPanel class
         self.goutput = goutput.GMConsole(parent = self, margin = False,
                                          notebook = self.RPackagesBook)
         self.goutputId = self.RPackagesBook.GetPageCount()
