@@ -36,6 +36,7 @@ static const char *standarddirs[] = {
     "/usr/lib/X11/fonts",
     "/usr/share/X11/fonts",
     "/usr/share/fonts",
+    "/usr/local/share/fonts",
     "${HOME}/Library/Fonts",
     "/Library/Fonts",
     "/System/Library/Fonts",
