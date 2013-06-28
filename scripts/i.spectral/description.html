@@ -2,10 +2,19 @@
 
 <em>i.spectral</em> displays spectral response at user specified 
 locations in images.
+It requires the user to either interactively select positions on the
+Xmonitor (the default) or can function non-interactively with sampling
+coordinates specified with the <b>east_north</b> option.
+
 
 <h2>NOTES</h2>
 
-This script needs gnuplot to be installed.
+This script needs <a href="http://www.gnuplot.info">gnuplot</a> to be installed.
+Output may be to a new graphics window on your monitor (the default), or
+to an output file. Available output file formats are PNG, EPS, and SVG.
+In interactive mode use the <b>-m</b> flag to select multiple sampling
+points. Each coordinate pick will appear as a different colored line
+graph.
 
 
 <h2>EXAMPLES</h2>
@@ -21,7 +30,8 @@ i.spectral -i rast=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7
 
 <center>
 <img src="i_spectral.png" border=1><br>
-Spectral plot of 3 different land cover types: (1) water, (2) green vegetation, and (3) highway
+Spectral plot of 3 different land cover types: (1) water, (2) green
+vegetation, and (3) highway
 </center>
 
 
@@ -30,7 +40,8 @@ To analyze a time series of maps, use:
 
 <div class="code"><pre>
 d.rast map_1
-LIST=`g.mlist type=rast mapset=timeseries pat="map_*" | sort -t '_' -k 2 -n | tr '\n' ','| sed 's+,$++g'`
+LIST=`g.mlist type=rast mapset=timeseries pat="map_*" | \
+   sort -t '_' -k 2 -n | tr '\n' ','| sed 's+,$++g'`
 i.spectral -i rast=$LIST
 </pre></div>
 
@@ -40,15 +51,19 @@ year etc). The user is then asked to click into a map position and the
 resulting pixel values of all matching maps are drawn in the gnuplot
 output.
 
+
 <h2>SEE ALSO</h2>
 
 <em><a href="d.what.rast.html">d.what.rast</a></em><br>
 <em><a href="d.where.html">d.where</a></em><br>
 <em><a href="r.what.html">r.what</a></em><br>
 
+
 <h2>AUTHOR</h2>
 
 Markus Neteler<br>
-Francesco Pirotti
+Francesco Pirotti<br>
+Hamish Bowman
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
