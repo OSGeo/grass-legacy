@@ -183,7 +183,8 @@ int main(int argc, char *argv[])
 	}
     }
 
-    G_done_msg(" ");
+    if (!simple_flag->answer)
+	G_done_msg("");
 
     return EXIT_SUCCESS;
 }
