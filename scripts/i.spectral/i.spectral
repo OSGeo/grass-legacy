@@ -27,7 +27,7 @@
 #%option
 #% key: group
 #% type: string
-#% gisprompt: old,group
+#% gisprompt: old,group,group
 #% description: Group input
 #% required : no
 #%end
@@ -42,7 +42,7 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: output
+#% gisprompt: new,file,file
 #% description: Write output to PNG image
 #% multiple : no
 #% required : no
@@ -57,7 +57,7 @@
 #%end
 #%flag 
 #%key: c
-#%description: Label with coordinates instead of numbering
+#%description: Show pick coordinates instead of numbering in the legend
 #%end
 
 if test "$GISBASE" = ""; then
@@ -83,11 +83,15 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
-
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
+
+if [ `d.mon -L | grep -w '^x[0-9]' | grep -vc 'not running'` -eq 0 ] ; then
+    g.message -e "No graphics device open (requires d.mon X-windows display)"
+    exit 1
+fi
 
 TMP1="`g.tempfile pid=$$`"
 TMP2="`g.tempfile pid=$$`"
@@ -105,33 +109,16 @@ if [ ! "$GIS_OPT_GROUP" ] ; then
 fi
 
 if [ $GIS_FLAG_I -eq 0 ] ; then
+    # Parse the group listing and set the x-axis labels as the map names
+    RASTERMAPS=`i.group -g group="$GIS_OPT_GROUP" | tr '\n' ',' | sed -e 's/,$//'`
+    NUMBANDS=`i.group -g group="$GIS_OPT_GROUP" | wc -l`
 
-	# ## PARSES THE GROUP FILES - gets rid of ugly header info from group list output
-	i.group  group=$GIS_OPT_GROUP -l | sed 's+ in + +g' | grep "group" -v | grep "\-\-\-\-$" -v > "$TMP2"
-	as=0
-	lists=""
-	xlabels=""
-	ass=0
-	for i in $( cat "$TMP2" ); do
-		er=`expr $as % 2`
-		as=`expr $as + 1`
-		if [ "$er" -eq "0" ]; then
-			ass=`expr $ass + 1`
-			if [ "$as" -eq "1" ]; then
-  	                  lists=$i
-			  xlabels="'$i' 1"
-			else
-   	                  lists=$lists,$i
-			  xlabels="$xlabels, '$i' $ass"
-		        fi
- 		fi       
-	 done
+    xlabels=`i.group -g group="$GIS_OPT_GROUP" | cut -f1 -d'@' | \
+        sed -e "s/^\|$/'/g" | awk '{print $1,NR ","}' | tr '\n' ' ' | \
+        sed -e 's/, $//'`
 
-NUMBANDS=$ass
-RASTERMAPS="$lists"
-
-# ## get data from list of files and set the x-axis labels
 else
+  ## get data from list of files and set the x-axis labels
   RASTERMAPS="$GIS_OPT_RASTER"
   news=`echo $GIS_OPT_RASTER | sed 's+,+ +g'`
   as=0
@@ -152,18 +139,10 @@ rm -f "$TMP2"
 #RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
 
 if [ "$GIS_FLAG_M" -eq "0" ]; then
-  if [ `d.mon -L | grep -v 'not running' | wc -l | awk '{print $1}'` -eq 2 ] ; then
-	  g.message -e "No graphic device open (d.mon)"
-	  exit 1
-  fi
-  d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
+  d.where -1 | r.what input="$RASTERMAPS" null=0 > "$TMP1"
 else 
   asss=0
-  if [ `d.mon -L | grep -v 'not running' | wc -l | awk '{print $1}'` -eq 2 ] ; then
-	  g.message -e  "No graphic device open (d.mon)"
-	  exit 1
-  fi
-  d.where | r.what input=$RASTERMAPS > "$TMP1"
+  d.where | r.what input="$RASTERMAPS" null=0 > "$TMP1"
   cat "$TMP1" > tmper
   rm -f "$TMP1"
   for asas in $(cat "tmper"); do
@@ -230,7 +209,7 @@ xrange=`expr $NUMBANDS + 1`
 
 # build gnuplot script
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
-  echo "set term png large" >> spectrum.gnuplot
+  echo "set term png truecolor large size 825,550" >> spectrum.gnuplot
   echo "set output '$GIS_OPT_OUTPUT'" >> spectrum.gnuplot
 fi
 echo "set xtics ($xlabels)" >> spectrum.gnuplot
@@ -240,6 +219,7 @@ echo "set title 'Spectral signatures'" >> spectrum.gnuplot
 echo "set xrange [0:$xrange]" >> spectrum.gnuplot
 echo "set noclabel" >> spectrum.gnuplot
 echo "set xlabel 'Bands'" >> spectrum.gnuplot
+echo "set xtics rotate by -40" >> spectrum.gnuplot
 echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 
 ## if more then 2 points we can draw an interpolated spline:
@@ -261,13 +241,13 @@ str=""
     if [ "$i" -eq "1" ]
      then
       if [ $GIS_FLAG_C -eq 0 ] ; then
-        str="plot 'data_$i' title '$i'" 
+        str="plot 'data_$i' title 'Pick $i'" 
       else
         str="plot 'data_$i' title '${COORD[$i]}'" 
       fi
      else
       if [ $GIS_FLAG_C -eq 0 ] ; then
-        str=$str",'data_$i' title '$i'" 
+        str=$str",'data_$i' title 'Pick $i'" 
       else
         str=$str",'data_$i' title '${COORD[$i]}'" 
       fi
