@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     sensor->type = TYPE_STRING;
     sensor->label = _("Spacecraft sensor");
     sensor->description =
-	_("Required only if 'metfile' not given (recommended by sanity)");
+	_("Required only if 'metfile' not given (recommended for sanity)");
     sensor->options = "mss1,mss2,mss3,mss4,mss5,tm4,tm5,tm7,ot8";
     sensor->descriptions =
 	_("mss1;Landsat_1 MSS;"
