@@ -200,15 +200,18 @@ class WMSDialog(wx.Dialog):
                 layers[value] = {}
                 lastLayer = value
             elif key == 'title':
-                layers[lastLayer][key] = value
+                if lastLayer and 'title' not in layers[lastLayer]:
+                    layers[lastLayer][key] = value
             elif key == 'style':
-                if 'style' not in layers[lastLayer]:
-                    layers[lastLayer]['style'] = {}
-                layers[lastLayer]['style'][value] = ''
-                lastStyle = value
+                if lastLayer:
+                    if 'style' not in layers[lastLayer]:
+                        layers[lastLayer]['style'] = {}
+                    layers[lastLayer]['style'][value] = ''
+                    lastStyle = value
             elif key == 'style title':
-                layers[lastLayer]['style'][lastStyle] = value
-        
+                if lastLayer:
+                    layers[lastLayer]['style'][lastStyle] = value
+
         # update list of layers
         self.list.LoadData(layers)
         
