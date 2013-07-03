@@ -1,33 +1,164 @@
 <h2>DESCRIPTION</h2>
 
-<em>g.extension</em> downloads and installs extensions from 
-GRASS Addons SVN repository into the local GRASS installation.
+<em>g.extension</em> downloads community contributed addon modules from
+the GRASS-addons Subversion repository (SVN) and installs them on the
+local system. These include modules providing specialist functionality,
+modules in development and beta testing, newly proposed modules,
+experimental modules, and simple helper scripts. There are additional
+code contributions in the SVN repository which are either incomplete or
+complex to install and so not available through <em>g.extension</em>. The
+addons repository acts in part as an incubation area, so the code there
+may not be as polished and well reviewed as the core GRASS modules, or it
+may not even work at all. All code is license-compatible with GRASS and
+can be used, shared, and modified under the same Free-software terms.
+You are both welcome and encouraged to contribute your own scripts there,
+and so make them available via <em>g.extension</em>, if you feel they
+would be useful to others.
 <p>
-Re-running the script on an installed GRASS Addon re-installs
-the requested extension which may include updates.
+Re-running the script for an installed GRASS addon module re-installs
+the requested extension. This is a handy way to apply updates or rebuild
+compiled modules after installing a new version of GRASS.
 <p>
-If your GRASS_ADDON_PATH contains more than one path, the default
-action is to use the first directory in the list.
+The default action is to install the files into the first directory
+listed in the GRASS_ADDON_PATH environment variable. If that has not been
+set it will default to <tt>~/.grass6/addons/</tt> on UNIX or
+<tt>%APPDATA%\GRASS6\addons</tt> on MS Windows. With suitable
+administrative permissions you can optionally install directly into the
+main GRASS program directory ($GISBASE).
+
+
+<h2>NOTES</h2>
+
+The wxGUI contains a graphical extension manager separate to this version
+of <em>g.extension</em>. The wxGUI Extension Manager can be found in the
+<i>Settings</i> menu. While they are generally interchangable, this help
+page describes the version of <em>g.extension</em> run from the GRASS
+command line. If one method of installing the addon fails you might try
+again with the other.
+<p>
+Help and <i>man</i> pages installed with the module will be available
+through the <em>g.manual</em> module.
+<p>
+If your GRASS_ADDON_PATH environment variable contains more than one
+path, the default action is to use the first directory in the list.
+Custom user scripts and installed addons can share the same addons
+directory.<br> <i>Note</i>: Bourne shell and Python scripts run within
+GRASS that use the <em>g.parser</em> module must be in the system's
+search PATH, or else <em>g.parser</em> will not be able to find them and
+complain about a failure to obtain the module's interface description. As
+long as the GRASS_ADDON_PATH environment variable is set <i>before</i>
+you start GRASS this will be taken care of automatically at startup.
+<p>
+For users building all of GRASS from source code who have also checked
+out the GRASS-addons Subversion repository, an alternate approach is to
+<tt>cd</tt> into the addon module's source directory, then run:
+<div class="code"><pre>
+  make MODULE_TOPDIR=/path/to/grass/source
+</pre></div>
+<p>
+UNIX users can set up an alias in their <tt>~/.bash_aliases</tt> file:
+<div class="code"><pre>
+  alias gmake643='make MODULE_TOPDIR=/path/to/grass643/source'
+</pre></div>
+<p>
+Users with GRASS installed from a GNU/Linux package can build without the
+full GRASS source code installed, but they will need the associated
+<tt>grass-dev</tt> and <tt>grass-doc</tt> packages installed.
+<p>
+Upgrading the GRASS version and users with multiple versions of GRASS
+installed on the same system require special care when dealing with
+<i>compiled</i> addon modules (those written in C and C++ and linking to
+the GRASS C libraries). If you try to run a compiled C addon module which
+was built using a different version of GRASS, you will get an error that
+the module can not find the shared GIS libraries of the other version, or
+if it can find them it will still check the internal versions and exit
+with an error if they do not match. In these cases you can simply re-run
+<em>g.extension</em> to rebuild the module and solve the problem.
+<p>
+You can typically share a single GRASS_ADDON_PATH directory for Bourne
+shell scripts and Python addon modules written for any version of GRASS
+6. Since your Addon modules and scripts will typically be in your user's
+home directory and thus persist even when GRASS is upgraded or
+reinstalled, some notes on compatibility:
+<ul>
+<li> Forward compatibility: Any script written for GRASS 6.0 or newer
+should work without changes with any newer version of GRASS 6. Module
+names, options, and flag behavior will be respected for the life of the
+stable release series.
+<li> Backwards compatibility: Scripts written for newer versions of GRASS
+6.4 may not work with earlier versions of GRASS 6 if they use commands
+which were introduced later in the series. Other than that, they should
+be fine.
+<li> API compatibility: While GRASS 6's core C library API is reasonably
+stable (at time of writing it has not changed in 16 months) it is not
+guaranteed. ABI compatibility is typically not maintained and compiled C
+and C++ modules will need to be recompiled after an upgrade in GRASS
+version. Changes to the source code should not be needed however, most
+changes are simply the addition of new functionality and care has been
+taken to avoid the repurposing or removal of old functions or libraries.
+<li> The GRASS Python library: It is still in development, and Python 3
+is just around the corner, so you can expect a few changes but starting
+with GRASS 6.4.3 the core scripting library API is expected to remain
+mostly stable. SWIG access to the GRASS C libraries has now been removed
+and replaced by the ctypes library.
+<li> Compatibility with GRASS 7: Not guaranteed. It is suggested to use a
+separate directory for your GRASS 7 addons, or name your custom scripts
+with the version number in the name. If you wish to write dual-compatible
+scripts, the <em>g.version</em> module and GRASS_VERSION environment
+variable are available for parsing at run-time.
+</ul>
 
 
 <h2>EXAMPLES</h2>
 
-Download and install <em>i.landsat.toar</em> into current GRASS installation:
+Download and install <em>i.landsat.toar</em> into the current GRASS
+addons directory:
 <div class="code"><pre>
-g.extension extension=i.landsat.toar
+  g.extension r.out.kml
 </pre></div>
 
 
 <h2>BUGS</h2>
-This is a new module and obtaining successful behavior on all platforms
-is rather tricky.  Please report any problems to the GRASS bug tracker.
-If this automatic build fails, instructions for compiling both the GRASS
-source code and GRASS addons by hand can be found in the GRASS wiki.
+
+This is a relatively new module and obtaining successful behavior on all
+platforms is rather tricky.  Please report any problems to the GRASS bug
+tracker. If this automatic build fails, instructions for compiling both
+the GRASS source code and GRASS addons by hand can be found in the GRASS
+wiki.
+<p>
+Note that Bourne shell and Python scripts can simply be downloaded from
+the online Subversion repository browser and moved into your
+GRASS_ADDON_PATH directory by hand. On UNIX you will likely need to set
+the executable bit using <tt>chmod</tt> before the script will run.
+In this case the associated usage section of the help page will not be
+created.
+<p>
+Installing addon Python scripts on MS Windows is still experimental and
+is not guaranteed to work properly at run-time due to association of
+"<tt>.py</tt>" file extensions with <tt>python.exe</tt>. It is possible
+to run them, but be aware that you will typically need to call them with
+".py" as part of the module name.
 
 
-<h2>AUTHOR</h2>
+<h2>SEE ALSO</h2>
 
-Markus Neteler
+<ul>
+<li> The <a href="http://grasswiki.osgeo.org/wiki/AddOns/GRASS_6">GRASS
+Addons module listing</a> in the GRASS Wiki
+<li> The <a href="wxGUI.html">wxGUI</a> extension manager (found in the
+<i>Settings</i> menu)
+<li> Details on contributing modules you have written to the
+<a href="http://grasswiki.osgeo.org/wiki/AddOns">GRASS addons repository</a>
+can be found in the <a href="https://trac.osgeo.org/grass/wiki/HowToContribute">GRASS
+Development Wiki</a>
+</ul>
+
+
+<h2>AUTHORS</h2>
+
+Markus Neteler<br>
+Martin Landa<br>
+Hamish Bowman
 
 <p>
 <i>Last changed: $Date$</i>
