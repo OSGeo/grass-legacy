@@ -220,7 +220,9 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
 	GRASS_ADDON_PATH1=`echo "$GRASS_ADDON_PATH" | cut -f1 -d:`
     fi
     PREFIX="$GRASS_ADDON_PATH1"
-elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] || [ $GIS_FLAG_U -eq 1 ] ; then
+fi
+
+if [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] || [ $GIS_FLAG_U -eq 1 ] ; then
    SYSADMIN=1
    PREFIX="$GISBASE"
 
