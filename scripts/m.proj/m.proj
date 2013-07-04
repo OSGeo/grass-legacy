@@ -168,8 +168,11 @@ if [ $GIS_FLAG_I -eq 1 ] ; then
 fi
 if [ $GIS_FLAG_O -eq 1 ] ; then
    IN_PROJ=`g.proj -j | (
-       IN_PROJ=
+       IN_PROJ=""
        while read line ; do
+           if [ $(echo "$line" | grep -c '+nadgrids=') -gt 0 ] ; then
+               line=$(echo "$line" | sed -e 's/=/="/' -e 's/$/"/')
+           fi
            IN_PROJ="$IN_PROJ '$line'"
        done
        echo "$IN_PROJ"
@@ -190,8 +193,11 @@ if [ $GIS_FLAG_O -eq 1 ] ; then
 fi
 if [ $GIS_FLAG_I -eq 1 ] ; then
    OUT_PROJ=`g.proj -j | (
-       OUT_PROJ=
+       OUT_PROJ=""
        while read line ; do
+           if [ $(echo "$line" | grep -c '+nadgrids=') -gt 0 ] ; then
+               line=$(echo "$line" | sed -e 's/=/="/' -e 's/$/"/')
+           fi
            OUT_PROJ="$OUT_PROJ '$line'"
        done
        echo "$OUT_PROJ"
