@@ -201,7 +201,7 @@ class WMSDialog(wx.Dialog):
                 lastLayer = value
             elif key == 'title':
                 if lastLayer and 'title' not in layers[lastLayer]:
-                    layers[lastLayer][key] = value
+                    layers[lastLayer][key] = value.decode('utf8')
             elif key == 'style':
                 if lastLayer:
                     if 'style' not in layers[lastLayer]:
