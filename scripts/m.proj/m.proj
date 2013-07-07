@@ -113,6 +113,25 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
+# Get the system name
+SYSTEM=`uname -s`
+case $SYSTEM in
+MINGW* | MSYS*)
+        MINGW=1
+        ;;
+CYGWIN*)
+        CYGWIN=1
+        ;;
+Darwin*)
+        MACOSX=1
+        ;;
+esac
+
+dos2unix_path()
+{
+   echo "$1" | sed -e 's|\("[A-Za-z]\):[\\/]|/\1/|' -e 's|\\|/|g'
+}
+
 # turn verbose mode on if requested either way
 if [ "$GIS_FLAG_V" -eq 1 ] ; then
    g.message -w "The verbosity option is superseded. Use --verbose instead"
@@ -173,10 +192,14 @@ if [ $GIS_FLAG_O -eq 1 ] ; then
            if [ $(echo "$line" | grep -c '+nadgrids=') -gt 0 ] ; then
                line=$(echo "$line" | sed -e 's/=/="/' -e 's/$/"/')
            fi
-           IN_PROJ="$IN_PROJ '$line'"
+           IN_PROJ="$IN_PROJ $line"
        done
        echo "$IN_PROJ"
    )`
+   # cs2cs gives an error for "C:/" not "C:\", but "/c/" seems ok
+   if [ "$MINGW" ] ; then
+      IN_PROJ=`dos2unix_path "$IN_PROJ"`
+   fi
 fi
 if [ -n "$GIS_OPT_PROJ_IN" ] ; then
    IN_PROJ="$GIS_OPT_PROJ_IN"
@@ -198,10 +221,14 @@ if [ $GIS_FLAG_I -eq 1 ] ; then
            if [ $(echo "$line" | grep -c '+nadgrids=') -gt 0 ] ; then
                line=$(echo "$line" | sed -e 's/=/="/' -e 's/$/"/')
            fi
-           OUT_PROJ="$OUT_PROJ '$line'"
+           OUT_PROJ="$OUT_PROJ $line"
        done
        echo "$OUT_PROJ"
    )`
+   # cs2cs gives an error for "C:/" not "C:\", but "/c/" seems ok
+   if [ "$MINGW" ] ; then
+      OUT_PROJ=`dos2unix_path "$OUT_PROJ"`
+   fi
 fi
 if [ -n "$GIS_OPT_PROJ_OUT" ] ; then
    OUT_PROJ="$GIS_OPT_PROJ_OUT"
@@ -280,12 +307,12 @@ fi
 if [ "$GIS_FLAG_G" -eq 1 ] ; then
    if [ -z "$outfile" ] ; then
       cat "$infile" | tr "$fs" ' ' | \
-	 eval cs2cs $COPYINP $OUTFMT `echo $IN_PROJ` +to `echo $OUT_PROJ` | \
+	 eval cs2cs $COPYINP $OUTFMT $IN_PROJ +to $OUT_PROJ | \
 	 tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS"
       EXITCODE=$?
    else
       cat "$infile" | tr "$fs" ' ' | \
-	 eval cs2cs $COPYINP $OUTFMT `echo $IN_PROJ` +to `echo $OUT_PROJ` | \
+	 eval cs2cs $COPYINP $OUTFMT $IN_PROJ +to $OUT_PROJ | \
 	 tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS" \
          > "$outfile"
       EXITCODE=$?
@@ -299,11 +326,11 @@ else
    # write cs2cs output as is
    if [ -z "$outfile" ] ; then
       cat "$infile" | tr "$fs" ' ' | \
-	 eval cs2cs $COPYINP $OUTFMT `echo $IN_PROJ` +to `echo $OUT_PROJ`
+	 eval cs2cs $COPYINP $OUTFMT $IN_PROJ +to $OUT_PROJ
       EXITCODE=$?
    else
       cat "$infile" | tr "$fs" ' ' | \
-	 eval cs2cs $COPYINP $OUTFMT `echo $IN_PROJ` +to `echo $OUT_PROJ` \
+	 eval cs2cs $COPYINP $OUTFMT $IN_PROJ +to $OUT_PROJ \
          > "$outfile"
       EXITCODE=$?
 
