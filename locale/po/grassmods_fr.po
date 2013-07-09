@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2013-01-27 09:31+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
@@ -123,7 +123,7 @@ msgstr "Facteur d'échelle vertical"
 #: ../raster/r.contour/main.c:158 ../raster/r.bilinear/main.c:81
 #: ../raster/r.out.png/r.out.png.c:214 ../raster/r.out.tiff/r.out.tiff.c:166
 #: ../raster/r.resample/main.c:97 ../raster/r.kappa/stats.c:30
-#: ../raster/r.kappa/stats.c:35 ../raster/r.kappa/main.c:161
+#: ../raster/r.kappa/stats.c:35 ../raster/r.kappa/main.c:153
 #: ../raster/r.out.mpeg/main.c:217 ../raster/r.recode/main.c:81
 #: ../raster/r.neighbors/main.c:193 ../raster/r.patch/main.c:113
 #: ../raster/r.univar2/r.univar_main.c:216 ../raster/r.bitpattern/main.c:101
@@ -1286,7 +1286,7 @@ msgid "Apply filter only to null data values"
 msgstr "Appliquer le filtre uniquement aux valeurs de données zéro"
 
 #: ../raster/r.mfilter.fp/main.c:109 ../raster/r.out.ppm/main.c:81
-#: ../raster/r.mfilter/main.c:104 ../raster/r.kappa/main.c:133
+#: ../raster/r.mfilter/main.c:104 ../raster/r.kappa/main.c:125
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead"
@@ -8389,7 +8389,7 @@ msgid "Error in pj_do_proj (can't re-projection GCP %i)"
 msgstr "Erreur dans pj_do_proj (projection du couple de coordonnées en entrée)"
 
 #: ../raster/r.in.gdal/main.c:633 ../raster/r.external/main.c:264
-#: ../vector/v.in.ogr/main.c:1256
+#: ../vector/v.in.ogr/main.c:1263
 #, fuzzy
 msgid "Default region for this location updated"
 msgstr ""
@@ -8398,7 +8398,7 @@ msgstr ""
 "\n"
 
 #: ../raster/r.in.gdal/main.c:636 ../raster/r.external/main.c:267
-#: ../vector/v.in.ogr/main.c:1259
+#: ../vector/v.in.ogr/main.c:1266
 msgid "Region for the current mapset updated"
 msgstr ""
 
@@ -8615,7 +8615,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.to.vect/areas_io.c:371 ../raster/r.to.vect/util.c:156
-#: ../vector/v.in.ogr/main.c:932 ../vector/v.random/main.c:300
+#: ../vector/v.in.ogr/main.c:939 ../vector/v.random/main.c:300
 #, c-format
 msgid "Cannot insert new row: %s"
 msgstr "Impossible d'insérer une nouvelle ligne : %s"
@@ -12390,11 +12390,6 @@ msgstr "rapport étendu, 132 colonnes (80 par défaut)"
 #, fuzzy
 msgid "No header in the report"
 msgstr "Par d'en-tête dans le rapport"
-
-#: ../raster/r.kappa/main.c:121 ../imagery/i.cca/main.c:117
-#, fuzzy, c-format
-msgid "Illegal output file name <%s>"
-msgstr "Nom du fichier de sortie illégal"
 
 #: ../raster/r.kappa/prt_hdr.c:17
 #, fuzzy, c-format
@@ -17055,7 +17050,7 @@ msgstr "Sélectionner des points multiples"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:8
 #, fuzzy
-msgid "Label with coordinates instead of numbering"
+msgid "Show pick coordinates instead of numbering in the legend"
 msgstr "Etiquette avec coordonnées à la place d'un nombre"
 
 #: ../locale/scriptstrings/d.redraw_to_translate.c:1
@@ -26477,7 +26472,7 @@ msgid "Spacecraft sensor"
 msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:95
-msgid "Required only if 'metfile' not given (recommended by sanity)"
+msgid "Required only if 'metfile' not given (recommended for sanity)"
 msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:98
@@ -26535,7 +26530,7 @@ msgid "Required only if 'method' is DOS3"
 msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:186
-msgid "Output at-sensor radiance instead reflectance for all bands"
+msgid "Output at-sensor radiance instead of reflectance for all bands"
 msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:191
@@ -26591,7 +26586,7 @@ msgstr "Type de donnée vectorielle"
 msgid "reflectance"
 msgstr "Résolution"
 
-#: ../imagery/i.landsat.toar/landsat_met.c:80
+#: ../imagery/i.landsat.toar/landsat_met.c:81
 #, fuzzy, c-format
 msgid "Metadata file <%s> not found"
 msgstr "fichier 3dview <%s> non trouvé"
@@ -26703,6 +26698,11 @@ msgstr "Attention : nom de sous-groupe illégal <%s>"
 #, fuzzy, c-format
 msgid "Illegal signature file name <%s>"
 msgstr "Attention : nom de fichier de signatures illégal <%s>"
+
+#: ../imagery/i.cca/main.c:117
+#, fuzzy, c-format
+msgid "Illegal output file name <%s>"
+msgstr "Nom du fichier de sortie illégal"
 
 #: ../imagery/i.cca/main.c:122
 msgid "Unknown imagery group."
@@ -30847,7 +30847,7 @@ msgstr "Calcul des moyennes de classes..."
 #: ../vector/v.buffer2/main.c:594 ../vector/v.buffer2/main.c:686
 #: ../vector/v.voronoi/dt_main.c:142 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750 ../vector/v.overlay/area_area.c:171
-#: ../vector/v.in.ogr/main.c:1058
+#: ../vector/v.in.ogr/main.c:1065
 msgid "Cannot calculate area centroid"
 msgstr "Impossible de calculer le centroïde de la surface"
 
@@ -36542,71 +36542,71 @@ msgstr "Distance de zone-tampon en unités carte."
 msgid "Importing map %d features..."
 msgstr "Importation des objets de la couche %d..."
 
-#: ../vector/v.in.ogr/main.c:948
+#: ../vector/v.in.ogr/main.c:955
 #, c-format
 msgid "%d %s without geometry"
 msgstr "%d %s sans géométrie"
 
-#: ../vector/v.in.ogr/main.c:972
+#: ../vector/v.in.ogr/main.c:979
 #, fuzzy
 msgid "Cleaning polygons, result is not guaranteed!"
 msgstr "Nettoyage des polygones, le résultat n'est pas garanti!\n"
 
-#: ../vector/v.in.ogr/main.c:976
+#: ../vector/v.in.ogr/main.c:983
 #, c-format
 msgid "Snap boundaries (threshold = %.3e):"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:990
+#: ../vector/v.in.ogr/main.c:997
 #, fuzzy
 msgid "Break polygons:"
 msgstr "Exporter les lignes en tant que polygones"
 
-#: ../vector/v.in.ogr/main.c:995 ../vector/v.in.ogr/main.c:1009
+#: ../vector/v.in.ogr/main.c:1002 ../vector/v.in.ogr/main.c:1016
 #, fuzzy
 msgid "Remove duplicates:"
 msgstr "Suppression des centroïdes en doublons..."
 
-#: ../vector/v.in.ogr/main.c:1005
+#: ../vector/v.in.ogr/main.c:1012
 msgid "Break boundaries:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1013
+#: ../vector/v.in.ogr/main.c:1020
 msgid "Clean boundaries at nodes:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1020
+#: ../vector/v.in.ogr/main.c:1027
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "impossible de mettre à jour les limites"
 
-#: ../vector/v.in.ogr/main.c:1025
+#: ../vector/v.in.ogr/main.c:1032
 msgid "Change boundary dangles to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1029
+#: ../vector/v.in.ogr/main.c:1036
 msgid "Change dangles to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1035
+#: ../vector/v.in.ogr/main.c:1042
 msgid "Change boundary bridges to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1039
+#: ../vector/v.in.ogr/main.c:1046
 msgid "Remove bridges:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1074
+#: ../vector/v.in.ogr/main.c:1081
 #, fuzzy, c-format
 msgid "Find centroids for layer: %s"
 msgstr "Calcul des moyennes de classes..."
 
-#: ../vector/v.in.ogr/main.c:1095
+#: ../vector/v.in.ogr/main.c:1102
 #, fuzzy
 msgid "Write centroids:"
 msgstr "Écrire les sommets de lignes."
 
-#: ../vector/v.in.ogr/main.c:1145
+#: ../vector/v.in.ogr/main.c:1152
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -36618,62 +36618,62 @@ msgstr ""
 "entités sont liées à plus d'un tuple de la table attributaire. Le nombre "
 "d'objets de ces entités est stocké comme une catégorie de la couche %d"
 
-#: ../vector/v.in.ogr/main.c:1155
+#: ../vector/v.in.ogr/main.c:1162
 #, fuzzy, c-format
 msgid "%d input polygons\n"
 msgstr "%d polygones en entrée\n"
 
-#: ../vector/v.in.ogr/main.c:1156
+#: ../vector/v.in.ogr/main.c:1163
 #, fuzzy, c-format
 msgid "%d input polygons"
 msgstr "%d polygones en entrée\n"
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1159
+#: ../vector/v.in.ogr/main.c:1166
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)\n"
 msgstr "Écriture %s..."
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1160
+#: ../vector/v.in.ogr/main.c:1167
 #, fuzzy, c-format
 msgid "Total area: %G (%d areas)"
 msgstr "Écriture %s..."
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1163
+#: ../vector/v.in.ogr/main.c:1170
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)\n"
 msgstr "Écriture %s..."
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1165
+#: ../vector/v.in.ogr/main.c:1172
 #, fuzzy, c-format
 msgid "Overlapping area: %G (%d areas)"
 msgstr "Écriture %s..."
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1169
+#: ../vector/v.in.ogr/main.c:1176
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)\n"
 msgstr "%d points sans catégorie"
 
 # c-format
-#: ../vector/v.in.ogr/main.c:1171
+#: ../vector/v.in.ogr/main.c:1178
 #, fuzzy, c-format
 msgid "Area without category: %G (%d areas)"
 msgstr "%d points sans catégorie"
 
-#: ../vector/v.in.ogr/main.c:1221
+#: ../vector/v.in.ogr/main.c:1228
 msgid "Errors were encountered during the import"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1222
+#: ../vector/v.in.ogr/main.c:1229
 #, c-format
 msgid "Try to import again, snapping with at least %g: 'snap=%g'"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:1263
+#: ../vector/v.in.ogr/main.c:1270
 #, fuzzy
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "

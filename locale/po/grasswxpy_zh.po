@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2010-12-16 18:47+0800\n"
 "Last-Translator: Shulin Yang <shulin.yang.9@gmail.com>\n"
 "Language-Team: Simplified Chinese <grass-translations@lists.osgeo.org>\n"
@@ -44,7 +44,7 @@ msgid "Not selectable element"
 msgstr "SQL选择语句"
 
 #: ../gui/wxpython/gui_core/gselect.py:335
-#: ../gui/wxpython/gui_core/preferences.py:1646
+#: ../gui/wxpython/gui_core/preferences.py:1649
 msgid "Mapset"
 msgstr ""
 
@@ -1033,10 +1033,10 @@ msgid "Key column cannot be empty string."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:212
-#: ../gui/wxpython/gui_core/preferences.py:1264
-#: ../gui/wxpython/gui_core/preferences.py:1291
-#: ../gui/wxpython/gui_core/preferences.py:1300
-#: ../gui/wxpython/gui_core/preferences.py:1309
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1294
+#: ../gui/wxpython/gui_core/preferences.py:1303
+#: ../gui/wxpython/gui_core/preferences.py:1312
 #: ../gui/wxpython/location_wizard/dialogs.py:114
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
@@ -1130,7 +1130,7 @@ msgstr "变化"
 
 #: ../gui/wxpython/gui_core/preferences.py:404
 #: ../gui/wxpython/gui_core/preferences.py:579
-#: ../gui/wxpython/gui_core/preferences.py:1412
+#: ../gui/wxpython/gui_core/preferences.py:1415
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3264
 #: ../gui/wxpython/psmap/dialogs.py:3720 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
@@ -1382,47 +1382,47 @@ msgstr "投影管理"
 msgid "Precision:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1263
+#: ../gui/wxpython/gui_core/preferences.py:1264
 #, fuzzy, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "无法创建文件 [%s]"
 
-#: ../gui/wxpython/gui_core/preferences.py:1290
-#: ../gui/wxpython/gui_core/preferences.py:1299
-#: ../gui/wxpython/gui_core/preferences.py:1308
+#: ../gui/wxpython/gui_core/preferences.py:1293
+#: ../gui/wxpython/gui_core/preferences.py:1302
+#: ../gui/wxpython/gui_core/preferences.py:1311
 #, fuzzy, python-format
 msgid "EPSG code %s not found"
 msgstr "驱动 %s 未发现"
 
-#: ../gui/wxpython/gui_core/preferences.py:1316
+#: ../gui/wxpython/gui_core/preferences.py:1319
 msgid "Select default display font"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1341
+#: ../gui/wxpython/gui_core/preferences.py:1344
 #, fuzzy
 msgid "Select output font"
 msgstr "选择默认的文件字体"
 
-#: ../gui/wxpython/gui_core/preferences.py:1419
+#: ../gui/wxpython/gui_core/preferences.py:1422
 msgid "Select font:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1443
+#: ../gui/wxpython/gui_core/preferences.py:1446
 #, fuzzy
 msgid "Character encoding:"
 msgstr "字符编码"
 
-#: ../gui/wxpython/gui_core/preferences.py:1461
+#: ../gui/wxpython/gui_core/preferences.py:1464
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 msgid "Font size:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1559
+#: ../gui/wxpython/gui_core/preferences.py:1562
 #, fuzzy
 msgid "Manage access to mapsets"
 msgstr "改变当前地图集"
 
-#: ../gui/wxpython/gui_core/preferences.py:1572
+#: ../gui/wxpython/gui_core/preferences.py:1575
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -1431,7 +1431,7 @@ msgid ""
 "    - You may only write to mapsets which you own."
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1647
+#: ../gui/wxpython/gui_core/preferences.py:1650
 msgid "Owner"
 msgstr ""
 
@@ -2556,7 +2556,7 @@ msgid "Choose GRASS data directory:"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
-#: ../gui/wxpython/location_wizard/wizard.py:1975
+#: ../gui/wxpython/location_wizard/wizard.py:1994
 msgid "Location already exists in GRASS Database."
 msgstr ""
 
@@ -2587,7 +2587,7 @@ msgid "Read projection and datum terms from a georeferenced data file"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-msgid "Read projection and datum terms from a WKT or PRJ file"
+msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
@@ -2699,12 +2699,13 @@ msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1185
 #: ../gui/wxpython/location_wizard/wizard.py:1242
-msgid "Select WKT or PRJ file"
+msgid "Select Well Known Text (WKT) .prj file"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1190
-msgid "WKT or PRJ file:"
-msgstr ""
+#, fuzzy
+msgid "WKT .prj file:"
+msgstr "保存组文件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1259
 msgid "Choose EPSG Code"
@@ -2763,28 +2764,31 @@ msgid "Projection:"
 msgstr "投影："
 
 #: ../gui/wxpython/location_wizard/wizard.py:1640
-msgid "PROJ.4 definition:"
+#, fuzzy
+msgid ""
+"PROJ.4 definition:\n"
+" (non-definitive)"
 msgstr "PROJ.4设置："
 
-#: ../gui/wxpython/location_wizard/wizard.py:1715
+#: ../gui/wxpython/location_wizard/wizard.py:1730
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 msgid "custom"
 msgstr ""
 
-#: ../gui/wxpython/location_wizard/wizard.py:1722
+#: ../gui/wxpython/location_wizard/wizard.py:1740
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
 msgstr "创建GRASS地点<%s>?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1723
+#: ../gui/wxpython/location_wizard/wizard.py:1741
 msgid "Create new location?"
 msgstr "创建新地点？"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1766
+#: ../gui/wxpython/location_wizard/wizard.py:1785
 msgid "Define new GRASS Location"
 msgstr "定义新GRASS地点"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1858
+#: ../gui/wxpython/location_wizard/wizard.py:1877
 #, python-format
 msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
@@ -2795,15 +2799,15 @@ msgstr ""
 "\n"
 "更多信息: %(err)s"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1866
+#: ../gui/wxpython/location_wizard/wizard.py:1885
 msgid "Location wizard canceled. Location not created."
 msgstr "地点向导已取消，没有创建新地点。"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1973
+#: ../gui/wxpython/location_wizard/wizard.py:1992
 msgid "Unable to create new location"
 msgstr "无法创建新地点"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1992
+#: ../gui/wxpython/location_wizard/wizard.py:2011
 #, fuzzy, python-format
 msgid ""
 "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
@@ -2812,16 +2816,16 @@ msgstr ""
 "将在目录<%(dir)s>下创建新地点<%(loc)s>.如需改变缺省目录，请在GRASS启动时设"
 "置。"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1997
+#: ../gui/wxpython/location_wizard/wizard.py:2016
 msgid "New GIS data directory"
 msgstr "新GIS数据目录"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2028
+#: ../gui/wxpython/location_wizard/wizard.py:2047
 msgid "EPSG code missing."
 msgstr "没有EPSG代码。"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2039
-#: ../gui/wxpython/location_wizard/wizard.py:2048
+#: ../gui/wxpython/location_wizard/wizard.py:2058
+#: ../gui/wxpython/location_wizard/wizard.py:2067
 #, fuzzy, python-format
 msgid "File <%s> not found."
 msgstr "未找到栅格图<%s>"
@@ -4436,37 +4440,37 @@ msgstr ""
 msgid "Unable to render overlay <%s>."
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
+#: ../gui/wxpython/core/utils.py:313 ../gui/wxpython/core/utils.py:354
 #, fuzzy, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "dig_att文件不存在。"
 
-#: ../gui/wxpython/core/utils.py:575
+#: ../gui/wxpython/core/utils.py:573
 #, python-format
 msgid "failed to open '%s'"
 msgstr "无法打开'%s'"
 
-#: ../gui/wxpython/core/utils.py:810
+#: ../gui/wxpython/core/utils.py:808
 #, fuzzy, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr "无法创建栅格地图 %s"
 
-#: ../gui/wxpython/core/utils.py:846
+#: ../gui/wxpython/core/utils.py:844
 #, fuzzy, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "无法打开输出文件 <%s>"
 
-#: ../gui/wxpython/core/utils.py:854
+#: ../gui/wxpython/core/utils.py:852
 #, python-format
 msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:860
+#: ../gui/wxpython/core/utils.py:858
 #, fuzzy, python-format
 msgid "Duplicated key: %s\n"
 msgstr "无法计算面的质心"
 
-#: ../gui/wxpython/core/utils.py:875
+#: ../gui/wxpython/core/utils.py:873
 #, fuzzy, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "无法创建栅格地图 %s"
@@ -9692,16 +9696,16 @@ msgid ""
 "running r.in.wms directly from the command line."
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:248
+#: ../gui/wxpython/modules/ogc_services.py:251
 #, fuzzy
 msgid "Layer / Style"
 msgstr "图层 '%s' 不可用"
 
-#: ../gui/wxpython/modules/ogc_services.py:249
+#: ../gui/wxpython/modules/ogc_services.py:252
 msgid "Title"
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:259
+#: ../gui/wxpython/modules/ogc_services.py:262
 #, fuzzy
 msgid "Layers"
 msgstr "图层 %d"

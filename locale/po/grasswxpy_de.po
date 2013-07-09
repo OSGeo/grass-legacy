@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2013-05-25 13:40+0200\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
@@ -46,7 +46,7 @@ msgid "Not selectable element"
 msgstr "Nicht auswählbare Elemente"
 
 #: ../gui/wxpython/gui_core/gselect.py:335
-#: ../gui/wxpython/gui_core/preferences.py:1646
+#: ../gui/wxpython/gui_core/preferences.py:1649
 msgid "Mapset"
 msgstr "Mapset"
 
@@ -994,10 +994,10 @@ msgid "Key column cannot be empty string."
 msgstr "Die Schlüsselspalte kann kein leerer Zeichenkette sein."
 
 #: ../gui/wxpython/gui_core/preferences.py:212
-#: ../gui/wxpython/gui_core/preferences.py:1264
-#: ../gui/wxpython/gui_core/preferences.py:1291
-#: ../gui/wxpython/gui_core/preferences.py:1300
-#: ../gui/wxpython/gui_core/preferences.py:1309
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1294
+#: ../gui/wxpython/gui_core/preferences.py:1303
+#: ../gui/wxpython/gui_core/preferences.py:1312
 #: ../gui/wxpython/location_wizard/dialogs.py:114
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
@@ -1091,7 +1091,7 @@ msgstr "Erscheinung"
 
 #: ../gui/wxpython/gui_core/preferences.py:404
 #: ../gui/wxpython/gui_core/preferences.py:579
-#: ../gui/wxpython/gui_core/preferences.py:1412
+#: ../gui/wxpython/gui_core/preferences.py:1415
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3264
 #: ../gui/wxpython/psmap/dialogs.py:3720 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
@@ -1334,44 +1334,44 @@ msgstr "LL-Projektionen"
 msgid "Precision:"
 msgstr "Genauigkeit:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1263
+#: ../gui/wxpython/gui_core/preferences.py:1264
 #, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Kann die EPGS codes nicht lesen: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1290
-#: ../gui/wxpython/gui_core/preferences.py:1299
-#: ../gui/wxpython/gui_core/preferences.py:1308
+#: ../gui/wxpython/gui_core/preferences.py:1293
+#: ../gui/wxpython/gui_core/preferences.py:1302
+#: ../gui/wxpython/gui_core/preferences.py:1311
 #, python-format
 msgid "EPSG code %s not found"
 msgstr "EPSG Code <%s> nicht gefunden"
 
-#: ../gui/wxpython/gui_core/preferences.py:1316
+#: ../gui/wxpython/gui_core/preferences.py:1319
 msgid "Select default display font"
 msgstr "Wählen Sie Standard Schrift"
 
-#: ../gui/wxpython/gui_core/preferences.py:1341
+#: ../gui/wxpython/gui_core/preferences.py:1344
 msgid "Select output font"
 msgstr "Aausgabeschrift auswählen"
 
-#: ../gui/wxpython/gui_core/preferences.py:1419
+#: ../gui/wxpython/gui_core/preferences.py:1422
 msgid "Select font:"
 msgstr "Wählen Sie eine Schrift"
 
-#: ../gui/wxpython/gui_core/preferences.py:1443
+#: ../gui/wxpython/gui_core/preferences.py:1446
 msgid "Character encoding:"
 msgstr "Zeichenkodierung:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1461
+#: ../gui/wxpython/gui_core/preferences.py:1464
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 msgid "Font size:"
 msgstr "Schriftgröße:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1559
+#: ../gui/wxpython/gui_core/preferences.py:1562
 msgid "Manage access to mapsets"
 msgstr "Zugangsrechte der Mapsets verwalten"
 
-#: ../gui/wxpython/gui_core/preferences.py:1572
+#: ../gui/wxpython/gui_core/preferences.py:1575
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -1386,7 +1386,7 @@ msgstr ""
 "    - Sie können nur in der selektierten Mapset speichern.\n"
 "    - Sie können nur in den Mapsets schreiben, die Ihnen gehören."
 
-#: ../gui/wxpython/gui_core/preferences.py:1647
+#: ../gui/wxpython/gui_core/preferences.py:1650
 msgid "Owner"
 msgstr "Eigentümer"
 
@@ -2558,7 +2558,7 @@ msgid "Choose GRASS data directory:"
 msgstr "Wählen Sie das GRASS-Daten Verzeichnis:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
-#: ../gui/wxpython/location_wizard/wizard.py:1975
+#: ../gui/wxpython/location_wizard/wizard.py:1994
 msgid "Location already exists in GRASS Database."
 msgstr "Die Location existiert bereits in der GRASS Datenbank."
 
@@ -2592,7 +2592,8 @@ msgstr ""
 "Einlesen von Projektions- und Datumsinformationen aus georeferenzierter Datei"
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-msgid "Read projection and datum terms from a WKT or PRJ file"
+#, fuzzy
+msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
 msgstr ""
 "Einlesen von Projektions- und Datumsinformationen aus WKT oder PRJ Datei"
 
@@ -2707,13 +2708,12 @@ msgstr "Georenferenzierte Datei:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1185
 #: ../gui/wxpython/location_wizard/wizard.py:1242
-#, fuzzy
-msgid "Select WKT or PRJ file"
-msgstr "Wählen Sie eine WKT-Datei"
+msgid "Select Well Known Text (WKT) .prj file"
+msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1190
 #, fuzzy
-msgid "WKT or PRJ file:"
+msgid "WKT .prj file:"
 msgstr "WKT-Datei:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1259
@@ -2772,28 +2772,31 @@ msgid "Projection:"
 msgstr "Projektion:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1640
-msgid "PROJ.4 definition:"
+#, fuzzy
+msgid ""
+"PROJ.4 definition:\n"
+" (non-definitive)"
 msgstr "PROJ.4 Definition:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1715
+#: ../gui/wxpython/location_wizard/wizard.py:1730
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 msgid "custom"
 msgstr "angepasst"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1722
+#: ../gui/wxpython/location_wizard/wizard.py:1740
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
 msgstr "Möchten Sie die GRASS Location <%s> erzeugen?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1723
+#: ../gui/wxpython/location_wizard/wizard.py:1741
 msgid "Create new location?"
 msgstr "Neue Location erzeugen?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1766
+#: ../gui/wxpython/location_wizard/wizard.py:1785
 msgid "Define new GRASS Location"
 msgstr "Definieren Sie eine neue GRASS Location"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1858
+#: ../gui/wxpython/location_wizard/wizard.py:1877
 #, python-format
 msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
@@ -2804,16 +2807,16 @@ msgstr ""
 "\n"
 "Details: %(err)s"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1866
+#: ../gui/wxpython/location_wizard/wizard.py:1885
 msgid "Location wizard canceled. Location not created."
 msgstr ""
 "Location-Assistent wurde abgebrochen. Die Location wurde nicht erzeugt."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1973
+#: ../gui/wxpython/location_wizard/wizard.py:1992
 msgid "Unable to create new location"
 msgstr "Kann neue Location nicht anlegen"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1992
+#: ../gui/wxpython/location_wizard/wizard.py:2011
 #, python-format
 msgid ""
 "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
@@ -2822,16 +2825,16 @@ msgstr ""
 "Die Location <%(loc)s> wird im GIS-Verzeichnis <%(dir)s> angelegt. Sie "
 "müssen das Standard GIS-Verzeichnis auf dem GRASS Startbildschirm anpassen."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1997
+#: ../gui/wxpython/location_wizard/wizard.py:2016
 msgid "New GIS data directory"
 msgstr "Neues GIS-Verzeichnis:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2028
+#: ../gui/wxpython/location_wizard/wizard.py:2047
 msgid "EPSG code missing."
 msgstr "EPSG Code fehlt"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2039
-#: ../gui/wxpython/location_wizard/wizard.py:2048
+#: ../gui/wxpython/location_wizard/wizard.py:2058
+#: ../gui/wxpython/location_wizard/wizard.py:2067
 #, python-format
 msgid "File <%s> not found."
 msgstr "Datei <%s> nicht gefunden."
@@ -4352,39 +4355,39 @@ msgstr "Kann die Kartenebene <%s> nicht rendern."
 msgid "Unable to render overlay <%s>."
 msgstr "Kann die Überlagerung <%s> nicht rendern."
 
-#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
+#: ../gui/wxpython/core/utils.py:313 ../gui/wxpython/core/utils.py:354
 #, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Vektorkarte <%(map)s>: %(msg)s\n"
 
-#: ../gui/wxpython/core/utils.py:575
+#: ../gui/wxpython/core/utils.py:573
 #, python-format
 msgid "failed to open '%s'"
 msgstr "Öffnen von '%s' nicht erfolgreich"
 
-#: ../gui/wxpython/core/utils.py:810
+#: ../gui/wxpython/core/utils.py:808
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr "FEHLER: Kann die GRASS-Version nicht bestimmen. Einzelheiten: %s"
 
-#: ../gui/wxpython/core/utils.py:846
+#: ../gui/wxpython/core/utils.py:844
 #, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "Kann Datei '%s' nicht öffnen.\n"
 
-#: ../gui/wxpython/core/utils.py:854
+#: ../gui/wxpython/core/utils.py:852
 #, fuzzy, python-format
 msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
 msgstr ""
 "%s: Zeilen übersprungen - kann '%s' nicht interpretieren\n"
 "Grund: %s\n"
 
-#: ../gui/wxpython/core/utils.py:860
+#: ../gui/wxpython/core/utils.py:858
 #, python-format
 msgid "Duplicated key: %s\n"
 msgstr "Doppelter Schlüssel: %s\n"
 
-#: ../gui/wxpython/core/utils.py:875
+#: ../gui/wxpython/core/utils.py:873
 #, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "Kann Datei '%s' nicht erzeugen.\n"
@@ -9563,15 +9566,15 @@ msgid ""
 "running r.in.wms directly from the command line."
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:248
+#: ../gui/wxpython/modules/ogc_services.py:251
 msgid "Layer / Style"
 msgstr "Layer / Style"
 
-#: ../gui/wxpython/modules/ogc_services.py:249
+#: ../gui/wxpython/modules/ogc_services.py:252
 msgid "Title"
 msgstr "Titel"
 
-#: ../gui/wxpython/modules/ogc_services.py:259
+#: ../gui/wxpython/modules/ogc_services.py:262
 msgid "Layers"
 msgstr "Ebenen"
 
@@ -13384,6 +13387,10 @@ msgstr "Unbekannter Objekttyp '%s'"
 #: ../gui/wxpython/vdigit/wxdigit.py:472
 msgid "Not enough points for line"
 msgstr "Nicht genügend Punkte für Linie"
+
+#, fuzzy
+#~ msgid "Select WKT or PRJ file"
+#~ msgstr "Wählen Sie eine WKT-Datei"
 
 #~ msgid ""
 #~ "Field separator must be ASCII character not <%s> (use e.g. ';', '&', '#')"

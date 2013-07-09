@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2011-08-03 16:27+0200\n"
 "Last-Translator: Jan Trochta <j.trochta@gmail.com>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -44,7 +44,7 @@ msgid "Not selectable element"
 msgstr "Prvek nelze vybrat"
 
 #: ../gui/wxpython/gui_core/gselect.py:335
-#: ../gui/wxpython/gui_core/preferences.py:1646
+#: ../gui/wxpython/gui_core/preferences.py:1649
 msgid "Mapset"
 msgstr "Mapset"
 
@@ -1028,10 +1028,10 @@ msgid "Key column cannot be empty string."
 msgstr "Klíčový sloupec nemůže obsahovat prázdný řetězec."
 
 #: ../gui/wxpython/gui_core/preferences.py:212
-#: ../gui/wxpython/gui_core/preferences.py:1264
-#: ../gui/wxpython/gui_core/preferences.py:1291
-#: ../gui/wxpython/gui_core/preferences.py:1300
-#: ../gui/wxpython/gui_core/preferences.py:1309
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1294
+#: ../gui/wxpython/gui_core/preferences.py:1303
+#: ../gui/wxpython/gui_core/preferences.py:1312
 #: ../gui/wxpython/location_wizard/dialogs.py:114
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
@@ -1125,7 +1125,7 @@ msgstr "Vzhled"
 
 #: ../gui/wxpython/gui_core/preferences.py:404
 #: ../gui/wxpython/gui_core/preferences.py:579
-#: ../gui/wxpython/gui_core/preferences.py:1412
+#: ../gui/wxpython/gui_core/preferences.py:1415
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3264
 #: ../gui/wxpython/psmap/dialogs.py:3720 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
@@ -1370,44 +1370,44 @@ msgstr "Projekce Lat/long"
 msgid "Precision:"
 msgstr "Přesnost:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1263
+#: ../gui/wxpython/gui_core/preferences.py:1264
 #, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Nelze přešíst EPSG kódy: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1290
-#: ../gui/wxpython/gui_core/preferences.py:1299
-#: ../gui/wxpython/gui_core/preferences.py:1308
+#: ../gui/wxpython/gui_core/preferences.py:1293
+#: ../gui/wxpython/gui_core/preferences.py:1302
+#: ../gui/wxpython/gui_core/preferences.py:1311
 #, python-format
 msgid "EPSG code %s not found"
 msgstr "EPSG kód %s nebyl nalezen"
 
-#: ../gui/wxpython/gui_core/preferences.py:1316
+#: ../gui/wxpython/gui_core/preferences.py:1319
 msgid "Select default display font"
 msgstr "Vybrat výchozí písmo"
 
-#: ../gui/wxpython/gui_core/preferences.py:1341
+#: ../gui/wxpython/gui_core/preferences.py:1344
 msgid "Select output font"
 msgstr "Zvolit font výstupu"
 
-#: ../gui/wxpython/gui_core/preferences.py:1419
+#: ../gui/wxpython/gui_core/preferences.py:1422
 msgid "Select font:"
 msgstr "Vybrat font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1443
+#: ../gui/wxpython/gui_core/preferences.py:1446
 msgid "Character encoding:"
 msgstr "Kódování znaků:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1461
+#: ../gui/wxpython/gui_core/preferences.py:1464
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 msgid "Font size:"
 msgstr "Velikost fontu:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1559
+#: ../gui/wxpython/gui_core/preferences.py:1562
 msgid "Manage access to mapsets"
 msgstr "Správa přístupu do mapsetů"
 
-#: ../gui/wxpython/gui_core/preferences.py:1572
+#: ../gui/wxpython/gui_core/preferences.py:1575
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -1421,7 +1421,7 @@ msgstr ""
 " - Můžete zapisovat pouze do současného mapsetu.\n"
 " - Můžete zapisovat pouze do mapsetu  který vlastníte."
 
-#: ../gui/wxpython/gui_core/preferences.py:1647
+#: ../gui/wxpython/gui_core/preferences.py:1650
 msgid "Owner"
 msgstr "Vlastník"
 
@@ -2580,7 +2580,7 @@ msgid "Choose GRASS data directory:"
 msgstr "Vybrat adresář s GRASS daty:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
-#: ../gui/wxpython/location_wizard/wizard.py:1975
+#: ../gui/wxpython/location_wizard/wizard.py:1994
 msgid "Location already exists in GRASS Database."
 msgstr "Location již existuje v databance GRASSu."
 
@@ -2611,7 +2611,8 @@ msgid "Read projection and datum terms from a georeferenced data file"
 msgstr "Načíst projekci a datum z již georeferencovaného souboru"
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-msgid "Read projection and datum terms from a WKT or PRJ file"
+#, fuzzy
+msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
 msgstr "Načíst projekci a datum ze souboru typu WTK nebo PRJ"
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
@@ -2724,13 +2725,12 @@ msgstr "Georeferencovaný soubor:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1185
 #: ../gui/wxpython/location_wizard/wizard.py:1242
-#, fuzzy
-msgid "Select WKT or PRJ file"
-msgstr "Vyberte WTK soubor"
+msgid "Select Well Known Text (WKT) .prj file"
+msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1190
 #, fuzzy
-msgid "WKT or PRJ file:"
+msgid "WKT .prj file:"
 msgstr "Soubor WTK:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1259
@@ -2789,28 +2789,31 @@ msgid "Projection:"
 msgstr "Projekce:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1640
-msgid "PROJ.4 definition:"
+#, fuzzy
+msgid ""
+"PROJ.4 definition:\n"
+" (non-definitive)"
 msgstr "Definice PROJ.4:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1715
+#: ../gui/wxpython/location_wizard/wizard.py:1730
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 msgid "custom"
 msgstr "volitelné"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1722
+#: ../gui/wxpython/location_wizard/wizard.py:1740
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
 msgstr "Přejete si založit GRASS location <%s>?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1723
+#: ../gui/wxpython/location_wizard/wizard.py:1741
 msgid "Create new location?"
 msgstr "Vytvořit novou location?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1766
+#: ../gui/wxpython/location_wizard/wizard.py:1785
 msgid "Define new GRASS Location"
 msgstr "Definujte novou GRASS location"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1858
+#: ../gui/wxpython/location_wizard/wizard.py:1877
 #, python-format
 msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
@@ -2821,15 +2824,15 @@ msgstr ""
 "\n"
 "Detaily: %(err)s"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1866
+#: ../gui/wxpython/location_wizard/wizard.py:1885
 msgid "Location wizard canceled. Location not created."
 msgstr "Průvodce vytvořením location byl zavřen. Location nebyla vytvořena."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1973
+#: ../gui/wxpython/location_wizard/wizard.py:1992
 msgid "Unable to create new location"
 msgstr "Nelze vytvořit novou location"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1992
+#: ../gui/wxpython/location_wizard/wizard.py:2011
 #, fuzzy, python-format
 msgid ""
 "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
@@ -2838,16 +2841,16 @@ msgstr ""
 "Location <%(loc)s> bude vytvořena v adresáři s GIS daty <%(dir)s>. Je "
 "potřeba změnit výchozí adresář s GIS daty na úvodní obrazovce."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1997
+#: ../gui/wxpython/location_wizard/wizard.py:2016
 msgid "New GIS data directory"
 msgstr "Nový adresář GIS dat"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2028
+#: ../gui/wxpython/location_wizard/wizard.py:2047
 msgid "EPSG code missing."
 msgstr "Kód EPSG chybí."
 
-#: ../gui/wxpython/location_wizard/wizard.py:2039
-#: ../gui/wxpython/location_wizard/wizard.py:2048
+#: ../gui/wxpython/location_wizard/wizard.py:2058
+#: ../gui/wxpython/location_wizard/wizard.py:2067
 #, fuzzy, python-format
 msgid "File <%s> not found."
 msgstr "Soubor nebyl nalezen."
@@ -4473,37 +4476,37 @@ msgstr "Nelze vykreslit mapovou vrstvu <%s>."
 msgid "Unable to render overlay <%s>."
 msgstr "Nelze vykreslit překrytí <%s>."
 
-#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
+#: ../gui/wxpython/core/utils.py:313 ../gui/wxpython/core/utils.py:354
 #, fuzzy, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Nová vektorová mapa <%s> byla vytvořena"
 
-#: ../gui/wxpython/core/utils.py:575
+#: ../gui/wxpython/core/utils.py:573
 #, python-format
 msgid "failed to open '%s'"
 msgstr "Nelze otevřít  '%s'"
 
-#: ../gui/wxpython/core/utils.py:810
+#: ../gui/wxpython/core/utils.py:808
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:846
+#: ../gui/wxpython/core/utils.py:844
 #, fuzzy, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "Nelze otevřít soubor <%s> pro zápis."
 
-#: ../gui/wxpython/core/utils.py:854
+#: ../gui/wxpython/core/utils.py:852
 #, python-format
 msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:860
+#: ../gui/wxpython/core/utils.py:858
 #, python-format
 msgid "Duplicated key: %s\n"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:875
+#: ../gui/wxpython/core/utils.py:873
 #, fuzzy, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "Nelze načíst seznam EPSG kódů: %s"
@@ -9749,15 +9752,15 @@ msgid ""
 "running r.in.wms directly from the command line."
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:248
+#: ../gui/wxpython/modules/ogc_services.py:251
 msgid "Layer / Style"
 msgstr "Vrstva / Styl"
 
-#: ../gui/wxpython/modules/ogc_services.py:249
+#: ../gui/wxpython/modules/ogc_services.py:252
 msgid "Title"
 msgstr "Název"
 
-#: ../gui/wxpython/modules/ogc_services.py:259
+#: ../gui/wxpython/modules/ogc_services.py:262
 msgid "Layers"
 msgstr "Vrstvy"
 
@@ -13636,6 +13639,10 @@ msgstr "Typ prvku:"
 #, fuzzy
 msgid "Not enough points for line"
 msgstr "Vytvořit body podél linií"
+
+#, fuzzy
+#~ msgid "Select WKT or PRJ file"
+#~ msgstr "Vyberte WTK soubor"
 
 #, fuzzy
 #~ msgid "&Protocol"

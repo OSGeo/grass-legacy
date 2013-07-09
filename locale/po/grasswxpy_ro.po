@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2013-07-09 22:15+0200\n"
 "Last-Translator: Andreea Marin <andreea.marin09 yahoo.com>\n"
 "Language-Team: GRASS Translation Team <grass-translations@lists.osgeo.org>\n"
@@ -34,14 +34,15 @@ msgstr "Introduceți comanda GRASS și rulați prin apăsarea tastei ENTER"
 #: ../gui/wxpython/gui_core/mapdisp.py:84 ../gui/wxpython/core/render.py:434
 #, python-format
 msgid "GRASS module '%s' not found. Unable to start map display window."
-msgstr "Modulul GRASS '%s' nu a fost găsit. Nu poate porni fereastra de vizualizare."
+msgstr ""
+"Modulul GRASS '%s' nu a fost găsit. Nu poate porni fereastra de vizualizare."
 
 #: ../gui/wxpython/gui_core/gselect.py:314
 msgid "Not selectable element"
 msgstr "Nici un element selectat"
 
 #: ../gui/wxpython/gui_core/gselect.py:335
-#: ../gui/wxpython/gui_core/preferences.py:1646
+#: ../gui/wxpython/gui_core/preferences.py:1649
 msgid "Mapset"
 msgstr "Mapset"
 
@@ -369,8 +370,12 @@ msgid "Close dialog on finish"
 msgstr "Închide caseta de dialog la final"
 
 #: ../gui/wxpython/gui_core/forms.py:514
-msgid "Close dialog when command is successfully finished. Change this settings in Preferences dialog ('Command' tab)."
-msgstr "Închide caseta de dialog când comanda a fost finalizată cu succes. Schimbă setările în caseta Preferences ('Command' tab)."
+msgid ""
+"Close dialog when command is successfully finished. Change this settings in "
+"Preferences dialog ('Command' tab)."
+msgstr ""
+"Închide caseta de dialog când comanda a fost finalizată cu succes. Schimbă "
+"setările în caseta Preferences ('Command' tab)."
 
 #: ../gui/wxpython/gui_core/forms.py:685
 #, python-format
@@ -523,8 +528,12 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:384
 #, python-format
-msgid "Vector map <%s> already exists in the current mapset. Do you want to overwrite it?"
-msgstr "Harta vectorială <%s> există deja în mapset-ul curent. Doriți să suprascrieți?"
+msgid ""
+"Vector map <%s> already exists in the current mapset. Do you want to "
+"overwrite it?"
+msgstr ""
+"Harta vectorială <%s> există deja în mapset-ul curent. Doriți să "
+"suprascrieți?"
 
 #: ../gui/wxpython/gui_core/dialogs.py:387
 msgid "Overwrite?"
@@ -553,8 +562,12 @@ msgid "Set size and position"
 msgstr "Setează dimensiune și poziție"
 
 #: ../gui/wxpython/gui_core/dialogs.py:534
-msgid "Click and drag on the map display to set legend size and position and then press OK"
-msgstr "Click și trageți de harta afișată pentru a seta dimensiunea și poziția legendei și apoi apăsați OK"
+msgid ""
+"Click and drag on the map display to set legend size and position and then "
+"press OK"
+msgstr ""
+"Click și trageți de harta afișată pentru a seta dimensiunea și poziția "
+"legendei și apoi apăsați OK"
 
 #: ../gui/wxpython/gui_core/dialogs.py:544
 msgid ""
@@ -623,7 +636,9 @@ msgstr "Închide caseta de dialog,  modificările nu sunt aplicate"
 
 #: ../gui/wxpython/gui_core/dialogs.py:882
 msgid "Select the group you want to edit or enter name of new group:"
-msgstr "Selectează grupul pe care doriți să-l editați sau introduceți un nume pentru noul grup:"
+msgstr ""
+"Selectează grupul pe care doriți să-l editați sau introduceți un nume pentru "
+"noul grup:"
 
 #: ../gui/wxpython/gui_core/dialogs.py:893
 msgid "Layers in selected group:"
@@ -941,8 +956,11 @@ msgstr "Aplică modificările pentru sesiunea curentă"
 #: ../gui/wxpython/gui_core/preferences.py:90
 #: ../gui/wxpython/wxplot/dialogs.py:381 ../gui/wxpython/wxplot/dialogs.py:765
 #: ../gui/wxpython/gcp/manager.py:2372
-msgid "Apply and save changes to user settings file (default for next sessions)"
-msgstr "Aplică și salvează modificările la setările fișierului utilizatorului (implicit pentru sesiunea viitoare)"
+msgid ""
+"Apply and save changes to user settings file (default for next sessions)"
+msgstr ""
+"Aplică și salvează modificările la setările fișierului utilizatorului "
+"(implicit pentru sesiunea viitoare)"
 
 #: ../gui/wxpython/gui_core/preferences.py:93
 #: ../gui/wxpython/psmap/dialogs.py:354
@@ -966,10 +984,10 @@ msgid "Key column cannot be empty string."
 msgstr "Coloana primară nu poate fi un șir gol."
 
 #: ../gui/wxpython/gui_core/preferences.py:212
-#: ../gui/wxpython/gui_core/preferences.py:1264
-#: ../gui/wxpython/gui_core/preferences.py:1291
-#: ../gui/wxpython/gui_core/preferences.py:1300
-#: ../gui/wxpython/gui_core/preferences.py:1309
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1294
+#: ../gui/wxpython/gui_core/preferences.py:1303
+#: ../gui/wxpython/gui_core/preferences.py:1312
 #: ../gui/wxpython/location_wizard/dialogs.py:114
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
@@ -1047,8 +1065,13 @@ msgid "Save current window layout as default"
 msgstr "Salvează aspectul ferestrei ca implicit"
 
 #: ../gui/wxpython/gui_core/preferences.py:377
-msgid "Save current position and size of Layer Manager window and opened Map Display window(s) and use as default for next sessions."
-msgstr "Salvează poziția și dimensiunea curentă a ferestrei de manipulare și deschiderea ferestrei de vizualizare și folosește-le ca implicit în următoarea sesiune."
+msgid ""
+"Save current position and size of Layer Manager window and opened Map "
+"Display window(s) and use as default for next sessions."
+msgstr ""
+"Salvează poziția și dimensiunea curentă a ferestrei de manipulare și "
+"deschiderea ferestrei de vizualizare și folosește-le ca implicit în "
+"următoarea sesiune."
 
 #: ../gui/wxpython/gui_core/preferences.py:400
 #: ../gui/wxpython/nviz/tools.py:91
@@ -1057,7 +1080,7 @@ msgstr "Aspect"
 
 #: ../gui/wxpython/gui_core/preferences.py:404
 #: ../gui/wxpython/gui_core/preferences.py:579
-#: ../gui/wxpython/gui_core/preferences.py:1412
+#: ../gui/wxpython/gui_core/preferences.py:1415
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3264
 #: ../gui/wxpython/psmap/dialogs.py:3720 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
@@ -1152,7 +1175,8 @@ msgstr "Setări avansate de afișare"
 
 #: ../gui/wxpython/gui_core/preferences.py:786
 msgid "3D view depth buffer (possible values are 16, 24, 32):"
-msgstr "Vizualizarea 3D a adâncimii zonei tampon (valorile posibile sunt 16,24,32)"
+msgstr ""
+"Vizualizarea 3D a adâncimii zonei tampon (valorile posibile sunt 16,24,32)"
 
 #: ../gui/wxpython/gui_core/preferences.py:817
 #: ../gui/wxpython/gmodeler/dialogs.py:136
@@ -1251,15 +1275,20 @@ msgstr "Setările barei de proiecție"
 #: ../gui/wxpython/gui_core/preferences.py:1115
 msgid ""
 "\n"
-"Note: This only controls the coordinates displayed in the lower-left of the Map Display\n"
-"window's status bar. It is purely cosmetic and does not affect the working location's\n"
-"projection in any way. You will need to enable the Projection check box in the drop-down\n"
+"Note: This only controls the coordinates displayed in the lower-left of the "
+"Map Display\n"
+"window's status bar. It is purely cosmetic and does not affect the working "
+"location's\n"
+"projection in any way. You will need to enable the Projection check box in "
+"the drop-down\n"
 "menu located at the bottom of the Map Display window.\n"
 msgstr ""
 "\n"
-"Notă: Aceasta controlează doar coordonatele afișate în colțul stâng al ferestrei de vizualizare\n"
+"Notă: Aceasta controlează doar coordonatele afișate în colțul stâng al "
+"ferestrei de vizualizare\n"
 "Bara ferestrei. Este pur estetică și nu afectează locația de lucru\n"
-"proiecția în nici un fel. Veti avea nevoie să dați posibilitatea de selectare a proiecției în caseta de jos\n"
+"proiecția în nici un fel. Veti avea nevoie să dați posibilitatea de "
+"selectare a proiecției în caseta de jos\n"
 "meniu situat în partea de jos a ferestrei de vizualizare.\n"
 
 #: ../gui/wxpython/gui_core/preferences.py:1130
@@ -1276,8 +1305,12 @@ msgid "EPSG file:"
 msgstr "Fișier EPSG:"
 
 #: ../gui/wxpython/gui_core/preferences.py:1178
-msgid "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string directly."
-msgstr "Încărcați codurile EPSG (fi rabdător), introduceți codul EPSG sau inserați direct șirul Proj.4."
+msgid ""
+"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
+"directly."
+msgstr ""
+"Încărcați codurile EPSG (fi rabdător), introduceți codul EPSG sau inserați "
+"direct șirul Proj.4."
 
 #: ../gui/wxpython/gui_core/preferences.py:1186
 msgid "&Load EPSG codes"
@@ -1295,44 +1328,44 @@ msgstr "Proiecțiile LL"
 msgid "Precision:"
 msgstr "Precizia:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1263
+#: ../gui/wxpython/gui_core/preferences.py:1264
 #, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Nu pot fi citite codurile EPSG: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1290
-#: ../gui/wxpython/gui_core/preferences.py:1299
-#: ../gui/wxpython/gui_core/preferences.py:1308
+#: ../gui/wxpython/gui_core/preferences.py:1293
+#: ../gui/wxpython/gui_core/preferences.py:1302
+#: ../gui/wxpython/gui_core/preferences.py:1311
 #, python-format
 msgid "EPSG code %s not found"
 msgstr "Codul EPSG %s nu este găsit"
 
-#: ../gui/wxpython/gui_core/preferences.py:1316
+#: ../gui/wxpython/gui_core/preferences.py:1319
 msgid "Select default display font"
 msgstr "Selectează fontul de afișare prestabilit"
 
-#: ../gui/wxpython/gui_core/preferences.py:1341
+#: ../gui/wxpython/gui_core/preferences.py:1344
 msgid "Select output font"
 msgstr "Selectează fontul de ieșire"
 
-#: ../gui/wxpython/gui_core/preferences.py:1419
+#: ../gui/wxpython/gui_core/preferences.py:1422
 msgid "Select font:"
 msgstr "Selectează font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1443
+#: ../gui/wxpython/gui_core/preferences.py:1446
 msgid "Character encoding:"
 msgstr "Codarea caracterelor:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1461
+#: ../gui/wxpython/gui_core/preferences.py:1464
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 msgid "Font size:"
 msgstr "Dimensiune font:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1559
+#: ../gui/wxpython/gui_core/preferences.py:1562
 msgid "Manage access to mapsets"
 msgstr "Gestionează accesul la mapset"
 
-#: ../gui/wxpython/gui_core/preferences.py:1572
+#: ../gui/wxpython/gui_core/preferences.py:1575
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -1340,13 +1373,14 @@ msgid ""
 "    - You may only write to the current mapset.\n"
 "    - You may only write to mapsets which you own."
 msgstr ""
-"Vericați un mapset pentru a-l face accesibil, debifați-l pentru a-l ascunde.\n"
+"Vericați un mapset pentru a-l face accesibil, debifați-l pentru a-l "
+"ascunde.\n"
 "Note:\n"
 "   - Mapsetul curent este întotdeauna accesibil.\n"
 "   - Puteți scrie numai în mapsetul curent.\n"
 "   - Puteți scrie numai pentru mapseturile pe care le dețineți."
 
-#: ../gui/wxpython/gui_core/preferences.py:1647
+#: ../gui/wxpython/gui_core/preferences.py:1650
 msgid "Owner"
 msgstr "Proprietar"
 
@@ -1389,8 +1423,12 @@ msgstr "&Fișier \"jurnal\""
 
 #: ../gui/wxpython/gui_core/goutput.py:270
 #, fuzzy
-msgid "Toggle to save list of executed commands into a file; content saved when switching off."
-msgstr "Permite salvearea listei de comenzi executate într-un fișier; conținut salvat atunci când este oprită."
+msgid ""
+"Toggle to save list of executed commands into a file; content saved when "
+"switching off."
+msgstr ""
+"Permite salvearea listei de comenzi executate într-un fișier; conținut "
+"salvat atunci când este oprită."
 
 #: ../gui/wxpython/gui_core/goutput.py:486
 #: ../gui/wxpython/gui_core/goutput.py:793
@@ -1406,8 +1444,12 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/goutput.py:524
 #, python-format
-msgid "Command '%s' not yet implemented in the WxGUI. Try adding it as a command layer instead."
-msgstr "Comanda '%s' nu a fost încă implementată în WxGUI. Încercați să-l adăugați ca un strat de control."
+msgid ""
+"Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
+"layer instead."
+msgstr ""
+"Comanda '%s' nu a fost încă implementată în WxGUI. Încercați să-l adăugați "
+"ca un strat de control."
 
 #: ../gui/wxpython/gui_core/goutput.py:571
 #, python-format
@@ -1488,8 +1530,11 @@ msgid "unknown"
 msgstr "necunoscut"
 
 #: ../gui/wxpython/gui_core/goutput.py:864
-msgid "Please note that the data are left in inconsistent state and may be corrupted"
-msgstr "Vă rugăm să rețineți că datele sunt lăsate în stare de inconsistență și pot fi corupte"
+msgid ""
+"Please note that the data are left in inconsistent state and may be corrupted"
+msgstr ""
+"Vă rugăm să rețineți că datele sunt lăsate în stare de inconsistență și pot "
+"fi corupte"
 
 #: ../gui/wxpython/gui_core/goutput.py:866
 msgid "Command aborted"
@@ -1645,8 +1690,12 @@ msgstr "Încarca data..."
 
 #: ../gui/wxpython/dbmgr/manager.py:152
 #, python-format
-msgid "Attribute table <%s> not found. For creating the table switch to 'Manage layers' tab."
-msgstr "Atributele tabelului <%s> nu a fost găsit. Pentru crearea tabelului activează tab-ul 'Gestionare layer'."
+msgid ""
+"Attribute table <%s> not found. For creating the table switch to 'Manage "
+"layers' tab."
+msgstr ""
+"Atributele tabelului <%s> nu a fost găsit. Pentru crearea tabelului "
+"activează tab-ul 'Gestionare layer'."
 
 #: ../gui/wxpython/dbmgr/manager.py:163
 #, python-format
@@ -1679,16 +1728,21 @@ msgstr "Valoare necunoscută"
 
 #: ../gui/wxpython/dbmgr/manager.py:304
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
-msgstr "Nu s-a putut decoda valoarea. Setați codarea în preferințele GUI ('Attributes')."
+msgstr ""
+"Nu s-a putut decoda valoarea. Setați codarea în preferințele GUI "
+"('Attributes')."
 
 #: ../gui/wxpython/dbmgr/manager.py:313
 #, python-format
 msgid ""
-"Error loading attribute data. Record number: %(rec)d. Unable to convert value '%(val)s' in key column (%(key)s) to integer.\n"
+"Error loading attribute data. Record number: %(rec)d. Unable to convert "
+"value '%(val)s' in key column (%(key)s) to integer.\n"
 "\n"
 "Details: %(detail)s"
 msgstr ""
-"Eroare în încărcarea atributelor. Număr de înregistrări: %(rec)d. Nu s-a putut converti valoarea '%(val)s' din coloana primară (%(key)s) în număr întreg.\n"
+"Eroare în încărcarea atributelor. Număr de înregistrări: %(rec)d. Nu s-a "
+"putut converti valoarea '%(val)s' din coloana primară (%(key)s) în număr "
+"întreg.\n"
 "\n"
 "Detalii: %(detail)s"
 
@@ -1746,8 +1800,12 @@ msgstr "Gestionare tabelă de atribute GRASS"
 
 #: ../gui/wxpython/dbmgr/manager.py:602
 #, python-format
-msgid "Database connection for vector map <%s> is not defined in DB file. You can define new connection in 'Manage layers' tab."
-msgstr "Conexiunea bazei de date pentru harta vectorială <%s> nu este definită în fișierul BD. Puteți defini o nouă conexiune în tab-ul 'Gestionare straturi' "
+msgid ""
+"Database connection for vector map <%s> is not defined in DB file. You can "
+"define new connection in 'Manage layers' tab."
+msgstr ""
+"Conexiunea bazei de date pentru harta vectorială <%s> nu este definită în "
+"fișierul BD. Puteți defini o nouă conexiune în tab-ul 'Gestionare straturi' "
 
 #: ../gui/wxpython/dbmgr/manager.py:628
 msgid "Browse data"
@@ -1771,7 +1829,8 @@ msgstr "Reîncarcă atributele (doar stratul selectat)"
 
 #: ../gui/wxpython/dbmgr/manager.py:691
 msgid "Attribute data - right-click to edit/manage records"
-msgstr "Datele de atribut - click dreapta pentru editare/gestionare înregistrări"
+msgstr ""
+"Datele de atribut - click dreapta pentru editare/gestionare înregistrări"
 
 #: ../gui/wxpython/dbmgr/manager.py:704 ../gui/wxpython/dbmgr/manager.py:844
 #: ../gui/wxpython/dbmgr/manager.py:2321 ../gui/wxpython/dbmgr/manager.py:2451
@@ -1900,8 +1959,12 @@ msgstr "Reîncarcă"
 
 #: ../gui/wxpython/dbmgr/manager.py:1188
 #, python-format
-msgid "Selected data records (%d) will be permanently deleted from table. Do you want to delete them?"
-msgstr "Datele înregistrate selectate (%d) vor fi șterse definitiv din tabel. Doriți să le ștergeți?"
+msgid ""
+"Selected data records (%d) will be permanently deleted from table. Do you "
+"want to delete them?"
+msgstr ""
+"Datele înregistrate selectate (%d) vor fi șterse definitiv din tabel. Doriți "
+"să le ștergeți?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1191 ../gui/wxpython/dbmgr/manager.py:1237
 #: ../gui/wxpython/gmodeler/dialogs.py:851
@@ -1910,8 +1973,12 @@ msgstr "Șterge înregistrările"
 
 #: ../gui/wxpython/dbmgr/manager.py:1234
 #, python-format
-msgid "All data records (%d) will be permanently deleted from table. Do you want to delete them?"
-msgstr "Toate înregistrările  (%d) vor fi șterse definitiv din tabel. Doriți să le ștergeți?"
+msgid ""
+"All data records (%d) will be permanently deleted from table. Do you want to "
+"delete them?"
+msgstr ""
+"Toate înregistrările  (%d) vor fi șterse definitiv din tabel. Doriți să le "
+"ștergeți?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1392
 #, python-format
@@ -1956,13 +2023,21 @@ msgstr "Nu s-a putut redenumi coloana. Nici un nume de coloană definit."
 
 #: ../gui/wxpython/dbmgr/manager.py:1632
 #, python-format
-msgid "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already exists in the table <%(table)s>."
-msgstr "Nu s-a putut redenumi coloana <%(column)s> în <%(columnTo)s>. Coloana există deja în tabel <%(table)s>."
+msgid ""
+"Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
+"exists in the table <%(table)s>."
+msgstr ""
+"Nu s-a putut redenumi coloana <%(column)s> în <%(columnTo)s>. Coloana există "
+"deja în tabel <%(table)s>."
 
 #: ../gui/wxpython/dbmgr/manager.py:1648
 #, python-format
-msgid "Unable to rename column. Column <%(column)s> doesn't exist in the table <%(table)s>."
-msgstr "Nu s-a putut redenumi coloana. Coloana <%(column)s> nu există în tabel <%(table)s>."
+msgid ""
+"Unable to rename column. Column <%(column)s> doesn't exist in the table <"
+"%(table)s>."
+msgstr ""
+"Nu s-a putut redenumi coloana. Coloana <%(column)s> nu există în tabel <"
+"%(table)s>."
 
 #: ../gui/wxpython/dbmgr/manager.py:1675
 msgid "Drop selected column"
@@ -1974,8 +2049,12 @@ msgstr "Șterge toate coloanele"
 
 #: ../gui/wxpython/dbmgr/manager.py:1693
 #, python-format
-msgid "Selected column '%s' will PERMANENTLY removed from table. Do you want to drop the column?"
-msgstr "Coloana selectată '%s' va fi eliminată DEFINITIV din tabel. Doriți să ștergeți această coloană?"
+msgid ""
+"Selected column '%s' will PERMANENTLY removed from table. Do you want to "
+"drop the column?"
+msgstr ""
+"Coloana selectată '%s' va fi eliminată DEFINITIV din tabel. Doriți să "
+"ștergeți această coloană?"
 
 #: ../gui/wxpython/dbmgr/manager.py:1696 ../gui/wxpython/dbmgr/manager.py:1733
 msgid "Drop column(s)"
@@ -2071,8 +2150,12 @@ msgid "Key"
 msgstr "Cheie"
 
 #: ../gui/wxpython/dbmgr/manager.py:2397
-msgid "Unknown default DB connection. Please define DB connection using db.connect module."
-msgstr "Conexiunea implicită BD necunoscută. Dediniși conexiune BD folosind modulul db.connect."
+msgid ""
+"Unknown default DB connection. Please define DB connection using db.connect "
+"module."
+msgstr ""
+"Conexiunea implicită BD necunoscută. Dediniși conexiune BD folosind modulul "
+"db.connect."
 
 #: ../gui/wxpython/dbmgr/manager.py:2416
 msgid "Add layer"
@@ -2145,17 +2228,24 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2895
 msgid "Unable to create new table. Table name or key column name is missing."
-msgstr "Nu se poate crea un tabel nou. Numele tabelului sau numele coloanei primare lipsește."
+msgstr ""
+"Nu se poate crea un tabel nou. Numele tabelului sau numele coloanei primare "
+"lipsește."
 
 #: ../gui/wxpython/dbmgr/manager.py:2901
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
-msgstr "Nu se poate crea un tabel nou. Tabelul <%s> există deja în baza de date."
+msgstr ""
+"Nu se poate crea un tabel nou. Tabelul <%s> există deja în baza de date."
 
 #: ../gui/wxpython/dbmgr/manager.py:2938
 #, python-format
-msgid "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already exists."
-msgstr "Nu se poate adăuga un strat nou la harta vectorială <%(vector)s>.  Stratul %(layer)d există deja."
+msgid ""
+"Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
+"exists."
+msgstr ""
+"Nu se poate adăuga un strat nou la harta vectorială <%(vector)s>.  Stratul "
+"%(layer)d există deja."
 
 #: ../gui/wxpython/dbmgr/sqlbuilder.py:68
 #, python-format
@@ -2246,11 +2336,13 @@ msgstr "Declarația SQL este validă"
 msgid ""
 "No attribute table found.\n"
 "\n"
-"Do you want to create a new attribute table and defined a link to vector map <%s>?"
+"Do you want to create a new attribute table and defined a link to vector map "
+"<%s>?"
 msgstr ""
 "Nu a fost găsit nici un tabel de atribute.\n"
 "\n"
-"Doriți să creați un tabel nou și să definiți o legătură cu harta vectorială <%s>?"
+"Doriți să creați un tabel nou și să definiți o legătură cu harta vectorială <"
+"%s>?"
 
 #: ../gui/wxpython/dbmgr/dialogs.py:74
 msgid "Create table?"
@@ -2435,8 +2527,12 @@ msgstr "Titlul locației opționa, puteți lăsa câmpul necompletat."
 
 #: ../gui/wxpython/location_wizard/wizard.py:159
 #, python-format
-msgid "Name <%(name)s> is not a valid name for location. Please use only ASCII characters excluding %(chars)s and space."
-msgstr "Nume <%(name)s> nu este un nume valid pentru locație. Vă rugăm utilizați doar caractere ASCII excluzând %(chars)s și spații."
+msgid ""
+"Name <%(name)s> is not a valid name for location. Please use only ASCII "
+"characters excluding %(chars)s and space."
+msgstr ""
+"Nume <%(name)s> nu este un nume valid pentru locație. Vă rugăm utilizați "
+"doar caractere ASCII excluzând %(chars)s și spații."
 
 #: ../gui/wxpython/location_wizard/wizard.py:162
 msgid "Invalid location name"
@@ -2447,7 +2543,7 @@ msgid "Choose GRASS data directory:"
 msgstr "Alegeți directorul de date GIS:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
-#: ../gui/wxpython/location_wizard/wizard.py:1975
+#: ../gui/wxpython/location_wizard/wizard.py:1994
 msgid "Location already exists in GRASS Database."
 msgstr "Locația există deja în baza de date GRASS."
 
@@ -2456,8 +2552,12 @@ msgid "Unable to create location"
 msgstr "Nu s-a putut crea locația"
 
 #: ../gui/wxpython/location_wizard/wizard.py:205
-msgid "Title of the location is limited only to one line and 256 characters. The rest of the text will be ignored."
-msgstr "Titlul locației este limitat doar la o singură linie și 256 caractere. Restul textului va fi ignorat."
+msgid ""
+"Title of the location is limited only to one line and 256 characters. The "
+"rest of the text will be ignored."
+msgstr ""
+"Titlul locației este limitat doar la o singură linie și 256 caractere. "
+"Restul textului va fi ignorat."
 
 #: ../gui/wxpython/location_wizard/wizard.py:212
 msgid "Choose method for creating a new location"
@@ -2473,15 +2573,19 @@ msgstr "Selectați codul EPSG a sistemului de referință spațial"
 
 #: ../gui/wxpython/location_wizard/wizard.py:224
 msgid "Read projection and datum terms from a georeferenced data file"
-msgstr "Citiți proiecția și termenii de referință dintr-un fișier de date georeferențiate"
+msgstr ""
+"Citiți proiecția și termenii de referință dintr-un fișier de date "
+"georeferențiate"
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-msgid "Read projection and datum terms from a WKT or PRJ file"
+#, fuzzy
+msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
 msgstr "Citiți proiecția și termenii de referință dintr-un fișier WKT sau PRJ"
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
 msgid "Specify projection and datum terms using custom PROJ.4 parameters"
-msgstr "Specificați proiecția și termenii de referință folosind parametrii PROJ.4"
+msgstr ""
+"Specificați proiecția și termenii de referință folosind parametrii PROJ.4"
 
 #: ../gui/wxpython/location_wizard/wizard.py:233
 msgid "Create a generic Cartesian coordinate system (XY)"
@@ -2588,11 +2692,12 @@ msgstr "Fișier georeferențiat:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1185
 #: ../gui/wxpython/location_wizard/wizard.py:1242
-msgid "Select WKT or PRJ file"
-msgstr "Selectați fișierul WKT sau PRJ"
+msgid "Select Well Known Text (WKT) .prj file"
+msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1190
-msgid "WKT or PRJ file:"
+#, fuzzy
+msgid "WKT .prj file:"
 msgstr "Fișier WKT sau PRJ:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1259
@@ -2650,28 +2755,31 @@ msgid "Projection:"
 msgstr "Proiecția:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1640
-msgid "PROJ.4 definition:"
+#, fuzzy
+msgid ""
+"PROJ.4 definition:\n"
+" (non-definitive)"
 msgstr "Definirea PROJ.4:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1715
+#: ../gui/wxpython/location_wizard/wizard.py:1730
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 msgid "custom"
 msgstr "obicei"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1722
+#: ../gui/wxpython/location_wizard/wizard.py:1740
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
 msgstr "Doriți să creați locația GRASS <%s>?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1723
+#: ../gui/wxpython/location_wizard/wizard.py:1741
 msgid "Create new location?"
 msgstr "Creați locație nouă?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1766
+#: ../gui/wxpython/location_wizard/wizard.py:1785
 msgid "Define new GRASS Location"
 msgstr "Definirea unei locații noi GRASS"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1858
+#: ../gui/wxpython/location_wizard/wizard.py:1877
 #, python-format
 msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
@@ -2682,29 +2790,34 @@ msgstr ""
 "\n"
 "Detalii:%(err)s"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1866
+#: ../gui/wxpython/location_wizard/wizard.py:1885
 msgid "Location wizard canceled. Location not created."
 msgstr "Locație wizard anulată. Locația nu a fost creată. "
 
-#: ../gui/wxpython/location_wizard/wizard.py:1973
+#: ../gui/wxpython/location_wizard/wizard.py:1992
 msgid "Unable to create new location"
 msgstr "Nu s-a putut crea locație nouă"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1992
+#: ../gui/wxpython/location_wizard/wizard.py:2011
 #, python-format
-msgid "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will need to change the default GIS data directory in the GRASS startup screen."
-msgstr "Locația <%(loc)s> va fi creată în directorul de date GIS <%(dir)s>. Va fi nevoie să schimbați directorul de date GIS implicit în fereastra de pornire GRASS."
+msgid ""
+"Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
+"need to change the default GIS data directory in the GRASS startup screen."
+msgstr ""
+"Locația <%(loc)s> va fi creată în directorul de date GIS <%(dir)s>. Va fi "
+"nevoie să schimbați directorul de date GIS implicit în fereastra de pornire "
+"GRASS."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1997
+#: ../gui/wxpython/location_wizard/wizard.py:2016
 msgid "New GIS data directory"
 msgstr "Director de date GIS nou"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2028
+#: ../gui/wxpython/location_wizard/wizard.py:2047
 msgid "EPSG code missing."
 msgstr "Codul EPSG lipsește."
 
-#: ../gui/wxpython/location_wizard/wizard.py:2039
-#: ../gui/wxpython/location_wizard/wizard.py:2048
+#: ../gui/wxpython/location_wizard/wizard.py:2058
+#: ../gui/wxpython/location_wizard/wizard.py:2067
 #, python-format
 msgid "File <%s> not found."
 msgstr "Fișierul <%s> nu este găsit."
@@ -2780,7 +2893,8 @@ msgid ""
 "Map frame size changed, old value: %(old1)s %(old2)s\n"
 "new value: %(new1)s %(new2)s"
 msgstr ""
-"Dimensiunea cadrului hărții a fost schimbată, valoare veche: %(old1)s %(old2)s\n"
+"Dimensiunea cadrului hărții a fost schimbată, valoare veche: %(old1)s "
+"%(old2)s\n"
 "valoare nouă: %(new1)s %(new2)s"
 
 #: ../gui/wxpython/psmap/instructions.py:684
@@ -2800,18 +2914,27 @@ msgstr "Citirea instrucțiunilor a eșuat %s."
 #: ../gui/wxpython/psmap/instructions.py:811
 #: ../gui/wxpython/psmap/instructions.py:1693
 #, python-format
-msgid "Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
-msgstr "Caracterele de pe poziția %s nu sunt acceptate de codificarea  ISO-8859-1 (Latin 1) care sunt necesare pentru modulul ps.map."
+msgid ""
+"Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
+"which is required by module ps.map."
+msgstr ""
+"Caracterele de pe poziția %s nu sunt acceptate de codificarea  ISO-8859-1 "
+"(Latin 1) care sunt necesare pentru modulul ps.map."
 
 #: ../gui/wxpython/psmap/instructions.py:815
 #: ../gui/wxpython/psmap/instructions.py:1697
-msgid "Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
-msgstr "Nu toate caracterele sunt acceptate de codificarea  ISO-8859-1 (Latin 1) care sunt necesare pentru modulul ps.map."
+msgid ""
+"Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is "
+"required by module ps.map."
+msgstr ""
+"Nu toate caracterele sunt acceptate de codificarea  ISO-8859-1 (Latin 1) "
+"care sunt necesare pentru modulul ps.map."
 
 #: ../gui/wxpython/psmap/instructions.py:931
 #, python-format
 msgid "Failed to read instruction %(inst)s: file %(file)s not found."
-msgstr "Citirea instrucțiunilor a eșuat %(inst)s: fișierul %(file)s nu a fost găsit."
+msgstr ""
+"Citirea instrucțiunilor a eșuat %(inst)s: fișierul %(file)s nu a fost găsit."
 
 #: ../gui/wxpython/psmap/toolbars.py:52
 msgid "Generate text file with mapping instructions"
@@ -3325,7 +3448,9 @@ msgstr "fișier eps:"
 
 #: ../gui/wxpython/psmap/dialogs.py:1971 ../gui/wxpython/psmap/dialogs.py:2160
 msgid "Type filename or click browse to choose file"
-msgstr "Tastați un nume de fișier sau faceți click pe navigator pentru a alege fișierul"
+msgstr ""
+"Tastați un nume de fișier sau faceți click pe navigator pentru a alege "
+"fișierul"
 
 #: ../gui/wxpython/psmap/dialogs.py:1972 ../gui/wxpython/psmap/dialogs.py:2161
 msgid "Choose a file"
@@ -3790,7 +3915,9 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/frame.py:232
 msgid "Program ps2pdf is not available. Please install it first to create PDF."
-msgstr "Programul ps2pdf nu este disponibil. Vă rugăm să-l instalați pentru a crea PDF."
+msgstr ""
+"Programul ps2pdf nu este disponibil. Vă rugăm să-l instalați pentru a crea "
+"PDF."
 
 #: ../gui/wxpython/psmap/frame.py:276
 msgid "Generating PDF..."
@@ -3825,7 +3952,8 @@ msgid ""
 "\n"
 " %s"
 msgstr ""
-"Programul ps2pdf nu este disponibil. Vă rugăm să-l instalați pentru a crea PGF.\n"
+"Programul ps2pdf nu este disponibil. Vă rugăm să-l instalați pentru a crea "
+"PGF.\n"
 "\n"
 "%s"
 
@@ -3843,7 +3971,8 @@ msgstr "Previzualizarea nu este disponibilă"
 
 #: ../gui/wxpython/psmap/frame.py:350
 msgid "Preview is not available probably due to missing Ghostscript."
-msgstr "Previzualizarea nu este disponibilă probabil din cauza lipsei Ghostscript."
+msgstr ""
+"Previzualizarea nu este disponibilă probabil din cauza lipsei Ghostscript."
 
 #: ../gui/wxpython/psmap/frame.py:352
 msgid "Please follow instructions on GRASS Trac Wiki."
@@ -3868,7 +3997,9 @@ msgstr "Scara nu este apropiată pentru această proiecție"
 
 #: ../gui/wxpython/psmap/frame.py:1028
 msgid "Press button with green triangle icon to generate preview."
-msgstr "Apăsați butonul cu imaginea triunghiului verde pentru a genera previzualizarea."
+msgstr ""
+"Apăsați butonul cu imaginea triunghiului verde pentru a genera "
+"previzualizarea."
 
 #: ../gui/wxpython/psmap/frame.py:1055
 msgid "wxGUI Cartographic Composer"
@@ -3883,8 +4014,12 @@ msgstr ""
 "\n"
 
 #: ../gui/wxpython/psmap/frame.py:1058 ../gui/wxpython/gmodeler/frame.py:717
-msgid "This program is free software under the GNU General Public License(>=v2). Read the file COPYING that comes with GRASS for details."
-msgstr "Acest program este un software liber dezvoltat sub Licență Publică Generală GNU (>=v2). Citiți fișierul COPYING care vine o dată cu GRASS pentru detalii."
+msgid ""
+"This program is free software under the GNU General Public License(>=v2). "
+"Read the file COPYING that comes with GRASS for details."
+msgstr ""
+"Acest program este un software liber dezvoltat sub Licență Publică Generală "
+"GNU (>=v2). Citiți fișierul COPYING care vine o dată cu GRASS pentru detalii."
 
 #: ../gui/wxpython/psmap/frame.py:1367
 msgid "Click and drag to resize object"
@@ -4156,12 +4291,15 @@ msgstr "Tipul stratutului neacceptat '%s'"
 
 #: ../gui/wxpython/core/render.py:421
 msgid "GISBASE not set. You must be in GRASS GIS to run this program."
-msgstr "GISBASE nu este setat. Trebuie să fiți în GRASS GIS pentru a rula acest program."
+msgstr ""
+"GISBASE nu este setat. Trebuie să fiți în GRASS GIS pentru a rula acest "
+"program."
 
 #: ../gui/wxpython/core/render.py:466
 #, python-format
 msgid "Error: Unable to open '%(file)s'. Reason: %(ret)s. wxGUI exited.\n"
-msgstr "Eroare: Nu s-a putut deschide '%(file)s'. Motiv: %(ret)s. wxGUI închisă.\n"
+msgstr ""
+"Eroare: Nu s-a putut deschide '%(file)s'. Motiv: %(ret)s. wxGUI închisă.\n"
 
 #: ../gui/wxpython/core/render.py:642
 #, python-format
@@ -4174,8 +4312,12 @@ msgid "Unable to zoom to vector map <%s>."
 msgstr "Nu s-a putut da zoom la harta vectorială<%s>."
 
 #: ../gui/wxpython/core/render.py:648
-msgid "Unable to get current geographic extent. Force quiting wxGUI. Please manually run g.region to fix the problem."
-msgstr "Nu s-a putut obține extinderea geografică curentă. Forțați închiderea wxGUI. Vă rugăm rulați manual g.region pentru a rezolva problema."
+msgid ""
+"Unable to get current geographic extent. Force quiting wxGUI. Please "
+"manually run g.region to fix the problem."
+msgstr ""
+"Nu s-a putut obține extinderea geografică curentă. Forțați închiderea wxGUI. "
+"Vă rugăm rulați manual g.region pentru a rezolva problema."
 
 #: ../gui/wxpython/core/render.py:931
 #, python-format
@@ -4192,37 +4334,37 @@ msgstr "Nu s-a putut reda stratul <%s>."
 msgid "Unable to render overlay <%s>."
 msgstr "Nu s-a putut reda suprapunerea <%s>."
 
-#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
+#: ../gui/wxpython/core/utils.py:313 ../gui/wxpython/core/utils.py:354
 #, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Harta vectorială <%(map)s>: %(msg)s\n"
 
-#: ../gui/wxpython/core/utils.py:575
+#: ../gui/wxpython/core/utils.py:573
 #, python-format
 msgid "failed to open '%s'"
 msgstr "eșec în deschiderea '%s'"
 
-#: ../gui/wxpython/core/utils.py:810
+#: ../gui/wxpython/core/utils.py:808
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr "EROARE: Nu s-a putut determina versiunea GRASS. Detalii: %s"
 
-#: ../gui/wxpython/core/utils.py:846
+#: ../gui/wxpython/core/utils.py:844
 #, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "Nu s-a putut deschide fișierul '%s'\n"
 
-#: ../gui/wxpython/core/utils.py:854
+#: ../gui/wxpython/core/utils.py:852
 #, fuzzy, python-format
 msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
 msgstr "%(env)s: linii omise - nu s-a putut analiza Motivul: %(e)s\n"
 
-#: ../gui/wxpython/core/utils.py:860
+#: ../gui/wxpython/core/utils.py:858
 #, python-format
 msgid "Duplicated key: %s\n"
 msgstr "Cheie duplicată: %s\n"
 
-#: ../gui/wxpython/core/utils.py:875
+#: ../gui/wxpython/core/utils.py:873
 #, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "Nu s-a putut crea fișierul'%s'\n"
@@ -4467,8 +4609,12 @@ msgstr "Șterge tot"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:848
 #, python-format
-msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
-msgstr "Datele înregistrate selectate (%d) vor fi șterse definitv din tabel. Doriți să le ștergeți?"
+msgid ""
+"Selected data records (%d) will permanently deleted from table. Do you want "
+"to delete them?"
+msgstr ""
+"Datele înregistrate selectate (%d) vor fi șterse definitv din tabel. Doriți "
+"să le ștergeți?"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:905
 msgid "Normalize"
@@ -4613,8 +4759,11 @@ msgid "%d maps deleted from current mapset"
 msgstr "%d hărți șterse din mapset-ul curent"
 
 #: ../gui/wxpython/gmodeler/frame.py:341 ../gui/wxpython/gmodeler/frame.py:456
-msgid "Current model is not empty. Do you want to store current settings to model file?"
-msgstr "Modelul curent este gol. Doriți să stocați setările curente ca fișier model?"
+msgid ""
+"Current model is not empty. Do you want to store current settings to model "
+"file?"
+msgstr ""
+"Modelul curent este gol. Doriți să stocați setările curente ca fișier model?"
 
 #: ../gui/wxpython/gmodeler/frame.py:344 ../gui/wxpython/gmodeler/frame.py:459
 msgid "Create new model?"
@@ -4679,7 +4828,9 @@ msgstr "Modelul este valid."
 #: ../gui/wxpython/modules/histogram.py:414
 #: ../gui/wxpython/mapdisp/frame.py:576 ../gui/wxpython/gcp/mapdisplay.py:456
 msgid "Choose a file name to save the image (no need to add extension)"
-msgstr "Alege un nume de fișier pentru a salva imaginea (nu este nevoie de adăugarea unui extensii)"
+msgstr ""
+"Alege un nume de fișier pentru a salva imaginea (nu este nevoie de adăugarea "
+"unui extensii)"
 
 #: ../gui/wxpython/gmodeler/frame.py:578 ../gui/wxpython/gmodeler/frame.py:585
 #, python-format
@@ -4844,8 +4995,12 @@ msgid "Save file"
 msgstr "Salvează fișier"
 
 #: ../gui/wxpython/gmodeler/frame.py:1619
-msgid "Python script is locally modificated. Refresh will discard all changes. Do you really want to continue?"
-msgstr "Scriptul Python a fost modificat local. Reîncărcarea va înlătura toate modificările. Doriți să continuați acest lucru?"
+msgid ""
+"Python script is locally modificated. Refresh will discard all changes. Do "
+"you really want to continue?"
+msgstr ""
+"Scriptul Python a fost modificat local. Reîncărcarea va înlătura toate "
+"modificările. Doriți să continuați acest lucru?"
 
 #: ../gui/wxpython/gmodeler/frame.py:1622
 msgid "Update"
@@ -4967,8 +5122,12 @@ msgid "ASCII x,y,z point import and gridding"
 msgstr "Importă puncte ASCII x,y,z și gridează"
 
 #: ../gui/wxpython/menustrings.py:33
-msgid "Create a raster map from an assemblage of many coordinates using univariate statistics."
-msgstr "Crează hartă raster dintr-un ansamblu de coordonate folosind statistici univariate."
+msgid ""
+"Create a raster map from an assemblage of many coordinates using univariate "
+"statistics."
+msgstr ""
+"Crează hartă raster dintr-un ansamblu de coordonate folosind statistici "
+"univariate."
 
 #: ../gui/wxpython/menustrings.py:34
 msgid "ASCII grid import"
@@ -4999,8 +5158,12 @@ msgid "ESRI ASCII grid import"
 msgstr "Importă grid ESRI ASCII"
 
 #: ../gui/wxpython/menustrings.py:41
-msgid "Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer."
-msgstr "Convertește un fișier raster ascii ESRI ARC/INFO (GRID) într-un strat raster (binar)."
+msgid ""
+"Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
+"map layer."
+msgstr ""
+"Convertește un fișier raster ascii ESRI ARC/INFO (GRID) într-un strat raster "
+"(binar)."
 
 #: ../gui/wxpython/menustrings.py:42
 msgid "GRIDATB.FOR import"
@@ -5039,8 +5202,12 @@ msgid "Terra ASTER HDF import"
 msgstr "Importă Terra ASTER HDF"
 
 #: ../gui/wxpython/menustrings.py:51
-msgid "Georeference, rectify and import Terra-ASTER imagery and relative DEM's using gdalwarp."
-msgstr "Georeferențiază, rectifică și importă imaginii Terra-ASTER și DEM folosind gdalwarp."
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Georeferențiază, rectifică și importă imaginii Terra-ASTER și DEM folosind "
+"gdalwarp."
 
 #: ../gui/wxpython/menustrings.py:52
 msgid "WMS import"
@@ -5064,7 +5231,8 @@ msgstr "Importă formate comune"
 
 #: ../gui/wxpython/menustrings.py:58
 msgid "Converts vector layers into a GRASS vector map using OGR."
-msgstr "Convertește straturi vectoriale în hartă vectorială GRASS folosind OGR."
+msgstr ""
+"Convertește straturi vectoriale în hartă vectorială GRASS folosind OGR."
 
 #: ../gui/wxpython/menustrings.py:59
 msgid "ASCII points/GRASS ASCII vector import"
@@ -5092,11 +5260,16 @@ msgstr "Importă hărți vectoriale realizate în versiuni mai vechi de GRASS."
 
 #: ../gui/wxpython/menustrings.py:65
 msgid "Historical GRASS vector import (all maps)"
-msgstr "Importă vector realizat într-o versiune mai veche de GRASS (toate hărțile)"
+msgstr ""
+"Importă vector realizat într-o versiune mai veche de GRASS (toate hărțile)"
 
 #: ../gui/wxpython/menustrings.py:66
-msgid "Converts all older versions of GRASS vector maps in current mapset to current format."
-msgstr "Convertește toate hărțile vectoriale din versiunile vechi de GRASS din mapset-ul curent în formatul actual."
+msgid ""
+"Converts all older versions of GRASS vector maps in current mapset to "
+"current format."
+msgstr ""
+"Convertește toate hărțile vectoriale din versiunile vechi de GRASS din "
+"mapset-ul curent în formatul actual."
 
 #: ../gui/wxpython/menustrings.py:67
 msgid "DXF import"
@@ -5127,16 +5300,24 @@ msgid "Garmin GPS import"
 msgstr "Importă de pe Garmin GPS"
 
 #: ../gui/wxpython/menustrings.py:74
-msgid "Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map."
-msgstr "Descarcă punctele de referință, rutele și traseele dintr-un dispozitiv GarminGPS intr-o hartă vectorială."
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+"Descarcă punctele de referință, rutele și traseele dintr-un dispozitiv "
+"GarminGPS intr-o hartă vectorială."
 
 #: ../gui/wxpython/menustrings.py:75
 msgid "GPSBabel GPS import"
 msgstr "Importă GPSBabel GPS"
 
 #: ../gui/wxpython/menustrings.py:76
-msgid "Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map."
-msgstr "Importă punctele de referință, rutele și traseele dintr-un dispozitiv GPS sau descarcă fișierul GPS intr-o hartă vectorială."
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+"Importă punctele de referință, rutele și traseele dintr-un dispozitiv GPS "
+"sau descarcă fișierul GPS intr-o hartă vectorială."
 
 #: ../gui/wxpython/menustrings.py:77
 msgid "Geonames import"
@@ -5144,15 +5325,21 @@ msgstr "Importă Geonames"
 
 #: ../gui/wxpython/menustrings.py:78
 msgid "Imports geonames.org country files into a GRASS vector points map."
-msgstr "Importă fișierele de țară geonames.org într-o hartă vectorială punctuală GRASS."
+msgstr ""
+"Importă fișierele de țară geonames.org într-o hartă vectorială punctuală "
+"GRASS."
 
 #: ../gui/wxpython/menustrings.py:79
 msgid "GEOnet import"
 msgstr "Importă GEOnet"
 
 #: ../gui/wxpython/menustrings.py:80
-msgid "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map."
-msgstr "Importă fișiere de țară US-NGA GEOnet Names Server (GNS) într-o hartă vectorială punctuală GRASS."
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+"Importă fișiere de țară US-NGA GEOnet Names Server (GNS) într-o hartă "
+"vectorială punctuală GRASS."
 
 #: ../gui/wxpython/menustrings.py:81
 msgid "Matlab array or Mapgen format import"
@@ -5171,7 +5358,8 @@ msgid "ASCII 3D import"
 msgstr "Importă ASCII 3D"
 
 #: ../gui/wxpython/menustrings.py:85
-msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
+msgid ""
+"Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
 msgstr "Convertește fișier text raster 3D ASCII într-o hartă raster 3D."
 
 #: ../gui/wxpython/menustrings.py:86
@@ -5179,8 +5367,11 @@ msgid "Vis5D import"
 msgstr "Importă Vis5D"
 
 #: ../gui/wxpython/menustrings.py:87
-msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
-msgstr "Importă fișier 3D Vis5D (ex. fișier V5D cu o variabilă și cel mai scurt timp)"
+msgid ""
+"Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 "
+"time step)."
+msgstr ""
+"Importă fișier 3D Vis5D (ex. fișier V5D cu o variabilă și cel mai scurt timp)"
 
 #: ../gui/wxpython/menustrings.py:88
 msgid "Import database table"
@@ -5219,8 +5410,11 @@ msgid "ASCII x,y,z points export"
 msgstr "Exportă puncte ASCII x,y,z"
 
 #: ../gui/wxpython/menustrings.py:97
-msgid "Export a raster map to a text file as x,y,z values based on cell centers."
-msgstr "Exportă hartă raster în fișier text ca valori x,y,z bazate doar pe centrul celulelor."
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+"Exportă hartă raster în fișier text ca valori x,y,z bazate doar pe centrul "
+"celulelor."
 
 #: ../gui/wxpython/menustrings.py:98
 msgid "ESRI ASCII grid export"
@@ -5275,16 +5469,24 @@ msgid "PPM export"
 msgstr "Exportă PPM"
 
 #: ../gui/wxpython/menustrings.py:111
-msgid "Converts a GRASS raster map to a PPM image file at the pixel resolution of the currently defined region."
-msgstr "Convertește harta raster GRASS într-un fișier imagine PPM cu rezoluția pixelului a regiunii curente definită."
+msgid ""
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
+"the currently defined region."
+msgstr ""
+"Convertește harta raster GRASS într-un fișier imagine PPM cu rezoluția "
+"pixelului a regiunii curente definită."
 
 #: ../gui/wxpython/menustrings.py:112
 msgid "PPM from RGB export"
 msgstr "Exportă PPM din RGB"
 
 #: ../gui/wxpython/menustrings.py:113
-msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
-msgstr "Convertește 3 straturi raster GRASS (R,G,B) într-un fișier imagine PPM cu rezoluția pixelului a REGIUNII CURENTE DEFINITĂ."
+msgid ""
+"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
+"resolution of the CURRENTLY DEFINED REGION."
+msgstr ""
+"Convertește 3 straturi raster GRASS (R,G,B) într-un fișier imagine PPM cu "
+"rezoluția pixelului a REGIUNII CURENTE DEFINITĂ."
 
 #: ../gui/wxpython/menustrings.py:114 ../gui/wxpython/menustrings.py:133
 msgid "POV-Ray export"
@@ -5299,8 +5501,12 @@ msgid "TIFF export"
 msgstr "Exportă TIFF"
 
 #: ../gui/wxpython/menustrings.py:117
-msgid "Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel resolution of the currently defined region."
-msgstr "Exportă hartă raster GRASS în imagine TIFF 8/24bit TIFF cu rezoluția pixelului a regiunii definite curent."
+msgid ""
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
+"resolution of the currently defined region."
+msgstr ""
+"Exportă hartă raster GRASS în imagine TIFF 8/24bit TIFF cu rezoluția "
+"pixelului a regiunii definite curent."
 
 #: ../gui/wxpython/menustrings.py:118
 msgid "VRML export"
@@ -5341,7 +5547,8 @@ msgstr "Exportă puncte ASCII/vectori GRASS ASCII"
 
 #: ../gui/wxpython/menustrings.py:128
 msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
-msgstr "Convertește hartă vectorială binară GRASS în harta vectorială ASCII GRASS."
+msgstr ""
+"Convertește hartă vectorială binară GRASS în harta vectorială ASCII GRASS."
 
 #: ../gui/wxpython/menustrings.py:129
 msgid "DXF export"
@@ -5356,8 +5563,11 @@ msgid "Multiple GPS export formats using GPSBabel"
 msgstr "Exportă formate multiple GPS folosind GPSBabel"
 
 #: ../gui/wxpython/menustrings.py:132
-msgid "Exports a vector map to a GPS receiver or file format supported by GpsBabel."
-msgstr "Exportă hartă vectorială la un dispozitiv GPS sau format de fișier acceptat de GpsBabel"
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+"Exportă hartă vectorială la un dispozitiv GPS sau format de fișier acceptat "
+"de GpsBabel"
 
 #: ../gui/wxpython/menustrings.py:134
 msgid "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"
@@ -5421,7 +5631,8 @@ msgstr "Leagă date raster suportate GDAL ca pseudo strat raster GRASS."
 
 #: ../gui/wxpython/menustrings.py:153
 msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
-msgstr "Crează pseudo-hartă vectorială nouă ca o legătură la un strat acceptat OGR."
+msgstr ""
+"Crează pseudo-hartă vectorială nouă ca o legătură la un strat acceptat OGR."
 
 #: ../gui/wxpython/menustrings.py:154
 msgid "Manage maps and volumes"
@@ -5432,8 +5643,13 @@ msgid "Copy"
 msgstr "Copiază"
 
 #: ../gui/wxpython/menustrings.py:156
-msgid "Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset."
-msgstr "Copiază fișiere de date disponibile în calea de căutare și locația celui mai apropiat director sub care a fost creat mapsetul curent."
+msgid ""
+"Copies available data files in the user's current mapset search path and "
+"location to the appropriate element directories under the user's current "
+"mapset."
+msgstr ""
+"Copiază fișiere de date disponibile în calea de căutare și locația celui mai "
+"apropiat director sub care a fost creat mapsetul curent."
 
 #: ../gui/wxpython/menustrings.py:157
 msgid "List"
@@ -5441,15 +5657,20 @@ msgstr "Listă"
 
 #: ../gui/wxpython/menustrings.py:158
 msgid "Lists available GRASS data base files of the user-specified data type."
-msgstr "Listează fișierele de bază disponibile GRASS specificate de utilizator."
+msgstr ""
+"Listează fișierele de bază disponibile GRASS specificate de utilizator."
 
 #: ../gui/wxpython/menustrings.py:159
 msgid "List filtered"
 msgstr "Listă filtrată"
 
 #: ../gui/wxpython/menustrings.py:160
-msgid "Lists available GRASS data base files of the user-specified data type optionally using the search pattern."
-msgstr "Listează fișierele de bază disponibile GRASS specificate de utilizator folosind modulul de căutare."
+msgid ""
+"Lists available GRASS data base files of the user-specified data type "
+"optionally using the search pattern."
+msgstr ""
+"Listează fișierele de bază disponibile GRASS specificate de utilizator "
+"folosind modulul de căutare."
 
 #: ../gui/wxpython/menustrings.py:161 ../gui/wxpython/lmgr/layertree.py:340
 msgid "Rename"
@@ -5510,8 +5731,12 @@ msgid "Vector to volume"
 msgstr "Vector în volume"
 
 #: ../gui/wxpython/menustrings.py:177 ../gui/wxpython/menustrings.py:582
-msgid "Converts a binary GRASS vector map (only points) layer into a 3D GRASS raster map layer."
-msgstr "Convertește hartă vectorială binară GRASS (doar puncte) în hartă raster 3D GRASS."
+msgid ""
+"Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
+"raster map layer."
+msgstr ""
+"Convertește hartă vectorială binară GRASS (doar puncte) în hartă raster 3D "
+"GRASS."
 
 #: ../gui/wxpython/menustrings.py:178 ../gui/wxpython/menustrings.py:583
 msgid "2D vector to 3D vector"
@@ -5582,8 +5807,12 @@ msgid "Bearing/distance to coordinates"
 msgstr "Direcția/distanța la coordonate"
 
 #: ../gui/wxpython/menustrings.py:195
-msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
-msgstr "O utilitate simplă de convertire a direcției și a măsurătorilor de distanță la coordonate și viceversa."
+msgid ""
+"A simple utility for converting bearing and distance measurements to "
+"coordinates and vice versa."
+msgstr ""
+"O utilitate simplă de convertire a direcției și a măsurătorilor de distanță "
+"la coordonate și viceversa."
 
 #: ../gui/wxpython/menustrings.py:196 ../gui/wxpython/lmgr/toolbars.py:142
 msgid "Cartographic Composer"
@@ -5647,7 +5876,8 @@ msgstr "Acces utilizator"
 
 #: ../gui/wxpython/menustrings.py:212
 msgid "Controls access to the current mapset for other users on the system."
-msgstr "Controlează accesul la mapsetul curent pentru alți utilizatori ai sistemului."
+msgstr ""
+"Controlează accesul la mapsetul curent pentru alți utilizatori ai sistemului."
 
 #: ../gui/wxpython/menustrings.py:213
 msgid "Change working environment"
@@ -5679,7 +5909,8 @@ msgstr "Afișează setările"
 
 #: ../gui/wxpython/menustrings.py:220 ../gui/wxpython/menustrings.py:222
 msgid "Outputs and modifies the user's current GRASS variable settings."
-msgstr "Afișează și modifică setările variabilelor ale utilizatorului GRASS curent."
+msgstr ""
+"Afișează și modifică setările variabilelor ale utilizatorului GRASS curent."
 
 #: ../gui/wxpython/menustrings.py:221
 msgid "Change settings"
@@ -5728,15 +5959,20 @@ msgstr "Afișează proiecția hărții"
 
 #: ../gui/wxpython/menustrings.py:233
 msgid "Print projection information (in conventional GRASS format)."
-msgstr "Printează informațiile privind proiecția (în format convențional GRASS)."
+msgstr ""
+"Printează informațiile privind proiecția (în format convențional GRASS)."
 
 #: ../gui/wxpython/menustrings.py:234
 msgid "Manage projections"
 msgstr "Gestionează proiecțiile"
 
 #: ../gui/wxpython/menustrings.py:235
-msgid "Prints and manipulates GRASS projection information files (in various co-ordinate system descriptions)."
-msgstr "Printează și manipulează fișierele de informații cu privire la proiecția GRASS (diverse descrieri la sistemului de coordonate)."
+msgid ""
+"Prints and manipulates GRASS projection information files (in various co-"
+"ordinate system descriptions)."
+msgstr ""
+"Printează și manipulează fișierele de informații cu privire la proiecția "
+"GRASS (diverse descrieri la sistemului de coordonate)."
 
 #: ../gui/wxpython/menustrings.py:236
 msgid "Change projection for current location"
@@ -5789,7 +6025,9 @@ msgstr "Preferințe"
 
 #: ../gui/wxpython/menustrings.py:248
 msgid "User GUI preferences (display font, commands, digitizer, etc.)"
-msgstr "Preferințele GUI ale utilizatorului (font afișare, comenzi, vectorizare, etc.)"
+msgstr ""
+"Preferințele GUI ale utilizatorului (font afișare, comenzi, vectorizare, "
+"etc.)"
 
 #: ../gui/wxpython/menustrings.py:249
 msgid "&Raster"
@@ -5804,8 +6042,13 @@ msgid "Digitize raster (requires XTerm)"
 msgstr "Vectorizare raster (necesită XTerm)"
 
 #: ../gui/wxpython/menustrings.py:252
-msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse) and save to a raster map."
-msgstr "Instrument interactiv utilizat pentru desenarea și salvarea trăsăturilor vectoriale pe un monitor grafic folosind un dispozitiv de indicare (mouse) și salvează harta raster."
+msgid ""
+"Interactive tool used to draw and save vector features on a graphics monitor "
+"using a pointing device (mouse) and save to a raster map."
+msgstr ""
+"Instrument interactiv utilizat pentru desenarea și salvarea trăsăturilor "
+"vectoriale pe un monitor grafic folosind un dispozitiv de indicare (mouse) "
+"și salvează harta raster."
 
 #: ../gui/wxpython/menustrings.py:253
 msgid "Compress/decompress"
@@ -5853,7 +6096,8 @@ msgstr "Re-eșanționează folosind statistici agregate."
 
 #: ../gui/wxpython/menustrings.py:264
 msgid "Resamples raster map layers to a coarser grid using aggregation."
-msgstr "Re-eșanționează straturi raster într-un grid mai grosier folosind agregarea."
+msgstr ""
+"Re-eșanționează straturi raster într-un grid mai grosier folosind agregarea."
 
 #: ../gui/wxpython/menustrings.py:265
 msgid "Resample using multiple methods"
@@ -5861,7 +6105,8 @@ msgstr "Re-eșanționează folosind metode multiple"
 
 #: ../gui/wxpython/menustrings.py:266
 msgid "Resamples raster map layers to a finer grid using interpolation."
-msgstr "Re-eșanționează straturi raster într-un grid mai fin folosind interpolarea."
+msgstr ""
+"Re-eșanționează straturi raster într-un grid mai fin folosind interpolarea."
 
 #: ../gui/wxpython/menustrings.py:267
 msgid "Resample using nearest neighbor"
@@ -5876,8 +6121,14 @@ msgid "Resample using spline tension"
 msgstr "Re-eșanționează folosind spline tension"
 
 #: ../gui/wxpython/menustrings.py:270
-msgid "Reinterpolates and optionally computes topographic analysis from input raster map to a new raster map (possibly with different resolution) using regularized spline with tension and smoothing."
-msgstr "Reinterpolează și opțional calculează analiza topografică de la harta raster de intrare la noua hartă raster (posibil cu rezoluție diferită) folosind metoda regularized spline with tension și netezirea."
+msgid ""
+"Reinterpolates and optionally computes topographic analysis from input "
+"raster map to a new raster map (possibly with different resolution) using "
+"regularized spline with tension and smoothing."
+msgstr ""
+"Reinterpolează și opțional calculează analiza topografică de la harta raster "
+"de intrare la noua hartă raster (posibil cu rezoluție diferită) folosind "
+"metoda regularized spline with tension și netezirea."
 
 #: ../gui/wxpython/menustrings.py:271 ../gui/wxpython/menustrings.py:544
 msgid "Support file maintenance"
@@ -5885,7 +6136,8 @@ msgstr "Întreținerea fișierului suport"
 
 #: ../gui/wxpython/menustrings.py:272
 msgid "Allows creation and/or modification of raster map layer support files."
-msgstr "Permite crearea și/sau modificarea fișierelor suport a hărților raster."
+msgstr ""
+"Permite crearea și/sau modificarea fișierelor suport a hărților raster."
 
 #: ../gui/wxpython/menustrings.py:273
 msgid "Update map statistics"
@@ -5908,8 +6160,12 @@ msgid "Tiling"
 msgstr "Mozaicare"
 
 #: ../gui/wxpython/menustrings.py:278
-msgid "Produces tilings of the source projection for use in the destination region and projection."
-msgstr "Produce o mozaicare a proiecției sursă pentru folosirea în regiunea și proiecția de destinație."
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+"Produce o mozaicare a proiecției sursă pentru folosirea în regiunea și "
+"proiecția de destinație."
 
 #: ../gui/wxpython/menustrings.py:279 ../gui/wxpython/menustrings.py:563
 msgid "Manage colors"
@@ -5929,7 +6185,8 @@ msgstr "Tabela de culori (stddev)"
 
 #: ../gui/wxpython/menustrings.py:283
 msgid "Set color rules based on stddev from a map's mean value."
-msgstr "Setează reguli de culoare bazate pe stddev din valorile medii ale hărții."
+msgstr ""
+"Setează reguli de culoare bazate pe stddev din valorile medii ale hărții."
 
 #: ../gui/wxpython/menustrings.py:284 ../gui/wxpython/menustrings.py:566
 msgid "Color rules"
@@ -5953,14 +6210,17 @@ msgstr "Amestecați 2 culori pentru raster"
 
 #: ../gui/wxpython/menustrings.py:289
 msgid "Blends color components of two raster maps by a given ratio."
-msgstr "Amestecați componentele de culaore a două hărți raster pe baza unei rații date."
+msgstr ""
+"Amestecați componentele de culaore a două hărți raster pe baza unei rații "
+"date."
 
 #: ../gui/wxpython/menustrings.py:290
 msgid "Create RGB"
 msgstr "Crează RBG"
 
 #: ../gui/wxpython/menustrings.py:291
-msgid "Combines red, green and blue raster maps into a single composite raster map."
+msgid ""
+"Combines red, green and blue raster maps into a single composite raster map."
 msgstr "Combină roșu, verde și albastru într-o singură hartă raster."
 
 #: ../gui/wxpython/menustrings.py:292 ../gui/wxpython/menustrings.py:713
@@ -5968,8 +6228,13 @@ msgid "RGB to HIS"
 msgstr "RGB în HIS"
 
 #: ../gui/wxpython/menustrings.py:293
-msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
-msgstr "Generează straturi raster roșu, verde, albastru în combinație cu valorile nuanței, intensității și saturației (HIS) dintr-un strat raster specificat de utilizator."
+msgid ""
+"Generates red, green and blue raster map layers combining hue, intensity and "
+"saturation (HIS) values from user-specified input raster map layers."
+msgstr ""
+"Generează straturi raster roșu, verde, albastru în combinație cu valorile "
+"nuanței, intensității și saturației (HIS) dintr-un strat raster specificat "
+"de utilizator."
 
 #: ../gui/wxpython/menustrings.py:294
 msgid "Query raster maps"
@@ -5996,8 +6261,12 @@ msgid "Buffer rasters"
 msgstr "Buffer raster"
 
 #: ../gui/wxpython/menustrings.py:307
-msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
-msgstr "Crează hartă raster care arată zonele tampon (buffer) în jurul celulelor care conțin valori ne-nule."
+msgid ""
+"Creates a raster map layer showing buffer zones surrounding cells that "
+"contain non-NULL category values."
+msgstr ""
+"Crează hartă raster care arată zonele tampon (buffer) în jurul celulelor "
+"care conțin valori ne-nule."
 
 #: ../gui/wxpython/menustrings.py:308
 msgid "Concentric circles"
@@ -6005,7 +6274,8 @@ msgstr "Cercuri concentrice"
 
 #: ../gui/wxpython/menustrings.py:309
 msgid "Creates a raster map containing concentric rings around a given point."
-msgstr "Crează o hartă raster care conține inele concentrice în jurul punctelor date."
+msgstr ""
+"Crează o hartă raster care conține inele concentrice în jurul punctelor date."
 
 #: ../gui/wxpython/menustrings.py:310
 msgid "Closest points"
@@ -6013,7 +6283,8 @@ msgstr "Punctele mai apropiate"
 
 #: ../gui/wxpython/menustrings.py:311
 msgid "Locates the closest points between objects in two raster maps."
-msgstr "Localizează punctele mai apropiate dintre obiectele din două hărți raster."
+msgstr ""
+"Localizează punctele mai apropiate dintre obiectele din două hărți raster."
 
 #: ../gui/wxpython/menustrings.py:313
 msgid "Creates a MASK for limiting raster operation."
@@ -6036,16 +6307,28 @@ msgid "Moving window"
 msgstr "Mutarea ferestrei"
 
 #: ../gui/wxpython/menustrings.py:318
-msgid "Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer."
-msgstr "Face fiecare valoare a celulei în funcție de valorile de categorii atribuite celulelor din jurul ei și stochează valorile celulei într-o hartă raster de ieșire."
+msgid ""
+"Makes each cell category value a function of the category values assigned to "
+"the cells around it, and stores new cell values in an output raster map "
+"layer."
+msgstr ""
+"Face fiecare valoare a celulei în funcție de valorile de categorii atribuite "
+"celulelor din jurul ei și stochează valorile celulei într-o hartă raster de "
+"ieșire."
 
 #: ../gui/wxpython/menustrings.py:319
 msgid "Neighborhood points"
 msgstr "Punctele vecinătății"
 
 #: ../gui/wxpython/menustrings.py:320
-msgid "Makes each cell value a function of the attribute values assigned to the vector points or centroids around it, and stores new cell values in an output raster map layer."
-msgstr "Face fiecare valoare a celulei în funcție de valorile de categorii atribuite punctelor vectoriale sau centroizilor și stochează valorile celulei într-o hartă raster de ieșire."
+msgid ""
+"Makes each cell value a function of the attribute values assigned to the "
+"vector points or centroids around it, and stores new cell values in an "
+"output raster map layer."
+msgstr ""
+"Face fiecare valoare a celulei în funcție de valorile de categorii atribuite "
+"punctelor vectoriale sau centroizilor și stochează valorile celulei într-o "
+"hartă raster de ieșire."
 
 #: ../gui/wxpython/menustrings.py:321
 msgid "Overlay rasters"
@@ -6056,24 +6339,37 @@ msgid "Cross product"
 msgstr "Produse intersectate"
 
 #: ../gui/wxpython/menustrings.py:323
-msgid "Creates a cross product of the category values from multiple raster map layers."
-msgstr "Crează produse intersectate a categoriilor de valori din straturi multiple de rastere."
+msgid ""
+"Creates a cross product of the category values from multiple raster map "
+"layers."
+msgstr ""
+"Crează produse intersectate a categoriilor de valori din straturi multiple "
+"de rastere."
 
 #: ../gui/wxpython/menustrings.py:324
 msgid "Raster series"
 msgstr "Serii de raster"
 
 #: ../gui/wxpython/menustrings.py:325
-msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
-msgstr "Face fiecare valoare a celulei rezultate în funcție de valorile corespunzătoare celulelor din harta raster de intrare."
+msgid ""
+"Makes each output cell value a function of the values assigned to the "
+"corresponding cells in the input raster map layers."
+msgstr ""
+"Face fiecare valoare a celulei rezultate în funcție de valorile "
+"corespunzătoare celulelor din harta raster de intrare."
 
 #: ../gui/wxpython/menustrings.py:326
 msgid "Patch raster maps"
 msgstr "Combină hărți raster"
 
 #: ../gui/wxpython/menustrings.py:327
-msgid "Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr "Crează o compoziție de hartă raster folosind valorile de categorii cunoscute de la unul (sau mai multe) straturi pentru a umple arealele cu \"no data\" într-o altă hartă."
+msgid ""
+"Creates a composite raster map layer by using known category values from one "
+"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgstr ""
+"Crează o compoziție de hartă raster folosind valorile de categorii cunoscute "
+"de la unul (sau mai multe) straturi pentru a umple arealele cu \"no data\" "
+"într-o altă hartă."
 
 #: ../gui/wxpython/menustrings.py:328
 msgid "Statistical overlay"
@@ -6100,8 +6396,11 @@ msgid "Shadows map"
 msgstr "Harta umbrelor"
 
 #: ../gui/wxpython/menustrings.py:334
-msgid "Calculates cast shadow areas from sun position and elevation raster map."
-msgstr "Calculează zonele umbrite în funcție de poziția soarelui și harta raster de elevație."
+msgid ""
+"Calculates cast shadow areas from sun position and elevation raster map."
+msgstr ""
+"Calculează zonele umbrite în funcție de poziția soarelui și harta raster de "
+"elevație."
 
 #: ../gui/wxpython/menustrings.py:335
 msgid "Terrain analysis"
@@ -6120,16 +6419,31 @@ msgid "Cost surface"
 msgstr "Suprafață de cost"
 
 #: ../gui/wxpython/menustrings.py:339
-msgid "Creates a raster map showing the cumulative cost of moving between different geographic locations on an input raster map whose cell category values represent cost."
-msgstr "Crează o hartă raster care arată costul cumulat a deplasării dintre locații geografice diferite pe o hartă raster a cărui celule are valori ce reprezintă costul."
+msgid ""
+"Creates a raster map showing the cumulative cost of moving between different "
+"geographic locations on an input raster map whose cell category values "
+"represent cost."
+msgstr ""
+"Crează o hartă raster care arată costul cumulat a deplasării dintre locații "
+"geografice diferite pe o hartă raster a cărui celule are valori ce "
+"reprezintă costul."
 
 #: ../gui/wxpython/menustrings.py:340
 msgid "Cumulative movement costs"
 msgstr "Costul cumulat al deplasării"
 
 #: ../gui/wxpython/menustrings.py:341
-msgid "Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost."
-msgstr "Crează o hartă raster care arată costul cumulat anisotropic al deplasării dintre locații geografice diferite pe o hartă raster de elevație ale cărui celule are valori ce reprezintă elevația combinată cu stratul raster de intrare, cel din urmă având valori ale celulelor ce reprezintă costul de frecare."
+msgid ""
+"Outputs a raster map layer showing the anisotropic cumulative cost of moving "
+"between different geographic locations on an input elevation raster map "
+"layer whose cell category values represent elevation combined with an input "
+"raster map layer whose cell values represent friction cost."
+msgstr ""
+"Crează o hartă raster care arată costul cumulat anisotropic al deplasării "
+"dintre locații geografice diferite pe o hartă raster de elevație ale cărui "
+"celule are valori ce reprezintă elevația combinată cu stratul raster de "
+"intrare, cel din urmă având valori ale celulelor ce reprezintă costul de "
+"frecare."
 
 #: ../gui/wxpython/menustrings.py:342
 msgid "Least cost route or flow"
@@ -6152,8 +6466,12 @@ msgid "Slope and aspect"
 msgstr "Panta și orientarea versanților"
 
 #: ../gui/wxpython/menustrings.py:347
-msgid "Generates raster maps of slope, aspect, curvatures and partial derivatives from a elevation raster map."
-msgstr "Generează hărți raster ale pantei, orientării, curburii și derivatelor parțiale dintr-o hartă raster de elevație."
+msgid ""
+"Generates raster maps of slope, aspect, curvatures and partial derivatives "
+"from a elevation raster map."
+msgstr ""
+"Generează hărți raster ale pantei, orientării, curburii și derivatelor "
+"parțiale dintr-o hartă raster de elevație."
 
 #: ../gui/wxpython/menustrings.py:348
 msgid "Terrain parameters"
@@ -6185,7 +6503,9 @@ msgstr "Distanța la trăsături"
 
 #: ../gui/wxpython/menustrings.py:355
 msgid "Generates a raster map layer of distance to features in input layer."
-msgstr "Generează un strat raster pentru distanța dintre trăsături în stratul de intrare."
+msgstr ""
+"Generează un strat raster pentru distanța dintre trăsături în stratul de "
+"intrare."
 
 #: ../gui/wxpython/menustrings.py:356
 msgid "Horizon angle"
@@ -6204,8 +6524,12 @@ msgid "Clump"
 msgstr "Grup"
 
 #: ../gui/wxpython/menustrings.py:360
-msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
-msgstr "Sortează datele dintr-o hartă raster în funcție de gruparea celulelor care formează areale fizice discrete într-o singură categorie."
+msgid ""
+"Recategorizes data in a raster map by grouping cells that form physically "
+"discrete areas into unique categories."
+msgstr ""
+"Sortează datele dintr-o hartă raster în funcție de gruparea celulelor care "
+"formează areale fizice discrete într-o singură categorie."
 
 #: ../gui/wxpython/menustrings.py:361
 msgid "Grow"
@@ -6213,7 +6537,8 @@ msgstr "Dezvoltă"
 
 #: ../gui/wxpython/menustrings.py:362
 msgid "Generates a raster map layer with contiguous areas grown by one cell."
-msgstr "Generează o hartă raster cu areale continuu dezvoltate după o singură celulă."
+msgstr ""
+"Generează o hartă raster cu areale continuu dezvoltate după o singură celulă."
 
 #: ../gui/wxpython/menustrings.py:363
 msgid "Thin"
@@ -6221,7 +6546,9 @@ msgstr "Subțiază"
 
 #: ../gui/wxpython/menustrings.py:364
 msgid "Thins non-zero cells that denote linear features in a raster map."
-msgstr "Subțiază celulele ne-nule care par că aparțin trăsăturilor lineare dintr-o hartă raster."
+msgstr ""
+"Subțiază celulele ne-nule care par că aparțin trăsăturilor lineare dintr-o "
+"hartă raster."
 
 #: ../gui/wxpython/menustrings.py:365
 msgid "Hydrologic modeling"
@@ -6232,8 +6559,12 @@ msgid "Carve stream channels"
 msgstr "Canale de drenaj"
 
 #: ../gui/wxpython/menustrings.py:367
-msgid "Takes vector stream data, transforms it to raster and subtracts depth from the output DEM."
-msgstr "Sunt luate datele vectoriale privind cursul de apă, le transformă în raster și scade adâncimea dintr-un DEM."
+msgid ""
+"Takes vector stream data, transforms it to raster and subtracts depth from "
+"the output DEM."
+msgstr ""
+"Sunt luate datele vectoriale privind cursul de apă, le transformă în raster "
+"și scade adâncimea dintr-un DEM."
 
 #: ../gui/wxpython/menustrings.py:368
 msgid "Fill lake"
@@ -6248,8 +6579,12 @@ msgid "Depressionless map and flowlines"
 msgstr "Harta depresiunilor și liniilor de scurgere"
 
 #: ../gui/wxpython/menustrings.py:371
-msgid "Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map."
-msgstr "Filtrează și generează o harta de elevație a depresiunilor și o hartă a direcției de scurgere dintr-un raster dat."
+msgid ""
+"Filters and generates a depressionless elevation map and a flow direction "
+"map from a given elevation raster map."
+msgstr ""
+"Filtrează și generează o harta de elevație a depresiunilor și o hartă a "
+"direcției de scurgere dintr-un raster dat."
 
 #: ../gui/wxpython/menustrings.py:372
 msgid "Flow accumulation"
@@ -6264,8 +6599,13 @@ msgid "Flow lines"
 msgstr "Liniile de scurgere"
 
 #: ../gui/wxpython/menustrings.py:375
-msgid "Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)."
-msgstr "Construiește curbe de pante (linii de scurgere), lungimea cursului și densitatea cursurilor de scurgere (în amonte) dintr-un model digital al elevației (DEM)."
+msgid ""
+"Construction of slope curves (flowlines), flowpath lengths, and flowline "
+"densities (upslope areas) from a raster digital elevation model (DEM)."
+msgstr ""
+"Construiește curbe de pante (linii de scurgere), lungimea cursului și "
+"densitatea cursurilor de scurgere (în amonte) dintr-un model digital al "
+"elevației (DEM)."
 
 #: ../gui/wxpython/menustrings.py:376
 msgid "Watershed analysis"
@@ -6296,8 +6636,12 @@ msgid "Groundwater modeling"
 msgstr "Modelarea apelor subterane"
 
 #: ../gui/wxpython/menustrings.py:383
-msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
-msgstr "Program de calcul numeric pentru tranzitarea, nelimitată și neînchisă a apelor subterane în două dimensiuni."
+msgid ""
+"Numerical calculation program for transient, confined and unconfined "
+"groundwater flow in two dimensions."
+msgstr ""
+"Program de calcul numeric pentru tranzitarea, nelimitată și neînchisă a "
+"apelor subterane în două dimensiuni."
 
 #: ../gui/wxpython/menustrings.py:384
 msgid "SIMWE Overland flow modeling"
@@ -6312,8 +6656,12 @@ msgid "SIMWE Sediment flux modeling"
 msgstr "Modelarea SIMWE a fluxului de sedimente"
 
 #: ../gui/wxpython/menustrings.py:387
-msgid "Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)."
-msgstr "Simularea transportului de sedimente și eroziune/depozitare folosind metoda (SIMWE)."
+msgid ""
+"Sediment transport and erosion/deposition simulation using path sampling "
+"method (SIMWE)."
+msgstr ""
+"Simularea transportului de sedimente și eroziune/depozitare folosind metoda "
+"(SIMWE)."
 
 #: ../gui/wxpython/menustrings.py:388
 msgid "Topographic index map"
@@ -6340,32 +6688,51 @@ msgid "Set up (requires XTerm)"
 msgstr "Configurează (necesită XTerm)"
 
 #: ../gui/wxpython/menustrings.py:394
-msgid "Interactive tool used to setup the sampling and analysis framework that will be used by the other r.le programs."
-msgstr "Instrument interactiv folosit pentru a seta prelevarea de probe și analiza cadrului care vor fi utilizate de alte r.le programs."
+msgid ""
+"Interactive tool used to setup the sampling and analysis framework that will "
+"be used by the other r.le programs."
+msgstr ""
+"Instrument interactiv folosit pentru a seta prelevarea de probe și analiza "
+"cadrului care vor fi utilizate de alte r.le programs."
 
 #: ../gui/wxpython/menustrings.py:395
 msgid "Analyze landscape"
 msgstr "Analiza peisajului"
 
 #: ../gui/wxpython/menustrings.py:396
-msgid "Contains a set of measures for attributes, diversity, texture, juxtaposition, and edge."
-msgstr "Conține un set de măsuri pentru atribute, diversitate, textură, juxtapunere și unghiuri."
+msgid ""
+"Contains a set of measures for attributes, diversity, texture, "
+"juxtaposition, and edge."
+msgstr ""
+"Conține un set de măsuri pentru atribute, diversitate, textură, juxtapunere "
+"și unghiuri."
 
 #: ../gui/wxpython/menustrings.py:397
 msgid "Analyze patches"
 msgstr "Analizează parcele"
 
 #: ../gui/wxpython/menustrings.py:398
-msgid "Calculates attribute, patch size, core (interior) size, shape, fractal dimension, and perimeter measures for sets of patches in a landscape."
-msgstr "Calculează atribute, dimensiunea parcelei, dimensiunea de bază (interior), forma, dimensiunea fractală și măsoară perimetrul pentru un set de parcele a peisajului."
+msgid ""
+"Calculates attribute, patch size, core (interior) size, shape, fractal "
+"dimension, and perimeter measures for sets of patches in a landscape."
+msgstr ""
+"Calculează atribute, dimensiunea parcelei, dimensiunea de bază (interior), "
+"forma, dimensiunea fractală și măsoară perimetrul pentru un set de parcele a "
+"peisajului."
 
 #: ../gui/wxpython/menustrings.py:399
 msgid "Summary and display (requires XTerm)"
 msgstr "Rezumat și afișare (necesită XTerm)"
 
 #: ../gui/wxpython/menustrings.py:400
-msgid "Displays the boundary of each r.le patch and shows how the boundary is traced, displays the attribute, size, perimeter and shape indices for each patch and saves the data in an output file."
-msgstr "Afișează limitele pentru fiecare  r.le patch și arată cum limitele sunt urmărite, afișează indici precum atributele, dimensiunea, perimetrul și forma pentru fiecare parcelă și salvează datele într-un fișier."
+msgid ""
+"Displays the boundary of each r.le patch and shows how the boundary is "
+"traced, displays the attribute, size, perimeter and shape indices for each "
+"patch and saves the data in an output file."
+msgstr ""
+"Afișează limitele pentru fiecare  r.le patch și arată cum limitele sunt "
+"urmărite, afișează indici precum atributele, dimensiunea, perimetrul și "
+"forma pentru fiecare parcelă și salvează datele într-un fișier."
 
 #: ../gui/wxpython/menustrings.py:401
 msgid "Landscape patch analysis"
@@ -6384,8 +6751,11 @@ msgid "Edge density"
 msgstr "Densitatea marginii"
 
 #: ../gui/wxpython/menustrings.py:405
-msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
-msgstr "Calculează indicele densității marginii pe o hartă raster, folosind algoritmul celor 4 vecini "
+msgid ""
+"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+msgstr ""
+"Calculează indicele densității marginii pe o hartă raster, folosind "
+"algoritmul celor 4 vecini "
 
 #: ../gui/wxpython/menustrings.py:406
 msgid "Contrast weighted edge density"
@@ -6393,15 +6763,21 @@ msgstr "Contrastul ponderat al densității de margine"
 
 #: ../gui/wxpython/menustrings.py:407
 msgid "Calculates contrast weighted edge density index on a raster map"
-msgstr "Calculează constratul ponderat al indicelului densității marginii pe o hartă raster"
+msgstr ""
+"Calculează constratul ponderat al indicelului densității marginii pe o hartă "
+"raster"
 
 #: ../gui/wxpython/menustrings.py:408
 msgid "Patch area mean"
 msgstr "Suprafața medie a parcelei"
 
 #: ../gui/wxpython/menustrings.py:409
-msgid "Calculates mean patch size index on a raster map, using a 4 neighbour algorithm"
-msgstr "Calculează dimensiunea medie a parcelei pe o hartă raster, folosind algoritmul celor 4 vecini"
+msgid ""
+"Calculates mean patch size index on a raster map, using a 4 neighbour "
+"algorithm"
+msgstr ""
+"Calculează dimensiunea medie a parcelei pe o hartă raster, folosind "
+"algoritmul celor 4 vecini"
 
 #: ../gui/wxpython/menustrings.py:410
 msgid "Patch area range"
@@ -6432,16 +6808,22 @@ msgid "Patch density"
 msgstr "Densitatea parcelelor"
 
 #: ../gui/wxpython/menustrings.py:417
-msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
-msgstr "Calculează densitatea parcelelor pe o hartă raster, folosind algoritmul celor 4 vecini"
+msgid ""
+"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
+msgstr ""
+"Calculează densitatea parcelelor pe o hartă raster, folosind algoritmul "
+"celor 4 vecini"
 
 #: ../gui/wxpython/menustrings.py:418
 msgid "Patch number"
 msgstr "Număr de parcele"
 
 #: ../gui/wxpython/menustrings.py:419
-msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
-msgstr "Calculează numărul de parcele pe o hartă raster, folosind algoritmul celor 4 vecini"
+msgid ""
+"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
+msgstr ""
+"Calculează numărul de parcele pe o hartă raster, folosind algoritmul celor 4 "
+"vecini"
 
 #: ../gui/wxpython/menustrings.py:420
 msgid "Dominance's diversity"
@@ -6488,24 +6870,41 @@ msgid "Rate of spread"
 msgstr "Rata de răspândire"
 
 #: ../gui/wxpython/menustrings.py:432
-msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
-msgstr "Generează trei sau patru straturi raster care arată 1) rata de răspândire (ROS) de bază (perpendiculară), 2) ROS maxim (înainte), 3) direcția pentru ROS maxim și opțional 4) potențialul maxim de propagare."
+msgid ""
+"Generates three, or four raster map layers showing 1) the base "
+"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
+"direction of the maximum ROS, and optionally 4) the maximum potential "
+"spotting distance."
+msgstr ""
+"Generează trei sau patru straturi raster care arată 1) rata de răspândire "
+"(ROS) de bază (perpendiculară), 2) ROS maxim (înainte), 3) direcția pentru "
+"ROS maxim și opțional 4) potențialul maxim de propagare."
 
 #: ../gui/wxpython/menustrings.py:433
 msgid "Least-cost spread paths"
 msgstr "Căi de propagare pentru cost minim"
 
 #: ../gui/wxpython/menustrings.py:434
-msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
-msgstr "Trasează recursiv cea mai scurtă cale la celulele de la care a fost determinat costul cumulativ."
+msgid ""
+"Recursively traces the least cost path backwards to cells from which the "
+"cumulative cost was determined."
+msgstr ""
+"Trasează recursiv cea mai scurtă cale la celulele de la care a fost "
+"determinat costul cumulativ."
 
 #: ../gui/wxpython/menustrings.py:435
 msgid "Anisotropic spread simulation"
 msgstr "Simulare de difuzie \"anisotropic\""
 
 #: ../gui/wxpython/menustrings.py:436
-msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."
-msgstr "Simulează răspândirea eliptică \"anisotropic\" pe fereastra grafică și generează o hartă raster a răspândirii cumulative în timp, care conține ratele de răspândire (ROS), direcția ROS și originile răspândirii."
+msgid ""
+"Simulates elliptically anisotropic spread on a graphics window and generates "
+"a raster map of the cumulative time of spread, given raster maps containing "
+"the rates of spread (ROS), the ROS directions and the spread origins."
+msgstr ""
+"Simulează răspândirea eliptică \"anisotropic\" pe fereastra grafică și "
+"generează o hartă raster a răspândirii cumulative în timp, care conține "
+"ratele de răspândire (ROS), direcția ROS și originile răspândirii."
 
 #: ../gui/wxpython/menustrings.py:437
 msgid "Change category values and labels"
@@ -6524,16 +6923,24 @@ msgid "Reclassify by size"
 msgstr "Reclasifică în funcție de dimensiune"
 
 #: ../gui/wxpython/menustrings.py:441
-msgid "Reclasses a raster map greater or less than user specified area size (in hectares)."
-msgstr "Reclasifică o hartă raster la o dimensiune mai mare sau egală cu valoarea specificată (în hectare) de utilizator."
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+"Reclasifică o hartă raster la o dimensiune mai mare sau egală cu valoarea "
+"specificată (în hectare) de utilizator."
 
 #: ../gui/wxpython/menustrings.py:442 ../gui/wxpython/menustrings.py:648
 msgid "Reclassify"
 msgstr "Reclasifică"
 
 #: ../gui/wxpython/menustrings.py:443
-msgid "Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer."
-msgstr "Crează un strat nou ale cărui valori sunt bazate pe reclasificarea categoriilor din stratul raster existent."
+msgid ""
+"Creates a new map layer whose category values are based upon a "
+"reclassification of the categories in an existing raster map layer."
+msgstr ""
+"Crează un strat nou ale cărui valori sunt bazate pe reclasificarea "
+"categoriilor din stratul raster existent."
 
 #: ../gui/wxpython/menustrings.py:444
 msgid "Recode"
@@ -6556,8 +6963,11 @@ msgid "Rescale with histogram"
 msgstr "Redimensionează cu histogramă"
 
 #: ../gui/wxpython/menustrings.py:449
-msgid "Rescales histogram equalized the range of category values in a raster map layer."
-msgstr "Redimensionează histograma egalizată cu gama de valori din stratul raster."
+msgid ""
+"Rescales histogram equalized the range of category values in a raster map "
+"layer."
+msgstr ""
+"Redimensionează histograma egalizată cu gama de valori din stratul raster."
 
 #: ../gui/wxpython/menustrings.py:450
 msgid "Generate random cells"
@@ -6576,8 +6986,12 @@ msgid "Random cells and vector points"
 msgstr "Celule și puncte vectoriale aleatorii"
 
 #: ../gui/wxpython/menustrings.py:454
-msgid "Creates a raster map layer and vector point map containing randomly located points."
-msgstr "Crează strat raster și puncte vectoriale care conțin puncte localizate aleatoriu."
+msgid ""
+"Creates a raster map layer and vector point map containing randomly located "
+"points."
+msgstr ""
+"Crează strat raster și puncte vectoriale care conțin puncte localizate "
+"aleatoriu."
 
 #: ../gui/wxpython/menustrings.py:455
 msgid "Generate surfaces"
@@ -6596,32 +7010,51 @@ msgid "Gaussian kernel density surface"
 msgstr "Suprafața densității Gaussian kernel"
 
 #: ../gui/wxpython/menustrings.py:459
-msgid "Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network."
-msgstr "Generează harta densității de tip raster din puncte vectoriale folosind mutarea kernel sau opțional generează harta densității de tip vector pe o rețea vectorială."
+msgid ""
+"Generates a raster density map from vector point data using a moving kernel "
+"or optionally generates a vector density map on a vector network."
+msgstr ""
+"Generează harta densității de tip raster din puncte vectoriale folosind "
+"mutarea kernel sau opțional generează harta densității de tip vector pe o "
+"rețea vectorială."
 
 #: ../gui/wxpython/menustrings.py:460
 msgid "Gaussian deviates surface"
 msgstr "Suprafața deviației Gaussiene"
 
 #: ../gui/wxpython/menustrings.py:461
-msgid "GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator."
-msgstr "Modul GRASS pentru a produce o hartă raster a deviației gaussiene a căror deviație standard și medie pot fi exprimate de utilizator. Folosește o generare aleatorie gaussiană de numere."
+msgid ""
+"GRASS module to produce a raster map layer of gaussian deviates whose mean "
+"and standard deviation can be expressed by the user. It uses a gaussian "
+"random number generator."
+msgstr ""
+"Modul GRASS pentru a produce o hartă raster a deviației gaussiene a căror "
+"deviație standard și medie pot fi exprimate de utilizator. Folosește o "
+"generare aleatorie gaussiană de numere."
 
 #: ../gui/wxpython/menustrings.py:462 ../gui/wxpython/nviz/tools.py:4307
 msgid "Plane"
 msgstr "Plan"
 
 #: ../gui/wxpython/menustrings.py:463
-msgid "Creates raster plane map given dip (inclination), aspect (azimuth) and one point."
-msgstr "Crează un pan de hartă raster cu un anumit dip (înclinație), orientare (azimut) și un punct."
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+"Crează un pan de hartă raster cu un anumit dip (înclinație), orientare "
+"(azimut) și un punct."
 
 #: ../gui/wxpython/menustrings.py:464
 msgid "Random deviates surface"
 msgstr "Abaterea aleatorie a suprafeței"
 
 #: ../gui/wxpython/menustrings.py:465
-msgid "Produces a raster map of uniform random deviates whose range can be expressed by the user."
-msgstr "Produce o hartă raster a deviației aleatorii uniforme a cărui interval poate fi exprimat de către utilizator."
+msgid ""
+"Produces a raster map of uniform random deviates whose range can be "
+"expressed by the user."
+msgstr ""
+"Produce o hartă raster a deviației aleatorii uniforme a cărui interval poate "
+"fi exprimat de către utilizator."
 
 #: ../gui/wxpython/menustrings.py:466
 msgid "Random surface with spatial dependence"
@@ -6672,8 +7105,12 @@ msgid "IDW from vector points"
 msgstr "IDW din puncte vectoriale"
 
 #: ../gui/wxpython/menustrings.py:478
-msgid "Surface interpolation from vector point data by Inverse Distance Squared Weighting."
-msgstr "Interpolarea suprafeței din puncte vectoriale în funcție de Inversul Distanței de Pondere Pătratică."
+msgid ""
+"Surface interpolation from vector point data by Inverse Distance Squared "
+"Weighting."
+msgstr ""
+"Interpolarea suprafeței din puncte vectoriale în funcție de Inversul "
+"Distanței de Pondere Pătratică."
 
 #: ../gui/wxpython/menustrings.py:479
 msgid "Raster contours"
@@ -6688,8 +7125,14 @@ msgid "Regularized spline tension"
 msgstr "Regularized spline tension"
 
 #: ../gui/wxpython/menustrings.py:482
-msgid "Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension."
-msgstr "Aproximarea spațială și analiza topografică de la un punct dat sau date de tip izolinii în format vectorial în format raster de puncte reale folosind metoda regularized spline with tension."
+msgid ""
+"Spatial approximation and topographic analysis from given point or isoline "
+"data in vector format to floating point raster format using regularized "
+"spline with tension."
+msgstr ""
+"Aproximarea spațială și analiza topografică de la un punct dat sau date de "
+"tip izolinii în format vectorial în format raster de puncte reale folosind "
+"metoda regularized spline with tension."
 
 #: ../gui/wxpython/menustrings.py:483
 msgid "Ordinary or block kriging"
@@ -6705,7 +7148,8 @@ msgstr "Umple celulele nule"
 
 #: ../gui/wxpython/menustrings.py:486
 msgid "Fills no-data areas in raster maps using spline interpolation."
-msgstr "Umple arealele fără date din harta raster folosind interpolarea spline."
+msgstr ""
+"Umple arealele fără date din harta raster folosind interpolarea spline."
 
 #: ../gui/wxpython/menustrings.py:487 ../gui/wxpython/menustrings.py:764
 msgid "Report and statistics"
@@ -6724,8 +7168,12 @@ msgid "Manage category information"
 msgstr "Gestionează categorii de informații"
 
 #: ../gui/wxpython/menustrings.py:491
-msgid "Manages category values and labels associated with user-specified raster map layers."
-msgstr "Gestionează categorii de valori și etichete asociate cu o hartă raster specificată de utilizator."
+msgid ""
+"Manages category values and labels associated with user-specified raster map "
+"layers."
+msgstr ""
+"Gestionează categorii de valori și etichete asociate cu o hartă raster "
+"specificată de utilizator."
 
 #: ../gui/wxpython/menustrings.py:492
 msgid "General statistics"
@@ -6772,8 +7220,12 @@ msgid "Statistics for clumped cells"
 msgstr "Statistici pentru grupuri de celule"
 
 #: ../gui/wxpython/menustrings.py:503
-msgid "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS vector points map containing the calculated centroids of these clumps."
-msgstr "Calculează volumul grupurilor de date și opțional produce hărți ale punctelor vectoriale GRASS care au calculat centroidul acestor grupuri."
+msgid ""
+"Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
+"vector points map containing the calculated centroids of these clumps."
+msgstr ""
+"Calculează volumul grupurilor de date și opțional produce hărți ale "
+"punctelor vectoriale GRASS care au calculat centroidul acestor grupuri."
 
 #: ../gui/wxpython/menustrings.py:504
 msgid "Total corrected area"
@@ -6788,7 +7240,8 @@ msgid "Univariate raster statistics"
 msgstr "Statistici univariate pentru raster"
 
 #: ../gui/wxpython/menustrings.py:507
-msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgid ""
+"Calculates univariate statistics from the non-null cells of a raster map."
 msgstr "Calculează statistici univariate din celule ne-nule ale hărții raster."
 
 #: ../gui/wxpython/menustrings.py:508
@@ -6797,23 +7250,32 @@ msgstr "Exemple de transects"
 
 #: ../gui/wxpython/menustrings.py:509
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr "Afișează valorile stratului raster situate de-a lungul liniei definită de utilizator."
+msgstr ""
+"Afișează valorile stratului raster situate de-a lungul liniei definită de "
+"utilizator."
 
 #: ../gui/wxpython/menustrings.py:510
 msgid "Sample transects (bearing/distance)"
 msgstr "Exemple de transects (direcție/distanță)"
 
 #: ../gui/wxpython/menustrings.py:511
-msgid "Outputs raster map layer values lying along user defined transect line(s)."
-msgstr "Afișează valorile stratului raster situate de-a lungul liniei transect definită de utilizator."
+msgid ""
+"Outputs raster map layer values lying along user defined transect line(s)."
+msgstr ""
+"Afișează valorile stratului raster situate de-a lungul liniei transect "
+"definită de utilizator."
 
 #: ../gui/wxpython/menustrings.py:512
 msgid "Covariance/correlation"
 msgstr "Covarianță/corelație"
 
 #: ../gui/wxpython/menustrings.py:513
-msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
-msgstr "Crează matricea de covarianță/corelație pentru o hartă raster specificată de utilizator."
+msgid ""
+"Outputs a covariance/correlation matrix for user-specified raster map layer"
+"(s)."
+msgstr ""
+"Crează matricea de covarianță/corelație pentru o hartă raster specificată de "
+"utilizator."
 
 #: ../gui/wxpython/menustrings.py:514
 msgid "Linear regression"
@@ -6828,8 +7290,12 @@ msgid "Mutual category occurrences"
 msgstr "Apariția reciprocă a categoriilor"
 
 #: ../gui/wxpython/menustrings.py:517
-msgid "Tabulates the mutual occurrence (coincidence) of categories for two raster map layers."
-msgstr "Cataloghează apariția reciprocă (coincidență) a categoriilor pentru două straturi raster."
+msgid ""
+"Tabulates the mutual occurrence (coincidence) of categories for two raster "
+"map layers."
+msgstr ""
+"Cataloghează apariția reciprocă (coincidență) a categoriilor pentru două "
+"straturi raster."
 
 #: ../gui/wxpython/menustrings.py:518
 msgid "&Vector"
@@ -6856,8 +7322,12 @@ msgid "Edit vector map (non-interactively)"
 msgstr "Editează harta vectorială (neinteractiv)"
 
 #: ../gui/wxpython/menustrings.py:525
-msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
-msgstr "Editarea unei hărți vectoriale, permite adăugarea, ștergerea și modificarea trăsăturilor vectoriale selectate."
+msgid ""
+"Edits a vector map, allows adding, deleting and modifying selected vector "
+"features."
+msgstr ""
+"Editarea unei hărți vectoriale, permite adăugarea, ștergerea și modificarea "
+"trăsăturilor vectoriale selectate."
 
 #: ../gui/wxpython/menustrings.py:526
 msgid "Convert object types"
@@ -6880,8 +7350,12 @@ msgid "Dissolve boundaries"
 msgstr "Dizolvă limitele"
 
 #: ../gui/wxpython/menustrings.py:531
-msgid "Dissolves boundaries between adjacent areas sharing a common category number or attribute."
-msgstr "Se dizolvă limitele dintre arealele adiacente un număr comun de categorii sau atribute."
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+"Se dizolvă limitele dintre arealele adiacente un număr comun de categorii "
+"sau atribute."
 
 #: ../gui/wxpython/menustrings.py:532
 msgid "Create 3D vector over raster"
@@ -6889,7 +7363,8 @@ msgstr "Crează vector 3D peste raster "
 
 #: ../gui/wxpython/menustrings.py:533
 msgid "Converts vector map to 3D by sampling of elevation raster map."
-msgstr "Convertește harta vectorială 3D în funcție de harta raster de elevație."
+msgstr ""
+"Convertește harta vectorială 3D în funcție de harta raster de elevație."
 
 #: ../gui/wxpython/menustrings.py:534
 msgid "Extrude 3D vector map"
@@ -6897,7 +7372,8 @@ msgstr "Extrudarea 3D  a hărții vectoriale"
 
 #: ../gui/wxpython/menustrings.py:535
 msgid "Extrudes flat vector object to 3D with defined height."
-msgstr "Extrudarea obiectului vectorial plat la 3D în funcție de înălțimea definită."
+msgstr ""
+"Extrudarea obiectului vectorial plat la 3D în funcție de înălțimea definită."
 
 #: ../gui/wxpython/menustrings.py:536
 msgid "Create labels"
@@ -6905,7 +7381,8 @@ msgstr "Crează etichete"
 
 #: ../gui/wxpython/menustrings.py:537
 msgid "Creates paint labels for a vector map from attached attributes."
-msgstr "Crează etichete de culoare pentru harta vectorială în funcție de atribute."
+msgstr ""
+"Crează etichete de culoare pentru harta vectorială în funcție de atribute."
 
 #: ../gui/wxpython/menustrings.py:538
 msgid "Create optimally placed labels"
@@ -6920,8 +7397,12 @@ msgid "Reposition vector map"
 msgstr "Repoziționează harta vectorială"
 
 #: ../gui/wxpython/menustrings.py:541
-msgid "Performs an affine transformation (shift, scale and rotate, or GPCs) on vector map."
-msgstr "Se efectuează o transformare afină (deplasare, scară și rotire, sau puncte de control) pe harta vectorială."
+msgid ""
+"Performs an affine transformation (shift, scale and rotate, or GPCs) on "
+"vector map."
+msgstr ""
+"Se efectuează o transformare afină (deplasare, scară și rotire, sau puncte "
+"de control) pe harta vectorială."
 
 #: ../gui/wxpython/menustrings.py:542
 msgid "Reproject vector map"
@@ -6953,7 +7434,9 @@ msgstr "Reconstruiește topologie pentru toate hărțile vectoriale"
 
 #: ../gui/wxpython/menustrings.py:550
 msgid "Rebuilds topology on all vector maps in the current mapset."
-msgstr "Reconstruiește topologie pentru toate hărțile vectoriale din mapset-ul curent."
+msgstr ""
+"Reconstruiește topologie pentru toate hărțile vectoriale din mapset-ul "
+"curent."
 
 #: ../gui/wxpython/menustrings.py:551
 msgid "Build polylines"
@@ -7004,8 +7487,11 @@ msgid "Adds missing centroids to closed boundaries."
 msgstr "Adaugă centroizi pentru a închide limitele."
 
 #: ../gui/wxpython/menustrings.py:565
-msgid "Set color rules for features in a vector using a numeric attribute column."
-msgstr "Stabilește reguli de culoare a trasăturilor vectoriale folosind o coloană de atribute numerice."
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+"Stabilește reguli de culoare a trasăturilor vectoriale folosind o coloană de "
+"atribute numerice."
 
 #: ../gui/wxpython/menustrings.py:567
 msgid "Interactive management of vector color tables."
@@ -7040,24 +7526,34 @@ msgid "Attribute query"
 msgstr "Interoghează atribute"
 
 #: ../gui/wxpython/menustrings.py:575
-msgid "Selects vector objects from an existing vector map and creates a new map containing only the selected objects."
-msgstr "Selectează obiectele vectoriale dintr-o hartă vectorială existentă și crează o hartă nouă care să conțină doar obiectele selectate."
+msgid ""
+"Selects vector objects from an existing vector map and creates a new map "
+"containing only the selected objects."
+msgstr ""
+"Selectează obiectele vectoriale dintr-o hartă vectorială existentă și crează "
+"o hartă nouă care să conțină doar obiectele selectate."
 
 #: ../gui/wxpython/menustrings.py:576
 msgid "Spatial query"
 msgstr "Interoghează spațial"
 
 #: ../gui/wxpython/menustrings.py:577
-msgid "Selects features from vector map (A) by features from other vector map (B)."
-msgstr "Selectează trăsături din harta vectorială (A) în funcție de trăsăturile din harta vectorială (B)."
+msgid ""
+"Selects features from vector map (A) by features from other vector map (B)."
+msgstr ""
+"Selectează trăsături din harta vectorială (A) în funcție de trăsăturile din "
+"harta vectorială (B)."
 
 #: ../gui/wxpython/menustrings.py:587
 msgid "Buffer vectors"
 msgstr "Buffer pentru vectori"
 
 #: ../gui/wxpython/menustrings.py:588
-msgid "Creates a buffer around features of given type (areas must contain centroid)."
-msgstr "Crează o zonă tampon în jurul trăsăturii pentru un tip dat (arealele trebuie să conțină centroizi)."
+msgid ""
+"Creates a buffer around features of given type (areas must contain centroid)."
+msgstr ""
+"Crează o zonă tampon în jurul trăsăturii pentru un tip dat (arealele trebuie "
+"să conțină centroizi)."
 
 #: ../gui/wxpython/menustrings.py:589
 msgid "Lidar analysis"
@@ -7076,16 +7572,24 @@ msgid "Detect interiors"
 msgstr "Detectează interioare"
 
 #: ../gui/wxpython/menustrings.py:593
-msgid "Building contour determination and Region Growing algorithm for determining the building inside"
-msgstr "Determinarea conturului de construcție și algoritmul Regiunii de Creștere pentru determinarea interiorului clădirii"
+msgid ""
+"Building contour determination and Region Growing algorithm for determining "
+"the building inside"
+msgstr ""
+"Determinarea conturului de construcție și algoritmul Regiunii de Creștere "
+"pentru determinarea interiorului clădirii"
 
 #: ../gui/wxpython/menustrings.py:594
 msgid "Correct and reclassify objects"
 msgstr "Corectează și reclasifică obiectele"
 
 #: ../gui/wxpython/menustrings.py:595
-msgid "Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering."
-msgstr "Corectarea de ieșire cu v.lidar.growing. Acesta este ultimul din cei trei algoritmi de filtrare pentru LIDAR."
+msgid ""
+"Correction of the v.lidar.growing output. It is the last of the three "
+"algorithms for LIDAR filtering."
+msgstr ""
+"Corectarea de ieșire cu v.lidar.growing. Acesta este ultimul din cei trei "
+"algoritmi de filtrare pentru LIDAR."
 
 #: ../gui/wxpython/menustrings.py:596
 msgid "Linear referencing"
@@ -7105,31 +7609,44 @@ msgstr "Crează staționare"
 
 #: ../gui/wxpython/menustrings.py:600
 msgid "Creates stationing from input lines, and linear reference system"
-msgstr "Crează staționare pentru liniile de intrare, și sistem de referință linear"
+msgstr ""
+"Crează staționare pentru liniile de intrare, și sistem de referință linear"
 
 #: ../gui/wxpython/menustrings.py:601
 msgid "Create points/segments"
 msgstr "Crează puncte/segmente"
 
 #: ../gui/wxpython/menustrings.py:602
-msgid "Creates points/segments from input lines, linear reference system and positions read from stdin or a file."
-msgstr "Crează puncte/segmente din linii de intrare, sistem de referință linear și poziții citite din stdin sau din fișier."
+msgid ""
+"Creates points/segments from input lines, linear reference system and "
+"positions read from stdin or a file."
+msgstr ""
+"Crează puncte/segmente din linii de intrare, sistem de referință linear și "
+"poziții citite din stdin sau din fișier."
 
 #: ../gui/wxpython/menustrings.py:603
 msgid "Find line id and offset"
 msgstr "Găsește id-ul liniei și offset"
 
 #: ../gui/wxpython/menustrings.py:604
-msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
-msgstr "Găsește id-ul liniei și km real+offset pentru anumite puncte din harta vectorială folosind sistemul de referință linear."
+msgid ""
+"Finds line id and real km+offset for given points in vector map using linear "
+"reference system."
+msgstr ""
+"Găsește id-ul liniei și km real+offset pentru anumite puncte din harta "
+"vectorială folosind sistemul de referință linear."
 
 #: ../gui/wxpython/menustrings.py:605
 msgid "Nearest features"
 msgstr "Cele mai apropiate trăsături"
 
 #: ../gui/wxpython/menustrings.py:606
-msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
-msgstr "Găsește cele mai apropiate elemente din harta vectorială 'to' cu elementele din harta vectorială 'from'."
+msgid ""
+"Finds the nearest element in vector map 'to' for elements in vector map "
+"'from'."
+msgstr ""
+"Găsește cele mai apropiate elemente din harta vectorială 'to' cu elementele "
+"din harta vectorială 'from'."
 
 #: ../gui/wxpython/menustrings.py:607
 msgid "Network analysis"
@@ -7149,7 +7666,9 @@ msgstr "Alocare de subrețele"
 
 #: ../gui/wxpython/menustrings.py:611
 msgid "Allocate subnets for nearest centres (direction from centre)."
-msgstr "Alocarea subrețelelor pentru cei mai apropiați centrii (direcție dinspre centru)."
+msgstr ""
+"Alocarea subrețelelor pentru cei mai apropiați centrii (direcție dinspre "
+"centru)."
 
 #: ../gui/wxpython/menustrings.py:612
 msgid "Split net"
@@ -7172,8 +7691,12 @@ msgid "Shortest path for sets of features"
 msgstr "Calea cea mai scurtă pentru seturi de trăsături"
 
 #: ../gui/wxpython/menustrings.py:617
-msgid "Computes shortest distance via the network between the given sets of features."
-msgstr "Calculează distanța cea mai scurtă prin intermediul rețelei dintre anumite seturi de trăsături."
+msgid ""
+"Computes shortest distance via the network between the given sets of "
+"features."
+msgstr ""
+"Calculează distanța cea mai scurtă prin intermediul rețelei dintre anumite "
+"seturi de trăsături."
 
 #: ../gui/wxpython/menustrings.py:618
 msgid "Shortest path using timetables"
@@ -7189,7 +7712,8 @@ msgstr "Calea cea mai scurtă pentru toate perechile"
 
 #: ../gui/wxpython/menustrings.py:621
 msgid "Computes the shortest path between all pairs of nodes in the network."
-msgstr "Calculează calea cea mai scurtă dintre toate perechile de noduri din rețea."
+msgstr ""
+"Calculează calea cea mai scurtă dintre toate perechile de noduri din rețea."
 
 #: ../gui/wxpython/menustrings.py:622
 msgid "Visibility network"
@@ -7221,7 +7745,9 @@ msgstr "Conectivitatea vertex-ului"
 
 #: ../gui/wxpython/menustrings.py:629
 msgid "Computes vertex connectivity between two sets of nodes in the network."
-msgstr "Calculează conectivitatea punctelor de inflexiune dintre două seturi de noduri din rețea."
+msgstr ""
+"Calculează conectivitatea punctelor de inflexiune dintre două seturi de "
+"noduri din rețea."
 
 #: ../gui/wxpython/menustrings.py:630
 msgid "Components"
@@ -7229,15 +7755,20 @@ msgstr "Componente"
 
 #: ../gui/wxpython/menustrings.py:631
 msgid "Computes strongly and weakly connected components in the network."
-msgstr "Calculează componentele cele mai puternic și cele mai slab conectate din rețea."
+msgstr ""
+"Calculează componentele cele mai puternic și cele mai slab conectate din "
+"rețea."
 
 #: ../gui/wxpython/menustrings.py:632
 msgid "Centrality"
 msgstr "Centralitate"
 
 #: ../gui/wxpython/menustrings.py:633
-msgid "Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network."
-msgstr "Calculează gradele, centralitatea, aproprierea și vectorii eigen din rețea."
+msgid ""
+"Computes degree, centrality, betweeness, closeness and eigenvector "
+"centrality measures in the network."
+msgstr ""
+"Calculează gradele, centralitatea, aproprierea și vectorii eigen din rețea."
 
 #: ../gui/wxpython/menustrings.py:634
 msgid "Steiner tree"
@@ -7261,7 +7792,9 @@ msgstr "Analiză de tip 'vânzător călător'"
 
 #: ../gui/wxpython/menustrings.py:639
 msgid "Creates a cycle connecting given nodes (Traveling salesman problem)."
-msgstr "Crearea de ciclu conectat la anumite noduri (Problema 'vânzătorului călător')."
+msgstr ""
+"Crearea de ciclu conectat la anumite noduri (Problema 'vânzătorului "
+"călător')."
 
 #: ../gui/wxpython/menustrings.py:640 ../gui/wxpython/menustrings.py:641
 msgid "Overlay vector maps"
@@ -7289,19 +7822,29 @@ msgstr "Gestionează sau raportează categoriile"
 
 #: ../gui/wxpython/menustrings.py:647
 msgid "Attach, delete or report vector categories to map geometry."
-msgstr "Atașează, șterge sau raportează categoriile vectoriale din harta geometrică."
+msgstr ""
+"Atașează, șterge sau raportează categoriile vectoriale din harta geometrică."
 
 #: ../gui/wxpython/menustrings.py:649
-msgid "Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column."
-msgstr "Schimbă valorile de categorie vectorială pentru o hartă vectorială existentă în funcție de rezultatele interogărilor SQL sau de valorile din coloana de atribute din tabel."
+msgid ""
+"Changes vector category values for an existing vector map according to "
+"results of SQL queries or a value in attribute table column."
+msgstr ""
+"Schimbă valorile de categorie vectorială pentru o hartă vectorială existentă "
+"în funcție de rezultatele interogărilor SQL sau de valorile din coloana de "
+"atribute din tabel."
 
 #: ../gui/wxpython/menustrings.py:651
 msgid "Update area attributes from raster"
 msgstr "Actualizează atributele zonei dintr-un raster"
 
 #: ../gui/wxpython/menustrings.py:652
-msgid "Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns."
-msgstr "Calculează statistici univariate dintr-o hartă raster bazată pe poligoane vectoriale și încarcă statisticile în coloane noi de atribute."
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr ""
+"Calculează statistici univariate dintr-o hartă raster bazată pe poligoane "
+"vectoriale și încarcă statisticile în coloane noi de atribute."
 
 #: ../gui/wxpython/menustrings.py:653
 msgid "Update point attributes from areas"
@@ -7309,7 +7852,8 @@ msgstr "Actualizează atributele punctelor din areale"
 
 #: ../gui/wxpython/menustrings.py:654
 msgid "Uploads vector values at positions of vector points to the table."
-msgstr "Încarcă valorile vectorilor în pozițiile punctelor vectoriale din tabel."
+msgstr ""
+"Încarcă valorile vectorilor în pozițiile punctelor vectoriale din tabel."
 
 #: ../gui/wxpython/menustrings.py:655
 msgid "Update database values from vector"
@@ -7360,16 +7904,24 @@ msgid "Delaunay triangles"
 msgstr "Triunghiuri Delaunay"
 
 #: ../gui/wxpython/menustrings.py:667
-msgid "Creates a Delaunay triangulation from an input vector map containing points or centroids."
-msgstr "Crează triangulația Delaunay dintr-o hartă vectorială de intrare care conține puncte sau centrozi."
+msgid ""
+"Creates a Delaunay triangulation from an input vector map containing points "
+"or centroids."
+msgstr ""
+"Crează triangulația Delaunay dintr-o hartă vectorială de intrare care "
+"conține puncte sau centrozi."
 
 #: ../gui/wxpython/menustrings.py:668
 msgid "Voronoi diagram/Thiessen polygons"
 msgstr "Diagrama Voronoi/Poligoane Thiessen"
 
 #: ../gui/wxpython/menustrings.py:669
-msgid "Creates a Voronoi diagram from an input vector map containing points or centroids."
-msgstr "Crează diagrama Voronoi dintr-o hartă vectorială de intrare care conține puncte sau centrozi."
+msgid ""
+"Creates a Voronoi diagram from an input vector map containing points or "
+"centroids."
+msgstr ""
+"Crează diagrama Voronoi dintr-o hartă vectorială de intrare care conține "
+"puncte sau centrozi."
 
 #: ../gui/wxpython/menustrings.py:670
 msgid "Generate grid"
@@ -7388,8 +7940,11 @@ msgid "Generate from database"
 msgstr "Generează din baza de date"
 
 #: ../gui/wxpython/menustrings.py:674
-msgid "Creates new vector (points) map from database table containing coordinates."
-msgstr "Crează hartă vectorială nouă (puncte) din tabelul bazei de date care conține coordonate."
+msgid ""
+"Creates new vector (points) map from database table containing coordinates."
+msgstr ""
+"Crează hartă vectorială nouă (puncte) din tabelul bazei de date care conține "
+"coordonate."
 
 #: ../gui/wxpython/menustrings.py:675
 msgid "Generate points along lines"
@@ -7397,7 +7952,8 @@ msgstr "Generează puncte de-a lungul liniilor"
 
 #: ../gui/wxpython/menustrings.py:676
 msgid "Create points along input lines in new vector with 2 layers."
-msgstr "Crează puncte de-a lungul liniilor de intrare în vector nou cu 2 straturi."
+msgstr ""
+"Crează puncte de-a lungul liniilor de intrare în vector nou cu 2 straturi."
 
 #: ../gui/wxpython/menustrings.py:677
 msgid "Generate random points"
@@ -7441,7 +7997,9 @@ msgstr "Metadata vectorului de bază"
 
 #: ../gui/wxpython/menustrings.py:687
 msgid "Outputs basic information about a user-specified vector map."
-msgstr "Transmite informații de bază despre harta vectorială specificată de utilizator."
+msgstr ""
+"Transmite informații de bază despre harta vectorială specificată de "
+"utilizator."
 
 #: ../gui/wxpython/menustrings.py:688
 msgid "Classify attribute data"
@@ -7464,16 +8022,24 @@ msgid "Univariate attribute statistics for points"
 msgstr "Statistici univariate de atribute pentru puncte"
 
 #: ../gui/wxpython/menustrings.py:693
-msgid "Calculates univariate statistics for attribute. Variance and standard deviation is calculated only for points if specified."
-msgstr "Calculează statistici univariate pentru atribute. Varianța și deviația standard sunt calculate doar pentru punctele specificate."
+msgid ""
+"Calculates univariate statistics for attribute. Variance and standard "
+"deviation is calculated only for points if specified."
+msgstr ""
+"Calculează statistici univariate pentru atribute. Varianța și deviația "
+"standard sunt calculate doar pentru punctele specificate."
 
 #: ../gui/wxpython/menustrings.py:694
 msgid "Univariate statistics for attribute columns"
 msgstr "Statistici univariate pentru coloanele de atribute"
 
 #: ../gui/wxpython/menustrings.py:695
-msgid "Calculates univariate statistics on selected table column for a GRASS vector map."
-msgstr "Calculează statistici univariate pe coloana tabelului selectat pentru o hartă vectorială GRASS."
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr ""
+"Calculează statistici univariate pe coloana tabelului selectat pentru o "
+"hartă vectorială GRASS."
 
 #: ../gui/wxpython/menustrings.py:696
 msgid "Quadrat indices"
@@ -7521,7 +8087,9 @@ msgstr "Mozaic de imagini"
 
 #: ../gui/wxpython/menustrings.py:707
 msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
-msgstr "Mozaic de până la 4 imagini și extiderea hărții de culoare; crează hartă *.mozaic"
+msgstr ""
+"Mozaic de până la 4 imagini și extiderea hărții de culoare; crează hartă *."
+"mozaic"
 
 #: ../gui/wxpython/menustrings.py:708
 msgid "Manage image colors"
@@ -7540,20 +8108,32 @@ msgid "HIS to RGB"
 msgstr "HIS - RGB"
 
 #: ../gui/wxpython/menustrings.py:712
-msgid "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to RGB (Red-Green-Blue) color space."
-msgstr "Transformă harta raster din sistemul HIS (Valoare-Intensitate-Saturație) în sistemul de culori RGB (Roșu-Verde-Albastru)."
+msgid ""
+"Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
+"RGB (Red-Green-Blue) color space."
+msgstr ""
+"Transformă harta raster din sistemul HIS (Valoare-Intensitate-Saturație) în "
+"sistemul de culori RGB (Roșu-Verde-Albastru)."
 
 #: ../gui/wxpython/menustrings.py:714
-msgid "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-Intensity-Saturation) color space."
-msgstr "Transformă harta raster din sistemul de culori RGB (Roșu-Verde-Albastru) în sistemul HIS (Valoare-Intensitate-Saturație)."
+msgid ""
+"Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
+"Intensity-Saturation) color space."
+msgstr ""
+"Transformă harta raster din sistemul de culori RGB (Roșu-Verde-Albastru) în "
+"sistemul HIS (Valoare-Intensitate-Saturație)."
 
 #: ../gui/wxpython/menustrings.py:715
 msgid "Rectify image or raster"
 msgstr "Rectifică imagine sau raster"
 
 #: ../gui/wxpython/menustrings.py:716
-msgid "Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points."
-msgstr "Rectifică o imagine în funcție de calculul transformării coordonatelor fiecărui pixel din imagine, pe baza punctelor de control."
+msgid ""
+"Rectifies an image by computing a coordinate transformation for each pixel "
+"in the image based on the control points."
+msgstr ""
+"Rectifică o imagine în funcție de calculul transformării coordonatelor "
+"fiecărui pixel din imagine, pe baza punctelor de control."
 
 #: ../gui/wxpython/menustrings.py:717 ../gui/wxpython/lmgr/layertree.py:457
 msgid "Histogram"
@@ -7568,16 +8148,22 @@ msgid "Spectral response"
 msgstr "Răspunsul spectral"
 
 #: ../gui/wxpython/menustrings.py:720
-msgid "Displays spectral response at user specified locations in group or images."
-msgstr "Afișează răspunsul spectral în locațiile specificate de utilizator din grup sau imagini."
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+"Afișează răspunsul spectral în locațiile specificate de utilizator din grup "
+"sau imagini."
 
 #: ../gui/wxpython/menustrings.py:721
 msgid "Brovey sharpening"
 msgstr "Transformarea Brovey"
 
 #: ../gui/wxpython/menustrings.py:722
-msgid "Brovey transform to merge multispectral and high-res panchromatic channels"
-msgstr "Transformarea Brovey pentru a fuziona canele multispectral și pancromatic de rezoluție înaltă"
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+"Transformarea Brovey pentru a fuziona canele multispectral și pancromatic de "
+"rezoluție înaltă"
 
 #: ../gui/wxpython/menustrings.py:723
 msgid "Classify image"
@@ -7588,8 +8174,12 @@ msgid "Clustering input for unsupervised classification"
 msgstr "Gruparea pixelilor de intrare pentru clasificarea nesupervizată"
 
 #: ../gui/wxpython/menustrings.py:725
-msgid "Generates spectral signatures for land cover types in an image using a clustering algorithm."
-msgstr "Generează signaturi spectrale pentru tipurile de acoperire a terenului intr-o imagine folosind un algoritm de grupare."
+msgid ""
+"Generates spectral signatures for land cover types in an image using a "
+"clustering algorithm."
+msgstr ""
+"Generează signaturi spectrale pentru tipurile de acoperire a terenului intr-"
+"o imagine folosind un algoritm de grupare."
 
 #: ../gui/wxpython/menustrings.py:726
 msgid "Input for supervised MLC"
@@ -7609,11 +8199,16 @@ msgstr "Clasifică celule de reflectanță spectrală dintr-o imagine."
 
 #: ../gui/wxpython/menustrings.py:730
 msgid "Interactive input for supervised classification (requires Xterm)"
-msgstr "Intrare interactivă pentru clasificarea superfivată (necesită Xtermeni)"
+msgstr ""
+"Intrare interactivă pentru clasificarea superfivată (necesită Xtermeni)"
 
 #: ../gui/wxpython/menustrings.py:731
-msgid "Generates spectral signatures for an image by allowing the user to outline regions of interest."
-msgstr "Generează signaturi spectrale pentru o imagine, permițând utilizatorului să evidențieze regiunile de interes."
+msgid ""
+"Generates spectral signatures for an image by allowing the user to outline "
+"regions of interest."
+msgstr ""
+"Generează signaturi spectrale pentru o imagine, permițând utilizatorului să "
+"evidențieze regiunile de interes."
 
 #: ../gui/wxpython/menustrings.py:732
 msgid "Input for supervised SMAP"
@@ -7628,8 +8223,12 @@ msgid "Sequential maximum a posteriori classification (SMAP)"
 msgstr "Clasificarea maximă secvențială posterioară (SMAP)"
 
 #: ../gui/wxpython/menustrings.py:735
-msgid "Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation."
-msgstr "Efectuează o clasificare contextuală a imagii folosind estimarea maximă secvențială posterioară (SMAP)."
+msgid ""
+"Performs contextual image classification using sequential maximum a "
+"posteriori (SMAP) estimation."
+msgstr ""
+"Efectuează o clasificare contextuală a imagii folosind estimarea maximă "
+"secvențială posterioară (SMAP)."
 
 #: ../gui/wxpython/menustrings.py:736
 msgid "Filter image"
@@ -7641,7 +8240,9 @@ msgstr "Detectarea marginilor"
 
 #: ../gui/wxpython/menustrings.py:738
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
-msgstr "Funcția raster \"detectarea marginilor\" fără trecere pentru procesarea imaginii."
+msgstr ""
+"Funcția raster \"detectarea marginilor\" fără trecere pentru procesarea "
+"imaginii."
 
 #: ../gui/wxpython/menustrings.py:739
 msgid "Matrix/convolving filter"
@@ -7661,7 +8262,9 @@ msgstr "Corelație canonică"
 
 #: ../gui/wxpython/menustrings.py:743
 msgid "Canonical components analysis (cca) program for image processing."
-msgstr "Programul de analiză canonică a componentelor (cca) pentru procesarea imaginilor."
+msgstr ""
+"Programul de analiză canonică a componentelor (cca) pentru procesarea "
+"imaginilor."
 
 #: ../gui/wxpython/menustrings.py:744
 msgid "Principal components"
@@ -7696,8 +8299,12 @@ msgid "Landsat DN to radiance/reflectance"
 msgstr "Număr digital Landsat în radianță/reflectanță"
 
 #: ../gui/wxpython/menustrings.py:752
-msgid "Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+."
-msgstr "Calculează radianța sau reflectanța atmosferei înalte și temperatura pentru Landsat MSS/TM/ETM+."
+msgid ""
+"Calculates top-of-atmosphere radiance or reflectance and temperature for "
+"Landsat MSS/TM/ETM+."
+msgstr ""
+"Calculează radianța sau reflectanța atmosferei înalte și temperatura pentru "
+"Landsat MSS/TM/ETM+."
 
 #: ../gui/wxpython/menustrings.py:753
 msgid "Landsat cloud cover assessment"
@@ -7705,7 +8312,8 @@ msgstr "Aprecierea acoperiri cu nori a imaginii Landsat"
 
 #: ../gui/wxpython/menustrings.py:754
 msgid "Performs Landsat TM/ETM+ Automatic Cloud Cover Assessment (ACCA)."
-msgstr "Evaluează automat acoperirea cu nori a imaginilor Landsat TM/ETM+ (ACCA)."
+msgstr ""
+"Evaluează automat acoperirea cu nori a imaginilor Landsat TM/ETM+ (ACCA)."
 
 #: ../gui/wxpython/menustrings.py:755
 msgid "Modis quality control"
@@ -7756,8 +8364,12 @@ msgid "Kappa analysis"
 msgstr "Analiza Kappa"
 
 #: ../gui/wxpython/menustrings.py:768
-msgid "Calculate error matrix and kappa parameter for accuracy assessment of classification result."
-msgstr "Calculează eroare matricii și parametrul kappa pentru evaluarea acurateții rezultatului de clasificare."
+msgid ""
+"Calculate error matrix and kappa parameter for accuracy assessment of "
+"classification result."
+msgstr ""
+"Calculează eroare matricii și parametrul kappa pentru evaluarea acurateții "
+"rezultatului de clasificare."
 
 #: ../gui/wxpython/menustrings.py:769
 msgid "OIF for LandSat TM"
@@ -7765,7 +8377,8 @@ msgstr "OIF pentru LandSat TM"
 
 #: ../gui/wxpython/menustrings.py:770
 msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-msgstr "Calculează Indicele de Factor Optim pentru benzile 1-5,  & 7 LANDSAT TM"
+msgstr ""
+"Calculează Indicele de Factor Optim pentru benzile 1-5,  & 7 LANDSAT TM"
 
 #: ../gui/wxpython/menustrings.py:771
 msgid "V&olumes"
@@ -7812,20 +8425,31 @@ msgid "Cross section"
 msgstr "Secțiune transversală"
 
 #: ../gui/wxpython/menustrings.py:785
-msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
-msgstr "Crează secțiune transversală pentru harta raster 2D dintr-o hartă raster 3D, bazată pe harta de elevație 2D."
+msgid ""
+"Creates cross section 2D raster map from 3D raster map based on 2D elevation "
+"map."
+msgstr ""
+"Crează secțiune transversală pentru harta raster 2D dintr-o hartă raster 3D, "
+"bazată pe harta de elevație 2D."
 
 #: ../gui/wxpython/menustrings.py:787
-msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
-msgstr "Calculează numeric scurgerea apei subterane tranzitorie în trei dimensiuni."
+msgid ""
+"Calculates numerically transient, confined groundwater flow in three "
+"dimensions."
+msgstr ""
+"Calculează numeric scurgerea apei subterane tranzitorie în trei dimensiuni."
 
 #: ../gui/wxpython/menustrings.py:788
 msgid "Interpolate volume from points"
 msgstr "Interpolează volume din puncte"
 
 #: ../gui/wxpython/menustrings.py:789
-msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
-msgstr "Interpolează datele punctuale într-o hartă raster 3D folosind algoritmul regular spline with tension (RST)."
+msgid ""
+"Interpolates point data to a 3D raster map using regularized spline with "
+"tension (RST) algorithm."
+msgstr ""
+"Interpolează datele punctuale într-o hartă raster 3D folosind algoritmul "
+"regular spline with tension (RST)."
 
 #: ../gui/wxpython/menustrings.py:790
 msgid "Report and Statistics"
@@ -7837,7 +8461,9 @@ msgstr "Metadata volumului de bază"
 
 #: ../gui/wxpython/menustrings.py:792
 msgid "Outputs basic information about a user-specified 3D raster map layer."
-msgstr "Transmite informații de bază despre harta raster 3D specificată de utilizator."
+msgstr ""
+"Transmite informații de bază despre harta raster 3D specificată de "
+"utilizator."
 
 #: ../gui/wxpython/menustrings.py:793
 msgid "Voxel statistics"
@@ -7852,8 +8478,11 @@ msgid "Univariate statistics for volumes"
 msgstr "Statistici univariate pentru volume"
 
 #: ../gui/wxpython/menustrings.py:796
-msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
-msgstr "Calculează statistici univariate din celulele 3D nenule ale hărții raster3d."
+msgid ""
+"Calculates univariate statistics from the non-null 3d cells of a raster3d "
+"map."
+msgstr ""
+"Calculează statistici univariate din celulele 3D nenule ale hărții raster3d."
 
 #: ../gui/wxpython/menustrings.py:797
 msgid "&Database"
@@ -7905,7 +8534,9 @@ msgstr "Conectează"
 
 #: ../gui/wxpython/menustrings.py:809
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr "Printează/setează conexiunea generală BD pentru mapsetul curent și după aceea ieși."
+msgstr ""
+"Printează/setează conexiunea generală BD pentru mapsetul curent și după "
+"aceea ieși."
 
 #: ../gui/wxpython/menustrings.py:810
 msgid "Login"
@@ -7945,7 +8576,9 @@ msgstr "Test"
 
 #: ../gui/wxpython/menustrings.py:819
 msgid "Test database driver, database must exist and set by db.connect."
-msgstr "Testare driver bază de date; baza de date trebuie să existe și să fie conectată prin db.connect."
+msgstr ""
+"Testare driver bază de date; baza de date trebuie să existe și să fie "
+"conectată prin db.connect."
 
 #: ../gui/wxpython/menustrings.py:821
 msgid "Query any table"
@@ -7953,7 +8586,9 @@ msgstr "Interoghează orice tabel"
 
 #: ../gui/wxpython/menustrings.py:822
 msgid "Selects data from attribute table (performs SQL query statement(s))."
-msgstr "Selectează date din tabela de atribute (efectuează declarație de interogare SQL)"
+msgstr ""
+"Selectează date din tabela de atribute (efectuează declarație de interogare "
+"SQL)"
 
 #: ../gui/wxpython/menustrings.py:825
 msgid "SQL statement"
@@ -7972,8 +8607,12 @@ msgid "New table"
 msgstr "Tabel nou"
 
 #: ../gui/wxpython/menustrings.py:829
-msgid "Creates and connects a new attribute table to a given layer of an existing vector map."
-msgstr "Crează și conectează o tabelă de atribute nouă la un anumit strat a hărții vectoriale existente."
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"Crează și conectează o tabelă de atribute nouă la un anumit strat a hărții "
+"vectoriale existente."
 
 #: ../gui/wxpython/menustrings.py:830
 msgid "Remove table"
@@ -7996,24 +8635,37 @@ msgid "Add columns"
 msgstr "Adaugă coloane"
 
 #: ../gui/wxpython/menustrings.py:835
-msgid "Adds one or more columns to the attribute table connected to a given vector map."
-msgstr "Adaugă una sau mai multe coloane la tabela de atribute conectată la o anumită hartă vectorială."
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr ""
+"Adaugă una sau mai multe coloane la tabela de atribute conectată la o "
+"anumită hartă vectorială."
 
 #: ../gui/wxpython/menustrings.py:837
-msgid "Drops a column from the attribute table connected to a given vector map."
-msgstr "Șterge o coloană din tabela de atribute conectată la o anumită hartă vectorială."
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr ""
+"Șterge o coloană din tabela de atribute conectată la o anumită hartă "
+"vectorială."
 
 #: ../gui/wxpython/menustrings.py:839
-msgid "Renames a column in the attribute table connected to a given vector map."
-msgstr "Redenumește o coloană din tabela de atribute conectată la o anumită hartă vectorială."
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr ""
+"Redenumește o coloană din tabela de atribute conectată la o anumită hartă "
+"vectorială."
 
 #: ../gui/wxpython/menustrings.py:840
 msgid "Change values"
 msgstr "Schimbă valorile"
 
 #: ../gui/wxpython/menustrings.py:841
-msgid "Allows to update a column in the attribute table connected to a vector map."
-msgstr "Permite actualizarea unei coloane din tabela de atribute conectată la harta vectorială."
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr ""
+"Permite actualizarea unei coloane din tabela de atribute conectată la harta "
+"vectorială."
 
 #: ../gui/wxpython/menustrings.py:842
 msgid "Reconnect vectors to database"
@@ -8029,7 +8681,9 @@ msgstr "Definirea conexiunii dintre harta vectorială și baza de date."
 
 #: ../gui/wxpython/menustrings.py:845
 msgid "Prints/sets DB connection for a vector map to attribute table."
-msgstr "Printează/setează conexiunea BD pentru o hartă vectorială la tabela de atribute."
+msgstr ""
+"Printează/setează conexiunea BD pentru o hartă vectorială la tabela de "
+"atribute."
 
 #: ../gui/wxpython/menustrings.py:846 ../gui/wxpython/menustrings.py:898
 msgid "&Help"
@@ -8580,7 +9234,9 @@ msgstr "Încarcă"
 
 #: ../gui/wxpython/modules/colorrules.py:396
 msgid "Type filename or click to choose file and load color table"
-msgstr "Introduceți un nume de fișier și click pentru a alege fișierul și pentru a încărca tabela de culoare"
+msgstr ""
+"Introduceți un nume de fișier și click pentru a alege fișierul și pentru a "
+"încărca tabela de culoare"
 
 #: ../gui/wxpython/modules/colorrules.py:402
 msgid "Save color table to file:"
@@ -8592,7 +9248,9 @@ msgstr "Alege fișier pentru a salva tabela de culoare"
 
 #: ../gui/wxpython/modules/colorrules.py:404
 msgid "Type filename or click to choose file and save color table"
-msgstr "Introduceți un nume de fișier și click pentru a alege fișierul și pentru a salva tabela de culoare"
+msgstr ""
+"Introduceți un nume de fișier și click pentru a alege fișierul și pentru a "
+"salva tabela de culoare"
 
 #: ../gui/wxpython/modules/colorrules.py:410
 msgid "Reload default table"
@@ -8604,7 +9262,9 @@ msgstr "Previzualizare"
 
 #: ../gui/wxpython/modules/colorrules.py:504
 msgid "Show preview of map (current Map Display extent is used)."
-msgstr "Afișează harta previzualizată (extinderea curentă a fereastrei de vizualizare este utilizată)."
+msgstr ""
+"Afișează harta previzualizată (extinderea curentă a fereastrei de "
+"vizualizare este utilizată)."
 
 #: ../gui/wxpython/modules/colorrules.py:534
 msgid "No valid color rules given."
@@ -8634,7 +9294,9 @@ msgstr "gama"
 #: ../gui/wxpython/modules/colorrules.py:837
 #, python-format
 msgid "Enter raster category values or percents (%(range)s = %(min)d-%(max)d)"
-msgstr "Introduceți valorile de categorie raster sau procente (%(range)s = %(min)d-%(max)d)"
+msgstr ""
+"Introduceți valorile de categorie raster sau procente (%(range)s = %(min)d-"
+"%(max)d)"
 
 #: ../gui/wxpython/modules/colorrules.py:926
 msgid "Create new color rules for vector map"
@@ -8701,8 +9363,12 @@ msgstr "Importă sau exportă tabela de culoare"
 
 #: ../gui/wxpython/modules/colorrules.py:1096
 #, python-format
-msgid "Database connection for vector map <%s> is not defined in DB file.  Do you want to create and connect new attribute table?"
-msgstr "Conexiunea bazei de date pentru harta vectorială <%s> nu este definită în fișierul BD.  Doriți să creați și să conectați noua tabelă de atribute?"
+msgid ""
+"Database connection for vector map <%s> is not defined in DB file.  Do you "
+"want to create and connect new attribute table?"
+msgstr ""
+"Conexiunea bazei de date pentru harta vectorială <%s> nu este definită în "
+"fișierul BD.  Doriți să creați și să conectați noua tabelă de atribute?"
 
 #: ../gui/wxpython/modules/colorrules.py:1099
 msgid "No database connection defined"
@@ -8710,13 +9376,21 @@ msgstr "Nici o conexiune a bazei de date nu este definită"
 
 #: ../gui/wxpython/modules/colorrules.py:1171
 #, python-format
-msgid "Selected map <%(map)s> is not in current mapset <%(mapset)s>. Color rules cannot be edited."
-msgstr "Harta selectată <%(map)s>nu este în mapset-ul curent <%(mapset)s>. Regulile de culoare nu pot fi editate."
+msgid ""
+"Selected map <%(map)s> is not in current mapset <%(mapset)s>. Color rules "
+"cannot be edited."
+msgstr ""
+"Harta selectată <%(map)s>nu este în mapset-ul curent <%(mapset)s>. Regulile "
+"de culoare nu pot fi editate."
 
 #: ../gui/wxpython/modules/colorrules.py:1176
 #, python-format
-msgid "Selected map <%(map)s> is not in current mapset <%(mapset)s>. Attribute table cannot be edited."
-msgstr "Harta selectată <%(map)s>nu este în mapset-ul curent <%(mapset)s>. Tabela de atribute nu poate fi editată."
+msgid ""
+"Selected map <%(map)s> is not in current mapset <%(mapset)s>. Attribute "
+"table cannot be edited."
+msgstr ""
+"Harta selectată <%(map)s>nu este în mapset-ul curent <%(mapset)s>. Tabela de "
+"atribute nu poate fi editată."
 
 #: ../gui/wxpython/modules/colorrules.py:1318
 #, python-format
@@ -8729,8 +9403,13 @@ msgstr "Vă rugăm să așteptați, încărcarea datelor din tabela de atribute.
 
 #: ../gui/wxpython/modules/colorrules.py:1411
 #, python-format
-msgid "Number of loaded records reached %d, displaying all the records will be time-consuming and may lead to computer freezing, do you still want to continue?"
-msgstr "Număr de înregistrări încărcate atins %d, afișarea tuturor înregistrărilor va fi consumatoare de timp și poate duce la blocarea calculatorului, doriți să continuați?"
+msgid ""
+"Number of loaded records reached %d, displaying all the records will be time-"
+"consuming and may lead to computer freezing, do you still want to continue?"
+msgstr ""
+"Număr de înregistrări încărcate atins %d, afișarea tuturor înregistrărilor "
+"va fi consumatoare de timp și poate duce la blocarea calculatorului, doriți "
+"să continuați?"
 
 #: ../gui/wxpython/modules/colorrules.py:1415
 msgid "Too many records"
@@ -8865,18 +9544,22 @@ msgid "Connect to the server"
 msgstr "Conectează la server"
 
 #: ../gui/wxpython/modules/ogc_services.py:167
-msgid "The 'xml2' parser is required, please install it first. You may also try running r.in.wms directly from the command line."
-msgstr "Este necesar parser 'xml2' , vă rugăm să-l instalați mai întâi. De asemenea, puteți să încercați să rulați r.in.wms direct în linia de comandă."
+msgid ""
+"The 'xml2' parser is required, please install it first. You may also try "
+"running r.in.wms directly from the command line."
+msgstr ""
+"Este necesar parser 'xml2' , vă rugăm să-l instalați mai întâi. De asemenea, "
+"puteți să încercați să rulați r.in.wms direct în linia de comandă."
 
-#: ../gui/wxpython/modules/ogc_services.py:248
+#: ../gui/wxpython/modules/ogc_services.py:251
 msgid "Layer / Style"
 msgstr "Strat / Stil"
 
-#: ../gui/wxpython/modules/ogc_services.py:249
+#: ../gui/wxpython/modules/ogc_services.py:252
 msgid "Title"
 msgstr "Titlu"
 
-#: ../gui/wxpython/modules/ogc_services.py:259
+#: ../gui/wxpython/modules/ogc_services.py:262
 msgid "Layers"
 msgstr "Straturi"
 
@@ -8964,8 +9647,11 @@ msgid "Fly-through mode"
 msgstr "Mod de zbor"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:57
-msgid "Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
-msgstr "Trage cu mouse-ul, ține apăsat Ctrl down pentru un mod diferit sau Shift pentru a accelera"
+msgid ""
+"Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
+msgstr ""
+"Trage cu mouse-ul, ține apăsat Ctrl down pentru un mod diferit sau Shift "
+"pentru a accelera"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:59
 msgid "Click mouse to zoom"
@@ -8996,8 +9682,15 @@ msgid "Reason: %s"
 msgstr "Motiv: %s"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:90
-msgid "Note that the wxGUI's 3D view mode is currently disabled on MS Windows (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
-msgstr "Notă asupra faptului că wxGUI's pentru vizualizarea  3D nu este disponibilă, pentru moment, pe MS Windows (sperăm să rezolvăm acest lucru cât mai curând). Vă rugăm să fiți atenți la actualizarea versiunilor de GRASS. Între timp puteți utiliza \"NVIZ\" din meniul Fișier."
+msgid ""
+"Note that the wxGUI's 3D view mode is currently disabled on MS Windows "
+"(hopefully this will be fixed soon). Please keep an eye out for updated "
+"versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
+msgstr ""
+"Notă asupra faptului că wxGUI's pentru vizualizarea  3D nu este disponibilă, "
+"pentru moment, pe MS Windows (sperăm să rezolvăm acest lucru cât mai "
+"curând). Vă rugăm să fiți atenți la actualizarea versiunilor de GRASS. Între "
+"timp puteți utiliza \"NVIZ\" din meniul Fișier."
 
 #: ../gui/wxpython/mapdisp/toolbars.py:98
 #: ../gui/wxpython/vdigit/toolbars.py:695
@@ -9009,8 +9702,15 @@ msgid "Vector digitizer not available"
 msgstr "Vectorizarea nu este disponibilă"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:107
-msgid "Note that the wxGUI's vector digitizer is currently disabled (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"v.digit\" from the Develop Vector menu."
-msgstr "Notă asupra faptului că wxGUI's pentru vectorizare nu este disponibilă (sperăm să rezolvăm acest lucru cât mai curând). Vă rugăm să fiți atenți la actualizarea versiunilor de GRASS. Între timp puteți utiliza \"v.digit\" din meniul Dezvoltă vector."
+msgid ""
+"Note that the wxGUI's vector digitizer is currently disabled (hopefully this "
+"will be fixed soon). Please keep an eye out for updated versions of GRASS. "
+"In the meantime you can use \"v.digit\" from the Develop Vector menu."
+msgstr ""
+"Notă asupra faptului că wxGUI's pentru vectorizare nu este disponibilă "
+"(sperăm să rezolvăm acest lucru cât mai curând). Vă rugăm să fiți atenți la "
+"actualizarea versiunilor de GRASS. Între timp puteți utiliza \"v.digit\" din "
+"meniul Dezvoltă vector."
 
 #: ../gui/wxpython/mapdisp/gprint.py:285
 msgid ""
@@ -9051,32 +9751,53 @@ msgid "Show computational extent"
 msgstr "Afișează extinderea regiunii de calcul"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:392
-msgid "Show/hide computational region extent (set with g.region). Display region drawn as a blue box inside the computational region, computational region inside a display region as a red box)."
-msgstr "Afișează/ascunde extinderea regiunii de calcul (setează cu g.region). Afișează regiunea desenată ca un dreptunghi albastru în interiorul regiunii de calcul, iar regiunea de calcul desenat ca un dreptunchi roșu în centrul ecranului)."
+msgid ""
+"Show/hide computational region extent (set with g.region). Display region "
+"drawn as a blue box inside the computational region, computational region "
+"inside a display region as a red box)."
+msgstr ""
+"Afișează/ascunde extinderea regiunii de calcul (setează cu g.region). "
+"Afișează regiunea desenată ca un dreptunghi albastru în interiorul regiunii "
+"de calcul, iar regiunea de calcul desenat ca un dreptunchi roșu în centrul "
+"ecranului)."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:432
 msgid "Display mode"
 msgstr "Modul de afișare"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:439
-msgid "Align region extent based on display size from center point. Default value for new map displays can be set up in 'User GUI settings' dialog."
-msgstr "Aliniează extinderea regiunii bazată pe dimensiunea ecranului de la punctul central. Valoarea implicită pentru afișarea unei hărți noi poate fi stabilită în caseta  'Setări GUI '. "
+msgid ""
+"Align region extent based on display size from center point. Default value "
+"for new map displays can be set up in 'User GUI settings' dialog."
+msgstr ""
+"Aliniează extinderea regiunii bazată pe dimensiunea ecranului de la punctul "
+"central. Valoarea implicită pentru afișarea unei hărți noi poate fi "
+"stabilită în caseta  'Setări GUI '. "
 
 #: ../gui/wxpython/mapdisp/statusbar.py:452
 msgid "Display resolution"
 msgstr "Rezoluția de afișare"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:459
-msgid "Constrain display resolution to computational region settings. Default value for new map displays can be set up in 'User GUI settings' dialog."
-msgstr "Forțează rezoluția de afișare la setările regiunii de calcul. Valoarea implicită pentru afișarea unei hărți noi poate fi stabilită în caseta  'Setări GUI '. "
+msgid ""
+"Constrain display resolution to computational region settings. Default value "
+"for new map displays can be set up in 'User GUI settings' dialog."
+msgstr ""
+"Forțează rezoluția de afișare la setările regiunii de calcul. Valoarea "
+"implicită pentru afișarea unei hărți noi poate fi stabilită în caseta  "
+"'Setări GUI '. "
 
 #: ../gui/wxpython/mapdisp/statusbar.py:483
 msgid "Map scale"
 msgstr "Scara hărții"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:497
-msgid "As everyone's monitors and resolutions are set differently these values are not true map scales, but should get you into the right neighborhood."
-msgstr "Pentru că toate monitoarele și rezoluțiile sunt setate diferit, aceste valori nu sunt reale, dar rămân apropiate."
+msgid ""
+"As everyone's monitors and resolutions are set differently these values are "
+"not true map scales, but should get you into the right neighborhood."
+msgstr ""
+"Pentru că toate monitoarele și rezoluțiile sunt setate diferit, aceste "
+"valori nu sunt reale, dar rămân apropiate."
 
 #: ../gui/wxpython/mapdisp/statusbar.py:550
 msgid "Go to"
@@ -9100,8 +9821,12 @@ msgid "Use defined projection"
 msgstr "Utilizează o proiecție definită"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:695
-msgid "Reproject coordinates displayed in the statusbar. Projection can be defined in GUI preferences dialog (tab 'Projection')"
-msgstr "Reproiectează coordonatele afișate în bara de stare. Proiecția poate fi definită în caseta de preferințe GUI (tab 'Proiecție')"
+msgid ""
+"Reproject coordinates displayed in the statusbar. Projection can be defined "
+"in GUI preferences dialog (tab 'Projection')"
+msgstr ""
+"Reproiectează coordonatele afișate în bara de stare. Proiecția poate fi "
+"definită în caseta de preferințe GUI (tab 'Proiecție')"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:720
 msgid "MASK"
@@ -9343,8 +10068,12 @@ msgid "Tilt:"
 msgstr "Înclinarea:"
 
 #: ../gui/wxpython/nviz/tools.py:263
-msgid "Adjusts the viewing height above the surface (angle of view automatically adjusts to maintain the same center of view)"
-msgstr "Reglează înălțimea de vizualizare deasupra suprafeței (unghiul de vedere se reglează automat pentru a menține același centru de vedere)"
+msgid ""
+"Adjusts the viewing height above the surface (angle of view automatically "
+"adjusts to maintain the same center of view)"
+msgstr ""
+"Reglează înălțimea de vizualizare deasupra suprafeței (unghiul de vedere se "
+"reglează automat pentru a menține același centru de vedere)"
 
 #: ../gui/wxpython/nviz/tools.py:268
 msgid "Adjusts the relative height of features above the plane of the surface"
@@ -9363,8 +10092,12 @@ msgid "here"
 msgstr "aici"
 
 #: ../gui/wxpython/nviz/tools.py:301
-msgid "Allows you to select a point on the surface that becomes the new center of view. Click on the button and then on the surface."
-msgstr "Permite selectarea unui punct de pe suprafață, care devine noul centru al vizualizării. Click pe buton si după aceea pe suprafață."
+msgid ""
+"Allows you to select a point on the surface that becomes the new center of "
+"view. Click on the button and then on the surface."
+msgstr ""
+"Permite selectarea unui punct de pe suprafață, care devine noul centru al "
+"vizualizării. Click pe buton si după aceea pe suprafață."
 
 #: ../gui/wxpython/nviz/tools.py:307
 msgid "center"
@@ -9379,8 +10112,12 @@ msgid "top"
 msgstr "de sus"
 
 #: ../gui/wxpython/nviz/tools.py:317
-msgid "Sets the viewer directly over the scene's center position. This top view orients approximately north south."
-msgstr "Setează privitorul direct pe poziția centrală a scenei.  Acest punct de vizualizare de sus orientezaă aproximativ nord - sud."
+msgid ""
+"Sets the viewer directly over the scene's center position. This top view "
+"orients approximately north south."
+msgstr ""
+"Setează privitorul direct pe poziția centrală a scenei.  Acest punct de "
+"vizualizare de sus orientezaă aproximativ nord - sud."
 
 #: ../gui/wxpython/nviz/tools.py:321
 msgid "reset"
@@ -9395,8 +10132,13 @@ msgid "Image Appearance"
 msgstr "Aspectul Imaginii"
 
 #: ../gui/wxpython/nviz/tools.py:385
-msgid "Press 'Record' button and start changing the view. It is recommended to use fly-through mode (Map Display toolbar) to achieve smooth motion."
-msgstr "Apăsați pe butonul 'Înregistrează' și începeți să modificați vizualizare. Se recomandă să utilizați modul zboară prin (bara de instrumente din fereastra de vizualizare) pentru a realiza o mișcare fluidă."
+msgid ""
+"Press 'Record' button and start changing the view. It is recommended to use "
+"fly-through mode (Map Display toolbar) to achieve smooth motion."
+msgstr ""
+"Apăsați pe butonul 'Înregistrează' și începeți să modificați vizualizare. Se "
+"recomandă să utilizați modul zboară prin (bara de instrumente din fereastra "
+"de vizualizare) pentru a realiza o mișcare fluidă."
 
 #: ../gui/wxpython/nviz/tools.py:396
 msgid "Record"
@@ -9439,8 +10181,10 @@ msgid "File prefix:"
 msgstr "Prefix fișier:"
 
 #: ../gui/wxpython/nviz/tools.py:483
-msgid "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
-msgstr "Numele fișierelor generate va arăta astfel: prefix_1.ppm, prefix_2.ppm, ..."
+msgid ""
+"Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
+msgstr ""
+"Numele fișierelor generate va arăta astfel: prefix_1.ppm, prefix_2.ppm, ..."
 
 #: ../gui/wxpython/nviz/tools.py:484
 msgid "File format:"
@@ -9635,15 +10379,21 @@ msgstr "Setează coordonata Y a planului de tăiere curent"
 
 #: ../gui/wxpython/nviz/tools.py:1006
 msgid "Rotates the current cutting plane about vertical axis"
-msgstr "Efectuează o rotație în jurul axei verticale a planului de tăiere curent"
+msgstr ""
+"Efectuează o rotație în jurul axei verticale a planului de tăiere curent"
 
 #: ../gui/wxpython/nviz/tools.py:1022
 msgid "Rotates the current cutting plane about horizontal axis"
-msgstr "Efectuează o rotație în jurul axei orizontale a planului de tăiere curent"
+msgstr ""
+"Efectuează o rotație în jurul axei orizontale a planului de tăiere curent"
 
 #: ../gui/wxpython/nviz/tools.py:1038
-msgid "Sets the Z coordinate of the current cutting plane (only meaningful when tilt is not 0)"
-msgstr "Setează coordonata Z a planului de tăiere curent (semnificativ doar când tilt nu este 0)"
+msgid ""
+"Sets the Z coordinate of the current cutting plane (only meaningful when "
+"tilt is not 0)"
+msgstr ""
+"Setează coordonata Z a planului de tăiere curent (semnificativ doar când "
+"tilt nu este 0)"
 
 #: ../gui/wxpython/nviz/tools.py:1107
 msgid "Fine resolution:"
@@ -9815,7 +10565,8 @@ msgstr "Șterge ultimul"
 
 #: ../gui/wxpython/nviz/tools.py:1958
 msgid "Do you want to record new animation without saving the previous one?"
-msgstr "Doriți să înregistrați o animație nouă fără să o salvați pe cea dinainte?"
+msgstr ""
+"Doriți să înregistrați o animație nouă fără să o salvați pe cea dinainte?"
 
 #: ../gui/wxpython/nviz/tools.py:1961
 msgid "Animation already axists"
@@ -9970,8 +10721,12 @@ msgid "Adjusts the distance and direction of the image viewpoint"
 msgstr "Reglează distanța și direcția punctului de vedere a imaginii"
 
 #: ../gui/wxpython/nviz/tools.py:4860
-msgid "Adjusts the light direction. Click and drag the puck to change the light direction."
-msgstr "Reglează direcția de lumină. Faceți click și trageți pucul pentru a schimba direcția de lumină."
+msgid ""
+"Adjusts the light direction. Click and drag the puck to change the light "
+"direction."
+msgstr ""
+"Reglează direcția de lumină. Faceți click și trageți pucul pentru a schimba "
+"direcția de lumină."
 
 #: ../gui/wxpython/nviz/preferences.py:31
 msgid "3D view settings"
@@ -10043,13 +10798,22 @@ msgid "3D view settings saved to file <%s>."
 msgstr "Setările de vizualizare 3D salvate ca fișier <%s>."
 
 #: ../gui/wxpython/nviz/mapwindow.py:204
-msgid "Opening 3D view was not successful. Please try to change the value of depth buffer in GUI Settings dialog > tab Map Display > Advanced and restart GUI."
-msgstr "Vizualizarea 3D nu a fost realizată cu succes. Vă rugăm să încercați să modificați valoare adâncimii zonei tampon din caseta de dialog Setări GUI > tabul Afișare hartă > Avansați și restartați GUI."
+msgid ""
+"Opening 3D view was not successful. Please try to change the value of depth "
+"buffer in GUI Settings dialog > tab Map Display > Advanced and restart GUI."
+msgstr ""
+"Vizualizarea 3D nu a fost realizată cu succes. Vă rugăm să încercați să "
+"modificați valoare adâncimii zonei tampon din caseta de dialog Setări GUI > "
+"tabul Afișare hartă > Avansați și restartați GUI."
 
 #: ../gui/wxpython/nviz/mapwindow.py:530
 #, python-format
-msgid "Image is too large, your OpenGL implementation supports maximum texture size %d px."
-msgstr "Imagine este prea mare, implementarea OpenGL suportă o dimensiune maximă de  %d px."
+msgid ""
+"Image is too large, your OpenGL implementation supports maximum texture size "
+"%d px."
+msgstr ""
+"Imagine este prea mare, implementarea OpenGL suportă o dimensiune maximă de  "
+"%d px."
 
 #: ../gui/wxpython/nviz/mapwindow.py:1026
 msgid "Easting"
@@ -10169,8 +10933,16 @@ msgid "At least one raster map required"
 msgstr "Este necesară cel puțin o hartă raster"
 
 #: ../gui/wxpython/nviz/wxnviz.py:32 ../gui/wxpython/wxplot/profile.py:30
-msgid "This module requires the NumPy module, which could not be imported. It probably is not installed (it's not part of the standard Python distribution). See the Numeric Python site (http://numpy.scipy.org) for information on downloading source or binaries."
-msgstr "Acest modul necesită modulul NumPy, care nu a putut fi importat. Probabil nu este instalat (nu este parte a distribuției standard de Python). Vezi site-ul Numeric Python (http://numpy.scipy.org) pentru informații despre descărcarea codului sursă."
+msgid ""
+"This module requires the NumPy module, which could not be imported. It "
+"probably is not installed (it's not part of the standard Python "
+"distribution). See the Numeric Python site (http://numpy.scipy.org) for "
+"information on downloading source or binaries."
+msgstr ""
+"Acest modul necesită modulul NumPy, care nu a putut fi importat. Probabil nu "
+"este instalat (nu este parte a distribuției standard de Python). Vezi site-"
+"ul Numeric Python (http://numpy.scipy.org) pentru informații despre "
+"descărcarea codului sursă."
 
 #: ../gui/wxpython/nviz/wxnviz.py:49
 #, python-format
@@ -10272,7 +11044,9 @@ msgstr "Nimic pentru realizarea profilului"
 
 #: ../gui/wxpython/wxplot/profile.py:333
 msgid "Choose prefix for file(s) where to save profile values..."
-msgstr "Alege un prefix pentru fișierul(ele) unde vor fi salvate valorile profilului..."
+msgstr ""
+"Alege un prefix pentru fișierul(ele) unde vor fi salvate valorile "
+"profilului..."
 
 #: ../gui/wxpython/wxplot/profile.py:335
 msgid "Comma separated value (*.csv)|*.csv"
@@ -10375,7 +11149,8 @@ msgstr "Dimensiuni text grafic salvate ca fișier '%s'."
 
 #: ../gui/wxpython/wxplot/dialogs.py:492
 msgid "No map or image group selected to plot."
-msgstr "Nici o hartă sau grup de imagine selectat(ă) pentru reprezentare grafică."
+msgstr ""
+"Nici o hartă sau grup de imagine selectat(ă) pentru reprezentare grafică."
 
 #: ../gui/wxpython/wxplot/dialogs.py:523
 msgid "Map/image plotted"
@@ -10415,8 +11190,11 @@ msgid "Scale"
 msgstr "Scara"
 
 #: ../gui/wxpython/wxplot/dialogs.py:662
-msgid "Automatic axis scaling, custom max and min, or scale matches data range (min)"
-msgstr "Scalare automatică, personalizare maximă și minimă sau scalare în funcție de un interval (min)"
+msgid ""
+"Automatic axis scaling, custom max and min, or scale matches data range (min)"
+msgstr ""
+"Scalare automatică, personalizare maximă și minimă sau scalare în funcție de "
+"un interval (min)"
 
 #: ../gui/wxpython/wxplot/dialogs.py:667
 msgid "Custom min"
@@ -10578,7 +11356,8 @@ msgstr "Zoom la harta selectată (ignoră valorile nule)"
 
 #: ../gui/wxpython/lmgr/layertree.py:445
 msgid "Set computational region from selected map(s) (ignore NULLs)"
-msgstr "Setează regiunea de calcul pentru harta selectată (ignoră valorile nule)"
+msgstr ""
+"Setează regiunea de calcul pentru harta selectată (ignoră valorile nule)"
 
 #: ../gui/wxpython/lmgr/layertree.py:461
 msgid "Profile"
@@ -10590,7 +11369,9 @@ msgstr "Nu se poate crea profil pe harta raster."
 
 #: ../gui/wxpython/lmgr/layertree.py:589
 msgid "Unable to display histogram of raster map. No map name defined."
-msgstr "Nu se poate afișa histograma harții raster. Nici un nume de hartă nu este definit."
+msgstr ""
+"Nu se poate afișa histograma harții raster. Nici un nume de hartă nu este "
+"definit."
 
 #: ../gui/wxpython/lmgr/layertree.py:669
 #, python-format
@@ -10898,7 +11679,8 @@ msgstr "Stratul selectat nu este un vector."
 
 #: ../gui/wxpython/lmgr/frame.py:586
 msgid "Editing is allowed only for vector maps from the current mapset."
-msgstr "Editarea este permisă doar pentru hărțile vectoriale din mapset-ul curent."
+msgstr ""
+"Editarea este permisă doar pentru hărțile vectoriale din mapset-ul curent."
 
 #: ../gui/wxpython/lmgr/frame.py:601
 msgid "Choose script file to run"
@@ -10915,8 +11697,13 @@ msgstr "Scriptul '%s' nu există. Operațiune anulată."
 
 #: ../gui/wxpython/lmgr/frame.py:621
 #, python-format
-msgid "Script <%s> is not executable. Do you want to set the permissions that allows you to run this script (note that you must be the owner of the file)?"
-msgstr "Scriptul <%s> nu este executabil. Doriți să setați permisiunea care vă oferă posibilitatea de a rula acest script (notă: trebuie să fiți administratorul fișierului)"
+msgid ""
+"Script <%s> is not executable. Do you want to set the permissions that "
+"allows you to run this script (note that you must be the owner of the file)?"
+msgstr ""
+"Scriptul <%s> nu este executabil. Doriți să setați permisiunea care vă oferă "
+"posibilitatea de a rula acest script (notă: trebuie să fiți administratorul "
+"fișierului)"
 
 #: ../gui/wxpython/lmgr/frame.py:626
 msgid "Set permission?"
@@ -10928,8 +11715,12 @@ msgstr "Nu s-a putut seta permisiunea. Operațiune anulată."
 
 #: ../gui/wxpython/lmgr/frame.py:646
 #, python-format
-msgid "Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this directory to GRASS_ADDON_PATH?"
-msgstr "Directorul '%s' nu este definit în  GRASS_ADDON_PATH. Doriți să adăugați acest director la GRASS_ADDON_PATH?"
+msgid ""
+"Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this "
+"directory to GRASS_ADDON_PATH?"
+msgstr ""
+"Directorul '%s' nu este definit în  GRASS_ADDON_PATH. Doriți să adăugați "
+"acest director la GRASS_ADDON_PATH?"
 
 #: ../gui/wxpython/lmgr/frame.py:649
 msgid "Update Addons path?"
@@ -10974,8 +11765,12 @@ msgid "Platform"
 msgstr "Platformă"
 
 #: ../gui/wxpython/lmgr/frame.py:831
-msgid "Current workspace is not empty. Do you want to store current settings to workspace file?"
-msgstr "Spațiul de lucru curent nu este gol. Doriți să stocați setările curente pentru fișierul din spațiul de lucru?"
+msgid ""
+"Current workspace is not empty. Do you want to store current settings to "
+"workspace file?"
+msgstr ""
+"Spațiul de lucru curent nu este gol. Doriți să stocați setările curente "
+"pentru fișierul din spațiul de lucru?"
 
 #: ../gui/wxpython/lmgr/frame.py:834
 msgid "Create new workspace?"
@@ -11017,7 +11812,9 @@ msgstr "Alege fișier pentru a salva spațiul de lucru curent"
 #: ../gui/wxpython/lmgr/frame.py:1067 ../gui/wxpython/lmgr/frame.py:1083
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
-msgstr "Fișierul spațiului de lucru <%s> există deja. Doriți să suprascrieți acest fișier?"
+msgstr ""
+"Fișierul spațiului de lucru <%s> există deja. Doriți să suprascrieți acest "
+"fișier?"
 
 #: ../gui/wxpython/lmgr/frame.py:1107
 msgid "Writing current settings to workspace file failed."
@@ -11050,8 +11847,12 @@ msgid "Unsupported map layer type <%s>."
 msgstr "Tip de strat neacceptat <%s>."
 
 #: ../gui/wxpython/lmgr/frame.py:1642
-msgid "Note that cell values can only be displayed for regions of less than 10,000 cells."
-msgstr "Reține faptul că valorile celulelor pot fi afișate numai pentru regiunile cu mai puțin de 10,000 celule."
+msgid ""
+"Note that cell values can only be displayed for regions of less than 10,000 "
+"cells."
+msgstr ""
+"Reține faptul că valorile celulelor pot fi afișate numai pentru regiunile cu "
+"mai puțin de 10,000 celule."
 
 #: ../gui/wxpython/lmgr/frame.py:1724
 #, python-format
@@ -11084,8 +11885,14 @@ msgid "No map layer selected. Operation canceled."
 msgstr "Nici un strat selectat. Operațiune anulată."
 
 #: ../gui/wxpython/lmgr/frame.py:1837
-msgid "Display resolution is currently not constrained to computational settings. It's suggested to constrain map to region geometry. Do you want to constrain the resolution?"
-msgstr "Rezoluția eranului nu este în prezent limitată de setările de calcul. Este recomandat să limitați harta la geometria regiunii. Doriți să limitați rezoluția?"
+msgid ""
+"Display resolution is currently not constrained to computational settings. "
+"It's suggested to constrain map to region geometry. Do you want to constrain "
+"the resolution?"
+msgstr ""
+"Rezoluția eranului nu este în prezent limitată de setările de calcul. Este "
+"recomandat să limitați harta la geometria regiunii. Doriți să limitați "
+"rezoluția?"
 
 #: ../gui/wxpython/lmgr/frame.py:1846
 msgid "Constrain map to region geometry?"
@@ -11346,12 +12153,14 @@ msgstr "Citirea fișierului POINTS a eșuat"
 
 #: ../gui/wxpython/gcp/manager.py:1305
 msgid ""
-"Insufficient points defined and active (checked) for selected rectification method.\n"
+"Insufficient points defined and active (checked) for selected rectification "
+"method.\n"
 "3+ points needed for 1st order,\n"
 "6+ points for 2nd order, and\n"
 "10+ points for 3rd order."
 msgstr ""
-"Insuficiente puncte definite și active (verificate) pentru metoda de rectificare selectată.\n"
+"Insuficiente puncte definite și active (verificate) pentru metoda de "
+"rectificare selectată.\n"
 "3+ puncte necesare pentru prima transformare,\n"
 "6+puncte pentru a doua transformare, and\n"
 "10+puncte pentru a treia transformare."
@@ -11372,8 +12181,11 @@ msgstr "Georectificare hărții vectoriale <%s> a eșuat"
 
 #: ../gui/wxpython/gcp/manager.py:1443
 #, python-format
-msgid "Vector map <%s> already exists. Change extension name and georectify again."
-msgstr "Harta vectorială <%s> există deja. Alege numele extensiei și georectifică încă o dată."
+msgid ""
+"Vector map <%s> already exists. Change extension name and georectify again."
+msgstr ""
+"Harta vectorială <%s> există deja. Alege numele extensiei și georectifică "
+"încă o dată."
 
 #: ../gui/wxpython/gcp/manager.py:1453
 msgid "For all vector maps georectified successfully,"
@@ -11652,8 +12464,12 @@ msgid "&Location wizard"
 msgstr "&Locație wizard"
 
 #: ../gui/wxpython/gis_set.py:143
-msgid "Start location wizard. After location is created successfully, GRASS session is started."
-msgstr "Pornește locație wizard. După ce locația va fi creată cu succes, sesiunea GRASS va porni."
+msgid ""
+"Start location wizard. After location is created successfully, GRASS session "
+"is started."
+msgstr ""
+"Pornește locație wizard. După ce locația va fi creată cu succes, sesiunea "
+"GRASS va porni."
 
 #: ../gui/wxpython/gis_set.py:147
 msgid "Rename mapset"
@@ -11681,7 +12497,8 @@ msgstr "Introduceți sesiunea GRASS"
 
 #: ../gui/wxpython/gis_set.py:214 ../gui/wxpython/gis_set.py:655
 msgid "Unable to set GRASS database. Check your locale settings."
-msgstr "Nu se poate stabili baza de date GRASS. Verificați setările de localizare."
+msgstr ""
+"Nu se poate stabili baza de date GRASS. Verificați setările de localizare."
 
 #: ../gui/wxpython/gis_set.py:232
 #, python-format
@@ -11700,8 +12517,12 @@ msgstr "Linie invalidă în fișierul GISRC (%(e)s):%(l)s\n"
 
 #: ../gui/wxpython/gis_set.py:412
 #, python-format
-msgid "Do you want to import data source <%(name)s> to created location? Default region will be set to match imported map."
-msgstr "Doriți să importați sursa datei<%(name)s> pentru crearea locației? Regiunea va fi setată implicit pentru a se potrivi cu harta importată."
+msgid ""
+"Do you want to import data source <%(name)s> to created location? Default "
+"region will be set to match imported map."
+msgstr ""
+"Doriți să importați sursa datei<%(name)s> pentru crearea locației? Regiunea "
+"va fi setată implicit pentru a se potrivi cu harta importată."
 
 #: ../gui/wxpython/gis_set.py:416
 msgid "Import data"
@@ -11724,7 +12545,8 @@ msgstr "Datele vectoriale <%(name)s> au fost importate cu succes."
 #: ../gui/wxpython/gis_set.py:490
 #, python-format
 msgid "Attempt to import data source <%(name)s> as raster or vector failed. "
-msgstr "Încercarea de a importa datele <%(name)s> ca raster sau vector a eșuat."
+msgstr ""
+"Încercarea de a importa datele <%(name)s> ca raster sau vector a eșuat."
 
 #: ../gui/wxpython/gis_set.py:494
 #, python-format
@@ -11817,11 +12639,13 @@ msgstr ""
 #: ../gui/wxpython/gis_set.py:605
 #, python-format
 msgid ""
-"Do you want to continue with deleting mapset <%(mapset)s> from location <%(location)s>?\n"
+"Do you want to continue with deleting mapset <%(mapset)s> from location <"
+"%(location)s>?\n"
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
-"Doriți continuarea ștergerii mapset-ului <%(mapset)s> din locația <%(location)s>?\n"
+"Doriți continuarea ștergerii mapset-ului <%(mapset)s> din locația <"
+"%(location)s>?\n"
 "\n"
 "TOATE HĂRȚILE incluse în acest mapset vor fi ȘTERSE DEFINITIV!"
 
@@ -11870,14 +12694,16 @@ msgid ""
 "\n"
 "Concurrent use not allowed.\n"
 "\n"
-"Do you want to try to remove .gislock (note that you need permission for this operation) and continue?"
+"Do you want to try to remove .gislock (note that you need permission for "
+"this operation) and continue?"
 msgstr ""
 "GRASS deja rulează în mapset-ul selectat<%(mapset)s>\n"
 "(fișier %(lock)s găsit).\n"
 "\n"
 "Utilizarea concomitentă nu este permisă.\n"
 "\n"
-"Doriți să încercați să eliminați .gislock (notă: pentru această operațiune aveți nevoie de permisiune) și să continuați?"
+"Doriți să încercați să eliminați .gislock (notă: pentru această operațiune "
+"aveți nevoie de permisiune) și să continuați?"
 
 #: ../gui/wxpython/gis_set.py:845 ../gui/wxpython/gis_set.py:857
 msgid "Lock file found"
@@ -11887,11 +12713,13 @@ msgstr "Blocare fișier găsit"
 msgid ""
 "ARE YOU REALLY SURE?\n"
 "\n"
-"If you really are running another GRASS session doing this could corrupt your data. Have another look in the processor manager just to be sure..."
+"If you really are running another GRASS session doing this could corrupt "
+"your data. Have another look in the processor manager just to be sure..."
 msgstr ""
 "SUNTEȚI SIGUR?\n"
 "\n"
-"Dacă rulați o altă sesiune de GRASS, aceasta vă poate afecta datele. Uitați-vă în gestionează procesor pentru a fi siguri..."
+"Dacă rulați o altă sesiune de GRASS, aceasta vă poate afecta datele. Uitați-"
+"vă în gestionează procesor pentru a fi siguri..."
 
 #: ../gui/wxpython/gis_set.py:868
 #, python-format
@@ -11906,8 +12734,12 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:918
 #, python-format
-msgid "Name <%(name)s> is not a valid name for location or mapset. Please use only ASCII characters excluding %(chars)s and space."
-msgstr "Nume <%(name)s> nu este un nume valid pentru locație și mapset. Vă rugăm să folosiți doar caractere ASCII fără %(chars)s și spații."
+msgid ""
+"Name <%(name)s> is not a valid name for location or mapset. Please use only "
+"ASCII characters excluding %(chars)s and space."
+msgstr ""
+"Nume <%(name)s> nu este un nume valid pentru locație și mapset. Vă rugăm să "
+"folosiți doar caractere ASCII fără %(chars)s și spații."
 
 #: ../gui/wxpython/gis_set.py:921
 msgid "Invalid name"
@@ -11918,8 +12750,14 @@ msgid "Starting GRASS for the first time"
 msgstr "Pornește GRASS pentru prima dată"
 
 #: ../gui/wxpython/gis_set.py:985
-msgid "GRASS needs a directory in which to store its data. Create one now if you have not already done so. A popular choice is \"grassdata\", located in your home directory."
-msgstr "GRASS are nevoie de un director în care să stocheze datele. Crează unul acum, în cazul în care nu ai făcut deja acest lucru. Alegerea cea mai întâlnită este \"grassdata\", aflată în directorul acasă."
+msgid ""
+"GRASS needs a directory in which to store its data. Create one now if you "
+"have not already done so. A popular choice is \"grassdata\", located in your "
+"home directory."
+msgstr ""
+"GRASS are nevoie de un director în care să stocheze datele. Crează unul "
+"acum, în cazul în care nu ai făcut deja acest lucru. Alegerea cea mai "
+"întâlnită este \"grassdata\", aflată în directorul acasă."
 
 #: ../gui/wxpython/icons/icon.py:83
 #, python-format
@@ -11942,7 +12780,8 @@ msgstr "Vectorizează linie nouă"
 #: ../gui/wxpython/vdigit/toolbars.py:88 ../gui/wxpython/vdigit/toolbars.py:91
 #: ../gui/wxpython/vdigit/toolbars.py:112
 msgid "Left: new point; Ctrl+Left: undo last point; Right: close line"
-msgstr "Stânga: punct nou; Ctrl+Left: anulează ultimul punct; Dreapta: închide linie"
+msgstr ""
+"Stânga: punct nou; Ctrl+Left: anulează ultimul punct; Dreapta: închide linie"
 
 #: ../gui/wxpython/vdigit/toolbars.py:90
 msgid "Digitize new boundary"
@@ -11953,8 +12792,12 @@ msgid "Digitize new centroid"
 msgstr "Vectorizează centroid nou"
 
 #: ../gui/wxpython/vdigit/toolbars.py:96
-msgid "Digitize new area (composition of boundaries without category and one centroid with category)"
-msgstr "Vectorizează un areal nou (crează o limită fără categori și un centroid cu categorie)"
+msgid ""
+"Digitize new area (composition of boundaries without category and one "
+"centroid with category)"
+msgstr ""
+"Vectorizează un areal nou (crează o limită fără categori și un centroid cu "
+"categorie)"
 
 #: ../gui/wxpython/vdigit/toolbars.py:99
 msgid "Add new vertex"
@@ -12097,7 +12940,8 @@ msgstr "Selectează harta vectorială"
 #: ../gui/wxpython/vdigit/toolbars.py:678
 #, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
-msgstr "Vă rugăm să așteptați, deschiderea hărții vectoriale <%s> pentru editare..."
+msgstr ""
+"Vă rugăm să așteptați, deschiderea hărții vectoriale <%s> pentru editare..."
 
 #: ../gui/wxpython/vdigit/toolbars.py:731
 #, python-format
@@ -12111,7 +12955,9 @@ msgstr "Salvați modificările?"
 #: ../gui/wxpython/vdigit/toolbars.py:740
 #, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
-msgstr "Vă rugăm să așteptați, închiderea și reconstruirea topologiei hărții vectoriale<%s>..."
+msgstr ""
+"Vă rugăm să așteptați, închiderea și reconstruirea topologiei hărții "
+"vectoriale<%s>..."
 
 #: ../gui/wxpython/vdigit/toolbars.py:750
 #, python-format
@@ -12189,7 +13035,8 @@ msgstr "Aplică modificările pentru această sesiune"
 
 #: ../gui/wxpython/vdigit/preferences.py:56
 msgid "Close dialog and save changes to user settings file"
-msgstr "Închide caseta de dialog și salvează modificările din fișierul de setări"
+msgstr ""
+"Închide caseta de dialog și salvează modificările din fișierul de setări"
 
 #: ../gui/wxpython/vdigit/preferences.py:148
 msgid "Snapping"
@@ -12229,11 +13076,15 @@ msgstr "Selectează prag"
 
 #: ../gui/wxpython/vdigit/preferences.py:218
 msgid "Select only features inside of selection bounding box"
-msgstr "Selectează doar trăsăturile din interiorul casetei de încadrare de selecție"
+msgstr ""
+"Selectează doar trăsăturile din interiorul casetei de încadrare de selecție"
 
 #: ../gui/wxpython/vdigit/preferences.py:220
-msgid "By default are selected all features overlapping selection bounding box "
-msgstr "Implicit sunt selectate toate trăsăturile casetei de încadrare selectată care se suprapun"
+msgid ""
+"By default are selected all features overlapping selection bounding box "
+msgstr ""
+"Implicit sunt selectate toate trăsăturile casetei de încadrare selectată "
+"care se suprapun"
 
 #: ../gui/wxpython/vdigit/preferences.py:223
 msgid "Check for duplicates"
@@ -12344,8 +13195,12 @@ msgid "perimeter"
 msgstr "perimetru"
 
 #: ../gui/wxpython/vdigit/preferences.py:484
-msgid "Note: These settings are stored in the workspace not in the vector digitizer preferences."
-msgstr "Notă: Aceste setări sunt stocate în spațiul de lucru, nu în preferințele pentru vectorizare."
+msgid ""
+"Note: These settings are stored in the workspace not in the vector digitizer "
+"preferences."
+msgstr ""
+"Notă: Aceste setări sunt stocate în spațiul de lucru, nu în preferințele "
+"pentru vectorizare."
 
 #: ../gui/wxpython/vdigit/preferences.py:512
 msgid "Digitize new line segment"
@@ -12414,7 +13269,9 @@ msgstr "Snapping dezactivat"
 #: ../gui/wxpython/vdigit/preferences.py:598
 #, python-format
 msgid "Snapping threshold is %(value).1f %(units)s (based on comp. resolution)"
-msgstr "Snapping pentru prag este %(value).1f %(units)s (bazat pe rezoluția de calcul)"
+msgstr ""
+"Snapping pentru prag este %(value).1f %(units)s (bazat pe rezoluția de "
+"calcul)"
 
 #: ../gui/wxpython/vdigit/preferences.py:654
 #, python-format
@@ -12432,7 +13289,9 @@ msgstr "Nici o hartă vectorială selectată pentru editare."
 
 #: ../gui/wxpython/vdigit/mapwindow.py:502
 msgid "Nothing to do. Choose appropriate tool from digitizer toolbar."
-msgstr "Nimic de făcut. Alege cel mai apropiat instrument de pe bara pentru vectorizare."
+msgstr ""
+"Nimic de făcut. Alege cel mai apropiat instrument de pe bara pentru "
+"vectorizare."
 
 #: ../gui/wxpython/vdigit/mapwindow.py:992
 #, fuzzy
@@ -12441,8 +13300,14 @@ msgstr "Caseta de dialog pentru etichetarea altitudinii"
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:869
 #, python-format
-msgid "Topology for vector map <%s> is not available. Topology is required by digitizer. Do you want to rebuild topology (takes some time) and open the vector map for editing?"
-msgstr "Topologia pentru harta vectorială <%s> nu este disponibilă. Topologia este necesară pentru vectorizare. Doriți să reconstruiți topologia (va lua ceva timp) și să deschideți harta vectorială pentru editare?"
+msgid ""
+"Topology for vector map <%s> is not available. Topology is required by "
+"digitizer. Do you want to rebuild topology (takes some time) and open the "
+"vector map for editing?"
+msgstr ""
+"Topologia pentru harta vectorială <%s> nu este disponibilă. Topologia este "
+"necesară pentru vectorizare. Doriți să reconstruiți topologia (va lua ceva "
+"timp) și să deschideți harta vectorială pentru editare?"
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:873
 msgid "Topology missing"
@@ -12482,12 +13347,16 @@ msgstr "Legătura bazei de date %d nu este disponibilă. Operațiune anulată."
 #: ../gui/wxpython/vdigit/wxdigit.py:89
 #, python-format
 msgid "Unable to start database driver <%s>. Operation canceled."
-msgstr "Nu s-a putut deschide driver-ul bazei de date <%s>. Operațiune anulată."
+msgstr ""
+"Nu s-a putut deschide driver-ul bazei de date <%s>. Operațiune anulată."
 
 #: ../gui/wxpython/vdigit/wxdigit.py:97
 #, python-format
-msgid "Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
-msgstr "Nu s-a putut deschide baza de date <%(db)s> cu driver-ul <%(driver)s>. Operațiune anulată."
+msgid ""
+"Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
+msgstr ""
+"Nu s-a putut deschide baza de date <%(db)s> cu driver-ul <%(driver)s>. "
+"Operațiune anulată."
 
 #: ../gui/wxpython/vdigit/wxdigit.py:105
 #, python-format
@@ -12512,3 +13381,6 @@ msgstr "Tip de trăsătură necunoscut '%s'"
 #: ../gui/wxpython/vdigit/wxdigit.py:472
 msgid "Not enough points for line"
 msgstr "Nu sunt suficiente puncte pentru linie"
+
+#~ msgid "Select WKT or PRJ file"
+#~ msgstr "Selectați fișierul WKT sau PRJ"

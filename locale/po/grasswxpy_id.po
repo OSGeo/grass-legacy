@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_id\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:39+0200\n"
+"POT-Creation-Date: 2013-07-10 00:42+0200\n"
 "PO-Revision-Date: 2009-04-10 21:13+0700\n"
 "Last-Translator: Firman Hadi <jalmiburung@gmail.com>\n"
 "Language-Team: deutsch <grass-translations@lists.osgeo.org>\n"
@@ -45,7 +45,7 @@ msgid "Not selectable element"
 msgstr "Hapus kolom terpilih"
 
 #: ../gui/wxpython/gui_core/gselect.py:335
-#: ../gui/wxpython/gui_core/preferences.py:1646
+#: ../gui/wxpython/gui_core/preferences.py:1649
 msgid "Mapset"
 msgstr "Mapset"
 
@@ -1073,10 +1073,10 @@ msgid "Key column cannot be empty string."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:212
-#: ../gui/wxpython/gui_core/preferences.py:1264
-#: ../gui/wxpython/gui_core/preferences.py:1291
-#: ../gui/wxpython/gui_core/preferences.py:1300
-#: ../gui/wxpython/gui_core/preferences.py:1309
+#: ../gui/wxpython/gui_core/preferences.py:1265
+#: ../gui/wxpython/gui_core/preferences.py:1294
+#: ../gui/wxpython/gui_core/preferences.py:1303
+#: ../gui/wxpython/gui_core/preferences.py:1312
 #: ../gui/wxpython/location_wizard/dialogs.py:114
 #: ../gui/wxpython/location_wizard/dialogs.py:131
 #: ../gui/wxpython/location_wizard/dialogs.py:438
@@ -1170,7 +1170,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:404
 #: ../gui/wxpython/gui_core/preferences.py:579
-#: ../gui/wxpython/gui_core/preferences.py:1412
+#: ../gui/wxpython/gui_core/preferences.py:1415
 #: ../gui/wxpython/psmap/dialogs.py:2787 ../gui/wxpython/psmap/dialogs.py:3264
 #: ../gui/wxpython/psmap/dialogs.py:3720 ../gui/wxpython/wxplot/dialogs.py:310
 msgid "Font settings"
@@ -1432,48 +1432,48 @@ msgstr "Pengaturan proyeksi"
 msgid "Precision:"
 msgstr "Proyeksi:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1263
+#: ../gui/wxpython/gui_core/preferences.py:1264
 #, fuzzy, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "Tidak dapat membaca kode EPSG: %s"
 
-#: ../gui/wxpython/gui_core/preferences.py:1290
-#: ../gui/wxpython/gui_core/preferences.py:1299
-#: ../gui/wxpython/gui_core/preferences.py:1308
+#: ../gui/wxpython/gui_core/preferences.py:1293
+#: ../gui/wxpython/gui_core/preferences.py:1302
+#: ../gui/wxpython/gui_core/preferences.py:1311
 #, fuzzy, python-format
 msgid "EPSG code %s not found"
 msgstr "ERROR: Location <%s> tidak ada"
 
-#: ../gui/wxpython/gui_core/preferences.py:1316
+#: ../gui/wxpython/gui_core/preferences.py:1319
 msgid "Select default display font"
 msgstr "Pilih jenis huruf tampilan standar"
 
-#: ../gui/wxpython/gui_core/preferences.py:1341
+#: ../gui/wxpython/gui_core/preferences.py:1344
 #, fuzzy
 msgid "Select output font"
 msgstr "Pilih jenis huruf"
 
-#: ../gui/wxpython/gui_core/preferences.py:1419
+#: ../gui/wxpython/gui_core/preferences.py:1422
 #, fuzzy
 msgid "Select font:"
 msgstr "Pilih jenis huruf"
 
-#: ../gui/wxpython/gui_core/preferences.py:1443
+#: ../gui/wxpython/gui_core/preferences.py:1446
 msgid "Character encoding:"
 msgstr ""
 
-#: ../gui/wxpython/gui_core/preferences.py:1461
+#: ../gui/wxpython/gui_core/preferences.py:1464
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 #, fuzzy
 msgid "Font size:"
 msgstr "Tema ikon:"
 
-#: ../gui/wxpython/gui_core/preferences.py:1559
+#: ../gui/wxpython/gui_core/preferences.py:1562
 #, fuzzy
 msgid "Manage access to mapsets"
 msgstr "Ubah mapset saat ini."
 
-#: ../gui/wxpython/gui_core/preferences.py:1572
+#: ../gui/wxpython/gui_core/preferences.py:1575
 #, fuzzy
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
@@ -1486,7 +1486,7 @@ msgstr ""
 "menyembunyikannya.%Catatan: PERMANEN dan mapset saat ini akan selalu dapat "
 "diakses."
 
-#: ../gui/wxpython/gui_core/preferences.py:1647
+#: ../gui/wxpython/gui_core/preferences.py:1650
 msgid "Owner"
 msgstr "Pemilik"
 
@@ -2681,7 +2681,7 @@ msgid "Choose GRASS data directory:"
 msgstr "Pilih direktori data GRASS:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
-#: ../gui/wxpython/location_wizard/wizard.py:1975
+#: ../gui/wxpython/location_wizard/wizard.py:1994
 msgid "Location already exists in GRASS Database."
 msgstr "Location sudah ada dalam basisdata GRASS"
 
@@ -2714,7 +2714,7 @@ msgid "Read projection and datum terms from a georeferenced data file"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-msgid "Read projection and datum terms from a WKT or PRJ file"
+msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
 msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
@@ -2832,13 +2832,12 @@ msgstr "Berkas georeferensi:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1185
 #: ../gui/wxpython/location_wizard/wizard.py:1242
-#, fuzzy
-msgid "Select WKT or PRJ file"
-msgstr "Pilih berkas WKT"
+msgid "Select Well Known Text (WKT) .prj file"
+msgstr ""
 
 #: ../gui/wxpython/location_wizard/wizard.py:1190
 #, fuzzy
-msgid "WKT or PRJ file:"
+msgid "WKT .prj file:"
 msgstr "Berkas WKT:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1259
@@ -2897,29 +2896,32 @@ msgid "Projection:"
 msgstr "Proyeksi:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1640
-msgid "PROJ.4 definition:"
+#, fuzzy
+msgid ""
+"PROJ.4 definition:\n"
+" (non-definitive)"
 msgstr "Definisi PROJ.4:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1715
+#: ../gui/wxpython/location_wizard/wizard.py:1730
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 #, fuzzy
 msgid "custom"
 msgstr "Bebas min."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1722
+#: ../gui/wxpython/location_wizard/wizard.py:1740
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
 msgstr "Apakah Anda hendak membuat GRASS location <%s>?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1723
+#: ../gui/wxpython/location_wizard/wizard.py:1741
 msgid "Create new location?"
 msgstr "Buat location baru?"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1766
+#: ../gui/wxpython/location_wizard/wizard.py:1785
 msgid "Define new GRASS Location"
 msgstr "Definisikan GRASS Location baru"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1858
+#: ../gui/wxpython/location_wizard/wizard.py:1877
 #, fuzzy, python-format
 msgid ""
 "Unable to create new location. Location <%(loc)s> not created.\n"
@@ -2928,32 +2930,32 @@ msgid ""
 msgstr ""
 "Tidak mampu membuat location baru. Location <%s> tidak berhasil dibuat."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1866
+#: ../gui/wxpython/location_wizard/wizard.py:1885
 msgid "Location wizard canceled. Location not created."
 msgstr "Location wizard dibatalkan. Location tidak dibuat."
 
-#: ../gui/wxpython/location_wizard/wizard.py:1973
+#: ../gui/wxpython/location_wizard/wizard.py:1992
 msgid "Unable to create new location"
 msgstr "Tidak mampu membuat location baru"
 
-#: ../gui/wxpython/location_wizard/wizard.py:1992
+#: ../gui/wxpython/location_wizard/wizard.py:2011
 #, python-format
 msgid ""
 "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
 "need to change the default GIS data directory in the GRASS startup screen."
 msgstr ""
 
-#: ../gui/wxpython/location_wizard/wizard.py:1997
+#: ../gui/wxpython/location_wizard/wizard.py:2016
 #, fuzzy
 msgid "New GIS data directory"
 msgstr "Direktori Data GIS:"
 
-#: ../gui/wxpython/location_wizard/wizard.py:2028
+#: ../gui/wxpython/location_wizard/wizard.py:2047
 msgid "EPSG code missing."
 msgstr "Kode EPSG tidak ada."
 
-#: ../gui/wxpython/location_wizard/wizard.py:2039
-#: ../gui/wxpython/location_wizard/wizard.py:2048
+#: ../gui/wxpython/location_wizard/wizard.py:2058
+#: ../gui/wxpython/location_wizard/wizard.py:2067
 #, fuzzy, python-format
 msgid "File <%s> not found."
 msgstr "berkas tidak ditemukan"
@@ -4578,37 +4580,37 @@ msgstr "Tidak dapat melakukan render layer peta <%s>."
 msgid "Unable to render overlay <%s>."
 msgstr "Tidak dapat merender overlay <%s>."
 
-#: ../gui/wxpython/core/utils.py:315 ../gui/wxpython/core/utils.py:356
+#: ../gui/wxpython/core/utils.py:313 ../gui/wxpython/core/utils.py:354
 #, fuzzy, python-format
 msgid "Vector map <%(map)s>: %(msg)s\n"
 msgstr "Peta vektor baru"
 
-#: ../gui/wxpython/core/utils.py:575
+#: ../gui/wxpython/core/utils.py:573
 #, fuzzy, python-format
 msgid "failed to open '%s'"
 msgstr "Tidak dapat membuka berkas"
 
-#: ../gui/wxpython/core/utils.py:810
+#: ../gui/wxpython/core/utils.py:808
 #, python-format
 msgid "ERROR: Unable to determine GRASS version. Details: %s"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:846
+#: ../gui/wxpython/core/utils.py:844
 #, fuzzy, python-format
 msgid "Unable to open file '%s'\n"
 msgstr "Tidak mampu membuka berkas <%s> untuk dibaca."
 
-#: ../gui/wxpython/core/utils.py:854
+#: ../gui/wxpython/core/utils.py:852
 #, python-format
 msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:860
+#: ../gui/wxpython/core/utils.py:858
 #, python-format
 msgid "Duplicated key: %s\n"
 msgstr ""
 
-#: ../gui/wxpython/core/utils.py:875
+#: ../gui/wxpython/core/utils.py:873
 #, fuzzy, python-format
 msgid "Unable to create file '%s'\n"
 msgstr "Tidak dapat membaca kode EPSG: %s"
@@ -10063,16 +10065,16 @@ msgid ""
 "running r.in.wms directly from the command line."
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:248
+#: ../gui/wxpython/modules/ogc_services.py:251
 #, fuzzy
 msgid "Layer / Style"
 msgstr "Layer yang akan dihapus"
 
-#: ../gui/wxpython/modules/ogc_services.py:249
+#: ../gui/wxpython/modules/ogc_services.py:252
 msgid "Title"
 msgstr ""
 
-#: ../gui/wxpython/modules/ogc_services.py:259
+#: ../gui/wxpython/modules/ogc_services.py:262
 #, fuzzy
 msgid "Layers"
 msgstr "Layer"
@@ -14023,6 +14025,10 @@ msgstr "ID Fitur"
 #, fuzzy
 msgid "Not enough points for line"
 msgstr "Buat titik sepanjang garis"
+
+#, fuzzy
+#~ msgid "Select WKT or PRJ file"
+#~ msgstr "Pilih berkas WKT"
 
 #, fuzzy
 #~ msgid "&Protocol"
