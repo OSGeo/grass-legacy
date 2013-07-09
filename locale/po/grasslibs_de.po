@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2013-05-03 14:40+0200\n"
 "Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
@@ -1026,8 +1026,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:272
 #: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
-#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:185
-#: ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:186
+#: ../lib/vector/Vlib/net.c:356
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Kann die Datenbank <%s> nicht mit dem Treiber <%s> öffnen."
@@ -2500,27 +2500,27 @@ msgstr "Kann range-Datei für [%s in %s] nicht lesen."
 msgid "can't write range file for [%s in %s]"
 msgstr "Kann range-Datei für [%s in %s] nicht schreiben."
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "Keine %s Dateien im aktuellen Mapset vorhanden.\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "Keine %s Dateien in Mapset <%s> vorhanden.\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "RETURN zum Weitermachen drücken -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s Dateien im Mapset <%s> vorhanden:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: Unbekannter Elementtyp"
 
@@ -3803,8 +3803,8 @@ msgstr "Lade Daten aus der Attributtabelle ..."
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:244
 #: ../lib/vector/Vlib/map.c:365 ../lib/vector/Vlib/map.c:471
 #: ../lib/vector/Vlib/map.c:589 ../lib/vector/Vlib/map.c:687
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "Die Datenbankverbindung für den Layer <%d> ist nicht definiert."
@@ -4155,7 +4155,7 @@ msgstr "Versuche Insel %d von toter Fläche %d zu löschen."
 msgid "Computing minimum spanning tree..."
 msgstr "Berechne minimalen aufspannenden Baum..."
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "GngFlatten Fehler"
@@ -4407,40 +4407,40 @@ msgstr "%d Flächengrenzen zusammengelegt"
 msgid "%d new boundaries"
 msgstr "%d neue Flächengrenzen"
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 msgid "Building graph..."
 msgstr "Erzeuge Graphen..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 msgid "Unable to build network graph"
 msgstr "Kann den Netzwerk-Graph nicht erzeugen."
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "Spalte der Vorwärtskosten nicht angegeben."
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "Arc Feld < 1"
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Spalte <%s> nicht in Tabelle <%s> gefunden."
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr ""
 "Spaltentyp der Spalte <%s> wird nicht unterstützt (muss numerisch sein)."
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 msgid "Registering arcs..."
 msgstr "Registriere arcs..."
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -4449,7 +4449,7 @@ msgstr ""
 "Datenbankeintrag für Linie %d (cat = %d, vorwärts/beide Richtung(en)) nicht "
 "gefunden (vorwärts/beide Richtung(en) der Linie übersprungen)."
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
@@ -4458,35 +4458,35 @@ msgstr ""
 "Datenbankeintrag für Linie %d (cat = %d, rückwärts Richtung) nicht gefunden "
 "(Richtung der Linie übersprungen)."
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "Kann Netzwerk arc nicht hinzufügen."
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr "Setze Kosten der Knoten..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 "Datenbankeintrag für Knoten %d (cat = %d) nicht gefunden (Kosten auf 0 "
 "gesetzt)."
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 msgid "Flattening the graph..."
 msgstr "Mache den Graph flach..."
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "Graph wurde erstellt."
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "dglShortestPath Fehler: %s"
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Falsche Linienrichtung in Vect_net_get_line_cost()."
 

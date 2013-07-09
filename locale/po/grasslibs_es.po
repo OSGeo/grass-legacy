@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2013-03-20 00:13-0600\n"
 "Last-Translator: Javier García Prieto <fjgarciaprieto@hotmail.com>\n"
 "Language-Team: Español; Castellano <grass-translations@lists.osgeo.org>\n"
@@ -1071,8 +1071,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:272
 #: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
-#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:185
-#: ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:186
+#: ../lib/vector/Vlib/net.c:356
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr ""
@@ -2591,32 +2591,32 @@ msgid "can't write range file for [%s in %s]"
 msgstr ""
 "No es posible escribir el archivo que contiene los rangos para [%s en %s]."
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr ""
 "No hay archivos %s disponibles en el directorio de mapas de usuario actual "
 "(mapset).\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr ""
 "No hay archivos %s disponibles en el directorio de mapas de usuario (mapset) "
 "<%s>.\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "Presione ENTER para continuar. -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr ""
 "Archivos %s disponibles en el directorio de mapas de usuario (Mapset)<%s>:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: tipo de elemento desconocido."
 
@@ -3952,8 +3952,8 @@ msgstr "Cargando datos de la tabla de atributos..."
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:244
 #: ../lib/vector/Vlib/map.c:365 ../lib/vector/Vlib/map.c:471
 #: ../lib/vector/Vlib/map.c:589 ../lib/vector/Vlib/map.c:687
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "No se ha definido la conexión a la base de datos para la capa %d."
@@ -4322,7 +4322,7 @@ msgstr "Intento de eliminar la isla %d del área muerta.%d."
 msgid "Computing minimum spanning tree..."
 msgstr "Calculando el mínimo árbol de expansión."
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "Error 'GngFlatten'"
@@ -4589,41 +4589,41 @@ msgstr "%d Contornos fusionados."
 msgid "%d new boundaries"
 msgstr "%d Nuevos contornos."
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 msgid "Building graph..."
 msgstr "Construyendo grafica..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 msgid "Unable to build network graph"
 msgstr "Imposible crear gráfico de la red."
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "Columna de costos a futuro no especificada."
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "Campo de arco < 1."
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "No se ha encontrado la columna <%s> en la tabla <%s>."
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr ""
 "El tipo de datos para la columna <%s> no está soportado (debe ser de tipo "
 "numérico)."
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 msgid "Registering arcs..."
 msgstr "Registrando arcos..."
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -4633,7 +4633,7 @@ msgstr ""
 "%d, hacia adelante / en una o ambas direcciones) (se omite la línea hacia "
 "adelante / en una o ambas direcciones)."
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
@@ -4643,35 +4643,35 @@ msgstr ""
 "hacia atrás) en la base de datos , (se omite la dirección de la línea)."
 
 #
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "No se ha podido añadir el arco a la red."
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 msgid "Setting node costs..."
 msgstr "Estableciendo costes de nodos..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 "No se encuentra el registro para el nodo %d (cat = %d). (El coste se "
 "establece como 0)."
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 msgid "Flattening the graph..."
 msgstr "Achatamiento de la gráfica ..."
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "El grafico fue construido."
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "Error de dglShortestPath: %s"
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Dirección de la línea incorrecta en Vect_net_get_line_cost()."
 

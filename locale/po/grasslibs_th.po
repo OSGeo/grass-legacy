@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -1024,8 +1024,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:272
 #: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
-#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:185
-#: ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:186
+#: ../lib/vector/Vlib/net.c:356
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "ไม่สามารถเปิดตาราง <%s> ด้วยตัวขับ <%s>"
@@ -2479,27 +2479,27 @@ msgstr "ไม่สามารถอ่าน range ไฟล์สำหร�
 msgid "can't write range file for [%s in %s]"
 msgstr "ไม่สามารถเขียน range ไฟล์สำหรับ [%s ใน %s]"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "ไม่มีไฟล์ %s อยู่ในชุดแผนที่ปัจจุบัน\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "ไม่มีไฟล์ %s อยู่ในชุดแผนที่ <%s>\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "กด RETURN เพื่อดำเนินการต่อ -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s ไฟล์อยู่ในชุดแผนที่ปัจจุบัน <%s>:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: ไม่ทราบชนิดชิ้นส่วน"
 
@@ -3767,8 +3767,8 @@ msgstr "กำลังอ่านข้อมูลจากตารางข
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:244
 #: ../lib/vector/Vlib/map.c:365 ../lib/vector/Vlib/map.c:471
 #: ../lib/vector/Vlib/map.c:589 ../lib/vector/Vlib/map.c:687
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "การเชื่อมต่อฐานข้อมูลไม่ได้ถูกกำหนด สำหรับชั้นข้อมูลนี้ %d"
@@ -4112,7 +4112,7 @@ msgstr "ตั้งใจที่จะลบข้อมูล isle  [%d] จ
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "GngFlatten ผิดพลาด"
@@ -4364,42 +4364,42 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 #, fuzzy
 msgid "Building graph..."
 msgstr "สร้าง graph ..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 #, fuzzy
 msgid "Unable to build network graph"
 msgstr "ไม่สามารถสร้าง network graph"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "Costs column ไม่ได้ระบุ"
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "Arc field < 1"
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, fuzzy, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "ไม่สามารถ บรรยายตารางนี้ได้ <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, fuzzy, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr "ชนิดของ z column ไม่รองรับ (ต้องเป็น  integer หรือ  double)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 #, fuzzy
 msgid "Registering arcs..."
 msgstr "การบันทึก arcs ..."
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -4408,42 +4408,42 @@ msgstr ""
 "ข้อมูลบรรทัดที่ %d (cat = %d, forward/both direction(s)) ไม่พบ (forward/both "
 "direction(s)  ข้ามไป)"
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
 "(direction of line skipped)"
 msgstr "ข้อมูลบรรทัดที่ %d (cat = %d, backword direction) ไม่พบ ( ข้ามไป)"
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "ไม่สามารถเพิ่ม network arc"
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 #, fuzzy
 msgid "Setting node costs..."
 msgstr "กำหนด node costs ..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr "ข้อมูล node %d (cat = %d) ไม่พบ (กำหนด cost เป็น 0)"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 #, fuzzy
 msgid "Flattening the graph..."
 msgstr "Flattening the graph ..."
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "Graph ถูกสร้าง"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "ทิศทางผิดใน  Vect_net_get_line_cost()"
 

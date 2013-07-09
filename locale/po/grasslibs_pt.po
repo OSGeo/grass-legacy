@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2007-06-18 22:26-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -981,8 +981,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
 #: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:272
 #: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
-#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:185
-#: ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:186
+#: ../lib/vector/Vlib/net.c:356
 #, fuzzy, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Impossível abrir base de dados <%s> com driver <%s>"
@@ -2436,27 +2436,27 @@ msgstr "não consegui ler arquivo de intervalo para [%s em %s]"
 msgid "can't write range file for [%s in %s]"
 msgstr "não consegui escrever arquivo de intervalo para [%s em %s]"
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:114
 #, fuzzy, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "não há arquivos <%s> disponíveis no mapset ativo\n"
 
-#: ../lib/gis/list.c:118
+#: ../lib/gis/list.c:117
 #, fuzzy, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "não há arquivos %s disponíveis no mapset %s\n"
 
-#: ../lib/gis/list.c:133
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "Pressione ENTER para continuar -->"
 
-#: ../lib/gis/list.c:184
+#: ../lib/gis/list.c:183
 #, fuzzy, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s arquivos disponíveis no mapset %s:\n"
 
-#: ../lib/gis/list.c:255
+#: ../lib/gis/list.c:254
 msgid "G_list: Unknown element type"
 msgstr "G_list: Tipo de elemento desconhecido"
 
@@ -3735,8 +3735,8 @@ msgstr "Carregando dados da tabela de atributos ... "
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:244
 #: ../lib/vector/Vlib/map.c:365 ../lib/vector/Vlib/map.c:471
 #: ../lib/vector/Vlib/map.c:589 ../lib/vector/Vlib/map.c:687
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:179
-#: ../lib/vector/Vlib/net.c:350
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr ""
@@ -4083,7 +4083,7 @@ msgstr "Tentativa de remover ilha [%d] da área[%d]"
 msgid "Computing minimum spanning tree..."
 msgstr ""
 
-#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309 ../lib/vector/Vlib/net.c:433
 #: ../lib/vector/Vlib/graph.c:110
 msgid "GngFlatten error"
 msgstr "Erro 'GngFlatten'"
@@ -4333,85 +4333,85 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:121
+#: ../lib/vector/Vlib/net.c:122
 #, fuzzy
 msgid "Building graph..."
 msgstr "Construindo grafo ..."
 
-#: ../lib/vector/Vlib/net.c:163
+#: ../lib/vector/Vlib/net.c:164
 #, fuzzy
 msgid "Unable to build network graph"
 msgstr "Impossível construir grafo da rede"
 
-#: ../lib/vector/Vlib/net.c:169
+#: ../lib/vector/Vlib/net.c:170
 msgid "Forward costs column not specified"
 msgstr "Coluna de custos não especificada"
 
-#: ../lib/vector/Vlib/net.c:176
+#: ../lib/vector/Vlib/net.c:177
 msgid "Arc field < 1"
 msgstr "Campo de arco < 1"
 
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
+#: ../lib/vector/Vlib/net.c:191 ../lib/vector/Vlib/net.c:208
+#: ../lib/vector/Vlib/net.c:361
 #, fuzzy, c-format
 msgid "Column <%s> not found in table <%s>"
 msgstr "Impossível descrever tabela <%s>"
 
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
+#: ../lib/vector/Vlib/net.c:197 ../lib/vector/Vlib/net.c:214
+#: ../lib/vector/Vlib/net.c:367
 #, fuzzy, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr "Tipo da coluna z não é suportado (deve ser inteiro ou double)"
 
-#: ../lib/vector/Vlib/net.c:226
+#: ../lib/vector/Vlib/net.c:227
 #, fuzzy
 msgid "Registering arcs..."
 msgstr "Registrando arcos ..."
 
-#: ../lib/vector/Vlib/net.c:254
+#: ../lib/vector/Vlib/net.c:255
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
 "(forward/both direction(s) of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:273
+#: ../lib/vector/Vlib/net.c:274
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
 "(direction of line skipped)"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:322
+#: ../lib/vector/Vlib/net.c:323
 msgid "Cannot add network arc"
 msgstr "Impossível adicionar arco"
 
-#: ../lib/vector/Vlib/net.c:346
+#: ../lib/vector/Vlib/net.c:347
 #, fuzzy
 msgid "Setting node costs..."
 msgstr "Ajustando custo dos nós ..."
 
-#: ../lib/vector/Vlib/net.c:402
+#: ../lib/vector/Vlib/net.c:403
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 "Registro na base de dados para nó %d (cat= %d) não encontrado (custo 0)"
 
-#: ../lib/vector/Vlib/net.c:429
+#: ../lib/vector/Vlib/net.c:430
 #, fuzzy
 msgid "Flattening the graph..."
 msgstr "Achatando o gráfico"
 
-#: ../lib/vector/Vlib/net.c:438
+#: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
 msgstr "Grafo construído"
 
-#: ../lib/vector/Vlib/net.c:521 ../lib/vector/Vlib/graph.c:231
+#: ../lib/vector/Vlib/net.c:522 ../lib/vector/Vlib/graph.c:231
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:602
+#: ../lib/vector/Vlib/net.c:603
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Direção da linha errada em Vect_net_get_line_cost()"
 

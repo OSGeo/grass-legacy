@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2008-01-05 15:05+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -6753,53 +6753,3 @@ msgstr "กำหนด ความกว้างเส้น ในหน่�
 #: ../vector/v.digit/settings.tcl:329
 msgid "Table"
 msgstr "ตาราง"
-
-#~ msgid "Test"
-#~ msgstr "ทดสอบ"
-
-#~ msgid "Run (in Xterm)"
-#~ msgstr "เริ่ม (in Xterm)"
-
-#~ msgid "Zoom to..."
-#~ msgstr "ย่อ/ขยาย ไปที่ ..."
-
-#~ msgid "Export display to graphics file"
-#~ msgstr "ส่งออกจอแสดงเป้นแฟ้มข้อมูลภาพ"
-
-#~ msgid "Create/rebuild topology: "
-#~ msgstr "สร้าง/สร้างใหม่ topology: "
-
-#~ msgid "Generalization"
-#~ msgstr "สร้าง"
-
-#~ msgid "WARNING: Error creating new location"
-#~ msgstr "คำเตือน: ข้อผิดพลาดในการสร้างตำแหน่งใหม่"
-
-#~ msgid ""
-#~ "Error creating new location from georeferenced file.  g.proj returned "
-#~ "following message:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "ข้อผิดพลาดในการสร้างตำแหน่งใหม่จาก Georeferenced ไฟล์.  g.proj "
-#~ "ส่งข้อความกลับตามนี้:\n"
-#~ "\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "Display: rows=%d columns=%d  resolution=%g %s"
-#~ msgstr "clf'z]: rows=%d cols=%d  N-S res=%g  E-W res=%g"
-
-#, fuzzy
-#~ msgid "cumulative length = %s\n"
-#~ msgstr "Cumulative movement costs"
-
-#, fuzzy
-#~ msgid " width"
-#~ msgstr "กว้าง"
-
-#~ msgid "text color"
-#~ msgstr "สีข้อความ"
-
-#~ msgid " text size"
-#~ msgstr "ขนาดข้อความ"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-09 14:55+0200\n"
+"POT-Creation-Date: 2013-07-10 00:49+0200\n"
 "PO-Revision-Date: 2009-01-28 23:05-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -6754,89 +6754,3 @@ msgstr "Установить толщину линии в пикселях"
 #: ../vector/v.digit/settings.tcl:329
 msgid "Table"
 msgstr "Таблица"
-
-#~ msgid "Test"
-#~ msgstr "Тест"
-
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Запустить (в Xterm)"
-
-#~ msgid "Zoom to..."
-#~ msgstr "Масштабировать до..."
-
-#~ msgid "Export display to graphics file"
-#~ msgstr "Экспортировать дисплей в графический файл"
-
-#~ msgid "Create/rebuild topology: "
-#~ msgstr "Создать/построить топологию:"
-
-#~ msgid "Generalization"
-#~ msgstr "Генерализация"
-
-#, fuzzy
-#~ msgid "WARNING: Error creating new location"
-#~ msgstr "ПРЕДУПРЕЖДЕНИЕ"
-
-#, fuzzy
-#~ msgid "Convert vector lines to points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Remove existing attribute table for vector map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "by GDAL (raster) or OGR (vector)\n"
-#~ "\n"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Generating HTMLs...  %i of %i  \"%s\""
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Down"
-#~ msgstr "Вниз"
-
-#, fuzzy
-#~ msgid "Searching in %s..."
-#~ msgstr " ."
-
-#, fuzzy
-#~ msgid ""
-#~ "Error in regular expression:\n"
-#~ "\"%s\""
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Please select location and mapset\n"
-#~ msgstr "Выберите район и набор данных,\n"
-
-#, fuzzy
-#~ msgid "Database : "
-#~ msgstr "База данных : "
-
-#, fuzzy
-#~ msgid "(Accessible) Mapsets"
-#~ msgstr "Наборы данных :"
-
-#, fuzzy
-#~ msgid "Create Location From EPSG"
-#~ msgstr "Район"
-
-#~ msgid "Maximum likelyhood classification (MLC)"
-#~ msgstr "Классификация максимального подобия (MLC)"
-
-#~ msgid "   Attribute col for labels"
-#~ msgstr "   Поле атрибутов для подписей"
-
-#~ msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
-#~ msgstr "полиномиальная трансформация (только растры). Требует 7+ GCP."
