@@ -67,7 +67,7 @@ Contents
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
 
-     svn ci -m"GRASS $VERSION" include/VERSION
+     svn ci -m"GRASS GIS $VERSION" include/VERSION
      svn up
 
  o Create Changelog file on release branch:
@@ -85,7 +85,7 @@ Contents
           echo $RELEASETAG
 
           URL=https://svn.osgeo.org/grass
-          svn copy $URL/grass/branches/releasebranch_6_4 \
+          svn copy $URL/grass/branches/develbranch_6 \
 	       $URL/grass/tags/$RELEASETAG \
 	       -m "Tagging release grass_${MAJOR}_${MINOR}_${RELEASE}"
       
@@ -136,7 +136,7 @@ Contents
     - News section
     - http://grass.osgeo.org/download/software/
     - http://grass.osgeo.org/download/software/sources/
-    - http://grass.osgeo.org/grass64/ <- to be moved to CMS
+    - http://grass.osgeo.org/grass65/ <- to be moved to CMS
     - http://grass.osgeo.org/home/history/releases/
     - http://grass.osgeo.org/development/svn/svn-tags/ (add tag): echo $RELEASETAG
 
@@ -174,8 +174,6 @@ Contents
                          <grass-dev@lists.osgeo.org>
                        http://lists.osgeo.org/mailman/listinfo/grassuser
                          <grass-user@lists.osgeo.org>
-                       http://lists.osgeo.org/mailman/listinfo/grass-windows
-                         <grass-windows@lists.osgeo.org>
 
    DebianGIS:          <debian-gis@lists.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
@@ -222,12 +220,12 @@ Contents
 1. see SVN book:
    http://svnbook.red-bean.com/en/1.1/ch04s07.html
 
-   GRASS 6.4 development branch:
+   GRASS 6.5 development branch:
           BRANCH=develbranch_6
           URL=https://svn.osgeo.org/grass
           svn copy $URL/grass/trunk \
                    $URL/grass/branches/$BRANCH \
-                   -m "Development branch for GRASS 6.4.x"
+                   -m "Development branch for GRASS 6.5.x"
 
 
    Switching current local copy to above development branch:
