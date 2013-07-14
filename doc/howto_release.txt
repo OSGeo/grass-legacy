@@ -60,6 +60,9 @@ Contents
 2013
       rm -f include/VERSION~
 
+    - Update additionally the winGRASS version
+      grass-addons/tools/wingrass-packager/grass_packager_release.bat
+
      #version:
      MAJOR=`cat include/VERSION | head -1 | tail -1`
      MINOR=`cat include/VERSION | head -2 | tail -1`
