@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = "Split lines to shorter segments.";
+    module->description = _("Split lines to shorter segments.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -51,14 +51,14 @@ int main(int argc, char *argv[])
     length_opt->type = TYPE_DOUBLE;
     length_opt->required = NO;
     length_opt->multiple = NO;
-    length_opt->description = "Maximum segment length.";
+    length_opt->description = _("Maximum segment length");
 
     vertices_opt = G_define_option();
     vertices_opt->key = "vertices";
     vertices_opt->type = TYPE_INTEGER;
     vertices_opt->required = NO;
     vertices_opt->multiple = NO;
-    vertices_opt->description = "Maximum number of vertices in segment.";
+    vertices_opt->description = _("Maximum number of vertices in segment");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
