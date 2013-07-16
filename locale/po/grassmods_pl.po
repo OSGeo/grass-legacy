@@ -1,16 +1,16 @@
 # translation of grassmods_pl.po into Polski
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2011, 2012 GRASS Development Team
+# Copyright (C) 2005-2013 GRASS Development Team
 # Artur Nieścior <nieart@interia.pl>, 2005.
-# Milena Nowotarska <do.milenki*gmail.com>, 2008, 2009, 2010, 2011.
+# Milena Nowotarska <do.milenki*gmail.com>, 2008-2013.
 # Maciej Sieczka <msieczka "at" msieczka "dot" org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-10 00:42+0200\n"
-"PO-Revision-Date: 2013-06-20 11:37+0100\n"
-"Last-Translator: Markus Neteler <neteler@osgeo.org>\n"
+"PO-Revision-Date: 2013-07-16 12:26+0100\n"
+"Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: 2316,2891,3202,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../raster/r.out.pov/main.c:121 ../raster/r.out.ppm3/main.c:57
@@ -268,7 +268,7 @@ msgstr "Nazwa mapy wysokości"
 
 #: ../raster/r.out.vrml/main.c:63
 msgid "Name of color file"
-msgstr ""
+msgstr "Nazwa pliku koloru"
 
 #: ../raster/r.out.vrml/main.c:70 ../misc/m.nviz.image/args.c:494
 #, fuzzy
@@ -282,7 +282,7 @@ msgstr "Nazwa nowego pliku VRML"
 #: ../raster/r.out.vrml/main.c:163
 #, c-format
 msgid "Opening %s for writing... "
-msgstr ""
+msgstr "Otwieranie %s do zapisu..."
 
 #: ../raster/r.out.vrml/put_grid.c:37
 msgid "Writing vertices..."
@@ -520,12 +520,12 @@ msgstr "Nie udało się skopiować pliku"
 
 #: ../raster/r.in.arc/gethead.c:88
 msgid "Illegal line in header"
-msgstr ""
+msgstr "Nieprawidłowa linia w nagłówku"
 
 #: ../raster/r.in.arc/gethead.c:160 ../raster/r.in.ascii/gethead.c:251
 #, c-format
 msgid "Duplicate \"%s\" field in header"
-msgstr ""
+msgstr "Zduplikowane \"%s\" pole w nagłówku"
 
 #: ../raster/r.in.arc/gethead.c:165
 #, c-format
@@ -921,7 +921,7 @@ msgstr ""
 
 #: ../raster/r.cost/btree.c:403
 msgid "Bad start cell"
-msgstr ""
+msgstr "Niewłaściwa komórka początkowa"
 
 #: ../raster/r.cost/btree.c:417
 #, c-format
@@ -8153,9 +8153,9 @@ msgid "Setting map name to <%s> which overrides <%s>"
 msgstr ""
 
 #: ../raster/r.in.mat/main.c:377
-#, fuzzy, c-format
+#, c-format
 msgid "Setting map name to <%s>"
-msgstr "Ustawianie okna mapy"
+msgstr "Ustawianie nazwy mapy na <%s>"
 
 #: ../raster/r.in.mat/main.c:381
 #, fuzzy
@@ -8216,9 +8216,8 @@ msgid "cols=%d"
 msgstr "kolumny=%d"
 
 #: ../raster/r.in.mat/main.c:433
-#, fuzzy
 msgid "Writing new raster map..."
-msgstr "Odczytywanie mapy rastrowej..."
+msgstr "Zapisywanie nowej mapy rastrowej..."
 
 #: ../raster/r.in.mat/main.c:491
 #, c-format
@@ -8264,9 +8263,8 @@ msgstr ""
 
 #: ../raster/r.regression.line/main.c:63 ../general/g.region/main.c:150
 #: ../locale/scriptstrings/i.oif_to_translate.c:9
-#, fuzzy
 msgid "Print in shell script style"
-msgstr "Wyświetl ustawienia bieżącego regionu (styl skryptu powłoki)"
+msgstr "Wyświetl w stylu skryptu powłoki"
 
 #: ../raster/r.regression.line/main.c:67
 msgid "Slower but accurate (applies to FP maps only"
@@ -9711,7 +9709,7 @@ msgstr "Zaawansowane"
 
 #: ../raster/r.what/main.c:127 ../vector/v.what/main.c:69
 msgid "Coordinates for query"
-msgstr ""
+msgstr "Współrzędne do zapytania"
 
 #: ../raster/r.what/main.c:131
 msgid "Output header row"
@@ -16213,6 +16211,8 @@ msgid ""
 "Dissolves boundaries between adjacent areas sharing a common category number "
 "or attribute."
 msgstr ""
+"Usuwa granice pomiędzy sąsiadującymi obszarami o tej samej kategorii lub "
+"wartości atrybutu"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:2
 msgid "vector, area, dissolve"
@@ -16223,9 +16223,8 @@ msgid "Layer number. If -1, all layers are extracted."
 msgstr "Numer warstwy. Dla -l, wszystkie warstwy będą wyciągnięte."
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:7
-#, fuzzy
 msgid "Name of column used to dissolve common boundaries"
-msgstr "Nazwa istniejącej warstwy mapy rastrowej"
+msgstr "Nazwa kolumny użytej do połączenia"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:1
 msgid "Creates a MASK for limiting raster operation."
@@ -16990,14 +16989,13 @@ msgid "Action to be taken"
 msgstr "Akcja do podjęcia"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:7
-#, fuzzy
 msgid "Category number starting value"
-msgstr "Nazwa kolumny kategorii"
+msgstr "Wartość początkowa kategorii"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:8
 #: ../vector/v.category/main.c:114
 msgid "Category increment"
-msgstr ""
+msgstr "Przyrost kategorii"
 
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:1
 msgid "Import ASCII x,y[,z] coordinates as a series of lines."
@@ -18257,9 +18255,8 @@ msgid "Class breaks, without minimum and maximum"
 msgstr ""
 
 #: ../display/d.thematic.area/main.c:105 ../vector/v.class/main.c:68
-#, fuzzy
 msgid "Algorithm to use for classification"
-msgstr "Sygnatury które mają być użyte do klasyfikacji"
+msgstr "Algorytm klasyfikacji"
 
 #: ../display/d.thematic.area/main.c:106 ../vector/v.class/main.c:69
 msgid ""
@@ -19670,9 +19667,8 @@ msgstr ""
 "rogiem ramki)"
 
 #: ../display/d.barscale/main.c:106
-#, fuzzy
 msgid "Font size"
-msgstr "Rozmiar ikony"
+msgstr "Rozmiar czcionki"
 
 #: ../display/d.barscale/main.c:114
 #, c-format
@@ -25281,11 +25277,11 @@ msgstr "wektor, edycja, digitalizacja"
 
 #: ../vector/v.digit/main.c:109
 msgid "Interactive editing and digitization of vector maps."
-msgstr ""
+msgstr "Interaktywna edycja i digitalizacja map wektorowych."
 
 #: ../vector/v.digit/main.c:124
 msgid "Create new file if it does not exist."
-msgstr ""
+msgstr "Utwórz nowy plik, jeśli nie istnieje"
 
 #: ../vector/v.digit/main.c:161
 msgid "New empty map created."
@@ -26706,7 +26702,7 @@ msgstr "wektor do usunięcia"
 
 #: ../vector/v.category/main.c:70
 msgid "Attach, delete or report vector categories to map geometry."
-msgstr ""
+msgstr "Dołącza, usuwa lub wypisuje kategorie do geometrii mapy."
 
 #: ../vector/v.category/main.c:84
 #, fuzzy
@@ -27646,16 +27642,20 @@ msgstr "Tworzy topologię dla wektorowej mapy GRASS."
 #: ../vector/v.build/main.c:42
 msgid "Name for vector map where erroneous vector features are written to"
 msgstr ""
+"Nazwa mapy wektorowej, na której zapisane zostaną błędy obiektów wektorowych"
 
 #: ../vector/v.build/main.c:53
 msgid "Build topology or dump topology or spatial index to stdout"
-msgstr ""
+msgstr "Buduj topologię lub wyświetl topologię lub indeks przestrzenny"
 
 #: ../vector/v.build/main.c:55
 msgid ""
 "build;build topology;dump;write topology to stdout;sdump;write spatial index "
 "to stdout;cdump;write category index to stdout"
 msgstr ""
+"build;buduj topologię;dump;wyświetl topologię w oknie wyniku polecenia;sdump;"
+"wyświetl index przestrzenny w oknie wyniku polecenia;cdump;wyświetl index "
+"kategorii w oknie wyniku polecenia"
 
 #: ../vector/v.vol.rst/main.c:204
 msgid ""
@@ -28075,46 +28075,44 @@ msgid "vector, buffer"
 msgstr "wektor, bufor"
 
 #: ../vector/v.buffer2/main.c:152 ../vector/v.buffer/main.c:256
-#, fuzzy
 msgid ""
 "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr ""
 "Tworzy bufory wokół obiektów danego typu (obszary muszą zawierać centroid)."
 
 #: ../vector/v.buffer2/main.c:170
-#, fuzzy
 msgid "Buffer distance along major axis in map units"
-msgstr "Szerokość strefy w jednostkach mapy"
+msgstr "Szerokość bufora wzdłuż głównej osi w jednostkach mapy"
 
 #: ../vector/v.buffer2/main.c:171 ../vector/v.buffer2/main.c:179
 #: ../vector/v.buffer2/main.c:187 ../vector/v.buffer2/main.c:193
 #: ../vector/v.buffer2/main.c:201 ../vector/v.buffer2/main.c:210
 msgid "Distance"
-msgstr "Odległość"
+msgstr "Szerokość"
 
 #: ../vector/v.buffer2/main.c:178
-#, fuzzy
 msgid "Buffer distance along minor axis in map units"
-msgstr "Szerokość strefy w jednostkach mapy"
+msgstr "Szerokość bufora wzdłuż mniejszej osi w jednostkach mapy"
 
 #: ../vector/v.buffer2/main.c:186 ../vector/v.parallel2/main.c:74
 msgid "Angle of major axis in degrees"
 msgstr "Kąt głównej osi w stopniach"
 
 #: ../vector/v.buffer2/main.c:192
-#, fuzzy
 msgid "Name of column to use for buffer distances"
-msgstr "Nazwa wyświetlanej kolumny"
+msgstr "Nazwa kolumny z szerokościami buforów"
 
 #: ../vector/v.buffer2/main.c:200 ../vector/v.buffer/main.c:286
 msgid "Scaling factor for attribute column values"
-msgstr ""
+msgstr "Współczynnik skali dla wartości atrybutów"
 
 #: ../vector/v.buffer2/main.c:209 ../vector/v.buffer/main.c:296
 msgid ""
 "Maximum distance between theoretical arc and polygon segments as multiple of "
 "buffer"
 msgstr ""
+"Maksymalna szerokość pomiędzy teoretycznym łukiem a segmentami poligonu jako "
+"mnożenie bufora"
 
 #: ../vector/v.buffer2/main.c:225
 msgid ""
@@ -28128,11 +28126,11 @@ msgstr "Szerokość strefy w jednostkach mapy"
 
 #: ../vector/v.buffer2/main.c:232
 msgid "Make outside corners straight"
-msgstr ""
+msgstr "Zewnętrzne rogi proste"
 
 #: ../vector/v.buffer2/main.c:236
 msgid "Don't make caps at the ends of polylines"
-msgstr ""
+msgstr "Bez nasady na końcach polilinii"
 
 #: ../vector/v.buffer2/main.c:247
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
@@ -28239,9 +28237,8 @@ msgid "Breaking boundaries..."
 msgstr "Zapiywanie %s ..."
 
 #: ../vector/v.buffer2/main.c:559
-#, fuzzy
 msgid "Cleaning boundaries at nodes"
-msgstr "Zapiywanie %s ..."
+msgstr "Czyszczenie granic na węzłach"
 
 #: ../vector/v.buffer2/main.c:574 ../vector/v.buffer/main.c:637
 #: ../vector/v.overlay/area_area.c:157
@@ -28258,7 +28255,7 @@ msgstr "Obliczanie centroidów dla obszarów..."
 #: ../vector/v.buffer/main.c:750 ../vector/v.overlay/area_area.c:171
 #: ../vector/v.in.ogr/main.c:1065
 msgid "Cannot calculate area centroid"
-msgstr "Nie można obliczyć centroid powierzchni"
+msgstr "Nie można obliczyć centroidu obszaru"
 
 #: ../vector/v.buffer2/main.c:611 ../vector/v.buffer/main.c:686
 msgid "Generating list of boundaries to be deleted..."
@@ -28484,9 +28481,8 @@ msgid "Builds polylines from lines or boundaries."
 msgstr "Tworzy polilinie z linii lub granic."
 
 #: ../vector/v.build.polylines/main.c:121
-#, fuzzy
 msgid "Category number mode"
-msgstr "Nazwa kolumny kategorii"
+msgstr "Tryb numerów kategorii"
 
 #: ../vector/v.build.polylines/main.c:123
 msgid ""
@@ -28750,16 +28746,33 @@ msgid ""
 "rmline;remove all lines or boundaries of zero length, threshold is ignored;"
 "rmsa;remove small angles between lines at nodes"
 msgstr ""
+"break;break lines at each intersection;rmdupl;usuń powielone obiekty "
+"geometryczne (uważaj na kategorie!);rmdangle;usuń wiszące węzły, próg jest "
+"ignorowany jeśli < 0;chdangle;zamień wiszące węzły granic na linie, próg "
+"jest ignorowany jeśli < 0, wejściowy rodzaj linii jest ignorowany;rmbridge;"
+"usuń mosty łączące obszar z wyspą lub 2 wyspy;chbridge;zmień typ mostu "
+"łączącego obszar z wyspą lub 2 wyspy z granicy na linię;snap;snapuj linie do "
+"werteksów w zadanym progu;rmdac;usuń powielone centroidy obszarów ('type' "
+"option ignored);bpol;zamień (topologicznie czyste) poligony (importowane z "
+"nie topologicznego formatu, jak ShapeFile). Granice są łamane na każdym "
+"punkcie dzielonym przez dwa lub więcej poligonów, gdzie kąty segmentów są "
+"różne; prune;usuń węzły z linii i granic w zadanym progu, granica jest "
+"czyszczona jeśli topologia nie jest uszkodzona (nowe przecięcie, zmieniony "
+"centroid), pierwszy i ostatni segment granicy nie jest zmieniany;rmarea;usuń "
+"małe obszary, usuwana jest najdłuższa granica sąsiedniego obszaru;rmline;"
+"usuń linie/granice o zerowej długości, krok jest ignorowany;rmsa;usuń małe "
+"kąty pomiędzy liniami i werteksami"
 
 #: ../vector/v.clean/main.c:94
 msgid ""
 "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
 msgstr ""
+"Próg w jednostkach mapy, jedna wartość dla każdego narzędzia (domyślnie: 0.0"
+"[,0.0,...])"
 
 #: ../vector/v.clean/main.c:100
-#, fuzzy
 msgid "Don't build topology for the output vector"
-msgstr "%s: Musisz zbudować topologię na pliku wektorowym"
+msgstr "NIe buduj topologii dla wyjściowego pliku wektorowego"
 
 #: ../vector/v.clean/main.c:121
 msgid "You must select at least one tool"
@@ -28772,11 +28785,11 @@ msgstr "Narzędzie nie istnieje"
 #: ../vector/v.clean/main.c:176
 #, c-format
 msgid "Threshold for tool %d may not be > 0, set to 0"
-msgstr ""
+msgstr "Próg dla narzędzia %d nie może być > 0, ustawiono 0"
 
 #: ../vector/v.clean/main.c:185
 msgid "Tool: Threshold"
-msgstr ""
+msgstr "Narzędzie: Próg"
 
 #: ../vector/v.clean/main.c:190
 msgid "Break"
@@ -28788,11 +28801,11 @@ msgstr "Usuń duplikaty"
 
 #: ../vector/v.clean/main.c:196
 msgid "Remove dangles"
-msgstr ""
+msgstr "Usuń węzły wiszące"
 
 #: ../vector/v.clean/main.c:199
 msgid "Change type of boundary dangles"
-msgstr ""
+msgstr "Zmień typ węzłów wiszących granicy"
 
 #: ../vector/v.clean/main.c:203
 msgid "Remove bridges"
@@ -28800,51 +28813,47 @@ msgstr "Usuń mosty"
 
 #: ../vector/v.clean/main.c:206
 msgid "Change type of boundary bridges"
-msgstr ""
+msgstr "Zmień typ mostów granicy"
 
 #: ../vector/v.clean/main.c:210
 msgid "Snap vertices"
-msgstr "Snapowanie węzłów"
+msgstr "Snapowanie werteksów"
 
 #: ../vector/v.clean/main.c:213
-#, fuzzy
 msgid "Remove duplicate area centroids"
-msgstr "Nie można obliczyć centroid powierzchni"
+msgstr "Usuń powielone centroidy obszarów"
 
 #: ../vector/v.clean/main.c:217
 msgid "Break polygons"
-msgstr "Rozłącz poligony"
+msgstr "Poligony na linie"
 
 #: ../vector/v.clean/main.c:220
-#, fuzzy
 msgid "Prune"
-msgstr "Wyświetl"
+msgstr "Usuń werteksy"
 
 #: ../vector/v.clean/main.c:223
 msgid "Remove small areas"
 msgstr "Usuń małe obszary"
 
 #: ../vector/v.clean/main.c:226
-#, fuzzy
 msgid "Remove small angles at nodes"
-msgstr "Usuń wszystkie ramki i wyczyść monitor"
+msgstr "Usuń małe kąty na węzłach"
 
 #: ../vector/v.clean/main.c:231
 msgid "Remove all lines or boundaries of zero length"
-msgstr ""
+msgstr "Usuń wszystkie linie lub granice zerwoej długości"
 
 #: ../vector/v.clean/main.c:273
-#, fuzzy
 msgid "Copying vector lines..."
-msgstr "Nie mogę znaleźć mapsetu dla %s"
+msgstr "Kopiowanie linii wektorowych..."
 
 #: ../vector/v.clean/main.c:295 ../vector/v.clean/main.c:305
 msgid "Rebuilding parts of topology..."
-msgstr ""
+msgstr "Przebudowywanie części topologii..."
 
 #: ../vector/v.clean/main.c:313
 msgid "Tool: Break lines at intersections"
-msgstr ""
+msgstr "Narzędzie: Podziel linie na intersekcjach"
 
 #: ../vector/v.clean/main.c:317
 msgid "Tool: Remove duplicates"
@@ -28852,11 +28861,11 @@ msgstr "Narzędzie: Usuń duplikaty"
 
 #: ../vector/v.clean/main.c:321
 msgid "Tool: Remove dangles"
-msgstr ""
+msgstr "Narzędzie: Usuń węzły wiszące"
 
 #: ../vector/v.clean/main.c:325
 msgid "Tool: Change type of boundary dangles"
-msgstr ""
+msgstr "Narzędzie: Zmień typ węzłów wiszących granicy"
 
 #: ../vector/v.clean/main.c:329
 msgid "Tool: Remove bridges"
@@ -28864,7 +28873,7 @@ msgstr "Narzędzie: Usuń mosty"
 
 #: ../vector/v.clean/main.c:333
 msgid "Tool: Change type of boundary bridges"
-msgstr "Narzędzie: Zmień typ mostów granic"
+msgstr "Narzędzie: Zmień typ mostów granicy"
 
 #: ../vector/v.clean/main.c:337
 msgid "Tool: Remove duplicate area centroids"
@@ -28872,33 +28881,33 @@ msgstr "Narzędzie: Usuń centroidy powielonych obszarów"
 
 #: ../vector/v.clean/main.c:341
 msgid "Tool: Snap line to vertex in threshold"
-msgstr ""
+msgstr "Narzędzie: Snapuj linie do werteksów w progu"
 
 #: ../vector/v.clean/main.c:345
 msgid "Tool: Break polygons"
-msgstr ""
+msgstr "Narzędzie: Poligony na linie"
 
 #: ../vector/v.clean/main.c:349
 msgid "Tool: Prune lines/boundaries"
-msgstr ""
+msgstr "Narzędzie: Czyść werteksy na liniach/granicach"
 
 #: ../vector/v.clean/main.c:353
 msgid "Tool: Remove small areas"
-msgstr ""
+msgstr "Narzędzie: Usuń małe obszary"
 
 #: ../vector/v.clean/main.c:356
 #, c-format
 msgid "%d areas of total size %g removed"
-msgstr ""
+msgstr "usunięto %d obszarów o łącznym rozmiarze %g"
 
 #: ../vector/v.clean/main.c:359
 msgid "Tool: Remove small angles at nodes"
-msgstr ""
+msgstr "Narzędzie: Usuń małe łuki na węzłach"
 
 #: ../vector/v.clean/main.c:362
 #, c-format
 msgid "%d modifications done"
-msgstr ""
+msgstr "Wykonano %d modyfikacji"
 
 #: ../vector/v.clean/main.c:365
 msgid "Tool: Remove all lines and boundaries of zero length"
@@ -29343,7 +29352,7 @@ msgstr ""
 
 #: ../vector/v.class/main.c:47
 msgid "Classifies attribute data, e.g. for thematic mapping"
-msgstr ""
+msgstr "Klasyfikacja danych atrybutowych, np. do map tematycznych"
 
 #: ../vector/v.class/main.c:58
 msgid "Column name or expression"
@@ -29739,17 +29748,15 @@ msgstr "Usuwanie zduplikowanych centroidów..."
 
 #: ../vector/v.segment/main.c:54
 msgid "Creates points/segments from input vector lines and positions."
-msgstr ""
+msgstr "Tworzy punkty/segmenty z wejściowych linii i pozycji."
 
 #: ../vector/v.segment/main.c:57
-#, fuzzy
 msgid "Name of input vector map containing lines"
-msgstr "Wejściowa mapa wektorowa"
+msgstr "Nazwa wejściowej mapy wektorowejzawierającej linie"
 
 #: ../vector/v.segment/main.c:61
-#, fuzzy
 msgid "Name for output vector map where segments will be written"
-msgstr "Nazwa wyjściowej wektorowej mapy punktów"
+msgstr "Nazwa wyjściowej mapy wektorowej z segmentami"
 
 #: ../vector/v.segment/main.c:66 ../vector/v.lrs/v.lrs.segment/main.c:85
 #: ../vector/v.lrs/v.lrs.create/main.c:145
@@ -29759,11 +29766,10 @@ msgid "Line layer"
 msgstr "Warstwa liniowa"
 
 #: ../vector/v.segment/main.c:71 ../vector/v.lrs/v.lrs.segment/main.c:112
-#, fuzzy
 msgid "Name of file containing segment rules. If not given, read from stdin."
 msgstr ""
-"Nazwa pliku zawierającego procedury graficzne, jeśli brak czyta standardowe "
-"wejście"
+"Nazwa pliku zawierającego procedury graficzne, jeśli brak czyta z wiersza "
+"poleceń."
 
 #: ../vector/v.segment/main.c:137 ../vector/v.segment/main.c:177
 #, fuzzy, c-format
@@ -30899,7 +30905,7 @@ msgstr "Jeśli brak - czyta ze standardowego wejścia"
 
 #: ../vector/v.what/main.c:77
 msgid "Query threshold distance"
-msgstr ""
+msgstr "Długość kroku zapytania"
 
 #: ../vector/v.what/main.c:85
 msgid "Print attribute information"
@@ -30908,7 +30914,7 @@ msgstr "Wyświetl informacje atrybutowe"
 #: ../vector/v.what/main.c:159
 #, c-format
 msgid "You must build topology on vector map <%s>"
-msgstr "%s: Musisz zbudować topologię na pliku wektorowym"
+msgstr "<%s> Musisz zbudować topologię na pliku wektorowym"
 
 #: ../vector/v.what/main.c:178
 #, fuzzy, c-format
@@ -31732,9 +31738,8 @@ msgid "Intersection Matrix Pattern used for 'relate' operator"
 msgstr ""
 
 #: ../vector/v.select/args.c:84
-#, fuzzy
 msgid "Do not skip features without category"
-msgstr "Edytować plik kategorii dla [%s]? "
+msgstr "Nie pomijaj obiektów bez kategorii"
 
 #: ../vector/lidar/v.lidar.growing/main.c:79
 #: ../vector/lidar/v.lidar.correction/main.c:73
@@ -31780,9 +31785,9 @@ msgstr ""
 "conect"
 
 #: ../vector/lidar/v.lidar.growing/main.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open table <%s>"
-msgstr "Nie można skopiować tabeli <%s>"
+msgstr "Nie można otworzyć tabeli <%s>"
 
 #: ../vector/lidar/v.lidar.growing/main.c:204
 #, fuzzy
@@ -32937,9 +32942,8 @@ msgid "Name of column used as raster category labels"
 msgstr "Nazwa kolumny z etykietami kategorii rastra"
 
 #: ../vector/v.to.rast/main.c:92
-#, fuzzy
 msgid "Raster value (for use=val)"
-msgstr "Plik rastra dla powierzchni"
+msgstr "Wartość rastra (dla use=val)"
 
 #: ../vector/v.to.rast/main.c:113
 msgid "Column parameter missing (or use value parameter)"
@@ -33030,9 +33034,9 @@ msgid "Converted points/lines: %d of %d"
 msgstr "Przekonwertowane punkty/linie: %d z %d"
 
 #: ../vector/v.to.rast/do_areas.c:49 ../vector/v.to.rast/do_areas.c:57
-#, fuzzy, c-format
+#, c-format
 msgid "No record for area (cat = %d)"
-msgstr "Brak rekordu dla cat = %d"
+msgstr "Brak rekordu dla obszaru (cat = %d)"
 
 #: ../vector/v.to.rast/do_areas.c:78
 #, fuzzy, c-format
@@ -33040,9 +33044,8 @@ msgid "Get area %d failed"
 msgstr "Nie można opisać tabeli"
 
 #: ../vector/v.to.rast/do_areas.c:118
-#, fuzzy
 msgid "Area without centroid (OK for island)"
-msgstr "Obszar bez centroidu (może być OK dla wysp)"
+msgstr "Obszar bez centroidu ( OK dla wysp)"
 
 #: ../vector/v.to.rast/do_areas.c:125
 msgid "Area centroid without category"
@@ -33086,7 +33089,7 @@ msgstr "Typ kolumny (%s) nieobsługiwany"
 #: ../vector/v.to.rast/support.c:514
 #, fuzzy
 msgid "Cannot allocate memory for row buffer"
-msgstr "Nie można ulakować pamięci dla ciągu"
+msgstr "Nie można alokować pamięci dla ciągu"
 
 #: ../vector/v.to.rast/support.c:584
 #, fuzzy, c-format
