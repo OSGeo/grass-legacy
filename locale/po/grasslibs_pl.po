@@ -1,15 +1,15 @@
 # translation of grasslibs_pl.po into Polski
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2009, 2012 GRASS Development Team
+# Copyright (C) 2005-2013 GRASS Development Team
 # Artur Nieścior <nieart@interia.pl>, 2005, 2006.
-# Milena Nowotarska <do.milenki * gmail.com>, 2008, 2009, 2010, 2011, 2012.
+# Milena Nowotarska <do.milenki * gmail.com>, 2008-2013.
 # Maciej Sieczka <msieczka "at" msieczka "dot" org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-10 00:42+0200\n"
-"PO-Revision-Date: 2012-09-17 22:46+0100\n"
+"PO-Revision-Date: 2013-07-16 11:28+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: GRASS Translation Team\n"
 "Language: pl\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../lib/raster/rem_io.c:40
 #, c-format
@@ -281,9 +282,8 @@ msgid "Unable to open <%s>"
 msgstr "Nie można otworzyć <%s>"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:415
-#, fuzzy
 msgid "OGSF library has not been built with MPEG output support"
-msgstr "NVIZ nie został skompilowany z obsługą wyjścia MPEG"
+msgstr "Biblioteka OSGF nie została skompilowany z obsługą wyjścia MPEG"
 
 #: ../lib/ogsf/gsd_prim.c:146
 #, c-format
@@ -1260,9 +1260,8 @@ msgid "Unable select records from table <%s>"
 msgstr "Nie można pobrać wpisów z tabeli <%s>"
 
 #: ../lib/db/dbmi_client/select.c:333
-#, fuzzy
 msgid "Key column type is not integer"
-msgstr "Kolumna <%s> nie jest całkowitoliczbowa"
+msgstr "Kolumna klucza nie jest całkowitoliczbowa"
 
 #: ../lib/db/dbmi_client/delete_tab.c:44
 #, c-format
@@ -1804,9 +1803,9 @@ msgid "MAPSET %s - permission denied"
 msgstr "MAPSET %s - dostęp zabroniony"
 
 #: ../lib/gis/gisinit.c:66
-#, fuzzy, c-format
+#, c-format
 msgid "MAPSET %s not found at %s"
-msgstr "MAPSET %s nie został znaleziony"
+msgstr "MAPSET %s nie został znaleziony w %s"
 
 #: ../lib/gis/gisinit.c:110
 msgid "System not initialized. Programmer forgot to call G_gisinit()."
@@ -2919,7 +2918,7 @@ msgstr "Separator pól"
 
 #: ../lib/gis/parser.c:654
 msgid "Special characters: newline, space, comma, tab"
-msgstr ""
+msgstr "Znaki specjalne: nowa linia, spacja, przecinek, tab"
 
 #: ../lib/gis/parser.c:665
 msgid "Color"
@@ -3972,25 +3971,25 @@ msgstr "Obliczanie najkrótszych dróg dla wszystkich par..."
 
 #: ../lib/vector/Vlib/snap.c:148
 msgid "Snap vertices Pass 1: select points"
-msgstr ""
+msgstr "Snapuj werteksy Krok 1: wybierz punkty"
 
 #: ../lib/vector/Vlib/snap.c:202
 msgid "Snap vertices Pass 2: assign anchor vertices"
-msgstr ""
+msgstr "Snapuj werteksy Krok 2: wskaż werteksy kotwic"
 
 #: ../lib/vector/Vlib/snap.c:271
 msgid "Snap vertices Pass 3: snap to assigned points"
-msgstr ""
+msgstr "Snapuj werteksy Krok 3: snapuj do wskazanych punktów"
 
 #: ../lib/vector/Vlib/snap.c:451
 #, c-format
 msgid "Snapped vertices: %d"
-msgstr ""
+msgstr "Zasnapowane werteksy: %d"
 
 #: ../lib/vector/Vlib/snap.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "New vertices: %d"
-msgstr "Liczba prymitywów: %d"
+msgstr "Nowe werteksy : %d"
 
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
