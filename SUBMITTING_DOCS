@@ -2,7 +2,7 @@ $Date$
 
 NOTE: Please improve this list!
 
-Dear (new) GRASS Developer,
+Dear (new) GRASS GIS Developer,
 
 When submitting documentation to GRASS SVN repository, please take
 care of following rules:
@@ -82,10 +82,14 @@ care of following rules:
 3. Usage of limited HTML tags
    Since the MAN conversion of g.html2man is limited, please use
    no other HTML tags than:
-   <A> <B> <BLINK> <BODY> <BR> <CODE> <DD> <DL> <DT> <EM> 
-   <H2> <H3> <H4>  <HEAD> <HEADER> <HR> <I> <IMG> <LI> <OL> <P>
-   <PRE> <SUP> <TABLE> <TD> <TH> <TITLE> <TR> <UL>
+   <a> <b> <blink> <body> <br> <code> <dd> <dl> <dt> <em>
+   <h2> <h3> <h4> <head> <header> <hr> <i> <img> <li> <ol> <p>
+   <pre> <sup> <table> <td> <th> <title> <tr> <ul>
 
+   Note that all tags has a closing tag except for <hr/>, <br/> and <p>.
+   Use lower case forms.
+
+   (The MAN converter is here: tools/g.html2man/)
 
 4. Suggested HTML markup protocol:
    Module names (i.e., v.category) should be emphsized with <em>,
@@ -96,7 +100,7 @@ care of following rules:
 
 
 5. When submitting new files to the repository set SVN properties,
-   e.g. for HTML file:
+   e.g. for HTML file
     
        svn:mime-type : text/html
        svn:keywords : Author Date Id
@@ -105,9 +109,16 @@ care of following rules:
    See
    http://svnbook.red-bean.com/en/1.4/svn.advanced.props.html
 
+   You can also simply use this script:
+   http://svn.osgeo.org/grass/grass-addons/tools/module_svn_propset.sh
 
-6. See also
+6. Compress PNG images with
+       optipng -o5 file.png
+
+7. See also
    http://grass.osgeo.org/wiki/Updating_GRASS_Documentation
 
 ...
 [please add further hints if required]
+
+"Your attention to detail is appreciated."
