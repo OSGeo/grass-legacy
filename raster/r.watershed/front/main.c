@@ -57,20 +57,20 @@ int main(int argc, char *argv[])
     module->description = _("Watershed basin analysis program");
 
     opt1 = G_define_standard_option(G_OPT_R_ELEV);
-    opt1->guisection = _("Input_options");
+    opt1->guisection = _("Inputs");
 
     opt2 = G_define_standard_option(G_OPT_R_INPUT);
     opt2->key = "depression";
     opt2->label = _("Name of input raster map with real depressions");
     opt2->description = _("All non-NULL and non-zero cells are considered as real depressions");
     opt2->required = NO;
-    opt2->guisection = _("Input_options");
+    opt2->guisection = _("Inputs");
 
     opt3 = G_define_standard_option(G_OPT_R_INPUT);
     opt3->key = "flow";
     opt3->description = _("Name of input raster representing amount of overland flow per cell");
     opt3->required = NO;
-    opt3->guisection = _("Input_options");
+    opt3->guisection = _("Inputs");
 
     opt4 = G_define_standard_option(G_OPT_R_INPUT);
     opt4->key = "disturbed.land";
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 	_("Name of input raster map percent of disturbed land");
     opt4->description = _("For USLE");
     opt4->required = NO;
-    opt4->guisection = _("Input_options");
+    opt4->guisection = _("Inputs");
 
     opt5 = G_define_standard_option(G_OPT_R_INPUT);
     opt5->key = "blocking";
@@ -87,33 +87,33 @@ int main(int argc, char *argv[])
     opt5->description =
 	_("For USLE. All non-NULL and non-zero cells are considered as blocking terrain.");
     opt5->required = NO;
-    opt5->guisection = _("Input_options");
+    opt5->guisection = _("Inputs");
 
     opt8 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt8->key = "accumulation";
     opt8->label = _("Name for output accumulation raster map");
     opt8->description = _("Number of cells that drain through each cell");
     opt8->required = NO;
-    opt8->guisection = _("Output_options");
+    opt8->guisection = _("Outputs");
 
     opt9 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt9->key = "drainage";
     opt9->description = _("Name for output drainage direction raster map");
     opt9->required = NO;
-    opt9->guisection = _("Output_options");
+    opt9->guisection = _("Outputs");
 
     opt10 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt10->key = "basin";
     opt10->label = _("Name for basins raster map");
     opt10->description = _("Unique label for each watershed basin");
     opt10->required = NO;
-    opt10->guisection = _("Output_options");
+    opt10->guisection = _("Outputs");
 
     opt11 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt11->key = "stream";
     opt11->description = _("Name for output stream segments raster map");
     opt11->required = NO;
-    opt11->guisection = _("Output_options");
+    opt11->guisection = _("Outputs");
 
     opt12 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt12->key = "half.basin";
@@ -121,14 +121,14 @@ int main(int argc, char *argv[])
     opt12->description =
 	_("Each half-basin is given a unique value");
     opt12->required = NO;
-    opt12->guisection = _("Output_options");
+    opt12->guisection = _("Outputs");
 
     opt13 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt13->key = "visual";
     opt13->description =
 	_("Name for output raster map useful for visual display of results (DEPRECATED)");
     opt13->required = NO;
-    opt13->guisection = _("Output_options");
+    opt13->guisection = _("Outputs");
 
     opt14 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt14->key = "length.slope";
@@ -136,14 +136,14 @@ int main(int argc, char *argv[])
     opt14->description =
 	_("Slope length and steepness (LS) factor for USLE");
     opt14->required = NO;
-    opt14->guisection = _("Output_options");
+    opt14->guisection = _("Outputs");
 
     opt15 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt15->key = "slope.steepness";
     opt15->label = _("Name for output slope steepness raster map");
     opt15->description = _("Slope steepness (S) factor for USLE");
     opt15->required = NO;
-    opt15->guisection = _("Output_options");
+    opt15->guisection = _("Outputs");
 
     opt6 = G_define_option();
     opt6->key = "threshold";
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 	_("Minimum size of exterior watershed basin");
     opt6->required = NO;
     opt6->type = TYPE_INTEGER;
-    opt6->guisection = _("Input_options");
+    opt6->guisection = _("Inputs");
 
     opt7 = G_define_option();
     opt7->key = "max.slope.length";
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
     opt7->description = _("For USLE");
     opt7->required = NO;
     opt7->type = TYPE_DOUBLE;
-    opt7->guisection = _("Input_options");
+    opt7->guisection = _("Inputs");
 
     opt16 = G_define_option();
     opt16->key = "convergence";
