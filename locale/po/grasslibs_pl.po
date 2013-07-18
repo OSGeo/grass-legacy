@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-10 00:49+0200\n"
-"PO-Revision-Date: 2013-07-16 11:28+0100\n"
+"PO-Revision-Date: 2013-07-16 15:42+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: GRASS Translation Team\n"
 "Language: pl\n"
@@ -3611,7 +3611,7 @@ msgstr "G_distance_point_to_line_segment: to nie powinno się zdarzyć: code=%d 
 
 #: ../lib/arraystats/class.c:21
 msgid "Discont algorithm currently not available because of bugs"
-msgstr "Algorytm 'discont' nie jest obecnie dostępny z powodu błędów w oprogramowaniu"
+msgstr "Algorytm discont nie jest obecnie dostępny z powodu błędów w oprogramowaniu"
 
 #: ../lib/arraystats/class.c:23
 #, c-format
@@ -4984,8 +4984,17 @@ msgstr "Nie można przydzielić kategorii %d obiektowi o id %d)"
 msgid "Unknown query tool"
 msgstr "Nieznane narzędzie zapytań"
 
-#~ msgid "Requested g3d map <%s> not found"
-#~ msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
+msgid "Requested g3d map <%s> not found"
+msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
+
+msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgstr "G_malloc: nie można przydzielić %lu bajtów w %s:%d"
+
+msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+msgstr "G_calloc: nie można przydzielić %lu * %lu bajtów w %s:%d"
+
+msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+msgstr "G_realloc: nie można przydzielić %lu bajtów w %s:%d"
 
 #~ msgid "Unable to open driver <%s>"
 #~ msgstr "Nie można otworzyć sterownika <%s>"
@@ -4998,15 +5007,6 @@ msgstr "Nieznane narzędzie zapytań"
 
 #~ msgid "Please advise GRASS developers of this error.\n"
 #~ msgstr "Powiadom programistów GRASS o tym błędzie.\n"
-
-#~ msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
-#~ msgstr "G_malloc: nie można przydzielić %lu bajtów w %s:%d"
-
-#~ msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
-#~ msgstr "G_calloc: nie można przydzielić %lu * %lu bajtów w %s:%d"
-
-#~ msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
-#~ msgstr "G_realloc: nie można przydzielić %lu bajtów w %s:%d"
 
 #~ msgid "Unable to rename directory '%s' to '%s'"
 #~ msgstr "Nie można zmienić nazwy katalogu z '%s' na '%s'"

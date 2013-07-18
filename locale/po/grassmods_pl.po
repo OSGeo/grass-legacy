@@ -16740,9 +16740,8 @@ msgstr "Nazwa rozszerzenia do zainstalowania/odinstalowania"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:5
 #: ../vector/v.net/main.c:69
-#, fuzzy
 msgid "Operation to be performed"
-msgstr "Mapa(y) rastrowa(e) dla której ma być utworzony profil"
+msgstr "Operacja do wykonania"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:6
 msgid "SVN Addons repository URL"
@@ -25337,9 +25336,8 @@ msgid "First column is 1. If 0, unique category is assigned to each row and writ
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:141 ../vector/v.in.dwg/main.c:88
-#, fuzzy
 msgid "Create 3D vector map"
-msgstr "Nazwa mapy wektorowej"
+msgstr "Utwórz mapę wektorową 3D"
 
 #: ../vector/v.in.ascii/in.c:146
 msgid "Create a new empty vector map and exit. Nothing is read from input."
@@ -28511,9 +28509,8 @@ msgid "New points are excluded from shortest path calculations."
 msgstr "Komórki NULL pominięto podczas obliczeń"
 
 #: ../vector/v.net.allpairs/main.c:224 ../vector/v.net.centrality/main.c:314
-#, fuzzy
 msgid "Writing data into the table..."
-msgstr "Zapisywanie danych do pliku..."
+msgstr "Zapisywanie danych do tabeli..."
 
 #: ../vector/v.drape/main.c:166
 #, fuzzy
@@ -31408,7 +31405,7 @@ msgstr ""
 #: ../vector/lidar/v.outlier/outlier.c:99
 #: ../vector/lidar/v.outlier/outlier.c:197
 msgid "Impossible to write in the database"
-msgstr ""
+msgstr "Nie można zapisać do bazy danych"
 
 #: ../vector/lidar/v.outlier/main.c:74
 msgid "Removes outliers from vector point data."
@@ -31433,14 +31430,14 @@ msgid "Threshold for the outliers"
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "It was impossible to create <%s> table."
-msgstr "nie można utworzyć %s"
+msgstr "Nie można utworzyć tabeli <%s>."
 
 #: ../vector/lidar/v.outlier/main.c:405
 #, fuzzy
 msgid "Outlier detection"
-msgstr "Kolor konturu"
+msgstr "Wykrywanie konturu"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:70
 #: ../vector/v.lrs/v.lrs.create/main.c:121
@@ -32657,7 +32654,7 @@ msgstr "wektor, sieć, komponenty"
 
 #: ../vector/v.net.components/main.c:71
 msgid "Computes strongly and weakly connected components in the network."
-msgstr ""
+msgstr "Oblicza silnie i słabo połączone komponenty w sieciach."
 
 #: ../vector/v.net.components/main.c:85
 msgid "weak;Weakly connected components;strong;Strongly connected components;"
@@ -32708,7 +32705,7 @@ msgstr ""
 
 #: ../vector/v.perturb/main.c:137 ../vector/v.perturb/main.c:144
 msgid "Error scanning arguments"
-msgstr ""
+msgstr "Błąd podczas skanowania argumentów"
 
 #: ../vector/v.perturb/main.c:140
 msgid "Maximum of uniform distribution must be >= zero"
@@ -32913,11 +32910,11 @@ msgstr ""
 
 #: ../vector/v.generalize/main.c:514
 msgid "reduced"
-msgstr ""
+msgstr "zredukowane"
 
 #: ../vector/v.generalize/main.c:514
 msgid "changed"
-msgstr "zmieniony"
+msgstr "zmienione"
 
 #: ../vector/v.generalize/misc.c:208 ../vector/v.generalize/misc.c:221
 #, c-format
@@ -36398,94 +36395,162 @@ msgstr "Nazwa mapy rastrowej współczynnika bezpośredniego promieniowania nieb
 msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
 msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 
-#~ msgid "Subgroup <%s> not found"
-#~ msgstr "Podgrupy <%s> nie znaleziono"
+msgid "Subgroup <%s> not found"
+msgstr "Podgrupy <%s> nie znaleziono"
+
+msgid "Unknown production date (defined by '%s')"
+msgstr "Nieznana data produkcji (zdefiniowana przez '%s')"
+
+msgid "Extracted %d areas"
+msgstr "Wyciągnięto %d obszarów"
+
+msgid "Extracted %d points"
+msgstr "Wyciągnięto %d punktów"
+
+msgid "Extracted %d lines"
+msgstr "Wyciągnięto %d linii"
+
+msgid "Column to query"
+msgstr "Kolumna do zapytań"
+
+msgid "Use G3D mask (if exists) with input map"
+msgstr "Użyj maski 3D (jeżeli istnieje) dla mapy wejściowej"
+
+msgid "Sets the legend's text color"
+msgstr "Ustaw kolor tekstu w legendzie"
+
+msgid "Create/Edit"
+msgstr "Utwórz/Edytuj"
+
+msgid "Create new projection files (modifies current location unless 'location' option specified)"
+msgstr "Utwórz nowe pliki projekcji (modyfikuj bieżącą lokalizację chyba że opcja 'location' została określona) "
+
+msgid "Location %s created!"
+msgstr "Lokacja %s została utworzona!"
+
+msgid ""
+"\n"
+"\n"
+"WARNING!  A projection file already exists for this location\n"
+msgstr ""
+"\n"
+"\n"
+"UWAGA!  Plik odwzorowania już istnieje dla tej lokacji\n"
+
+msgid "Error writing PROJ_INFO"
+msgstr "Błąd poczas zapisywania PROJ_INFO"
+
+msgid "Error writing PROJ_UNITS"
+msgstr "Błąd podczas zapisywania PROJ_UNITS"
+
+msgid "The projection information will not be updated."
+msgstr "Informacje o odwzorowaniu nie zostaną zaktualizowane."
+
+msgid "Unknown column type '%s'"
+msgstr "Nieznany typ kolumny '%s'"
+
+msgid "Building partial topology..."
+msgstr "Budowanie częściowej topologii ..."
+
+msgid "Title, in quotes"
+msgstr "Tytuł, w cudzysłowiu"
+
+msgid "Calculating covariance matrix..."
+msgstr "Obliczanie macierzy kowariancji..."
+
+#, fuzzy
+msgid "Unable to allocate memory for raster row"
+msgstr "Nie można ulakować pamięci dla ciągu"
+
+msgid "Transforming <%s>..."
+msgstr "Przekształcanie <%s>..."
+
+#, fuzzy
+msgid "Unable allocate memory for row buffer"
+msgstr "Nie można alokować pamięci dla ciągu"
+
+msgid "Current window size:"
+msgstr "Rozmiar bieżącego okna:"
+
+msgid "rows:    %d"
+msgstr "rzędy:    %d"
+
+msgid "columns: %d"
+msgstr "kolumny: %d"
+
+msgid "Aborting."
+msgstr "Przerywam wykonanie."
+
+#, fuzzy
+msgid "Results into a table:"
+msgstr "Nazwa mapy wynikowej"
+
+msgid "Cannot open driver\n"
+msgstr "Nie można otworzyć sterownika\n"
+
+msgid "Cannot open database\n"
+msgstr "Nie można otworzyć bazy danych\n"
+
+msgid "Computing row %d (of %d) of covariance matrix..."
+msgstr "Obliczanie rzędu %d (z %d) macierzy kowariancji..."
+
+#, fuzzy
+msgid "Unable to allocate memory for row buffer"
+msgstr "Nie można alokować pamięci dla ciągu"
+
+msgid "File containing mapping instructions (or use input=- to enter from keyboard)"
+msgstr "Plik zawierający instrukcje mapowe (lub użyj input=- dla ich wprowadzenia z klawiatury)"
+
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr "fp: Zakres rozpiętości danych wynosi %.25f do %.25f\n"
+
+#, fuzzy
+msgid "Computing means for band %d..."
+msgstr "Oblicza biny"
+
+msgid "Cannot describe table\n"
+msgstr "Nie można opisac tabeli\n"
+
+msgid "Raster map in which to fill nulls"
+msgstr "Mapa rastrowa, w której mają być wypełnione zera"
+
+#, fuzzy
+msgid "Unable to set isosurface (%d) attribute (%d) of volume %d)"
+msgstr "Nie mozna otworzyć pliku wejściowego <%s@%s>."
+
+#, fuzzy
+msgid "Rescaling <%s> to range %d,%d..."
+msgstr "Odczytywanie map rastrowych..."
+
+#, fuzzy
+msgid ""
+"\n"
+"Your current window setting may be too large. Cells displayed on your graphics window may be too small for cell category number to be visible."
+msgstr ""
+"\n"
+"Bieżące ustawienia okna mogą być zbyt długie. Wyświetlane komórki mogą być za małe dla kategorii  "
+
+msgid "Create a new vector from the current region."
+msgstr "Twórz nowy wektor dla zasięgu bieżącego regionu."
+
+msgid "Area without centroid (may be OK for island)"
+msgstr "Obszar bez centroidu (może być OK dla wysp)"
+
+msgid "Error trying to read dbmscap file\n"
+msgstr "Błąd przy próbie czytania pliku dbmscap \n"
+
+msgid "print drivers and exit"
+msgstr "wyświetl sterowniki i wyjdź"
+
+msgid "List all database drivers."
+msgstr "Wyświetl listę wszystkich sterowników bazy danych"
+
+#, fuzzy
+msgid "Subgroup <%s> not found in current mapset"
+msgstr "Mapa rastrowa <%s> nie została znaleziona w bieżącym mapsecie"
 
 #~ msgid "Elevation value(s)"
 #~ msgstr "Wartości wysokości"
-
-#~ msgid "Unknown production date (defined by '%s')"
-#~ msgstr "Nieznana data produkcji (zdefiniowana przez '%s')"
-
-#~ msgid "Extracted %d areas"
-#~ msgstr "Wyciągnięto %d obszarów"
-
-#~ msgid "Extracted %d points"
-#~ msgstr "Wyciągnięto %d punktów"
-
-#~ msgid "Extracted %d lines"
-#~ msgstr "Wyciągnięto %d linii"
-
-#~ msgid "Column to query"
-#~ msgstr "Kolumna do zapytań"
-
-#~ msgid "Use G3D mask (if exists) with input map"
-#~ msgstr "Użyj maski 3D (jeżeli istnieje) dla mapy wejściowej"
-
-#~ msgid "Sets the legend's text color"
-#~ msgstr "Ustaw kolor tekstu w legendzie"
-
-#~ msgid "Create/Edit"
-#~ msgstr "Utwórz/Edytuj"
-
-#~ msgid "Create new projection files (modifies current location unless 'location' option specified)"
-#~ msgstr "Utwórz nowe pliki projekcji (modyfikuj bieżącą lokalizację chyba że opcja 'location' została określona) "
-
-#~ msgid "Location %s created!"
-#~ msgstr "Lokacja %s została utworzona!"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "WARNING!  A projection file already exists for this location\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "UWAGA!  Plik odwzorowania już istnieje dla tej lokacji\n"
-
-#~ msgid "Error writing PROJ_INFO"
-#~ msgstr "Błąd poczas zapisywania PROJ_INFO"
-
-#~ msgid "Error writing PROJ_UNITS"
-#~ msgstr "Błąd podczas zapisywania PROJ_UNITS"
-
-#~ msgid "The projection information will not be updated."
-#~ msgstr "Informacje o odwzorowaniu nie zostaną zaktualizowane."
-
-#~ msgid "Unknown column type '%s'"
-#~ msgstr "Nieznany typ kolumny '%s'"
-
-#~ msgid "Building partial topology..."
-#~ msgstr "Budowanie częściowej topologii ..."
-
-#~ msgid "Title, in quotes"
-#~ msgstr "Tytuł, w cudzysłowiu"
-
-#~ msgid "Calculating covariance matrix..."
-#~ msgstr "Obliczanie macierzy kowariancji..."
-
-#, fuzzy
-#~ msgid "Unable to allocate memory for raster row"
-#~ msgstr "Nie można ulakować pamięci dla ciągu"
-
-#~ msgid "Transforming <%s>..."
-#~ msgstr "Przekształcanie <%s>..."
-
-#, fuzzy
-#~ msgid "Unable allocate memory for row buffer"
-#~ msgstr "Nie można alokować pamięci dla ciągu"
-
-#~ msgid "Current window size:"
-#~ msgstr "Rozmiar bieżącego okna:"
-
-#~ msgid "rows:    %d"
-#~ msgstr "rzędy:    %d"
-
-#~ msgid "columns: %d"
-#~ msgstr "kolumny: %d"
-
-#~ msgid "Aborting."
-#~ msgstr "Przerywam wykonanie."
 
 #, fuzzy
 #~ msgid "Feature type to convert from"
@@ -36501,26 +36566,6 @@ msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 #, fuzzy
 #~ msgid "Neither %s nor %s was given"
 #~ msgstr "Tekst powinien być wprowadzony lub użyte -c"
-
-#, fuzzy
-#~ msgid "Results into a table:"
-#~ msgstr "Nazwa mapy wynikowej"
-
-#~ msgid "Cannot open driver\n"
-#~ msgstr "Nie można otworzyć sterownika\n"
-
-#~ msgid "Cannot open database\n"
-#~ msgstr "Nie można otworzyć bazy danych\n"
-
-#~ msgid "Computing row %d (of %d) of covariance matrix..."
-#~ msgstr "Obliczanie rzędu %d (z %d) macierzy kowariancji..."
-
-#, fuzzy
-#~ msgid "Unable to allocate memory for row buffer"
-#~ msgstr "Nie można alokować pamięci dla ciągu"
-
-#~ msgid "File containing mapping instructions (or use input=- to enter from keyboard)"
-#~ msgstr "Plik zawierający instrukcje mapowe (lub użyj input=- dla ich wprowadzenia z klawiatury)"
 
 #, fuzzy
 #~ msgid "Reading raster map <%s in %s> ..."
@@ -36732,9 +36777,6 @@ msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 #~ "Konwertuj w locie, uzyj mniejszej przestrzeni dyskowej\n"
 #~ "\t(wymaga r.out.ppm z opcją 'stdout')"
 
-#~ msgid "fp: Data range is %.25f to %.25f\n"
-#~ msgstr "fp: Zakres rozpiętości danych wynosi %.25f do %.25f\n"
-
 #, fuzzy
 #~ msgid "Could not read south bufferzone size. Aborting."
 #~ msgstr "nie można odczytać pliku zakresu rozpiętości danych"
@@ -36775,18 +36817,8 @@ msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 #~ msgstr "Nazwa wyjściowej mapy rastrowej z jeziorem"
 
 #, fuzzy
-#~ msgid "Computing means for band %d..."
-#~ msgstr "Oblicza biny"
-
-#~ msgid "Cannot describe table\n"
-#~ msgstr "Nie można opisac tabeli\n"
-
-#, fuzzy
 #~ msgid "Name of table created for output when the distance to all flag is used"
 #~ msgstr "Nazwa tabeli wyjściowej gdy użyto wszystkich flag"
-
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Mapa rastrowa, w której mają być wypełnione zera"
 
 #~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 #~ msgstr "Mozaikuje do 4 obrazów i rozciąga colormap; tworzy mapę *.mosaic."
@@ -36794,42 +36826,11 @@ msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 #~ msgid "Name of raster map with given starting point(s) (at least 1 cell > 0)"
 #~ msgstr "Nazwa mapy rastrowej która ma być użyta jako maska (co najmniej 1 komórka >0)"
 
-#, fuzzy
-#~ msgid "Unable to set isosurface (%d) attribute (%d) of volume %d)"
-#~ msgstr "Nie mozna otworzyć pliku wejściowego <%s@%s>."
-
 #~ msgid "Name of an output file to hold the report"
 #~ msgstr "Nazwa wyjściowego pliku raportu"
 
-#, fuzzy
-#~ msgid "Rescaling <%s> to range %d,%d..."
-#~ msgstr "Odczytywanie map rastrowych..."
-
 #~ msgid "Data exists after final 'end' instruction!"
 #~ msgstr "Dane powstają po końcowej instrukcji 'end'!"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Your current window setting may be too large. Cells displayed on your graphics window may be too small for cell category number to be visible."
-#~ msgstr ""
-#~ "\n"
-#~ "Bieżące ustawienia okna mogą być zbyt długie. Wyświetlane komórki mogą być za małe dla kategorii  "
-
-#~ msgid "Create a new vector from the current region."
-#~ msgstr "Twórz nowy wektor dla zasięgu bieżącego regionu."
-
-#~ msgid "Area without centroid (may be OK for island)"
-#~ msgstr "Obszar bez centroidu (może być OK dla wysp)"
-
-#~ msgid "Error trying to read dbmscap file\n"
-#~ msgstr "Błąd przy próbie czytania pliku dbmscap \n"
-
-#~ msgid "print drivers and exit"
-#~ msgstr "wyświetl sterowniki i wyjdź"
-
-#~ msgid "List all database drivers."
-#~ msgstr "Wyświetl listę wszystkich sterowników bazy danych"
 
 #~ msgid "Data range is %.7g to %.7g\n"
 #~ msgstr "Zakres rozpiętości danych wynosi od %.7g do %.7g\n"
@@ -36851,7 +36852,3 @@ msgstr "Nazwa mapy rastrowej współczynnika promieniowania rozproszonego nieba"
 
 #~ msgid "Write output to PNG image"
 #~ msgstr "Zapisz do PNG"
-
-#, fuzzy
-#~ msgid "Subgroup <%s> not found in current mapset"
-#~ msgstr "Mapa rastrowa <%s> nie została znaleziona w bieżącym mapsecie"
