@@ -48,6 +48,14 @@ int main(int argc, char **argv)
     int stat;
     FILE *fd;
 
+    if (parms.table) {
+	if (!db_table_exists(parms.driver, parms.database, parms.table)) {
+	    G_warning(_("Table <%s> not found in database <%s> using driver <%s>"),
+		       parms.table, parms.database, parms.driver);
+	    exit(EXIT_FAILURE);
+	}
+    }
+
     parse_command_line(argc, argv);
 
     if (parms.input) {
@@ -89,7 +97,7 @@ int main(int argc, char **argv)
 	}
     }
 
-    if(parms.test_only)
+    if (parms.test_only)
 	G_verbose_message(_("Test %s."), stat ? _("failed") : _("succeeded"));
 
     db_close_database(driver);
