@@ -3,7 +3,7 @@
 
 #include <grass/config.h>
 
-extern char *G_gettext(const char *, const char *);
+extern char *G_gettext(const char *, const char *) __attribute__((format_arg (2)));
 
 #if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
 #include <libintl.h>
