@@ -193,7 +193,7 @@ int db__copy_table(const char *from_drvname, const char *from_dbname,
 	db_append_string(&sql, " where 0 = 1");	/* to get no data */
     }
 
-    G_debug(3, db_get_string(&sql));
+    G_debug(3, "db__copy_table: %s", db_get_string(&sql));
     if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) !=
 	DB_OK) {
 	G_warning(_("Unable to open select cursor: '%s'"),
@@ -270,7 +270,7 @@ int db__copy_table(const char *from_drvname, const char *from_dbname,
 	}
     }
 
-    G_debug(3, db_get_string(&sql));
+    G_debug(3, "db__copy_table: %s", db_get_string(&sql));
     if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) !=
 	DB_OK) {
 	G_warning(_("Unable to open select cursor: '%s'"),
@@ -361,7 +361,7 @@ int db__copy_table(const char *from_drvname, const char *from_dbname,
 	if (!select)
 	    continue;
 	db_append_string(&sql, ")");
-	G_debug(3, db_get_string(&sql));
+	G_debug(3, "db__copy_table: %s", db_get_string(&sql));
 	if (db_execute_immediate(to_driver, &sql) != DB_OK) {
 	    G_warning("Unable to insert new record: '%s'",
 		      db_get_string(&sql));
