@@ -93,8 +93,8 @@ int main(int argc, char **argv)
     opt3->answer = "0.0,0.0";
     opt3->options = "0-100";
     opt3->required = NO;
-    opt3->description =
-	_("The screen coordinates for top-left corner of label ([0,0] is top-left of frame)");
+    opt3->label = _("Screen coordinates of the rectangle's top-left corner");
+    opt3->description = _("(0,0) is top-left of the display frame");
 
     fsize = G_define_option();
     fsize->key = "fontsize";
