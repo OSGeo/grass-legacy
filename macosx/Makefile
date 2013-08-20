@@ -100,6 +100,7 @@ install-basic-macosx:
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	-sed -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" \
 		-e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" \
+		-e "s#-isysroot /.*MacOSX.*\.sdk##g" \
 		${GISBASE}/include/Make/Platform.make > ${INST_DIR_TARGET}/include/Make/Platform.make
 	-sed -e "s#^\(ARCH_DISTDIR.[^=]*\).*#\1= ${INST_DIR}#" \
 		-e "s#^\(ARCH_BINDIR.[^=]*\).*#\1= ${UNIX_BIN}#" \
