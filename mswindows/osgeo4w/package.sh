@@ -137,7 +137,9 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 		--with-regex \
 		--with-nls \
 		--with-freetype-includes=$OSGEO4W_ROOT_MSYS/include/freetype2 \
-		--with-odbc
+		--with-odbc \
+	        --with-cairo \
+		--with-cairo-includes=$OSGEO4W_ROOT_MSYS/include/cairo
 
 	touch mswindows/osgeo4w/configure-stamp
 fi
