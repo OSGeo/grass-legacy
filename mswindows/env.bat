@@ -1,4 +1,6 @@
+rem
 rem Environmental variables for GRASS stand-alone installer
+rem
 
 set GRASS_WISH=%GISBASE%\extrabin\wish.exe
 set GRASS_SH=%GISBASE%\msys\bin\sh.exe
