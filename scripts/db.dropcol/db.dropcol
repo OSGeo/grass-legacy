@@ -53,13 +53,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
-
-#### check if we have awk
-if [ ! -x "`which awk`" ] ; then
-    g.message -e "awk required, please install awk or gawk first"
-    exit 1
-fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -89,9 +82,6 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-
 table="$GIS_OPT_TABLE"
 
 # check if DB parameters are set, and if not set them.
@@ -102,8 +92,8 @@ driver=`db.connect -p | grep '^driver' | cut -d ':' -f2`
 # schema needed for PG?
 col="$GIS_OPT_COLUMN"
 
-force=$GIS_FLAG_F
-if [ $force -eq 1 ] ; then
+force="$GIS_FLAG_F"
+if [ "$force" -eq 1 ] ; then
    g.message "Forcing ..."
 fi
 
@@ -115,14 +105,15 @@ if [ "$col" = "cat" ] ; then
    #exit 1
 fi
 
-db.describe -c $GIS_OPT_TABLE | grep '^Column ' | cut -d':' -f2 | grep "^ ${col}" 2>&1 >/dev/null
+db.describe -c "$GIS_OPT_TABLE" | grep '^Column ' | \
+   cut -d':' -f2 | grep "^ ${col}" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	g.message -e "Column <$col> not found in table"
 	cleanup
 	exit 1
 fi
 
-if [ $force -eq 0 ] ; then
+if [ "$force" -eq 0 ] ; then
     g.message "The <$col> column would be deleted."
     g.message message=""
     g.message "You must use the force flag to actually remove it. Exiting."
@@ -138,7 +129,8 @@ if [ "$driver" = "sqlite" ] ; then
 	cat "$TEMPFILE.coldesc" | cut -d':' -f1 > "$TEMPFILE.colnames"
 	COLDEF=`paste -d' ' "$TEMPFILE.colnames" "$TEMPFILE.coltypes" | tr '\n' ',' | sed 's+,$++g'`
 	COLNAMES=`cat "$TEMPFILE.colnames" | tr '\n' ',' | sed 's+,$++g'`
-echo "BEGIN TRANSACTION;
+
+	echo "BEGIN TRANSACTION;
 CREATE TEMPORARY TABLE ${table}_backup(${COLDEF});
 INSERT INTO ${table}_backup SELECT ${COLNAMES} FROM ${table};
 DROP TABLE ${table};
@@ -146,15 +138,17 @@ CREATE TABLE ${table}(${COLDEF});
 INSERT INTO ${table} SELECT ${COLNAMES} FROM ${table}_backup;
 DROP TABLE ${table}_backup;
 COMMIT;" > "$TEMPFILE"
+
 	db.execute input="$TEMPFILE"
-	if [ $? -eq 1 ] ; then
+	if [ $? -ne 0 ] ; then
 	    	g.message -e "Cannot continue (problem deleting column)."
 	    	cleanup
 	    	exit 1
 	fi
 else
-	echo "ALTER TABLE $table DROP COLUMN $col" | db.execute database="${database}" driver=${driver}
-	if [ $? -eq 1 ] ; then
+	echo "ALTER TABLE $table DROP COLUMN $col" | \
+	   db.execute database="$database" driver="$driver"
+	if [ $? -ne 0 ] ; then
 	    	g.message -e "Cannot continue (problem deleting column)."
 	    	cleanup
 	    	exit 1
@@ -165,4 +159,3 @@ fi
 cleanup
 
 exit 0
-
