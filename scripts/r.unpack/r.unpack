@@ -2,7 +2,7 @@
 #  r.unpack   --  unpack up a raster map packed with r.pack:
 #     tar+gzip'd map elements => GRASS 6 mapset structure
 #
-#   (c) 2004-2008, 2012 GRASS Development Team
+#   (c) 2004-2012 by Hamish Bowman, and The GRASS Development Team
 #   AUTHOR: Hamish Bowman, Otago University, New Zealand
 #
 #   This program is free software under the GNU General Public
@@ -114,7 +114,7 @@ else
 fi
 
 eval `g.findfile element=cell file="$MAP_NAME" mapset=.`
-if [ ! -z "$file" ] && [ "$GRASS_OVERWRITE" -ne 1 ] ; then
+if [ -n "$file" ] && [ "$GRASS_OVERWRITE" -ne 1 ] ; then
    g.message -e "Raster map <$MAP_NAME> already exists"
    cleanup
    exit 1
@@ -133,7 +133,8 @@ fi
 cd "$DATA_NAME"/
 
 # check projection compatibility in a rather crappy way
-if [ ! -z `diff PROJ_INFO "$MSET_DIR"/../PERMANENT/PROJ_INFO` ] ; then
+if [ `diff -u PROJ_INFO "$MSET_DIR"/../PERMANENT/PROJ_INFO | wc -l` -ne 0 ] ; then
+    diff -u PROJ_INFO "$MSET_DIR"/../PERMANENT/PROJ_INFO
     if [ $GIS_FLAG_O -eq 1 ] ; then
         g.message -w "Projection information does not match. Proceeding.."
     else
