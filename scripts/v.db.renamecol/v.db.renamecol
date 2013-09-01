@@ -80,8 +80,8 @@ error()
 }
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+MAPSET=`g.gisenv get=MAPSET`
+
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
 if [ ! "$file" ] ; then

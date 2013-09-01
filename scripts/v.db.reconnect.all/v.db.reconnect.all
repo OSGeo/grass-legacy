@@ -47,13 +47,10 @@ if test "$GISBASE" = ""; then
     exit 1
 fi
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
-
 if [ "$1" != "@ARGS_PARSED@" ] ; then
    exec g.parser "$0" "$@"
 fi
+
 
 OLD_DATABASE="$GIS_OPT_OLD_DATABASE"
 NEW_DATABASE="$GIS_OPT_NEW_DATABASE"
@@ -70,10 +67,13 @@ if [ -z "$NEW_DATABASE" ] ; then
   exit 1
 fi
 
+
+MAPSET=`g.gisenv get=MAPSET`
+
 for VECT in `g.list type=vect mapset="$MAPSET" | sed 1,2d | grep -v '^-*$'`
 do
-    g.message message="Reconnecting vector '${VECT}@${MAPSET}'"
-    for LINK in `v.db.connect -g fs="|" map=${VECT}@${MAPSET}` ; do
+    g.message message="Reconnecting vector <$VECT> in mapset <$MAPSET>"
+    for LINK in `v.db.connect -g fs="|" map="$VECT@$MAPSET"` ; do
         eval `echo "$LINK" | sed 's$\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)$LAYER=\1 SCHEMA_TABLE=\2 KEY=\3 DATABASE=\4 DRIVER=\5$'`
 
         SCHEMA=`echo "$SCHEMA_TABLE" | grep '\.' | sed 's/\([^.]*\)\..*/\1/'`

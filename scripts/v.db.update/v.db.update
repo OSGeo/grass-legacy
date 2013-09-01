@@ -77,25 +77,16 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
-
-#### check if we have awk
-if [ ! -x "`which awk`" ] ; then
-    g.message -e "awk required, please install awk or gawk first"
-    exit 1
-fi
-
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+MAPSET=`g.gisenv get=MAPSET`
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
+eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
 if [ ! "$file" ] ; then
    g.message -e "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
