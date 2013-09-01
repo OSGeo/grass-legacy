@@ -59,7 +59,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -77,8 +76,7 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+MAPSET=`g.gisenv get=MAPSET`
 
 # check if we want to connect to real DB
 if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
@@ -95,7 +93,7 @@ fi
 
 if [ -z "$GRASS_OVERWRITE" ] ; then
   if [ `db.tables -p | grep "^${GIS_OPT_OUTPUT}$"` ] ; then
-     g.message -e "Table <${GIS_OPT_OUTPUT}> already exists"
+     g.message -e "Table <$GIS_OPT_OUTPUT> already exists"
      exit 1
   fi
 else
@@ -110,7 +108,7 @@ fi
 
 # check ERRORs and cat and cat_ issues (maybe problem with translated messages)
 # we import faking a map which generates only the attribute table:
-### check-me: is the quoting ok?
+### CHECK-ME: is the quoting ok?
 WARNING="`v.in.ogr --q dsn=\"$GIS_OPT_DSN\" $LAYER out=$GIS_OPT_OUTPUT -o --o 2>&1 | grep -i 'ERROR\|cat' | grep -v 'truncated'`"
 if [ -n "$WARNING" ] ; then
    echo "$WARNING"
