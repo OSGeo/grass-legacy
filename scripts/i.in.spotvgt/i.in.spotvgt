@@ -79,10 +79,6 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
-
 
 #### check for gdalinfo (just to check if installation is complete)
 if [ ! -x "`which gdalinfo`" ] ; then
