@@ -93,15 +93,12 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 if test "$GISBASE" = ""; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
 fi   
      
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
-PROG=`basename "$0"`
+MAPSET=`g.gisenv get=MAPSET`
 
 g.message "Collecting map names for current mapset <$MAPSET>..."
 
@@ -127,81 +124,82 @@ g="$GIS_OPT_GROUP"
 d="$GIS_OPT_DVIEW"
 
 if [ -n "$r" ] ; then
-    rast=`g.mlist $regex type=rast sep=, mapset=$MAPSET pattern="$r"`
+    rast=`g.mlist $regex type=rast sep=, mapset="$MAPSET" pattern="$r"`
 fi
 
 if [ -n "$r3" ] ; then
-    rast3d=`g.mlist $regex type=rast3d sep=, mapset=$MAPSET pattern="$r3"`
+    rast3d=`g.mlist $regex type=rast3d sep=, mapset="$MAPSET" pattern="$r3"`
 fi
 
 if [ -n "$v" ] ; then
-    vect=`g.mlist $regex type=vect sep=, mapset=$MAPSET pattern="$v"`
+    vect=`g.mlist $regex type=vect sep=, mapset="$MAPSET" pattern="$v"`
 fi
 
 if [ -n "$i" ] ; then
-    icon=`g.mlist $regex type=icon sep=, mapset=$MAPSET pattern="$i"`
+    icon=`g.mlist $regex type=icon sep=, mapset="$MAPSET" pattern="$i"`
 fi
 
 if [ -n "$l" ] ; then
-    labels=`g.mlist $regex type=labels sep=, mapset=$MAPSET pattern="$l"`
+    labels=`g.mlist $regex type=labels sep=, mapset="$MAPSET" pattern="$l"`
 fi
 
 if [ -n "$rg" ] ; then
-    region=`g.mlist $regex type=region sep=, mapset=$MAPSET pattern="$rg"`
+    region=`g.mlist $regex type=region sep=, mapset="$MAPSET" pattern="$rg"`
 fi
 
 if [ -n "$g" ] ; then
-    group=`g.mlist $regex type=group sep=, mapset=$MAPSET pattern="$g"`
+    group=`g.mlist $regex type=group sep=, mapset="$MAPSET" pattern="$g"`
 fi
 
 if [ -n "$d" ] ; then
-    dview=`g.mlist $regex type=3dview sep=, mapset=$MAPSET pattern="$d"`
+    dview=`g.mlist $regex type=3dview sep=, mapset="$MAPSET" pattern="$d"`
 fi
 
-found=
+found=""
+
 if [ "$rast" ] ; then
-	found=1
-	rast="rast=$rast"
+    found=1
+    rast="rast=$rast"
 fi
 
 if [ "$rast3d" ] ; then
-	found=1
-	rast3d="rast3d=$rast3d"
+    found=1
+    rast3d="rast3d=$rast3d"
 fi
 
 if [ "$vect" ] ; then
-	found=1
-	vect="vect=$vect"
+    found=1
+    vect="vect=$vect"
 fi
 
 if [ "$icon" ] ; then
-	found=1
-	icon="icon=$icon"
+    found=1
+    icon="icon=$icon"
 fi
 
 if [ "$labels" ] ; then
-	found=1
-	labels="labels=$labels"
+    found=1
+    labels="labels=$labels"
 fi
 
 if [ "$region" ] ; then
-	found=1
-	region="region=$region"
+    found=1
+    region="region=$region"
 fi
 
 if [ "$group" ] ; then
-	found=1
-	group="group=$group"
+    found=1
+    group="group=$group"
 fi
 
 if [ "$dview" ] ; then
-	found=1
-	dview="3dview=$dview"
+    found=1
+    dview="3dview=$dview"
 fi
 
 if [ ! "$found" ] ; then
-	g.message -e "No data found."
-	exit 1
+    g.message -e "No data found."
+    exit 1
 fi
 
 if [ $force -eq 0 ] ; then
