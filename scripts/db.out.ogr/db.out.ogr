@@ -62,7 +62,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -79,9 +78,6 @@ exitprocedure()
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
 
-### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 if [ "$GIS_OPT_FORMAT" = "DBF" -o  "$GIS_OPT_FORMAT" = "dbf" ] ; then
   GIS_OPT_FORMAT="ESRI_Shapefile"
