@@ -146,7 +146,7 @@ fi
 
 # check the input vector map
 eval `v.info -t map="$VECTORFULL" layer="$GIS_OPT_LAYER"`
-if [ $areas -eq 0 ] ; then
+if [ "$areas" -eq 0 ] ; then
    g.message -e "No areas found in vector map"
    exit 1
 fi
@@ -195,7 +195,7 @@ fi
 r.category "${VECTOR}_$TMPNAME" fs=';' --quiet | cut -d';' -f1 > "$TEMPFILE.cats"
 # echo "List of categories found: $CATSLIST"
 NUMBER=`cat "$TEMPFILE.cats" | wc -l | awk '{print $1}'`
-if [ $NUMBER -lt 1 ] ; then
+if [ "$NUMBER" -lt 1 ] ; then
    g.message -e "No categories found in raster map"
    cleanup
    exit 1
@@ -212,7 +212,7 @@ else
    DBFDRIVER=0
 fi
 
-if [ $DBFDRIVER -eq 1 ] ; then
+if [ "$DBFDRIVER" -eq 1 ] ; then
    # `wc -c` reports number of chars + 1 for the newline
    if [ `echo "$COLPREFIX" | wc -c` -gt 10 ] ; then
        g.message -e "Cannot create unique names for columns. \
@@ -260,7 +260,7 @@ unset ADDCOLS
 unset COLNAMES
 for i in $BASECOLS $EXTRACOLS ; do
   # check if column already present
-  if [ $DBFDRIVER -eq 1 ] ; then
+  if [ "$DBFDRIVER" -eq 1 ] ; then
      CURRCOLUMN="`echo "${COLPREFIX}_$i" | cut -b1-10`"
   else
      CURRCOLUMN="${COLPREFIX}_$i"
@@ -310,7 +310,8 @@ if [ -n "$ADDCOLS" ] ; then
   do
     col=`echo "$ADDCOLS" | cut -d',' -f$n`
     
-    echo "ALTER TABLE $TABLE ADD COLUMN $col" | db.execute database="${DB_DATABASE}" driver="${DB_SQLDRIVER}"
+    echo "ALTER TABLE $TABLE ADD COLUMN $col" | \
+       db.execute database="$DB_DATABASE" driver="$DB_SQLDRIVER"
     if [ $? -eq 1 ] ; then
       g.message -e "Cannot continue (problem adding column)."
       exit 1
@@ -329,14 +330,14 @@ rm -f "$SQLTMP" "$STATSTMP" "$COLNAMETMP"
 unset $BASECOLS $EXTRACOLS
 if [ $GIS_FLAG_E -eq 1 ] ; then 
     r.univar -t -e map="$RASTER" \
-    zones="${VECTOR}_$TMPNAME" percentile="$GIS_OPT_PERCENTILE" | \
-    cut -f1,3,5-8,10-13,15-18 -d'|' | sed 's+nan+NULL+g' > "$STATSTMP"
+      zones="${VECTOR}_$TMPNAME" percentile="$GIS_OPT_PERCENTILE" | \
+      cut -f1,3,5-8,10-13,15-18 -d'|' | sed 's+nan+NULL+g' > "$STATSTMP"
 else
     r.univar -t map="$RASTER" zones="${VECTOR}_$TMPNAME" | \
-    cut -f1,3,5-8,10-13 -d'|' | sed 's+nan+NULL+g' > "$STATSTMP"
+      cut -f1,3,5-8,10-13 -d'|' | sed 's+nan+NULL+g' > "$STATSTMP"
 fi
 
-if [ $GIS_FLAG_E -eq 1 ] && [ $DBFDRIVER -eq 1 ] ; then
+if [ $GIS_FLAG_E -eq 1 ] && [ "$DBFDRIVER" -eq 1 ] ; then
     eval "$PERCCOL=\$percentile_$GIS_OPT_PERCENTILE"
 fi
 
@@ -360,13 +361,22 @@ fi
 # create SQL file for extended and normal statistics
 g.message -v "Creating SQL file ..."
 if [ $GIS_FLAG_E -eq 1 ] ; then
-    sed -e '1d' "$STATSTMP" | awk -F "|" '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.2f , '${col3}' = %.2f , '${col4}' = %.2f , '${col5}' = %.2f , '${col6}' = %.2f , '${col7}' = %.2f , '${col8}' = %.2f , '${col9}' = %.2f , '${col10}' = %.2f , '${col11}' = %.2f , '${col12}' = %2f , '${col13}' = %.2f WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$1}' > "$SQLTMP"
+    sed -e '1d' "$STATSTMP" | awk -F "|" \
+      '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.15g , \
+      '${col3}' = %.15g , '${col4}' = %.15g , '${col5}' = %.15g , '${col6}' = %.15g , \
+      '${col7}' = %.15g , '${col8}' = %.15g , '${col9}' = %.15g , '${col10}' = %.15g , \
+      '${col11}' = %.15g , '${col12}' = %2f , '${col13}' = %.15g \
+      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$1}' > "$SQLTMP"
 else
-    sed -e '1d' "$STATSTMP" | awk -F "|" '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.2f , '${col3}' = %.2f , '${col4}' = %.2f , '${col5}' = %.2f , '${col6}' = %.2f , '${col7}' = %.2f , '${col8}' = %.2f , '${col9}' = %.2f WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$1}' > "$SQLTMP"   
+    sed -e '1d' "$STATSTMP" | awk -F "|" \
+      '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.15g , \
+      '${col3}' = %.15g , '${col4}' = %.15g , '${col5}' = %.15g , '${col6}' = %.15g , \
+      '${col7}' = %.15g , '${col8}' = %.15g , '${col9}' = %.15g \
+      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$1}' > "$SQLTMP"
 fi
 
 g.message message="Updating the database ..."
-db.execute input="$SQLTMP" database="${DB_DATABASE}" driver="$DB_SQLDRIVER"
+db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
 EXITCODE=$?
 
 cleanup
