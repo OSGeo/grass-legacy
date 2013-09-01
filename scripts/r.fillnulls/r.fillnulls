@@ -235,7 +235,8 @@ if [ "$GIS_OPT_METHOD" = "rst" ] ; then
    eval `g.findfile element=cell file=$USERMASK`
    if [ "$file" ] ; then
       g.message "Using user mask while interpolating"
-      RST_CMD="v.surf.rst -z layer=0 tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
+      RST_CMD="v.surf.rst -z layer=0 tension=$GIS_OPT_TENSION \
+      		smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
    else
       RST_CMD="v.surf.rst -z layer=0 tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
    fi
