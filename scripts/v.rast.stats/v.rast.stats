@@ -74,8 +74,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
-
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
     g.message "awk required, please install awk or gawk first" 
@@ -130,8 +128,7 @@ RASTER="$GIS_OPT_RASTER"
 COLPREFIX="$GIS_OPT_COLPREFIX"
 
 ### setup enviro vars ###
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+MAPSET=`g.gisenv get=MAPSET`
 
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file="$GIS_OPT_VECTOR" mapset="$MAPSET"`
