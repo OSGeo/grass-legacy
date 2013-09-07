@@ -37,8 +37,7 @@ int G_ask_colors(const char *name, const char *mapset, struct Colors *pcolr)
 	return -1;
     G_get_fp_range_min_max(&range, &min, &max);
     if (G_is_d_null_value(&min) || G_is_d_null_value(&max)) {
-	sprintf(buff, _(" The raster map %s@%s is empty"), name, mapset);
-	G_warning(buff);
+	G_warning(_("The raster map <%s@%s> is empty"), name, mapset);
 	return -1;
     }
 
