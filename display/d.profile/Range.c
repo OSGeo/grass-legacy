@@ -16,7 +16,8 @@ int WindowRange(char *name, char *mapset, long *min, long *max)
 
     /* write stats to a temp file */
     temp_fname = G_tempfile();
-    sprintf(stats_cmd, "r.stats -ci %s > %s\n", name, temp_fname);
+    sprintf(stats_cmd, "r.stats -ci \"%s\" > \"%s\"", name, temp_fname);
+    G_debug(3, "r.stats command=[%s]", stats_cmd);
     system(stats_cmd);
 
     /* open temp file and read the stats into a linked list */
@@ -45,6 +46,7 @@ int WindowRange(char *name, char *mapset, long *min, long *max)
 	    done = 1;
     }
 
+    fclose(temp_file);
     return 0;
 }
 
