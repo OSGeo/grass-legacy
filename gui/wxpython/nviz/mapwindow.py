@@ -1305,8 +1305,10 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                     if (vInfo['points']) > 0:
                         # include vInfo['centroids'] to initially load centroids 
                         self.LoadVector(item, points = True)
-                    if (vInfo['lines'] + vInfo['boundaries']) > 0 or vInfo['map3d']:
+                    if (vInfo['lines'] + vInfo['boundaries']) > 0:
                         self.LoadVector(item, points = False)
+                    if vInfo['map3d'] and (vInfo['kernels'] + vInfo['faces']) > 0:
+                        self.LoadVector(item, points=None)
                     
             except GException, e:
                 GError(parent = self,
@@ -2109,17 +2111,21 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             data['height'].pop('update')
             
         # surface
-        if 'update' in data['mode'] and 'surface' in data['mode']:
-            for item in range(len(data['mode']['surface']['value'])):
-                for type in ('raster', 'constant'):
-                    sid = self.GetLayerId(type = type,
-                                          name = data['mode']['surface']['value'][item])
-                    if sid > -1:
-                        if data['mode']['surface']['show'][item]:
-                            self._display.SetVectorPointSurface(id, sid)
-                        else:
-                            self._display.UnsetVectorPointSurface(id, sid)   
-                        break
+        if 'update' in data['mode']:
+            if data['mode'].get('3d', False):
+                self._display.SetVectorPointZMode(id, True)
+            elif 'surface' in data['mode']:
+                self._display.SetVectorPointZMode(id, False)
+                for item in range(len(data['mode']['surface']['value'])):
+                    for type in ('raster', 'constant'):
+                        sid = self.GetLayerId(type=type,
+                                              name=data['mode']['surface']['value'][item])
+                        if sid > -1:
+                            if data['mode']['surface']['show'][item]:
+                                self._display.SetVectorPointSurface(id, sid)
+                            else:
+                                self._display.UnsetVectorPointSurface(id, sid)   
+                            break
             data['mode'].pop('update')
             
     def GetLayerNames(self, type):
