@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     DCELL *map1_buf, *map2_buf, map1_val, map2_val;
     char *name, *mapset;
     struct Option *input_map1, *input_map2, *output_opt;
-    struct Flag *shell_style;
+    struct Flag *shell_style, *slow;
     struct Cell_head region;
     struct GModule *module;
 
@@ -61,6 +61,11 @@ int main(int argc, char *argv[])
     shell_style = G_define_flag();
     shell_style->key = 'g';
     shell_style->description = _("Print in shell script style");
+
+    slow = G_define_flag();
+    slow->key = 's';
+    slow->description =
+	_("This does nothing. It is retained for backwards compatibility");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
