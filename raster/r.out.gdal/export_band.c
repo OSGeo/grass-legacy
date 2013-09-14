@@ -15,7 +15,6 @@
 *****************************************************************************/
 
 #include <grass/gis.h>
-#include <grass/raster.h>
 #include <grass/glocale.h>
 
 #include "cpl_string.h"
