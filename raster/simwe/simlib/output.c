@@ -7,6 +7,7 @@
 /* #include <grass/site.h> */
 #include <grass/bitmap.h>
 #include <grass/linkm.h>
+#include <grass/glocale.h>
 
 #include <grass/waterglobs.h>
 
@@ -38,6 +39,8 @@ int output_data(int tt, double ft)
 
 
     ndigit = 2;
+    /* more compact but harder to read:
+       ndigit = (int)floor(log10(timesec)) + 2 */
     if (timesec >= 10)
 	ndigit = 3;
     if (timesec >= 100)
@@ -98,7 +101,7 @@ int output_data(int tt, double ft)
 	else
 	    fd6 = G_open_fp_cell_new(depth);
 	if (fd6 < 0)
-	    G_fatal_error("unable to create raster map %s", depth);
+	    G_fatal_error(_("Cannot create raster map <%s>"), depth);
     }
 
     if (disch != NULL) {
@@ -111,7 +114,7 @@ int output_data(int tt, double ft)
 	else
 	    fd7 = G_open_fp_cell_new(disch);
 	if (fd7 < 0)
-	    G_fatal_error("unable to create raster map %s", disch);
+	    G_fatal_error(_("Cannot create raster map <%s>"), disch);
     }
 
     if (err != NULL) {
@@ -125,7 +128,7 @@ int output_data(int tt, double ft)
 	    fd8 = G_open_fp_cell_new(err);
 
 	if (fd8 < 0)
-	    G_fatal_error("unable to create raster map %s", err);
+	    G_fatal_error(_("Cannot create raster map <%s>"), err);
     }
 
 
@@ -140,7 +143,7 @@ int output_data(int tt, double ft)
 	    fd14 = G_open_fp_cell_new(conc);
 
 	if (fd14 < 0)
-	    G_fatal_error("unable to create raster map %s", conc);
+	    G_fatal_error(_("Cannot create raster map <%s>"), conc);
     }
 
     if (flux != NULL) {
@@ -154,7 +157,7 @@ int output_data(int tt, double ft)
 	    fd15 = G_open_fp_cell_new(flux);
 
 	if (fd15 < 0)
-	    G_fatal_error("unable to create raster map %s", flux);
+	    G_fatal_error(_("Cannot create raster map <%s>"), flux);
     }
 
     if (erdep != NULL) {
@@ -168,7 +171,7 @@ int output_data(int tt, double ft)
 	    fd16 = G_open_fp_cell_new(erdep);
 
 	if (fd16 < 0)
-	    G_fatal_error("unable to create raster map %s", erdep);
+	    G_fatal_error(_("Cannot create raster map <%s>"), erdep);
     }
 
 
@@ -307,7 +310,7 @@ int output_data(int tt, double ft)
 
 	if (ts == 1) {
 	    if ((mapst = G_find_file("fcell", depth0, "")) == NULL)
-		G_fatal_error("cannot find file %s", depth0);
+		G_fatal_error(_("FP raster map <%s> not found"), depth0);
 	    G_write_colors(depth0, mapst, &colors);
 	    G_quantize_fp_map_range(depth0, mapst, 0., (FCELL) gmax, 0,
 				    (CELL) gmax);
@@ -315,7 +318,7 @@ int output_data(int tt, double ft)
 	}
 	else {
 	    if ((mapst = G_find_file("fcell", depth, "")) == NULL)
-		G_fatal_error("cannot find file %s", depth);
+		G_fatal_error(_("FP raster map <%s> not found"), depth);
 	    G_write_colors(depth, mapst, &colors);
 	    G_quantize_fp_map_range(depth, mapst, 0., (FCELL) gmax, 0,
 				    (CELL) gmax);
@@ -350,7 +353,7 @@ int output_data(int tt, double ft)
 
 	if (ts == 1) {
 	    if ((mapst = G_find_file("cell", disch0, "")) == NULL)
-		G_fatal_error("cannot find file %s", disch0);
+		G_fatal_error(_("Raster map <%s> not found"), disch0);
 	    G_write_colors(disch0, mapst, &colors);
 	    G_quantize_fp_map_range(disch0, mapst, 0., (FCELL) dismax, 0,
 				    (CELL) dismax);
@@ -359,7 +362,7 @@ int output_data(int tt, double ft)
 	else {
 
 	    if ((mapst = G_find_file("cell", disch, "")) == NULL)
-		G_fatal_error("cannot find file %s", disch);
+		G_fatal_error(_("Raster map <%s> not found"), disch);
 	    G_write_colors(disch, mapst, &colors);
 	    G_quantize_fp_map_range(disch, mapst, 0., (FCELL) dismax, 0,
 				    (CELL) dismax);
@@ -390,7 +393,7 @@ int output_data(int tt, double ft)
 
 	if (ts == 1) {
 	    if ((mapst = G_find_file("cell", flux0, "")) == NULL)
-		G_fatal_error("cannot find file %s", flux0);
+		G_fatal_error(_("Raster map <%s> not found"), flux0);
 	    G_write_colors(flux0, mapst, &colors);
 	    G_quantize_fp_map_range(flux0, mapst, 0., (FCELL) dismax, 0,
 				    (CELL) dismax);
@@ -399,7 +402,7 @@ int output_data(int tt, double ft)
 	else {
 
 	    if ((mapst = G_find_file("cell", flux, "")) == NULL)
-		G_fatal_error("cannot find file %s", flux);
+		G_fatal_error(_("Raster map <%s> not found"), flux);
 	    G_write_colors(flux, mapst, &colors);
 	    G_quantize_fp_map_range(flux, mapst, 0., (FCELL) dismax, 0,
 				    (CELL) dismax);
@@ -446,7 +449,7 @@ int output_data(int tt, double ft)
 
 	if (ts == 1) {
 	    if ((mapst = G_find_file("cell", erdep0, "")) == NULL)
-		G_fatal_error("cannot find file %s", erdep0);
+		G_fatal_error(_("Raster map <%s> not found"), erdep0);
 	    G_write_colors(erdep0, mapst, &colors);
 	    G_quantize_fp_map_range(erdep0, mapst, (FCELL) ermin,
 				    (FCELL) ermax, (CELL) ermin,
@@ -464,7 +467,7 @@ int output_data(int tt, double ft)
 	else {
 
 	    if ((mapst = G_find_file("cell", erdep, "")) == NULL)
-		G_fatal_error("cannot find file %s", erdep);
+		G_fatal_error(_("Raster map <%s> not found"), erdep);
 	    G_write_colors(erdep, mapst, &colors);
 	    G_quantize_fp_map_range(erdep, mapst, (FCELL) ermin,
 				    (FCELL) ermax, (CELL) ermin,
@@ -488,7 +491,7 @@ int output_data(int tt, double ft)
 	if (ts == 0) {
 	    mapst = G_find_file("cell", depth, "");
 	    if (mapst == NULL) {
-		G_warning("File [%s] not found", depth);
+		G_warning(_("Raster map <%s> not found"), depth);
 		return -1;
 	    }
 	    G_short_history(depth, type, &hist);
@@ -530,7 +533,7 @@ int output_data(int tt, double ft)
 	if (ts == 0) {
 	    mapst = G_find_file("cell", disch, "");
 	    if (mapst == NULL)
-		G_fatal_error("file [%s] not found\n", disch);
+		G_fatal_error(_("Raster map <%s> not found"), disch);
 	    G_short_history(disch, type, &hist);
 	}
 	else
@@ -568,7 +571,7 @@ int output_data(int tt, double ft)
 	if (ts == 0) {
 	    mapst = G_find_file("cell", flux, "");
 	    if (mapst == NULL)
-		G_fatal_error("file [%s] not found\n", flux);
+		G_fatal_error(_("Raster map <%s> not found"), flux);
 	    G_short_history(flux, type, &hist);
 	}
 	else
@@ -626,30 +629,30 @@ int output_et()
 
     if (et != NULL) {
 	cell17 = G_allocate_f_raster_buf();
-	/*      if (ts == 1) {
-	   sprintf(buf,"%s.%.*d",et,ndigit,tt);
+	/* if (ts == 1) {
+	   sprintf(buf, "%s.%.*d", et, ndigit, tt);
 	   et0 = G_store(buf);
-	   fd17 = G_open_fp_cell_new (et0);
+	   fd17 = G_open_fp_cell_new(et0);
 	   }
 	   else */
 	fd17 = G_open_fp_cell_new(et);
 
 	if (fd17 < 0)
-	    G_fatal_error("unable to create raster map %s", et);
+	    G_fatal_error(_("Cannot create raster map <%s>"), et);
     }
 
     if (tc != NULL) {
 	cell13 = G_allocate_f_raster_buf();
 	/*   if (ts == 1) {
-	   sprintf(buf,"%s.%.*d",tc,ndigit,tt);
+	   sprintf(buf, "%s.%.*d", tc, ndigit, tt);
 	   tc0 = G_store(buf);
-	   fd13 = G_open_fp_cell_new (tc0);
+	   fd13 = G_open_fp_cell_new(tc0);
 	   }
 	   else */
 	fd13 = G_open_fp_cell_new(tc);
 
 	if (fd13 < 0)
-	    G_fatal_error("unable to create raster map %s", tc);
+	    G_fatal_error(_("Cannot create raster map <%s>"), tc);
     }
 
 
@@ -741,7 +744,7 @@ int output_et()
 
 	/*    if (ts == 1) {
 	   if ((mapst = G_find_file("cell", et0, "")) == NULL)
-	   G_fatal_error ("cannot find file %s", et0);
+	   G_fatal_error (_("Raster map <%s> not found"), et0);
 	   G_write_colors(et0, mapst, &colors);
 	   G_quantize_fp_map_range(et0,mapst,(FCELL)etmin,(FCELL)etmax,(CELL)etmin,(CELL)etmax);
 	   G_free_colors(&colors);
@@ -749,7 +752,7 @@ int output_et()
 	   else { */
 
 	if ((mapst = G_find_file("cell", et, "")) == NULL)
-	    G_fatal_error("cannot find file %s", et);
+	    G_fatal_error(_("Raster map <%s> not found"), et);
 	G_write_colors(et, mapst, &colors);
 	G_quantize_fp_map_range(et, mapst, (FCELL) etmin, (FCELL) etmax,
 				(CELL) etmin, (CELL) etmax);
