@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
     parm.manin = G_define_standard_option(G_OPT_R_INPUT);
     parm.manin->key = "manin";
     parm.manin->required = NO;
-    parm.manin->description = _("Name of the Mannings n raster map");
+    parm.manin->description = _("Name of the Manning's n raster map");
     parm.manin->guisection = _("Input");
 
     parm.maninval = G_define_option();
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     parm.maninval->type = TYPE_DOUBLE;
     parm.maninval->answer = MANINVAL;
     parm.maninval->required = NO;
-    parm.maninval->description = _("Mannings n unique value");
+    parm.maninval->description = _("Manning's n unique value");
     parm.maninval->guisection = _("Input");
 
     parm.traps = G_define_standard_option(G_OPT_R_INPUT);
@@ -385,7 +385,7 @@ int main(int argc, char *argv[])
 	if (parm.maninval->answer == NULL) {
 	    /*No Mannings input so use default */
 	    sscanf(MANINVAL, "%lf", &manin_val);
-	    /* if mannings unique input value exists, load it */
+	    /* if Mannings unique input value exists, load it */
 	}
 	else {
 	    /*Unique value input only */
