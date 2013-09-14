@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
     parm.manin = G_define_standard_option(G_OPT_R_INPUT);
     parm.manin->key = "manin";
     parm.manin->required = NO;
-    parm.manin->description = _("Name of the Mannings n raster map");
+    parm.manin->description = _("Name of the Manning's n raster map");
     parm.manin->guisection = _("Input");
 
     parm.maninval = G_define_option();
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
     parm.maninval->type = TYPE_DOUBLE;
     parm.maninval->answer = MANINVAL;
     parm.maninval->required = NO;
-    parm.maninval->description = _("Name of the Mannings n value");
+    parm.maninval->description = _("Manning's n unique value");
     parm.maninval->guisection = _("Input");
 
     /* needs to be updated to GRASS 6 vector format !! 
