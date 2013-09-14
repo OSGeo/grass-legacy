@@ -21,7 +21,6 @@
 #define _MEM_STREAM_H
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
 
 #include <cstring>
