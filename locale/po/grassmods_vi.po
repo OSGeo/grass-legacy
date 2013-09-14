@@ -5499,12 +5499,12 @@ msgstr "Tên của bản đồ raster độ nét đứt gãy nghiêm trọng [Pa
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
-msgid "Name of the Mannings n raster map"
-msgstr "Tên của bản đồ raster Mannings n"
+msgid "Name of the Manning's n raster map"
+msgstr "Tên của bản đồ raster Manning's n"
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
-msgid "Name of the Mannings n value"
-msgstr "Tên giá trị Mannings n"
+msgid "Name of the Manning's n value"
+msgstr "Tên giá trị Manning's n"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
 msgid "Output transport capacity raster map [kg/ms]"
@@ -5638,8 +5638,8 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "Giá trị đơn trị tốc độ thâm nhập chảy tràn [mm/giờ]"
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
-msgstr "Giá trị đơn trị Mannings n"
+msgid "Manning's n unique value"
+msgstr "Giá trị đơn trị Manning's n"
 
 #: ../raster/simwe/r.sim.water/main.c:188
 msgid "Name of the flow controls raster map (permeability ratio 0-1)"
@@ -5703,8 +5703,8 @@ msgstr ""
 "một được cho phép để tiến hành"
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
-msgstr "Giá trị 0 trong Mannings n"
+msgid "Zero value in Manning's n"
+msgstr "Giá trị 0 trong Manning's n"
 
 #: ../raster/simwe/simlib/input.c:592
 msgid "Infiltration exceeds the rainfall rate everywhere! No overland flow."
@@ -5735,8 +5735,8 @@ msgstr "Tốc độ dòng chảy trung bình \t= %f m/giây\n"
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
-msgstr "Mannings trung bình \t=%f\n"
+msgid "Mean Manning's \t= %f\n"
+msgstr "Manning's trung bình \t=%f\n"
 
 #: ../raster/simwe/simlib/input.c:625
 #, c-format

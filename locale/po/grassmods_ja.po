@@ -5362,11 +5362,11 @@ msgstr "重大せん断応力ラスターマップ名 [Pa]"
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
-msgid "Name of the Mannings n raster map"
+msgid "Name of the Manning's n raster map"
 msgstr "マニングｎ値ラスターマップ名"
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
-msgid "Name of the Mannings n value"
+msgid "Name of the Manning's n value"
 msgstr "マニングｎ値名"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
@@ -5497,7 +5497,7 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "流出水侵入率ユニーク値 [mm/hr]"
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
+msgid "Manning's n unique value"
 msgstr "マニング n ユニーク値"
 
 #: ../raster/simwe/r.sim.water/main.c:188
@@ -5561,7 +5561,7 @@ msgstr ""
 "どちらかを行って下さい"
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
+msgid "Zero value in Manning's n"
 msgstr "マニング ｎ のゼロ値"
 
 #: ../raster/simwe/simlib/input.c:592
@@ -5589,7 +5589,7 @@ msgstr "平均流速 \t= %f m/s\n"
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
 msgstr "平均マニング \t= %ff\n"
 
 #: ../raster/simwe/simlib/input.c:625

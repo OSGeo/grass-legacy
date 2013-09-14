@@ -5561,12 +5561,12 @@ msgstr "Name der Rasterkarte mit kritische Scherrspannung [Pa]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
-msgid "Name of the Mannings n raster map"
-msgstr "Name der Rasterkarte mit Mannings n."
+msgid "Name of the Manning's n raster map"
+msgstr "Name der Rasterkarte mit Manning's n."
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
-msgid "Name of the Mannings n value"
-msgstr "Name des Mannings n Parameters."
+msgid "Name of the Manning's n value"
+msgstr "Name des Manning's n Parameters."
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
 msgid "Output transport capacity raster map [kg/ms]"
@@ -5700,8 +5700,8 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "Abflußinfiltrationsrate, einzelner Wert [mm/hr]."
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
-msgstr "Mannings n, einzelner Wert."
+msgid "Manning's n unique value"
+msgstr "Manning's n, einzelner Wert."
 
 #: ../raster/simwe/r.sim.water/main.c:188
 msgid "Name of the flow controls raster map (permeability ratio 0-1)"
@@ -5766,8 +5766,8 @@ msgstr ""
 "welche prozessiert werden dürfen."
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
-msgstr "Nullwert in Mannings n."
+msgid "Zero value in Manning's n"
+msgstr "Nullwert in Manning's n."
 
 #: ../raster/simwe/simlib/input.c:592
 msgid "Infiltration exceeds the rainfall rate everywhere! No overland flow."
@@ -5797,8 +5797,8 @@ msgstr "Mittlere Fließgeschwindigkeit \t= %f m/s\n"
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
-msgstr "Mittlerer Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
+msgstr "Mittlerer Manning's \t= %f\n"
 
 #: ../raster/simwe/simlib/input.c:625
 #, c-format
