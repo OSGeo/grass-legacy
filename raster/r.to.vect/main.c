@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster, conversion, vectorization");
-    module->description = _("Converts a raster map into a vector map layer.");
+    module->description = _("Converts a raster map into a vector map.");
 
     in_opt = G_define_standard_option(G_OPT_R_INPUT);
 
