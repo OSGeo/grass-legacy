@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
     table_opt = G_define_standard_option(G_OPT_TABLE);
     table_opt->gisprompt = "new_dbtable,dbtable,dbtable";
     table_opt->description =
-	_("Name of table created for output when the distance to all flag is used");
+	_("Name of table created when the 'distance to all' flag is used");
 
     print_flag = G_define_flag();
     print_flag->key = 'p';
