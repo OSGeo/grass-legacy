@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     int row, col, null_fd;
     unsigned char *null_bits;
     RASTER_MAP_TYPE map_type;
-    int change_null = 0, create, remove, only_int, only_fp, only_null;
+    int change_null = FALSE, create, remove, only_int, only_fp, only_null;
     int is_reclass;
 
     struct GModule *module;
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
     
     if (parms.null->answer) {
 	if (sscanf(parms.null->answer, "%lf", &new_null) == 1)
-	    change_null = 1;
+	    change_null = TRUE;
 	else
 	    G_fatal_error(_("%s is illegal entry for null"),
 			  parms.null->answer);
@@ -177,8 +177,7 @@ int main(int argc, char *argv[])
 
 	for (row = 0; row < cellhd.rows; row++) {
 	    G_percent(row, cellhd.rows, 1);
-	    if (G__write_null_bits(null_fd, null_bits, row, cellhd.cols, 0) <
-		0)
+	    if (G__write_null_bits(null_fd, null_bits, row, cellhd.cols, 0) < 0)
 		G_fatal_error(_("Error writing null row %d"), row);
 	}
 	G_percent(row, cellhd.rows, 1);
