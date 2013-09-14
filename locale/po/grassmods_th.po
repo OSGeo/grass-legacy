@@ -5412,13 +5412,13 @@ msgstr "ชื่อของ แผนที่  critical shear stress เช�
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
-msgid "Name of the Mannings n raster map"
-msgstr "ชื่อของ แผนที่  Mannings n เชิงภาพ"
+msgid "Name of the Manning's n raster map"
+msgstr "ชื่อของ แผนที่  Manning's n เชิงภาพ"
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
 #, fuzzy
-msgid "Name of the Mannings n value"
-msgstr "ชื่อของ แผนที่  Mannings n เชิงภาพ"
+msgid "Name of the Manning's n value"
+msgstr "ชื่อของ แผนที่  Manning's n เชิงภาพ"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
 #, fuzzy
@@ -5562,7 +5562,7 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "ชื่อของ แผนที่  runoff infiltration rate เชิงภาพ, [ม.ม./ชั่วโมง]"
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
+msgid "Manning's n unique value"
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:188
@@ -5630,8 +5630,8 @@ msgid ""
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
-msgstr "ค่า 0 ใน Mannings n"
+msgid "Zero value in Manning's n"
+msgstr "ค่า 0 ใน Manning's n"
 
 #: ../raster/simwe/simlib/input.c:592
 msgid "Infiltration exceeds the rainfall rate everywhere! No overland flow."
@@ -5656,7 +5656,7 @@ msgstr ""
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:625

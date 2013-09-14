@@ -5484,12 +5484,12 @@ msgstr "Ime novega rastrskega sloja"
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
 #, fuzzy
-msgid "Name of the Mannings n raster map"
+msgid "Name of the Manning's n raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
 #, fuzzy
-msgid "Name of the Mannings n value"
+msgid "Name of the Manning's n value"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
@@ -5636,7 +5636,7 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
+msgid "Manning's n unique value"
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:188
@@ -5705,7 +5705,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
+msgid "Zero value in Manning's n"
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:592
@@ -5731,7 +5731,7 @@ msgstr ""
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:625

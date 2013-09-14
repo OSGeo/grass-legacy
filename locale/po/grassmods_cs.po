@@ -5593,12 +5593,12 @@ msgstr "Jméno rastrové mapy kritických střihů [Pa]"
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
 #, fuzzy
-msgid "Name of the Mannings n raster map"
+msgid "Name of the Manning's n raster map"
 msgstr "Název rastrovéhé mapy drsnosti (Manningovo n)"
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
 #, fuzzy
-msgid "Name of the Mannings n value"
+msgid "Name of the Manning's n value"
 msgstr "Název hodnoty Manningova n"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
@@ -5739,7 +5739,7 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr "Jméno rastrové mapy poměru odtoku a infiltrace [mm/hod]"
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
+msgid "Manning's n unique value"
 msgstr "jedinečná hodnota drsnosti (Manningovo n)"
 
 #: ../raster/simwe/r.sim.water/main.c:188
@@ -5810,7 +5810,7 @@ msgstr ""
 "jedno z toho pro umožnění výpočtu"
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
+msgid "Zero value in Manning's n"
 msgstr "Nulová hodnota v Manningově součiniteli n (drsnost koryta)"
 
 #: ../raster/simwe/simlib/input.c:592
@@ -5842,7 +5842,7 @@ msgstr "Průměrná rychlost toku \t= %f m/s\n"
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
 msgstr "Průměrná Manningova drsnost \t= %f\n"
 
 #: ../raster/simwe/simlib/input.c:625

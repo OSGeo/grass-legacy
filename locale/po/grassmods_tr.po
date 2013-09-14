@@ -5282,12 +5282,12 @@ msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
-msgid "Name of the Mannings n raster map"
+msgid "Name of the Manning's n raster map"
 msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
-msgid "Name of the Mannings n value"
-msgstr "Mannings n değeri adı"
+msgid "Name of the Manning's n value"
+msgstr "Manning's n değeri adı"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
 msgid "Output transport capacity raster map [kg/ms]"
@@ -5419,7 +5419,7 @@ msgid "Runoff infiltration rate unique value [mm/hr]"
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:181
-msgid "Mannings n unique value"
+msgid "Manning's n unique value"
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:188
@@ -5482,7 +5482,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:541
-msgid "Zero value in Mannings n"
+msgid "Zero value in Manning's n"
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:592
@@ -5508,7 +5508,7 @@ msgstr ""
 
 #: ../raster/simwe/simlib/input.c:621
 #, c-format
-msgid "Mean Mannings \t= %f\n"
+msgid "Mean Manning's \t= %f\n"
 msgstr ""
 
 #: ../raster/simwe/simlib/input.c:625
@@ -35388,12 +35388,12 @@ msgstr ""
 #~ msgstr "Su yüksekliği raster haritasının adı [m]"
 
 #, fuzzy
-#~ msgid "Name of mannings n raster map"
+#~ msgid "Name of Manning's n raster map"
 #~ msgstr "Mevcut bir raster harita adı"
 
 #, fuzzy
-#~ msgid "Name of mannings n value"
-#~ msgstr "Mannings n değeri adı"
+#~ msgid "Name of Manning's n value"
+#~ msgstr "Manning's n değeri adı"
 
 #, fuzzy
 #~ msgid "Name for output transport capacity raster map [kg/ms]"
