@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
 
     slow = G_define_flag();
     slow->key = 's';
-    slow->description = _("Slower but accurate (applies to FP maps only");
+    slow->description =
+	_("This does nothing. It is retained for backwards compatibility");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
