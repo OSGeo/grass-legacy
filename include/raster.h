@@ -37,6 +37,7 @@ void R_kill_driver(void);
 void R_close_driver(void);
 void R_release_driver(void);
 
+/* io_sock.c */
 int R_open_driver(void);
 
 /* pad.c */
