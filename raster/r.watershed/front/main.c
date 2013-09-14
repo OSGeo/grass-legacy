@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     /* Set description */
     module = G_define_module();
     module->keywords = _("raster, hydrology");
-    module->description = _("Watershed basin analysis program");
+    module->description = _("Watershed basin analysis program.");
 
     opt1 = G_define_standard_option(G_OPT_R_ELEV);
     opt1->guisection = _("Inputs");
