@@ -57,20 +57,23 @@ int main(int argc, char *argv[])
     int stat;
     char cmnd2[500];
     char proj_out[20], proj_name[50], set_name[20];
-    char path[1024], buffa[1024], buffb[1024], answer[200], answer1[200];
+    char path[GPATH_MAX], buffa[1024], buffb[1024], answer[200], answer1[200];
     char answer2[200], buff[1024];
     char tmp_buff[20], *buf;
 
     struct Key_Value *old_proj_keys, *out_proj_keys, *in_unit_keys;
     double aa, e2;
     double f;
-    FILE *FPROJ;
+    FILE *FPROJ, *fp;
     int exist = 0;
     char spheroid[100];
     int j, k, sph_check;
     struct Cell_head cellhd;
     char datum[100], dat_ellps[100], dat_params[100];
     struct proj_parm *proj_parms;
+    struct Option *set_myname;
+    struct Flag *print_myname;
+
 
     G_gisinit(argv[0]);
 
@@ -79,15 +82,45 @@ int main(int argc, char *argv[])
     module->description =
 	_("Interactively reset the location's projection settings.");
 
+    set_myname = G_define_option();
+    set_myname->key = "description";
+    set_myname->key_desc = "\"phrase\"";
+    set_myname->type = TYPE_STRING;
+    set_myname->required = NO;
+    set_myname->description =
+	_("Reset the location's one line description with this text, then exit");
+
+    print_myname = G_define_flag();
+    print_myname->key = 'n';
+    print_myname->description =
+        _("Print the location's one line description and exit");
+
     if (argc > 1 && G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
 
+    if (print_myname->answer) {
+	fprintf(stdout, "%s\n", G_myname());
+	exit(EXIT_SUCCESS);
+    }
+
     if (strcmp(G_mapset(), "PERMANENT") != 0)
 	G_fatal_error(_("You must be in the PERMANENT mapset to run g.setproj"));
 
+    if (set_myname->answer) {
+	fp = G_fopen_new(".", "MYNAME");
+	if (strlen(set_myname->answer) > RECORD_LEN-1)
+	    G_warning(_("Text shortened to first %d characters"), RECORD_LEN-1);
+	strncpy(buffa, set_myname->answer, RECORD_LEN-1);
+	buffa[RECORD_LEN-1] = '\0';
+	G_squeeze(buffa);
+	fputs(buffa, fp);
+	fclose(fp);
+	exit(EXIT_SUCCESS);
+    }
+
 	/***
-         * no longer necessary, table is a static struct 
+	  * no longer necessary, table is a static struct
 	 * init_unit_table();
         ***/
     sprintf(set_name, "PERMANENT");
@@ -246,7 +279,7 @@ int main(int argc, char *argv[])
     }
     else {
 
-/*****************   GET spheroid  **************************/
+	/*****************   GET spheroid  **************************/
 
 	if (Out_proj != PROJECTION_SP) {	/* some projections have 
 						 * fixed spheroids */
@@ -318,7 +351,7 @@ int main(int argc, char *argv[])
 		    radius =
 			prompt_num_double(_("Enter radius for the sphere in meters"),
 					  RADIUS_DEF, 1);
-	    }			/* end ask radius */
+	    }	/* end ask radius */
 	}
     }
 
@@ -486,7 +519,7 @@ int main(int argc, char *argv[])
 		    G_set_key_value(desc->key, tmp_buff, out_proj_keys);
 		}
 	    }
-	}			/* for OPTIONS */
+	}	/* for OPTIONS */
     }
 
     /* create the PROJ_INFO & PROJ_UNITS files, if required */
