@@ -3737,7 +3737,7 @@ class NvizToolWindow(FN.FlatNotebook):
             if sel < 0 or sel >= list.GetCount() - 1:
                 item = list.Append(item = "%s %s" % (_("Slice parallel to"), axis))
             else:
-                list.Insert(item = "%s" % (_("Slice parallel to"), axis),
+                list.Insert(item = "%s %s" % (_("Slice parallel to"), axis),
                             pos = sel+1) # append
                 item = sel + 1
         
