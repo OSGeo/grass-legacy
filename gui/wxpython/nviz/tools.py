@@ -3611,7 +3611,7 @@ class NvizToolWindow(FN.FlatNotebook):
         
         ret = self._display.SetIsosurfaceInOut(id, isosurfId, event.GetInt())
         if ret == 1:
-            data['isosurface'][isosurfId]['inout'] = event.GetInt()
+            data['isosurface'][isosurfId]['inout']['value'] = event.GetInt()
             
         if self.mapDisplay.IsAutoRendered():
             self.mapWindow.Refresh(False)
@@ -4711,7 +4711,7 @@ class NvizToolWindow(FN.FlatNotebook):
                                  attrb = attrb, map = data[attrb]['map'])
         # set inout
         if 'inout' in data:
-            self.FindWindowById(self.win['volume']['inout']).SetValue(data['inout'])
+            self.FindWindowById(self.win['volume']['inout']).SetValue(data['inout']['value'])
             
     def UpdateVolumeSlicePage(self, data):
         """!Update dialog -- slice attributes"""
