@@ -36,9 +36,10 @@ int main(int argc, char **argv)
     int colort = 0;
     double size = 0., gsize = 0.;	/* initialize to zero */
     double east, north;
-    int do_text, fontsize, mark_type, line_width;
+    int do_text, fontsize, mark_type, line_width, dirn;
     struct GModule *module;
-    struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor, *lwidth;
+    struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor, *lwidth,
+	*direction;
     struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84, *cross,
 	*fiducial, *dot;
     struct pj_info info_in;	/* Proj structures */
@@ -69,6 +70,16 @@ int main(int argc, char **argv)
     opt3->answer = "0,0";
     opt3->multiple = NO;
     opt3->description = _("Lines of the grid pass through this coordinate");
+
+    direction = G_define_option();
+    direction->key = "direction";
+    direction->type = TYPE_STRING;
+    direction->required = NO;
+    direction->answer = "both";
+    direction->options = "both,east-west,north-south";
+    direction->description =
+	_("Draw only east-west lines, north-south lines, or both ");
+    direction->guisection = _("Disable");
 
     lwidth = G_define_option();
     lwidth->key = "width";
@@ -177,6 +188,15 @@ int main(int argc, char **argv)
     if (dot->answer)
 	mark_type = MARK_DOT;
 
+    if (G_strcasecmp(direction->answer, "both") == 0)
+        dirn = DIRN_BOTH;
+    else if (G_strcasecmp(direction->answer, "east-west") == 0)
+        dirn = DIRN_LAT;
+    else if (G_strcasecmp(direction->answer, "north-south") == 0)
+        dirn = DIRN_LON;
+    else
+        G_fatal_error("Invalid direction: %s", direction->answer);
+
     /* get grid size */
     if (geogrid->answer) {
 	if (!G_scan_resolution(opt2->answer, &gsize, PROJECTION_LL) ||
@@ -222,12 +242,12 @@ int main(int argc, char **argv)
 	    /* initialzie proj stuff */
 	    init_proj(&info_in, &info_out, wgs84->answer);
 	    plot_geogrid(gsize, info_in, info_out, do_text, colorg, colort,
-			 fontsize, mark_type, line_width);
+			 fontsize, mark_type, line_width, dirn);
 	}
 	else {
 	    /* Do the grid plotting */
 	    plot_grid(size, east, north, do_text, colorg, colort, fontsize,
-		      mark_type, line_width);
+		      mark_type, line_width, dirn);
 	}
     }
 
@@ -237,7 +257,7 @@ int main(int argc, char **argv)
 	D_raster_use_color(colorb);
 
 	/* Do the border plotting */
-	plot_border(size, east, north);
+	plot_border(size, east, north, dirn);
     }
 
     D_add_to_list(G_recreate_command());

@@ -12,7 +12,7 @@
 
 int plot_grid(double grid_size, double east, double north, int do_text,
 	      int gcolor, int tcolor, int fontsize, int mark_type,
-	      double line_width)
+	      double line_width, int direction)
 {
     double x, y, y0;
     double e1, e2;
@@ -38,37 +38,38 @@ int plot_grid(double grid_size, double east, double north, int do_text,
     else
 	x = east - ceil((east - window.west) / grid_size) * grid_size;
 
-    while (x <= window.east) {
+    if (direction != DIRN_LAT) {
+	while (x <= window.east) {
 
-	if (mark_type == MARK_GRID) {
-	    D_raster_use_color(gcolor);
-	    if (line_width)
-		D_line_width(line_width);
-	    G_plot_line(x, window.north, x, window.south);
-	    D_line_width(0);	/* reset so text doesn't use it */
+	    if (mark_type == MARK_GRID) {
+		D_raster_use_color(gcolor);
+		if (line_width)
+		    D_line_width(line_width);
+		G_plot_line(x, window.north, x, window.south);
+		D_line_width(0);    /* reset so text doesn't use it */
+	    }
+
+	    if (do_text) {
+		D_raster_use_color(tcolor);
+		G_format_easting(x, text, G_projection());
+		R_text_rotation(270.0);
+		R_text_size(fontsize, fontsize);
+
+		/* Positioning -
+		   x: 4 pixels to the right of the grid line, + 0.5 rounding factor.
+		   y: End of text is 7 pixels up from bottom of screen, +.5 rounding.
+		   fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
+		 */
+		R_move_abs((int)(D_u_to_d_col(x) + 4 + .5),
+			   (int)(D_get_d_south() -
+				 (strlen(text) * fontsize * 0.81) - 7 + 0.5));
+
+		R_text(text);
+	    }
+	    x += grid_size;
 	}
-
-	if (do_text) {
-	    D_raster_use_color(tcolor);
-	    G_format_easting(x, text, G_projection());
-	    R_text_rotation(270.0);
-	    R_text_size(fontsize, fontsize);
-
-	    /* Positioning -
-	       x: 4 pixels to the right of the grid line, + 0.5 rounding factor.
-	       y: End of text is 7 pixels up from bottom of screen, +.5 rounding.
-	       fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
-	     */
-	    R_move_abs((int)(D_u_to_d_col(x) + 4 + .5),
-		       (int)(D_get_d_south() -
-			     (strlen(text) * fontsize * 0.81) - 7 + 0.5));
-
-	    R_text(text);
-	}
-	x += grid_size;
+	R_text_rotation(0.0);	    /* reset */
     }
-    R_text_rotation(0.0);	/* reset */
-
 
     /* Draw horizontal grids
      *
@@ -84,34 +85,36 @@ int plot_grid(double grid_size, double east, double north, int do_text,
     else
 	y = north - ceil((north - window.south) / grid_size) * grid_size;
 
-    while (y <= window.north) {
-	if (mark_type == MARK_GRID) {
-	    D_raster_use_color(gcolor);
-	    if (line_width)
-		D_line_width(line_width);
-	    G_plot_line(window.east, y, e1, y);
-	    G_plot_line(e1, y, e2, y);
-	    G_plot_line(e2, y, window.west, y);
-	    D_line_width(0);	/* reset so text doesn't use it */
+    if (direction != DIRN_LON) {
+	while (y <= window.north) {
+	    if (mark_type == MARK_GRID) {
+		D_raster_use_color(gcolor);
+		if (line_width)
+		    D_line_width(line_width);
+		G_plot_line(window.east, y, e1, y);
+		G_plot_line(e1, y, e2, y);
+		G_plot_line(e2, y, window.west, y);
+		D_line_width(0);    /* reset so text doesn't use it */
+	    }
+
+	    if (do_text) {
+		D_raster_use_color(tcolor);
+		G_format_northing(y, text, G_projection());
+		R_text_size(fontsize, fontsize);
+
+		/* Positioning -
+		   x: End of text is 7 pixels left from right edge of screen, +.5 rounding.
+		   fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
+		   y: 4 pixels above each grid line, +.5 rounding.
+		 */
+		R_move_abs((int)
+			   (D_get_d_east() - (strlen(text) * fontsize * 0.81) -
+			    7 + 0.5), (int)(D_u_to_d_row(y) - 4 + .5));
+
+		R_text(text);
+	    }
+	    y += grid_size;
 	}
-
-	if (do_text) {
-	    D_raster_use_color(tcolor);
-	    G_format_northing(y, text, G_projection());
-	    R_text_size(fontsize, fontsize);
-
-	    /* Positioning -
-	       x: End of text is 7 pixels left from right edge of screen, +.5 rounding.
-	       fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
-	       y: 4 pixels above each grid line, +.5 rounding.
-	     */
-	    R_move_abs((int)
-		       (D_get_d_east() - (strlen(text) * fontsize * 0.81) -
-			7 + 0.5), (int)(D_u_to_d_row(y) - 4 + .5));
-
-	    R_text(text);
-	}
-	y += grid_size;
     }
 
     /* draw marks not grid lines */
@@ -148,7 +151,7 @@ int plot_grid(double grid_size, double east, double north, int do_text,
 
 int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out,
 		 int do_text, int gcolor, int tcolor, int fontsize,
-		 int mark_type, double line_width)
+		 int mark_type, double line_width, int direction)
 {
     double g;
     double e1, e2, n1, n2;
@@ -189,7 +192,7 @@ int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out,
     e1 = east;
     for (j = 0; g >= south; j++, g -= size) {
 	start_coord = -9999.;
-	if (g == north || g == south)
+	if (g == north || g == south || direction == DIRN_LON)
 	    continue;
 
 	/* Set grid color */
@@ -244,7 +247,7 @@ int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out,
     for (j = 0; g > west; j++, g -= size) {
 	start_coord = -9999.;
 	extra_y_off = 0.0;
-	if (g == east || g == west)
+	if (g == east || g == west || direction == DIRN_LAT)
 	    continue;
 
 	/* Set grid color */

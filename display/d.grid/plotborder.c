@@ -1,8 +1,9 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/display.h>
+#include "local_proto.h"
 
-int plot_border(double grid_size, double east, double north)
+int plot_border(double grid_size, double east, double north, int direction)
 {
     double x, y;
     struct Cell_head window;
@@ -41,39 +42,41 @@ int plot_border(double grid_size, double east, double north)
     else
 	x = east - ceil((east - window.west) / grid_size) * grid_size;
 
-    while (x <= window.east) {
-	loop = 0;
-	for (i = 0; i <= grid_size; i = i + steps) {
-	    if (loop == 0) {
-		G_plot_line(x + i,
-			    window.south + (window.north -
-					    window.south) / longmark, x + i,
-			    window.south);
-		G_plot_line(x + i, window.north, x + i,
-			    window.north - (window.north -
-					    window.south) / longmark);
+    if (direction != DIRN_LAT) {
+	while (x <= window.east) {
+	    loop = 0;
+	    for (i = 0; i <= grid_size; i = i + steps) {
+		if (loop == 0) {
+		    G_plot_line(x + i,
+				window.south + (window.north -
+						window.south) / longmark, x + i,
+				window.south);
+		    G_plot_line(x + i, window.north, x + i,
+				window.north - (window.north -
+						window.south) / longmark);
+		}
+		if (loop == 5) {
+		    G_plot_line(x + i,
+				window.south + (window.north -
+						window.south) / middlemark, x + i,
+				window.south);
+		    G_plot_line(x + i, window.north, x + i,
+				window.north - (window.north -
+						window.south) / middlemark);
+		}
+		else {
+		    G_plot_line(x + i,
+				window.south + (window.north -
+						window.south) / shortmark, x + i,
+				window.south);
+		    G_plot_line(x + i, window.north, x + i,
+				window.north - (window.north -
+						window.south) / shortmark);
+		}
+		loop++;
 	    }
-	    if (loop == 5) {
-		G_plot_line(x + i,
-			    window.south + (window.north -
-					    window.south) / middlemark, x + i,
-			    window.south);
-		G_plot_line(x + i, window.north, x + i,
-			    window.north - (window.north -
-					    window.south) / middlemark);
-	    }
-	    else {
-		G_plot_line(x + i,
-			    window.south + (window.north -
-					    window.south) / shortmark, x + i,
-			    window.south);
-		G_plot_line(x + i, window.north, x + i,
-			    window.north - (window.north -
-					    window.south) / shortmark);
-	    }
-	    loop++;
+	    x += grid_size;
 	}
-	x += grid_size;
     }
 
     /* Draw horizontal border marks */
@@ -83,36 +86,38 @@ int plot_border(double grid_size, double east, double north)
     else
 	y = north - ceil((north - window.south) / grid_size) * grid_size;
 
-    while (y <= window.north) {
-	loop = 0;
-	for (i = 0; i <= grid_size; i = i + steps) {
-	    if (loop == 0) {
-		G_plot_line(window.west, y + i,
-			    window.west + (window.east -
-					   window.west) / longmark, y + i);
-		G_plot_line(window.east -
-			    (window.east - window.west) / longmark, y + i,
-			    window.east, y + i);
+    if (direction != DIRN_LON) {
+	while (y <= window.north) {
+	    loop = 0;
+	    for (i = 0; i <= grid_size; i = i + steps) {
+		if (loop == 0) {
+		    G_plot_line(window.west, y + i,
+				window.west + (window.east -
+					       window.west) / longmark, y + i);
+		    G_plot_line(window.east -
+				(window.east - window.west) / longmark, y + i,
+				window.east, y + i);
+		}
+		if (loop == 5) {
+		    G_plot_line(window.west, y + i,
+				window.west + (window.east -
+					       window.west) / middlemark, y + i);
+		    G_plot_line(window.east -
+				(window.east - window.west) / middlemark, y + i,
+				window.east, y + i);
+		}
+		else {
+		    G_plot_line(window.west, y + i,
+				window.west + (window.east -
+					       window.west) / shortmark, y + i);
+		    G_plot_line(window.east -
+				(window.east - window.west) / shortmark, y + i,
+				window.east, y + i);
+		}
+		loop++;
 	    }
-	    if (loop == 5) {
-		G_plot_line(window.west, y + i,
-			    window.west + (window.east -
-					   window.west) / middlemark, y + i);
-		G_plot_line(window.east -
-			    (window.east - window.west) / middlemark, y + i,
-			    window.east, y + i);
-	    }
-	    else {
-		G_plot_line(window.west, y + i,
-			    window.west + (window.east -
-					   window.west) / shortmark, y + i);
-		G_plot_line(window.east -
-			    (window.east - window.west) / shortmark, y + i,
-			    window.east, y + i);
-	    }
-	    loop++;
+	    y += grid_size;
 	}
-	y += grid_size;
     }
 
     return 0;
