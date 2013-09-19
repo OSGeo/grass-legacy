@@ -7,7 +7,7 @@
  *               Hamish Bowman <hamish_b yahoo.com>, Jan-Oliver Wagner <jan intevation.de>,
  *               Markus Neteler <neteler itc.it>
  * PURPOSE:      
- * COPYRIGHT:    (C) 1999-2006, 2010 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2013 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -46,23 +46,24 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster, statistics, reclass");
+    module->keywords = _("raster, reclassification");
+    module->label = _("Reclassify raster map based on category values.");
     module->description =
-	_("Creates a new map layer whose category values are based "
+	_("Creates a new raster map whose category values are based "
 	  "upon a reclassification of the categories in an existing "
-	  "raster map layer.");
-
+	  "raster map.");
+    
     parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description = _("Raster map to be reclassified");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
-    parm.rules = G_define_option();
+    parm.rules = G_define_standard_option(G_OPT_F_INPUT);
     parm.rules->key = "rules";
-    parm.rules->type = TYPE_STRING;
-    parm.rules->description = _("File containing reclass rules");
-    parm.rules->key_desc = "name";
-    parm.rules->gisprompt = "old_file,file,input";
+    parm.rules->label = _("File containing reclass rules");
+    parm.rules->description = _("\"-\" to read from stdin");
+    parm.rules->required = NO;
+    parm.rules->guisection = _("Required");
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Input map can NOT be the same as output map"));
 
     srcfp = stdin;
-    if (parm.rules->answer) {
+    if (parm.rules->answer && strcmp("-", parm.rules->answer) != 0) {
 	srcfp = fopen(parm.rules->answer, "r");
 	if (!srcfp)
 	    G_fatal_error(_("Cannot open rules file <%s>"),
@@ -104,13 +105,13 @@ int main(int argc, char *argv[])
 	fprintf(stdout,
 		_("Enter rule(s), \"end\" when done, \"help\" if you need it\n"));
 	if (map_type == FCELL_TYPE)
-	    fprintf(stdout, _("Data range is %.7g to %.7g\n"),
+	    fprintf(stdout, _("FCELL: Data range is %.7g to %.7g\n"),
 		    (double)min, (double)max);
 	else if (map_type == DCELL_TYPE)
-	    fprintf(stdout, _("Data range is %.15g to %.15g\n"),
+	    fprintf(stdout, _("DCELL: Data range is %.15g to %.15g\n"),
                     (double)min, (double)max);
 	else
-	    fprintf(stdout, _("Data range is %ld to %ld\n"), (long)min,
+	    fprintf(stdout, _("CELL: Data range is %ld to %ld\n"), (long)min,
 		    (long)max);
     }
 
