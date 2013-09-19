@@ -266,9 +266,7 @@ int main(int argc, char **argv)
     overwrite = !flag.w->answer;
     interactive = flag.i->answer;
     remove = flag.r->answer;
-    
     name = opt.map->answer;
-
     style = opt.colr->answer;
     cmap = opt.rast->answer;
     rules = opt.rules->answer;
