@@ -29,7 +29,7 @@
 
 int
 transform_digit_file(struct Map_info *Old, struct Map_info *New,
-		     int shift_file, double ztozero, double *trans_params_def,
+		     int shift_file, double ztozero, int swap, double *trans_params_def,
 		     char *table, char **columns, int field)
 {
     int i, type, cat, ret;
@@ -87,6 +87,14 @@ transform_digit_file(struct Map_info *Old, struct Map_info *New,
 	    break;
 	}
 
+	if (swap) {
+	    for (i = 0; i < Points->n_points; i++) {
+		x = Points->x[i];
+		Points->x[i] = Points->y[i];
+		Points->y[i] = x;
+	    }
+	} 
+	
 	/* get transformation parameters */
 	if (field > 0) {
 	    Vect_cat_get(Cats, field, &cat);	/* get first category */
