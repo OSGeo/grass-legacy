@@ -86,28 +86,29 @@ int main(int argc, char *argv[])
     tozero_flag->description = _("Shift all z values to bottom=0");
     tozero_flag->guisection = _("Custom");
 
+    swap_flag = G_define_flag();
+    swap_flag->key = 'w';
+    swap_flag->description =
+	_("Swap coordinates x, y and then apply other parameters");
+    swap_flag->guisection = _("Custom");
+
     print_mat_flag = G_define_flag();
     print_mat_flag->key = 'm';
     print_mat_flag->description =
 	_("Print the transformation matrix to stdout");
-    
+
     shift_flag = G_define_flag();
     shift_flag->key = 's';
     shift_flag->description =
 	_("Instead of points use transformation parameters "
 	  "(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection = _("Custom");
-	
-    swap_flag = G_define_flag();
-    swap_flag->key = 'w';
-    swap_flag->description =
-	_("Swap coordinates x, y and then apply other parameters");
-    
+
     vold = G_define_standard_option(G_OPT_V_INPUT);
 
     field = G_define_standard_option(G_OPT_V_FIELD);
     field->answer = "-1";
-    
+
     vnew = G_define_standard_option(G_OPT_V_OUTPUT);
 
     pointsfile = G_define_standard_option(G_OPT_F_INPUT);
