@@ -10,7 +10,7 @@
 * PURPOSE:      To transform a vector map's coordinates via a set of tie
 *               points.
 *
-* COPYRIGHT:    (C) 2002-2007, 2011 by the GRASS Development Team
+* COPYRIGHT:    (C) 2002-2011 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -96,19 +96,19 @@ int main(int argc, char *argv[])
     print_mat_flag->key = 'm';
     print_mat_flag->description =
 	_("Print the transformation matrix to stdout");
-    
+
     shift_flag = G_define_flag();
     shift_flag->key = 's';
     shift_flag->description =
 	_("Instead of points use transformation parameters "
 	  "(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection = _("Custom");
-	
+
     vold = G_define_standard_option(G_OPT_V_INPUT);
 
     field = G_define_standard_option(G_OPT_V_FIELD);
     field->answer = "-1";
-    
+
     vnew = G_define_standard_option(G_OPT_V_OUTPUT);
 
     pointsfile = G_define_standard_option(G_OPT_F_INPUT);
