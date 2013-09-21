@@ -207,7 +207,7 @@ EOF
    done
 done
 
-rm -f "$TMP1" "$TMP1".graph
+rm -f "$TMP1"
 
 
 #### overrdraw a trend line, slope+offset, and R^2 value.
