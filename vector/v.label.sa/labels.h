@@ -184,6 +184,18 @@ void print_label(FILE * labelf, label_t * label, struct params *p);
 struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
 				    label_point_t * p, double angle);
 
+/**
+ * This function rotates and translates the label bounding box to the
+ * given point, and returns it as a polygon.
+ * @param bb The bounding box to translate and rotate.
+ * @param p The point to translate the bounding box to
+ * @param angle The angle (in radians) to rotate the label counter-clockwise
+ * @return A lint_pnts structure containing the rotated and translated
+ * bounding box as a polygon.
+ */
+struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
+				double angle);
+
 void free_freetypecap(struct GFONT_CAP *ftcap);
 struct GFONT_CAP *find_font_from_freetypecap(const char *font);
 
