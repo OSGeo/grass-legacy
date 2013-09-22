@@ -367,7 +367,7 @@ int main(int argc, char *argv[])
 	    }
 	    /* Mode of DN */
 	    h_max = 0L;
-	    for (j = lsat.band[i].qcalmin; j < 241; j++) {	/* Exclude ptentially saturated < 240 */
+	    for (j = lsat.band[i].qcalmin; j < 241; j++) {	/* Exclude potentially saturated < 240 */
 		/* G_debug(5, "%d-%ld", j, hist[j]); */
 		if (hist[j] > h_max) {
 		    h_max = hist[j];
