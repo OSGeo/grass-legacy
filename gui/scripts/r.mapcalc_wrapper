@@ -38,7 +38,7 @@
 #% multiple: no
 #% key_desc: name
 #% description: File containing expression(s) to evaluate
-#% gisprompt: old,file,input
+#% gisprompt: old_file,file,input
 #% guisection: Expression
 #%end
 
