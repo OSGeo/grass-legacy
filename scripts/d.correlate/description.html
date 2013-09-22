@@ -2,58 +2,45 @@
 
 <em>d.correlate</em> is a shell (sh(1)) script that
 graphically displays the results of an
-
-<em><a href="r.stats.html">r.stats</a></em> 
-
+  <em><a href="r.stats.html">r.stats</a></em> 
 run on two raster map layers.  This shell script is useful
 for highlighting the correlation (or lack of it) among data
 layers (scattergram).
-
 <p>
-
 The results are displayed in the active display frame on
 the user's graphics monitor.  <em>d.correlate</em> erases
 the active frame before displaying results.
+<p>
+The <b>layer</b><i>n</i> parameters supply the names of two to
+four existing raster map layers to be included in the correlation.
 
-<h2>OPTIONS</h2>
-
-<h3>Parameters:</h3>
-
-<dl>
-
-<dt><em>layer1 layer2 </em>[<em>layer3</em> [<em>layer4</em>]]
-
-<dd>The names of from two to four existing raster map layers
-to be included in the correlation.
-</dl>
 
 <h2>NOTES</h2>
 
-This is a shell script that uses 
-<em><a href="r.stats.html">r.stats</a></em> 
-and the UNIX <em>awk</em> command
-to calculate the correlation among data layers,
-and uses 
-<em><a href="d.text.html">d.text</a></em> and 
+This is a shell script that uses <em><a href="r.stats.html">r.stats</a></em> 
+and the UNIX <em>awk</em> command to calculate the correlation among data
+layers, and uses <em><a href="d.text.html">d.text</a></em> and 
 <em><a href="d.graph.html">d.graph</a></em> to display the results.
-
 <p>
-
 If three or four map layers are specified, the correlation
 among each combination of two data layers is displayed.
 
-<h2>FILES</h2>
 
-This program is simply a shell script.  Users are
-encouraged to make their own shell script programs using
-similar techniques.  See <KBD>$GISBASE/scripts/d.correlate</KBD>.
+<h2>EXAMPLE</h2>
+
+<center>
+<img src="d_correlate.png" border=1 width="70%"><br>
+</center>
+
+Compare LANDSAT-7 bands 2 and 3 in the North Carolina sample dataset,
+and over-plot a trend line:
+<div class="code"><pre>
+  g.region rast=lsat7_2002_20
+  d.correlate -t layer1=lsat7_2002_20 layer2=lsat7_2002_30 --verbose
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
-
-The UNIX <em>awk</em> command.
-
-
-<p>
 
 <em>
 <a href="d.text.html">d.text</a>,
@@ -63,11 +50,15 @@ The UNIX <em>awk</em> command.
 <a href="r.stats.html">r.stats</a>
 </em>
 
-<h2>AUTHOR</h2>
+
+<h2>AUTHORS</h2>
 
 Michael Shapiro,
 <a href="http://www.cecer.army.mil/">U.S.Army Construction Engineering 
 Research Laboratory</a>
 <p>
-Rewritten to GRASS 6 (from csh to sh) by Markus Neteler
-<p><i>Last changed: $Date$</i>
+Rewritten to GRASS 6 (from csh to sh) by Markus Neteler<br>
+Linear regression model and trend line plotting by Hamish Bowman
+
+<p>
+<i>Last changed: $Date$</i>
