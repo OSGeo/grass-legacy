@@ -3,21 +3,22 @@
 ############################################################################
 #
 # MODULE:       d.correlate for GRASS 6; based on dcorrelate.sh for GRASS 4,5
-# AUTHOR(S):    CERL - Michael Shapiro; updated to GRASS 6 by Markus Neteler 5/2005
+# AUTHOR(S):    CERL - Michael Shapiro;
+#		 updated to GRASS 6 by Markus Neteler 5/2005
+#		 H.Bowman added trend line & model fix flag June 2010
 # PURPOSE:      prints a graph of the correlation between data layers (in pairs)
 #               derived from <grass5>/src.local/d.correlate.sh
-# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+# COPYRIGHT:    (C) 2005-2013 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
 #               for details.
 #
-# TODO GRASS 7: rename parameters to map1, map2 or better multiple map=map1[,map2[...]]
 #############################################################################
 
 #%Module
-#%  description: Prints a graph of the correlation between data layers (in pairs).
-#%  keywords: display, diagram
+#% description: Prints a graph of the correlation between raster maps (in pairs).
+#% keywords: display, correlation, scatterplot
 #%End
 #%option
 #% key: layer1
@@ -47,6 +48,10 @@
 #% description: raster input map
 #% required : no
 #%end
+#%flag
+#% key: t
+#% description: Draw a trend line and calculate linear regression formula
+#%end
 
 if [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
@@ -62,7 +67,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG=`basename "$0"`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
@@ -76,89 +80,212 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 if [ $# -gt 4 ] ; then
-        g.message -e "max 4 layers allowed"
-	exit 1
+    g.message -e "A maximum of four raster maps is allowed"
+    exit 1
 fi
 
-TMP1="`g.tempfile pid=$$`"
+if [ "$GIS_OPT_LAYER1" = "$GIS_OPT_LAYER2" ] ; then
+   g.message -e "Nothing to see if the maps are the same."
+   exit 1
+fi
 
 ok=yes
-for f in $GIS_OPT_LAYER1 $GIS_OPT_LAYER2 $GIS_OPT_LAYER3 $GIS_OPT_LAYER4
-do
-  eval `g.findfile element=cell file=$f`
-  if [ -z "$name" ] ; then
-        g.message -e "$f not found"
+for map in "$GIS_OPT_LAYER1" "$GIS_OPT_LAYER2" $GIS_OPT_LAYER3 $GIS_OPT_LAYER4 ; do
+    eval `g.findfile element=cell file="$map"`
+    if [ -z "$name" ] ; then
+        g.message -e "Raster map <$map> not found"
 	ok=no
-  fi
+    fi
 done
 
 if [ "$ok" = "no" ] ; then
- exit 1
+    exit 1
 fi
 
 d.erase
-GRASS_PNG_READ=TRUE
-export GRASS_PNG_READ
-if [ $? != 0 ] ; then
- exit 1
+if [ $? -ne 0 ] ; then
+    exit 1
 fi
 
-# how many cmd line arguments?
-ARGNUM=`echo "$CMDLINE" | tr -s ' ' '\n' | wc -l | awk '{print $1 - 1}'`
+TMP1="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP1" ] ; then
+    g.message -e "Unable to create temporary file"
+    exit 1
+fi
 
-echo "CORRELATION" | d.text color=white size=4 line=1
+# avoid output that overwrites one another
+#  (check what kind of monitor is selected first, skip for Xmons?)
+GRASS_PNG_READ=TRUE
+export GRASS_PNG_READ
+
+
+# count how many maps given on the cmd line
+ARGNUM=`echo "$CMDLINE" | tr -s ' ' '\n' | grep -c 'layer[0-9]='`
+
+echo "CORRELATION" | d.text color=grey size=3 line=1
 colors="red black blue green gray violet"
-if [ $ARGNUM -eq 2 ] ; then
+if [ "$ARGNUM" -eq 2 ] ; then
+  topline=93
   line=4
 else
   line=2
 fi
-iloop=0
-jloop=0
 
 # get max in case of two maps for x, y axis
-eval `r.univar -g $GIS_OPT_LAYER1`
-max_layer1=$max
-eval `r.univar -g $GIS_OPT_LAYER2`
-max_layer2=$max
+eval `r.univar -g "$GIS_OPT_LAYER1"`
+max_layer1="$max"
+eval `r.univar -g "$GIS_OPT_LAYER2"`
+max_layer2="$max"
 
-for i in $GIS_OPT_LAYER1 $GIS_OPT_LAYER2 $GIS_OPT_LAYER3 $GIS_OPT_LAYER4
-do
-   iloop=`expr $iloop + 1`
-   for j in $GIS_OPT_LAYER1 $GIS_OPT_LAYER2 $GIS_OPT_LAYER3 $GIS_OPT_LAYER4 ; do
-    jloop=`expr $jloop + 1`
-    if [ "$i" != "$j" -a $iloop -le $jloop ] ; then
-      colorstmp1=`echo $colors | cut -d' ' -f1`
-      colorstmp2=`echo $colors | cut -d' ' -f2-`
-      colors=`echo $colorstmp2 $colorstmp1`
+# don't go too overboard with r.stats
+if [ "$n" -gt 2048 ] ; then
+   n=2048
+fi
 
-      if [ $ARGNUM -eq 2 ] ; then
-        echo $j | d.text color=`echo $colors | cut -d' ' -f1` size=4 at=0,9$line
-        echo $i | d.text color=`echo $colors | cut -d' ' -f1` size=4 at=60,0$line
-      else
-        echo $i $j | d.text color=`echo $colors | cut -d' ' -f1` size=4 line=$line
-      fi
-      line=`expr $line + 1`
-      r.stats -cnA input=$i,$j > "$TMP1"
-      m="`awk '$1>max1{max1=$1} $2>max2{max2=$2} min1==0||$1<min1{min1=$1} min2==0||$2<min2{min2=$2} END {print min1,max1,min2,max2}' $TMP1`"
-      m1=`echo $m | cut -d' ' -f1`
-      m2=`echo $m | cut -d' ' -f2`
-      m3=`echo $m | cut -d' ' -f3`
-      m4=`echo $m | cut -d' ' -f4`
-      awk '{print "move",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1);print "draw",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1) }' min1=$m1 max1=$m2 min2=$m3 max2=$m4 "$TMP1" | d.graph color=`echo $colors | cut -d' ' -f1`
+i_loop=0
+for i_map in "$GIS_OPT_LAYER1" "$GIS_OPT_LAYER2" $GIS_OPT_LAYER3 $GIS_OPT_LAYER4 ; do
+   i_loop=`expr $i_loop + 1`
+   j_loop=0
+   for j_map in "$GIS_OPT_LAYER1" "$GIS_OPT_LAYER2" $GIS_OPT_LAYER3 $GIS_OPT_LAYER4 ; do
+     j_loop=`expr $j_loop + 1`
 
-      if [ $ARGNUM -eq 2 ] ; then
-         d.graph << EOF
-size 2 2
-move 0 92
-text $max_layer1
-move 90 2
-text $max_layer2
+     if [ "$i_map" != "$j_map" -a "$i_loop" -le "$j_loop" ] ; then
+	g.message -v "$i_map vs. $j_map ..."
+        colorstmp1=`echo "$colors" | cut -d' ' -f1`
+        colorstmp2=`echo "$colors" | cut -d' ' -f2-`
+        colors=`echo "$colorstmp2 $colorstmp1"`
+
+        if [ "$ARGNUM" -eq 2 ] ; then
+           echo "$i_map" | \
+	       d.text color=`echo "$colors" | cut -d' ' -f1` size=4 at=1,"$topline"
+           echo "$j_map" | \
+	       d.text color=`echo "$colors" | cut -d' ' -f1` size=4 at=60,"$line"
+        else
+           echo "$i_map vs. $j_map" | \
+	       d.text color=`echo "$colors" | cut -d' ' -f1` size=4 line="$line"
+        fi
+
+        line=`expr $line + 1`
+
+        r.stats -cnA input="$i_map,$j_map" nsteps="$n" > "$TMP1"
+
+        m=`awk '$1 > max1  {max1=$1} \
+		$2 > max2  {max2=$2} \
+		min1 == 0 || $1 < min1  {min1=$1} \
+		min2 == 0 || $2 < min2  {min2=$2} \
+		END \
+		{print min1,max1,min2,max2}' "$TMP1"`
+
+	g.message -d message="min1,max1,min2,max2: $m"
+
+	m1=`echo "$m" | cut -d' ' -f1`
+	m2=`echo "$m" | cut -d' ' -f2`
+	m3=`echo "$m" | cut -d' ' -f3`
+	m4=`echo "$m" | cut -d' ' -f4`
+
+	# scaled map1 value is plotted as x, scaled map2 value is plotted as y
+	awk '{print "move", \
+		($1-min1+1) * 100.0 / (max1-min1+1), \
+		($2-min2+1) * 100.0 / (max2-min2+1);
+	      print "draw", \
+		($1-min1+1) * 100.0 / (max1-min1+1), \
+		($2-min2+1) * 100.0 / (max2-min2+1) }' \
+	      min1="$m1" max1="$m2" min2="$m3" max2="$m4" "$TMP1" | \
+	    d.graph color=`echo "$colors" | cut -d' ' -f1`
+
+
+	if [ "$ARGNUM" -eq 2 ] ; then
+	   d.graph << EOF
+              size 2 2
+              move 1 90
+              text max: $max_layer1
+              move 75 2
+              text max: $max_layer2
 EOF
-      fi
+	fi
     fi
    done
-   jloop=0
 done
 
 rm -f "$TMP1"
+
+
+#### overrdraw a trend line, slope+offset, and R^2 value.
+if [ "$GIS_FLAG_T" -eq 1 ] ; then
+
+   if [ "$ARGNUM" -ne 2 ] ; then
+      g.message -e 'Will only draw trend line if two map layers are given'
+      exit 1
+   fi
+
+   # perform linear regression
+   eval `r.regression.line -g map1="$GIS_OPT_LAYER2" map2="$GIS_OPT_LAYER1"`
+   g.message -v "y = $b*x + $a"
+   g.message -v "R^2 = `echo "$R" | awk '{printf("%.4g", $1 * $1)}'`"
+
+
+   #### calc coords for trend line in map1,map2 space
+   A0="$m1"
+   B0=`echo "$m1 $a $b" | awk '{print ($1-$2)/$3}'`
+   A1="$m2"
+   B1=`echo "$m2 $a $b" | awk '{print ($1-$2)/$3}'`
+
+   # scale to 0-100% space
+   X0=`echo "$A0 $m1 $m2" | awk '{print ($1-$2+1) * 100.0 / ($3-$2+1)}'`
+   Y0=`echo "$B0 $m3 $m4" | awk '{print ($1-$2+1) * 100.0 / ($3-$2+1)}'`
+   X1=`echo "$A1 $m1 $m2" | awk '{print ($1-$2+1) * 100.0 / ($3-$2+1)}'`
+   Y1=`echo "$B1 $m3 $m4" | awk '{print ($1-$2+1) * 100.0 / ($3-$2+1)}'`
+   g.message -d "Raw plot line:  $X0,$Y0    $X1,$Y1"
+
+   # d.graph doesn't like % coords that are >100 or <0, so we need to work backwards
+   # through the scaling and linear regression formulas to recalc coords in-bounds.
+   if [ `echo "$Y0" | grep -c '\-'` -ne 0 ] ; then
+      g.message -d message="y-offset at x=0% is negative, recalc"
+      Y0=0
+      B0=`echo "$m3" | awk '{print $1 - 1}'`
+      A0=`echo "$B0 $a $b" | awk '{print ($1 * $3) + $2}'`
+      X0=`echo "$A0 $m1 $m2" | awk '{print 100.0 * ($1-$2+1) / ($3-$2+1)}'`
+   elif [ `echo "$Y0" | awk '{if($1 > 100) {print 1} else {print 0}}'` -eq 1 ] ; then
+      g.message -d message="y position at left side of plot is > 100%, recalc"
+      Y0=100
+      B0="$m4"
+      A0=`echo "$B0 $a $b" | awk '{print ($1 * $3) + $2}'`
+      X0=`echo "$A0 $m1 $m2" | awk '{print 100.0 * ($1-$2+1) / ($3-$2+1)}'`
+   fi
+   g.message -d "After Y0 fixes:  $X0,$Y0    $X1,$Y1"
+
+   if [ `echo "$Y1" | grep -c '\-'` -ne 0 ] ; then
+      g.message -d message="y-offset at x=100% is negative, recalc"
+      Y1=0
+      B1=`echo "$m3" | awk '{print $1 - 1}'`
+      A1=`echo "$B1 $a $b" | awk '{print ($1 * $3) + $2}'`
+      X1=`echo "$A1 $m1 $m2" | awk '{print 100.0 * ($1-$2+1) / ($3-$2+1)}'`
+   elif [ `echo "$Y1" | awk '{if($1 > 100) {print 1} else {print 0}}'` -eq 1 ] ; then
+      g.message -d message="y position at right side of plot is > 100%, recalc"
+      Y1=100
+      B1="$m4"
+      A1=`echo "$B1 $a $b" | awk '{print ($1 * $3) + $2}'`
+      X1=`echo "$A1 $m1 $m2" | awk '{print 100.0 * ($1-$2+1) / ($3-$2+1)}'`
+   fi
+
+   g.message -d "final line coords: ($X0, $Y0) to ($X1, $Y1)"
+
+
+   # plot the trend line and coefficient text
+   d.graph << EOF
+      color red
+      width 2
+      move $X0 $Y0
+      draw $X1 $Y1
+      width 0
+
+      color indigo
+      size 2
+      move 5 80
+      text y = $b*x + $a
+      move 5 75
+      text R^2 = `echo "$R" | awk '{printf("%.4g", $1 * $1)}'`
+# um, r.regression.line's R is the R of R^2 fame, right??
+EOF
+fi
+
