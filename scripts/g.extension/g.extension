@@ -207,7 +207,16 @@ if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_L -eq 0 ] ; then
 fi
 
 
-if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then 
+if [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] || [ $GIS_FLAG_U -eq 1 ] ; then
+   SYSADMIN=1
+   PREFIX="$GISBASE"
+
+   # just to make later tests happy
+   if [ $GIS_FLAG_S -eq 0 ] && [ $GIS_FLAG_U -eq 1 ] ; then
+      GIS_FLAG_S=1
+   fi
+
+elif [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then 
     if [ -z "$GRASS_ADDON_PATH" ] ; then 
 	g.message -w message="GRASS_ADDON_PATH is not defined, installing to ~/.grass6/addons/"
 	ADDON_PATH_EMPTY=true
@@ -220,16 +229,6 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
 	GRASS_ADDON_PATH1=`echo "$GRASS_ADDON_PATH" | cut -f1 -d:`
     fi
     PREFIX="$GRASS_ADDON_PATH1"
-fi
-
-if [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] || [ $GIS_FLAG_U -eq 1 ] ; then
-   SYSADMIN=1
-   PREFIX="$GISBASE"
-
-   # just to make later tests happy
-   if [ $GIS_FLAG_S -eq 0 ] && [ $GIS_FLAG_U -eq 1 ] ; then
-      GIS_FLAG_S=1
-   fi
 fi
 
 
@@ -245,8 +244,8 @@ else
     MYINST_DIR="$PREFIX"
 fi
 
-if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
-    g.message -e "'$PREFIX' is not writable (are you logged in as the system administator?)"
+if [ ! -w "$PREFIX" -a "$SYSADMIN" -ne 1 ] ; then
+    g.message -e "'$PREFIX' is not writable (do you have suitable file-system permissions?)"
     exit 1
 fi
 
@@ -267,8 +266,8 @@ fi
 if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    g.message message="Removing <$MODULE>..."
 
-   if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
-       rm -f "${MYINST_DIR}/bin/${MODULE}"
+   if test -f "$MYINST_DIR/bin/$MODULE" ; then
+       rm -f "$MYINST_DIR/bin/$MODULE"
    fi
    if test -f "$MYINST_DIR/scripts/$MODULE" ; then
        rm -f "$MYINST_DIR/scripts/$MODULE"
@@ -276,12 +275,12 @@ if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    if test -e "$MYINST_DIR/$MODULE" ; then
        rm -f "$MYINST_DIR/$MODULE"
    fi
-   if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
-       rm -f "${MYINST_DIR}/docs/html/${MODULE}.html"
+   if test -f "$MYINST_DIR/docs/html/$MODULE.html" ; then
+       rm -f "$MYINST_DIR/docs/html/$MODULE.html"
        #also html/$MODULE*.jpg, html/$MODULE*.png
    fi
-   if test -f "${MYINST_DIR}/man/man1/${MODULE}.1" ; then
-       rm -f "${MYINST_DIR}/man/man1/${MODULE}.1"
+   if test -f "$MYINST_DIR/man/man1/$MODULE.1" ; then
+       rm -f "$MYINST_DIR/man/man1/$MODULE.1"
    fi
    if test -f "$MYINST_DIR/docs/man/man1/$MODULE.1" ; then
        rm -f "$MYINST_DIR/docs/man/man1/$MODULE.1"
@@ -295,7 +294,7 @@ g.message -d "svn co [$SVNURL_ADDONS]/[$MODULECLASS]/[$MODULE]"
 
 cd "$TMPDIR"
 g.message message="Fetching <$MODULE> from GRASS-Addons SVN (be patient)..."
-svn co "${SVNURL_ADDONS}/${MODULECLASS}/${MODULE}"
+svn co "$SVNURL_ADDONS/$MODULECLASS/$MODULE"
 
 if [ $? -ne 0 ] ; then
    g.message -e message="GRASS Add-on $MODULE not found in repository or no network connection or another problem"
@@ -334,8 +333,8 @@ INST_NOW=true
 export INST_NOW
 
 make MODULE_TOPDIR="$GISBASE" \
-   ARCH_INC="'-I$GISBASE/include' '-I${MYINST_DIR}/include' '-I$TMPDIR/$DIST_DIR/include'" \
-   ARCH_LIBPATH="'-L$GISBASE/lib' '-L${MYINST_DIR}/lib' '-L$TMPDIR/$DIST_DIR/lib'" \
+   ARCH_INC="'-I$GISBASE/include' '-I$MYINST_DIR/include' '-I$TMPDIR/$DIST_DIR/include'" \
+   ARCH_LIBPATH="'-L$GISBASE/lib' '-L$MYINST_DIR/lib' '-L$TMPDIR/$DIST_DIR/lib'" \
    ARCH_LIBDIR="$GISBASE/lib" \
    ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
    ARCH_BINDIR="$TMPDIR/$DIST_DIR/bin"
@@ -369,12 +368,14 @@ else
 
    if [ $SYSADMIN -eq 1 ] ; then
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
-         if [ $GIS_FLAG_U -eq 1 ] ; then
+         if [ "$GIS_FLAG_U" -eq 1 ] ; then
             g.message "You may need to enter your password to remove an earlier copy of $MODULE:"
             sudo rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
          else
-            g.message "You need to enter the root password to remove an earlier copy of $MODULE:"
-            su -c "rm -f \"$MYINST_DIR/$PROGTYPE/$MODULE\""
+            rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
+	    if [ $? -ne 0 ] ; then
+	       g.message -w "Removal failed. Do you have suitable file-system permissions?"
+	    fi
          fi
       fi
       if [ $GIS_FLAG_U -eq 1 ] ; then
@@ -384,9 +385,10 @@ else
 	     ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
 	     INST_DIR="$MYINST_DIR" install
       else
-         g.message "You need to enter the root password to install $MODULE:"
-
-         su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/$DIST_DIR\" INST_DIR=\"$MYINST_DIR\" install"
+	 make MODULE_TOPDIR="$GISBASE" \
+	   ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
+	   INST_DIR="$MYINST_DIR" \
+	   install
       fi
    else
       if test -f "$MYINST_DIR/$PROGTYPE/$MODULE" ; then
@@ -394,6 +396,7 @@ else
          rm -f "$MYINST_DIR/$PROGTYPE/$MODULE"
       fi
 
+       # ? ETC="$MYINST_DIR/etc"
       make MODULE_TOPDIR="$GISBASE" \
            ARCH_DISTDIR="$TMPDIR/$DIST_DIR" \
 	   INST_DIR="$MYINST_DIR" install
@@ -405,6 +408,7 @@ else
       exit 1
    fi
 
+   # clean up python installs, since PythonScript.make doesn't exist yet
    if [ -e "$MYINST_DIR/$PROGTYPE/$MODULE.py" ] ; then
       # drop the .py from python scripts
       mv "$MYINST_DIR/$PROGTYPE/$MODULE.py" "$MYINST_DIR/$PROGTYPE/$MODULE"
