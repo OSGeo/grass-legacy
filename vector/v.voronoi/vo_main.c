@@ -108,11 +108,14 @@ int main(int argc, char **argv)
     struct GModule *module;
     struct line_pnts *Points;
     struct line_cats *Cats;
+    struct bound_box box;
     int node, nnodes;
     COOR *coor;
+    int verbose;
     int ncoor, acoor;
     int line, nlines, type, ctype, area, nareas;
     int err_boundaries, err_centr_out, err_centr_dupl, err_nocentr;
+    double snap_thresh;
 
     G_gisinit(argv[0]);
 
@@ -190,7 +193,10 @@ int main(int argc, char **argv)
     voronoi(triangulate, nextone);
 
     /* Close free ends by current region */
+    verbose = G_verbose();
+    G_set_verbose(0);
     Vect_build_partial(&Out, GV_BUILD_BASE);
+    G_set_verbose(verbose);
 
     ncoor = 0;
     acoor = 100;
@@ -336,7 +342,7 @@ int main(int argc, char **argv)
 	    if (fields[i] == 0)
 		continue;
 
-	    G_message(_("Layer %d"), fields[i]);
+	    G_debug(1, "Layer %d", fields[i]);
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field(&In, fields[i]);
@@ -369,7 +375,9 @@ int main(int argc, char **argv)
     Vect_close(&In);
 
     /* cleaning part 1: count errors */
+    G_set_verbose(0);
     Vect_build_partial(&Out, GV_BUILD_CENTROIDS);
+    G_set_verbose(verbose);
     err_boundaries = err_centr_out = err_centr_dupl = err_nocentr = 0;
     nlines = Vect_get_num_lines(&Out);
     for (line = 1; line <= nlines; line++) {
@@ -409,11 +417,22 @@ int main(int argc, char **argv)
     }
 
     /* cleaning part 2: snap */
+    /* TODO: adjust snapping treshold to ULP */
+    Vect_get_map_box(&Out, &box);
+    snap_thresh = fabs(box.W);
+    if (snap_thresh < fabs(box.E))
+	snap_thresh = fabs(box.E);
+    if (snap_thresh < fabs(box.N))
+	snap_thresh = fabs(box.N);
+    if (snap_thresh < fabs(box.S))
+	snap_thresh = fabs(box.S);
+    snap_thresh = d_ulp(snap_thresh);
+    
     if (err_nocentr || err_centr_dupl || err_centr_out) {
 	int nmod;
 
 	G_important_message(_("Output needs topological cleaning"));
-	Vect_snap_lines(&Out, GV_BOUNDARY, 1e-7, NULL);
+	Vect_snap_lines(&Out, GV_BOUNDARY, snap_thresh, NULL);
 	do {
 	    Vect_break_lines(&Out, GV_BOUNDARY, NULL);
 	    Vect_remove_duplicates(&Out, GV_BOUNDARY, NULL);
