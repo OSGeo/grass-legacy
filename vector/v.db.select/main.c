@@ -7,7 +7,7 @@
  *               
  * PURPOSE:      Print vector attributes
  *               
- * COPYRIGHT:    (C) 2005-2009 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2005-2013 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     struct field_info *Fi;
     int field, ncols, col, more;
     struct Map_info Map;
-    char *mapset;
+    char *mapset, *fs;
     char query[1024];
     struct ilist *list_lines;
 
@@ -124,6 +124,17 @@ int main(int argc, char **argv)
       list_lines = NULL;
     }
 
+    /* the field separator */
+    fs = fs_opt->answer;
+    if (strcmp(fs, "\\t") == 0)
+        fs = "\t";
+    if (strcmp(fs, "tab") == 0)
+        fs = "\t";
+    if (strcmp(fs, "space") == 0)
+        fs = " ";
+    if (strcmp(fs, "comma") == 0)
+        fs = ",";
+
     db_init_string(&sql);
     db_init_string(&value_string);
 
@@ -183,7 +194,7 @@ int main(int argc, char **argv)
 	for (col = 0; col < ncols; col++) {
 	    column = db_get_table_column(table, col);
 	    if (col)
-		fprintf(stdout, "%s", fs_opt->answer);
+		fprintf(stdout, "%s", fs);
 	    fprintf(stdout, "%s", db_get_column_name(column));
 	}
 	fprintf(stdout, "\n");
@@ -217,11 +228,10 @@ int main(int argc, char **argv)
 	    db_convert_column_value_to_string(column, &value_string);
 
 	    if (!c_flag->answer && v_flag->answer)
-		fprintf(stdout, "%s%s", db_get_column_name(column),
-			fs_opt->answer);
+		fprintf(stdout, "%s%s", db_get_column_name(column), fs);
 
 	    if (col && !v_flag->answer)
-		fprintf(stdout, "%s", fs_opt->answer);
+		fprintf(stdout, "%s", fs);
 
 	    if (nv_opt->answer && db_test_value_isnull(value))
 		fprintf(stdout, "%s", nv_opt->answer);
