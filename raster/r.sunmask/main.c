@@ -8,7 +8,7 @@
  *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>,
  *               Hamish Bowman <hamish_b yahoo.com>, Paul Kelly <paul-grass stjohnspoint.co.uk>
  * PURPOSE:      
- * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2013 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -299,12 +299,12 @@ int main(int argc, char *argv[])
 	sscanf(parm.opt4->answer, "%lf", &dazi);
     }
     else {
-	sscanf(parm.year->answer, "%i", &year);
-	sscanf(parm.month->answer, "%i", &month);
-	sscanf(parm.day->answer, "%i", &day);
-	sscanf(parm.hour->answer, "%i", &hour);
-	sscanf(parm.minutes->answer, "%i", &minutes);
-	sscanf(parm.seconds->answer, "%i", &seconds);
+	sscanf(parm.year->answer, "%d", &year);
+	sscanf(parm.month->answer, "%d", &month);
+	sscanf(parm.day->answer, "%d", &day);
+	sscanf(parm.hour->answer, "%d", &hour);
+	sscanf(parm.minutes->answer, "%d", &minutes);
+	sscanf(parm.seconds->answer, "%d", &seconds);
 	sscanf(parm.timezone->answer, "%lf", &timezone);
     }
 
