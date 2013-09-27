@@ -155,21 +155,19 @@ int dig__fread_port_L(long *buf, int cnt, GVFILE * fp)
 	    memset(buf, 0, cnt * sizeof(long));
 	    /* read from buffer in changed order */
 	    c1 = (unsigned char *)buffer;
-	    if (lng_order == ENDIAN_LITTLE)
-		c2 = (unsigned char *)buf;
-	    else
-		c2 = (unsigned char *)buf + nat_lng - PORT_LONG;
+	    c2 = (unsigned char *)buf;
 	    for (i = 0; i < cnt; i++) {
 		/* set to FF if the value is negative */
 		if (lng_order == ENDIAN_LITTLE) {
 		    if (c1[PORT_LONG - 1] & 0x80)
 			memset(c2, 0xff, sizeof(long));
+		    memcpy(c2, c1, PORT_LONG);
 		}
 		else {
 		    if (c1[0] & 0x80)
 			memset(c2, 0xff, sizeof(long));
+		    memcpy(c2 + nat_lng - PORT_LONG, c1, PORT_LONG);
 		}
-		memcpy(c2, c1, PORT_LONG);
 		c1 += PORT_LONG;
 		c2 += sizeof(long);
 	    }
@@ -227,21 +225,19 @@ int dig__fread_port_I(int *buf, int cnt, GVFILE * fp)
 	    memset(buf, 0, cnt * sizeof(int));
 	    /* read from buffer in changed order */
 	    c1 = (unsigned char *)buffer;
-	    if (int_order == ENDIAN_LITTLE)
-		c2 = (unsigned char *)buf;
-	    else
-		c2 = (unsigned char *)buf + nat_int - PORT_INT;
+	    c2 = (unsigned char *)buf;
 	    for (i = 0; i < cnt; i++) {
 		/* set to FF if the value is negative */
 		if (int_order == ENDIAN_LITTLE) {
 		    if (c1[PORT_INT - 1] & 0x80)
 			memset(c2, 0xff, sizeof(int));
+		    memcpy(c2, c1, PORT_INT);
 		}
 		else {
 		    if (c1[0] & 0x80)
 			memset(c2, 0xff, sizeof(int));
+		    memcpy(c2 + nat_int - PORT_INT, c1, PORT_INT);
 		}
-		memcpy(c2, c1, PORT_INT);
 		c1 += PORT_INT;
 		c2 += sizeof(int);
 	    }
@@ -299,21 +295,19 @@ int dig__fread_port_S(short *buf, int cnt, GVFILE * fp)
 	    memset(buf, 0, cnt * sizeof(short));
 	    /* read from buffer in changed order */
 	    c1 = (unsigned char *)buffer;
-	    if (shrt_order == ENDIAN_LITTLE)
-		c2 = (unsigned char *)buf;
-	    else
-		c2 = (unsigned char *)buf + nat_shrt - PORT_SHORT;
+	    c2 = (unsigned char *)buf;
 	    for (i = 0; i < cnt; i++) {
 		/* set to FF if the value is negative */
 		if (shrt_order == ENDIAN_LITTLE) {
 		    if (c1[PORT_SHORT - 1] & 0x80)
 			memset(c2, 0xff, sizeof(short));
+		    memcpy(c2, c1, PORT_SHORT);
 		}
 		else {
 		    if (c1[0] & 0x80)
 			memset(c2, 0xff, sizeof(short));
+		    memcpy(c2 + nat_shrt - PORT_SHORT, c1, PORT_SHORT);
 		}
-		memcpy(c2, c1, PORT_SHORT);
 		c1 += PORT_SHORT;
 		c2 += sizeof(short);
 	    }
@@ -438,15 +432,15 @@ int dig__fwrite_port_L(long *buf,	/* LONG */
 	}
 	else {
 	    buf_alloc(cnt * PORT_LONG);
-	    if (lng_order == ENDIAN_LITTLE)
-		c1 = (unsigned char *)buf;
-	    else
-		c1 = (unsigned char *)buf + nat_lng - PORT_LONG;
+	    c1 = (unsigned char *)buf;
 	    c2 = (unsigned char *)buffer;
 	    for (i = 0; i < cnt; i++) {
-		memcpy(c2, c1, PORT_LONG);
-		c1 += PORT_LONG;
-		c2 += sizeof(long);
+		if (lng_order == ENDIAN_LITTLE)
+		    memcpy(c2, c1, PORT_LONG);
+		else
+		    memcpy(c2, c1 + nat_lng - PORT_LONG, PORT_LONG);
+		c1 += sizeof(long);
+		c2 += PORT_LONG;
 	    }
 	    if (dig_fwrite(buffer, PORT_LONG, cnt, fp) == cnt)
 		return 1;
@@ -481,15 +475,15 @@ int dig__fwrite_port_I(int *buf,	/* INT */
 	}
 	else {
 	    buf_alloc(cnt * PORT_INT);
-	    if (int_order == ENDIAN_LITTLE)
-		c1 = (unsigned char *)buf;
-	    else
-		c1 = (unsigned char *)buf + nat_int - PORT_INT;
+	    c1 = (unsigned char *)buf;
 	    c2 = (unsigned char *)buffer;
 	    for (i = 0; i < cnt; i++) {
-		memcpy(c2, c1, PORT_INT);
-		c1 += PORT_INT;
-		c2 += sizeof(int);
+		if (int_order == ENDIAN_LITTLE)
+		    memcpy(c2, c1, PORT_INT);
+		else
+		    memcpy(c2, c1 + nat_int - PORT_INT, PORT_INT);
+		c1 += sizeof(int);
+		c2 += PORT_INT;
 	    }
 	    if (dig_fwrite(buffer, PORT_INT, cnt, fp) == cnt)
 		return 1;
@@ -524,15 +518,15 @@ int dig__fwrite_port_S(short *buf,	/* SHORT */
 	}
 	else {
 	    buf_alloc(cnt * PORT_SHORT);
-	    if (shrt_order == ENDIAN_LITTLE)
-		c1 = (unsigned char *)buf;
-	    else
-		c1 = (unsigned char *)buf + nat_shrt - PORT_SHORT;
+	    c1 = (unsigned char *)buf;
 	    c2 = (unsigned char *)buffer;
 	    for (i = 0; i < cnt; i++) {
-		memcpy(c2, c1, PORT_SHORT);
-		c1 += PORT_SHORT;
-		c2 += sizeof(short);
+		if (shrt_order == ENDIAN_LITTLE)
+		    memcpy(c2, c1, PORT_SHORT);
+		else
+		    memcpy(c2, c1 + nat_shrt - PORT_SHORT, PORT_SHORT);
+		c1 += sizeof(short);
+		c2 += PORT_SHORT;
 	    }
 	    if (dig_fwrite(buffer, PORT_SHORT, cnt, fp) == cnt)
 		return 1;
