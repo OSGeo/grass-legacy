@@ -25,6 +25,8 @@
 
 #include "local_proto.h"
 
+#define QCALMAX   65536		/* L1-7=256 but L8=65536 */
+
 int main(int argc, char *argv[])
 {
     struct History history;
@@ -40,28 +42,29 @@ int main(int argc, char *argv[])
 
     RASTER_MAP_TYPE in_data_type;
 
-    struct Option *input_prefix, *output_prefix, *metfn, *sensor, *adate,
-	*pdate, *elev, *bgain, *metho, *perc, *dark, *atmo;
+    struct Option *input_prefix, *output_prefix, *metfn,
+	*sensor, *adate, *pdate, *elev, *bgain, *metho, *perc, *dark, *atmo;
     char *inputname, *met, *outputname, *sensorname;
     struct Flag *frad, *named;
 
     lsat_data lsat;
     char band_in[GNAME_MAX], band_out[GNAME_MAX];
-    int i, j, q, method, pixel, dn_dark[MAX_BANDS], dn_mode[MAX_BANDS];
+    int i, j, q, method, pixel, dn_dark[MAX_BANDS], dn_mode[MAX_BANDS],
+	dn_sat;
     double qcal, rad, ref, percent, ref_mode, rayleigh;
+    unsigned long hist[QCALMAX], h_max;
 
     struct Colors colors;
     struct FPRange range;
     double min, max;
-    unsigned long hist[256], h_max;
 
-    /* initialize GIS environment */
+    /* It initializes GIS environment */
     G_gisinit(argv[0]);
 
-    /* initialize module */
+    /* It initializes module */
     module = G_define_module();
     module->description =
-	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+.");
+	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+/OLI");
     module->keywords =
 	_("imagery, landsat, top-of-atmosphere reflectance, dos-type simple atmospheric correction");
 
@@ -93,7 +96,7 @@ int main(int argc, char *argv[])
     sensor->label = _("Spacecraft sensor");
     sensor->description =
 	_("Required only if 'metfile' not given (recommended for sanity)");
-    sensor->options = "mss1,mss2,mss3,mss4,mss5,tm4,tm5,tm7,ot8";
+    sensor->options = "mss1,mss2,mss3,mss4,mss5,tm4,tm5,tm7,oli8";
     sensor->descriptions =
 	_("mss1;Landsat_1 MSS;"
 	  "mss2;Landsat_2 MSS;"
@@ -102,8 +105,8 @@ int main(int argc, char *argv[])
 	  "mss5;Landsat_5 MSS;"
 	  "tm4;Landsat_4 TM;"
 	  "tm5;Landsat_5 TM;"
-          "tm7;Landsat_7 ETM+;"
-          "ot8;Landsat_8 OLI/TIRS");
+	  "tm7;Landsat_7 ETM+;"
+          "oli8;Landsat_8 OLI/TIRS");
     sensor->required = NO;	/* perhaps YES for clarity */
     sensor->guisection = _("Metadata");
 
@@ -111,7 +114,7 @@ int main(int argc, char *argv[])
     metho->key = "method";
     metho->type = TYPE_STRING;
     metho->required = NO;
-    metho->options = "uncorrected,corrected,dos1,dos2,dos2b,dos3,dos4";
+    metho->options = "uncorrected,dos1,dos2,dos2b,dos3,dos4";
     metho->label = _("Atmospheric correction method");
     metho->description = _("Atmospheric correction method");
     metho->answer = "uncorrected";
@@ -179,7 +182,7 @@ int main(int argc, char *argv[])
     atmo->answer = "0.0";
     atmo->guisection = _("Settings");
 
-    /* define the different flags */
+    /* It defines the different flags */
     frad = G_define_flag();
     frad->key = 'r';
     frad->description =
@@ -195,10 +198,10 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
 
-    /*****************************************
-     * ---------- START --------------------
-     * Stores options and flag to variables
-     *****************************************/
+  /*****************************************
+  * ---------- START --------------------
+  * Stores options and flags to variables
+  *****************************************/
     met = metfn->answer;
     inputname = input_prefix->answer;
     outputname = output_prefix->answer;
@@ -228,9 +231,10 @@ int main(int argc, char *argv[])
     pixel = atoi(dark->answer);
     rayleigh = atof(atmo->answer);
 
-    /* Data from metadata file */
-    /* Unnecessary because G_zero filled, but for sanity */
-    lsat.flag = NOMETADATAFILE;
+    /*
+     * Data from metadata file 
+     */
+    lsat.flag = NOMETADATAFILE;	/* Unnecessary because G_zero filled, but for sanity */
     if (met != NULL) {
 	lsat.flag = METADATAFILE;
 	lsat_metadata(met, &lsat);
@@ -240,28 +244,29 @@ int main(int argc, char *argv[])
 	if (!lsat.sensor || lsat.number > 8 || lsat.number < 1)
 	    G_fatal_error(_("Failed to identify satellite"));
 
-	G_debug(1, "Landsat-%d %s with data set in met file [%s]",
+	G_debug(1, "Landsat-%d %s with data set in metadata file [%s]",
 		lsat.number, lsat.sensor, met);
 
-	/* Overwrite solar elevation of metadata file */
-	if (elev->answer != NULL)
+	if (elev->answer != NULL) {
 	    lsat.sun_elev = atof(elev->answer);
+	    G_warning("Overwriting solar elevation of metadata file");
+	}
     }
-    /* Data from date and solar elevation */
+    /*
+     * Data from command line
+     */
     else if (adate->answer == NULL || elev->answer == NULL) {
 	G_fatal_error(_("Lacking '%s' and/or '%s' for this satellite"),
 		      adate->key, elev->key);
     }
     else {
-	/* Need gain */
 	if (strcmp(sensorname, "tm7") == 0) {
 	    if (bgain->answer == NULL || strlen(bgain->answer) != 9)
-		G_fatal_error(_("Landsat-7 requires band gain with 9 (H/L) data"));
+		G_fatal_error(_("Landsat-7 requires band gain with 9 (H/L) characters"));
 	    set_ETM(&lsat, bgain->answer);
 	}
-	/* Not need gain */
-	else if (strcmp(sensorname, "ot8") == 0)
-	    set_LDCM(&lsat);
+	else if (strcmp(sensorname, "oli8") == 0)
+	    set_OLI(&lsat);
 	else if (strcmp(sensorname, "tm5") == 0)
 	    set_TM5(&lsat);
 	else if (strcmp(sensorname, "tm4") == 0)
@@ -278,13 +283,13 @@ int main(int argc, char *argv[])
 	    set_MSS1(&lsat);
 	else
 	    G_fatal_error(_("Unknown satellite type (defined by '%s')"),
-			  sensor->key);
+			  sensorname);
     }
 
 	/*****************************************
 	* ------------ PREPARATION --------------
 	*****************************************/
-    if (strcasecmp(metho->answer, "corrected") == 0)
+    if (strcasecmp(metho->answer, "corrected") == 0)	/* deleted 2013 */
 	method = CORRECTED;
     else if (strcasecmp(metho->answer, "dos1") == 0)
 	method = DOS1;
@@ -300,21 +305,21 @@ int main(int argc, char *argv[])
 	method = UNCORRECTED;
 
     /*
-       if (metho->answer[3] == 'r')            method = CORRECTED;
-       else if (metho->answer[3] == '1')       method = DOS1;
-       else if (metho->answer[3] == '2')       method = (metho->answer[4] == '\0') ? DOS2 : DOS2b;
-       else if (metho->answer[3] == '3')       method = DOS3;
-       else if (metho->answer[3] == '4')       method = DOS4;
-       else method = UNCORRECTED;
+       if (metho->answer[3] == '2') method = (metho->answer[4] == '\0') ? DOS2 : DOS2b;
+       else if (metho->answer[3] == '1') method = DOS1; 
+       else if (metho->answer[3] == '3') method = DOS3; 
+       else if (metho->answer[3] == '4') method = DOS4; 
+       else method = UNCORRECTED; 
      */
 
     for (i = 0; i < lsat.bands; i++) {
 	dn_mode[i] = 0;
 	dn_dark[i] = (int)lsat.band[i].qcalmin;
-	/* Calculate dark pixel */
+	dn_sat = (int)(0.90 * lsat.band[i].qcalmax);
+	/* Begin: calculate dark pixel */
 	if (method > DOS && !lsat.band[i].thermal) {
-	    for (j = 0; j < 256; j++)
-		hist[j] = 0L;
+	    for (q = 0; q <= lsat.band[i].qcalmax; q++)
+		hist[q] = 0L;
 
 	    sprintf(band_in, "%s%d", inputname, lsat.band[i].code);
 	    mapset = G_find_cell2(band_in, "");
@@ -354,54 +359,56 @@ int main(int argc, char *argv[])
 			break;
 		    }
 		    if (!G_is_null_value(ptr, in_data_type) &&
-			q >= lsat.band[i].qcalmin && q < 256)
+			q >= lsat.band[i].qcalmin &&
+			q <= lsat.band[i].qcalmax)
 			hist[q]++;
 		}
 	    }
 	    /* DN of dark object */
-	    for (j = lsat.band[i].qcalmin; j < 256; j++) {
+	    for (j = lsat.band[i].qcalmin; j <= lsat.band[i].qcalmax; j++) {
 		if (hist[j] >= (unsigned int)pixel) {
 		    dn_dark[i] = j;
 		    break;
 		}
 	    }
-	    /* Mode of DN */
+	    /* Mode of DN (exclude potentially saturated) */
 	    h_max = 0L;
-	    for (j = lsat.band[i].qcalmin; j < 241; j++) {	/* Exclude potentially saturated < 240 */
+	    for (j = lsat.band[i].qcalmin; j < dn_sat; j++) {
 		/* G_debug(5, "%d-%ld", j, hist[j]); */
 		if (hist[j] > h_max) {
 		    h_max = hist[j];
 		    dn_mode[i] = j;
 		}
 	    }
-	    G_verbose_message("... DN = %.2d [%lu] : mode %.2d [%lu] %s",
-			      dn_dark[i], hist[dn_dark[i]],
-			      dn_mode[i], hist[dn_mode[i]],
-			      hist[255] >
-			      hist[dn_mode[i]] ? ", excluding DN > 241" : "");
+	    G_verbose_message
+		("... DN = %.2d [%lu] : mode %.2d [%lu], exclusing DN > %d",
+		 dn_dark[i], hist[dn_dark[i]], dn_mode[i], hist[dn_mode[i]],
+		 dn_sat);
 
 	    G_free(inrast);
 	    G_close_cell(infd);
 	}
+	/* End: calculate dark pixel */
+
 	/* Calculate transformation constants */
 	lsat_bandctes(&lsat, i, method, percent, dn_dark[i], rayleigh);
     }
 
-    /* unnecessary or necessary with more checking as acquisition date,...
-       if (strlen(lsat.creation) == 0)
-       G_fatal_error(_("Unknown production date (defined by '%s')"), pdate->key);
+    /*
+     * unnecessary or necessary with more checking as acquisition date,...
+     * if (strlen(lsat.creation) == 0) 
+     * G_fatal_error(_("Unknown production date (defined by '%s')"), pdate->key); 
      */
 
     if (G_verbose() > G_verbose_std()) {
-	fprintf(stderr, " LANDSAT: %d SENSOR: %s\n", lsat.number,
+	fprintf(stderr, "\n LANDSAT: %d SENSOR: %s\n", lsat.number,
 		lsat.sensor);
 	fprintf(stderr, " ACQUISITION DATE %s [production date %s]\n",
 		lsat.date, lsat.creation);
 	fprintf(stderr, "   earth-sun distance    = %.8lf\n", lsat.dist_es);
 	fprintf(stderr, "   solar elevation angle = %.8lf\n", lsat.sun_elev);
 	fprintf(stderr, "   Atmospheric correction: %s\n",
-		(method == CORRECTED ? "CORRECTED"
-		 : (method == UNCORRECTED ? "UNCORRECTED" : metho->answer)));
+		(method == UNCORRECTED ? "UNCORRECTED" : metho->answer));
 	if (method > DOS) {
 	    fprintf(stderr,
 		    "   percent of solar irradiance in path radiance = %.4lf\n",
@@ -409,16 +416,15 @@ int main(int argc, char *argv[])
 	}
 	for (i = 0; i < lsat.bands; i++) {
 	    fprintf(stderr, "-------------------\n");
-	    fprintf(stderr, " BAND %d %s(code %d)\n",
-		    lsat.band[i].number,
+	    fprintf(stderr, " BAND %d %s(code %d)\n", lsat.band[i].number,
 		    (lsat.band[i].thermal ? "thermal " : ""),
 		    lsat.band[i].code);
 	    fprintf(stderr,
 		    "   calibrated digital number (DN): %.1lf to %.1lf\n",
 		    lsat.band[i].qcalmin, lsat.band[i].qcalmax);
-	    fprintf(stderr, "   calibration constants (L): %.3lf to %.3lf\n",
+	    fprintf(stderr, "   calibration constants (L): %.5lf to %.5lf\n",
 		    lsat.band[i].lmin, lsat.band[i].lmax);
-	    fprintf(stderr, "   at-%s radiance = %.8lf * DN + %.3lf\n",
+	    fprintf(stderr, "   at-%s radiance = %.8lf * DN + %.5lf\n",
 		    (method > DOS ? "surface" : "sensor"), lsat.band[i].gain,
 		    lsat.band[i].bias);
 	    if (lsat.band[i].thermal) {
@@ -428,7 +434,7 @@ int main(int argc, char *argv[])
 	    }
 	    else {
 		fprintf(stderr,
-			"   mean solar exoatmospheric irradiance (ESUN): %.3lf\n",
+			"   mean solar exoatmospheric irradiance (ESUN): %.5lf\n",
 			lsat.band[i].esun);
 		fprintf(stderr, "   at-%s reflectance = radiance / %.5lf\n",
 			(method > DOS ? "surface" : "sensor"),
@@ -478,18 +484,19 @@ int main(int argc, char *argv[])
 	if ((outfd = G_open_raster_new(band_out, DCELL_TYPE)) < 0)
 	    G_fatal_error(_("Unable to create raster map <%s>"), band_out);
 
-	/* Allocate input and output buffer */
+	/* allocate input and output buffer */
 	inrast = G_allocate_raster_buf(in_data_type);
 	outrast = G_allocate_raster_buf(DCELL_TYPE);
 
 	nrows = G_window_rows();
 	ncols = G_window_cols();
-	/* ================================================================= */
+
 	G_important_message(_("Writing %s of <%s> to <%s>..."),
-			    (frad->answer ? _("radiance")
-			     : (lsat.
-				band[i].thermal) ? _("temperature") :
-			     _("reflectance")), band_in, band_out);
+			    (frad->
+			     answer ? _("radiance") : (lsat.band[i].
+						       thermal) ?
+			     _("temperature") : _("reflectance")), band_in,
+			    band_out);
 	for (row = 0; row < nrows; row++) {
 	    G_percent(row, nrows, 2);
 
@@ -541,17 +548,20 @@ int main(int argc, char *argv[])
 	    ref_mode = lsat_rad2ref(ref_mode, &lsat.band[i]);
 	}
 
-	/* ================================================================= */
 
 	G_free(inrast);
 	G_close_cell(infd);
 	G_free(outrast);
 	G_close_cell(outfd);
 
-	/* needed ?
-	   if (out_type != CELL_TYPE)
-	   G_quantize_fp_map_range(band_out, G_mapset(), 0., 360., 0, 360);
+
+	/*
+	 * needed? 
+	 * if (out_type != CELL_TYPE)
+	 * G_quantize_fp_map_range(band_out, G_mapset(), 0., 360., 0,
+	 * 360); 
 	 */
+
 	/* set grey255 colortable */
 	G_init_colors(&colors);
 	G_read_fp_range(band_out, G_mapset(), &range);
@@ -559,7 +569,7 @@ int main(int argc, char *argv[])
 	G_make_grey_scale_fp_colors(&colors, min, max);
 	G_write_colors(band_out, G_mapset(), &colors);
 
-	/* Initialize the 'hist' structure with basic info */
+	/* Initialize the 'history' structure with basic info */
 	G_short_history(band_out, "raster", &history);
 	sprintf(history.edhist[0], " %s of Landsat-%d %s (method %s)",
 		(frad->
@@ -568,51 +578,55 @@ int main(int argc, char *argv[])
 					"Reflectance")), lsat.number,
 		lsat.sensor, metho->answer);
 	sprintf(history.edhist[1],
-		"----------------------------------------------------------------");
+		"-----------------------------------------------------------------");
 	sprintf(history.edhist[2],
-		" Acquisition date ...................... %s", lsat.date);
+		" Acquisition date (and time) ........... %s (%.4lf h)",
+		lsat.date, lsat.time);
 	sprintf(history.edhist[3],
 		" Production date ....................... %s\n",
 		lsat.creation);
 	sprintf(history.edhist[4],
-		" Earth-sun distance (d) ................ %.8lf",
+		" Earth-sun distance (d) ................ %.7lf",
 		lsat.dist_es);
 	sprintf(history.edhist[5],
+		" Sun elevation (and azimuth) ........... %.5lf (%.5lf)",
+		lsat.sun_elev, lsat.sun_az);
+	sprintf(history.edhist[6],
 		" Digital number (DN) range ............. %.0lf to %.0lf",
 		lsat.band[i].qcalmin, lsat.band[i].qcalmax);
-	sprintf(history.edhist[6],
-		" Calibration constants (Lmin to Lmax) .. %+.3lf to %+.3lf",
-		lsat.band[i].lmin, lsat.band[i].lmax);
 	sprintf(history.edhist[7],
+		" Calibration constants (Lmin to Lmax) .. %+.5lf to %+.5lf",
+		lsat.band[i].lmin, lsat.band[i].lmax);
+	sprintf(history.edhist[8],
 		" DN to Radiance (gain and bias) ........ %+.5lf and %+.5lf",
 		lsat.band[i].gain, lsat.band[i].bias);
 	if (lsat.band[i].thermal) {
-	    sprintf(history.edhist[8],
+	    sprintf(history.edhist[9],
 		    " Temperature (K1 and K2) ............... %.3lf and %.3lf",
 		    lsat.band[i].K1, lsat.band[i].K2);
-	    history.edlinecnt = 9;
+	    history.edlinecnt = 10;
 	}
 	else {
-	    sprintf(history.edhist[8],
+	    sprintf(history.edhist[9],
 		    " Mean solar irradiance (ESUN) .......... %.3lf",
 		    lsat.band[i].esun);
-	    sprintf(history.edhist[9],
-		    " Reflectance = Radiance divided by ..... %.5lf",
+	    sprintf(history.edhist[10],
+		    " Radiance to Reflectance (divide by) ... %+.5lf",
 		    lsat.band[i].K1);
-	    history.edlinecnt = 10;
+	    history.edlinecnt = 11;
 	    if (method > DOS) {
-		sprintf(history.edhist[10], " ");
-		sprintf(history.edhist[11],
+		sprintf(history.edhist[11], " ");
+		sprintf(history.edhist[12],
 			" Dark object (%4d pixels) DN = ........ %d", pixel,
 			dn_dark[i]);
-		sprintf(history.edhist[12],
+		sprintf(history.edhist[13],
 			" Mode in reflectance histogram ......... %.5lf",
 			ref_mode);
-		history.edlinecnt = 13;
+		history.edlinecnt = 14;
 	    }
 	}
 	sprintf(history.edhist[history.edlinecnt],
-		"-----------------------------------------------------------------");
+		"------------------------------------------------------------------");
 	history.edlinecnt++;
 
 	G_command_history(&history);
@@ -625,7 +639,7 @@ int main(int argc, char *argv[])
 	else
 	    G_write_raster_units(band_out, "unitless");
 
-	/* set raster timestamp from acq date? (see r.timestamp module) */
+	/*  set raster timestamp from acq date? (see r.timestamp module)  */
     }
 
     exit(EXIT_SUCCESS);
