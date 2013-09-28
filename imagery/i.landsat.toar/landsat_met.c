@@ -12,7 +12,7 @@
 #define PI  M_PI
 #define D2R M_PI/180.
 
-#define MAX_STR         127
+#define MAX_STR         256
 #define METADATA_SIZE   65535	/* MTL.txt file size  65535 bytes */
 #define TM5_MET_SIZE    28700	/* .met file size 28686 bytes */
 
@@ -24,6 +24,15 @@ inline void chrncpy(char *dest, char src[], int n)
     for (i = 0; i < n && src[i] != '\0' && src[i] != '\"'; i++)
 	dest[i] = src[i];
     dest[i] = '\0';
+}
+
+inline void date_replace_slash(char *str)
+{
+    while (*str) {
+	if (*str == '/')
+	    *str = '-';
+	*str++;
+    }
 }
 
 void get_metformat(const char metadata[], char *key, char value[])
@@ -77,12 +86,13 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
     void (*get_mtldata) (const char[], char *, char[]);
     int i, j, ver_mtl;
 
+    /* store metadata in ram */
     if ((f = fopen(metafile, "r")) == NULL)
 	G_fatal_error(_("Metadata file <%s> not found"), metafile);
-
     i = fread(mtldata, METADATA_SIZE, 1, f);
+    (void)fclose(f);
 
-    /* get version of the metadata file */
+    /* set version of the metadata file */
     get_mtldata =
 	(strstr(mtldata, " VALUE ") != NULL) ? get_metformat : get_mtlformat;
     ver_mtl = (strstr(mtldata, "QCALMAX_BAND") != NULL) ? 0 : 1;
@@ -92,7 +102,6 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
     if (value[0] == '\0') {
 	get_mtldata(mtldata, "PLATFORMSHORTNAME", value);
     }
-
     i = 0;
     while (value[i] && (value[i] < '0' || value[i] > '9'))
 	i++;
@@ -111,8 +120,10 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	    get_mtldata(mtldata, "CALENDARDATE", value);
 	}
     }
-    if (value[0] != '\0')
+    if (value[0] != '\0') {
+	date_replace_slash(value);
 	chrncpy(lsat->date, value, 10);
+    }
     else
 	G_warning("Using adquisition date from the command line 'date'");
 
@@ -123,8 +134,10 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	    get_mtldata(mtldata, "PRODUCTIONDATETIME", value);
 	}
     }
-    if (value[0] != '\0')
+    if (value[0] != '\0') {
+	date_replace_slash(value);
 	chrncpy(lsat->creation, value, 10);
+    }
     else
 	G_warning
 	    ("Using production date from the command line 'product_date'");
@@ -132,7 +145,7 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
     get_mtldata(mtldata, "SUN_AZIMUTH", value);
     lsat->sun_az = atof(value);
     if (lsat->sun_az == 0.)
-        G_warning("Sun azimuth is %f", lsat->sun_az);
+	G_warning("Sun azimuth is %f", lsat->sun_az);
 
     get_mtldata(mtldata, "SUN_ELEVATION", value);
     if (value[0] == '\0') {
@@ -144,14 +157,14 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 
     get_mtldata(mtldata, "SCENE_CENTER_TIME", value);
     if (value[0] == '\0') {
-        get_mtldata(mtldata, "SCENE_CENTER_SCAN_TIME", value);
+	get_mtldata(mtldata, "SCENE_CENTER_SCAN_TIME", value);
     }
-    /* Remove trailing 'z'*/
-    value[strlen(value) - 1]='\0';
-    /* Cast from hh:mm:ss into hh.hhh*/
-    G_llres_scan(value, &lsat->time);
+    if (value[0] != '\0') {
+	value[strlen(value) - 1] = '\0';	/* Remove trailing 'z' */
+	G_llres_scan(value, &lsat->time);	/* Cast from hh:mm:ss into hh.hhh */
+    }
     if (lsat->time == 0.)
-        G_warning("Time is %f", lsat->time);
+	G_warning("Scene time is %f", lsat->time);
 
     /* Fill the data with the basic/default sensor parameters */
     switch (lsat->number) {
@@ -195,9 +208,8 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	    break;
 	}
     case 8:
-	set_LDCM(lsat);
+	set_OLI(lsat);
 	break;
-
     default:
 	G_warning("Unable to recognize satellite platform [%d]",
 		  lsat->number);
@@ -206,7 +218,7 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 
     /* Update the information from metadata file, if infile */
     if (get_mtldata == get_mtlformat) {
-	if (ver_mtl == 0) {	/* now MTLold.txt */
+	if (ver_mtl == 0) {
 	    G_verbose_message("Metada file is MTL file: old format");
 	    for (i = 0; i < lsat->bands; i++) {
 		sprintf(key, "LMAX_BAND%d", lsat->band[i].code);
@@ -223,14 +235,38 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 		lsat->band[i].qcalmin = atof(value);
 	    }
 	}
-	else {			/* now MTL.txt */
-
+	else {
 	    G_verbose_message("Metada file is MTL file: new format");
+	    /* Other possible values in the metadata file */
+	    get_mtldata(mtldata, "EARTH_SUN_DISTANCE", value);	/* used after in calculus after */
+	    if (value[0] != '\0')
+		lsat->dist_es = atof(value);
+	    /* ----- */
+	    char *fmt_radmu[] =
+		{ "RADIANCE_MULTIPLICATIVE_FACTOR_BAND%d",
+    "RADIANCE_MULT_BAND_%d" };
+	    char *fmt_radad[] =
+		{ "RADIANCE_ADDITIVE_FACTOR_BAND%d", "RADIANCE_ADD_BAND_%d" };
+	    char *fmt_k1cte[] =
+		{ "K1_CONSTANT_BAND%d", "K1_CONSTANT_BAND_%d" };
+	    char *fmt_k2cte[] =
+		{ "K2_CONSTANT_BAND%d", "K2_CONSTANT_BAND_%d" };
+	    char *fmt_refmu[] =
+		{ "REFLECTANCE_MULTIPLICATIVE_FACTOR_BAND%d",
+    "REFLECTANCE_MULT_BAND_%d" };
+	    char *fmt_refad[] =
+		{ "REFLECTANCE_ADDITIVE_FACTOR_BAND%d",
+    "REFLECTANCE_ADD_BAND_%d" };
+	    /* --NASA-- LDCM sample file: mode = 0; LDCM-DFCB-004.pdf file: mode = 1 */
+	    int mode =
+		(strstr(mtldata, "RADIANCE_MULTIPLICATIVE_FACTOR_BAND") !=
+		 NULL) ? 0 : 1;
+	    /* ----- */
 	    if (strstr(mtldata, "RADIANCE_MAXIMUM_BAND") != NULL) {
 		G_verbose_message
 		    ("RADIANCE & QUANTIZE from data of the metadata file");
 		for (i = 0; i < lsat->bands; i++) {
-		    if (lsat->band[i].thermal && lsat->number == 7) {
+		    if (lsat->number == 7 && lsat->band[i].thermal) {
 			sprintf(key, "RADIANCE_MAXIMUM_BAND_6_VCID_%d",
 				lsat->band[i].code - 60);
 			get_mtldata(mtldata, key, value);
@@ -266,29 +302,20 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 			get_mtldata(mtldata, key, value);
 			lsat->band[i].qcalmin = atof(value);
 		    }
+		    /* other possible values of each band */
+		    if (lsat->band[i].thermal) {
+			sprintf(key, fmt_k1cte[mode], lsat->band[i].code);
+			get_mtldata(mtldata, key, value);
+			lsat->band[i].K1 = atof(value);
+			sprintf(key, fmt_k2cte[mode], lsat->band[i].code);
+			get_mtldata(mtldata, key, value);
+			lsat->band[i].K2 = atof(value);
+		    }
 		}
 	    }
 	    else {
 		G_verbose_message
 		    ("RADIANCE & QUANTIZE from radiometric rescaling group of the metadata file");
-		/* from LDCM sample file: mode = 0; from LDCM-DFCB-004.pdf file: mode = 1 */
-		int mode =
-		    (strstr(mtldata, "RADIANCE_MULTIPLICATIVE_FACTOR_BAND") !=
-		     NULL) ? 0 : 1;
-		char *fmt_radmu[] =
-		    { "RADIANCE_MULTIPLICATIVE_FACTOR_BAND%d",
-	"RADIANCE_MULT_BAND_%d" };
-		char *fmt_radad[] =
-		    { "RADIANCE_ADDITIVE_FACTOR_BAND%d",
-	"RADIANCE_ADD_BAND_%d" };
-		char *fmt_k1cte[] =
-		    { "K1_CONSTANT_BAND%d", "K1_CONSTANT_BAND_%d" };
-		char *fmt_k2cte[] =
-		    { "K2_CONSTANT_BAND%d", "K2_CONSTANT_BAND_%d" };
-		char *fmt_refad[] =
-		    { "REFLECTANCE_ADDITIVE_FACTOR_BAND%d",
-	"REFLECTANCE_ADD_BAND_%d" };
-
 		for (i = 0; i < lsat->bands; i++) {
 		    sprintf(key, fmt_radmu[mode], lsat->band[i].code);
 		    get_mtldata(mtldata, key, value);
@@ -296,17 +323,14 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 		    sprintf(key, fmt_radad[mode], lsat->band[i].code);
 		    get_mtldata(mtldata, key, value);
 		    lsat->band[i].bias = atof(value);
-		    /* reverse to calculate the original values */
-		    lsat->band[i].qcalmax =
-			(lsat->number < 8 ? 255. : 65535.);
-		    lsat->band[i].qcalmin = 1.;
+		    /* reversing to calculate the values of Lmin and Lmax ... */
 		    lsat->band[i].lmin =
 			lsat->band[i].gain * lsat->band[i].qcalmin +
 			lsat->band[i].bias;
 		    lsat->band[i].lmax =
 			lsat->band[i].gain * lsat->band[i].qcalmax +
 			lsat->band[i].bias;
-		    /* ----- */
+		    /* ... qcalmax and qcalmin loaded in previous sensor_ function */
 		    if (lsat->number == 8) {
 			if (lsat->band[i].thermal) {
 			    sprintf(key, fmt_k1cte[mode], lsat->band[i].code);
@@ -317,34 +341,32 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 			    lsat->band[i].K2 = atof(value);
 			}
 			else {
-			    lsat->band[i].K1 = 0.;
-			    /* ESUN from metadafa file: bias/K2 seem better than gain/K1 */
+			    sprintf(key, fmt_refmu[mode], lsat->band[i].code);
+			    get_mtldata(mtldata, key, value);
+			    lsat->band[i].K1 = atof(value);
 			    sprintf(key, fmt_refad[mode], lsat->band[i].code);
 			    get_mtldata(mtldata, key, value);
 			    lsat->band[i].K2 = atof(value);
+			    /* ESUN evaluates from metadafa file */
 			    lsat->band[i].esun =
 				(double)(PI * lsat->dist_es * lsat->dist_es *
-					 lsat->band[i].bias) / (sin(D2R *
-								    lsat->
-								    sun_elev)
-								*
-								lsat->band[i].
-								K2);
+					 lsat->band[i].bias) /
+				lsat->band[i].K2;
+			    /*
+			       double esun1 = (double) (PI * lsat->dist_es * lsat->dist_es * lsat->band[i].bias) / lsat->band[i].K2;
+			       double esun2 = (double) (PI * lsat->dist_es * lsat->dist_es * lsat->band[i].gain) / lsat->band[i].K1;
+			       lsat->band[i].esun = (esun1 + esun2) / 2.;
+			     */
 			}
 		    }
 		}
-	    }
-	    /* Other possible values in file */
-	    get_mtldata(mtldata, "EARTH_SUN_DISTANCE", value);
-	    if (value[0] != '\0') {
-		lsat->dist_es = atof(value);
-		G_verbose_message
+		G_warning
 		    ("ESUN evaluate from REFLECTANCE_ADDITIVE_FACTOR_BAND of the metadata file");
 	    }
 	}
     }
     else {
-	G_verbose_message("Metada file is MET file");
+	G_verbose_message("Metadata file is MET file");
 	G_verbose_message
 	    ("RADIANCE & QUANTIZE from band setting of the metadata file");
 	for (i = 0; i < lsat->bands; i++) {
@@ -374,6 +396,5 @@ void lsat_metadata(char *metafile, lsat_data * lsat)
 	}
     }
 
-    (void)fclose(f);
     return;
 }
