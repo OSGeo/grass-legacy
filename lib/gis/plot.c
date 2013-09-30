@@ -24,7 +24,7 @@ static struct Cell_head window;
 static int fastline(double, double, double, double);
 static int slowline(double, double, double, double);
 static int plot_line(double, double, double, double, int (*)());
-static double nearest(double, double);
+static double wrap_east(double, double);
 static int edge(double, double, double, double);
 static int edge_point(double, int);
 
@@ -386,7 +386,7 @@ static int npalloc = 0;
 #define NO_MEMORY 1
 #define OUT_OF_SYNC -1
 
-static double nearest(double e0, double e1)
+static double wrap_east(double e0, double e1)
 {
     while (e0 - e1 > 180)
 	e1 += 360.0;
@@ -444,7 +444,7 @@ int G_plot_polygon(const double *x, const double *y, int n)
 	    return NO_MEMORY;
 
 	for (i = 0; i < n; i++) {
-	    e1 = nearest(e0, x[i]);
+	    e1 = wrap_east(e0, x[i]);
 	    if (e1 > E)
 		E = e1;
 	    if (e1 < W)
@@ -584,7 +584,7 @@ int G_plot_area(double *const *xs, double *const *ys, int *rpnts, int rings)
 		return NO_MEMORY;
 
 	    for (i = 0; i < n; i++) {
-		e1 = nearest(e0, x[i]);
+		e1 = wrap_east(e0, x[i]);
 		if (e1 > E)
 		    E = e1;
 		if (e1 < W)
