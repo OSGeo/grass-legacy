@@ -658,7 +658,8 @@ dnl AC_CHECK_TOOL(AR, ar)
 		fi
 		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
 	    else
-		SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
+		#SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
+		SHLIB_LD="$CC -shared"
 		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 		GRASS_NEEDS_EXP_FILE=1
@@ -697,7 +698,8 @@ dnl AC_CHECK_TOOL(AR, ar)
 		    SHLIB_LD_FLAGS="-b64"
 		fi
 	    fi
-	    SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
+	    #SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
+	    SHLIB_LD="$CC -shared"
 
 	    # On AIX <=v4 systems, libbsd.a has to be linked in to support
 	    # non-blocking file IO.  This library has to be linked in after
