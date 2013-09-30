@@ -335,6 +335,8 @@ int main(int argc, char *argv[])
 	    G_set_window(&cellhd);
 
 	    in_data_type = G_raster_map_type(band_in, mapset);
+	    if (in_data_type < 0)
+	        G_fatal_error(_("Unable to read data type of raster map <%s>"), band_in);
 	    inrast = G_allocate_raster_buf(in_data_type);
 
 	    nrows = G_window_rows();
@@ -356,6 +358,10 @@ int main(int argc, char *argv[])
 		    case DCELL_TYPE:
 			ptr = (void *)((DCELL *) inrast + col);
 			q = (int)*((DCELL *) ptr);
+			break;
+		   default:
+		        ptr = NULL;
+		        q = -1.;
 			break;
 		    }
 		    if (!G_is_null_value(ptr, in_data_type) &&
@@ -470,6 +476,8 @@ int main(int argc, char *argv[])
 	if ((infd = G_open_cell_old(band_in, mapset)) < 0)
 	    G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 	in_data_type = G_raster_map_type(band_in, mapset);
+	if (in_data_type < 0)
+	    G_fatal_error(_("Unable to read data type of raster map <%s>"), band_in);
 	if (G_get_cellhd(band_in, mapset, &cellhd) < 0)
 	    G_fatal_error(_("Unable to read header of raster map <%s>"),
 			  band_in);
@@ -515,6 +523,10 @@ int main(int argc, char *argv[])
 		    ptr = (void *)((DCELL *) inrast + col);
 		    qcal = (double)((DCELL *) inrast)[col];
 		    break;
+		default:
+		  ptr = NULL;
+		  qcal = -1.;
+		  break;
 		}
 		if (G_is_null_value(ptr, in_data_type) ||
 		    qcal < lsat.band[i].qcalmin) {
