@@ -17,7 +17,7 @@
 #define TM5_MET_SIZE    28700	/* .met file size 28686 bytes */
 
 
-inline void chrncpy(char *dest, char src[], int n)
+static void chrncpy(char *dest, char src[], int n)
 {
     int i;
 
@@ -31,7 +31,7 @@ inline void date_replace_slash(char *str)
     while (*str) {
 	if (*str == '/')
 	    *str = '-';
-	*str++;
+	str++;
     }
 }
 
@@ -46,9 +46,9 @@ void get_metformat(const char metadata[], char *key, char value[])
 	if (ptr != NULL) {
 	    while (*ptr++ != '=') ;
 	    while (*ptr <= ' ')
-		*ptr++;
+		ptr++;
 	    if (*ptr == '\"')
-		*ptr++;
+		ptr++;
 	    while (i < MAX_STR && *ptr != '\"' && *ptr >= ' ')
 		value[i++] = *ptr++;
 	}
@@ -64,9 +64,9 @@ void get_mtlformat(const char metadata[], char *key, char value[])
     if (ptr != NULL) {
 	while (*ptr++ != '=') ;
 	while (*ptr <= ' ')
-	    *ptr++;
+	    ptr++;
 	if (*ptr == '\"')
-	    *ptr++;
+	    ptr++;
 	while (i < MAX_STR && *ptr != '\"' && *ptr > ' ')
 	    value[i++] = *ptr++;
     }
