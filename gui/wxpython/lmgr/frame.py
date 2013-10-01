@@ -763,6 +763,9 @@ class GMFrame(wx.Frame):
             osgeo4w = ''
         
         self.goutput.WriteCmdLog(_("System Info"))
+        # platform from UTF-8 conversion was added because of Fedora 19
+        # which has the name Schrodinger's cat (umlaut and special ' character)
+        # which appears in the platform.platform() string
         self.goutput.WriteLog("%s: %s\n"
                               "%s: %s\n"
                               "%s: %s (%s)\n"
@@ -776,7 +779,7 @@ class GMFrame(wx.Frame):
                                            gdalVersion, projVersion,
                                            platform.python_version(),
                                            wx.__version__,
-                                           _("Platform"), platform.platform(), osgeo4w),
+                                           _("Platform"), platform.platform().decode('utf8', errors='replace'), osgeo4w),
                               switchPage = True)
         self.goutput.WriteCmdLog(' ')
     
