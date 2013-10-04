@@ -58,10 +58,10 @@ int main(int argc, char *argv[])
     struct FPRange range;
     double min, max;
 
-    /* It initializes GIS environment */
+    /* initialize GIS environment */
     G_gisinit(argv[0]);
 
-    /* It initializes module */
+    /* initialize module */
     module = G_define_module();
     module->description =
 	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+/OLI");
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 	  "tm4;Landsat_4 TM;"
 	  "tm5;Landsat_5 TM;"
 	  "tm7;Landsat_7 ETM+;"
-          "oli8;Landsat_8 OLI/TIRS");
+	  "oli8;Landsat_8 OLI/TIRS");
     sensor->required = NO;	/* perhaps YES for clarity */
     sensor->guisection = _("Metadata");
 
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
     rayleigh = atof(atmo->answer);
 
     /*
-     * Data from metadata file 
+     * Data from metadata file
      */
     lsat.flag = NOMETADATAFILE;	/* Unnecessary because G_zero filled, but for sanity */
     if (met != NULL) {
@@ -306,10 +306,10 @@ int main(int argc, char *argv[])
 
     /*
        if (metho->answer[3] == '2') method = (metho->answer[4] == '\0') ? DOS2 : DOS2b;
-       else if (metho->answer[3] == '1') method = DOS1; 
-       else if (metho->answer[3] == '3') method = DOS3; 
-       else if (metho->answer[3] == '4') method = DOS4; 
-       else method = UNCORRECTED; 
+       else if (metho->answer[3] == '1') method = DOS1;
+       else if (metho->answer[3] == '3') method = DOS3;
+       else if (metho->answer[3] == '4') method = DOS4;
+       else method = UNCORRECTED;
      */
 
     for (i = 0; i < lsat.bands; i++) {
@@ -402,8 +402,8 @@ int main(int argc, char *argv[])
 
     /*
      * unnecessary or necessary with more checking as acquisition date,...
-     * if (strlen(lsat.creation) == 0) 
-     * G_fatal_error(_("Unknown production date (defined by '%s')"), pdate->key); 
+     * if (strlen(lsat.creation) == 0)
+     * G_fatal_error(_("Unknown production date (defined by '%s')"), pdate->key);
      */
 
     if (G_verbose() > G_verbose_std()) {
@@ -524,9 +524,9 @@ int main(int argc, char *argv[])
 		    qcal = (double)((DCELL *) inrast)[col];
 		    break;
 		default:
-		  ptr = NULL;
-		  qcal = -1.;
-		  break;
+		    ptr = NULL;
+		    qcal = -1.;
+		    break;
 		}
 		if (G_is_null_value(ptr, in_data_type) ||
 		    qcal < lsat.band[i].qcalmin) {
@@ -568,10 +568,10 @@ int main(int argc, char *argv[])
 
 
 	/*
-	 * needed? 
+	 * needed?
 	 * if (out_type != CELL_TYPE)
 	 * G_quantize_fp_map_range(band_out, G_mapset(), 0., 360., 0,
-	 * 360); 
+	 * 360);
 	 */
 
 	/* set grey255 colortable */
