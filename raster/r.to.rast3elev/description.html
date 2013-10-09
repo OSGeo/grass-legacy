@@ -46,14 +46,14 @@ r.to.rast3elev --o in=soils elev=elevation.10m out=volev_u -u
 # Example with multiple elevation maps.
 ## first we need three support maps
 
-r.mapcalc --o expression="one = 1" 
-r.mapcalc --o expression="two = 2" 
-r.mapcalc --o expression="three = 3" 
+r.mapcalc "one = 1" 
+r.mapcalc "two = 2" 
+r.mapcalc "three = 3" 
 
 ## Now we generate the new evelation maps
 
-r.mapcalc --o expression="elev_mid = elevation.10m - 500"
-r.mapcalc --o expression="elev_bottom = elevation.10m - 1000"
+r.mapcalc "elev_mid = elevation.10m - 500"
+r.mapcalc "elev_bottom = elevation.10m - 1000"
 
 ## Now fill the lower cells below the elevation maps with the values one, two and three
 
