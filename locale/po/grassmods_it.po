@@ -9,13 +9,14 @@
 # Stefano Costa <steko at iosa.it>, 2006.
 # Luca Delucchi <lucadeluge@gmail.com>, 2008.
 # Marco Curreli <marcocurreli at tiscali it>, 2011, 2012.
+# Anna Zanchetta <ciupava at gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-10 00:42+0200\n"
-"PO-Revision-Date: 2013-07-15 19:21+0100\n"
-"Last-Translator: Elena <elena.mezzini@gmail.com>\n"
+"PO-Revision-Date: 2013-10-15 10:08+0100\n"
+"Last-Translator: az\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -813,9 +814,7 @@ msgstr "Impossible determinare il formato del file"
 
 #: ../raster/r.cost/main.c:631
 msgid "Failed to guess site file format\n"
-msgstr ""
-"Ricerca del formato del file del sito"
-" non riuscita\n"
+msgstr "Ricerca del formato del file del sito non riuscita\n"
 
 #: ../raster/r.cost/main.c:685 ../raster/r.texture/h_measure.c:770
 #: ../imagery/i.smap/bouman/interp.c:69
@@ -902,7 +901,7 @@ msgstr ""
 #: ../raster/r.cost/btree.c:430
 #, c-format
 msgid "%s %f-%f higher cost lower"
-msgstr ""
+msgstr "%s %f-%f costo più alto più basso"
 
 #: ../raster/r.cost/btree.c:436
 #, c-format
@@ -1578,6 +1577,14 @@ msgid ""
 "USAGE for slope length determination:\n"
 "%s [-4] el=elevation_map t=swale_threshold [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
 msgstr ""
+"USO per delineazione di bacino:\n"
+"%s -4 el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] ba=watershed_basin_map [se=stream_segment_map]\n"
+"\n"
+"USO per la creazione di ARMSED FILE:\n"
+"%s [-4] el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ba=watershed_basin_map] [se=stream_segment_map] ha=half_basin_map ar=ARMSED_file_name\n"
+"\n"
+"USO per la determinazione della lunghezza della pendenza:\n"
+"%s [-4] el=elevation_map t=swale_threshold [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
 
 #: ../raster/r.watershed/seg/init_vars.c:114
 #, c-format
@@ -1726,11 +1733,11 @@ msgstr "divisi per bacino. %s poi gira %s e crea il report."
 
 #: ../raster/r.watershed/shed/valid.c:24
 msgid "accum file missing in valid_basins()"
-msgstr ""
+msgstr "manca file di accumulazione in valid_basins()"
 
 #: ../raster/r.watershed/shed/valid.c:28
 msgid "unable to open accum file in valid_basins()"
-msgstr ""
+msgstr "impossibile aprire file di accumulazione in valid_basins()"
 
 #: ../raster/r.watershed/shed/basin_maps.c:12
 msgid ""
@@ -2548,7 +2555,7 @@ msgstr ""
 #: ../raster/r.coin/inter.c:108
 #, c-format
 msgid "'%s' being saved\n"
-msgstr ""
+msgstr "'%s' viene salvato\n"
 
 #: ../raster/r.coin/inter.c:117
 #, c-format
@@ -2656,7 +2663,7 @@ msgstr "Numero di colonna dei valori dei dati nel file di input"
 
 #: ../raster/r.in.xyz/main.c:220
 msgid "Filter range for z data (min,max)"
-msgstr ""
+msgstr "Range del filtro per valori z (min,max)"
 
 #: ../raster/r.in.xyz/main.c:227
 msgid "Scale to apply to z data"
@@ -2664,7 +2671,7 @@ msgstr "Scala da applicare ai dati z"
 
 #: ../raster/r.in.xyz/main.c:242
 msgid "pth percentile of the values"
-msgstr ""
+msgstr "p-esimo percentile dei valori"
 
 #: ../raster/r.in.xyz/main.c:251
 msgid "Discard <trim> percent of the smallest and <trim> percent of the largest observations"
@@ -2688,7 +2695,7 @@ msgstr "Specificare un numero di colonna ragionevole."
 
 #: ../raster/r.in.xyz/main.c:302
 msgid "Invalid zrange"
-msgstr ""
+msgstr "Range z non valido"
 
 #: ../raster/r.in.xyz/main.c:389
 msgid "Unable to calculate percentile without the pth option specified!"
@@ -2778,7 +2785,7 @@ msgstr "raster, serie"
 
 #: ../raster/r.series/main.c:135
 msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
-msgstr ""
+msgstr "Rende ogni valore delle celle di output una funzione dei valori assegnati alle corrispondenti celle del layer raster di input."
 
 #: ../raster/r.series/main.c:149
 msgid "Aggregate operation"
@@ -2847,11 +2854,11 @@ msgstr "Distanza di output in metri invece che in unità di mappa"
 
 #: ../raster/r.grow.distance/main.c:184
 msgid "At least one of distance= and value= must be given"
-msgstr ""
+msgstr "Dev'essere assegnato almeno un valore  di distance= e value="
 
 #: ../raster/r.grow.distance/main.c:199
 msgid "metric=geodesic is only valid for lat/lon"
-msgstr ""
+msgstr "metric=geodesic è valido solo per lat/lon"
 
 #: ../raster/r.grow.distance/main.c:205 ../raster/r.grow2/main.c:199
 #, c-format
@@ -2956,15 +2963,15 @@ msgstr "Funzione solamente se la mappa è di valori interi"
 
 #: ../raster/r.null/null.c:94
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
-msgstr ""
+msgstr "Compie l'operazione solo se la mappa non ha un file bitmap NULL-value"
 
 #: ../raster/r.null/null.c:100
 msgid "Create NULL-value bitmap file validating all data cells"
-msgstr ""
+msgstr "Crea un file bitmap NULL-value che valida tutte celle di dati"
 
 #: ../raster/r.null/null.c:104
 msgid "Remove NULL-value bitmap file"
-msgstr ""
+msgstr "Rimuove file bitmap NULL-value"
 
 #: ../raster/r.null/null.c:105
 #: ../locale/scriptstrings/r.mask_to_translate.c:11
@@ -3253,7 +3260,7 @@ msgstr "Opzione <%s> richiesta"
 #: ../raster/r.sunmask/main.c:459
 #, c-format
 msgid "Unable to open range file for raster map <%s>"
-msgstr ""
+msgstr "Impossibile aprire il range del file per il raster <%s>"
 
 #: ../raster/r.sunmask/main.c:475
 msgid "Calculating shadows from DEM..."
@@ -3294,12 +3301,12 @@ msgstr "Errore nell'esecuzione di 'pj do proj' (ovvero nella coppia di coordinat
 #: ../raster/r.sunmask/solpos00.c:949
 #, c-format
 msgid "S_decode ==> Please fix the year: %d [1950-2050]"
-msgstr ""
+msgstr "S_decode ==> Prego l'anno: %d [1950-2050]"
 
 #: ../raster/r.sunmask/solpos00.c:952
 #, c-format
 msgid "S_decode ==> Please fix the month: %d"
-msgstr ""
+msgstr "S_decode ==> Prego : %d"
 
 #: ../raster/r.sunmask/solpos00.c:954
 #, c-format
@@ -5584,27 +5591,27 @@ msgstr "Mappa <%s> non valida"
 #: ../raster/r.mapcalc/expression.c:261
 #, c-format
 msgid "Undefined function '%s'"
-msgstr ""
+msgstr "Funzione '%s' non definita"
 
 #: ../raster/r.mapcalc/expression.c:266
 #, c-format
 msgid "Too few arguments (%d) to function %s()"
-msgstr ""
+msgstr "Troppi pochi argomenti  (%d) per la funzione %s()"
 
 #: ../raster/r.mapcalc/expression.c:270
 #, c-format
 msgid "Too many arguments (%d) to function %s()"
-msgstr ""
+msgstr "Troppi argomenti  (%d) per la funzione %s()"
 
 #: ../raster/r.mapcalc/expression.c:274
 #, c-format
 msgid "Incorrect argument types to function %s()"
-msgstr ""
+msgstr "Tipi di argomento per la funzione %s() non corretti"
 
 #: ../raster/r.mapcalc/expression.c:277
 #, c-format
 msgid "Internal error for function %s()"
-msgstr ""
+msgstr "Errore interno per la funzione %s()"
 
 #: ../raster/r.mapcalc/expression.c:452
 #, c-format
@@ -5630,10 +5637,21 @@ msgid ""
 " \n"
 "For more information use 'g.manual r.mapcalc'\n"
 msgstr ""
+"r.mapcalc - Calcolatore di dati di mappe raster\n"
+"\n"
+"uso: r.mapcalc '<mappa>=<espressione>'\n"
+"\n"
+"r.mapcalc svolge calcoli aritmetici su mappe raster.\n"
+"\n"
+"Possono essere create nuove mappe raster che siano espressioni aritmetiche\n"
+"di mappe raster esistenti, costanti intere o reali,\n"
+"e funzioni.\n"
+" \n"
+"Per maggiori informazioni usare 'g.manual r.mapcalc'\n"
 
 #: ../raster/r.mapcalc/main.c:142
 msgid "Floating point error(s) occured in the calculation"
-msgstr ""
+msgstr "Errore(i) di floating point avvenuti durante il calcolo"
 
 #: ../raster/r.mapcalc/main.c:147
 msgid "Overflow occured in the calculation"
@@ -7387,7 +7405,7 @@ msgstr "Attributi"
 
 #: ../raster/r.to.vect/main.c:80
 msgid "Write raster values as z coordinate. Table is not created. Currently supported only for points."
-msgstr ""
+msgstr "Scrive valori raster come coordinate z. Non viene creata una tabella. Attualmente è supportato solo per punti."
 
 #: ../raster/r.to.vect/main.c:87
 msgid "Do not build vector topology (use with care for massive point export)"
@@ -9273,39 +9291,39 @@ msgstr "Calcolo dell'angolo dell'orizzonte da un modello digitale di elevazione.
 
 #: ../raster/r.horizon/main.c:181
 msgid "Computes horizon angle height from a digital elevation model. The module has two different modes of operation:  1. Computes the entire horizon around a single point whose coordinates are given with the 'coord' option. The horizon height (in radians). 2. Computes one or more raster maps of the horizon height in a single direction.  The input for this is the angle (in degrees), which is measured  counterclockwise with east=0, north=90 etc. The output is the horizon height in radians."
-msgstr ""
+msgstr "Calcola l'angolo dell'altezza dell'orizzonte da un modello di elevazione digitiale. Il modulo ha due modalità di operare: 1. Calcola l'intero orizzonte attorno ad un singolo punto le cui coordinate sono date con l'opzione 'coord'. Altezza dell'orizzonte (in radianti). 2. Calcola una o due mappe raster dell'altezza dell'orizzonte in una singola direzione. L'input per questo è l'angolo (in gradi), che è misurato in senso antiorario con est=0, nord=90 etc. L'output è l'altezza dell'orizzonte in radianti."
 
 #: ../raster/r.horizon/main.c:234
 msgid "Direction in which you want to know the horizon height"
-msgstr ""
+msgstr "Direzione lungo la quale vuoi conoscere l'altezza dell'orizzonte."
 
 #: ../raster/r.horizon/main.c:250
 msgid "For horizon rasters, read from the DEM an extra buffer around the present region"
-msgstr ""
+msgstr "Per raster di orizzonte, legge dal DEM un buffer extra attorno alla presente regione"
 
 #: ../raster/r.horizon/main.c:258
 msgid "For horizon rasters, read from the DEM an extra buffer eastward the present region"
-msgstr ""
+msgstr "Per raster di orizzonte, legge dal DEM un buffer extra in direzione est attorno alla presente regione"
 
 #: ../raster/r.horizon/main.c:266
 msgid "For horizon rasters, read from the DEM an extra buffer westward the present region"
-msgstr ""
+msgstr "Per raster di orizzonte, legge dal DEM un buffer extra in direzione ovest attorno alla presente regione"
 
 #: ../raster/r.horizon/main.c:274
 msgid "For horizon rasters, read from the DEM an extra buffer northward the present region"
-msgstr ""
+msgstr "Per raster di orizzonte, legge dal DEM un buffer extra in direzione nord attorno alla presente regione"
 
 #: ../raster/r.horizon/main.c:282
 msgid "For horizon rasters, read from the DEM an extra buffer southward the present region"
-msgstr ""
+msgstr "Per raster di orizzonte, legge dal DEM un buffer extra in direzione sud attorno alla presente regione"
 
 #: ../raster/r.horizon/main.c:290
 msgid "The maximum distance to consider when finding the horizon height"
-msgstr ""
+msgstr "La massima distanza da considerare nel trovare l'altezza dell'orizzonte"
 
 #: ../raster/r.horizon/main.c:299
 msgid "Prefix of the horizon raster output maps"
-msgstr ""
+msgstr "Prefisso delle mappe raster di orizzonte in output"
 
 #: ../raster/r.horizon/main.c:309
 msgid "Coordinate for which you want to calculate the horizon"
@@ -22229,7 +22247,7 @@ msgstr ""
 
 #: ../imagery/i.points/main.c:98
 msgid "Mark ground control points on image to be rectified."
-msgstr ""
+msgstr "Marca i punti di controllo a terra (GCP) sull'immagine da rettificare."
 
 #: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
 msgid "imagery, map management"
