@@ -909,7 +909,7 @@ class DisplayDriver:
                                                           subkey = 'value'))
                 continue
             
-            color = wx.Color(UserSettings.Get(group = 'vdigit', key = 'symbol',
+            color = wx.Colour(UserSettings.Get(group = 'vdigit', key = 'symbol',
                                               subkey = [key, 'color'])[0],
                              UserSettings.Get(group = 'vdigit', key = 'symbol',
                                               subkey = [key, 'color'])[1],

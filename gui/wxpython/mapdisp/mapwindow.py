@@ -320,7 +320,8 @@ class BufferedWindow(MapWindow, wx.Window):
         dc.Clear()
         
         # use PrepareDC to set position correctly
-        self.PrepareDC(dc)
+        # probably does nothing, removed from wxPython 2.9
+        # self.PrepareDC(dc)
         
         # create a clipping rect from our position and size
         # and update region
@@ -473,7 +474,8 @@ class BufferedWindow(MapWindow, wx.Window):
             
         dc = wx.BufferedDC(None, ibuffer)
         dc.Clear()
-        self.PrepareDC(dc)
+        # probably does nothing, removed from wxPython 2.9
+        # self.PrepareDC(dc)
         self.pdc.DrawToDC(dc)
         if self.pdcVector:
             self.pdcVector.DrawToDC(dc)

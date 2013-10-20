@@ -86,7 +86,6 @@ class SearchModuleWindow(wx.Panel):
         """!Do layout"""
         sizer = wx.StaticBoxSizer(self.box, wx.HORIZONTAL)
         gridSizer = wx.GridBagSizer(hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(1)
         
         gridSizer.Add(item = self.searchBy,
                       flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
@@ -102,6 +101,7 @@ class SearchModuleWindow(wx.Panel):
                           flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (row, 0), span = (1, 2))
             row += 1
         
+        gridSizer.AddGrowableCol(1)
         sizer.Add(item = gridSizer, proportion = 1)
         
         self.SetSizer(sizer)
@@ -596,7 +596,8 @@ class HelpWindow(wx.html.HtmlWindow):
         in the Panel.
         """
         self.parent = parent
-        wx.InitAllImageHandlers()
+        if not globalvar.CheckWxVersion([2, 9]):
+            wx.InitAllImageHandlers()
         wx.html.HtmlWindow.__init__(self, parent = parent, **kwargs)
         
         self.loaded = False

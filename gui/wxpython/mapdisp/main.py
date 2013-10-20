@@ -45,7 +45,8 @@ monSize = list(globalvar.MAP_WINDOW_SIZE)
 
 class MapApp(wx.App):
     def OnInit(self):
-        wx.InitAllImageHandlers()
+        if not globalvar.CheckWxVersion([2, 9]):
+            wx.InitAllImageHandlers()
         if __name__ == "__main__":
             self.cmdTimeStamp = os.path.getmtime(monFile['cmd'])
             self.Map = Map(cmdfile = monFile['cmd'], mapfile = monFile['map'],
