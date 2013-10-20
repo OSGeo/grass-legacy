@@ -276,7 +276,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
         
         #
         # ask when removing map layer from layer tree
@@ -333,6 +332,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         gridSizer.Add(item = copySelectedTextToClipboard,
                       pos = (row, 0), span = (1, 2))
+        gridSizer.AddGrowableCol(0)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
@@ -344,7 +344,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
         
         row = 0
         posDisplay = wx.CheckBox(parent = panel, id = wx.ID_ANY,
@@ -380,6 +379,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         gridSizer.Add(item = defaultPos,
                       pos = (row, 0), span = (1, 2))
+        gridSizer.AddGrowableCol(0)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
@@ -405,7 +405,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
 
         #
         # font settings
@@ -425,6 +424,7 @@ class PreferencesDialog(PreferencesBaseDialog):
                       flag = wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)
 
         #
         # languages
@@ -433,7 +433,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)        
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
 
@@ -458,6 +457,7 @@ class PreferencesDialog(PreferencesBaseDialog):
                       flag = wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)        
         #
         # appearence
         #
@@ -465,7 +465,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer  =  wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
 
         #
         # element list
@@ -557,6 +556,7 @@ class PreferencesDialog(PreferencesBaseDialog):
                       flag = wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
@@ -580,7 +580,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
 
         #
         # font settings
@@ -597,6 +596,7 @@ class PreferencesDialog(PreferencesBaseDialog):
                       flag = wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)
 
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
@@ -608,7 +608,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
 
         
         #
@@ -765,6 +764,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer.Add(item = scrollDir,
                       flag = wx.ALIGN_RIGHT,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)
 
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
@@ -821,7 +821,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
         
         #
         # command dialog settings
@@ -882,6 +881,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         gridSizer.Add(item = verbosity,
                       pos = (row, 1), flag = wx.ALIGN_RIGHT)
+        gridSizer.AddGrowableCol(0)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
@@ -893,7 +893,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(0)
         
         #
         # raster overlay
@@ -930,6 +929,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         gridSizer.Add(item = rasterCTName,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(0)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
@@ -978,7 +978,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         highlightSizer = wx.StaticBoxSizer(highlightBox, wx.VERTICAL)
 
         flexSizer = wx.FlexGridSizer (cols = 2, hgap = 5, vgap = 5)
-        flexSizer.AddGrowableCol(0)
         
         label = wx.StaticText(parent = panel, id = wx.ID_ANY, label = _("Color:"))
         hlColor = csel.ColourSelect(parent = panel, id = wx.ID_ANY,
@@ -998,6 +997,7 @@ class PreferencesDialog(PreferencesBaseDialog):
 
         flexSizer.Add(label, proportion = 0, flag = wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(hlWidth, proportion = 0, flag = wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        flexSizer.AddGrowableCol(0)
 
         highlightSizer.Add(item = flexSizer,
                            proportion = 0,
@@ -1017,7 +1017,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         dataBrowserSizer = wx.StaticBoxSizer(dataBrowserBox, wx.VERTICAL)
 
         flexSizer = wx.FlexGridSizer (cols = 2, hgap = 5, vgap = 5)
-        flexSizer.AddGrowableCol(0)
         label = wx.StaticText(parent = panel, id = wx.ID_ANY, label = _("Left mouse double click:"))
         leftDbClick = wx.Choice(parent = panel, id = wx.ID_ANY,
                                 choices = self.settings.Get(group = 'atm', key = 'leftDbClick', subkey = 'choices', internal = True),
@@ -1047,6 +1046,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         self.winId['atm:askOnDeleteRec:enabled'] = askOnDeleteRec.GetId()
 
         flexSizer.Add(askOnDeleteRec, proportion = 0)
+        flexSizer.AddGrowableCol(0)
 
         dataBrowserSizer.Add(item = flexSizer,
                            proportion = 0,
@@ -1066,7 +1066,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         createTableSizer = wx.StaticBoxSizer(createTableBox, wx.VERTICAL)
 
         flexSizer = wx.FlexGridSizer (cols = 2, hgap = 5, vgap = 5)
-        flexSizer.AddGrowableCol(0)
 
         label = wx.StaticText(parent = panel, id = wx.ID_ANY,
                               label = _("Key column:"))
@@ -1077,6 +1076,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         flexSizer.Add(label, proportion = 0, flag = wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(keyColumn, proportion = 0, flag = wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        flexSizer.AddGrowableCol(0)
 
         createTableSizer.Add(item = flexSizer,
                              proportion = 0,
@@ -1107,7 +1107,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(1)
 
         # note for users expecting on-the-fly data reprojection
         row = 0
@@ -1187,6 +1186,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer.Add(item = epsgLoad,
                       flag = wx.ALIGN_RIGHT,
                       pos = (row, 1))
+        gridSizer.AddGrowableCol(1)
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
         border.Add(item = sizer, proportion = 0, flag = wx.ALL | wx.EXPAND, border = 3)
@@ -1198,7 +1198,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         
         gridSizer = wx.GridBagSizer (hgap = 3, vgap = 3)
-        gridSizer.AddGrowableCol(2)
 
         row = 0
         # ll format
@@ -1229,6 +1228,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer.Add(item = precision,
                       flag = wx.ALIGN_CENTER_VERTICAL,
                       pos = (row, 2))
+        gridSizer.AddGrowableCol(2)
         
         
         sizer.Add(item = gridSizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 5)
@@ -1416,7 +1416,6 @@ class DefaultFontDialog(wx.Dialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         gridSizer = wx.GridBagSizer (hgap = 5, vgap = 5)
-        gridSizer.AddGrowableCol(0)
 
         label = wx.StaticText(parent = panel, id = wx.ID_ANY,
                               label = _("Select font:"))
@@ -1481,6 +1480,7 @@ class DefaultFontDialog(wx.Dialog):
         if self.font:
             self.fontlb.SetStringSelection(self.font, True)
 
+        gridSizer.AddGrowableCol(0)
         sizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.EXPAND | wx.ALL,
                   border = 5)

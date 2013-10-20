@@ -44,7 +44,7 @@ def CheckForWx():
         return
     
     minVersion = [2, 8, 1, 1]
-    unsupportedVersion = [2, 9, 0, 0]
+
     try:
         try:
             import wxversion
@@ -57,9 +57,7 @@ def CheckForWx():
         
         if map(int, version.split('.')) < minVersion:
             raise ValueError('Your wxPython version is %s.%s.%s.%s' % tuple(version.split('.')))
-        if map(int, version.split('.')) >= unsupportedVersion:
-            print >> sys.stderr, 'ERROR: wxGUI does not support wxPython %s yet.' % version
-            sys.exit(1)
+
     except ImportError, e:
         print >> sys.stderr, 'ERROR: wxGUI requires wxPython. %s' % str(e)
         sys.exit(1)

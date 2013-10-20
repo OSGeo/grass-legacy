@@ -1191,8 +1191,6 @@ class MapLayersDialog(wx.Dialog):
         
     def _createDialogBody(self):
         bodySizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        bodySizer.AddGrowableCol(1)
-        bodySizer.AddGrowableRow(3)
         
         # layer type
         bodySizer.Add(item = wx.StaticText(parent = self, label = _("Map type:")),
@@ -1257,6 +1255,8 @@ class MapLayersDialog(wx.Dialog):
                       flag = wx.EXPAND,
                       pos = (3,1), span = (1, 2))
         
+        bodySizer.AddGrowableCol(1)
+        bodySizer.AddGrowableRow(3)
         # bindings
         self.layerType.Bind(wx.EVT_CHOICE, self.OnChangeParams)
         self.mapset.Bind(wx.EVT_COMBOBOX, self.OnChangeParams)

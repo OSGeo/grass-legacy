@@ -1303,8 +1303,6 @@ class GdalSelect(wx.Panel):
         inputSizer = wx.StaticBoxSizer(self.inputBox, wx.HORIZONTAL)
         
         self.dsnSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        #self.dsnSizer.AddGrowableRow(0)
-        self.dsnSizer.AddGrowableCol(3)
         
         row = 0
         self.dsnSizer.Add(item = wx.StaticText(parent = self, id = wx.ID_ANY,
@@ -1337,6 +1335,7 @@ class GdalSelect(wx.Panel):
                               flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                               pos = (row, 1), span = (1, 3))
             row += 1
+        self.dsnSizer.AddGrowableCol(3)
         
         inputSizer.Add(item=self.dsnSizer, proportion = 1,
                        flag=wx.EXPAND | wx.BOTTOM, border = 10)
@@ -1480,14 +1479,17 @@ class GdalSelect(wx.Panel):
         return data
 
     def OnSetType(self, event, sel = None):
-        """!Datasource type changed"""
+        """!Datasource type changed.
+
+        @todo improve showing/hiding widgets        
+        """
         if event:
             sel = event.GetSelection()
         else:
             self.source.SetSelection(sel)
         win = self.input[self.dsnType][1]
         if win:
-            self.dsnSizer.Remove(win)
+            self.dsnSizer.Detach(win)
             win.Hide()
         
         if sel == self.sourceMap['file']:   # file
@@ -1668,7 +1670,7 @@ class GdalSelect(wx.Panel):
             return
         
         win = self.input[self.dsnType][1]
-        self.dsnSizer.Remove(win)
+        self.dsnSizer.Detach(win)
         
         if self.dsnType == 'file':
             win.Destroy()

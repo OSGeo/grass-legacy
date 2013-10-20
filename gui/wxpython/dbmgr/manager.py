@@ -770,7 +770,6 @@ class AttributeManager(wx.Frame):
                                         label = "")
 
             sqlFlexSizer = wx.FlexGridSizer (cols = 3, hgap = 5, vgap = 5)
-            sqlFlexSizer.AddGrowableCol(1)
 
             sqlFlexSizer.Add(item = sqlSimple,
                              flag = wx.ALIGN_CENTER_VERTICAL)
@@ -794,6 +793,7 @@ class AttributeManager(wx.Frame):
                              flag = wx.EXPAND)
             sqlFlexSizer.Add(item = btnSqlBuilder,
                              flag = wx.ALIGN_RIGHT)
+            sqlFlexSizer.AddGrowableCol(1)
 
             sqlSizer.Add(item = sqlFlexSizer,
                          flag = wx.ALL | wx.EXPAND,
@@ -2517,7 +2517,6 @@ class LayerBook(wx.Notebook):
                 
         # data area
         dataSizer = wx.GridBagSizer(hgap = 5, vgap = 5)
-        dataSizer.AddGrowableCol(1)
         row = 0
         for key in ('layer', 'driver', 'database', 'table', 'key', 'addCat'):
             label, value = self.addLayerWidgets[key]
@@ -2542,6 +2541,7 @@ class LayerBook(wx.Notebook):
                           flag = style, pos = (row, 1))
             
             row += 1
+        dataSizer.AddGrowableCol(1)
         
         layerSizer.Add(item = dataSizer,
                        proportion = 1,
@@ -2571,13 +2571,13 @@ class LayerBook(wx.Notebook):
                 
         # data area
         dataSizer = wx.FlexGridSizer(cols = 2, hgap = 5, vgap = 5)
-        dataSizer.AddGrowableCol(1)
         for key in ['table', 'key']:
             label, value = self.tableWidgets[key]
             dataSizer.Add(item = label,
                           flag = wx.ALIGN_CENTER_VERTICAL)
             dataSizer.Add(item = value,
                           flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        dataSizer.AddGrowableCol(1)
 
         tableSizer.Add(item = dataSizer,
                        proportion = 1,
@@ -2643,12 +2643,12 @@ class LayerBook(wx.Notebook):
         dataSizer = wx.BoxSizer(wx.VERTICAL)
 
         flexSizer = wx.FlexGridSizer(cols = 2, hgap = 5, vgap = 5)
-        flexSizer.AddGrowableCol(2)
 
         flexSizer.Add(item = label,
                       flag = wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item = self.deleteLayer,
                       flag = wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.AddGrowableCol(1)
 
         dataSizer.Add(item = flexSizer,
                       proportion = 0,
@@ -2758,7 +2758,6 @@ class LayerBook(wx.Notebook):
 
         # data area
         dataSizer = wx.FlexGridSizer(cols = 2, hgap = 5, vgap = 5)
-        dataSizer.AddGrowableCol(1)
         for key in ('layer', 'driver', 'database', 'table', 'key'):
             label, value = self.modifyLayerWidgets[key]
             dataSizer.Add(item = label,
@@ -2769,6 +2768,7 @@ class LayerBook(wx.Notebook):
             else:
                 dataSizer.Add(item = value,
                               flag = wx.ALIGN_CENTER_VERTICAL)
+        dataSizer.AddGrowableCol(1)
 
         pageSizer.Add(item = dataSizer,
                       proportion = 1,
