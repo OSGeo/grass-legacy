@@ -325,7 +325,6 @@ class NvizToolWindow(FN.FlatNotebook):
                       flag = wx.TOP|wx.BOTTOM|wx.RIGHT| wx.ALIGN_RIGHT,
                       border = 5)
         
-        gridSizer.AddGrowableCol(2)
         gridSizer.Add(item = viewSizer, pos = (4, 0), span = (1, 3),
                       flag = wx.EXPAND)
         
@@ -340,7 +339,6 @@ class NvizToolWindow(FN.FlatNotebook):
                            label = " %s " % (_("Image Appearance")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(0)
         
         # background color
         self.win['view']['background'] = {}
@@ -355,6 +353,7 @@ class NvizToolWindow(FN.FlatNotebook):
         self.win['view']['background']['color'] = color.GetId()
         color.Bind(csel.EVT_COLOURSELECT, self.OnBgColor)
         gridSizer.Add(item = color, pos = (0, 1))
+        gridSizer.AddGrowableCol(0)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.ALL | wx.EXPAND, border = 3)
@@ -671,7 +670,6 @@ class NvizToolWindow(FN.FlatNotebook):
                             label = " %s " % (_("Draw")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(3)
         
         # mode
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
@@ -763,6 +761,7 @@ class NvizToolWindow(FN.FlatNotebook):
         self.win['surface']['draw']['res-fine'] = resF.GetId()
         resF.Bind(wx.EVT_SPINCTRL, self.OnSurfaceResolution)
         gridSizer.Add(item = resF, pos = (1, 2), flag = wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT)
+        gridSizer.AddGrowableCol(3)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.ALL | wx.EXPAND, border = 3)
@@ -777,7 +776,6 @@ class NvizToolWindow(FN.FlatNotebook):
                             label = " %s " % (_("Surface attributes")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(2)
         
         # type 
         self.win['surface']['attr'] = {}
@@ -840,6 +838,7 @@ class NvizToolWindow(FN.FlatNotebook):
                                  attrb = code) # -> enable map / disable constant
                 
             row += 1
+        gridSizer.AddGrowableCol(2)
         boxSizer.Add(item = gridSizer, proportion = 0,
                   flag = wx.ALL | wx.EXPAND, border = 3)
         pageSizer.Add(item = boxSizer, proportion = 0,
@@ -853,7 +852,6 @@ class NvizToolWindow(FN.FlatNotebook):
                             label = " %s " % (_("Position")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(3)
         
         # position
         tooltip = _("Changes the x, y, and z position of the current surface")
@@ -883,6 +881,7 @@ class NvizToolWindow(FN.FlatNotebook):
         gridSizer.Add(item = pslide, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 1))
         gridSizer.Add(item = ptext, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 2))
         gridSizer.Add(item = reset, flag = wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, pos = (0, 3))
+        gridSizer.AddGrowableCol(3)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.ALL | wx.EXPAND, border = 3)
@@ -1207,7 +1206,6 @@ class NvizToolWindow(FN.FlatNotebook):
                             label = " %s " % (_("Vector lines")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
-        gridSizer.AddGrowableCol(5)
         
         # width
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
@@ -1282,6 +1280,7 @@ class NvizToolWindow(FN.FlatNotebook):
         gridSizer.Add(item = self.FindWindowById(self.win['vector']['lines']['height']['text']),
                       pos = (4, 5),
                       flag = wx.ALIGN_CENTER)
+        gridSizer.AddGrowableCol(5)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                      flag = wx.ALL | wx.EXPAND, border = 3)
@@ -1308,10 +1307,6 @@ class NvizToolWindow(FN.FlatNotebook):
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         vertSizer = wx.BoxSizer(wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
-        gridSizer.AddGrowableCol(0)
-        gridSizer.AddGrowableCol(2)
-        gridSizer.AddGrowableCol(4)
-        gridSizer.AddGrowableCol(6)
         
         # icon size
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
@@ -1379,6 +1374,10 @@ class NvizToolWindow(FN.FlatNotebook):
         gridSizer.Add(item = isym, flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
                       pos = (0, 6))
         
+        gridSizer.AddGrowableCol(0)
+        gridSizer.AddGrowableCol(2)
+        gridSizer.AddGrowableCol(4)
+        gridSizer.AddGrowableCol(6)
         vertSizer.Add(gridSizer, proportion = 0, flag = wx.EXPAND, border = 0)
         # high
         gridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
@@ -1390,6 +1389,7 @@ class NvizToolWindow(FN.FlatNotebook):
         display.Bind(wx.EVT_CHOICE, self.OnVectorPointsMode)
         gridSizer.Add(item=display,
                       pos=(0, 1), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
                                          label = _("Height above surface:")),
                       pos = (1, 2), flag = wx.ALIGN_CENTER_VERTICAL)
@@ -1588,7 +1588,6 @@ class NvizToolWindow(FN.FlatNotebook):
                             label = " %s " % (_("Position")))
         boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(3)
         
         # position
         self._createControl(panel, data = self.win['volume'], name = 'position',
@@ -1617,6 +1616,7 @@ class NvizToolWindow(FN.FlatNotebook):
         gridSizer.Add(item = pslide, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 1))
         gridSizer.Add(item = ptext, flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 2))
         gridSizer.Add(item = reset, flag = wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, pos = (0, 3))
+        gridSizer.AddGrowableCol(3)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                   flag = wx.ALL | wx.EXPAND, border = 3)
@@ -2389,9 +2389,6 @@ class NvizToolWindow(FN.FlatNotebook):
         boxSizer.Add(hSizer, proportion = 0, flag = wx.ALL|wx.EXPAND, border = 3)
         
         gridSizer = wx.GridBagSizer(vgap = 3, hgap = 3)
-        gridSizer.AddGrowableCol(0,1)
-        gridSizer.AddGrowableCol(1,2)
-        gridSizer.AddGrowableCol(2,2)
         
         # text labels
         for i in range(2):
@@ -2438,6 +2435,9 @@ class NvizToolWindow(FN.FlatNotebook):
             gridSizer.Add(item = slider, pos = (4,i+1), 
                           flag = wx.ALIGN_CENTER|wx.EXPAND)
                         
+        gridSizer.AddGrowableCol(0,1)
+        gridSizer.AddGrowableCol(1,2)
+        gridSizer.AddGrowableCol(2,2)
         
         boxSizer.Add(item = gridSizer, proportion = 1,
                      flag = wx.ALL | wx.EXPAND, border = 3)
@@ -3113,14 +3113,14 @@ class NvizToolWindow(FN.FlatNotebook):
         return str(color[0]) + ':' + str(color[1]) + ':' + str(color[2])
     
     def _getColorFromString(self, color, delim = ':'):
-        """!Convert color string (R:G:B) to wx.Color
+        """!Convert color string (R:G:B) to wx.Colour
 
         @param color string
         @param delim delimiter
 
-        @return wx.Color instance
+        @return wx.Colour instance
         """
-        return wx.Color(*map(int, color.split(delim)))
+        return wx.Colour(*map(int, color.split(delim)))
     
     def _get3dRange(self, name):
         """!Gelper func for getting range of 3d map"""
@@ -4823,7 +4823,8 @@ class PositionWindow(wx.Window):
         dc.SetBackground(wx.Brush("White"))
         dc.Clear()
         
-        self.PrepareDC(dc)
+        # probably does nothing, removed from wxPython 2.9
+        # self.PrepareDC(dc)
         self.pdc.DrawToDC(dc)
         
     def UpdatePos(self, xcoord, ycoord):

@@ -963,6 +963,12 @@ class SbProgress(SbItem):
     def SetRange(self, range):
         """!Sets progress range."""
         self.widget.SetRange(range)
+        
+    def SetValue(self, value):
+        if value >= value:
+            self.widget.SetValue(self.GetRange())
+        else:
+            self.widget.SetValue(value)
     
 
 class SbGoToGCP(SbItem):

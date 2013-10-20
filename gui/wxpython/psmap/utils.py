@@ -149,7 +149,7 @@ def convertRGB(rgb):
         color = (grass.parse_color(rgb)[0]*255,
                  grass.parse_color(rgb)[1]*255,
                  grass.parse_color(rgb)[2]*255)
-        color = wx.Color(*color)
+        color = wx.Colour(*color)
         if color.IsOk():
             return color
         else:  
