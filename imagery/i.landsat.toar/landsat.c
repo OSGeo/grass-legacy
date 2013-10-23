@@ -22,7 +22,6 @@ double lsat_qcal2rad(double qcal, band_data * band)
  *****************************************************************************/
 double lsat_rad2ref(double rad, band_data * band)
 {
-    
     return (double)(rad / band->K1);
 }
 
