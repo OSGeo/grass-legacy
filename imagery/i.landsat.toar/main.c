@@ -3,7 +3,7 @@
  *
  * MODULE:       i.landsat.toar
  *
- * AUTHOR(S):    E. Jorge Tizado - ej.tizado@unileon.es
+ * AUTHOR(S):    E. Jorge Tizado - ej.tizado at unileon.es
  *               Hamish Bowman (small grassification cleanups)
  *               Yann Chemin (v7 + L5TM _MTL.txt support) [removed after update]
  *
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     struct History history;
     struct GModule *module;
 
-    struct Cell_head cellhd;
+    struct Cell_head cellhd, orig_cellhd;
     char *mapset;
 
     void *inrast, *outrast;
@@ -42,10 +42,10 @@ int main(int argc, char *argv[])
 
     RASTER_MAP_TYPE in_data_type;
 
-    struct Option *input_prefix, *output_prefix, *metfn,
-	*sensor, *adate, *pdate, *elev, *bgain, *metho, *perc, *dark, *atmo;
+    struct Option *input_prefix, *output_prefix, *metfn, *sensor, *adate,
+	*pdate, *elev, *bgain, *metho, *perc, *dark, *atmo;
     char *inputname, *met, *outputname, *sensorname;
-    struct Flag *frad, *named;
+    struct Flag *frad, *print_meta, *named;
 
     lsat_data lsat;
     char band_in[GNAME_MAX], band_out[GNAME_MAX];
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     module->description =
 	_("Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+/OLI");
     module->keywords =
-	_("imagery, landsat, top-of-atmosphere reflectance, dos-type simple atmospheric correction");
+	_("imagery, Landsat, radiance, reflectance, brightness temperature, atmospheric correction");
 
     /* It defines the different parameters */
     input_prefix = G_define_option();
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     atmo->answer = "0.0";
     atmo->guisection = _("Settings");
 
-    /* It defines the different flags */
+    /* define the different flags */
     frad = G_define_flag();
     frad->key = 'r';
     frad->description =
@@ -192,6 +192,10 @@ int main(int argc, char *argv[])
     named->key = 'n';
     named->description =
 	_("Input raster maps use as extension the number of the band instead the code");
+
+    print_meta = G_define_flag();
+    print_meta->key = 'p';
+    print_meta->description = _("Print output metadata info");
 
     /* options and afters parser */
     if (G_parser(argc, argv))
@@ -207,6 +211,7 @@ int main(int argc, char *argv[])
     outputname = output_prefix->answer;
     sensorname = sensor->answer ? sensor->answer : "";
 
+    G_get_window(&orig_cellhd);
     G_zero(&lsat, sizeof(lsat));
 
     if (adate->answer != NULL) {
@@ -238,8 +243,18 @@ int main(int argc, char *argv[])
     if (met != NULL) {
 	lsat.flag = METADATAFILE;
 	lsat_metadata(met, &lsat);
-	G_debug(1, "lsat.number = %d, lsat.sensor = [%s]", lsat.number,
-		lsat.sensor);
+	if (print_meta->answer) {
+	    G_message("Landsat-%d %s\n", lsat.number, lsat.sensor);
+	    G_message("Number of bands = %d\n", lsat.bands);
+	    G_message("Acquisition date = %s\n", lsat.date);
+	    G_message("Acquisition time (h) = %f\n", lsat.time);
+	    G_message("Sun elevation (degrees) = %f\n", lsat.sun_elev);
+	    G_message("Sun azimuth (degrees) = %f\n", lsat.sun_az);
+	    G_message("Product creation date = %s\n", lsat.creation);
+	    exit(EXIT_SUCCESS);
+	}
+	G_debug(1, "lsat.number = %d, lsat.sensor = [%s]",
+		lsat.number, lsat.sensor);
 
 	if (!lsat.sensor || lsat.number > 8 || lsat.number < 1)
 	    G_fatal_error(_("Failed to identify satellite"));
@@ -327,16 +342,17 @@ int main(int argc, char *argv[])
 		G_warning(_("Raster map <%s> not found"), band_in);
 		continue;
 	    }
-	    if ((infd = G_open_cell_old(band_in, "")) < 0)
-		G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 	    if (G_get_cellhd(band_in, mapset, &cellhd) < 0)
 		G_fatal_error(_("Unable to read header of raster map <%s>"),
 			      band_in);
 	    G_set_window(&cellhd);
+	    if ((infd = G_open_cell_old(band_in, "")) < 0)
+		G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 
 	    in_data_type = G_raster_map_type(band_in, mapset);
 	    if (in_data_type < 0)
-	        G_fatal_error(_("Unable to read data type of raster map <%s>"), band_in);
+		G_fatal_error(_("Unable to read data type of raster map <%s>"),
+			      band_in);
 	    inrast = G_allocate_raster_buf(in_data_type);
 
 	    nrows = G_window_rows();
@@ -359,10 +375,9 @@ int main(int argc, char *argv[])
 			ptr = (void *)((DCELL *) inrast + col);
 			q = (int)*((DCELL *) ptr);
 			break;
-		   default:
-		        ptr = NULL;
-		        q = -1.;
-			break;
+		    default:
+			ptr = NULL;
+			q = -1.;
 		    }
 		    if (!G_is_null_value(ptr, in_data_type) &&
 			q >= lsat.band[i].qcalmin &&
@@ -411,13 +426,13 @@ int main(int argc, char *argv[])
 		lsat.sensor);
 	fprintf(stderr, " ACQUISITION DATE %s [production date %s]\n",
 		lsat.date, lsat.creation);
-	fprintf(stderr, "   earth-sun distance    = %.8lf\n", lsat.dist_es);
-	fprintf(stderr, "   solar elevation angle = %.8lf\n", lsat.sun_elev);
+	fprintf(stderr, "   Earth-sun distance    = %.8lf\n", lsat.dist_es);
+	fprintf(stderr, "   Solar elevation angle = %.8lf\n", lsat.sun_elev);
 	fprintf(stderr, "   Atmospheric correction: %s\n",
 		(method == UNCORRECTED ? "UNCORRECTED" : metho->answer));
 	if (method > DOS) {
 	    fprintf(stderr,
-		    "   percent of solar irradiance in path radiance = %.4lf\n",
+		    "   Percent of solar irradiance in path radiance = %.4lf\n",
 		    percent);
 	}
 	for (i = 0; i < lsat.bands; i++) {
@@ -473,17 +488,18 @@ int main(int argc, char *argv[])
 	    continue;
 	}
 
+	/* set same size as original band raster */
+	if (G_get_cellhd(band_in, mapset, &cellhd) < 0)
+	    G_fatal_error(_("Unable to read header of raster map <%s>"),
+			  band_in);
+	G_set_window(&cellhd);
 	if ((infd = G_open_cell_old(band_in, mapset)) < 0)
 	    G_fatal_error(_("Unable to open raster map <%s>"), band_in);
 	in_data_type = G_raster_map_type(band_in, mapset);
 	if (in_data_type < 0)
-	    G_fatal_error(_("Unable to read data type of raster map <%s>"), band_in);
-	if (G_get_cellhd(band_in, mapset, &cellhd) < 0)
-	    G_fatal_error(_("Unable to read header of raster map <%s>"),
+	    G_fatal_error(_("Unable to read data type of raster map <%s>"),
 			  band_in);
 
-	/* set same size as original band raster */
-	G_set_window(&cellhd);
 
 	/* controlling, if we can write the raster */
 	if (G_legal_filename(band_out) < 0)
@@ -500,11 +516,9 @@ int main(int argc, char *argv[])
 	ncols = G_window_cols();
 
 	G_important_message(_("Writing %s of <%s> to <%s>..."),
-			    (frad->
-			     answer ? _("radiance") : (lsat.band[i].
-						       thermal) ?
-			     _("temperature") : _("reflectance")), band_in,
-			    band_out);
+			    (frad->answer ? _("radiance")
+			     : (lsat.band[i].thermal) ? _("temperature") :
+			     _("reflectance")), band_in, band_out);
 	for (row = 0; row < nrows; row++) {
 	    G_percent(row, nrows, 2);
 
@@ -526,7 +540,6 @@ int main(int argc, char *argv[])
 		default:
 		    ptr = NULL;
 		    qcal = -1.;
-		    break;
 		}
 		if (G_is_null_value(ptr, in_data_type) ||
 		    qcal < lsat.band[i].qcalmin) {
@@ -584,56 +597,40 @@ int main(int argc, char *argv[])
 	/* Initialize the 'history' structure with basic info */
 	G_short_history(band_out, "raster", &history);
 	sprintf(history.edhist[0], " %s of Landsat-%d %s (method %s)",
-		(frad->
-		 answer ? "Radiance" : (lsat.band[i].
-					thermal ? "Temperature" :
-					"Reflectance")), lsat.number,
-		lsat.sensor, metho->answer);
+		(frad->answer ? "Radiance"
+		 : (lsat.band[i].thermal ? "Temperature" : "Reflectance")),
+		lsat.number, lsat.sensor, metho->answer);
 	sprintf(history.edhist[1],
 		"-----------------------------------------------------------------");
-	sprintf(history.edhist[2],
-		" Acquisition date (and time) ........... %s (%.4lf h)",
+	sprintf(history.edhist[2], " Acquisition date (and time) ........... %s (%.4lf h)",
 		lsat.date, lsat.time);
-	sprintf(history.edhist[3],
-		" Production date ....................... %s\n",
+	sprintf(history.edhist[3], " Production date ....................... %s\n",
 		lsat.creation);
-	sprintf(history.edhist[4],
-		" Earth-sun distance (d) ................ %.7lf",
+	sprintf(history.edhist[4], " Earth-sun distance (d) ................ %.7lf",
 		lsat.dist_es);
-	sprintf(history.edhist[5],
-		" Sun elevation (and azimuth) ........... %.5lf (%.5lf)",
+	sprintf(history.edhist[5], " Sun elevation (and azimuth) ........... %.5lf (%.5lf)",
 		lsat.sun_elev, lsat.sun_az);
-	sprintf(history.edhist[6],
-		" Digital number (DN) range ............. %.0lf to %.0lf",
+	sprintf(history.edhist[6], " Digital number (DN) range ............. %.0lf to %.0lf",
 		lsat.band[i].qcalmin, lsat.band[i].qcalmax);
-	sprintf(history.edhist[7],
-		" Calibration constants (Lmin to Lmax) .. %+.5lf to %+.5lf",
+	sprintf(history.edhist[7], " Calibration constants (Lmin to Lmax) .. %+.5lf to %+.5lf",
 		lsat.band[i].lmin, lsat.band[i].lmax);
-	sprintf(history.edhist[8],
-		" DN to Radiance (gain and bias) ........ %+.5lf and %+.5lf",
+	sprintf(history.edhist[8], " DN to Radiance (gain and bias) ........ %+.5lf and %+.5lf",
 		lsat.band[i].gain, lsat.band[i].bias);
 	if (lsat.band[i].thermal) {
-	    sprintf(history.edhist[9],
-		    " Temperature (K1 and K2) ............... %.3lf and %.3lf",
+	    sprintf(history.edhist[9], " Temperature (K1 and K2) ............... %.3lf and %.3lf",
 		    lsat.band[i].K1, lsat.band[i].K2);
 	    history.edlinecnt = 10;
 	}
 	else {
 	    sprintf(history.edhist[9],
-		    " Mean solar irradiance (ESUN) .......... %.3lf",
-		    lsat.band[i].esun);
+		    " Mean solar irradiance (ESUN) .......... %.3lf", lsat.band[i].esun);
 	    sprintf(history.edhist[10],
-		    " Radiance to Reflectance (divide by) ... %+.5lf",
-		    lsat.band[i].K1);
+		    " Radiance to Reflectance (divide by) ... %+.5lf", lsat.band[i].K1);
 	    history.edlinecnt = 11;
 	    if (method > DOS) {
 		sprintf(history.edhist[11], " ");
-		sprintf(history.edhist[12],
-			" Dark object (%4d pixels) DN = ........ %d", pixel,
-			dn_dark[i]);
-		sprintf(history.edhist[13],
-			" Mode in reflectance histogram ......... %.5lf",
-			ref_mode);
+		sprintf(history.edhist[12], " Dark object (%4d pixels) DN = ........ %d", pixel, dn_dark[i]);
+		sprintf(history.edhist[13], " Mode in reflectance histogram ......... %.5lf", ref_mode);
 		history.edlinecnt = 14;
 	    }
 	}
@@ -653,6 +650,7 @@ int main(int argc, char *argv[])
 
 	/*  set raster timestamp from acq date? (see r.timestamp module)  */
     }
+    G_set_window(&orig_cellhd);
 
     exit(EXIT_SUCCESS);
 }
