@@ -8,7 +8,8 @@ distributions, this program may also be used to segment
 multispectral images based on simple spectral mean and
 covariance parameters.
 
-<p><em>i.smap</em> has two modes of operation.  The first mode
+<p>
+<em>i.smap</em> has two modes of operation.  The first mode
 is the sequential maximum a posteriori (SMAP) mode
 [<a href="#ref1">1</a>,<a href="#ref2">2</a>].  The SMAP
 segmentation algorithm attempts to improve segmentation
@@ -17,10 +18,12 @@ segmenting each pixel separately
 (see <a href="#notes">NOTES</a>).
 
 
-<p>The second mode is the more conventional maximum likelihood (ML)
+<p>
+The second mode is the more conventional maximum likelihood (ML)
 classification which classifies each pixel separately,
 but requires somewhat less computation. This mode is selected with
 the <b>-m</b> flag (see <a href="#mflag.html">below</a>).
+
 
 <h2>OPTIONS</h2>
 
@@ -28,7 +31,7 @@ the <b>-m</b> flag (see <a href="#mflag.html">below</a>).
 
 <dl>
 
-<dt><b>-m</b></a>
+<dt><b>-m</b>
 
 <dd>Use maximum likelihood estimation (instead of smap).
 Normal operation is to use SMAP estimation (see
@@ -109,13 +112,16 @@ categories on the ground.
 
 </dl>
 
+
 <h2>INTERACTIVE MODE</h2>
 
 If none of the arguments are specified on the command line,
 <em>i.smap</em> will interactively prompt for the names of
 the maps and files.
 
-<a name="notes"><h2>NOTES</h2></a>
+
+<a name="notes"></a>
+<h2>NOTES</h2>
 
 The SMAP algorithm exploits the fact that nearby pixels in
 an image are likely to have the same class.  It works by
@@ -141,6 +147,7 @@ using e.g. r.mapcalc:
 <p><div class="code"><pre>
 r.mapcalc "MASKed_map = classification_results"
 </pre></div>
+
 
 <h2>EXAMPLE</h2>
 
@@ -172,6 +179,7 @@ d.rast.leg lsat7_2002_smap_classes
 r.kappa -w classification=lsat7_2002_smap_classes reference=training
 </pre></div>
 
+
 <h2>REFERENCES</h2>
 
 <ul>
@@ -190,6 +198,7 @@ pp. III-565 - III-568, San Francisco, California, March 23-26, 1992.
 <em>IEEE Trans. on Geoscience and Remote Sensing, 33(6): 1313-1316.</em>
 </ul>
 
+
 <h2>SEE ALSO</h2>
 
 <em><a href="i.group.html">i.group</a></em>
@@ -202,6 +211,7 @@ to copy classification result in order to cut out MASKed subareas
 <p>
 <em><a href="i.gensigset.html">i.gensigset</a></em>
 to generate the signature file required by this program
+
 
 <h2>AUTHORS</h2>
 
