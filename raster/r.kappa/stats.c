@@ -41,8 +41,9 @@ int stats(void)
     strcat(buf, G_fully_qualified_name(maps[1], mmapset));
     strcat(buf, ",");
     strcat(buf, G_fully_qualified_name(maps[0], rmapset));
-    strcat(buf, " > ");
+    strcat(buf, " > \"");
     strcat(buf, stats_file);
+    strcat(buf, "\"");
 
     if (system(buf)) {
 	unlink(stats_file);
