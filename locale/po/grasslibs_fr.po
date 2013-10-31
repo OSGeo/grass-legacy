@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-30 22:18+0100\n"
-"PO-Revision-Date: 2013-10-27 19:18+0100\n"
+"PO-Revision-Date: 2013-10-31 01:11+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -252,9 +252,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Carte vecteur <%s> chargée (%d points)"
 
 #: ../lib/ogsf/gsd_prim.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Color Material: %d"
-msgstr "Couleur de matériel : %d"
+msgstr "Couleur d'élément : %d"
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
@@ -379,7 +379,7 @@ msgstr "Erreur de récupération de la plage pour la légende"
 #: ../lib/ogsf/gsd_legend.c:384
 #, fuzzy
 msgid "Unable to show discrete FP range (use list"
-msgstr "Impossible d'afficher une plage FP discrète (utilisation d'une liste"
+msgstr "Impossible d'afficher une plage flottante discrète (utilisation d'une liste"
 
 #: ../lib/ogsf/gsd_legend.c:500
 msgid "Too many categories to show as discrete!"
@@ -1761,7 +1761,6 @@ msgid "Computing all pairs shortest paths..."
 msgstr "Calcul des plus courts chemins pour toutes les paires..."
 
 #: ../lib/vector/neta/spanningtree.c:104
-#, fuzzy
 msgid "Computing minimum spanning tree..."
 msgstr "Calcul de l'arbre couvrant de poids minimal ..."
 
@@ -2428,7 +2427,6 @@ msgid "Area of size = 0.0 ignored"
 msgstr "Surface de taille = 0.0 ignorée"
 
 #: ../lib/vector/Vlib/build_nat.c:148
-#, fuzzy
 msgid "Request to find area outside nonexistent isle"
 msgstr "Requête pour trouver des surfaces à l'extérieur d'une île non-existante"
 
@@ -2646,9 +2644,8 @@ msgid "Line is not looped"
 msgstr "La ligne ne boucle pas"
 
 #: ../lib/vector/Vlib/buffer2.c:598 ../lib/vector/Vlib/buffer2.c:609
-#, fuzzy
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
-msgstr "Le somment suivant a déjà été visité mais n'est pas le premier !!! rupture de la boucle"
+msgstr "Le somment suivant a déjà été visité mais n'est pas le premier !!! Interruption de la boucle"
 
 #: ../lib/vector/Vlib/buffer2.c:657
 msgid "side != 0 feature not implemented"
@@ -2955,9 +2952,8 @@ msgid "Reading nodes from vector map ..."
 msgstr "Lecture des noeuds depuis la carte vectorielle ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:314
-#, fuzzy
 msgid "Strip exists with insufficient data"
-msgstr "la bande existe avec des données insuffisantes"
+msgstr "Les données de la bande sont insuffisantes"
 
 #: ../lib/rst/interp_float/vinput2d.c:328
 #, c-format
@@ -3271,7 +3267,6 @@ msgid "%s not set"
 msgstr "%s n'a pas de valeur"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-#, fuzzy
 msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
 msgstr "Version de librairie incompatible pour le module. Vous devez recompiler GRASS ou gérer les versions multiples."
 
@@ -3295,14 +3290,12 @@ msgid "color support for [%s] in mapset [%s] %s"
 msgstr "support de la couleur pour [%s] dans le jeu de données (mapset) [%s] %s"
 
 #: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
-#, fuzzy
 msgid "Unable to seek"
-msgstr "Impossible d'ouvrir %s"
+msgstr "Recherche impossible"
 
 #: ../lib/gis/seek.c:56
-#, fuzzy
 msgid "Seek offset out of range"
-msgstr "Index de couche en dehors des limites"
+msgstr "Index de recherche en dehors des limites"
 
 #: ../lib/gis/auto_mask.c:64
 msgid "Unable to open automatic MASK file"
@@ -3767,7 +3760,7 @@ msgstr "Exécuter en silence"
 
 #: ../lib/gis/parser.c:1997
 msgid "Unable to spawn the 'wish' program"
-msgstr ""
+msgstr "Impossible de générer le programme 'whish'"
 
 #: ../lib/gis/parser.c:2016
 msgid "Unable to determine program name"
@@ -4630,9 +4623,9 @@ msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "ERREUR en lisant le fichier <%s> du secteur <%s>"
 
 #: ../lib/gis/make_colr.c:40
-#, fuzzy, c-format
+#, c-format
 msgid "The raster map <%s@%s> is empty"
-msgstr "La couche raster %s@%s est vide"
+msgstr "La couche raster <%s@%s> est vide"
 
 #: ../lib/gis/make_colr.c:48
 #, c-format
