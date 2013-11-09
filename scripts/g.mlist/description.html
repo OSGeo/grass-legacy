@@ -1,8 +1,8 @@
 <h2>DESCRIPTION</h2>
 
-<em>g.mlist</em> is an extended version of 
-<em><a href="g.list.html">g.list</a></em> which
-provides (extended) regular expression and wildcard support.
+<em>g.mlist</em> searches for data files matching a pattern given by
+wildcards or POSIX Extended Regular Expressions. It is is an extended
+version of <em><a href="g.list.html">g.list</a></em>.
 <em>g.mlist</em> will only print map names and an optional separator,
 without extraneous output. In addition, map search is also available.
 
@@ -13,7 +13,8 @@ options.
 <h2>NOTES</h2>
 
 The output of <em>g.mlist</em> may be useful for other programs' parameter
-input (e.g. time series for <em><a href="r.series.html">r.series</a></em>).
+input (e.g. time series for <em><a href="r.series.html">r.series</a></em>)
+when used with <em>separator=comma</em>.
 
 <h2>EXAMPLES</h2>
 
@@ -46,6 +47,26 @@ List certain raster maps with one variable character/number:
 g.mlist type=rast pattern="N45E00?.meters"
 </pre></div>
 
+Use of <em>exclude</em> parameter:
+<div class="code"><pre>
+# without exclude:
+  g.mlist rast pat="r*" mapset=PERMANENT
+  railroads
+  roads
+  rstrct.areas
+  rushmore
+
+# exclude only complete word(s):
+  g.mlist rast pat="r*" exclude=roads mapset=PERMANENT
+  railroads
+  rstrct.areas
+  rushmore
+
+# exclude with wildcard:
+  g.mlist rast pat="r*" exclude="*roads*" mapset=PERMANENT
+  rstrct.areas
+  rushmore
+</pre></div>
 
 <h3>Regular expressions:</h3>
 
@@ -73,9 +94,9 @@ g.mlist -r type=vect sep=comma pattern='^tmp[0-9]$'
 </pre></div>
 
 
-<h3>Regular expressions:</h3>
+<h3>Extended regular expressions:</h3>
 
-List all precipitation maps of the years 1997-2012, comma separated:
+List all precipitation maps for the years 1997-2012, comma separated:
 <div class="code"><pre>
 g.mlist -e type=rast sep=comma pattern="precip_total.(199[7-9]|200[0-9]|201[0-2]).sum"
 </pre></div>
@@ -92,6 +113,9 @@ g.mlist -e type=rast sep=comma pattern="precip_total.(199[7-9]|200[0-9]|201[0-2]
 
 
 <h2>AUTHOR</h2>
-Huidae Cho
+
+Huidae Cho<br>
+grass4u@gmail.com
+
 <p>
 <i>Last changed: $Date$</i>
