@@ -78,13 +78,13 @@ In the following example, the buffer zones would be (in the default units
 of meters):  0-100, 101-200, 201-300, 301-400 and 401-500.
 <br>
 <div class="code"><pre>
-<b>r.buffer input=</b>roads <b>output=</b>roads.buf <b>distances=</b>100,200,300,400,500
+r.buffer input=roads output=roads.buf distances=100,200,300,400,500
 </pre></div>
 
 Result:
 
 <div class="code"><pre>
-<b>r.category input=</b>roads.buf
+r.category input=roads.buf
 
       1       distances calculated from these locations
       2       0-100 meters
@@ -97,13 +97,19 @@ Result:
 <h2>SEE ALSO</h2>
 
 <em>
-<a href="g.region.html">g.region</a><br>
-<a href="r.cost.html">r.cost</a><br>
-<a href="r.mapcalc.html">r.mapcalc</a><br>
-<a href="r.reclass.html">r.reclass</a><br>
+<a href="r.grow.html">r.grow</a>,
 <a href="v.buffer.html">v.buffer</a>
 </em>
 
+<p>
+<em>
+<a href="g.region.html">g.region</a>,
+<a href="r.cost.html">r.cost</a>,
+<a href="r.distance.html">r.distance</a>,
+<a href="r.grow.distance.html">r.grow.distance</a>,
+<a href="r.mapcalc.html">r.mapcalc</a>,
+<a href="r.reclass.html">r.reclass</a>
+</em>
 
 <h2>AUTHORS</h2>
 
