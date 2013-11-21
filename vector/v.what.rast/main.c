@@ -140,17 +140,18 @@ int main(int argc, char *argv[])
     Vect_set_open_level(2);
     Vect_open_old(&Map, vect_opt->answer, mapset);
 
-    /* FIXME: if print flag is used then a database doesn't need to exist */
     Fi = Vect_get_field(&Map, field);
-    if (Fi == NULL)
-	G_fatal_error(_("Database connection not defined for layer %d"),
-		      field);
+    if (!print_flag->answer) {
+	if (Fi == NULL)
+	    G_fatal_error(_("Database connection not defined for layer %d"),
+			  field);
 
-    /* Open driver */
-    driver = db_start_driver_open_database(Fi->driver, Fi->database);
-    if (driver == NULL) {
-	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
-		      Fi->database, Fi->driver);
+	/* Open driver */
+	driver = db_start_driver_open_database(Fi->driver, Fi->database);
+	if (driver == NULL) {
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+	    		  Fi->database, Fi->driver);
+	}
     }
 
     /* Open raster */
@@ -248,8 +249,10 @@ int main(int argc, char *argv[])
 	point_cnt++;
     }
 
-    Vect_set_db_updated(&Map);
-    Vect_hist_command(&Map);
+    if (!print_flag->answer) {
+	Vect_set_db_updated(&Map);
+	Vect_hist_command(&Map);
+    }
     Vect_close(&Map);
 
     G_debug(1, "Read %d vector points", point_cnt);
@@ -558,7 +561,10 @@ int main(int argc, char *argv[])
     if (print_flag->answer) {
 	dupl_cnt = 0;
 
-	G_message("%s|value", Fi->key);
+	if(Fi)
+	    G_message("%s|value", Fi->key);
+	else
+	    G_message("cat|value");
 
 	for (point = 0; point < point_cnt; point++) {
 	    if (cache[point].count > 1) {
