@@ -674,15 +674,12 @@ int main(int argc, char *argv[])
     }
 
     /* Report */
-    G_message(_("%d categories loaded from table"), select);
     G_message(_("%d categories loaded from vector"), point_cnt);
-
-    if (!print_flag->answer)
-	G_message(_("%d categories from vector missing in table"), norec_cnt);
-
     G_message(_("%d duplicate categories in vector"), dupl_cnt);
 
     if (!print_flag->answer) {
+	G_message(_("%d categories loaded from table"), select);
+	G_message(_("%d categories from vector missing in table"), norec_cnt);
 	if (!where_opt->answer)
 	    G_message(_("%d records updated"), update_cnt);
 	G_message(_("%d update errors"), upderr_cnt);
