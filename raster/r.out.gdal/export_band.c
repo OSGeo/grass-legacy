@@ -214,6 +214,8 @@ int exact_checks(GDALDataType export_datatype,
 	ret = -1;
     }
 
+    G_close_cell(fd);
+
     G_free(bufer);
 
     return ret;
@@ -484,6 +486,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 	    G_percent(row + 1, rows, 2);
 	}
     }
+
+    G_close_cell(fd);
 
     G_free(bufer);
 
