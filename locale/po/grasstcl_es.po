@@ -799,11 +799,11 @@ msgstr "Encuadrar"
 
 #: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
-msgstr "Zum a la región por defecto"
+msgstr "Zoom a la región por defecto"
 
 #: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
-msgstr "Zum a una región guardada"
+msgstr "Zoom a una región guardada"
 
 #: ../vector/v.digit/toolbox.tcl:236
 msgid "Display categories"
@@ -2096,11 +2096,11 @@ msgstr "Alejar"
 #: ../gui/tcltk/gis.m/georecttool.tcl:144 ../gui/tcltk/gis.m/maptool.tcl:165
 #: ../gui/tcltk/d.m/tool1.tcl:87
 msgid "Return to previous zoom"
-msgstr "Volver al zum anterior"
+msgstr "Volver al zoom anterior"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:151
 msgid "Zoom to map"
-msgstr "Zum al mapa"
+msgstr "Zoom al mapa"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:85 ../gui/tcltk/d.m/menu.tcl:75
 msgid "&File"
@@ -4256,11 +4256,11 @@ msgstr "Por favor espere..."
 
 #: ../gui/tcltk/gis.m/georect.tcl:2029 ../gui/tcltk/gis.m/mapcanvas.tcl:1503
 msgid "Drag or click mouse to zoom"
-msgstr "Arrastrar o clic de ratón para hacer zum"
+msgstr "Arrastrar o clic de ratón para hacer zoom"
 
 #: ../gui/tcltk/gis.m/georect.tcl:2031 ../gui/tcltk/gis.m/mapcanvas.tcl:1505
 msgid "Drag or click mouse to unzoom"
-msgstr "Arrastrar o clic de ratón para deshacer zum"
+msgstr "Arrastrar o clic de ratón para deshacer zoom"
 
 #: ../gui/tcltk/gis.m/georect.tcl:2229 ../gui/tcltk/gis.m/mapcanvas.tcl:1808
 msgid "Drag with mouse to pan"
@@ -4619,7 +4619,7 @@ msgstr " Establecer color de fondo (celdas con valor nulo coloreadas)"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:584
 msgid "Maximum zoom-in reached"
-msgstr "Máximo aumento de zum alcanzado"
+msgstr "Máximo aumento de zoom alcanzado"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:660
 msgid "Error setting region 1"
@@ -5190,11 +5190,11 @@ msgstr "Puntero"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:185
 msgid "Zoom display to selected map"
-msgstr "Zum de la visualización al mapa seleccionado"
+msgstr "Zoom de la visualización al mapa seleccionado"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:188
 msgid "Zoom display to saved region"
-msgstr "Zum de la visualización a la región guardada"
+msgstr "Zoom de la visualización a la región guardada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:191
 msgid "Save display extents to named region"
@@ -5203,11 +5203,11 @@ msgstr "Guardar las límites de la visualización en la región designada"
 #: ../gui/tcltk/gis.m/maptool.tcl:194
 msgid "Zoom display to computational region (set with g.region)"
 msgstr ""
-"Zum de la visualización a la región computacional (establecida con g.region)"
+"Zoom de la visualización a la región computacional (establecida con g.region)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:197
 msgid "Zoom display to default region"
-msgstr "Zum de la visualización a la región predeterminada"
+msgstr "Zoom de la visualización a la región predeterminada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:200
 msgid "Set computational region extents to match display"
@@ -6799,7 +6799,7 @@ msgstr "girar leyenda"
 #~ "control."
 
 #~ msgid "Zoom to..."
-#~ msgstr "Zum a..."
+#~ msgstr "Zoom a..."
 
 #~ msgid "Export display to graphics file"
 #~ msgstr "Exportar pantalla a fichero gráfico (png, tiff, ...)"

@@ -15133,7 +15133,7 @@ msgstr "No se puede analizar hasta que la región esté completa."
 
 #: ../imagery/i.class/redisplay.c:56
 msgid "No zoom window is defined."
-msgstr "No está definida ninguna ventada de zum."
+msgstr "No está definida ninguna ventada de zoom."
 
 #: ../imagery/i.class/readbands.c:12
 msgid "Error reading raster map in function readbands."
@@ -19219,11 +19219,11 @@ msgstr "Nombre de mapa vectorial"
 
 #: ../display/d.zoom/main.c:108
 msgid "Magnification: >1.0 zooms in, <1.0 zooms out"
-msgstr "Zum: >1.0 acercar, <1.0 alejar"
+msgstr "Zoom: >1.0 acercar, <1.0 alejar"
 
 #: ../display/d.zoom/main.c:118
 msgid "Full menu (zoom + pan) & Quit menu"
-msgstr "Menú completo (zum + panorámica) y Salir del menú"
+msgstr "Menú completo (zoom + panorámica) y Salir del menú"
 
 #: ../display/d.zoom/main.c:122
 msgid "Pan mode"
@@ -19239,7 +19239,7 @@ msgstr "Sólo redibujar los mapas dados usando colores predeterminados"
 
 #: ../display/d.zoom/main.c:134
 msgid "Return to previous zoom"
-msgstr "Volver al zum anterior"
+msgstr "Volver al zoom anterior"
 
 #: ../display/d.zoom/main.c:145
 msgid "Please choose only one mode of operation"
@@ -19268,11 +19268,11 @@ msgstr "No hay zoom previo disponible"
 
 #: ../display/d.zoom/main.c:311
 msgid "Returning to previous zoom"
-msgstr "Volviendo al zum anterior"
+msgstr "Volviendo al zoom anterior"
 
 #: ../display/d.zoom/main.c:352
 msgid "Zooming complete."
-msgstr "Zum completado."
+msgstr "Zoom completado."
 
 #: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:17
 #, c-format
@@ -37058,7 +37058,7 @@ msgstr "Nombre del  mapa(s) raster para las elevaciones"
 #~ "2D)"
 
 #~ msgid "Raster map to zoom into"
-#~ msgstr "Mapa ráster en el que hacer zum"
+#~ msgstr "Mapa ráster en el que hacer zoom"
 
 #~ msgid "Save the current region to region definition file"
 #~ msgstr "Guardar la región actual en archivo de definición de región"
