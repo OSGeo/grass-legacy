@@ -14834,7 +14834,7 @@ msgstr "No se puede ejecutar el comando: '%s'"
 
 #, fuzzy
 #~ msgid "Zoom to selected map (ignore NULLs)"
-#~ msgstr "Zum"
+#~ msgstr "Zoom"
 
 #, fuzzy
 #~ msgid "Set computational region from selected map (ignore NULLs)"
