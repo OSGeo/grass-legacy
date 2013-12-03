@@ -24,6 +24,7 @@
 #% gisprompt: old,cell,raster
 #% key_desc: name
 #% description: Name of input raster map 
+#% multiple: yes
 #% required: yes
 #%end
 #%option
