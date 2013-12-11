@@ -1,4 +1,4 @@
-#! /bin/sh -x
+#!/bin/sh
 #%Module 
 #%description: Select a circular or polygonal area
 #%End
@@ -66,7 +66,8 @@ f_path="$GISBASE/etc/r.li.setup"
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
- fi
+fi
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi

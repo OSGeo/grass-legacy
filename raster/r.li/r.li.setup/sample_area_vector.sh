@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash
 #
 # This program is free software under the GPL (>=v2)
 # Read the COPYING file that comes with GRASS for details.
