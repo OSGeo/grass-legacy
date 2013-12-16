@@ -278,7 +278,7 @@ static int print_error(const char *msg, const int type)
 	    log_error(msg, fatal);
 
 	if (format == G_INFO_FORMAT_SILENT)
-	    return;
+	    return 0;
 
 	if (format != G_INFO_FORMAT_GUI) {
 	    if (format != G_INFO_FORMAT_PLAIN) {
