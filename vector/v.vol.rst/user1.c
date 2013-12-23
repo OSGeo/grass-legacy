@@ -65,7 +65,7 @@ int INPUT(struct Map_info *In, char *column, char *scol, char *wheresql)
     struct quadruple *point;
     double x, y, z, w, nz = 0., sm;
     double c1, c2, c3, c4, c5, c6, nsg;
-    int i, j, k = 0, a, cfmask;
+    int i, j, k = 0, a, irev, cfmask;
     int ddisk = 0;
     double deltx, delty, deltz;
     int first_time = 1;
@@ -366,12 +366,13 @@ int INPUT(struct Map_info *In, char *column, char *scol, char *wheresql)
 	cellmask = G_allocate_cell_buf();
 	cfmask = G_open_cell_old(maskmap, mapsetm);
 	for (i = 0; i < nsizr; i++) {
+	    irev = nsizr - i - 1;
 	    G_get_map_row(cfmask, cellmask, i);
 	    for (j = 0; j < nsizc; j++) {
 		if ((cellmask[j] == 0) || G_is_c_null_value(&cellmask[j]))
-		    BM_set(bitmask, j, i, 0);
+		    BM_set(bitmask, j, irev, 0);
 		else
-		    BM_set(bitmask, j, i, 1);
+		    BM_set(bitmask, j, irev, 1);
 	    }
 	}
 	G_message("bitmap mask created");
@@ -440,10 +441,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -491,10 +492,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -542,10 +543,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -593,10 +594,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -644,10 +645,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -695,10 +696,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
@@ -746,10 +747,10 @@ int OUTGR()
 	cnt = 0;
 	for (iarc = 0; iarc < nsizl; iarc++) {
 
-	    for (y = nsizr - 1; y >= 0; y--) {  /* changed by AV */
+	    for (y = nsizr - 1; y >= 0; y--) {	/* changed by AV */
 		for (x = 0; x < nsizc; x++) {
 		    if (maskmap != NULL)
-			bmask = BM_get(bitmask, x, y);
+			bmask = BM_get(bitmask, x, nsizr - y - 1);
 		    else
 			bmask = 1;
 		    value = data[cnt];
