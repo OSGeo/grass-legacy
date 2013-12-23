@@ -84,6 +84,7 @@ int Vedit_split_lines(struct Map_info *Map, struct ilist *List,
 	    G_debug(3, "Vedit_split_lines(): line=%d", line);
 
 	    /* copy first line part */
+            Vect_reset_line(Points2);
 	    for (l = 0; l < seg; l++) {
 		Vect_append_point(Points2, x[l], y[l], z[l]);
 	    }
