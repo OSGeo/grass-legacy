@@ -21,9 +21,11 @@ is normally held in the area's centroid) you must first use
 
 <h2>EXAMPLES</h2>
 
+The examples are intended for the North Carolina sample dataset:
+
 <h3>Extract areas by category number with dissolving #1:</h3>
 <div class="code"><pre>
-v.extract -d list=1,2,3,4 input=soils output=soil_groupa type=area new=0
+v.extract -d list=1,2,3,4 input=soils_wake output=soil_groupa type=area new=0
 </pre></div>
 
 <p>
@@ -33,7 +35,7 @@ dissolved, and all areas in the new map will be assigned category number 0.
 
 <h3>Extract areas by category number with dissolving #2:</h3>
 <div class="code"><pre>
-v.extract -d list=1-4 input=soils output=soil_groupa type=area new=-1
+v.extract -d list=1-4 input=soils_wake output=soil_groupa type=area new=-1
 </pre></div>
 <p>
 produces a new vector map <b>soil_groupa</b> containing the areas from vector
@@ -43,7 +45,7 @@ numbers 1 thru 4, since <b>new</b> was set to -1.
 
 <h3>Extract all areas and assign the same category to all:</h3>
 <div class="code"><pre>
-v.extract input=soils output=soil_groupa type=area new=1
+v.extract input=soils_wake output=soil_groupa type=area new=1
 </pre></div>
 <p>
 
@@ -62,46 +64,46 @@ fulfilled.
 
 <h3>Extract vector features which have the given field empty:</h3>
 <div class="code"><pre>
-v.extract input=forest output=forest_gaps where="CANOPY is NULL"
+v.extract input=lakes output=lakes_gaps where="FTYPE is NULL"                    
 </pre></div>
 
 <h3>Extract vector features which have the given field not empty:</h3>
 <div class="code"><pre>
-v.extract input=forest output=forest_canopy where="CANOPY not NULL"
+v.extract input=lakes output=lakes_ftype where="FTYPE not NULL"
 </pre></div>
 
 <h3>Reverse extracting (behaves like selective vector objects deleting):</h3>
 
-Remove unreferenced stations from the GlobalSOD database:
+Remove meteorological stations from map which are located above 1000m:
 <div class="code"><pre>
 # check what to delete:
-v.db.select gsod_stationlist where="latitude < -91"
+v.db.select precip_30ynormals where="elev > 1000"
 
 # perform reverse selection
-v.extract -r gsod_stationlist out=gsod_stationlist_clean where="latitude < -91"
+v.extract -r precip_30ynormals out=precip_30ynormals_lowland where="elev > 1000"
 
-v.db.select gsod_stationlist_clean
+# verify
+v.db.select precip_30ynormals_lowland
 </pre></div>
 
 
 <h3>Dissolving based on column attributes:</h3>
 <div class="code"><pre>
 # check column names:
-v.info -c polbnda_italy
+v.info -c zipcodes_wake
 
 # reclass based on desired column:
-v.reclass polbnda_italy out=polbnda_italy_recl_nam col=vmap_nam
+v.reclass zipcodes_wake out=zipcodes_wake_recl_nam col=ZIPNAME
 
 # verify:
-v.info -c polbnda_italy_recl_nam
-v.db.select polbnda_italy_recl_nam
+v.info -c zipcodes_wake_recl_nam
+v.db.select zipcodes_wake_recl_nam
 
 # dissolve:
-v.extract -d polbnda_italy_recl_nam out=pol_italy_regions
+v.extract -d zipcodes_wake_recl_nam out=zipcodes_wake_regions
 </pre></div>
 <p>
-
-produces a new vector map with common boundaries dissolved where the reclassed
+This produces a new vector map with common boundaries dissolved where the reclassed
 attributes of adjacent (left/right) areas are identical.
 
 <h3>Remove islands from polygon map</h3>
@@ -116,7 +118,7 @@ v.extract -d in=map_with_islands out=maps_without_islands
 <div class="code"><pre>
 v.extract input=geology output=random_geology type=area random=3
 </pre></div>
-will create new map with three random categories matching areas.
+This creates a new map with three random categories matching areas.
 Note that there may be more than one feature with the same category.
 
 <h2>SEE ALSO</h2>
