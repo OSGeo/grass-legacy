@@ -140,7 +140,8 @@ void setMode(int val)
 int ll_correction = FALSE;
 double coslatsq;
 
-/* use G_distance() instead ??!?! */
+/* why not use G_distance() here which switches to geodesic/great
+  circle distance as needed? */
 double distance(double x1, double x2, double y1, double y2)
 {
     if (ll_correction) {
@@ -421,6 +422,7 @@ int main(int argc, char *argv[])
 
 
     sscanf(parm.dist->answer, "%lf", &dist);
+    if (dist < 0.5 || dist > 1.5 ) G_fatal_error(_("The distance value must be 0.5-1.5. Aborting."));
 
     stepxy = dist * 0.5 * (stepx + stepy);
     distxy = dist;
@@ -468,8 +470,7 @@ int main(int argc, char *argv[])
 
     if ((in_proj_info = G_get_projinfo()) == NULL)
 	G_fatal_error(
-	    _("Can't get projection info of current location: "
-	      "please set latitude via 'lat' or 'latin' option!"));
+	    _("Can't get projection info of current location"));
 
     if ((in_unit_info = G_get_projunits()) == NULL)
 	G_fatal_error(_("Can't get projection units of current location"));
@@ -494,6 +495,7 @@ int main(int argc, char *argv[])
 
 
     INPUT();
+    G_debug(3, "calculate() starts...");
     calculate(xcoord, ycoord, (int)(ebufferZone / stepx),
 	      (int)(wbufferZone / stepx), (int)(sbufferZone / stepy),
 	      (int)(nbufferZone / stepy));
@@ -1232,6 +1234,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 		}
 	    }
 
+        G_debug(3, "OUTGR() starts...");
 	    OUTGR(cellhd.rows, cellhd.cols);
 
 	    /* empty array */
