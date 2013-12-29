@@ -140,7 +140,8 @@ void setMode(int val)
 int ll_correction = FALSE;
 double coslatsq;
 
-/* use G_distance() instead ??!?! */
+/* why not use G_distance() here which switches to geodesic/great
+  circle distance as needed? */
 double distance(double x1, double x2, double y1, double y2)
 {
     if (ll_correction) {
@@ -338,9 +339,8 @@ int main(int argc, char *argv[])
     else {
 	setMode(SINGLE_POINT);
 	if (sscanf(parm.coord->answer, "%lf,%lf", &xcoord, &ycoord) != 2) {
-	    G_fatal_error
-		("Can't read the coordinates from the \"coord\" option.");
-
+	    G_fatal_error(
+		_("Can't read the coordinates from the \"coord\" option."));
 	}
 
 	/* Transform the coordinates to row/column */
@@ -357,15 +357,13 @@ int main(int argc, char *argv[])
 
     if (isMode(WHOLE_RASTER)) {
 	if ((parm.direction->answer == NULL) && (parm.step->answer == NULL)) {
-	    G_fatal_error
-		(_("You didn't specify a direction value or step size. Aborting."));
+	    G_fatal_error(
+		_("You didn't specify a direction value or step size. Aborting."));
 	}
 
-
 	if (parm.horizon->answer == NULL) {
-	    G_fatal_error
-		(_("You didn't specify a horizon raster name. Aborting."));
-
+	    G_fatal_error(
+		_("You didn't specify a horizon raster name. Aborting."));
 	}
 	horizon = parm.horizon->answer;
 	if (parm.step->answer != NULL)
@@ -374,9 +372,8 @@ int main(int argc, char *argv[])
     else {
 
 	if (parm.step->answer == NULL) {
-	    G_fatal_error
-		(_("You didn't specify an angle step size. Aborting."));
-
+	    G_fatal_error(
+		_("You didn't specify an angle step size. Aborting."));
 	}
 	sscanf(parm.step->answer, "%lf", &step);
 
@@ -429,6 +426,7 @@ int main(int argc, char *argv[])
 
 
     sscanf(parm.dist->answer, "%lf", &dist);
+    if (dist < 0.5 || dist > 1.5 ) G_fatal_error(_("The distance value must be 0.5-1.5. Aborting."));
 
     stepxy = dist * 0.5 * (stepx + stepy);
     distxy = dist;
@@ -475,15 +473,15 @@ int main(int argc, char *argv[])
     struct Key_Value *in_proj_info, *in_unit_info;
 
     if ((in_proj_info = G_get_projinfo()) == NULL)
-	G_fatal_error
-	    (_("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!"));
+	G_fatal_error(
+	    _("Can't get projection info of current location"));
 
     if ((in_unit_info = G_get_projunits()) == NULL)
 	G_fatal_error(_("Can't get projection units of current location"));
 
     if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-	G_fatal_error
-	    (_("Can't get projection key values of current location"));
+	G_fatal_error(
+	    _("Can't get projection key values of current location"));
 
     G_free_key_value(in_proj_info);
     G_free_key_value(in_unit_info);
@@ -501,6 +499,7 @@ int main(int argc, char *argv[])
 
 
     INPUT();
+    G_debug(3, "calculate() starts...");
     calculate(xcoord, ycoord, (int)(ebufferZone / stepx),
 	      (int)(wbufferZone / stepx), (int)(sbufferZone / stepy),
 	      (int)(nbufferZone / stepy));
@@ -617,7 +616,6 @@ int OUTGR(int numrows, int numcols)
 	if (fd1 < 0)
 	    G_fatal_error(_("Unable to create raster map %s"), shad_filename);
     }
-
 
     if (numrows != G_window_rows())
 	G_fatal_error(_("OOPS: rows changed from %d to %d"), numrows,
@@ -1127,12 +1125,13 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 
 	    if (step != 0.0)
 		sprintf(shad_filename, formatString, horizon, k);
+
 	    angle = (single_direction * deg2rad) + (dfr_rad * k);
 	    /*              
 	       com_par(angle);
 	     */
-	    G_message(_("Calculating map %01d of %01d (angle %lf, raster map <%s>)"), (k + 1), arrayNumInt,
-		   angle * rad2deg, shad_filename);
+	    G_message(_("Calculating map %01d of %01d (angle %lf, raster map <%s>)"),
+		     (k + 1), arrayNumInt, angle * rad2deg, shad_filename);
 
 	    for (j = hor_row_start; j < hor_row_end; j++) {
 		G_percent(j - hor_row_start, hor_numrows - 1, 2);
@@ -1239,6 +1238,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 		}
 	    }
 
+        G_debug(3, "OUTGR() starts...");
 	    OUTGR(cellhd.rows, cellhd.cols);
 
 	    /* empty array */
