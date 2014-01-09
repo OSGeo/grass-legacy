@@ -13,15 +13,14 @@ msgstr ""
 "Project-Id-Version: grassmods_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-30 21:55+0100\n"
-"PO-Revision-Date: 2013-01-27 09:31+0100\n"
+"PO-Revision-Date: 2014-01-01 11:35+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: Français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: ../visualization/nviz/src/nviz_init.c:53 ../misc/m.nviz.image/main.c:49
 msgid "visualization, raster, vector, raster3d"
@@ -99,11 +98,11 @@ msgstr "Charger le fichier d'état enregistré précédemment"
 #: ../raster/r.in.mat/main.c:125 ../display/d.vect/main.c:367
 #: ../display/d.mon/pgms/release.c:36
 msgid "The '-v' flag is superseded and will be removed in future. Please use '--verbose' instead."
-msgstr "Le drapeau '-v' est caduque et sera supprimé à l'avenir. Merci d'utiliser '--verbose' à la place."
+msgstr "Le drapeau '-v' est obsolète et sera supprimé à l'avenir. Merci d'utiliser '--verbose' à la place."
 
 #: ../visualization/nviz/src/nviz_init.c:287
 msgid "Number of elevation files does not match number of colors files"
-msgstr "Le nombre de fichiers d'altitudes ne correspond pas au nombre de fichiers de couleur"
+msgstr "Le nombre de fichiers d'altitudes ne correspond pas au nombre de fichiers de couleurs"
 
 #: ../visualization/nviz/src/nviz_init.c:298
 msgid "Loading data failed"
@@ -111,7 +110,7 @@ msgstr "Chargement des données échoué"
 
 #: ../visualization/nviz/src/nviz_init.c:411
 msgid "Entering script mode ..."
-msgstr "Entrant dans le mode script..."
+msgstr "Entrée dans le mode script ..."
 
 #: ../visualization/ximgview/main.c:62
 msgid "Unable to open display"
@@ -147,7 +146,7 @@ msgstr "Afficher"
 
 #: ../visualization/ximgview/main.c:271
 msgid "View BMP images from the PNG driver."
-msgstr "Visionner des images BMP depuis le pilote PNG."
+msgstr "Visionner des images BMP avec le pilote PNG."
 
 #: ../visualization/ximgview/main.c:279
 #, fuzzy
@@ -164,22 +163,22 @@ msgstr "Pourcentage du temps CPU à utiliser"
 #: ../visualization/xganim/Clr_table.c:318
 #, c-format
 msgid "Unknown visual class [%d]."
-msgstr "Classe visuelle inconnue [%d]"
+msgstr "Classe visuelle inconnue [%d]."
 
 #: ../visualization/ximgview/color.c:239
 #: ../visualization/xganim/Clr_table.c:243
 msgid "Unable to get sufficient gray shades."
-msgstr "Impossible de trouver un nombre de nuances de gris suffisant"
+msgstr "Impossible d'obtenir un nombre de nuances de gris suffisant."
 
 #: ../visualization/ximgview/color.c:256
 #: ../visualization/xganim/Clr_table.c:260
 msgid "Unable to get sufficient colors."
-msgstr "Impossible de trouver un nombre de couleurs suffisant"
+msgstr "Impossible d'obtenir un nombre de couleurs suffisant."
 
 #: ../visualization/ximgview/color.c:269
 #: ../visualization/xganim/Clr_table.c:273
 msgid "Using private colormap for DirectColor visual."
-msgstr "Utilisation d'une table de couleur privée pour la visualisation DirectColor"
+msgstr "Utilisation d'une table de couleur privée pour la visualisation DirectColor."
 
 #: ../visualization/xganim/main.c:362
 #, fuzzy, c-format
@@ -297,7 +296,7 @@ msgstr "Lecture du fichier [%s]..."
 #: ../vector/v.drape/main.c:245
 #, c-format
 msgid "Raster map <%s> not found"
-msgstr "couche raster <%s> non trouvée"
+msgstr "Couche raster <%s> non trouvée"
 
 # c-format
 #: ../visualization/xganim/main.c:370 ../doc/raster/r.example/main.c:122
@@ -388,6 +387,7 @@ msgid "Unable to read raster row"
 msgstr "Impossible de lire la ligne raster."
 
 #: ../visualization/xganim/main.c:544 ../raster/r.out.mpeg/main.c:346
+#, fuzzy
 msgid "Error reading wildcard"
 msgstr "Erreur de lecture de la wildcard"
 
@@ -402,7 +402,7 @@ msgstr "sites"
 
 #: ../doc/raster/r.example/main.c:85
 msgid "raster, keyword2, keyword3"
-msgstr "couche matricielle, mot-clé2, mot-clé3"
+msgstr "raster, mot-clé2, mot-clé3"
 
 #: ../doc/raster/r.example/main.c:86
 #, fuzzy
@@ -536,7 +536,7 @@ msgstr "Erreur d'écriture de la carte raster <%s>"
 
 #: ../doc/vector/v.example/main.c:50
 msgid "vector, keyword2, keyword3"
-msgstr "couche vectorielle, mot-clé2, mot-clé3"
+msgstr "vecteur, mot-clé2, mot-clé3"
 
 #: ../doc/vector/v.example/main.c:51
 #, fuzzy
@@ -804,7 +804,7 @@ msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:101
 msgid "Specific yield in 1/m"
-msgstr "débit spécifique en 1/m"
+msgstr "Débit spécifique en 1/m"
 
 #: ../raster3d/r3.gwflow/main.c:108
 msgid "Recharge raster map in m^3/s"
@@ -871,7 +871,7 @@ msgstr ""
 
 #: ../raster3d/r3.mkdspf/main.c:77
 msgid "Creates a display file from an existing grid3 file according to specified threshold levels."
-msgstr "Crée un affichage à partir d'une couche raster 3D existante à partir de seuils de valeur spécifiée"
+msgstr "Créé un affichage à partir d'une couche raster 3D existante et de seuils de valeurs spécifiées."
 
 #: ../raster3d/r3.mkdspf/main.c:85
 msgid "Name of an existing 3d raster map"
@@ -879,11 +879,11 @@ msgstr "Nom d'une couche raster 3D existante"
 
 #: ../raster3d/r3.mkdspf/main.c:91
 msgid "Name of output display file"
-msgstr "Nom de la couche raster cible à afficher"
+msgstr "Nom du fichier d'affichage en sortie"
 
 #: ../raster3d/r3.mkdspf/main.c:98
 msgid "List of thresholds for isosurfaces"
-msgstr "Liste des valeurs de seuillage pour les iso-surfaces"
+msgstr "Liste des valeurs seuils pour les iso-surfaces"
 
 #: ../raster3d/r3.mkdspf/main.c:104
 msgid "Minimum isosurface level"
@@ -895,11 +895,11 @@ msgstr "Altitude maximale de l'iso-surface"
 
 #: ../raster3d/r3.mkdspf/main.c:116
 msgid "Positive increment between isosurface levels"
-msgstr "Dénivelé (de valeur positive) entre les courbes de niveau des iso-surfaces"
+msgstr "Dénivelé (positif) entre les courbes de niveau des iso-surfaces"
 
 #: ../raster3d/r3.mkdspf/main.c:123
 msgid "Number of isosurface threshold levels"
-msgstr "Nombre de niveaux de seuillage pour construire l'iso-surface"
+msgstr "Nombre de niveaux de seuils pour construire l'iso-surface"
 
 #: ../raster3d/r3.mkdspf/main.c:127
 msgid "Suppress progress report & min/max information"
@@ -937,7 +937,7 @@ msgstr "Erreur d'ouverture du fichier d'affichage [%s]"
 #: ../raster3d/r3.mkdspf/main.c:216
 #, c-format
 msgid "Writing %s from %s..."
-msgstr "Écriture de %s à partir de %s..."
+msgstr "Écriture de %s à partir de %s ..."
 
 #: ../raster3d/r3.out.ascii/main.c:76
 #, fuzzy
@@ -1031,15 +1031,15 @@ msgstr "Afficher uniquement l'intervalle"
 
 #: ../raster3d/base/r3.info.main.c:96
 msgid "Print 3D raster map resolution (NS-res, EW-res, TB-res) only"
-msgstr "Écrire uniquement la résolution de la couche raster 3D (NS-res, EW-res, Haut-Bas-res)"
+msgstr "Afficher uniquement la résolution de la couche raster 3D (NS-res, EW-res, Haut-Bas-res)"
 
 #: ../raster3d/base/r3.info.main.c:100
 msgid "Print 3D raster map type (float/double) only"
-msgstr "Écrire uniquement le type de couche raster 3D (float/double)"
+msgstr "Afficher uniquement le type de couche raster 3D (float/double)"
 
 #: ../raster3d/base/r3.info.main.c:104
 msgid "Print 3D raster map region only"
-msgstr "Afficher seulement la région de la couche raster 3D"
+msgstr "Afficher uniquement la région de la couche raster 3D"
 
 #: ../raster3d/base/r3.info.main.c:108
 #, fuzzy
@@ -1048,7 +1048,7 @@ msgstr "Afficher l'historique du raster à la place des infos générales"
 
 #: ../raster3d/base/r3.info.main.c:113
 msgid "Print 3D raster map timestamp (day.month.year hour:minute:seconds) only"
-msgstr "Afficher seulement l'étiquette date&heure du raster 3D (sous la forme jour.mois.année heure:minute:secondes)"
+msgstr "Afficher uniquement l'étiquette date&heure du raster 3D (sous la forme jour.mois.année heure:minute:secondes)"
 
 #: ../raster3d/base/r3.info.main.c:121
 #, fuzzy, c-format
@@ -1067,6 +1067,7 @@ msgstr "couche raster 3D <%s> non trouvée"
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
 #: ../raster/r.info/main.c:307 ../raster/r.info/main.c:433
+#, fuzzy
 msgid "Cannot allocate memory for string"
 msgstr "Impossible de calculer le centroïde de la surface (problème d'allocation mémoire)"
 
@@ -1081,7 +1082,7 @@ msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:58
 msgid "3d raster map for which to modify null values"
-msgstr "Nom de la couche raster 3D où modifier les valeurs null"
+msgstr "Nom de la couche raster 3D où modifier les valeurs nulles"
 
 #: ../raster3d/base/r3.null.main.c:66 ../raster/r.null/null.c:70
 msgid "List of cell values to be set to NULL"
@@ -1098,13 +1099,15 @@ msgstr "valeur illégale pour null"
 
 #: ../raster3d/base/r3.null.main.c:125
 msgid "modifyNull: error opening tmp file"
-msgstr "modifyNull (modification des valeurs nulles) : erreur d'ouverture du fichier temporaire"
+msgstr "modifyNull : erreur d'ouverture du fichier temporaire"
 
 #: ../raster3d/base/r3.null.main.c:174
+#, fuzzy
 msgid "modifyNull: error flushing tiles in cube"
 msgstr "modifyNull : erreur dans le tuilage de la couche dans le cube"
 
 #: ../raster3d/base/r3.null.main.c:180
+#, fuzzy
 msgid "modifyNull: error flushing all tiles"
 msgstr "modifyNull : erreur dans le tuilage de la couche"
 
@@ -1120,7 +1123,7 @@ msgstr "modifyNull (modification des valeurs nulles) : erreur dans la fermeture 
 
 #: ../raster3d/base/r3.null.main.c:207
 msgid "Explicitly create the 3D NULL-value bitmap file."
-msgstr "Créer de façon explicite le fichier bitmap 3D de valeur-NULL"
+msgstr "Créer de façon explicite le fichier bitmap 3D de valeurs NULL."
 
 #: ../raster3d/base/r3.timestamp.main.c:45
 #, fuzzy
@@ -1156,10 +1159,12 @@ msgid "Unable to open 3D raster mask file"
 msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:124
+#, fuzzy
 msgid "makeMask: error flushing tiles in cube"
 msgstr "makeMask : erreur de tuilage de la couche dans le cube"
 
 #: ../raster3d/base/r3.mask.main.c:129
+#, fuzzy
 msgid "makeMask: error flushing all tiles"
 msgstr "makeMask : erreur de tuilage de la couche"
 
@@ -1175,14 +1180,14 @@ msgstr "Impossible d'ouvrir la couche raster <%s>"
 
 #: ../raster3d/base/r3.mask.main.c:155
 msgid "Establishes the current working 3D raster mask."
-msgstr "Active le masque raster 3D courant"
+msgstr "Active le masque raster 3D courant."
 
 #: ../raster3d/base/r3.mask.main.c:159
 msgid ""
 "Cannot create mask file: G3D_MASK already exists!\n"
 " Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."
 msgstr ""
-"Impossible de créer un fichier masque : G3D_MASK existe déjà!\n"
+"Impossible de créer un fichier masque : G3D_MASK existe déjà !\n"
 "Utilisez 'g.remove rast3d=G3D_MASK' pour supprimer le masque existant."
 
 #: ../raster3d/r3.out.v5d/main.c:72
@@ -1231,7 +1236,7 @@ msgstr "Couche(s) raster 3D à convertir en tranches raster 2D"
 
 #: ../raster3d/r3.to.rast/main.c:85
 msgid "Basename for resultant raster slice maps"
-msgstr "Racine du nom des tranches rasters créées"
+msgstr "Nom de base pour les tranches de rasters créées"
 
 #: ../raster3d/r3.to.rast/main.c:95
 msgid "Use the same resolution as the input 3D raster map for the 2D outputmaps, independent of the current region settings"
@@ -1304,7 +1309,7 @@ msgstr "Mémoire insuffisante"
 #: ../raster3d/r3.to.rast/main.c:302 ../raster3d/r3.cross.rast/main.c:349
 #: ../raster/r.to.rast3/main.c:239
 msgid "Illegal output file name"
-msgstr "Nom du fichier de sortie illégal"
+msgstr "Nom du fichier de sortie invalide"
 
 # c-format
 #: ../raster3d/r3.to.rast/main.c:304
@@ -1325,7 +1330,7 @@ msgstr "Couche raster %i le nom de fichier %s existe déjà. Ce fichier va être
 
 #: ../raster3d/r3.cross.rast/main.c:91
 msgid "Input 3D raster map for cross section."
-msgstr "Couche raster 3D en entrée pour la coupe"
+msgstr "Couche raster 3D en entrée pour la section de coupe."
 
 #: ../raster3d/r3.cross.rast/main.c:98
 msgid "2D elevation map used to create the cross section map"
@@ -1333,7 +1338,7 @@ msgstr "Couche de relief 2D utilisée pour créer la couche de coupe"
 
 #: ../raster3d/r3.cross.rast/main.c:105
 msgid "Resulting cross section 2D raster map"
-msgstr "couche raster en coupe 2D en sortie"
+msgstr "Carte raster pour la sortie de la section de coupe 2D"
 
 #: ../raster3d/r3.cross.rast/main.c:162
 #, fuzzy
@@ -1423,7 +1428,7 @@ msgstr "Nom du fichier VTK-ASCII en sortie"
 
 #: ../raster3d/r3.out.vtk/parameters.c:41
 msgid "Float value to represent no data cell/points"
-msgstr "Valeur flottante pour figurer les cellules/point sans valeur"
+msgstr "Valeur flottante pour les cellules/point sans valeur"
 
 #: ../raster3d/r3.out.vtk/parameters.c:47
 msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
@@ -1530,7 +1535,7 @@ msgstr "Convertit une couche raster au format VTK-Ascii"
 
 #: ../raster3d/r3.out.vtk/main.c:389
 msgid "failed to interpret dp as an integer"
-msgstr "Echec pour interpréter dp comme valeur entière (integer)"
+msgstr "Échec pour interpréter dp comme valeur entière (integer)"
 
 #: ../raster3d/r3.out.vtk/main.c:391 ../raster/r.out.ascii/main.c:125
 msgid "dp has to be from 0 to 20"
@@ -1579,16 +1584,16 @@ msgstr "Fichier raster ASCII à importer"
 
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "String representing NULL value data cell (use 'none' if no such value)"
-msgstr "Chaîne représentant les cellules de données NULL (utilisez 'none' si toutes les valeurs sont définies)"
+msgstr "Chaîne représentant les cellules de données NULL (utilise 'none' si toutes les valeurs sont définies)"
 
 #: ../raster3d/r3.in.ascii/main.c:175
 #, c-format
 msgid "Loading data ...  (%dx%dx%d)"
-msgstr "Chargement des données... (%dx%dx%d)"
+msgstr "Chargement des données ... (%dx%dx%d)"
 
 #: ../raster3d/r3.in.ascii/main.c:192
 msgid "End of file reached while still loading data."
-msgstr "Fin de fichier atteinte en cours de chargement de la donnée."
+msgstr "Fin de fichier atteinte pendant le chargement des données."
 
 #: ../raster3d/r3.in.ascii/main.c:205
 #, fuzzy
@@ -2016,7 +2021,7 @@ msgstr "Au moins <%s> ou <%s> requis"
 #: ../misc/m.nviz.image/args.c:936
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
-msgstr "Nombre d'attributs incohérent (<%s/%s> %d: <%s> %d)"
+msgstr "Nombre d'attributs incohérent (<%s/%s> %d : <%s> %d)"
 
 #: ../misc/m.nviz.image/args.c:947
 #, fuzzy, c-format
@@ -2029,7 +2034,7 @@ msgstr "Nombre d'attributs incohérent (<%s> %d: <%s> %d)"
 #: ../misc/m.nviz.image/args.c:996 ../misc/m.nviz.image/args.c:1028
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
-msgstr "Nombre d'attributs incohérent (<%s> %d: <%s> %d)"
+msgstr "Nombre d'attributs incohérent (<%s> %d : <%s> %d)"
 
 #: ../misc/m.nviz.image/args.c:1012 ../misc/m.nviz.image/args.c:1021
 #, fuzzy, c-format
@@ -2044,7 +2049,7 @@ msgstr "Nombre d'attributs incohérent (<%s> %d: <%s> %d)"
 #: ../misc/m.nviz.image/args.c:1045
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d)"
-msgstr "Nombre d'attributs incohérent (<%s/%s> %d: <%s> %d, <%s> %d"
+msgstr "Nombre d'attributs incohérent (<%s/%s> %d : <%s> %d, <%s> %d)"
 
 #: ../misc/m.nviz.image/volume.c:42 ../misc/m.nviz.image/volume.c:125
 #, fuzzy, c-format
@@ -2454,7 +2459,7 @@ msgstr "Aucune couche spécifiée en entrée."
 
 #: ../raster/r.external/main.c:598
 msgid "input= and source= are mutually exclusive"
-msgstr "l"
+msgstr "input= et source= sont mutuellements exclusifs"
 
 #: ../raster/r.external/main.c:601 ../raster/r.in.gdal/main.c:222
 msgid "Name for output raster map not specified"
@@ -2519,19 +2524,19 @@ msgstr ""
 
 #: ../raster/r.mode/main.c:52
 msgid "Finds the mode of values in a cover map within areas assigned the same category value in a user-specified base map."
-msgstr "Trouve la mode des valeurs d'une couche de couverture pour les zones définies par les catégories d'une couche de base."
+msgstr "Trouve le « mode » (valeur la plus présente) des valeurs d'une couche de couverture pour les zones définies par les catégories d'une couche de base."
 
 #: ../raster/r.mode/main.c:58
 msgid "Base map to be reclassified"
-msgstr "couche de base à reclasser"
+msgstr "Couche de base à reclasser"
 
 #: ../raster/r.mode/main.c:65
 msgid "Coverage map"
-msgstr "couche de couverture"
+msgstr "Couche de couverture"
 
 #: ../raster/r.mode/main.c:72
 msgid "Output map"
-msgstr "couche de sortie"
+msgstr "Couche de sortie"
 
 # c-format
 #: ../raster/r.mode/main.c:86
@@ -2557,15 +2562,16 @@ msgstr "%s: %s dans %s - impossible de lire le fichier de catégorie"
 
 #: ../raster/r.mode/read_stats.c:14
 msgid "reading r.stats output"
-msgstr "e lecture de r.stats en sortie"
+msgstr "Lecture de la sortie de r.stats"
 
 #: ../raster/r.profile/main.c:53
 msgid "raster, profile"
 msgstr ""
 
 #: ../raster/r.profile/main.c:55
+#, fuzzy
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr "Sort les valeurs de la couche raster à partir de ligne(s) définies par l'utilisateur"
+msgstr "Sort les valeurs de la couche raster à partir de ligne(s) définie(s) par l'utilisateur."
 
 #: ../raster/r.profile/main.c:66
 msgid "Name of file for output (use output=- for stdout)"
@@ -2578,7 +2584,7 @@ msgstr "Jeu de coordonnées pour définir le profil"
 
 #: ../raster/r.profile/main.c:81
 msgid "Resolution along profile (default = current region resolution)"
-msgstr "Résolution utilisée pour le profil (par défaut = la résolution de la région courante)"
+msgstr "Résolution utilisée pour le profil (par défaut = résolution de la région courante)"
 
 #: ../raster/r.profile/main.c:88
 msgid "Character to represent no data cell"
@@ -2677,7 +2683,9 @@ msgstr "Milieu:"
 msgid ""
 "Right:  Finish profile and exit\n"
 "\n"
-msgstr "Droit : finir le profil et sortir\n"
+msgstr ""
+"Droit : finir le profil et sortir\n"
+"\n"
 
 #: ../raster/r.profile/main.c:305
 #, c-format
@@ -2706,12 +2714,12 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:230 ../raster/r.sun/main.c:176
 msgid "Computes direct (beam), diffuse and reflected solar irradiation raster maps for given day, latitude, surface and atmospheric conditions. Solar parameters (e.g. sunrise, sunset times, declination, extraterrestrial irradiance, daylight length) are saved in the map history file. Alternatively, a local time can be specified to compute solar incidence angle and/or irradiance raster maps. The shadowing effect of the topography is optionally incorporated."
-msgstr "Calcule des couches de rayonnement solaire direct (beam), diffus et réfléchi pour un jour donné, une latitude; des propriétés de surface et des conditions atmosphériques. Les paramètres solaires (par exemple, le lever du soleil, le coucher du soleil, la déclinaison, les radiations extra-terrestres, la durée du jour) sont sauvegardées dans un fichier texte local. Sinon, une heure locale peut être indiquée pour calculer des angles d'incidence ou d'irradiance du rayonnement solaire. Les effets d'ombres portées par la topographie peuvent être pris en compte de façon optionnelle."
+msgstr "Calcule des couches de rayonnement solaire direct (beam), diffus et réfléchi pour un jour donné, une latitude, des propriétés de surface et des conditions atmosphériques. Les paramètres solaires (par exemple, le lever du soleil, le coucher du soleil, la déclinaison, les radiations extra-terrestres, la durée du jour) sont enregistrées dans un fichier texte local. Sinon, une heure locale peut être indiquée pour calculer des angles d'incidence ou d'irradiance du rayonnement solaire. Les effets d'ombres portées par la topographie peuvent être pris en compte de façon optionnelle."
 
 #: ../raster/r.sun2/main.c:244 ../raster/r.sun/main.c:206
 #: ../raster/r.horizon/main.c:225
 msgid "Name of the input elevation raster map [meters]"
-msgstr "Nom de la couche raster d'altitude (mètres)"
+msgstr "Nom du raster d'altitudes en entrée [mètres]"
 
 #: ../raster/r.sun2/main.c:245 ../raster/r.sun2/main.c:254
 #: ../raster/r.sun2/main.c:263 ../raster/r.sun2/main.c:272
@@ -2740,7 +2748,7 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:253 ../raster/r.sun/main.c:215
 msgid "Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]"
-msgstr "Nom de la couche d'aspect source (aspect du terrain ou azimut du panneau solaire) [degrés décimaux]"
+msgstr "Nom de la couche d'aspect en entrée (aspect du terrain ou azimut du panneau solaire) [degrés décimaux]"
 
 #: ../raster/r.sun2/main.c:262
 msgid "A single value of the orientation (aspect), 270 is south"
@@ -2748,7 +2756,7 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:271 ../raster/r.sun/main.c:225
 msgid "Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]"
-msgstr "Nom de la couche raster source de pente (pente du terrain ou inclinaison du panneau solaire) [degrés décimaux]"
+msgstr "Nom du raster de pentes en entrée (pente du terrain ou inclinaison du panneau solaire) [degrés décimaux]"
 
 #: ../raster/r.sun2/main.c:279
 msgid "A single value of inclination (slope)"
@@ -2756,7 +2764,7 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:288 ../raster/r.sun/main.c:234
 msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
-msgstr "Nom de la couche raster source pour le coefficient atmosphérique d'opacité de Linke"
+msgstr "Nom du raster en entrée pour le coefficient atmosphérique d'opacité de Linke [-]"
 
 #: ../raster/r.sun2/main.c:298 ../raster/r.sun/main.c:245
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
@@ -2764,15 +2772,15 @@ msgstr "Valeur unique du coefficient atmosphérique d'opacité de Linke [-]"
 
 #: ../raster/r.sun2/main.c:308 ../raster/r.sun/main.c:254
 msgid "Name of the ground albedo coefficient input raster map [-]"
-msgstr "Nom de la couche raster source pour le coefficient d'albedo"
+msgstr "Nom du raster en entrée pour le coefficient d'albedo du sol [-]"
 
 #: ../raster/r.sun2/main.c:318 ../raster/r.sun/main.c:265
 msgid "A single value of the ground albedo coefficient [-]"
-msgstr "Valeur unique pour le coefficient d'albedo terrestre [-]"
+msgstr "Valeur unique pour le coefficient d'albedo du sol [-]"
 
 #: ../raster/r.sun2/main.c:328
 msgid "Name of input raster map containing latitudes [decimal degrees]"
-msgstr "Nom de la couche en entrée contenant "
+msgstr "Nom du raster en entrée contenant les laltitudes [degrés décimaux]"
 
 #: ../raster/r.sun2/main.c:337
 #, fuzzy
@@ -2829,7 +2837,7 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:389 ../raster/r.sun/main.c:320
 msgid "Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)"
-msgstr "Fichier raster en sortie pour le rayonnement solaire [W.m-2] (mode 1) ou l'irradiation [Wh.m-2.day-1] (mode 2)"
+msgstr "Couche raster en sortie pour le rayonnement solaire [W.m-2] (mode 1) ou l'irradiation [Wh.m-2.day-1] (mode 2)"
 
 #: ../raster/r.sun2/main.c:398 ../raster/r.sun/main.c:329
 msgid "Output insolation time raster map [h] (mode 2 only)"
@@ -2854,7 +2862,7 @@ msgstr "Numéro du jour dans l'année (1-365)"
 
 #: ../raster/r.sun2/main.c:441 ../raster/r.sun/main.c:362
 msgid "Time step when computing all-day radiation sums [decimal hours]"
-msgstr "Pas temporel pour calculer le rayonnement total sur une journée [heures décimales]"
+msgstr "Pas de temps pour le calcul du rayonnement total sur une journée [heures décimales]"
 
 #: ../raster/r.sun2/main.c:448 ../raster/r.sun/main.c:369
 msgid "Declination value (overriding the internally computed value) [radians]"
@@ -2879,7 +2887,7 @@ msgstr ""
 #: ../raster/r.sun2/main.c:502 ../raster/r.regression.line/main.c:68
 #: ../vector/v.buffer2/main.c:218 ../vector/v.generalize/main.c:209
 msgid "This does nothing. It is retained for backwards compatibility"
-msgstr "Ceci ne fait rien. C'est maintenu pour la rétrocompatibilité "
+msgstr "Ceci ne fait rien. Maintenu pour la rétrocompatibilité"
 
 #: ../raster/r.sun2/main.c:503 ../vector/v.buffer2/main.c:216
 #: ../vector/v.buffer2/main.c:228 ../vector/v.build.polylines/main.c:134
@@ -2893,7 +2901,7 @@ msgstr "Intègre les effets d'ombres portées du relief"
 
 #: ../raster/r.sun2/main.c:514
 msgid "Use the low-memory version of the program"
-msgstr "Utiliser la version basse-mémoire du programme"
+msgstr "Utiliser la version faible-mémoire du programme"
 
 #: ../raster/r.sun2/main.c:561
 msgid "You must give the longitude raster if you use civil time"
@@ -2936,7 +2944,7 @@ msgstr "%s = %s -- doit être supérieur à zéro"
 
 #: ../raster/r.sun2/main.c:610
 msgid "If you use the horizon option you must also set the 'horizonstep' parameter."
-msgstr "Si vous utilisez l'option horizon vous devez aussi fournir le paramètre 'horizonstep'"
+msgstr "Si vous utilisez l'option horizon vous devez aussi fournir le paramètre 'horizonstep'."
 
 #: ../raster/r.sun2/main.c:616
 #, fuzzy
@@ -2968,14 +2976,14 @@ msgstr "Si vous souhaitez économiser de la mémoire et utiliser les ombres, vou
 #: ../general/g.region/printwindow.c:247 ../general/g.region/printwindow.c:503
 #: ../general/g.region/printwindow.c:622
 msgid "Can't get projection info of current location"
-msgstr "Impossible d'obtenir les informations de projection pour le Secteur (location) courant"
+msgstr "Impossible d'obtenir les informations de projection pour le Secteur courant"
 
 #: ../raster/r.sun2/main.c:732 ../raster/r.sun/main.c:475
 #: ../raster/r.horizon/main.c:482 ../display/d.where/main.c:96
 #: ../general/g.region/printwindow.c:250 ../general/g.region/printwindow.c:506
 #: ../general/g.region/printwindow.c:625
 msgid "Can't get projection units of current location"
-msgstr "Impossible d'obtenir les unités de projection pour le Secteur (location) courant"
+msgstr "Impossible d'obtenir les unités de projection pour le Secteur courant"
 
 #: ../raster/r.sun2/main.c:736 ../raster/r.sun/main.c:479
 #: ../raster/r.horizon/main.c:486 ../ps/ps.map/do_geogrid.c:272
@@ -2983,14 +2991,14 @@ msgstr "Impossible d'obtenir les unités de projection pour le Secteur (location
 #: ../general/g.region/printwindow.c:253 ../general/g.region/printwindow.c:509
 #: ../general/g.region/printwindow.c:628
 msgid "Can't get projection key values of current location"
-msgstr "Impossible d'obtenir les valeurs clefs de projection pour le Secteur (location) courant"
+msgstr "Impossible d'obtenir les valeurs clefs de projection pour le Secteur courant"
 
 #: ../raster/r.sun2/main.c:746 ../raster/r.sun/main.c:489
 #: ../raster/r.horizon/main.c:496 ../ps/ps.map/do_geogrid.c:278
 #: ../display/d.where/main.c:106 ../display/d.where/main.c:132
 #: ../display/d.grid/plot.c:326 ../display/d.grid/plot.c:353
 msgid "Unable to set up lat/long projection parameters"
-msgstr "Impossible de fixer les paramètres de projection longitude/latitude"
+msgstr "Impossible de fixer les paramètres de projection latitude/longitude"
 
 #: ../raster/r.sun2/main.c:750
 msgid "latin and longin raster maps have no effect when in a Lat/Lon location"
@@ -4661,7 +4669,7 @@ msgstr "Mode silencieux"
 #: ../raster/r.covar/main.c:75 ../vector/v.mkgrid/main.c:141
 #: ../vector/v.qcount/main.c:117
 msgid "The '-q' flag is superseded and will be removed in future. Please use '--quiet' instead."
-msgstr "Le drapeau '-q' est caduque et sera supprimé à l'avenir. Merci d'utiliser '--quiet' à la place."
+msgstr "Le drapeau '-q' est obsolète et sera supprimé à l'avenir. Merci d'utiliser '--quiet' à la place."
 
 #: ../raster/r.cross/main.c:122
 #, fuzzy, c-format
