@@ -30,15 +30,16 @@ static const struct menu
     {c_ave,    w_ave,    "average",  "average (mean) value"},
     {c_median, w_median, "median",   "median value"},
     {c_mode,   w_mode,   "mode",     "most frequently occuring value"},
-    {c_min,    NULL,     "minimum",  "lowest value"},
-    {c_max,    NULL,     "maximum",  "highest value"},
+    {c_min,    w_min,    "minimum",  "lowest value"},
+    {c_max,    w_max,    "maximum",  "highest value"},
     {c_quart1, w_quart1, "quart1",   "first quartile"},
     {c_quart3, w_quart3, "quart3",   "third quartile"},
     {c_perc90, w_perc90, "perc90",   "ninetieth percentile"},
     {c_sum,    w_sum,    "sum",      "sum of values"},
     {c_var,    w_var,    "variance", "variance value"},
     {c_stddev, w_stddev, "stddev",   "standard deviation"},
-    {NULL, NULL, NULL, NULL}
+    {c_quant,  w_quant,  "quantile", "arbitrary quantile"},
+    {NULL, NULL, NULL}
 };
 
 static char *build_method_list(void)
@@ -77,7 +78,9 @@ static struct Cell_head dst_w, src_w;
 static DCELL *outbuf;
 static DCELL **bufs;
 static int method;
+static const void *closure;
 static int row_scale, col_scale;
+static double quantile;
 
 static void resamp_unweighted(void)
 {
@@ -141,7 +144,7 @@ static void resamp_unweighted(void)
 	    if (null && nulls)
 		G_set_d_null_value(&outbuf[col], 1);
 	    else
-		(*method_fn) (&outbuf[col], values, n, NULL);
+		(*method_fn) (&outbuf[col], values, n, closure);
 	}
 
 	G_set_window(&dst_w);
@@ -227,7 +230,7 @@ static void resamp_weighted(void)
 	    if (null && nulls)
 		G_set_d_null_value(&outbuf[col], 1);
 	    else
-		(*method_fn) (&outbuf[col], values, n, NULL);
+		(*method_fn) (&outbuf[col], values, n, closure);
 	}
 
 	G_set_window(&dst_w);
@@ -240,7 +243,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct
     {
-	struct Option *rastin, *rastout, *method;
+	struct Option *rastin, *rastout, *method, *quantile;
     } parm;
     struct
     {
@@ -272,6 +275,14 @@ int main(int argc, char *argv[])
     parm.method->options = build_method_list();
     parm.method->answer = "average";
 
+    parm.quantile = G_define_option();
+    parm.quantile->key = "quantile";
+    parm.quantile->type = TYPE_DOUBLE;
+    parm.quantile->required = NO;
+    parm.quantile->description = _("Quantile to calculate for method=quantile");
+    parm.quantile->options = "0.0-1.0";
+    parm.quantile->answer = "0.5";
+
     flag.nulls = G_define_flag();
     flag.nulls->key = 'n';
     flag.nulls->description = _("Propagate NULLs");
@@ -288,6 +299,11 @@ int main(int argc, char *argv[])
     method = find_method(parm.method->answer);
     if (method < 0)
 	G_fatal_error(_("Unknown method <%s>"), parm.method->answer);
+
+    if (menu[method].method == c_quant) {
+	quantile = atoi(parm.quantile->answer);
+	closure = &quantile;
+    }
 
     G_get_set_window(&dst_w);
 
