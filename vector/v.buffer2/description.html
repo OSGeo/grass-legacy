@@ -16,31 +16,37 @@ cannot be resolved automatically.
 
 <h2>EXAMPLES</h2>
 
+All examples are based on the North Carolina sample dataset.
+
 <h3>Buffer around input lines</h3>
 
 <div class="code"><pre>
-v.buffer input=map output=buffer type=line distance=100
+v.buffer input=roadsmajor output=roadsmajor_buffer type=line distance=100
 </pre></div>
+
+<center>
+<img src="v_buffer_lines.png" border="1"><br>
+Buffer of 100m along the "roadsmajor" lines (map subset, original center line
+shown in black)
+</center>
 
 <h3>Circles around input points</h3>
 
 <div class="code"><pre>
-v.buffer input=pointsmap output=circles type=point distance=1000 
+v.buffer input=hospitals output=hospitals_circled type=point distance=1000 
 </pre></div>
 
-<h3>Non-overlapping circles around input points with attribute transfer</h3>
+<h3>Overlapping circles around input points with attribute transfer</h3>
 
 <div class="code"><pre>
-v.buffer input=archsites output=circles type=point distance=200 
+v.buffer input=hospitals output=circles type=point distance=2000
 # change original points to centroids: 
-v.type in=archsites out=archcentroids type=point,centroid 
+v.type in=hospitals out=hospital_centroids type=point,centroid 
 # patch circles and centroids: 
-v.patch in=archcentroids,circles out=circles_db 
-# attach attributes, either use 
-# db.copy ... 
-# or link to the original table: 
-v.db.connect map=circles_db table=archsites field=1 key=cat driver=dbf \
-database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
+v.patch in=hospital_centroids,circles out=circles_db 
+# attach attributes, either use db.copy or link to the original table: 
+v.db.connect map=circles_db table=hospitals layer=1 key=cat driver=dbf \
+     database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
 </pre></div>
 
 
@@ -53,7 +59,6 @@ database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
 <a href="v.patch.html">v.patch</a>,
 <a href="v.db.connect.html">v.db.connect</a>
 </em>
-
 
 <h2>AUTHORS</h2>
 
