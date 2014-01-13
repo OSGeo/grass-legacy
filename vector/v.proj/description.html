@@ -4,8 +4,9 @@
 of a specified location (different from current) with projection of input
 location to the vector map in a current mapset of current location with
 projection of current location (both projections are defined by
-corresponding PROJ_INFO files).
-
+corresponding PROJ_INFO files). The projection information is taken from the
+current PROJ_INFO files, as set and viewed with
+<em><a href="g.proj.html">g.proj</a></em>.
 
 <h2>NOTES</h2>
 
@@ -25,6 +26,14 @@ location is stored in another separate GRASS database.
 <em>v.proj</em> supports general datum transformations, making use of the
 <em>PROJ.4</em> co-ordinate system translation library.
 
+<p>
+In order to preserve spatial detail, it is recommended to densify linear 
+features with <em><a href="v.split.html">v.split</a></em> before 
+reprojecting. Depending on the source and target CRS 
+(Coordinate Reference System), geometries can be substantially 
+deformed (straight lines become curves, squares become trapezoids, etc). 
+In these cases densification of linear features can help to avoid 
+topological errors.
 
 <h2>EXAMPLES</h2>
 
@@ -34,12 +43,12 @@ v.proj in=mymap location=latlong mapset=user1
 
 <h2>REFERENCES</h2>
 
-<a href=http://proj.maptools.org/>PROJ 4</a>: Projection/datum support library.
+<a href="http://trac.osgeo.org/proj/">PROJ 4</a>: Projection/datum support library.
 
 <p>
 <b>Further reading</b>
 <ul>
-<li> <a href="http://www.asprs.org/persjournals/PE-RS-Journals/Grids-Datums.html">ASPRS Grids and Datum</a>
+<li> <a href="http://www.asprs.org/Grids-Datums.html">ASPRS Grids and Datum</a>
 <li> <a href="http://www.mapref.org">MapRef - The Collection of Map Projections and Reference Systems for Europe</a>
 <li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ4)
 </ul>
@@ -53,6 +62,7 @@ v.proj in=mymap location=latlong mapset=user1
 <a href="i.rectify.html">i.rectify</a>,  
 <a href="r.stats.html">r.stats</a>,  
 <a href="v.sample.html">v.sample</a>,
+<a href="v.split.html">v.split</a>,
 <a href="v.surf.idw.html">v.surf.idw</a>,
 <a href="v.surf.rst.html">v.surf.rst</a>
 </em>
