@@ -217,8 +217,6 @@ class AboutWindow(wx.Frame):
         infoTxt.SetupScrolling()
         infoSizer = wx.BoxSizer(wx.VERTICAL)
         infoGridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
-        infoGridSizer.AddGrowableCol(0)
-        infoGridSizer.AddGrowableCol(1)
         logo = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass-64x64.png")
         logoBitmap = wx.StaticBitmap(parent = infoTxt, id = wx.ID_ANY,
                                      bitmap = wx.Bitmap(name = logo,
@@ -288,6 +286,8 @@ class AboutWindow(wx.Frame):
                                                label = wx.__version__),
                           pos = (row, 1),
                           flag = wx.ALIGN_LEFT)
+        infoGridSizer.AddGrowableCol(0)
+        infoGridSizer.AddGrowableCol(1)
         
         infoSizer.Add(item = infoGridSizer,
                       proportion = 1,
