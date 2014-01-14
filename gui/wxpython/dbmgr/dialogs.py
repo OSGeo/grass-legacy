@@ -153,7 +153,8 @@ class DisplayAttributesDialog(wx.Dialog):
         # bindigs
         btnReset.Bind(wx.EVT_BUTTON, self.OnReset)
         btnSubmit.Bind(wx.EVT_BUTTON, self.OnSubmit)
-        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnClose)
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -298,8 +299,8 @@ class DisplayAttributesDialog(wx.Dialog):
                     if name != key and id != wx.NOT_FOUND:
                         self.FindWindowById(id).SetValue(str(value))
 
-    def OnCancel(self, event):
-        """!Cancel button pressed
+    def OnClose(self, event):
+        """!Closes dialog and removes query layer.
         """
         frame = self.parent.parent
         frame.dialogs['attributes'] = None
@@ -311,7 +312,7 @@ class DisplayAttributesDialog(wx.Dialog):
             frame.RemoveQueryLayer()
             self.parent.UpdateMap(render = True)
 
-        self.Close()
+        self.Destroy()
 
     def OnSubmit(self, event):
         """!Submit records"""
@@ -333,7 +334,7 @@ class DisplayAttributesDialog(wx.Dialog):
                        stdin = sql)
         
         if close and self.closeDialog.IsChecked():
-            self.OnCancel(event)
+            self.OnClose(event)
 
     def OnFeature(self, event):
         self.fid = int(event.GetString())
