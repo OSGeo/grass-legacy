@@ -54,8 +54,6 @@ real-install-macosx: INST_DIR_TARGET = ${INST_DIR}
 real-install-macosx: PREFIX_TARGET = ${prefix}
 real-install-macosx: install-basic-macosx macosx-support-dir bundle-macosx
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${MACOSX_SUPPDIR} ; tar xBf - ) 2>/dev/null
-	@# help file package
-	${LN_DIR} "${INST_DIR_TARGET}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 
 # create a packagemaker installer package.
 # pretty much the same as install, but needs intermediate install location
