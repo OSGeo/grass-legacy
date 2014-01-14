@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     struct dxf_file *dxf;
     struct Map_info *Map;
     char *output = NULL;
+    int ret;
 
     struct GModule *module;
     struct
@@ -173,7 +174,7 @@ int main(int argc, char *argv[])
     }
 
     /* import */
-    dxf_to_vect(dxf, Map);
+    ret = dxf_to_vect(dxf, Map);
 
     dxf_close(dxf);
 
@@ -182,7 +183,7 @@ int main(int argc, char *argv[])
     else {
 	Vect_close(Map);
 
-	if (found_layers) {
+	if (ret) {
 	    if (Vect_open_old(Map, output, G_mapset())) {
 		if (!flag_topo)
 		    if (!Vect_build(Map))

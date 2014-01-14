@@ -27,7 +27,7 @@ struct dxf_file
 
 GLOBAL int flag_list, flag_extent, flag_table, flag_topo, flag_invert,
     flag_one_layer, flag_frame;
-GLOBAL int num_layers, found_layers;
+GLOBAL int num_layers;
 GLOBAL char **layers;
 GLOBAL char dxf_buf[DXF_BUF_SIZE], entity[DXF_BUF_SIZE];
 GLOBAL int ARR_MAX;
@@ -86,6 +86,6 @@ int add_text(struct dxf_file *, struct Map_info *);
 #define write_face(a, b, c) write_vect(a, b, entity, "", c, GV_FACE)
 #define write_text(a, b, c) write_vect(a, b, entity, c, 1, GV_POINT)
 void write_vect(struct Map_info *, char *, char *, char *, int, int);
-void write_done(struct Map_info *);
+int write_done(struct Map_info *);
 
 #endif
