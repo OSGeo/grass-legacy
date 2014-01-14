@@ -70,13 +70,13 @@ void write_vect(struct Map_info *Map, char *layer, char *entity, char *label,
     return;
 }
 
-void write_done(struct Map_info *Map)
+int write_done(struct Map_info *Map)
 {
     int i;
 
-    if (!(found_layers = (num_fields > 0))) {
+    if (!num_fields) {
 	G_warning(_("No DXF layers found!"));
-	return;
+	return 0;
     }
 
     if (!flag_table) {
@@ -115,7 +115,7 @@ void write_done(struct Map_info *Map)
 	driver = NULL;
     }
 
-    return;
+    return 1;
 }
 
 static int get_field_cat(struct Map_info *Map, char *layer, int *field,
