@@ -557,22 +557,21 @@ class Map(object):
     def ChangeMapSize(self, (width, height)):
         """!Change size of rendered map.
         
-        @param width,height map size
-
-        @return True on success
-        @return False on failure
+        @param width,height map size given as tuple
         """
         try:
             self.width  = int(width)
             self.height = int(height)
-            Debug.msg(2, "Map.ChangeMapSize(): width=%d, height=%d" % \
-                          (self.width, self.height))
-            return True
-        except:
+            if self.width < 1 or self.height < 1:
+                sys.stderr.write(_("Invalid map size %d,%d\n") % (self.width, self.height))
+                raise ValueError
+        except ValueError:
             self.width  = 640
             self.height = 480
-            return False
-        
+
+        Debug.msg(2, "Map.ChangeMapSize(): width=%d, height=%d" % \
+                      (self.width, self.height))
+
     def GetRegion(self, rast = [], zoom = False, vect = [], regionName = None,
                   n = None, s = None, e = None, w = None, default = False,
                   update = False):
