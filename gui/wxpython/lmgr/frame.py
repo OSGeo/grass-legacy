@@ -798,14 +798,14 @@ class GMFrame(wx.Frame):
         self.goutput.WriteCmdLog(_("System Info"))
         self.goutput.WriteLog("%s: %s\n"
                               "%s: %s\n"
-                              "%s: %s (%s)\n"
+                              # "%s: %s (%s)\n"
                               "GDAL/OGR: %s\n"
                               "PROJ4: %s\n"
                               "Python: %s\n"
                               "wxPython: %s\n"
                               "%s: %s%s\n"% (_("GRASS version"), vInfo['version'],
                                            _("GRASS SVN Revision"), vInfo['revision'],
-                                           _("GIS Library Revision"), vInfo['libgis_revision'], vInfo['libgis_date'].split(' ', 1)[0],
+                                           # _("GIS Library Revision"), vInfo['libgis_revision'], vInfo['libgis_date'].split(' ', 1)[0],
                                            gdalVersion, projVersion,
                                            platform.python_version(),
                                            wx.__version__,
