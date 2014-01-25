@@ -65,7 +65,7 @@ if ! grep -i '</html>' ${PGM}.tmp.html > /dev/null ; then
     cat >> ${PGM}.tmp.html <<-EOF
 	<HR>
 	<P><a href="index.html">Main index</a> - <a href="$INDEXNAME.html">$INDEXNAME index</a> - <a href="full_index.html">Full index</a></P>
-	<P>&copy; 2003-2013 <a href="http://grass.osgeo.org">GRASS Development Team</a></p>
+	<P>&copy; 2003-2014 <a href="http://grass.osgeo.org">GRASS Development Team</a></p>
 	</body>
 	</html>
 	EOF
