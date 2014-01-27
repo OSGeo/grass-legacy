@@ -314,6 +314,8 @@ proc Nviz_main_save { file_hook } {
 	puts $file_hook "[$Nv_(HEIGHT_SLIDER).f.entry get]"
 	puts $file_hook "[Nv_getXYPos  XY_POS]"
 	puts $file_hook "[Nhas_focus]"
+	# Note that the user must keep the g.region settings the same to get the same view upon load!
+	#  Focus is relative to nviz canvas not map coords. See also "focus_real".
 	puts $file_hook "[Nget_focus]"
 	# if not focused, should use view_to
 }
@@ -335,7 +337,7 @@ proc Nviz_main_load { file_hook } {
 	Nv_scaleCallback $Nv_(main_BASE).bframe.cframe.pers e 0 null [expr int($data)]
 	update
 
-	# zexag
+	# z-exag
 	gets $file_hook data
 	Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $data
 	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $data
