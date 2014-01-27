@@ -714,7 +714,7 @@ typbuff *gs_get_att_typbuff(geosurf * gs, int desc, int to_write)
    \return -1 on error
    \return pointer to typbuff (casted)
  */
-int gs_malloc_att_buff(geosurf * gs, int desc, int type)
+size_t gs_malloc_att_buff(geosurf * gs, int desc, int type)
 {
     int hdata, dims[2], ndims;
 

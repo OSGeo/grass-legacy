@@ -404,7 +404,7 @@ int gs_num_datah_reused(int);
 int gs_get_att_type(geosurf *, int);
 int gs_get_att_src(geosurf *, int);
 typbuff *gs_get_att_typbuff(geosurf *, int, int);
-int gs_malloc_att_buff(geosurf *, int, int);
+size_t gs_malloc_att_buff(geosurf *, int, int);
 int gs_malloc_lookup(geosurf *, int);
 int gs_set_att_type(geosurf *, int, int);
 int gs_set_att_src(geosurf *, int, int);
