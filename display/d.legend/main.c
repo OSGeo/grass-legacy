@@ -77,6 +77,8 @@ int main(int argc, char **argv)
     double UserRangeMin, UserRangeMax, UserRangeTemp;
     double *catlist, maxCat;
     int catlistCount, use_catlist;
+    int txsiz;
+    const char *fontsize_override;
 
 
     /* Initialize the GIS calls */
@@ -562,7 +564,6 @@ int main(int argc, char **argv)
 
     if (do_smooth) {
 	int wleg, lleg, dx, dy;
-	int txsiz;
 	int ppl;
 	int tcell;
 	float ScaleFactor = 1.0;
@@ -670,11 +671,15 @@ int main(int argc, char **argv)
 	    /* scale text to fit in window if position not manually set */
 	    /* usually not needed, except when frame is really narrow   */
 	    if (!use_mouse && opt7->answer == NULL) {	/* ie defualt scaling */
-		ScaleFactor = ((r - x1) / ((MaxLabelLen + 1) * txsiz * 0.81));	/* ?? txsiz*.81=actual text width. */
+		/* ?? txsiz*.81=actual text width. */
+		ScaleFactor = ((r - x1) / ((MaxLabelLen + 1) * txsiz * 0.81));
 		if (ScaleFactor < 1.0) {
 		    txsiz = (int)(txsiz * ScaleFactor);
 		}
 	    }
+
+	    if ((fontsize_override = getenv("GRASS_FONTSIZE")))
+		sscanf(fontsize_override, "%d", &txsiz);
 
 	    if (txsiz < 0)
 		txsiz = 0;	/* keep it sane */
@@ -734,7 +739,7 @@ int main(int argc, char **argv)
     }
     else {			/* non FP, no smoothing */
 
-	int txsiz, true_l, true_r;
+	int true_l, true_r;
 	float ScaleFactor = 1.0;
 
 	/* set legend box bounds */
@@ -765,6 +770,9 @@ int main(int argc, char **argv)
 		dots_per_line = (int)floor(dots_per_line * ScaleFactor);
 	    }
 	}
+
+	if ((fontsize_override = getenv("GRASS_FONTSIZE")))
+	    sscanf(fontsize_override, "%d", &txsiz);
 
 	if (dots_per_line < txsiz)
 	    txsiz = dots_per_line;
@@ -897,13 +905,14 @@ int main(int argc, char **argv)
 
 	if (do_cats != cats_num) {
 	    cur_dot_row += dots_per_line;
-	    /*          sprintf(buff, "%d of %d categories\n", (j-1), cats_num) ;   */
 
+	    /* sprintf(buff, "%d of %d categories\n", (j-1), cats_num); */
 	    sprintf(buff, "%d of %d categories\n", k, cats_num);
 
 	    /* shrink text if it will run off the screen */
 	    MaxLabelLen = strlen(buff) + 4;
-	    ScaleFactor = ((true_r - true_l) / (MaxLabelLen * txsiz * 0.81));	/* ?? txsiz*.81=actual text width. */
+	    /* ?? txsiz*.81=actual text width. */
+	    ScaleFactor = ((true_r - true_l) / (MaxLabelLen * txsiz * 0.81));
 	    if (ScaleFactor < 1.0) {
 		txsiz = (int)floor(txsiz * ScaleFactor);
 		R_text_size(txsiz, txsiz);
