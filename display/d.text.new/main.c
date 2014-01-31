@@ -134,6 +134,7 @@ int main(int argc, char **argv)
     int set_x, set_y;
     double east, north;
     int do_background, fg_color, bg_color;
+    const char *fontsize_override;
 
     /* initialize the GIS calls */
     G_gisinit(argv[0]);
@@ -353,6 +354,10 @@ int main(int argc, char **argv)
 
     prev_x = x;
     prev_y = y;
+
+
+    if ((fontsize_override = getenv("GRASS_FONTSIZE")))
+	sscanf(fontsize_override, "%d", &size);
 
     R_text_size(size, size);
     R_text_rotation((float)(rotation * 180.0 / M_PI));

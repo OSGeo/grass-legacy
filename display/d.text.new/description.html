@@ -63,6 +63,7 @@ This command means <em>bold on</em>.
 
 </dl>
 
+
 <h2>EXAMPLE</h2>
 
 The following command will print the short phrase "This is
@@ -93,9 +94,15 @@ Note that the GRASS command
 suitable for input to <em>d.text</em>.
 
 <p>
-
 <em>d.text</em> needs escape sequences that can be used
 within lines to change colors, boldness, and perhaps size.
+
+<p>
+The font size as given on the command line can be manually overridden
+by setting the <tt>GRASS_FONTSIZE</tt> environment variable. This does
+not affect the ".S" command file sizing. <!-- since you might want to
+use more than one size when using an input file -->
+
 
 <h2>SEE ALSO</h2>
 
@@ -115,4 +122,5 @@ Research Laboratory
 <p>
 Updates by Huidae Cho
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
