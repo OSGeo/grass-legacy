@@ -3,13 +3,14 @@
  *
  * MODULE:       db.login
  * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
- *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
- * PURPOSE:      
- * COPYRIGHT:    (C) 2004-2006 by the GRASS Development Team
+ *               Glynn Clements <glynn gclements.plus.com>
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      Store db login settings
+ * COPYRIGHT:    (C) 2004-2014 by the GRASS Development Team
  *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
+ *               This program is free software under the GNU General
+ *               Public License (>=v2). Read the file COPYING that
+ *               comes with GRASS for details.
  *
  *****************************************************************************/
 #include <stdio.h>
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
     user->required = NO;
     user->multiple = NO;
     user->description = _("Username");
+    user->guisection = _("Settings");
 
     password = G_define_option();
     password->key = "password";
@@ -65,6 +67,7 @@ int main(int argc, char *argv[])
     password->required = NO;
     password->multiple = NO;
     password->description = _("Password");
+    password->guisection = _("Settings");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -107,7 +110,8 @@ int main(int argc, char *argv[])
     }
 
     if (password->answer)
-	G_warning(_("The password was stored in file"));
-
+        /* defined in lib/db/dbmi_base/login.c */
+        G_important_message(_("The password was stored in file (%s/.grasslogin64)"), G_home());
+    
     exit(EXIT_SUCCESS);
 }
