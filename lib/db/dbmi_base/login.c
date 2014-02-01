@@ -28,7 +28,7 @@ static const char *login_filename(void)
 
     if (!file) {
 	file = (char *)malloc(1000);
-	sprintf(file, "%s/.grasslogin64", G_home());
+	sprintf(file, "%s/.grasslogin65", G_home());
     }
     return file;
 }
