@@ -45,8 +45,16 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     g_areas g;
     int receiveChannel;
     int res;
-    wd child[WORKERS];
     int i, mypid, doneDir, withoutJob, mv_fd, random_access;
+
+    int num_workers;
+    /* check if environment variable override was set */
+    const char *p = getenv("WORKERS");
+    num_workers = p ? atoi(p) : DEFAULT_WORKERS;
+    if ((num_workers <= 0) || (num_workers > 1e6))
+	G_fatal_error(_("Invalid number of workers: [%s]"), p);
+
+    wd child[num_workers];
 
     /*int mv_rows, mv_cols; */
     list l;
@@ -73,7 +81,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
        ############################################### */
 
     i = 0;
-    while (i < WORKERS) {
+    while (i < num_workers) {
 	int childpid;
 
 	/*creating pipe */
@@ -126,7 +134,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     if (parsed == MVWIN) {
 	/* struct Cell_head cellhd_r, cellhd_new;
 	   char *mapset; */
-	/*creating new raster file */
+	/* create new raster file */
 	mv_fd = G_open_raster_new(output, DCELL_TYPE);
 	if (mv_fd < 0)
 	    G_fatal_error(_("Unable to create raster map <%s>"), output);
@@ -156,14 +164,14 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     /*#######################################################
        ------------------analysis loop----------------------
        ####################################################### */
-    /*first job scheduling */
-    while ((i < WORKERS) && next_Area(parsed, l, g, &m) != 0) {
+    /* first job scheduling */
+    while ((i < num_workers) && next_Area(parsed, l, g, &m) != 0) {
 	send(child[i].channel, &m);
 	i++;
     }
 
 
-    /*body */
+    /* body */
     while (next_Area(parsed, l, g, &m) != 0) {
 	int j = 0, donePid;
 
@@ -179,7 +187,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 		print_Output(res, doneJob);
 	    }
 	    else {
-		/*raster output */
+		/* raster output */
 		raster_Output(random_access, doneJob.f.f_d.aid, g,
 			      doneJob.f.f_d.res);
 	    }
@@ -190,19 +198,20 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 		error_Output(res, doneJob);
 	    }
 	    else {
-		/*printf("todo ");fflush(stdout); *//* TODO scrivere su raster NULL ??? */
+		/* printf("todo"); fflush(stdout); */
+		/* TODO write to raster NULL ??? */
 	    }
 	}
 	j = 0;
 
 
-	while (j < WORKERS && donePid != child[j].pid)
+	while (j < num_workers && donePid != child[j].pid)
 	    j++;
 	send(child[j].channel, &m);
 
     }
 
-    /*kill childs */
+    /* kill childs */
     withoutJob = i;
     while (i > 0) {
 	int j = 0, donePid, status;
@@ -228,13 +237,14 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 		error_Output(res, doneJob);
 	    }
 	    else {
-		/*printf("todo2 ");fflush(stdout); *//*TODO scrivere su raster */
+		/* printf("todo2 "); fflush(stdout); */
+		/* TODO write to raster */
 	    }
 	}
 
 	i--;
 
-	while (j < WORKERS && donePid != child[j].pid)
+	while (j < num_workers && donePid != child[j].pid)
 	    j++;
 
 	m.type = TERM;
@@ -249,7 +259,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
 			      donePid);
 	    perc++;
-	    G_percent (perc, WORKERS, 1);
+	    G_percent (perc, num_workers, 1);
         }
 	/* remove pipe */
 	if (close(child[j].channel) != 0)
@@ -259,7 +269,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     }
 
     /* kill children without Job */
-    for (i = withoutJob; i < WORKERS; i++) {
+    for (i = withoutJob; i < num_workers; i++) {
 	int status;
 
 	m.type = TERM;
