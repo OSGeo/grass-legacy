@@ -176,8 +176,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	int j = 0, donePid;
 
 	receive(receiveChannel, &doneJob);
-	/* perc++; */
-	/* G_percent (perc, num_workers, 1); */
+
 	if (doneJob.type == DONE) {
 	    double result;
 
@@ -200,7 +199,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    }
 	    else {
 		/* printf("todo"); fflush(stdout); */
-		/* TODO scrivere su raster NULL ??? */
+		/* TODO write to raster NULL ??? */
 	    }
 	}
 	j = 0;
@@ -239,7 +238,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    }
 	    else {
 		/* printf("todo2 "); fflush(stdout); */
-		/* TODO scrivere su raster */
+		/* TODO write to raster */
 	    }
 	}
 
@@ -260,7 +259,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
 			      donePid);
 	    perc++;
-	    G_percent (perc, WORKERS, 1);
+	    G_percent (perc, num_workers, 1);
         }
 	/* remove pipe */
 	if (close(child[j].channel) != 0)
