@@ -235,14 +235,16 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     G_debug(3, "daemon mask preproc: raster=[%s] mask=[%s]  rl=%d cl=%d",
 	    raster, mask, rl, cl);
 
+    /* mapset is used hold the mapset of input raster */
     mapset = G_find_cell(raster, "");
     /* open raster */
     if (G_get_cellhd(raster, mapset, &cell) == -1)
 	return NULL;
 
-    mapset = G_find_cell(mask, "");
+    /* mmapset is used hold the mapset where mask is saved */
+    char *mmapset = G_find_cell(mask, "");
     /* open raster */
-    if (G_get_cellhd(mask, mapset, &oldcell) == -1)
+    if (G_get_cellhd(mask, mmapset, &oldcell) == -1)
 	return NULL;
 
     add_row = 1.0 * oldcell.rows / rl;
