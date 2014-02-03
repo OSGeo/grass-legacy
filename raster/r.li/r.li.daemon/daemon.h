@@ -19,6 +19,7 @@
 
 #include <grass/gis.h>
 #include "list.h"
+#include "defs.h"
 
 
 /**
