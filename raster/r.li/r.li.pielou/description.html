@@ -10,10 +10,13 @@ with:
 </ul>
 
 <h2>NOTES</h2>
-Do not use absolute path names for output files. They are raster if
-moving window disposition was selected, otherwise they are in
-<tt>~/.r.li/output/</tt> folder.
-<br>
+
+Do not use absolute path names for the <b>output</b> map/file.
+If the "moving window" method was selected in <b>r.li.setup</b>, then the
+output will be a raster map, otherwise an ASCII file will be generated in
+the <tt>~/.r.li/output/</tt> folder.
+<p>
+
 If the input raster contains NULL value cells, <em>r.li.pielou</em>
 returns -1 for these cells. <br>
 If you want to keep NULL values instead, run subsequently on the resulting map:
