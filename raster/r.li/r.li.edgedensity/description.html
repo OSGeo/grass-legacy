@@ -49,21 +49,6 @@ file run:<br>
 r.li.edgedensity map=my_map conf=my_conf output=my_out patch_type=34
 </pre></div>
 
-<h2>NOTES</h2>
-Do not use absolute path names for output files. They are raster if
-moving window disposition was selected, otherwise they are text files in the
-<tt>$HOME/.r.li/output/</tt> folder.
-<br>
-If input raster is full of null values <em>r.li.edgedensity</em> consider to have 0
-patch.<br>
-If area is 0 <em>r.li.edgedensity</em> returns -1; this is possible only if input
-raster is masked.
-If you want to have null values instead run <br>
-<div class="code"><pre>
-r.null setnull=-1 map=my_map
-</pre></div>
-after index calculation.
-
 <h2>SEE ALSO</h2>
 <em>
 <a href="r.li.html">r.li</a>
