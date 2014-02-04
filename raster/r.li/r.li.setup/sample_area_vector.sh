@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # This program is free software under the GPL (>=v2)
 # Read the COPYING file that comes with GRASS for details.
@@ -56,7 +56,7 @@ f_path="$GISBASE/etc/r.li.setup"
 ##############################################################
 
 #using v.category instead of v.build with cdump
-v.category input=$GIS_OPT_vector option=print > $TMP.cat
+v.category input=$GIS_OPT_vector option=print | sort | uniq > $TMP.cat
 
 #get input vector name
 GIS_OPT_input_vector=`echo $GIS_OPT_vector| cut -d'@' -f 1`
