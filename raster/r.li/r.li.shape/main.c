@@ -69,6 +69,7 @@ int shape_index(int fd, char **par, area_des ad, double *result)
     int *mask_buf;
 
     G_set_c_null_value(&complete_value, 1);
+
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
 	return 0;
@@ -90,7 +91,7 @@ int shape_index(int fd, char **par, area_des ad, double *result)
 	}
     }
 
-    /*calculate distance */
+    /* calculate distance */
     G_begin_distance_calculations();
     /* EW Dist at North edge */
     EW_DIST1 = G_distance(hd.east, hd.north, hd.west, hd.north);
