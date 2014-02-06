@@ -165,11 +165,11 @@ d.rast -o map="tmp_rli_mask.$$"
 name="$TMP.val"
 export name
 
-# ask if it's ok, save 0,1 to "$name.val" temp file
+# ask if it's ok, save 0,1 to "$name" temp file
 "$GRASS_WISH" "$f_path/area_query"
 
-ok=`cat "$name.val" | cut -f1 -d ' '`
-r_name=`cat "$name.val" | cut -f2 -d' '`
+ok=`cat "$name" | cut -f1 -d ' '`
+r_name=`cat "$name" | cut -f2 -d' '`
 
 
 if [ "$ok" -eq 1 ] ; then

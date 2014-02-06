@@ -160,7 +160,7 @@ d.zoom
 
 
 # ask if the selected area is right
-name="$TMP"  # temp file where the answer is written to by the tcl pop-up
+name="$TMP.var"  # temp file where the answer is written to by the tcl pop-up
 export name
 
 # ask if it's ok, save 0,1 to the "$name" tmp file
