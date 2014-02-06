@@ -56,11 +56,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
     wd child[num_workers];
 
-    /*int mv_rows, mv_cols; */
+    /* int mv_rows, mv_cols; */
     list l;
     msg m, doneJob;
-
-    int perc=0;
 
     g = (g_areas) G_malloc(sizeof(struct generatore));
     g->maskname = NULL;
@@ -255,12 +253,10 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	if (!(WIFEXITED(status)))
 	    G_warning(_("r.li.worker (pid %i) exited with abnormal status: %i"),
 		      donePid, status);
-	else {
+	else
 	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
 			      donePid);
-	    perc++;
-	    G_percent (perc, num_workers, 1);
-        }
+
 	/* remove pipe */
 	if (close(child[j].channel) != 0)
 	    G_message(_("Cannot close %s file (PIPE)"), child[j].pipe);
@@ -320,7 +316,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 {
     struct stat s;
     struct Cell_head cellhd;
-    char *buf, *token, *mapset;
+    char *buf, *token, *raster_fqn, *mapset;
     int setup;
     int letti;
     double rel_x, rel_y, rel_rl, rel_cl;
@@ -353,7 +349,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 
     /* find raster map */
     mapset = G_find_cell(raster, "");
-    char * raster_ = G_fully_qualified_name(raster, mapset);
+    raster_fqn = G_fully_qualified_name(raster, mapset);
    
     if (G_get_cellhd(raster, mapset, &cellhd) == -1)
 	G_fatal_error(_("Cannot read raster header file"));
@@ -475,7 +471,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
     else if (strcmp("MASKEDOVERLAYAREA", token) == 0) {
 	double sa_n, sa_s, sa_w, sa_e;
 	int aid = 1;
-	char maskname[GNAME_MAX] = { '\0' };
+	char maskname[GNAME_MAX] = {'\0'};
 	msg m;
 
 	do {
@@ -516,9 +512,10 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    G_fatal_error(_("Irregular maskedoverlay areas definition"));
 
 	token = strtok(NULL, "\n");
-	if (strcmp(token, raster_) != 0)
-	    G_fatal_error(_("The configuration file can be used only with \
-			%s rasterfile and not with %s "), token, raster_);
+	if (strcmp(token, raster_fqn) != 0)
+	    G_fatal_error(_("The configuration file can be used only with "
+			"rasterfile <%s> and not with <%s>"), token, raster_fqn);
+
 	close(setup);
 	return NORMAL;
     }
