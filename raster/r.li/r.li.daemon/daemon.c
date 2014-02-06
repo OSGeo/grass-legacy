@@ -56,7 +56,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
     wd child[num_workers];
 
-    /*int mv_rows, mv_cols; */
+    /* int mv_rows, mv_cols; */
     list l;
     msg m, doneJob;
 
