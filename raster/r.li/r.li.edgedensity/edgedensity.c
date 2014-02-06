@@ -54,9 +54,9 @@ int main(int argc, char *argv[])
     class->type = TYPE_STRING;
     class->required = NO;
     class->multiple = NO;
-    class->description =
-	"The value of the patch type, it can be integer, double or float; it will be changed in function of map type";
-
+    class->label = _("The value of the patch type");
+    class->description = _("It can be integer, double or float; "
+			   "it will be changed in function of map type");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -127,34 +127,28 @@ int calculate(int fd, area_des ad, char **valore, double *result)
     double e = 0;
     double somma = 0;
     double area = 0;
-
     CELL *buf_corr, *buf_sup, *buf_inf;
     CELL prevCell, corrCell, supCell, infCell, nextCell;
-
     AVL_table *array;
-
-    buf_sup = NULL;
-
     long tot = 0;
     long zero = 0;
     long m = 0;
     long bordoCorr = 0;
-
     avl_tree albero = NULL;
-
     int i, j;
     int mask_fd = -1, *mask_corr, *mask_sup, *mask_inf;
     int masked = FALSE;
     int ris;
-
     generic_cell c1;
+
+    buf_sup = NULL;
 
     c1.t = CELL_TYPE;
     /* open mask if needed */
     if (ad->mask == 1) {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0) {
-	    G_fatal_error("can't  open mask %s", ad->mask_name);
-	    return RLI_ERRORE;
+	    G_fatal_error("Cannot open mask file <%s>", ad->mask_name);
+	    return RLI_ERRORE;  /* FIXME: can not return from a fatal error */
 	}
 
 	mask_corr = G_malloc(ad->cl * sizeof(int));
@@ -178,11 +172,14 @@ int calculate(int fd, area_des ad, char **valore, double *result)
 	return RLI_ERRORE;
     }
 
-    G_set_c_null_value(buf_sup + ad->x, ad->cl);	/*the first time buf_sup is all null */
+    /* the first time buf_sup is all null */
+    G_set_c_null_value(buf_sup + ad->x, ad->cl);
 
-    for (j = 0; j < ad->rl; j++) {	/* for each raster row */
+    /* for each raster row */
+    for (j = 0; j < ad->rl; j++) {
 
-	buf_corr = RLI_get_cell_raster_row(fd, j + ad->y, ad);	/* read row of raster */
+	/* read row of raster */
+	buf_corr = RLI_get_cell_raster_row(fd, j + ad->y, ad);
 
 	if (j > 0)		/* not first row */
 	    buf_sup = RLI_get_cell_raster_row(fd, j - 1 + ad->y, ad);
@@ -369,7 +366,8 @@ int calculate(int fd, area_des ad, char **valore, double *result)
 	G_free(mask_inf);
 	G_free(mask_corr);
     }
-    /* G_free(buf_sup); */
+
+    /* G_free(buf_sup); */   /* <-- why not free it? */
     return RLI_OK;
 }
 
@@ -405,8 +403,8 @@ int calculateD(int fd, area_des ad, char **valore, double *result)
     /* open mask if needed */
     if (ad->mask == 1) {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0) {
-	    G_fatal_error("can't  open mask");
-	    return RLI_ERRORE;
+	    G_fatal_error("Cannot open mask file");
+	    return RLI_ERRORE;  /* FIXME: can not return from a fatal error */
 	}
 
 	mask_corr = G_malloc(ad->cl * sizeof(int));
@@ -656,8 +654,8 @@ int calculateF(int fd, area_des ad, char **valore, double *result)
     /* open mask if needed */
     if (ad->mask == 1) {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0) {
-	    G_fatal_error("can't  open mask");
-	    return RLI_ERRORE;
+	    G_fatal_error("Cannot open mask file");
+	    return RLI_ERRORE;  /* FIXME: can not return from a fatal error */
 	}
 
 	mask_corr = G_malloc(ad->cl * sizeof(int));
