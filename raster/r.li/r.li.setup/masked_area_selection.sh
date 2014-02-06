@@ -192,8 +192,6 @@ if [ "$ok" -eq 1 ] ; then
     g.remove rast="tmp_rli_mask.$$" --quiet
     g.remove vect="tmp_rli_mask_v$$" --quiet
 
-#    echo DROP TABLE "tmp_rli_mask_v$$" | db.execute
-
     if [ "$GIS_FLAG_f" -eq 1 ] ; then
     	g.region n="$GIS_OPT_north" s="$GIS_OPT_south" \
     		    e="$GIS_OPT_east" w="$GIS_OPT_west"
