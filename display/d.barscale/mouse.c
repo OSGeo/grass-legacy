@@ -28,7 +28,8 @@ int mouse_query(int toptext, int fontsize)
 	fprintf(stderr,
 		"\n"
 		"Left: choose location\n"
-		"Middle: cancel\n" "Right: confirm location\n");
+		"Middle: cancel\n"
+		"Right: confirm location\n");
 
 	R_get_location_with_pointer(&x_pos, &y_pos, &button);
 
