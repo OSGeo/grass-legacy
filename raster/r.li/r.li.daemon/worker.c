@@ -224,7 +224,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
 char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 {
-    char *mapset, *tmp_file;
+    char *mapset, *mask_mapset, *tmp_file;
     struct Cell_head cell, oldcell;
     int mask_fd, old_fd, *buf, i, j;
     CELL *old;
@@ -241,10 +241,9 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     if (G_get_cellhd(raster, mapset, &cell) == -1)
 	return NULL;
 
-    /* mmapset is used hold the mapset where mask is saved */
-    char *mmapset = G_find_cell(mask, "");
+    mask_mapset = G_find_cell(mask, "");
     /* open raster */
-    if (G_get_cellhd(mask, mmapset, &oldcell) == -1)
+    if (G_get_cellhd(mask, mask_mapset, &oldcell) == -1)
 	return NULL;
 
     add_row = 1.0 * oldcell.rows / rl;
