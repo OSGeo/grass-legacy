@@ -484,15 +484,18 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    m.type = MASKEDAREA;
 
 	    struct Cell_head window;
+
 	    /* Get the window setting. g.region rast=<input raster> */
 	    G_get_window(&window);
+
 	    /* Each input overlay area from input vector are converted to raster
-	    via v.to.rast. See r.li.setup/sample_area_vector.sh. This is to used 
-	    only for reading the region (NS, EW). */
+	       via v.to.rast. See r.li.setup/sample_area_vector.sh. This is to used 
+	       only for reading the region (NS, EW). */
 
 	    /* Get start x and y position of masked overlay raster with respect 
-	    to input raster region from window. 
-	    sa_n, sa_e are read from configuration file. */
+	       to input raster region from window. 
+	       sa_n, sa_e are read from configuration file. */
+
 	    m.f.f_ma.x = (int)G_easting_to_col(sa_e, &window);
 	    m.f.f_ma.y = (int)G_northing_to_row(sa_n, &window);
 
@@ -505,6 +508,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    aid++;
 	    insertNode(l, m);
 	}
+
 	while ((token = strtok(NULL, " ")) != NULL &&
 	       (strcmp(token, "MASKEDOVERLAYAREA") == 0));
 
