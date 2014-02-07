@@ -203,15 +203,15 @@ proc createNewConfiguration {} {
 	# insert buttons
 	frame .newConf.buttons -relief flat
 	pack .newConf.buttons -side bottom -anchor center -pady 2
-	button .newConf.buttons.save -text "Save settings" -state disabled -command {
+	button .newConf.buttons.save -text "3. Save settings" -state disabled -command {
 		saveSettings .newConf
 		}
-	button .newConf.buttons.s_area -text "Setup sampling areas" -state disabled -command {
+	button .newConf.buttons.s_area -text "2. Setup sampling areas" -state disabled -command {
 		setupSamplingArea .newConf
 		.newConf.buttons.save configure -state active
 		.newConf.buttons.s_area configure -state disabled
 	}
-	button .newConf.buttons.s_frame -text "Setup sampling frame" -command {
+	button .newConf.buttons.s_frame -text "1. Setup sampling frame" -command {
 		setupSamplingFrame .newConf
 		.newConf.buttons.s_frame configure -state disabled
 	} 
