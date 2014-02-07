@@ -247,7 +247,7 @@ switch $selection {
 		tk_messageBox -message "WARNING: this configuration file will work only on $env(RASTER) raster map" -type ok -icon warning
 		#TODO change here
 		if { $env(RASTER) != "" && $env(VECTOR) != "" && $env(CONF) != "" } then {
-			catch { exec  $env(F_PATH)/sample_area_vector.sh  raster=$env(RASTER) vector=$env(VECTOR) conf=$env(TMP).set >@stdout 2>@stderr }
+			catch { exec  $env(F_PATH)/sample_area_vector.sh  raster=$env(RASTER) vector=$env(VECTOR) sites=$env(SITE) conf=$env(TMP).set >@stdout 2>@stderr }
 		} else {
 			tk_messageBox -message "Please set configuration file name, raster map and vector file to overlay" -type ok -icon error
 		}

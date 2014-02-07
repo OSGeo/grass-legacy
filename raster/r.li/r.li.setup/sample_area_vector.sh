@@ -20,8 +20,14 @@
 #% type: string
 #% gisprompt: old,vector,vector
 #% key_desc: name
-#% description: Vector map where areas are defined
+#% description: Vector map containing areas
 #% required: yes
+#%end
+#%option
+#% key: sites
+#% type: string
+#% description: Vector points map to overlay
+#% required: no
 #%end
 #%option
 #% key: conf
@@ -146,6 +152,11 @@ while read CAT ; do
 
     # render extracted vector map  (prehaps fcolor=none for areas?)
     d.vect "$EXTRACT" type=boundary width=2
+
+    if [ -n "$GIS_OPT_SITES" ] ; then
+	d.vect map="$GIS_OPT_SITES" color=black fcolor=black size=9 icon=basic/circle
+	d.vect map="$GIS_OPT_SITES" color=red fcolor=red size=5 icon=basic/circle
+    fi
 
     echo " Area $i of $NUM_CATS (category $CAT)" | \
        d.text color=black size=2.5
