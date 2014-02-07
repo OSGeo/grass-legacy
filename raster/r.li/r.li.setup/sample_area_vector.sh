@@ -165,7 +165,7 @@ while read CAT ; do
 
     if [ "$ok" -eq 1 ] ; then
 	#area selected, create mask
-	mask_name="rli_${input_vector}_${CAT}_${r_name}"
+	mask_name="rli_samp_${input_vector}_${CAT}_${r_name}"
 	v.to.rast input="$EXTRACT" output="$mask_name" use=cat --quiet
 
 	# save the region settings into the configuration file
