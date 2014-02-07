@@ -89,13 +89,13 @@ proc setupSamplingArea {widget} {
 	pack $widget.samplingArea.choice
 	set selection ""
 	radiobutton $widget.samplingArea.choice.whole -text "Whole map layer" -relief flat -variable selection -value whole -width 40 -anchor w 
-	radiobutton $widget.samplingArea.choice.regions -text "Regions" -relief flat -variable selection -value regions -width 40 -anchor w
-	radiobutton $widget.samplingArea.choice.units -text "Sample units" -relief flat -variable selection -value units -width 40 -anchor w
+	radiobutton $widget.samplingArea.choice.regions -text "Regions (digitize polygons with mouse)" -relief flat -variable selection -value regions -width 40 -anchor w
+	radiobutton $widget.samplingArea.choice.units -text "Sample units (digitize box or circular areas\nwith mouse or define using keyboard)" -relief flat -variable selection -value units -width 40 -anchor w
 	radiobutton $widget.samplingArea.choice.window -text "Moving window" -relief flat -variable selection -value window -width 40 -anchor w
 	set vectorAreas [exec cat $env(TMP).set | grep "SAMPLINGFRAME" | tail -n 1 | cut -f2 -d " "]
 	if { $vectorAreas == "0|0|1|1"} then {
-		#inserting select areas from the overlayed vector map
-		radiobutton $widget.samplingArea.choice.vector -text "Select areas from the overlayed vector map" -relief flat -variable selection -value vector -width 40 -anchor w
+		#inserting select areas from the overlaid vector map
+		radiobutton $widget.samplingArea.choice.vector -text "Select areas from the overlaid vector map" -relief flat -variable selection -value vector -width 40 -anchor w
 		pack $widget.samplingArea.choice.whole $widget.samplingArea.choice.regions $widget.samplingArea.choice.units $widget.samplingArea.choice.window $widget.samplingArea.choice.vector
 	} else {
 		pack $widget.samplingArea.choice.whole $widget.samplingArea.choice.regions $widget.samplingArea.choice.units $widget.samplingArea.choice.window
@@ -239,7 +239,7 @@ proc setSampleUnits {widget} {
 	frame $widget.newUni.button
 	pack $widget.newUni.button -side left -anchor w 
 	#buttons
-	button $widget.newUni.button.b2 -text " Use keyboard to enter sampling units dimension " -width 50 -command {
+	button $widget.newUni.button.b2 -text " Use keyboard to define sampling units dimension " -width 50 -command {
 		 setKeyboardUnit 
 		 $setSampleUnits.newUni.button.b2 configure -state disabled
 		 $setSampleUnits.newUni.button.b3 configure -state disabled
@@ -273,7 +273,7 @@ proc setMovWindow {widget} {
 	frame $widget.newWin.button
 	pack $widget.newWin.button -side left -anchor w 
 	#buttons
-	button $widget.newWin.button.b2 -text " Use keyboard to enter moving window dimension " -width 50 -command {
+	button $widget.newWin.button.b2 -text " Use keyboard to define moving window dimension " -width 50 -command {
 		 setKeyboardWindow 
 		 $setMovWindow.newWin.button.b2 configure -state disabled
 		 $setMovWindow.newWin.button.b3 configure -state disabled

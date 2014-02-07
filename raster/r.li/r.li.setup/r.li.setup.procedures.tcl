@@ -266,30 +266,30 @@ proc defineSamplingUnits {selec rl cl maskname} {
 		nonoverlapping {
 			toplevel .dialog
 			wm title .dialog " Random Nonoverlapping "
-			wm minsize .dialog 300 150
+			wm minsize .dialog 300 100
 
 			frame .dialog.scale
 			pack .dialog.scale
-			label .dialog.scale.label1 -text " What number of Sampling Units to use?"
+			label .dialog.scale.label1 -text "\n How many Sampling Units to use?"
 			entry .dialog.scale.e1 -width 5 -textvariable number1
-			grid .dialog.scale.label1 .dialog.scale.e1   -padx 3
+			grid .dialog.scale.label1 .dialog.scale.e1  -padx 3
 
 			button .dialog.button -text " Ok " -command {
 				if  { $number1!="" && ![catch { exec printf %i $number1 }]} then {
 					exec echo "RANDOMNONOVERLAPPING $number1" >> $env(TMP).set
-					tk_messageBox -message "Sampling units distribuition set as Random Nonoverlapping" -type ok
+					tk_messageBox -message "Sampling units distribuition set to Random Nonoverlapping" -type ok
 					set number1 ""
 					destroy .dialog
 				} else {
 					tk_messageBox -message "Please type integer value" -type ok -icon error
 				}
 			}
-			pack .dialog.button
+			pack .dialog.button -pady 3
 		}
 
 		contiguous {
 			exec echo "SYSTEMATICCONTIGUOUS " >> $env(TMP).set
-			tk_messageBox -message "Sampling units distribuition set as Systematic Contiguous" -type ok
+			tk_messageBox -message "Sampling units distribuition set to Systematic Contiguous" -type ok
 		}
 
 		noncontiguous {
@@ -306,7 +306,7 @@ proc defineSamplingUnits {selec rl cl maskname} {
 	       		button .dialog.button -text " Ok " -command {
 			if  { $number1!="" && ![catch { exec printf %i $number1 }]} then {
 				exec echo "SYSTEMATICNONCONTIGUOUS $number1" >> $env(TMP).set
-				tk_messageBox -message "Sampling units distribuition set as Systematic Non Contiguous" -type ok
+				tk_messageBox -message "Sampling units distribuition set to Systematic Non Contiguous" -type ok
 				set number1 ""
 				destroy .dialog
 			} else {
@@ -336,7 +336,7 @@ proc defineSamplingUnits {selec rl cl maskname} {
 	       		button .dialog.button -text " Ok " -command {
 			if  { $number1!="" && $number2!="" && ![catch { exec printf %i%i $number1 $number2 }]} then {
 				exec echo "STRATIFIEDRANDOM $number1|$number2" >> $env(TMP).set
-				tk_messageBox -message "Sampling units distribuition set as Stratified random" -type ok
+				tk_messageBox -message "Sampling units distribuition set to Stratified random" -type ok
 				set number1 ""
 				destroy .dialog
 			} else {
@@ -653,8 +653,8 @@ proc circleMask { radius name} {
 	set southEdge [expr double($env(SF_N) - ($ycell * $env(SF_NSRES)))]
 	#restrict region
 	exec g.region n=$env(SF_N) s=$southEdge e=$easthEdge w=$env(SF_W)
-	set xcenter [exec g.region -c | grep "region center easting:" | cut -f2 -d: | tr -d " "]
-	set ycenter [exec g.region -c | grep "region center northing:" | cut -f2 -d: | tr -d " "]
+	set xcenter [exec g.region -c | grep "center easting:" | cut -f2 -d: | tr -d " "]
+	set ycenter [exec g.region -c | grep "center northing:" | cut -f2 -d: | tr -d " "]
 	#debug line
 	#tk_messageBox -message "$xcenter , $ycenter $env(SF_N) $southEdge $env(SF_W) $easthEdge"
 	#creating circle
