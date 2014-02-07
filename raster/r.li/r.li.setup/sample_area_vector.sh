@@ -112,7 +112,7 @@ NUM_CATS=`wc -l < "$TMP.cat"`
 if [ "$NUM_CATS" -gt 30 ] ; then
     g.message -w "<$GIS_OPT_vector> contains $NUM_CATS areas. Manual selection may be time consuming."
     # TODO: d.menu [Continue][Abort] on screen display
-elif [ "$NUM_CATS" -gt 0 ] ; then
+elif [ "$NUM_CATS" -eq 0 ] ; then
     g.message -w "<$GIS_OPT_vector> doesn't contain any areas. Aborting selection."
     # TODO: d.menu [Ok] on screen display
 fi
@@ -152,7 +152,7 @@ while read CAT ; do
 
     # ask the user to analyse this vector and a name for raster in a Tcl GUI
     name="$TMP.val" # where find the answer
-    export name
+    export name input_vector CAT
 
     # ask if it's ok, save 0,1 to "$name" temp file
     "$GRASS_WISH" "$f_path/area_query"
@@ -165,7 +165,7 @@ while read CAT ; do
 
     if [ "$ok" -eq 1 ] ; then
 	#area selected, create mask
-	mask_name="rli_samp_${input_vector}_${CAT}_${r_name}"
+	mask_name="rli_samp_${r_name}"
 	v.to.rast input="$EXTRACT" output="$mask_name" use=cat --quiet
 
 	# save the region settings into the configuration file

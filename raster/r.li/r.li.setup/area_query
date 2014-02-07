@@ -13,7 +13,7 @@
     pack .label 
     frame .buttons
     pack .buttons
-    set val ""
+    set val "$env(input_vector)_$env(CAT)"
     button .buttons.ok -text "Ok" -command {
 	frame .name
 	pack .name
