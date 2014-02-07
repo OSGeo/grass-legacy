@@ -172,8 +172,8 @@ proc createNewConfiguration {} {
 	frame .newConf.frame -relief flat
 	pack .newConf.frame -side top -fill y -anchor center
 
-	set names {{} {Configuration file name:} {Raster map to use to select areas:} {[Vector map to overlay:]}\
-	 {[Site file to overlay:]} }
+	set names {{} {Configuration file name:} {Raster map to use to select areas:} {[Vector areas map to overlay:]}\
+	 {[Vector points map to overlay:]} }
 	label .newConf.frame.label1 -text [lindex $names 1] -anchor e
 	entry .newConf.frame.entry1 -width 35 -textvariable env(CONF)
 	grid .newConf.frame.label1 .newConf.frame.entry1 -sticky ew -pady 2 -padx 1
@@ -367,8 +367,8 @@ button .r -text "Remove" -width 8 -command {
 	wm title .removeconf "\[r.li.setup\] Remove Window"
 	
 	# new top label
-	label .removeconf.topLabel -text "Are You sure to remove the ' $selection ' file ?"
-        pack .removeconf.topLabel -side top
+	label .removeconf.topLabel -text "Are you sure you want to remove\nthe '$selection' configuration file ?"
+        pack .removeconf.topLabel -side top -pady 10 -padx 10
 	
 	# create new frame
 	frame .removeconf.buttons -relief flat
@@ -378,8 +378,7 @@ button .r -text "Remove" -width 8 -command {
 	button .removeconf.buttons.y -text "Yes" -width 8 -command { 
 	      if { [ catch { exec rm $env(HOME)/.r.li/history/$selection } ] } then { 
 		tk_messageBox -message "'$selection' Not deleted" -type ok -icon error} else {
-		#annoying "deleted" messageBox
-		#tk_messageBox -message "$selection  deleted" -type ok
+		tk_messageBox -message "$selection  deleted" -type ok
 		openDir .files "~/.r.li/history"
 		destroy .removeconf}
 	}
@@ -387,7 +386,7 @@ button .r -text "Remove" -width 8 -command {
 	# create no button
 	button .removeconf.buttons.n -text "No" -width 8 -command { destroy .removeconf
 	openDir .files "~/.r.li/history"}
-	grid .removeconf.buttons.y  .removeconf.buttons.n
+	grid .removeconf.buttons.y  .removeconf.buttons.n -padx 2 -pady 10
 	}
 }
 
