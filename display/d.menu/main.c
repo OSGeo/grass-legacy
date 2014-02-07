@@ -23,7 +23,7 @@
  *    .C     contains the text color
  *    .D     contains the line divider color
  *    .F     contains the font name
- *    .S     contains the text size (in pixles)
+ *    .S     contains the text size (in pixels)
  *    .T     contains the panel's top edge
  *    .L     contains the panel's left edge
  *
@@ -186,9 +186,10 @@ int main(int argc, char **argv)
 	G_fatal_error(_("Menu must contain a title and at least one option"));
     }
 
-    i = D_popup(backcolor, textcolor, dividercolor, top,	/* The col of the top left corner */
+    i = D_popup(backcolor, textcolor, dividercolor,
+		top,		/* The col of the top left corner */
 		left,		/* The row of the top left corner */
-		size,		/* The size of the characters in pixles */
+		size,		/* The size of the characters in pixels */
 		options);	/* The text */
 
     R_close_driver();
