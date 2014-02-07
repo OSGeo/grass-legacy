@@ -57,7 +57,7 @@
 #% required: no
 #%end
 #%option
-#% key: west 
+#% key: west
 #% type: string
 #% description: Western edge (use only with the 'f' flag)
 #% required: no
@@ -142,7 +142,8 @@ d.rast -o map="$GIS_OPT_raster" --quiet
 if [ -n "$GIS_OPT_vector" ] ; then
     d.vect map="$GIS_OPT_vector" type=area fcolor=none width=2
 fi
-if [ -n "$GIS_OPT_site" ] ; then 
+if [ -n "$GIS_OPT_site" ] ; then
+    d.vect map="$GIS_OPT_site" color=black fcolor=black size=9 icon=basic/circle
     d.vect map="$GIS_OPT_site" color=red fcolor=red size=5 icon=basic/circle
 fi
 

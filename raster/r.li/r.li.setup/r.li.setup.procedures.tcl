@@ -211,7 +211,7 @@ switch $selection {
 			file delete $tmp.tmp
 			$button configure -state disabled
 		} else {
-			tk_messageBox -message "Warning sampling frame not set" -type ok -icon warning
+			tk_messageBox -message "Warning: sampling frame not set" -type ok -icon warning
 		}
 	}
 	}
@@ -496,7 +496,7 @@ proc drawMouseUnits { num sel } {
 						tk_messageBox -message "Selected area saved as sample area" -type ok
 						file delete $env(TMP).tmp
 					} else {
-						tk_messageBox -message "Warning sampling area not set" -type ok -icon warning
+						tk_messageBox -message "Warning: sampling area not set" -type ok -icon warning
 					}
 				}
 			}
