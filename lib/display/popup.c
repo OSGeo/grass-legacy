@@ -92,7 +92,7 @@ int D_popup(int back_colr, int text_colr, int div_colr,
     char *panel;
     int dots_per_line, dots_per_char, height, width;
 
-    /* Figure the number of options and the max length of options */
+    /* Figure the number of options and the max string length of options */
     max_len = 0;
     for (n_options = 0; options[n_options] != NULL; n_options++) {
 	len = strlen(options[n_options]);
@@ -103,23 +103,24 @@ int D_popup(int back_colr, int text_colr, int div_colr,
     /* Figure the dots per line and dots_per_char */
     height = R_screen_bot() - R_screen_top();
     width = R_screen_rite() - R_screen_left();
-    dots_per_line = height * percent_per_line / 100;
-    dots_per_char = width / (max_len + 2);
-    /* we want the box to fit into window horizontally */
+    dots_per_line = height * percent_per_line / 100.;
+    dots_per_char = width / (max_len + 2.);
 
-    t = R_screen_bot() - (R_screen_bot() - R_screen_top()) * top / 100;
-    l = R_screen_left() + (R_screen_rite() - R_screen_left()) * left / 100;
+    /* we want the box to fit into window horizontally */
+    t = R_screen_bot() - (R_screen_bot() - R_screen_top()) * top / 100.;
+    l = R_screen_left() + (R_screen_rite() - R_screen_left()) * left / 100.;
 
     /* Figure the bottom and right of the window */
-    text_size = (int)(.8 * (float)dots_per_line);
+    text_size = (int)(.8 * dots_per_line);
     if (text_size > dots_per_char)
 	text_size = dots_per_char;
 
     text_raise = (dots_per_line - text_size + 1) / 2;
     if (text_raise == 0)
 	text_raise = 1;
-    b = Y_BORDER + t + dots_per_line * n_options;
-    r = 2 * X_BORDER + l + text_size * max_len;
+
+    b = Y_BORDER + t + (dots_per_line * n_options) + 1;
+    r = 2 * X_BORDER + l + (text_size * 0.8) * max_len;
 
     /* Adjust, if necessary, to make sure window is all on screen */
     if (t < R_screen_top()) {
@@ -164,11 +165,11 @@ int D_popup(int back_colr, int text_colr, int div_colr,
 
     /* Draw border */
     R_standard_color(text_colr);
-    R_move_abs(l + 1, t + 1);
-    R_cont_abs(r - 1, t + 1);
+    R_move_abs(l + 0, t + 0);
+    R_cont_abs(r - 1, t + 0);
     R_cont_abs(r - 1, b - 1);
-    R_cont_abs(l + 1, b - 1);
-    R_cont_abs(l + 1, t + 1);
+    R_cont_abs(l + 0, b - 1);
+    R_cont_abs(l + 0, t + 0);
 
     /* Prepare for text */
     R_text_size(text_size, text_size);
@@ -195,16 +196,18 @@ int D_popup(int back_colr, int text_colr, int div_colr,
 	int n;
 
 	R_get_location_with_pointer(&x, &y, &button);
-	if (x > r
-	    || x < l || y < t + Y_BORDER + dots_per_line || y > b - Y_BORDER)
+	if (x > r || x < l
+	    || y < t + Y_BORDER + dots_per_line || y > b - Y_BORDER)
 	    continue;
 
 	n = y - t - Y_BORDER;
 	if (n % dots_per_line == 0)
 	    continue;
 
+	/* cleanup */
 	R_panel_restore(panel);
 	R_panel_delete(panel);
+
 	return (n / dots_per_line);
     }
 }
