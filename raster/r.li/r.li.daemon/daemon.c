@@ -316,7 +316,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 {
     struct stat s;
     struct Cell_head cellhd;
-    char *buf, *token, *raster_fqn, *mapset;
+    char *buf, *token, *mapset; /* *raster_fqn, */
     int setup;
     int letti;
     double rel_x, rel_y, rel_rl, rel_cl;
@@ -349,7 +349,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 
     /* find raster map */
     mapset = G_find_cell(raster, "");
-    raster_fqn = G_fully_qualified_name(raster, mapset);
+/*    raster_fqn = G_fully_qualified_name(raster, mapset); */
    
     if (G_get_cellhd(raster, mapset, &cellhd) == -1)
 	G_fatal_error(_("Cannot read raster header file"));
@@ -513,12 +513,12 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	       (strcmp(token, "MASKEDOVERLAYAREA") == 0));
 
 	if (strcmp(token, "RASTERMAP") != 0)
-	    G_fatal_error(_("Irregular maskedoverlay areas definition"));
+	    G_fatal_error(_("Irregular MASKEDOVERLAY areas definition"));
 
 	token = strtok(NULL, "\n");
-	if (strcmp(token, raster_fqn) != 0)
+/*	if (strcmp(token, raster_fqn) != 0)
 	    G_fatal_error(_("The configuration file can be used only with "
-			"rasterfile <%s> and not with <%s>"), token, raster_fqn);
+			"rasterfile <%s> and not with <%s>"), token, raster_fqn); */
 
 	close(setup);
 	return NORMAL;

@@ -235,15 +235,16 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     G_debug(3, "daemon mask preproc: raster=[%s] mask=[%s]  rl=%d cl=%d",
 	    raster, mask, rl, cl);
 
-/* BUG/TODO: mask variable already contains the @mapset, but it after this line switches to @PERMANENT */
-
     /* mapset is used hold the mapset of input raster */
     mapset = G_find_cell(raster, "");
+
     /* open raster */
     if (G_get_cellhd(raster, mapset, &cell) == -1)
 	return NULL;
 
+
     mask_mapset = G_find_cell(mask, "");
+
     /* open raster */
     if (G_get_cellhd(mask, mask_mapset, &oldcell) == -1)
 	return NULL;
@@ -253,8 +254,10 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 
     tmp_file = G_tempfile();
     mask_fd = open(tmp_file, O_RDWR | O_CREAT, 0755);
-    old_fd = G_open_cell_old(mask, mapset);
-    G_debug(1,"worker.c: mask <%s@%s>", mask, mapset);
+
+    old_fd = G_open_cell_old(mask, mask_mapset);
+
+    G_debug(1, "worker.c: mask <%s@%s>", mask, mask_mapset);
     old = G_allocate_cell_buf();
 
     for (i = 0; i < rl; i++) {
