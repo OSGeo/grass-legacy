@@ -14,10 +14,6 @@ mkdir -p "$MACOSX_SUPPDIR/Modules/lib"
 mkdir -p "$MACOSX_SUPPDIR/Modules/etc"
 mkdir -p "$MACOSX_SUPPDIR/Modules/docs/html"
 
-# modbuild
-
-cp -Rf "$PACKAGE_PATH/Contents/Resources/modbuild" "$MACOSX_SUPPDIR"
-
 # compile python - use python version GRASS was compiled for
 
 pyver_want="@PYVER@"
