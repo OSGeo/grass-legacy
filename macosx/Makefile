@@ -26,6 +26,11 @@ PACKAGEMAKER = /Developer/usr/bin/packagemaker
 PKG_INST_DIR = ${prefix}
 endif
 
+SUBDIRS =
+ifeq ($(MACOSX_APP),1)
+SUBDIRS = app
+endif
+
 FILES = AUTHORS COPYING CHANGES REQUIREMENTS.html GPL.TXT
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
