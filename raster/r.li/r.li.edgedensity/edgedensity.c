@@ -142,8 +142,8 @@ int calculate(int fd, struct area_entry *ad, char **valore, double *result)
     generic_cell c1;
 
     buf_sup = NULL;
-
     c1.t = CELL_TYPE;
+
     /* open mask if needed */
     if (ad->mask == 1) {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0) {
