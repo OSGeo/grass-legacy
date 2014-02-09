@@ -23,9 +23,9 @@
 #include "../r.li.daemon/daemon.h"
 
 
-int calculate(int fd, area_des ad, struct Cell_head hd, double *result);
-int calculateD(int fd, area_des ad, struct Cell_head hd, double *result);
-int calculateF(int fd, area_des ad, struct Cell_head hd, double *result);
+int calculate(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
+int calculateD(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
+int calculateF(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
 
 
 int main(int argc, char *argv[])
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 
 
-int meanPatchSize(int fd, char **par, area_des ad, double *result)
+int meanPatchSize(int fd, char **par, struct area_entry *ad, double *result)
 {
 
     char *mapset;
@@ -112,7 +112,7 @@ int meanPatchSize(int fd, char **par, area_des ad, double *result)
 }
 
 
-int calculate(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculate(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     CELL *buf;
     CELL *buf_sup;
@@ -484,7 +484,7 @@ int calculate(int fd, area_des ad, struct Cell_head hd, double *result)
 }
 
 
-int calculateD(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculateD(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     DCELL *buf;
     DCELL *buf_sup;
@@ -853,7 +853,7 @@ int calculateD(int fd, area_des ad, struct Cell_head hd, double *result)
 }
 
 
-int calculateF(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculateF(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     FCELL *buf;
     FCELL *buf_sup;

@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 }
 
-int shape_index(int fd, char **par, area_des ad, double *result)
+int shape_index(int fd, char **par, struct area_entry *ad, double *result)
 {
 
 
@@ -89,6 +89,7 @@ int shape_index(int fd, char **par, area_des ad, double *result)
 		}
 	    }
 	}
+	/* todo? free(mask_buf); */
     }
 
     /* calculate distance */

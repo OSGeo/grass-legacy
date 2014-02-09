@@ -37,7 +37,7 @@
 
 #define CACHESIZE 4194304
 
-void worker(char *raster, int f(int, char **, area_des, double *),
+void worker(char *raster, int f(int, char **, struct area_entry *, double *),
 	    char *server_channel, char *mychannel, char **parameters)
 {
     char *mapset;
@@ -45,7 +45,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
     int rec_ch, send_ch, erease_mask = 0, data_type = 0;
     int cache_rows, used = 0;
     msg toReceive, toSend;
-    area_des ad;
+    static struct area_entry *ad;
     double result;
     int pid;
     struct Cell_head hd;
@@ -279,7 +279,7 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     return G_store(tmp_file);
 }
 
-CELL *RLI_get_cell_raster_row(int fd, int row, area_des ad)
+CELL *RLI_get_cell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 
@@ -294,7 +294,7 @@ CELL *RLI_get_cell_raster_row(int fd, int row, area_des ad)
 
 }
 
-DCELL *RLI_get_dcell_raster_row(int fd, int row, area_des ad)
+DCELL *RLI_get_dcell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 
@@ -309,7 +309,7 @@ DCELL *RLI_get_dcell_raster_row(int fd, int row, area_des ad)
 
 }
 
-FCELL *RLI_get_fcell_raster_row(int fd, int row, area_des ad)
+FCELL *RLI_get_fcell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 

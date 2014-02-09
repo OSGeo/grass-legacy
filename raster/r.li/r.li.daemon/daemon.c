@@ -35,14 +35,14 @@
 #include "daemon.h"
 
 
-int calculateIndex(char *file, int f(int, char **, area_des, double *),
+int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *),
 		   char **parameters, char *raster, char *output)
 {
 
     char pathSetup[GPATH_MAX], out[GPATH_MAX], parsed;
     char *reportChannelName, *random_access_name;
     struct History history;
-    g_areas g;
+    struct g_area *g;
     int receiveChannel;
     int res;
     int i, mypid, doneDir, withoutJob, mv_fd, random_access;
@@ -57,12 +57,12 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     wd child[num_workers];
 
     /* int mv_rows, mv_cols; */
-    list l;
+    struct list *l;
     msg m, doneJob;
 
-    g = (g_areas) G_malloc(sizeof(struct generatore));
+    g = (struct g_area *) G_malloc(sizeof(struct g_area));
     g->maskname = NULL;
-    l = (list) G_malloc(sizeof(struct lista));
+    l = (struct list*) G_malloc(sizeof(struct list));
     l->head = NULL;
     l->tail = NULL;
     l->size = 0;
@@ -313,7 +313,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 }
 
 
-int parseSetup(char *path, list l, g_areas g, char *raster)
+int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 {
     struct stat s;
     struct Cell_head cellhd;
@@ -531,7 +531,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
     return ERROR;
 }
 
-int disposeAreas(list l, g_areas g, char *def)
+int disposeAreas(struct list *l, struct g_area *g, char *def)
 {
     char *token;
 
@@ -670,7 +670,7 @@ int disposeAreas(list l, g_areas g, char *def)
 }
 
 
-int next_Area(int parsed, list l, g_areas g, msg * m)
+int next_Area(int parsed, struct list *l, struct g_area *g, msg * m)
 {
     if (parsed == NORMAL) {
 	if (l->size == 0)
@@ -726,7 +726,7 @@ int error_Output(int out, msg m)
 }
 
 
-int raster_Output(int fd, int aid, g_areas g, double res)
+int raster_Output(int fd, int aid, struct g_area *g, double res)
 {
     double toPut = res;
     off_t offset = (off_t) aid * sizeof(double);
@@ -743,7 +743,7 @@ int raster_Output(int fd, int aid, g_areas g, double res)
 }
 
 
-int write_raster(int mv_fd, int random_access, g_areas g)
+int write_raster(int mv_fd, int random_access, struct g_area *g)
 {
     int i = 0, j = 0, letti = 0;
     double *file_buf;
