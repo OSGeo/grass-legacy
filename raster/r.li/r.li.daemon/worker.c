@@ -69,6 +69,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
     /* read data type to allocate cache */
     data_type = G_raster_map_type(raster, mapset);
+
     /* calculate rows in cache */
     switch (data_type) {
     case CELL_TYPE:{

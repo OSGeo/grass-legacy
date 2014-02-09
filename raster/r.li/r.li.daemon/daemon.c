@@ -205,6 +205,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
 	while (j < num_workers && donePid != child[j].pid)
 	    j++;
+
 	send(child[j].channel, &m);
 
     }
