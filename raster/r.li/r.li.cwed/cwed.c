@@ -251,8 +251,8 @@ int contrastWeightedEdgeDensity(int fd, char **par, struct area_entry *ad,
 	    }
 
 	}
-	else;
-	/* num = 1  ---> in the line there is only 1 token 
+	/*else
+	 *    num = 1  ---> in the line there is only 1 token 
 	 * I ignore this line
 	 */
 
