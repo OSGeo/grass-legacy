@@ -143,6 +143,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	    G_fatal_error(_("Cannot create random access file"));
     }
     else {
+	/* text file output */
 	/* check if ~/.r.li/output exists */
 	sprintf(out, "%s/.r.li/", G_home());
 
@@ -182,6 +183,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	    result = doneJob.f.f_d.res;
 	    /* output */
 	    if (parsed != MVWIN) {
+		/* text file output */
 		print_Output(res, doneJob);
 	    }
 	    else {
@@ -193,6 +195,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	else {
 	    donePid = doneJob.f.f_e.pid;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		error_Output(res, doneJob);
 	    }
 	    else {
@@ -222,10 +225,11 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	    donePid = doneJob.f.f_d.pid;
 	    result = doneJob.f.f_d.res;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		print_Output(res, doneJob);
 	    }
 	    else {
-		/* raster */
+		/* raster output */
 		raster_Output(random_access, doneJob.f.f_d.aid, g,
 			      doneJob.f.f_d.res);
 	    }
@@ -233,6 +237,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	else {
 	    donePid = doneJob.f.f_e.pid;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		error_Output(res, doneJob);
 	    }
 	    else {
@@ -301,6 +306,9 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	G_short_history(output, "raster", &history);
 	G_command_history(&history);
 	G_write_history(output, &history);
+    } else {
+	/* text file output */
+	G_message("Result written to ASCII file <%s>", out);
     }
 
     if (close(receiveChannel) != 0)
