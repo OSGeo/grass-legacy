@@ -679,16 +679,19 @@ int calculateF(int fd, struct area_entry *ad, char **valore, double *result)
 	return RLI_ERRORE;
     }
 
-    G_set_f_null_value(buf_sup + ad->x, ad->cl);	/*the first time buf_sup is all null */
+    /* the first time buf_sup is all null */
+    G_set_f_null_value(buf_sup + ad->x, ad->cl);
 
-    for (j = 0; j < ad->rl; j++) {	/* for each raster row */
+    /* for each raster row */
+    for (j = 0; j < ad->rl; j++) {
 
-	buf_corr = RLI_get_fcell_raster_row(fd, j + ad->y, ad);	/* read row of raster */
+	/* read row of raster */
+	buf_corr = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
 
 	if (j > 0)		/* not first row */
 	    buf_sup = RLI_get_fcell_raster_row(fd, j - 1 + ad->y, ad);
 
-	if ((j + 1) < ad->rl) {	/*not last row */
+	if ((j + 1) < ad->rl) {	/* not last row */
 
 	    buf_inf = RLI_get_fcell_raster_row(fd, 1 + j + ad->y, ad);
 	}
