@@ -180,7 +180,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
 	    donePid = doneJob.f.f_d.pid;
 	    result = doneJob.f.f_d.res;
-	    /*output */
+	    /* output */
 	    if (parsed != MVWIN) {
 		print_Output(res, doneJob);
 	    }
