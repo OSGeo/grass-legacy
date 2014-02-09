@@ -382,7 +382,6 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 
 	    if (rel_sa_x == -1.0 && rel_sa_y == -1.0) {
 		/* runtime disposition */
-
 		int sa_rl, sa_cl;
 
 		sa_rl = (int)rint(cellhd.rows * rel_sa_rl);
@@ -419,7 +418,6 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 		 strcmp(token, "SAMPLEAREA") == 0);
 
 	close(setup);
-
 	return toReturn;
     }
     else if (strcmp("MASKEDSAMPLEAREA", token) == 0) {
@@ -433,6 +431,7 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 	    rel_sa_rl = atof(strtok(NULL, "|"));
 	    rel_sa_cl = atof(strtok(NULL, "|"));
 	    strcpy(maskname, strtok(NULL, "\n"));
+
 	    if (rel_sa_x == -1 && rel_sa_y == -1) {
 		/* runtime disposition */
 		int sa_rl, sa_cl;
@@ -464,8 +463,10 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 		insertNode(l, m);
 	    }
 	}
+
 	while ((token = strtok(NULL, " ")) != NULL &&
 	       strcmp(token, "MASKEDSAMPLEAREA") == 0);
+
 	close(setup);
 	return NORMAL;
     }
@@ -473,7 +474,12 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 	double sa_n, sa_s, sa_w, sa_e;
 	int aid = 1;
 	char maskname[GNAME_MAX] = {'\0'};
+	struct Cell_head window;
 	msg m;
+
+	/* Get the window setting. g.region rast=<input raster> */
+	/*   ? same as cellhd above ? */
+	G_get_window(&window);
 
 	do {
 	    strcpy(maskname, strtok(NULL, "|"));
@@ -483,11 +489,6 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 	    sa_w = atof(strtok(NULL, "\n"));
 
 	    m.type = MASKEDAREA;
-
-	    struct Cell_head window;
-
-	    /* Get the window setting. g.region rast=<input raster> */
-	    G_get_window(&window);
 
 	    /* Each input overlay area from input vector are converted to raster
 	       via v.to.rast. See r.li.setup/sample_area_vector.sh. This is to used 
