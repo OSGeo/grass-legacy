@@ -21,9 +21,9 @@
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
 
-int calculate(int fd, area_des ad, double *result);
-int calculateD(int fd, area_des ad, double *result);
-int calculateF(int fd, area_des ad, double *result);
+int calculate(int fd, struct area_entry *ad, double *result);
+int calculateD(int fd, struct area_entry *ad, double *result);
+int calculateF(int fd, struct area_entry *ad, double *result);
 
 int main(int argc, char *argv[])
 {
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 }
 
 
-int shannon(int fd, char **par, area_des ad, double *result)
+int shannon(int fd, char **par, struct area_entry * ad, double *result)
 {
 
     char *mapset;
@@ -110,7 +110,7 @@ int shannon(int fd, char **par, area_des ad, double *result)
 }
 
 
-int calculate(int fd, area_des ad, double *result)
+int calculate(int fd, struct area_entry *ad, double *result)
 {
 
     CELL *buf;
@@ -314,7 +314,7 @@ int calculate(int fd, area_des ad, double *result)
 
 
 
-int calculateD(int fd, area_des ad, double *result)
+int calculateD(int fd, struct area_entry *ad, double *result)
 {
 
     DCELL *buf;
@@ -517,7 +517,7 @@ int calculateD(int fd, area_des ad, double *result)
 }
 
 
-int calculateF(int fd, area_des ad, double *result)
+int calculateF(int fd, struct area_entry *ad, double *result)
 {
 
     FCELL *buf;

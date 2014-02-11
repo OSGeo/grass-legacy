@@ -23,19 +23,20 @@
 #include "ipc.h"
 
 
-int send(int pipe, msg * m)
+int send(int pipe, msg *m)
 {
     int check;
 
     /* write on pipe */
     check = write(pipe, m, sizeof(msg));
+
     if (check > 0)
 	return 1;
     else
 	return 0;
 }
 
-int receive(int pipe, msg * m)
+int receive(int pipe, msg *m)
 {
     return read(pipe, m, sizeof(msg));
 }

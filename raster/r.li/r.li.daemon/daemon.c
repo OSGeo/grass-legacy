@@ -35,14 +35,14 @@
 #include "daemon.h"
 
 
-int calculateIndex(char *file, int f(int, char **, area_des, double *),
+int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *),
 		   char **parameters, char *raster, char *output)
 {
 
     char pathSetup[GPATH_MAX], out[GPATH_MAX], parsed;
     char *reportChannelName, *random_access_name;
     struct History history;
-    g_areas g;
+    struct g_area *g;
     int receiveChannel;
     int res;
     int i, mypid, doneDir, withoutJob, mv_fd, random_access;
@@ -56,15 +56,13 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
     wd child[num_workers];
 
-    /*int mv_rows, mv_cols; */
-    list l;
+    /* int mv_rows, mv_cols; */
+    struct list *l;
     msg m, doneJob;
 
-    int perc=0;
-
-    g = (g_areas) G_malloc(sizeof(struct generatore));
+    g = (struct g_area *) G_malloc(sizeof(struct g_area));
     g->maskname = NULL;
-    l = (list) G_malloc(sizeof(struct lista));
+    l = (struct list*) G_malloc(sizeof(struct list));
     l->head = NULL;
     l->tail = NULL;
     l->size = 0;
@@ -145,6 +143,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    G_fatal_error(_("Cannot create random access file"));
     }
     else {
+	/* text file output */
 	/* check if ~/.r.li/output exists */
 	sprintf(out, "%s/.r.li/", G_home());
 
@@ -182,8 +181,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
 	    donePid = doneJob.f.f_d.pid;
 	    result = doneJob.f.f_d.res;
-	    /*output */
+	    /* output */
 	    if (parsed != MVWIN) {
+		/* text file output */
 		print_Output(res, doneJob);
 	    }
 	    else {
@@ -195,6 +195,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	else {
 	    donePid = doneJob.f.f_e.pid;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		error_Output(res, doneJob);
 	    }
 	    else {
@@ -207,6 +208,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 
 	while (j < num_workers && donePid != child[j].pid)
 	    j++;
+
 	send(child[j].channel, &m);
 
     }
@@ -223,10 +225,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    donePid = doneJob.f.f_d.pid;
 	    result = doneJob.f.f_d.res;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		print_Output(res, doneJob);
 	    }
 	    else {
-		/* raster */
+		/* raster output */
 		raster_Output(random_access, doneJob.f.f_d.aid, g,
 			      doneJob.f.f_d.res);
 	    }
@@ -234,6 +237,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	else {
 	    donePid = doneJob.f.f_e.pid;
 	    if (parsed != MVWIN) {
+		/* text file output */
 		error_Output(res, doneJob);
 	    }
 	    else {
@@ -255,12 +259,10 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	if (!(WIFEXITED(status)))
 	    G_warning(_("r.li.worker (pid %i) exited with abnormal status: %i"),
 		      donePid, status);
-	else {
+	else
 	    G_verbose_message(_("r.li.worker (pid %i) terminated successfully"),
 			      donePid);
-	    perc++;
-	    G_percent (perc, num_workers, 1);
-        }
+
 	/* remove pipe */
 	if (close(child[j].channel) != 0)
 	    G_message(_("Cannot close %s file (PIPE)"), child[j].pipe);
@@ -304,6 +306,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	G_short_history(output, "raster", &history);
 	G_command_history(&history);
 	G_write_history(output, &history);
+    } else {
+	/* text file output */
+	G_message("Result written to ASCII file <%s>", out);
     }
 
     if (close(receiveChannel) != 0)
@@ -316,11 +321,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 }
 
 
-int parseSetup(char *path, list l, g_areas g, char *raster)
+int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
 {
     struct stat s;
     struct Cell_head cellhd;
-    char *buf, *token, *mapset;
+    char *buf, *token, *mapset; /* *raster_fqn, */
     int setup;
     int letti;
     double rel_x, rel_y, rel_rl, rel_cl;
@@ -353,7 +358,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 
     /* find raster map */
     mapset = G_find_cell(raster, "");
-    char * raster_ = G_fully_qualified_name(raster, mapset);
+/*    raster_fqn = G_fully_qualified_name(raster, mapset); */
    
     if (G_get_cellhd(raster, mapset, &cellhd) == -1)
 	G_fatal_error(_("Cannot read raster header file"));
@@ -385,7 +390,6 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 
 	    if (rel_sa_x == -1.0 && rel_sa_y == -1.0) {
 		/* runtime disposition */
-
 		int sa_rl, sa_cl;
 
 		sa_rl = (int)rint(cellhd.rows * rel_sa_rl);
@@ -422,7 +426,6 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 		 strcmp(token, "SAMPLEAREA") == 0);
 
 	close(setup);
-
 	return toReturn;
     }
     else if (strcmp("MASKEDSAMPLEAREA", token) == 0) {
@@ -436,6 +439,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    rel_sa_rl = atof(strtok(NULL, "|"));
 	    rel_sa_cl = atof(strtok(NULL, "|"));
 	    strcpy(maskname, strtok(NULL, "\n"));
+
 	    if (rel_sa_x == -1 && rel_sa_y == -1) {
 		/* runtime disposition */
 		int sa_rl, sa_cl;
@@ -467,16 +471,23 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 		insertNode(l, m);
 	    }
 	}
+
 	while ((token = strtok(NULL, " ")) != NULL &&
 	       strcmp(token, "MASKEDSAMPLEAREA") == 0);
+
 	close(setup);
 	return NORMAL;
     }
     else if (strcmp("MASKEDOVERLAYAREA", token) == 0) {
 	double sa_n, sa_s, sa_w, sa_e;
 	int aid = 1;
-	char maskname[GNAME_MAX] = { '\0' };
+	char maskname[GNAME_MAX] = {'\0'};
+	struct Cell_head window;
 	msg m;
+
+	/* Get the window setting. g.region rast=<input raster> */
+	/*   ? same as cellhd above ? */
+	G_get_window(&window);
 
 	do {
 	    strcpy(maskname, strtok(NULL, "|"));
@@ -487,16 +498,14 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 
 	    m.type = MASKEDAREA;
 
-	    struct Cell_head window;
-	    /* Get the window setting. g.region rast=<input raster> */
-	    G_get_window(&window);
 	    /* Each input overlay area from input vector are converted to raster
-	    via v.to.rast. See r.li.setup/sample_area_vector.sh. This is to used 
-	    only for reading the region (NS, EW). */
+	       via v.to.rast. See r.li.setup/sample_area_vector.sh. This is to used 
+	       only for reading the region (NS, EW). */
 
 	    /* Get start x and y position of masked overlay raster with respect 
-	    to input raster region from window. 
-	    sa_n, sa_e are read from configuration file. */
+	       to input raster region from window. 
+	       sa_n, sa_e are read from configuration file. */
+
 	    m.f.f_ma.x = (int)G_easting_to_col(sa_e, &window);
 	    m.f.f_ma.y = (int)G_northing_to_row(sa_n, &window);
 
@@ -509,16 +518,18 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    aid++;
 	    insertNode(l, m);
 	}
+
 	while ((token = strtok(NULL, " ")) != NULL &&
 	       (strcmp(token, "MASKEDOVERLAYAREA") == 0));
 
 	if (strcmp(token, "RASTERMAP") != 0)
-	    G_fatal_error(_("Irregular maskedoverlay areas definition"));
+	    G_fatal_error(_("Irregular MASKEDOVERLAY areas definition"));
 
 	token = strtok(NULL, "\n");
-	if (strcmp(token, raster_) != 0)
-	    G_fatal_error(_("The configuration file can be used only with \
-			%s rasterfile and not with %s "), token, raster_);
+/*	if (strcmp(token, raster_fqn) != 0)
+	    G_fatal_error(_("The configuration file can be used only with "
+			"rasterfile <%s> and not with <%s>"), token, raster_fqn); */
+
 	close(setup);
 	return NORMAL;
     }
@@ -529,7 +540,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
     return ERROR;
 }
 
-int disposeAreas(list l, g_areas g, char *def)
+int disposeAreas(struct list *l, struct g_area *g, char *def)
 {
     char *token;
 
@@ -668,7 +679,7 @@ int disposeAreas(list l, g_areas g, char *def)
 }
 
 
-int next_Area(int parsed, list l, g_areas g, msg * m)
+int next_Area(int parsed, struct list *l, struct g_area *g, msg * m)
 {
     if (parsed == NORMAL) {
 	if (l->size == 0)
@@ -724,7 +735,7 @@ int error_Output(int out, msg m)
 }
 
 
-int raster_Output(int fd, int aid, g_areas g, double res)
+int raster_Output(int fd, int aid, struct g_area *g, double res)
 {
     double toPut = res;
     off_t offset = (off_t) aid * sizeof(double);
@@ -741,7 +752,7 @@ int raster_Output(int fd, int aid, g_areas g, double res)
 }
 
 
-int write_raster(int mv_fd, int random_access, g_areas g)
+int write_raster(int mv_fd, int random_access, struct g_area *g)
 {
     int i = 0, j = 0, letti = 0;
     double *file_buf;

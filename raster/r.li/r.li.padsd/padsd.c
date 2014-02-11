@@ -21,9 +21,9 @@
 #include "../r.li.daemon/avlID.h"
 #include "../r.li.daemon/GenericCell.h"
 #include "../r.li.daemon/daemon.h"
-int calculate(int fd, area_des ad, double *result);
-int calculateD(int fd, area_des ad, double *result);
-int calculateF(int fd, area_des ad, double *result);
+int calculate(int fd, struct area_entry *ad, double *result);
+int calculateD(int fd, struct area_entry *ad, double *result);
+int calculateF(int fd, struct area_entry *ad, double *result);
 int main(int argc, char *argv[])
 {
     struct Option *raster, *conf, *output;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 			  raster->answer, output->answer);
 }
 
-int patchAreaDistributionSD(int fd, char **par, area_des ad, double *result)
+int patchAreaDistributionSD(int fd, char **par, struct area_entry *ad, double *result)
 {
     char *mapset;
     double indice = 0;
@@ -94,7 +94,7 @@ int patchAreaDistributionSD(int fd, char **par, area_des ad, double *result)
     return RLI_OK;
 }
 
-int calculate(int fd, area_des ad, double *result)
+int calculate(int fd, struct area_entry *ad, double *result)
 {
     CELL *buf;
     CELL *buf_sup;
@@ -493,7 +493,7 @@ int calculate(int fd, area_des ad, double *result)
 
 
 
-int calculateD(int fd, area_des ad, double *result)
+int calculateD(int fd, struct area_entry *ad, double *result)
 {
     DCELL *buf;
     DCELL *buf_sup;
@@ -885,7 +885,7 @@ int calculateD(int fd, area_des ad, double *result)
     return RLI_OK;
 }
 
-int calculateF(int fd, area_des ad, double *result)
+int calculateF(int fd, struct area_entry *ad, double *result)
 {
     FCELL *buf;
     FCELL *buf_sup;

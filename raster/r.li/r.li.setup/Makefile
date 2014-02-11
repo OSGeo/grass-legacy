@@ -9,7 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 default: script
 	$(MKDIR) $(TARGET)
 	$(INSTALL) area_query $(TARGET)/area_query
-	$(INSTALL) masked_area_selection $(TARGET)/masked_area_selection
+	$(INSTALL) masked_area_selection.sh $(TARGET)/masked_area_selection.sh
 	$(INSTALL) r.li.setup.main $(TARGET)/r.li.setup.main
 	$(INSTALL) r.li.setup.procedures.tcl $(TARGET)/r.li.setup.procedures.tcl
 	$(INSTALL) r.li.windows.tcl $(TARGET)/r.li.windows.tcl
