@@ -62,14 +62,9 @@ int main(int argc, char *argv[])
 int simpson(int fd, char **par, struct area_entry *ad, double *result)
 {
     char *mapset;
-
     int ris = RLI_OK;
-
     double indice = 0;
-
     struct Cell_head hd;
-
-
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
@@ -134,11 +129,9 @@ double calculate(struct area_entry *ad, int fd, double *result)
     double t;
 
     avl_tree albero = NULL;
-
     AVL_table *array;
 
     generic_cell uc;
-
 
     uc.t = CELL_TYPE;
 
@@ -276,7 +269,7 @@ double calculate(struct area_entry *ad, int fd, double *result)
 	return RLI_ERRORE;
     }
 
-    /* claculate index summary */
+    /* calculate index summary */
     for (i = 0; i < m; i++) {
 	t = (double)(array[i]->tot);
 	p = t / area;
@@ -488,7 +481,6 @@ double calculateD(struct area_entry *ad, int fd, double *result)
 }
 
 
-
 double calculateF(struct area_entry *ad, int fd, double *result)
 {
     FCELL *buf;
@@ -544,7 +536,6 @@ double calculateF(struct area_entry *ad, int fd, double *result)
 	}
 
 	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
-
 
 	for (i = 0; i < ad->cl; i++) {	/* for each fcell in the row */
 
@@ -604,7 +595,6 @@ double calculateF(struct area_entry *ad, int fd, double *result)
 		}
 		precCell = corrCell;
 	    }
-
 
 	}
     }
