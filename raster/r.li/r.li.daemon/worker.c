@@ -37,7 +37,7 @@
 
 #define CACHESIZE 4194304
 
-void worker(char *raster, int f(int, char **, area_des, double *),
+void worker(char *raster, int f(int, char **, struct area_entry *, double *),
 	    char *server_channel, char *mychannel, char **parameters)
 {
     char *mapset;
@@ -45,7 +45,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
     int rec_ch, send_ch, erease_mask = 0, data_type = 0;
     int cache_rows, used = 0;
     msg toReceive, toSend;
-    area_des ad;
+    static struct area_entry *ad;
     double result;
     int pid;
     struct Cell_head hd;
@@ -69,6 +69,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
     /* read data type to allocate cache */
     data_type = G_raster_map_type(raster, mapset);
+
     /* calculate rows in cache */
     switch (data_type) {
     case CELL_TYPE:{
@@ -224,7 +225,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
 char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 {
-    char *mapset, *tmp_file;
+    char *mapset, *mask_mapset, *tmp_file;
     struct Cell_head cell, oldcell;
     int mask_fd, old_fd, *buf, i, j;
     CELL *old;
@@ -237,14 +238,16 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 
     /* mapset is used hold the mapset of input raster */
     mapset = G_find_cell(raster, "");
+
     /* open raster */
     if (G_get_cellhd(raster, mapset, &cell) == -1)
 	return NULL;
 
-    /* mmapset is used hold the mapset where mask is saved */
-    char *mmapset = G_find_cell(mask, "");
+
+    mask_mapset = G_find_cell(mask, "");
+
     /* open raster */
-    if (G_get_cellhd(mask, mmapset, &oldcell) == -1)
+    if (G_get_cellhd(mask, mask_mapset, &oldcell) == -1)
 	return NULL;
 
     add_row = 1.0 * oldcell.rows / rl;
@@ -252,7 +255,10 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 
     tmp_file = G_tempfile();
     mask_fd = open(tmp_file, O_RDWR | O_CREAT, 0755);
-    old_fd = G_open_cell_old(mask, mapset);
+
+    old_fd = G_open_cell_old(mask, mask_mapset);
+
+    G_debug(1, "worker.c: mask <%s@%s>", mask, mask_mapset);
     old = G_allocate_cell_buf();
 
     for (i = 0; i < rl; i++) {
@@ -273,7 +279,7 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     return G_store(tmp_file);
 }
 
-CELL *RLI_get_cell_raster_row(int fd, int row, area_des ad)
+CELL *RLI_get_cell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 
@@ -288,7 +294,7 @@ CELL *RLI_get_cell_raster_row(int fd, int row, area_des ad)
 
 }
 
-DCELL *RLI_get_dcell_raster_row(int fd, int row, area_des ad)
+DCELL *RLI_get_dcell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 
@@ -303,7 +309,7 @@ DCELL *RLI_get_dcell_raster_row(int fd, int row, area_des ad)
 
 }
 
-FCELL *RLI_get_fcell_raster_row(int fd, int row, area_des ad)
+FCELL *RLI_get_fcell_raster_row(int fd, int row, struct area_entry *ad)
 {
     int hash;
 

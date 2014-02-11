@@ -9,13 +9,12 @@
  *
  */
 
-
-#include <grass/gis.h>
-#include <grass/glocale.h>
-
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "../r.li.daemon/defs.h"
 #include "../r.li.daemon/avlDefs.h"
@@ -23,10 +22,9 @@
 #include "../r.li.daemon/daemon.h"
 
 
-int calculate(int fd, area_des ad, struct Cell_head hd, double *result);
-int calculateD(int fd, area_des ad, struct Cell_head hd, double *result);
-int calculateF(int fd, area_des ad, struct Cell_head hd, double *result);
-
+int calculate(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
+int calculateD(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
+int calculateF(int fd, struct area_entry *ad, struct Cell_head hd, double *result);
 
 int main(int argc, char *argv[])
 {
@@ -60,25 +58,16 @@ int main(int argc, char *argv[])
 }
 
 
-
-int meanPatchSize(int fd, char **par, area_des ad, double *result)
+int meanPatchSize(int fd, char **par, struct area_entry *ad, double *result)
 {
-
     char *mapset;
-
     int ris = 0;
-
     double indice = 0;
-
     struct Cell_head hd;
-
-
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
 	return RLI_ERRORE;
-
-
 
     switch (ad->data_type) {
     case CELL_TYPE:
@@ -101,18 +90,18 @@ int meanPatchSize(int fd, char **par, area_des ad, double *result)
 	    G_fatal_error("data type unknown");
 	    return RLI_ERRORE;
 	}
+
     }
-    if (ris != RLI_OK) {
-	return RLI_ERRORE;
-    }
+    if (ris != RLI_OK)
+	  return RLI_ERRORE;
 
     *result = indice;
-    return RLI_OK;
 
+    return RLI_OK;
 }
 
 
-int calculate(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculate(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     CELL *buf;
     CELL *buf_sup;
@@ -143,10 +132,7 @@ int calculate(int fd, area_des ad, struct Cell_head hd, double *result)
     double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
 
     avlID_tree albero = NULL;
-
     avlID_table *array;
-
-
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -479,25 +465,22 @@ int calculate(int fd, area_des ad, struct Cell_head hd, double *result)
 
     G_free(mask_patch_corr);
 
-    G_free(buf_sup);
+    /* G_free(buf_sup); */   /* <-- why not free it? */
     return RLI_OK;
 }
 
 
-int calculateD(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculateD(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     DCELL *buf;
     DCELL *buf_sup;
-
     DCELL corrCell;
     DCELL precCell;
     DCELL supCell;
-
     int i, j;
     int mask_fd = -1, *mask_buf;
     int ris = 0;
     int masked = FALSE;
-
     long npatch = 0;
     long tot = 0;
     long zero = 0;
@@ -507,7 +490,6 @@ int calculateD(int fd, area_des ad, struct Cell_head hd, double *result)
     long doppi = 0;
     long *mask_patch_sup;
     long *mask_patch_corr;
-
     double indice = 0;
     double area = 0;		/*if all cells are null area=0 */
     double areaCorrect = 0;
@@ -853,7 +835,7 @@ int calculateD(int fd, area_des ad, struct Cell_head hd, double *result)
 }
 
 
-int calculateF(int fd, area_des ad, struct Cell_head hd, double *result)
+int calculateF(int fd, struct area_entry *ad, struct Cell_head hd, double *result)
 {
     FCELL *buf;
     FCELL *buf_sup;
@@ -1168,7 +1150,6 @@ int calculateF(int fd, area_des ad, struct Cell_head hd, double *result)
 	    }
 	}
 
-
 	array = G_malloc(npatch * sizeof(avlID_tableRow));
 	if (array == NULL) {
 	    G_fatal_error("malloc array failed");
@@ -1213,8 +1194,8 @@ int calculateF(int fd, area_des ad, struct Cell_head hd, double *result)
 
 
     if (masked)
-	G_free(mask_buf);
-
+	  G_free(mask_buf);
+/* TODO: fix if? */
     G_free(mask_patch_corr);
 
     return RLI_OK;
