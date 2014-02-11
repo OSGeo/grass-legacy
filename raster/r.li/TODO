@@ -4,11 +4,14 @@ A few remaining things should be done soon:
 - add relevant references
 - use English variable names in C code
 
-Please change the examples to Spearfish wherever possible:
+Please change the examples to North Carolina wherever possible:
+
 
 # Spearfish
 g.region rast=landcover.30m -p
-r.mapcalc "forests=if(landcover.30m >= 41 && landcover.30m <=43,1,null())"
+r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
+d.mon x0
+d.rast forests
 r.li.patchdensity forests conf=movwindow7 out=forests_p_dens7
 d.rast.leg forests_p_dens7
 
@@ -30,5 +33,9 @@ r.info -r forests_p_dens7
 min=19.841270
 max=19.841270
 # -> all cells are 19.841270 ?!
+
+---------
+
+Add example which results in an ASCII output file
 
 
