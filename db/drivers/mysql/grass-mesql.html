@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>GRASS-MySQL embedded driver</title>
+<title>GRASS GIS manual: GRASS-MySQL embedded driver</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="grassdocs.css" type="text/css">
 </head>
@@ -11,6 +11,11 @@
 
 <!-- meta page description: MySQL embedded driver -->
 <h1>MySQL embedded driver in GRASS</h1>
+
+<h2>KEYWORDS</h2>
+database, attribute table, driver
+
+<h2>DESCRIPTION</h2>
 
 MySQL database driver in GRASS enables GRASS to store vector
 attributes in MySQL embedded database without necessity 
@@ -51,6 +56,12 @@ the InnoDB storage is disabled by default (hardcoded
 The embedded server is started with hardcoded '--bootstrap'
 option to avoid warning about missing 
 "mysql.time_zone_leap_second table". This can be fixed in future.
+
+<h2>Troubleshooting: SQL syntax error</h2>
+
+Attempting to use a reserved SQL word as column or table name will result
+in a "SQL syntax" error. The list of reserved words for MySQL can be
+found in the <a href="http://dev.mysql.com/doc/refman/5.7/en/reserved-words.html#table-reserved-words-5.7.4">MySQL manual</a>.
 
 <h2>SEE ALSO</h2>
 

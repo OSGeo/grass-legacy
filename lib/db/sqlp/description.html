@@ -15,13 +15,15 @@
 <!-- meta page description: SQL support introduction -->
 <h2>SQL support in GRASS GIS</h2>
 
-GRASS can use various RDBMS and embedded databases. 
-SQL queries are directly passed to the underlying 
-database system. 
-The set of supported SQL commands depends on the RDMBS 
-and driver selected.  
+GRASS can use various RDBMS
+(<a href="http://en.wikipedia.org/wiki/Relational_database_management_system">Relational
+database management system</a>) and embedded databases. SQL
+(<a href="http://en.wikipedia.org/wiki/Sql">Structured Query
+Language</a>) queries are directly passed to the underlying database
+system. The set of supported SQL commands depends on the RDMBS and
+database driver selected.
 
-<h2>Drivers</h2>  
+<h2>Database drivers</h2>  
 The list of available drivers can vary in various binary 
 distributions of GRASS. 
 <p>
@@ -44,16 +46,14 @@ distributions of GRASS.
 
 <tr><td><a href="grass-odbc.html">odbc</a></td><td>UnixODBC. (PostgreSQL, Oracle, etc.)</td>
 <td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
-
 </table>
-
 
 <h2>NOTES</h2>
 
 <ul>
 <li> SQL does not support '.' (dots) in table names.
-<li> Supported table name characters are only:<br>
-    [A-Za-z][A-Za-z0-9_]*
+<li> Supported table name characters are only: <br>
+<div class="code"><pre>[A-Za-z][A-Za-z0-9_]*</pre></div>
 <li> A table name must start with a character, not a number.
 <li> Text-string matching requires the text part to be 'single quoted'.
 When run from the command line multiple queries should be contained 
@@ -61,22 +61,31 @@ in "double quotes". e.g.<br>
 <div class="code"><pre>
 d.vect map where="individual='juvenile' and area='beach'"
 </pre></div>
-<li> An error message such as "dbmi: Protocol error" either indicates an invalid column name
-     or an unsupported column type (then the GRASS SQL parser needs to be extended).
-<li> DBF column names are limited to 10 characters (DBF API definition)
+<li> An error message such as &quot;<tt>dbmi: Protocol
+     error</tt>&quot; either indicates an invalid column name or an
+     unsupported column type (then the GRASS SQL parser needs to be
+     extended).</li>
+<li> DBF column names are limited to 10 characters (DBF API definition).</li>
+<li> Attempts to use a reserved SQL word (depends on database backend) as 
+     column or table name will cause a "SQL syntax error".</li>
 </ul>
 
 
 <h2>EXAMPLES</h2>
 
-Display all vector points except for LAMAR valley and <i>extensive trapping</i> (brackets are superfluous in this example):
+Display all vector points except for <i>LAMAR</i> valley
+and <i>extensive trapping</i> (brackets are superfluous in this
+example):
+
 <div class="code"><pre>
 d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
     where="valley &lt;&gt; 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
 </pre></div>
 
 <p>
-Select all attributes from table where str1 column values are not 'No Name':
+Select all attributes from table where <i>str1</i> column values are not 'No
+Name':
+
 <div class="code"><pre>
 echo "SELECT * FROM archsites WHERE str1 &lt;&gt; 'No Name'" | db.select
 </pre></div>
@@ -162,6 +171,9 @@ v.db.update vectormap column=column3 qcolumn="column1 || column2"
 <h2>SEE ALSO</h2>
 
 <em>
+<a href="db.select.html">db.select</a>,
+<a href="db.execute.html">db.execute</a>,
+<a href="v.db.select.html">v.db.select</a>,
 <a href="v.db.update.html">v.db.update</a>
 </em>
 <p>
@@ -178,6 +190,6 @@ v.db.update vectormap column=column3 qcolumn="column1 || column2"
 <a href="index.html">Main index</a> -
 <a href="database.html">database index</a> -
 <a href="full_index.html">full index</a>
-<p>&copy; 2008-2012 <a href="http://grass.osgeo.org">GRASS Development Team</a>
+<p>&copy; 2008-2014 <a href="http://grass.osgeo.org">GRASS Development Team</a>
 </body>
 </html>
