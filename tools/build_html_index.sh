@@ -198,7 +198,7 @@ write_html_footer()
 echo "<br><br>
 <hr>
 <p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>
-&copy; 2003-2013 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a>, GRASS GIS $GRASSVERSION Reference Manual</p>
+&copy; 2003-2014 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a>, GRASS GIS $GRASSVERSION Reference Manual</p>
 </body>
 </html>" >> "$1"
 }
