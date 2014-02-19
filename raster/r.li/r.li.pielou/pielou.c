@@ -26,6 +26,8 @@
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
 
+/* template is shannon */
+
 int calculate(int fd, struct area_entry *ad, double *result);
 
 int calculateD(int fd, struct area_entry *ad, double *result);
@@ -62,11 +64,9 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
-    conf->gisprompt = "old_file,file,input";
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -76,17 +76,14 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, pielou, NULL, raster->answer,
 			  output->answer);
-
 }
 
 int pielou(int fd, char **par, struct area_entry *ad, double *result)
 {
-
     char *mapset;
     int ris = RLI_OK;
     double indice = 0;
     struct Cell_head hd;
-
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
@@ -123,16 +120,15 @@ int pielou(int fd, char **par, struct area_entry *ad, double *result)
     *result = indice;
 
     return RLI_OK;
-
 }
 
 
 int calculate(int fd, struct area_entry *ad, double *result)
 {
-
     CELL *buf;
     CELL corrCell;
     CELL precCell;
+
     int i, j;
     int mask_fd = -1, *mask_buf;
     int ris = 0;
@@ -159,7 +155,6 @@ int calculate(int fd, struct area_entry *ad, double *result)
     generic_cell cc_passage;	/*add to compute the number of class */
 
     avl_tree albero = NULL;
-
     AVL_table *array;
 
     cc.t = CELL_TYPE;
@@ -176,14 +171,11 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	masked = TRUE;
     }
 
-
     G_set_c_null_value(&precCell, 1);
-
 
     /*for each row */
     for (j = 0; j < ad->rl; j++) {
 	buf = RLI_get_cell_raster_row(fd, j + ad->y, ad);
-
 
 	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {

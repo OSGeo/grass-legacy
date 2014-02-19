@@ -40,12 +40,10 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
     conf->required = YES;
-    conf->gisprompt = "old_file,file,input";
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -55,25 +53,19 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, meanPixelAttribute, NULL,
 			  raster->answer, output->answer);
-
-
 }
 
 
 int meanPixelAttribute(int fd, char **par, struct area_entry *ad, double *result)
 {
     char *mapset;
-
     int ris = 0;
-
     double indice = 0;
-
     struct Cell_head hd;
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
 	return RLI_ERRORE;
-
 
     switch (ad->data_type) {
     case CELL_TYPE:
@@ -102,12 +94,10 @@ int meanPixelAttribute(int fd, char **par, struct area_entry *ad, double *result
 	return RLI_ERRORE;
     }
 
-
     *result = indice;
 
     return RLI_OK;
 }
-
 
 
 int calculate(int fd, struct area_entry *ad, double *result)
@@ -121,7 +111,6 @@ int calculate(int fd, struct area_entry *ad, double *result)
     double area = 0;
     double indice = 0;
     double somma = 0;
-
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -142,7 +131,6 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	buf = RLI_get_cell_raster_row(fd, j + ad->y, ad);	/*read raster row */
 
 	if (masked) {		/*read mask row if needed */
-
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
@@ -161,7 +149,6 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	}
     }
 
-
     if (area == 0)
 	indice = (double)-1;
     else
@@ -169,10 +156,13 @@ int calculate(int fd, struct area_entry *ad, double *result)
 
     *result = indice;
     if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
     }
+
     return RLI_OK;
 }
+
 
 int calculateD(int fd, struct area_entry *ad, double *result)
 {
@@ -185,7 +175,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     double area = 0;
     double indice = 0;
     double somma = 0;
-
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -207,7 +196,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	buf = RLI_get_dcell_raster_row(fd, j + ad->y, ad);	/*read raster row */
 
 	if (masked) {		/*read mask row if needed */
-
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
@@ -226,7 +214,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	}
     }
 
-
     if (area == 0)
 	indice = (double)-1;
     else
@@ -234,8 +221,10 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 
     *result = indice;
     if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
     }
+
     return RLI_OK;
 }
 
@@ -250,7 +239,6 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     double area = 0;
     double indice = 0;
     double somma = 0;
-
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -267,12 +255,10 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     }
 
 
-
     for (j = 0; j < ad->rl; j++) {	/*for each raster row */
 	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);	/*read raster row */
 
 	if (masked) {		/*read mask row if needed */
-
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
@@ -292,7 +278,6 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	}
     }
 
-
     if (area == 0)
 	indice = (double)-1;
     else
@@ -300,7 +285,9 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 
     *result = indice;
     if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
     }
+
     return RLI_OK;
 }

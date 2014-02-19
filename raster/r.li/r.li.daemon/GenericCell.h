@@ -7,11 +7,11 @@
  *       
  */
 
-#include <grass/gis.h>
-#include <grass/glocale.h>
-
 #ifndef GENERICCELL_H
 #define GENERICCELL_H
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define GC_HIGHER 1
 #define GC_EQUAL 2

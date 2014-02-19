@@ -1,12 +1,20 @@
 <h2>DESCRIPTION</h2>
 
-<em>r.li.patchdensity</em> calculates the "patch density index" as:
+<em>r.li.patchdensity</em> calculates the "patch density index", 
+the number of patches per square kilometer, as:
 <div class="code"><pre>
-f(sample_area) = (Patch_Number/Area) * 1000000
+PD = Npatch / A
 </pre></div>
 
-that is 1000000 by number of patch for area unit.
-This index is calculated using a 4 neighbour algorithm.
+with:
+<ul>
+  <li><b>A</b>:sampling area size</li>
+  <li><b>Npatch</b>: number of patches</li>
+</ul>
+
+<p>
+This index is calculated using a 4 neighbour algorithm, diagonal cells 
+are ignored when tracing a patch.
 
 <h2>NOTES</h2>
 
@@ -43,6 +51,7 @@ r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43, 1, null())"
 
 # patch density (7x7 moving window defined in r.li.setup):
 r.li.patchdensity forests conf=movwindow7 out=forests_p_dens7
+r.univar forests_p_dens7
 d.rast.leg forests_p_dens7
 
 r.to.vect forests out=forests feature=area

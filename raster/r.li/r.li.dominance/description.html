@@ -32,8 +32,11 @@ To calculate the dominance diversity index on map <em>my_map</em>, using
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.dominance map=my_map conf=my_conf output=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.dominance map=forests conf=movwindow7 out=forests_dominance_mov7

@@ -1,20 +1,26 @@
-/*
- * \brief calculates standard deviation of patch area
+/****************************************************************************
  *
- *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.padsd
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Fixes: Markus Neteler <neteler itc.it>
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
- *       
- */
-
-#include <grass/gis.h>
-#include <grass/glocale.h>
+ * PURPOSE:      calculates calculates standard deviation of patch areas
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "../r.li.daemon/defs.h"
 #include "../r.li.daemon/avlDefs.h"
@@ -24,6 +30,7 @@
 int calculate(int fd, struct area_entry *ad, double *result);
 int calculateD(int fd, struct area_entry *ad, double *result);
 int calculateF(int fd, struct area_entry *ad, double *result);
+
 int main(int argc, char *argv[])
 {
     struct Option *raster, *conf, *output;
@@ -37,13 +44,14 @@ int main(int argc, char *argv[])
 
     /* define options */
     raster = G_define_standard_option(G_OPT_R_MAP);
-    conf = G_define_option();
+
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->gisprompt = "old_file,file,input";
-    conf->type = TYPE_STRING;
     conf->required = YES;
+
     output = G_define_standard_option(G_OPT_R_OUTPUT);
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
     return calculateIndex(conf->answer, patchAreaDistributionSD, NULL,
@@ -62,25 +70,21 @@ int patchAreaDistributionSD(int fd, char **par, struct area_entry *ad, double *r
 	return RLI_ERRORE;
     switch (ad->data_type) {
     case CELL_TYPE:
-
 	{
 	    ris = calculate(fd, ad, &indice);
 	    break;
 	}
     case DCELL_TYPE:
-
 	{
 	    ris = calculateD(fd, ad, &indice);
 	    break;
 	}
     case FCELL_TYPE:
-
 	{
 	    ris = calculateF(fd, ad, &indice);
 	    break;
 	}
     default:
-
 	{
 	    G_fatal_error("data type unknown");
 	    return RLI_ERRORE;
@@ -90,9 +94,12 @@ int patchAreaDistributionSD(int fd, char **par, struct area_entry *ad, double *r
 	*result = -1;
 	return RLI_ERRORE;
     }
+
     *result = indice;
+
     return RLI_OK;
 }
+
 
 int calculate(int fd, struct area_entry *ad, double *result)
 {

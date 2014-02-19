@@ -6,6 +6,7 @@
  *   Read the COPYING file that comes with GRASS for details.
  *       
  */
+
 #include "GenericCell.h"
 
 int equalsGenericCell(generic_cell c1, generic_cell c2)

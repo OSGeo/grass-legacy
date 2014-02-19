@@ -7,7 +7,7 @@
  *               Commission from Faunalia Pontedera (PI) www.faunalia.it
  *               Fixes: Serena Pallecchi, Markus Neteler <neteler itc.it>
  * PURPOSE:      calculates patch density index
- * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006-2014 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -36,23 +36,18 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->gisprompt = "old_file,file,input";
-    conf->type = TYPE_STRING;
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
-
-	/** add other options for index parameters here */
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
     return calculateIndex(conf->answer, patch_density, NULL, raster->answer,
 			  output->answer);
-
 }
 
 

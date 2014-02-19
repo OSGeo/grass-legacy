@@ -36,11 +36,9 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->gisprompt = "old_file,file,input";
-    conf->type = TYPE_STRING;
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -52,13 +50,10 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, shape_index, NULL, raster->answer,
 			  output->answer);
-
 }
 
 int shape_index(int fd, char **par, struct area_entry *ad, double *result)
 {
-
-
     double area;
     char *mapset;
     struct Cell_head hd;
@@ -108,5 +103,6 @@ int shape_index(int fd, char **par, struct area_entry *ad, double *result)
 	(ad->rl * ad->cl - null_count);
 
     *result = area;
+
     return 1;
 }

@@ -1,15 +1,15 @@
 <h2>DESCRIPTION</h2>
 
-<em>r.li.padcv</em> (patch area distribution coefficient of variation) calculates
-as:<br>
-<img src="rlipadcv_formula1.png" alt="rlipadcv formula"> <br>
+<em>r.li.padcv</em> calculates the coefficient of variation of patch 
+area sizes in hectares as:<br>
+<img src="rlipadcv_formula1.png" alt="r.li.padcv formula"> <br>
 with:<br>
 <ul>
  <li><b>SD</b>: standard deviation of patch area size
   <img src="rlipadcv_formula2.png">  </li>
   <li><b>MPS</b>: mean patch area size </li>
   <li><b>a<small><small>i</small></small></b>: area of patch i</li>
-  <li><b>N<small>patch</small></b>: number of patch</li>
+  <li><b>N<small>patch</small></b>: number of patches</li>
 </ul>
 
 <h2>NOTES</h2>
@@ -33,8 +33,11 @@ To calculate patch area distribution coefficient of variation index on map <em>m
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.padcv map=my_map conf=my_conf output=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.padcv map=forests conf=movwindow7 out=forests_padcv_mov7
