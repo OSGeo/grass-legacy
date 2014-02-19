@@ -2,7 +2,10 @@
 
 <em>r.li.patchnum</em> calculates the "patch number index" as:<br>
 <I> f(sample_area)= Patch_Number </I><br>
-This index is calculated using a 4 neighbour algorithm<br>
+
+<p>
+This index is calculated using a 4 neighbour algorithm, diagonal cells 
+are ignored when tracing a patch.
 
 <h2>NOTES</h2>
 
@@ -25,8 +28,11 @@ To calculate patch number index on map <em>my_map</em>, using
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.patchnum map=my_map conf=my_conf out=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.patchnum map=forests conf=movwindow7 out=forests_patchnum_mov7

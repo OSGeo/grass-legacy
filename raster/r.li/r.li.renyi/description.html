@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>r.li.renyi</em> calculates the "Renyi's diversity index" as:<br>
-<img src="r_li_renyi.png"> <br>
+<img src="r_li_renyi.png" alt="r.li.renyi formula"> <br>
 with:
 <ul>
   <li><b>H</b>: Renyi entropy</li>
@@ -33,8 +33,11 @@ To calculate Renyi's diversity index on map <em>my_map</em>, using
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.renyi map=my_map conf=my_conf output=my_out alpha=0.6
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.renyi map=forests conf=movwindow7 out=forests_renyi_mov7_a06 alpha=0.6

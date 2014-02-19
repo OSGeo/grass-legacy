@@ -1,13 +1,18 @@
-/*
- * \brief calculates shannon's diversity index
+/****************************************************************************
  *
- *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.shannon
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
- *       
- */
+ * PURPOSE:      calculates Shannon's diversity index
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -20,6 +25,8 @@
 #include "../r.li.daemon/avlDefs.h"
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
+
+/* template for dominance, renyi, pielou, simpson */
 
 int calculate(int fd, struct area_entry *ad, double *result);
 int calculateD(int fd, struct area_entry *ad, double *result);
@@ -41,11 +48,9 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->gisprompt = "old_file,file,input";
-    conf->type = TYPE_STRING;
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -55,21 +60,15 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, shannon, NULL, raster->answer,
 			  output->answer);
-
 }
 
 
 int shannon(int fd, char **par, struct area_entry * ad, double *result)
 {
-
     char *mapset;
-
     int ris = RLI_OK;
-
     double indice = 0;
-
     struct Cell_head hd;
-
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
@@ -106,13 +105,11 @@ int shannon(int fd, char **par, struct area_entry * ad, double *result)
     *result = indice;
 
     return RLI_OK;
-
 }
 
 
 int calculate(int fd, struct area_entry *ad, double *result)
 {
-
     CELL *buf;
     CELL corrCell;
     CELL precCell;
@@ -138,9 +135,7 @@ int calculate(int fd, struct area_entry *ad, double *result)
     generic_cell cc;
 
     avl_tree albero = NULL;
-
     AVL_table *array;
-
 
     cc.t = CELL_TYPE;
 

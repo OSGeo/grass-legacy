@@ -48,20 +48,16 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
     conf->required = YES;
-    conf->gisprompt = "old_file,file,input";
 
-    path = G_define_option();
+    path = G_define_standard_option(G_OPT_F_INPUT);
     path->key = "path";
     path->description =
-	"Input file that contains the weight to calculate the index";
-    path->type = TYPE_STRING;
+        _("Name of file that contains the weight to calculate the index");
     path->required = YES;
-    path->gisprompt = "old_file,file,input";
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -84,28 +80,20 @@ int contrastWeightedEdgeDensity(int fd, char **par, struct area_entry *ad,
 				double *result)
 {
     double indice = 0;		/* the result */
-
     struct Cell_head hd;
-
     int i = 0;
     int file_fd = -1;
     int l;			/*number of read byte */
     int ris = 0;
-
     char *mapset;
     char *file;
     char *strFile;
-
     char row[NMAX];		/* to read the file */
-
     char **bufRighe;		/* contains every valid file row */
-
     char separatore;		/* separator to split a string */
-
     long totCoppie = 0;		/* number of cells pair */
     long totRow = 0;		/* of the file */
     long tabSize = 10;		/* array length */
-
     Coppie *cc = NULL;		/* here store the pair of cell with the weight. these information are in the file */
 
 
@@ -251,13 +239,10 @@ int contrastWeightedEdgeDensity(int fd, char **par, struct area_entry *ad,
 	    }
 
 	}
-	/*else
-	 *    num = 1  ---> in the line there is only 1 token 
+	/* else num = 1  ---> in the line there is only 1 token 
 	 * I ignore this line
 	 */
-
     }
-
 
 
 
@@ -301,7 +286,6 @@ int contrastWeightedEdgeDensity(int fd, char **par, struct area_entry *ad,
 int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	      double *result)
 {
-
     double indice = 0;
     double somma = 0;
     double area = 0;
@@ -340,7 +324,6 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	masked = TRUE;
     }
 
-
     buf_sup = G_allocate_cell_buf();
     if (buf_sup == NULL) {
 	G_fatal_error("malloc buf_sup failed");
@@ -358,7 +341,8 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 
     G_set_c_null_value(buf_sup + ad->x, ad->cl);	/*the first time buf_sup is all null */
     for (j = 0; j < ad->rl; j++) {	/* for each row */
-	buf_corr = RLI_get_cell_raster_row(fd, j + ad->y, ad);	/* read row of raster */
+	/* read row of raster */
+	buf_corr = RLI_get_cell_raster_row(fd, j + ad->y, ad);
 	if (j > 0) {		/* not first row */
 	    buf_sup = RLI_get_cell_raster_row(fd, j - 1 + ad->y, ad);
 	}
@@ -381,8 +365,8 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	    }
 	    if (!(G_is_null_value(&corrCell, CELL_TYPE))) {
 		supCell = buf_sup[i + ad->x];
-		/* calculate how many edge the cell has */
 
+		/* calculate how many edges the cell has */
 		if (((!G_is_null_value(&prevCell, CELL_TYPE))) &&
 		    (corrCell != prevCell)) {
 		    int r = 0;
@@ -414,7 +398,6 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	    mask_sup = mask_corr;
     }
 
-
     /* calcolo dell'indice */
     if (area == 0)
 	indice = -1;
@@ -431,6 +414,7 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
     *result = indice;
 
     if (masked) {
+	close(mask_fd);
 	G_free(mask_corr);
 	G_free(mask_sup);
     }
@@ -443,7 +427,6 @@ int calculate(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	       double *result)
 {
-
     double indice = 0;
     double somma = 0;
     double area = 0;
@@ -483,7 +466,6 @@ int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	masked = TRUE;
     }
 
-
     buf_sup = G_allocate_d_raster_buf();
     if (buf_sup == NULL) {
 	G_fatal_error("malloc buf_sup failed");
@@ -498,7 +480,8 @@ int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
     G_set_d_null_value(buf_sup + ad->x, ad->cl);	/*the first time buf_sup is all null */
 
     for (j = 0; j < ad->rl; j++) {	/* for each row */
-	buf_corr = RLI_get_dcell_raster_row(fd, j + ad->y, ad);	/* read row of raster */
+	/* read row of raster */
+	buf_corr = RLI_get_dcell_raster_row(fd, j + ad->y, ad);
 	if (j > 0) {		/* not first row */
 	    buf_sup = RLI_get_dcell_raster_row(fd, j - 1 + ad->y, ad);
 	}
@@ -552,7 +535,6 @@ int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	    mask_sup = mask_corr;
     }
 
-
     /* calcolo dell'indice */
     if (area == 0)
 	indice = -1;
@@ -568,6 +550,7 @@ int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
     }
     *result = indice;
     if (masked) {
+	close(mask_fd);
 	G_free(mask_corr);
 	G_free(mask_sup);
     }
@@ -579,7 +562,6 @@ int calculateD(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 int calculateF(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	       double *result)
 {
-
     double indice = 0;
     double somma = 0;
     double area = 0;
@@ -636,10 +618,11 @@ int calculateF(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
     c1.t = FCELL_TYPE;
     c2.t = FCELL_TYPE;
 
-
     for (j = 0; j < ad->rl; j++) {	/* for each row */
-	buf_corr = RLI_get_fcell_raster_row(fd, j + ad->y, ad);	/* read row of raster */
-	if (j > 0) {		/* not first row */
+	/* read row of raster */
+	buf_corr = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
+	if (j > 0) {
+	    /* not first row */
 	    buf_sup = RLI_get_fcell_raster_row(fd, j - 1 + ad->y, ad);
 	}
 	/*read mask if needed */
@@ -672,7 +655,6 @@ int calculateF(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 			return RLI_ERRORE;
 		}
 
-
 		if ((!(G_is_null_value(&supCell, FCELL_TYPE))) &&
 		    (corrCell != supCell)) {
 		    int r = 0;
@@ -692,7 +674,6 @@ int calculateF(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
 	    mask_sup = mask_corr;
     }
 
-
     /* calcolo dell'indice */
     if (area == 0)
 	indice = -1;
@@ -708,6 +689,7 @@ int calculateF(int fd, struct area_entry *ad, Coppie * cc, long totCoppie,
     }
     *result = indice;
     if (masked) {
+	close(mask_fd);
 	G_free(mask_corr);
 	G_free(mask_sup);
     }

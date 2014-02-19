@@ -1,13 +1,17 @@
 <h2>DESCRIPTION</h2>
 
-<em>r.li.padrange</em> (patch area distribution range) calculates
-as:<br>
-<img src="rlipadrange_formula.png" alt="rlipadrange formula"> <br>
+<em>r.li.padrange</em> calculates the range of patch area sizes in 
+hectares as:<br>
+<img src="rlipadrange_formula.png" alt="r.li.padrange formula"> <br>
 with:<br>
 <ul>
   <li><b>a<small><small>max</small></small></b>: max patch area size</li>
   <li><b>a<small><small>min</small></small></b>: min patch area size</li>
 </ul>
+
+<p>
+This index is calculated using a 4 neighbour algorithm, diagonal cells 
+are ignored when tracing a patch.
 
 <h2>NOTES</h2>
 
@@ -31,8 +35,11 @@ To calculate range of patch area size index on map <em>my_map</em>, using
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.padrange map=my_map conf=my_conf output=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.padrange map=forests conf=movwindow7 out=forests_padrange_mov7

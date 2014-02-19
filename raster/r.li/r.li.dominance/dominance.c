@@ -1,13 +1,19 @@
-/*
- * \brief calculates dominance's diversity index
+/****************************************************************************
  *
- *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.dominance
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Rewrite: Markus Metz
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
+ * PURPOSE:      calculates dominance diversity index
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
  *
- */
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -20,6 +26,8 @@
 #include "../r.li.daemon/avlDefs.h"
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
+
+/* template is shannon */
 
 int calculate(int fd, struct area_entry *ad, double *result);
 int calculateD(int fd, struct area_entry *ad, double *result);
@@ -41,11 +49,9 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
-    conf->gisprompt = "old_file,file,input";
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -55,7 +61,6 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, dominance, NULL, raster->answer,
 			  output->answer);
-
 }
 
 
@@ -91,22 +96,19 @@ int dominance(int fd, char **par, struct area_entry *ad, double *result)
 	    G_fatal_error("data type unknown");
 	    return RLI_ERRORE;
 	}
-
     }
 
     if (ris != RLI_OK)
-	   return RLI_ERRORE;
+	return RLI_ERRORE;
 
     *result = indice;
 
     return RLI_OK;
-
 }
 
 
 int calculate(int fd, struct area_entry *ad, double *result)
 {
-
     CELL *buf;
     CELL corrCell;
     CELL precCell;
@@ -266,14 +268,12 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	    return RLI_ERRORE;
 	}
 	tot = avl_to_array(albero, zero, array);
-
 	if (tot != m) {
-	    G_warning
-		("avl_to_array unaspected value. the result could be wrong");
+	    G_warning("avl_to_array unexpected value. the result could be wrong");
 	    return RLI_ERRORE;
 	}
 
-	/* calculate summary */
+	/* calculate shannon */
 	for (i = 0; i < m; i++) {
 	    t = (double)array[i]->tot;
 	    percentuale = (double)(t / area);
@@ -325,9 +325,7 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     double logaritmo;
 
     avl_tree albero = NULL;
-
     AVL_table *array;
-
     generic_cell cc;
 
     cc.t = DCELL_TYPE;
@@ -464,7 +462,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	    return RLI_ERRORE;
 	}
 	tot = avl_to_array(albero, zero, array);
-
 	if (tot != m) {
 	    G_warning
 		("avl_to_array unaspected value. the result could be wrong");
@@ -478,7 +475,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	    logaritmo = (double)log(percentuale);
 	    somma = somma + (percentuale * logaritmo);
 	}
-
 	G_free(array);
 
 	if (m != 0)
@@ -523,9 +519,7 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     double logaritmo;
 
     avl_tree albero = NULL;
-
     AVL_table *array;
-
     generic_cell cc;
 
     cc.t = FCELL_TYPE;
@@ -543,8 +537,6 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     }
 
     G_set_f_null_value(&precCell, 1);
-
-
     for (j = 0; j < ad->rl; j++) {	/* for each row */
 	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
@@ -661,14 +653,12 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	    return RLI_ERRORE;
 	}
 	tot = avl_to_array(albero, zero, array);
-
 	if (tot != m) {
-	    G_warning
-		("avl_to_array unaspected value. the result could be wrong");
+	    G_warning("avl_to_array unexpected value. the result could be wrong");
 	    return RLI_ERRORE;
 	}
 
-	/* calculate summary */
+	/* calculate shannon */
 	for (i = 0; i < m; i++) {
 	    t = (double)array[i]->tot;
 	    percentuale = (double)(t / area);

@@ -1,26 +1,33 @@
-
-/*
- * \brief calculates Simpson's diversity index
+/****************************************************************************
  *
- *  \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.simpson
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Rewrite: Markus Metz
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
- *       
- */
-
-#include <grass/gis.h>
-#include <grass/glocale.h>
+ * PURPOSE:      calculates Simpson's diversity index
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
 
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 #include "../r.li.daemon/defs.h"
 #include "../r.li.daemon/avlDefs.h"
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
+
+/* template is shannon */
 
 double calculate(struct area_entry *ad, int fd, double *result);
 double calculateD(struct area_entry *ad, int fd, double *result);
@@ -45,8 +52,6 @@ int main(int argc, char *argv[])
     conf = G_define_option();
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
-    conf->gisprompt = "old_file,file,input";
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -56,7 +61,6 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, simpson, NULL, raster->answer,
 			  output->answer);
-
 }
 
 int simpson(int fd, char **par, struct area_entry *ad, double *result)
@@ -91,7 +95,6 @@ int simpson(int fd, char **par, struct area_entry *ad, double *result)
 	    G_fatal_error("data type unknown");
 	    return RLI_ERRORE;
 	}
-
     }
 
     if (ris != RLI_OK)
@@ -100,9 +103,7 @@ int simpson(int fd, char **par, struct area_entry *ad, double *result)
     *result = indice;
 
     return RLI_OK;
-
 }
-
 
 
 double calculate(struct area_entry *ad, int fd, double *result)
@@ -130,7 +131,6 @@ double calculate(struct area_entry *ad, int fd, double *result)
 
     avl_tree albero = NULL;
     AVL_table *array;
-
     generic_cell uc;
 
     uc.t = CELL_TYPE;
@@ -317,9 +317,7 @@ double calculateD(struct area_entry *ad, int fd, double *result)
     double t;
 
     avl_tree albero = NULL;
-
     AVL_table *array;
-
     generic_cell uc;
 
     uc.t = DCELL_TYPE;
@@ -526,7 +524,6 @@ double calculateF(struct area_entry *ad, int fd, double *result)
 
     G_set_f_null_value(&precCell, 1);
 
-
     for (j = 0; j < ad->rl; j++) {	/* for each row */
 	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
@@ -538,7 +535,6 @@ double calculateF(struct area_entry *ad, int fd, double *result)
 	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
 
 	for (i = 0; i < ad->cl; i++) {	/* for each fcell in the row */
-
 	    area++;
 	    corrCell = buf[i + ad->x];
 
@@ -663,9 +659,10 @@ double calculateF(struct area_entry *ad, int fd, double *result)
 
 
     G_free(array);
-    if (masked)
+    if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
-
+    }
 
     *result = indice;
     return RLI_OK;

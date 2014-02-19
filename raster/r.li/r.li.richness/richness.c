@@ -1,6 +1,6 @@
 
 /*
- * \brief calculates dominance's diversity index
+ * \brief calculates richness diversity index
  *
  *  \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
  *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
@@ -42,11 +42,9 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
-    conf->gisprompt = "old_file,file,input";
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -62,14 +60,9 @@ int main(int argc, char *argv[])
 int dominance(int fd, char **par, struct area_entry *ad, double *result)
 {
     char *mapset;
-
     int ris = RLI_OK;
-
     double indice = 0;
-
     struct Cell_head hd;
-
-
 
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
@@ -121,15 +114,10 @@ double calculate(struct area_entry *ad, int fd, double *result)
     int ris = 0;
     int masked = FALSE;
     int a = 0;			/* a=0 if all cells are null */
-
     long m = 0;
-
     double indice = 0;
-
     avl_tree albero = NULL;
-
     generic_cell uc;
-
 
     uc.t = CELL_TYPE;
 
@@ -280,11 +268,8 @@ double calculateD(struct area_entry *ad, int fd, double *result)
     int ris = 0;
     int masked = FALSE;
     int a = 0;			/* a=0 if all cells are null */
-
     long m = 0;
-
     double indice = 0;
-
     avl_tree albero = NULL;
 
     generic_cell uc;

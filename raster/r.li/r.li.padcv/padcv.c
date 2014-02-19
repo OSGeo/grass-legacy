@@ -1,13 +1,19 @@
-/*
- * \brief calculates coefficient of variation of patch area 
+/****************************************************************************
  *
- *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.padcv
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Fixes: Markus Neteler <neteler itc.it>
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
+ * PURPOSE:      calculates coefficient of variation of patch areas
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
  *
- */
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -40,18 +46,15 @@ int main(int argc, char *argv[])
     /* define options */
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->gisprompt = "old_file,file,input";
-    conf->type = TYPE_STRING;
     conf->required = YES;
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
-
     return calculateIndex(conf->answer, patchAreaDistributionCV, NULL,
 			  raster->answer, output->answer);
 }
@@ -87,8 +90,8 @@ int patchAreaDistributionCV(int fd, char **par, struct area_entry *ad, double *r
 	    G_fatal_error("data type unknown");
 	    return RLI_ERRORE;
 	}
-
     }
+
     if (ris != RLI_OK) {
 	*result = -1;
 	return RLI_ERRORE;
@@ -98,6 +101,7 @@ int patchAreaDistributionCV(int fd, char **par, struct area_entry *ad, double *r
 
     return RLI_OK;
 }
+
 
 int calculate(int fd, struct area_entry *ad, double *result)
 {

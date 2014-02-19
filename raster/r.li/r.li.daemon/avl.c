@@ -6,13 +6,14 @@
  *   Read the COPYING file that comes with GRASS for details.
  *       
  */
-#include <grass/gis.h>
-#include <grass/glocale.h>
 
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "defs.h"
 #include "avlDefs.h"
@@ -32,7 +33,7 @@ void avl_rotation_rr(avl_node * critical);
 void printAVL(avl_node * r);
 
 
-/* define function declsred in avl.h */
+/* define function declared in avl.h */
 
 avl_tree avl_make(const generic_cell k, const long n)
 {
@@ -184,6 +185,8 @@ long avl_to_array(avl_node * root, long i, AVL_table * a)
     }
     return i;
 }
+
+
 
 
 static avl_node *avl_individua(const avl_tree root, const generic_cell k,
