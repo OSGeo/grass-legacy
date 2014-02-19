@@ -275,6 +275,7 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 	if (write(mask_fd, buf, cl * sizeof(int)) < 0)
 	    return NULL;
     }
+
     close(mask_fd);
     return G_store(tmp_file);
 }

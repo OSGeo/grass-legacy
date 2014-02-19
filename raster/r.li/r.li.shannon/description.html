@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>r.li.shannon</em> calculates the "Shannon's diversity index" as:<br>
-<img src="rliShannon_formula.png" alt="rliShannon formula"> <br>
+<img src="rliShannon_formula.png" alt="r.li.shannon formula"> <br>
 with:
 <ul>
 <li><b>i</b>: patch type</li>
@@ -33,8 +33,11 @@ To calculate Shannon's diversity index on map <em>my_map</em>, using
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.shannon map=my_map conf=my_conf output=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.shannon map=forests conf=movwindow7 out=forests_shannon_mov7

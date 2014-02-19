@@ -1,13 +1,18 @@
 <h2>DESCRIPTION</h2>
 
-<em>r.li.padsd</em> (patch area distribution standard deviation) calculates as:<br>
-<img src="rlipadsd_formula.png" alt="rlipadsd formula"> <br>
+<em>r.li.padsd</em> calculates the standard deviation of patch 
+area sizes in hectares as:<br>
+<img src="rlipadsd_formula.png" alt="r.li.padsd formula"> <br>
 with:<br>
 <ul>
   <li><b>MPS</b>: mean patch area size</li>
   <li><b>a<small><small>i</small></small></b>: area of patch i</li>
-  <li><b>N<small>patch</small></b>: number of patch</li>
+  <li><b>N<small>patch</small></b>: number of patches</li>
 </ul>
+
+<p>
+This index is calculated using a 4 neighbour algorithm, diagonal cells 
+are ignored when tracing a patch.
 
 <h2>NOTES</h2>
 
@@ -31,8 +36,11 @@ To calculate patch area distribution standard deviation index on map <em>my_map<
 <em>r.li.setup</em>) and saving results in <em>my_out</em>, run:
 <div class="code"><pre>
 r.li.padsd map=my_map conf=my_conf output=my_out
+</pre></div>
+<p>
 
-# forest map example:
+Forest map (Spearfish sample dataset) example:
+<div class="code"><pre>
 g.region rast=landcover.30m -p
 r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
 r.li.padsd map=forests conf=movwindow7 out=forests_padsd_mov7

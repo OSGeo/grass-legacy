@@ -6,6 +6,7 @@
  *   Read the COPYING file that comes with GRASS for details.
  *       
  */
+
 #define AVL_S 1
 #define AVL_D 2
 #define AVL_SS 11

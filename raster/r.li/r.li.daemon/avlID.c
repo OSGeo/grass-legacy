@@ -7,12 +7,12 @@
  *       
  */
 
-#include <grass/gis.h>
-#include <grass/glocale.h>
-
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "defs.h"
 #include "avlDefs.h"
@@ -28,7 +28,6 @@ void avlID_rotation_ll(avlID_node * critical);
 void avlID_rotation_lr(avlID_node * critical);
 void avlID_rotation_rl(avlID_node * critical);
 void avlID_rotation_rr(avlID_node * critical);
-
 
 
 avlID_tree avlID_make(const long k, const long n)

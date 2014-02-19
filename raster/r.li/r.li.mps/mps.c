@@ -1,13 +1,18 @@
-/*
- * \brief calculates mean patch size index
+/****************************************************************************
  *
- *  \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.patchnum
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
+ * PURPOSE:      calculates mean patch size index
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
  *
- */
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -40,12 +45,10 @@ int main(int argc, char *argv[])
 
     raster = G_define_standard_option(G_OPT_R_MAP);
 
-    conf = G_define_option();
+    conf = G_define_standard_option(G_OPT_F_INPUT);
     conf->key = "conf";
     conf->description = _("Configuration file");
-    conf->type = TYPE_STRING;
     conf->required = YES;
-    conf->gisprompt = "old_file,file,input";
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -54,7 +57,6 @@ int main(int argc, char *argv[])
 
     return calculateIndex(conf->answer, meanPatchSize, NULL, raster->answer,
 			  output->answer);
-
 }
 
 
@@ -93,7 +95,7 @@ int meanPatchSize(int fd, char **par, struct area_entry *ad, double *result)
 
     }
     if (ris != RLI_OK)
-	  return RLI_ERRORE;
+	return RLI_ERRORE;
 
     *result = indice;
 

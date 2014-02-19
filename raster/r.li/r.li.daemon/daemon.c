@@ -15,6 +15,7 @@
  * \include
  * 
  */
+#include <grass/config.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <fcntl.h>
@@ -34,6 +35,10 @@
 #include <grass/glocale.h>
 #include "daemon.h"
 
+#ifdef __MINGW32__
+#define srandom srand
+#define random rand
+#endif
 
 int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *),
 		   char **parameters, char *raster, char *output)
@@ -72,7 +77,6 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
     reportChannelName = G_tempfile();
     if (mkfifo(reportChannelName, 0644) == -1)
 	G_fatal_error("Error in pipe creation");
-
 
     /*###############################################
        --------------create childs-------------------
@@ -132,7 +136,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
     if (parsed == MVWIN) {
 	/* struct Cell_head cellhd_r, cellhd_new;
 	   char *mapset; */
-	/* create new raster file */
+	/*creating new raster file */
 	mv_fd = G_open_raster_new(output, DCELL_TYPE);
 	if (mv_fd < 0)
 	    G_fatal_error(_("Unable to create raster map <%s>"), output);
@@ -169,8 +173,7 @@ int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *
 	i++;
     }
 
-
-    /* body */
+    /*body */
     while (next_Area(parsed, l, g, &m) != 0) {
 	int j = 0, donePid;
 
