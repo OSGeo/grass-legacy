@@ -889,7 +889,6 @@ int main(int argc, char *argv[])
     G_close_cell(maxdir_fd);
     if (spotting) {
 	G_close_cell(spotdist_fd);
-	G_close_cell(spotdist_fd);
 	G_free(map_elev);
     }
 
