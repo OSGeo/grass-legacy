@@ -33,26 +33,26 @@ export LC_NUMERIC
 "$GISBASE"/etc/i.oif/m.cutmatrix "$temp_stddev" 1 $2 >> "$temp_sum"
 "$GISBASE"/etc/i.oif/m.cutmatrix "$temp_stddev" 1 $3 >> "$temp_sum"
 
-cat "$temp_sum" | awk -v temp_file="$temp_calc" \
+cat "$temp_sum" | awk \
 'BEGIN {sum = 0.0} 
 NR == 1{}
 	{sum += $1 ; N++}
 END{
-print sum > temp_file
-}'
+print sum
+}' > "$temp_calc"
 
 # calculate SUM of absolute(Correlation values):
 "$GISBASE"/etc/i.oif/m.cutmatrix "$temp_correlation" $1 $2 >  "$temp_sum"
 "$GISBASE"/etc/i.oif/m.cutmatrix "$temp_correlation" $1 $3 >> "$temp_sum"
 "$GISBASE"/etc/i.oif/m.cutmatrix "$temp_correlation" $2 $3 >> "$temp_sum"
 
-cat "$temp_sum" | awk -v temp_file="$temp_calc" \
+cat "$temp_sum" | awk \
 'BEGIN {sum = 0.0}
 NR == 1{}
         {sum += sqrt($1*$1) ; N++}  # sqrt(x^2) is my ABS-function
 END{
-print sum >> temp_file
-}'
+print sum
+}' >> "$temp_calc"
 
 # Calculate OIF index:
 #     Divide (SUM of Stddeviations) and (SUM of Correlation)
