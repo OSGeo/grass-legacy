@@ -6,7 +6,7 @@
 Classes:
  - layertree::LayerTree
 
-(C) 2007-2011 by the GRASS Development Team
+(C) 2007-2013 by the GRASS Development Team
 
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -158,8 +158,9 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                    Map = self.Map, auimgr = self.auimgr)
         
         # title
-        self.mapdisplay.SetTitle(_("GRASS GIS Map Display: %(id)d  - Location: %(loc)s") % \
-                                     { 'id' : self.disp_idx + 1,
+        self.mapdisplay.SetTitle(_("GRASS GIS %(version)s Map Display: %(id)d  - Location: %(loc)s") % \
+                                     { 'version' : grass.version()['version'],
+                                       'id' : self.disp_idx + 1,
                                        'loc' : grass.gisenv()["LOCATION_NAME"] })
         
         # show new display
