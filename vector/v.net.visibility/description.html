@@ -3,42 +3,45 @@
 <em>v.net.visibility</em> computes the visibility graph of a vector
 map containing lines, areas (boundaries) and points. The visibility
 graph is the graph where the nodes are the end point of the lines,
-boundaries or simply the points. There is an edge between two nodes
-if they are 'visible'. Two nodes are visibible if there is no segments
-in between them, i.e. the edge doesn't intersect any line or boundary
-in the vector map. This is useful to compute the sortest path in a
+boundaries or simply points. There is an edge between two nodes if they
+are 'visible' to each other. Two nodes are visibible if there are no segments
+in between of them, i.e. the edge does not intersect any line or boundary
+in the vector map. This is useful to compute the shortest path in a
 vector map from any two points. To do this, first you need to compute
 the visibility graph and from it compute the shortest path using
 <em>v.net.path</em> or <em>d.path</em>.
 
+<p>
 <b>IMPORTANT: the algorithm doesn't work well with intersecting lines
 (that includes overlapping)</b>
 
-<p>
-If you compute a shortest path after computing the visibility graph you
-will notice that this path might go through a vertix of a line. If this
-is not wanted you might to run the map through <em>v.buffer</em> first
-whith a small value. Example:
+<h2>NOTES</h2>
+
+If you compute a shortest path after computing the visibility graph
+you will notice that this path might go through a vertex of a line. If
+this is not what you wanted you might need to process the map
+in <em><a href="v.buffer.html">v.buffer</a></em>, initially whith a
+small value. Example:
 
 <div class="code"><pre>
 v.buffer input=map output=bufferedmap buffer=1 type=point,line,area,boundary
 </pre></div>
 
 <p>
-The first argument is the input map. It supports lines, boudaries 
-(so areas) and points. For the algorithm to work lines and 
-boundaries must not be intersecting (that includes overlapping).
+The first argument is the input map. It supports lines, boundaries 
+(so, areas) and points. For the algorithm  was written to work with lines
+and boundaries not intersecting each other (that includes overlapping).
 <br>
-The result map containing the visibility graph is given in the output map.
-
+The resulting map containing the visibility graph is given in the output map.
+<p>
 If you need to add additional points to compute a shortest path 
-between them afterwards you can use the <em>coordinate</em> parameter.
+between them afterwards you can use the <em>coordinate</em> parameter, e.g.:
 <div class="code"><pre>
 coordinate=25556200,6686400,25556400,6686600
 </pre></div>
 where 25556200,6686400 are the coordinate of the first point and 
 25556400,6686600 are the coordinates of the second point. Of course 
-you can give as many points as you want. They will be added to the 
+you can give as many points as you need. They will be added to the 
 visibility graph and edges from them will be computed. You can 
 always add those points after computing the visibility graph. Simply 
 use the <em>vis</em> parameter. The input will be the original 
@@ -50,16 +53,25 @@ v.net.visibility input=map vis=vis_map output=new_vis_map \
       coordinate=25556200,6686400,25556400,6686600
 </pre></div>
 
-<h2>EXAMPLE 1</h2>
-A simple example showing how to use the module
+<h2>EXAMPLES</h2>
+
+<h3>Example 1</h3>
+
+<!-- still overly complex result, some simple geometric were better -->
+A simple example (North Carolina sample data) showing how to use the module:
 <div class="code"><pre>
-v.net.visibility input=lines output=graph
+v.extract input=zipcodes_wake output=areas_7_11_25 cats=7,11,25
+g.region vect=zipcodes_wake
+d.mon x0
+d.vect areas_7_11_25
+v.net.visibility input=areas_7_11_25 output=graph
 d.vect graph
-d.vect lines col=red
+d.vect areas_7_11_25 color=red type=boundary
 </pre></div>
 
-<h2>EXAMPLE 2</h2>
-An example on how to use <em>v.buffer</em> with the module 
+<h3>Example 2</h3>d.er  
+An example on how to use <em><a href="v.buffer.html">v.buffer</a></em>
+along with the module:
 <div class="code"><pre>
 v.buffer input=lines output=buffered_lines buffer=1
 v.net.visibility input=buffered_lines output=graph
@@ -68,32 +80,38 @@ d.vect lines col=red
 </pre></div>
 
 
-<h2>EXAMPLE 3</h2>
+<h3>Example 3</h3>
 An example on how to use the coordinate parameter. This will compute the
-visibility graph of the vector map lines with the point 2555678,6686343
+visibility graph of the vector map lines with the point 2555678,6686343:
 <div class="code"><pre>
 v.net.visibility input=lines output=graph coordinate=2555678,6686343
 d.vect graph
 d.vect lines col=red
 </pre></div>
 
-<h2>EXAMPLE 4</h2>
-An example on how to use the coordinate parameter with the vis parameter.
+<h3>Example 4</h3>
+<!-- does not quite ork yet? -->
+An example (North Carolina sample data) on how to use the coordinate
+parameter with the vis parameter.
 Here the vector map graph is computed then a new visibility graph is computed
-from it with the point 2555678,6686343 extra
+from it with the point 669547.97,208348.20 extra:
 <div class="code"><pre>
-v.net.visibility input=lines output=graph
-d.vect graph
-d.vect lines col=red
-v.net.visibility input=lines vis=graph output=new_graph \
-      coordinate=2555678,6686343
+v.extract input=zipcodes_wake output=areas_7_11_25 cats=7,11,25
+g.region vect=zipcodes_wake
+d.mon x0
+d.vect areas_7_11_25
+v.net.visibility input=zipcodes_wake output=graph
+v.net.visibility input=zipcodes_wake vis=graph output=new_graph \
+      coordinate=669547.97,208348.20
 d.erase
+d.vect areas_7_11_25
+echo "symbol basic/star 20 669547.97 208348.20 black red" | d.graph -m
 d.vect new_graph
-d.vect lines col=red
+d.vect areas_7_11_25 color=red type=boundary
 </pre></div>
 
 
-<h2>EXAMPLE 5</h2>
+<h3>Example 5</h3>
 An example for connections of points (Spearfish):
 <div class="code"><pre>
 v.net.visibility input=archsites output=graph
@@ -111,16 +129,19 @@ visible, some wrong edges are added.
 
 <h2>SEE ALSO</h2>
 
-<em><a href="d.path.html">d.path</a></em>,
-<em><a href="v.net.html">v.net</a></em>,
-<em><a href="v.net.alloc.html">v.net.alloc</a></em>,
-<em><a href="v.net.iso.html">v.net.iso</a></em>,
-<em><a href="v.net.salesman.html">v.net.salesman</a></em>,
-<em><a href="v.net.steiner.html">v.net.steiner</a></em>,
-<em><a href="v.to.db.html">v.to.db</a></em>
+<em>
+<a href="d.path.html">d.path</a>,
+<a href="v.net.html">v.net</a>,
+<a href="v.net.alloc.html">v.net.alloc</a>,
+<a href="v.net.iso.html">v.net.iso</a>,
+<a href="v.net.salesman.html">v.net.salesman</a>,
+<a href="v.net.steiner.html">v.net.steiner</a>,
+<a href="v.to.db.html">v.to.db</a>
+</em>
 
 <h2>AUTHOR</h2>
 Maximilian Maldacker<br>
 Mentor: Wolf Bergenheim
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
