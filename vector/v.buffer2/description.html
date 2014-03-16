@@ -49,6 +49,23 @@ v.db.connect map=circles_db table=hospitals layer=1 key=cat driver=dbf \
      database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
 </pre></div>
 
+<center>
+<img src="v_buffer_points.png" border="1"><br>
+Buffer of 2000m around the "hospitals" points (map subset, original points
+shown in black, new area centroids in red)
+</center>
+
+<h3>Buffer around input areas</h3>
+
+<div class="code"><pre>
+v.buffer input=lakes output=lakes_buffer type=area distance=100
+</pre></div>
+
+<center>
+<img src="v_buffer_areas.png" border="1"><br>
+Buffer of 100m around the "lakes" polygons (map subset, original areas
+shown in black)
+</center>
 
 <h2>SEE ALSO</h2>
 
