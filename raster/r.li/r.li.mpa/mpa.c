@@ -1,14 +1,19 @@
-
-/*
- * \brief calculates mean pixel attribute index
+/****************************************************************************
  *
- *  \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
- *                      Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.mpa
+ * AUTHOR(S):    Serena Pallecchi (original contributor)
+ *                student of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Rewrite: Markus Metz
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
+ * PURPOSE:      calculates mean pixel attribute index
+ * COPYRIGHT:    (C) 2007-2014 by the GRASS Development Team
  *
- */
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -21,7 +26,7 @@
 #include "../r.li.daemon/defs.h"
 #include "../r.li.daemon/daemon.h"
 
-
+rli_func meanPixelAttribute;
 int calculate(int fd, struct area_entry *ad, double *result);
 int calculateD(int fd, struct area_entry *ad, double *result);
 int calculateF(int fd, struct area_entry *ad, double *result);
@@ -58,14 +63,8 @@ int main(int argc, char *argv[])
 
 int meanPixelAttribute(int fd, char **par, struct area_entry *ad, double *result)
 {
-    char *mapset;
     int ris = 0;
     double indice = 0;
-    struct Cell_head hd;
-
-    mapset = G_find_cell(ad->raster, "");
-    if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
-	return RLI_ERRORE;
 
     switch (ad->data_type) {
     case CELL_TYPE:
@@ -105,11 +104,10 @@ int calculate(int fd, struct area_entry *ad, double *result)
     CELL *buf;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int masked = FALSE;
 
     double area = 0;
-    double indice = 0;
     double somma = 0;
 
     /* open mask if needed */
@@ -126,35 +124,32 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	masked = TRUE;
     }
 
+    for (j = 0; j < ad->rl; j++) {
+	buf = RLI_get_cell_raster_row(fd, j + ad->y, ad);
 
-    for (j = 0; j < ad->rl; j++) {	/*for each raster row */
-	buf = RLI_get_cell_raster_row(fd, j + ad->y, ad);	/*read raster row */
-
-	if (masked) {		/*read mask row if needed */
+	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
 	    }
 	}
 
-	for (i = 0; i < ad->cl; i++) {	/*for each cell in the row */
-	    area++;
-	    if (masked && mask_buf[i + ad->x] == 0) {
+	for (i = 0; i < ad->cl; i++) {
+	    if (masked && mask_buf[i] == 0) {
 		G_set_c_null_value(&buf[i + ad->x], 1);
-		area--;
 	    }
-	    if (!(G_is_null_value(&buf[i + ad->x], CELL_TYPE))) {	/*if it's a cell to consider */
+	    if (!(G_is_c_null_value(&buf[i + ad->x]))) {
+		area++;
 		somma = somma + buf[i + ad->x];
 	    }
 	}
     }
 
-    if (area == 0)
-	indice = (double)-1;
+    if (area > 0)
+	*result = somma / area;
     else
-	indice = somma / area;
+	G_set_d_null_value(result, 1);
 
-    *result = indice;
     if (masked) {
 	close(mask_fd);
 	G_free(mask_buf);
@@ -169,11 +164,10 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     DCELL *buf;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int masked = FALSE;
 
     double area = 0;
-    double indice = 0;
     double somma = 0;
 
     /* open mask if needed */
@@ -190,36 +184,32 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	masked = TRUE;
     }
 
+    for (j = 0; j < ad->rl; j++) {
+	buf = RLI_get_dcell_raster_row(fd, j + ad->y, ad);
 
-
-    for (j = 0; j < ad->rl; j++) {	/*for each raster row */
-	buf = RLI_get_dcell_raster_row(fd, j + ad->y, ad);	/*read raster row */
-
-	if (masked) {		/*read mask row if needed */
+	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
 	    }
 	}
 
-	for (i = 0; i < ad->cl; i++) {	/*for each cell in the row */
-	    area++;
-	    if ((masked) && (mask_buf[i + ad->x] == 0)) {
-		area--;
+	for (i = 0; i < ad->cl; i++) {
+	    if (masked && mask_buf[i] == 0) {
 		G_set_d_null_value(&buf[i + ad->x], 1);
 	    }
-	    if (!(G_is_null_value(&buf[i + ad->x], DCELL_TYPE))) {
+	    if (!(G_is_d_null_value(&buf[i + ad->x]))) {
+		area++;
 		somma = somma + buf[i + ad->x];
 	    }
 	}
     }
 
-    if (area == 0)
-	indice = (double)-1;
+    if (area > 0)
+	*result = somma / area;
     else
-	indice = somma / area;
+	G_set_d_null_value(result, 1);
 
-    *result = indice;
     if (masked) {
 	close(mask_fd);
 	G_free(mask_buf);
@@ -233,11 +223,10 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     FCELL *buf;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int masked = FALSE;
 
     double area = 0;
-    double indice = 0;
     double somma = 0;
 
     /* open mask if needed */
@@ -254,36 +243,32 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	masked = TRUE;
     }
 
+    for (j = 0; j < ad->rl; j++) {
+	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
 
-    for (j = 0; j < ad->rl; j++) {	/*for each raster row */
-	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);	/*read raster row */
-
-	if (masked) {		/*read mask row if needed */
+	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
 		G_fatal_error("mask read failed");
 		return RLI_ERRORE;
 	    }
 	}
 
-	for (i = 0; i < ad->cl; i++) {	/*for each cell in the row */
-	    area++;
-
-	    if ((masked) && (mask_buf[i + ad->x] == 0)) {
-		area--;
+	for (i = 0; i < ad->cl; i++) {
+	    if (masked && mask_buf[i] == 0) {
 		G_set_f_null_value(&buf[i + ad->x], 1);
 	    }
-	    if (!(G_is_null_value(&buf[i + ad->x], FCELL_TYPE))) {
+	    if (!(G_is_f_null_value(&buf[i + ad->x]))) {
+		area++;
 		somma = somma + buf[i + ad->x];
 	    }
 	}
     }
 
-    if (area == 0)
-	indice = (double)-1;
+    if (area > 0)
+	*result = somma / area;
     else
-	indice = somma / area;
+	G_set_d_null_value(result, 1);
 
-    *result = indice;
     if (masked) {
 	close(mask_fd);
 	G_free(mask_buf);

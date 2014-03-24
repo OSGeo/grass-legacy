@@ -4,7 +4,7 @@ EXTRA_LIBS=$(GISLIB) $(MATHLIB)
 
 LIB_NAME = grass_rli.$(GRASS_VERSION_NUMBER)
 
-LIB_OBJS = daemon.o list.o ipc.o worker.o GenericCell.o	avl.o avlID.o
+LIB_OBJS = daemon.o list.o worker.o GenericCell.o avl.o avlID.o
 
 DEPENDENCIES = $(GISDEP) 
 
