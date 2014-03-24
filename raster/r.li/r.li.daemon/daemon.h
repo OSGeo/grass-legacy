@@ -22,10 +22,6 @@
 #include "defs.h"
 
 
-/**
- * \brief number of r.li.workers to use
- */
-#define DEFAULT_WORKERS 10
 #define NORMAL 1
 #define MVWIN 2
 #define GEN 3
@@ -99,10 +95,11 @@ typedef struct fcell_memory_entry *fcell_manager;
 
  /**
   * \brief fields of an area descriptor
-  * \member x the x coordinate of upper left corner
-  * \member y the y coordinate of upper left corner
-  * \member rl area length in rows
-  * \member cl area length in columns
+  * \member x column offset = start of sample area
+  * \member y row offset = start of sample area
+  * \member rl sample area length in rows
+  * \member cl sample area length in columns
+  * \member rc number of rows in the cache
   * \member mask file descriptor of mask raster file (-1 if there is no mask)
  */
 struct area_entry
@@ -111,6 +108,7 @@ struct area_entry
     int y;
     int rl;
     int cl;
+    int rc;
     int mask;
     int data_type;
     cell_manager cm;
@@ -120,7 +118,16 @@ struct area_entry
     char *mask_name;
 };
 
-
+/**
+ * \brief function prototype for index calculation
+ * \param fd file descripter of opened raster map
+ * \param par optional parameters
+ * \param ad definition of the sample area
+ * \param result pointer to store the result
+ * \return RLI_ERRORE error occurs in calculating index
+ * \return RLI_OK  otherwise
+ */
+typedef int rli_func(int fd, char **par, struct area_entry *ad, double *result);
 
 
 /**
@@ -132,7 +139,8 @@ struct area_entry
  * \return 0 error occurs in calculating index
  * \return 1  otherwise
  */
-int calculateIndex(char *file, int f(int, char **, struct area_entry *, double *),
+
+int calculateIndex(char *file, rli_func *f,
 		   char **parameters, char *raster, char *output);
 
 /**
@@ -197,12 +205,13 @@ int error_Output(int out, msg m);
  * \brief client implementation
  * \param raster the raster map to analyze
  * \param f the function used for index computing
- * \param server_channel the channel where to send the result
- * \param mychannel the channel where to receive the area messages
  * \param result where to put the result of index computing
  */
-void worker(char *raster, int f(int, char **, struct area_entry *, double *),
-	    char *server_channel, char *mychannel, char **parameters);
+void worker_init(char *raster, rli_func *f,
+		 char **parameters);
+void worker_process(msg * ret, msg * m);
+void worker_end(void);
+
  /**
   * \brief adapts the mask at current raster file
   * \param mask name of mask raster file
@@ -211,7 +220,7 @@ void worker(char *raster, int f(int, char **, struct area_entry *, double *),
   * \param cl the lenght in cols of sample area
   * \return the name of mask raster file to use
   */
-char *mask_preprocessing(char *mask, char *raster, int rl, int cl);
+char *mask_preprocessing(char *mask, char *raster, struct area_entry *ad);
 
  /**
   * \brief writes the output for a raster file
@@ -266,4 +275,3 @@ DCELL *RLI_get_dcell_raster_row(int fd, int row, struct area_entry * ad);
   */
 FCELL *RLI_get_fcell_raster_row(int fd, int row, struct area_entry * ad);
 
-#include "index.h"
