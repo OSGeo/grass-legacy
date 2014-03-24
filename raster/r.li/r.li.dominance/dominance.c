@@ -15,20 +15,20 @@
  *
  *****************************************************************************/
 
-#include <grass/gis.h>
-#include <grass/glocale.h>
-
 #include <stdlib.h>
 #include <fcntl.h>
 #include <math.h>
 
-#include "../r.li.daemon/defs.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
+#include "../r.li.daemon/daemon.h"
 #include "../r.li.daemon/avlDefs.h"
 #include "../r.li.daemon/avl.h"
-#include "../r.li.daemon/daemon.h"
 
 /* template is shannon */
 
+rli_func dominance;
 int calculate(int fd, struct area_entry *ad, double *result);
 int calculateD(int fd, struct area_entry *ad, double *result);
 int calculateF(int fd, struct area_entry *ad, double *result);
@@ -66,14 +66,8 @@ int main(int argc, char *argv[])
 
 int dominance(int fd, char **par, struct area_entry *ad, double *result)
 {
-    char *mapset;
     int ris = RLI_OK;
     double indice = 0;
-    struct Cell_head hd;
-
-    mapset = G_find_cell(ad->raster, "");
-    if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
-	return RLI_ERRORE;
 
     switch (ad->data_type) {
     case CELL_TYPE:
@@ -98,8 +92,9 @@ int dominance(int fd, char **par, struct area_entry *ad, double *result)
 	}
     }
 
-    if (ris != RLI_OK)
+    if (ris != RLI_OK) {
 	return RLI_ERRORE;
+    }
 
     *result = indice;
 
@@ -114,29 +109,22 @@ int calculate(int fd, struct area_entry *ad, double *result)
     CELL precCell;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int ris = 0;
     int masked = FALSE;
-    int a = 0;			/* a=0 if all cells are null */
 
     long m = 0;
     long tot = 0;
     long zero = 0;
-    long totCorr = 0;
+    long totCorr = 1;
 
-    double indice = 0;
-    double somma = 0;
-    double percentuale = 0;
-    double area = 0;
-    double t;
-    double logaritmo;
+    long area = 0;
 
     avl_tree albero = NULL;
     AVL_table *array;
+    generic_cell uc;
 
-    generic_cell cc;
-
-    cc.t = CELL_TYPE;
+    uc.t = CELL_TYPE;
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -151,7 +139,6 @@ int calculate(int fd, struct area_entry *ad, double *result)
     }
 
     G_set_c_null_value(&precCell, 1);
-
     for (j = 0; j < ad->rl; j++) {	/* for each row */
 	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
@@ -161,74 +148,73 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	}
 
 	buf = RLI_get_cell_raster_row(fd, j + ad->y, ad);
+
 	for (i = 0; i < ad->cl; i++) {	/* for each cell in the row */
-	    area++;
 	    corrCell = buf[i + ad->x];
 
-	    if ((masked) && (mask_buf[i + ad->x] == 0)) {
+	    if ((masked) && (mask_buf[i] == 0)) {
 		G_set_c_null_value(&corrCell, 1);
-		area--;
 	    }
 
-	    if (!(G_is_null_value(&corrCell, CELL_TYPE))) {
-		a = 1;
-		if (G_is_null_value(&precCell, cc.t)) {
-		    precCell = corrCell;
-		}
-		if (corrCell != precCell) {
-		    if (albero == NULL) {
-			cc.val.c = precCell;
-			albero = avl_make(cc, totCorr);
+	    if (!(G_is_null_value(&corrCell, uc.t))) {
+		/* total patch area */
+		area++;
+	    }
 
-			if (albero == NULL) {
-			    G_fatal_error("avl_make error");
-			    return RLI_ERRORE;
-			}
-			/* TODO missing?: else  - see r.li.simpson/simpson.c */
-			m++;
+	    if (!(G_is_null_value(&precCell, uc.t)) &&
+		corrCell == precCell) {
+
+		totCorr++;
+	    }
+	    else if (!(G_is_null_value(&precCell, uc.t)) &&
+		     corrCell != precCell) {
+		
+		/* add precCell to search tree */
+		if (albero == NULL) {
+		    uc.val.c = precCell;
+		    albero = avl_make(uc, totCorr);
+		    if (albero == NULL) {
+			G_fatal_error("avl_make error");
+			return RLI_ERRORE;
 		    }
-		    else {
-			cc.val.c = precCell;
-			ris = avl_add(&albero, cc, totCorr);
-			switch (ris) {
-			case AVL_ERR:
-			    {
-				G_fatal_error("avl_add error");
-				return RLI_ERRORE;
-			    }
-			case AVL_ADD:
-			    {
-				m++;
-				break;
-			    }
-			case AVL_PRES:
-			    {
-				break;
-			    }
-			default:
-			    {
-				G_fatal_error("avl_add unknown error");
-				return RLI_ERRORE;
-			    }
-			}
-		    }
-		    totCorr = 1;
+		    m++;
 		}
 		else {
-		    totCorr++;
+		    uc.val.c = precCell;
+		    ris = avl_add(&albero, uc, totCorr);
+		    switch (ris) {
+		    case AVL_ERR:
+			{
+			    G_fatal_error("avl_add error");
+			    return RLI_ERRORE;
+			}
+		    case AVL_ADD:
+			{
+			    m++;
+			    break;
+			}
+		    case AVL_PRES:
+			{
+			    break;
+			}
+		    default:
+			{
+			    G_fatal_error("avl_make unknown error");
+			    return RLI_ERRORE;
+			}
+		    }
 		}
-		precCell = corrCell;
-	    }
+		totCorr = 1;
+	    }		/* endif not equal cells */
+	    precCell = corrCell;
+	}
+    }
 
-	}			/* end for */
-    }				/* end for */
-
-    /*last closing */
-    if (a != 0) {
+    /* last closing */
+    if (area > 0 && !(G_is_null_value(&precCell, uc.t))) {
 	if (albero == NULL) {
-	    cc.val.c = precCell;
-	    albero = avl_make(cc, totCorr);
-
+	    uc.val.c = precCell;
+	    albero = avl_make(uc, totCorr);
 	    if (albero == NULL) {
 		G_fatal_error("avl_make error");
 		return RLI_ERRORE;
@@ -236,8 +222,8 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	    m++;
 	}
 	else {
-	    cc.val.c = precCell;
-	    ris = avl_add(&albero, cc, totCorr);
+	    uc.val.c = precCell;
+	    ris = avl_add(&albero, uc, totCorr);
 	    switch (ris) {
 	    case AVL_ERR:
 		{
@@ -260,7 +246,12 @@ int calculate(int fd, struct area_entry *ad, double *result)
 		}
 	    }
 	}
+    }
 
+    if (area > 0) {
+	double t;
+	double shannon;
+	double perc, logarithm;
 
 	array = G_malloc(m * sizeof(AVL_tableRow));
 	if (array == NULL) {
@@ -274,27 +265,25 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	}
 
 	/* calculate shannon */
+	shannon = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)array[i]->tot;
-	    percentuale = (double)(t / area);
-	    logaritmo = (double)log(percentuale);
-	    somma = somma + (percentuale * logaritmo);
+	    t = array[i]->tot;
+	    perc = t / area;
+	    logarithm = log(perc);
+	    shannon += perc * logarithm;
 	}
-
-	if (m != 0)
-	    indice = log((double)m) + somma;
-	else
-	    indice = 0;
 	G_free(array);
+
+	*result = log(m) + shannon;
     }
-    else			/*if a is 0, that is all cell are null, i put index=-1 */
-	indice = (double)(-1);
+    else
+	G_set_d_null_value(result, 1);
 
-
-    if (masked)
+    avl_destroy(albero);
+    if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
-
-    *result = indice;
+    }
 
     return RLI_OK;
 }
@@ -307,28 +296,22 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     DCELL precCell;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int ris = 0;
     int masked = FALSE;
-    int a = 0;			/* a=0 if all cells are null */
 
     long m = 0;
     long tot = 0;
     long zero = 0;
-    long totCorr = 0;
+    long totCorr = 1;
 
-    double indice = 0;
-    double somma = 0;
-    double percentuale = 0;
-    double area = 0;
-    double t;
-    double logaritmo;
+    long area = 0;
 
     avl_tree albero = NULL;
     AVL_table *array;
-    generic_cell cc;
+    generic_cell uc;
 
-    cc.t = DCELL_TYPE;
+    uc.t = DCELL_TYPE;
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -343,7 +326,6 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     }
 
     G_set_d_null_value(&precCell, 1);
-
     for (j = 0; j < ad->rl; j++) {	/* for each row */
 	if (masked) {
 	    if (read(mask_fd, mask_buf, (ad->cl * sizeof(int))) < 0) {
@@ -354,75 +336,72 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 
 	buf = RLI_get_dcell_raster_row(fd, j + ad->y, ad);
 
-	for (i = 0; i < ad->cl; i++) {	/* for each dcell in the row */
-	    area++;
+	for (i = 0; i < ad->cl; i++) {	/* for each cell in the row */
 	    corrCell = buf[i + ad->x];
 
-	    if (masked && mask_buf[i + ad->x] == 0) {
+	    if ((masked) && (mask_buf[i] == 0)) {
 		G_set_d_null_value(&corrCell, 1);
-		area--;
 	    }
 
-	    if (!(G_is_null_value(&corrCell, DCELL_TYPE))) {
-		a = 1;
-		if (G_is_null_value(&precCell, DCELL_TYPE)) {
-		    precCell = corrCell;
-		}
-		if (corrCell != precCell) {
+	    if (!(G_is_null_value(&corrCell, uc.t))) {
+		/* total patch area */
+		area++;
+	    }
+
+	    if (!(G_is_null_value(&precCell, uc.t)) &&
+		corrCell == precCell) {
+
+		totCorr++;
+	    }
+	    else if (!(G_is_null_value(&precCell, uc.t)) &&
+		     corrCell != precCell) {
+		
+		/* add precCell to search tree */
+		if (albero == NULL) {
+		    uc.val.dc = precCell;
+		    albero = avl_make(uc, totCorr);
 		    if (albero == NULL) {
-			cc.val.dc = precCell;
-			albero = avl_make(cc, totCorr);
-			if (albero == NULL) {
-			    G_fatal_error("avl_make error");
-			    return RLI_ERRORE;
-			}
-			m++;
+			G_fatal_error("avl_make error");
+			return RLI_ERRORE;
 		    }
-		    else {
-			cc.val.dc = precCell;
-			ris = avl_add(&albero, cc, totCorr);
-			switch (ris) {
-			case AVL_ERR:
-			    {
-				G_fatal_error("avl_add error");
-				return RLI_ERRORE;
-			    }
-			case AVL_ADD:
-			    {
-				m++;
-				break;
-			    }
-			case AVL_PRES:
-			    {
-				break;
-			    }
-			default:
-			    {
-				G_fatal_error("avl_add unknown error");
-				return RLI_ERRORE;
-			    }
-			}
-		    }
-		    totCorr = 1;
+		    m++;
 		}
 		else {
-		    totCorr++;
+		    uc.val.dc = precCell;
+		    ris = avl_add(&albero, uc, totCorr);
+		    switch (ris) {
+		    case AVL_ERR:
+			{
+			    G_fatal_error("avl_add error");
+			    return RLI_ERRORE;
+			}
+		    case AVL_ADD:
+			{
+			    m++;
+			    break;
+			}
+		    case AVL_PRES:
+			{
+			    break;
+			}
+		    default:
+			{
+			    G_fatal_error("avl_make unknown error");
+			    return RLI_ERRORE;
+			}
+		    }
 		}
-		precCell = corrCell;
-	    }
-
-	}			/*close for */
-    }				/*close for */
-
-    if (masked) {
-	G_free(mask_buf);
+		totCorr = 1;
+	    }		/* endif not equal cells */
+	    precCell = corrCell;
+	}
     }
 
-	/*last closing */
-    if (a != 0) {
+    /* last closing */
+    if (area > 0 && !(G_is_null_value(&precCell, uc.t))) {
 	if (albero == NULL) {
-	    cc.val.dc = precCell;
-	    albero = avl_make(cc, totCorr);
+	    uc.val.dc = precCell;
+	    albero = avl_make(uc, totCorr);
 	    if (albero == NULL) {
 		G_fatal_error("avl_make error");
 		return RLI_ERRORE;
@@ -430,8 +409,8 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	    m++;
 	}
 	else {
-	    cc.val.fc = precCell;
-	    ris = avl_add(&albero, cc, totCorr);
+	    uc.val.dc = precCell;
+	    ris = avl_add(&albero, uc, totCorr);
 	    switch (ris) {
 	    case AVL_ERR:
 		{
@@ -454,7 +433,12 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 		}
 	    }
 	}
+    }
 
+    if (area > 0) {
+	double t;
+	double shannon;
+	double perc, logarithm;
 
 	array = G_malloc(m * sizeof(AVL_tableRow));
 	if (array == NULL) {
@@ -463,32 +447,30 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	}
 	tot = avl_to_array(albero, zero, array);
 	if (tot != m) {
-	    G_warning
-		("avl_to_array unaspected value. the result could be wrong");
+	    G_warning("avl_to_array unexpected value. the result could be wrong");
 	    return RLI_ERRORE;
 	}
 
-	/* calculate summary */
+	/* calculate shannon */
+	shannon = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)array[i]->tot;
-	    percentuale = (double)(t / area);
-	    logaritmo = (double)log(percentuale);
-	    somma = somma + (percentuale * logaritmo);
+	    t = array[i]->tot;
+	    perc = t / area;
+	    logarithm = log(perc);
+	    shannon += perc * logarithm;
 	}
 	G_free(array);
 
-	if (m != 0)
-	    indice = log((double)m) + somma;
-	else
-	    indice = 0;
+	*result = log(m) + shannon;
     }
     else
-	/*if a is 0, that is all cell are null, i put index=-1 */
-	indice = (double)(-1);
+	G_set_d_null_value(result, 1);
 
-
-    *result = indice;
-
+    avl_destroy(albero);
+    if (masked) {
+	close(mask_fd);
+	G_free(mask_buf);
+    }
 
     return RLI_OK;
 }
@@ -501,28 +483,22 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     FCELL precCell;
 
     int i, j;
-    int mask_fd = -1, *mask_buf;
+    int mask_fd = -1, *mask_buf = NULL;
     int ris = 0;
     int masked = FALSE;
-    int a = 0;			/* a=0 if all cells are null */
 
     long m = 0;
     long tot = 0;
     long zero = 0;
-    long totCorr = 0;
+    long totCorr = 1;
 
-    double indice = 0;
-    double somma = 0;
-    double percentuale = 0;
-    double area = 0;
-    double t;
-    double logaritmo;
+    long area = 0;
 
     avl_tree albero = NULL;
     AVL_table *array;
-    generic_cell cc;
+    generic_cell uc;
 
-    cc.t = FCELL_TYPE;
+    uc.t = FCELL_TYPE;
 
     /* open mask if needed */
     if (ad->mask == 1) {
@@ -547,73 +523,72 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 
 	buf = RLI_get_fcell_raster_row(fd, j + ad->y, ad);
 
-	for (i = 0; i < ad->cl; i++) {	/* for each fcell in the row */
-
-	    area++;
+	for (i = 0; i < ad->cl; i++) {	/* for each cell in the row */
 	    corrCell = buf[i + ad->x];
 
-	    if (masked && mask_buf[i + ad->x] == 0) {
+	    if ((masked) && (mask_buf[i] == 0)) {
 		G_set_f_null_value(&corrCell, 1);
-		area--;
 	    }
 
-	    if (!(G_is_null_value(&corrCell, FCELL_TYPE))) {
-		a = 1;
-		if (G_is_null_value(&precCell, FCELL_TYPE)) {
-		    precCell = corrCell;
-		}
-		if (corrCell != precCell) {
+	    if (!(G_is_null_value(&corrCell, uc.t))) {
+		/* total patch area */
+		area++;
+	    }
+
+	    if (!(G_is_null_value(&precCell, uc.t)) &&
+		corrCell == precCell) {
+
+		totCorr++;
+	    }
+	    else if (!(G_is_null_value(&precCell, uc.t)) &&
+		     corrCell != precCell) {
+		
+		/* add precCell to search tree */
+		if (albero == NULL) {
+		    uc.val.fc = precCell;
+		    albero = avl_make(uc, totCorr);
 		    if (albero == NULL) {
-			cc.val.fc = precCell;
-			albero = avl_make(cc, totCorr);
-			if (albero == NULL) {
-			    G_fatal_error("avl_make error");
-			    return RLI_ERRORE;
-			}
-			m++;
+			G_fatal_error("avl_make error");
+			return RLI_ERRORE;
 		    }
-		    else {
-			cc.val.fc = precCell;
-			ris = avl_add(&albero, cc, totCorr);
-			switch (ris) {
-			case AVL_ERR:
-			    {
-				G_fatal_error("avl_add error");
-				return RLI_ERRORE;
-			    }
-			case AVL_ADD:
-			    {
-				m++;
-				break;
-			    }
-			case AVL_PRES:
-			    {
-				break;
-			    }
-			default:
-			    {
-				G_fatal_error("avl_add unknown error");
-				return RLI_ERRORE;
-			    }
-			}
-		    }
-		    totCorr = 1;
+		    m++;
 		}
 		else {
-		    totCorr++;
+		    uc.val.fc = precCell;
+		    ris = avl_add(&albero, uc, totCorr);
+		    switch (ris) {
+		    case AVL_ERR:
+			{
+			    G_fatal_error("avl_add error");
+			    return RLI_ERRORE;
+			}
+		    case AVL_ADD:
+			{
+			    m++;
+			    break;
+			}
+		    case AVL_PRES:
+			{
+			    break;
+			}
+		    default:
+			{
+			    G_fatal_error("avl_make unknown error");
+			    return RLI_ERRORE;
+			}
+		    }
 		}
-
-		precCell = corrCell;
-	    }
-
+		totCorr = 1;
+	    }		/* endif not equal cells */
+	    precCell = corrCell;
 	}
     }
 
-    /*last closing */
-    if (a != 0) {
+    /* last closing */
+    if (area > 0 && !(G_is_null_value(&precCell, uc.t))) {
 	if (albero == NULL) {
-	    cc.val.fc = precCell;
-	    albero = avl_make(cc, totCorr);
+	    uc.val.fc = precCell;
+	    albero = avl_make(uc, totCorr);
 	    if (albero == NULL) {
 		G_fatal_error("avl_make error");
 		return RLI_ERRORE;
@@ -621,8 +596,8 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	    m++;
 	}
 	else {
-	    cc.val.fc = precCell;
-	    ris = avl_add(&albero, cc, totCorr);
+	    uc.val.fc = precCell;
+	    ris = avl_add(&albero, uc, totCorr);
 	    switch (ris) {
 	    case AVL_ERR:
 		{
@@ -645,7 +620,12 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 		}
 	    }
 	}
+    }
 
+    if (area > 0) {
+	double t;
+	double shannon;
+	double perc, logarithm;
 
 	array = G_malloc(m * sizeof(AVL_tableRow));
 	if (array == NULL) {
@@ -659,29 +639,25 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	}
 
 	/* calculate shannon */
+	shannon = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)array[i]->tot;
-	    percentuale = (double)(t / area);
-	    logaritmo = (double)log(percentuale);
-	    somma = somma + (percentuale * logaritmo);
+	    t = array[i]->tot;
+	    perc = t / area;
+	    logarithm = log(perc);
+	    shannon += perc * logarithm;
 	}
-
-	if (m != 0)
-	    indice = log((double)m) + somma;
-	else
-	    indice = 0;
-
 	G_free(array);
+
+	*result = log(m) + shannon;
     }
-    else			/*if a is 0, that is all cell are null, i put index=-1 */
-	  indice = (double)(-1);
+    else
+	G_set_d_null_value(result, 1);
 
-
+    avl_destroy(albero);
     if (masked) {
+	close(mask_fd);
 	G_free(mask_buf);
     }
-
-    *result = indice;
 
     return RLI_OK;
 }
