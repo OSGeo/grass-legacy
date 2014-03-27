@@ -369,7 +369,7 @@ g.message "Screen export complete. (writing the file may take a small amount of 
 
 if [ $GIS_FLAG_M -eq 0 ] ; then
    # chop off out of region borders 
-   eval `g.region -g`
+   eval `g.region -gu`
 
    BOX_L=`echo $BOX | cut -f1 -d' '`
    BOX_R=`echo $BOX | cut -f2 -d' '`

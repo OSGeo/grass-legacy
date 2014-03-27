@@ -109,7 +109,7 @@ el="$GIS_OPT_ELEVATION"
 name="$GIS_OPT_NAME"
 type="$GIS_OPT_TYPE"
 
-eval `g.region -g`
+eval `g.region -gu`
 
 
 ### test input values ###

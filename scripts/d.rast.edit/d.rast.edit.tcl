@@ -127,7 +127,7 @@ proc create_overview {} {
 	exec g.region --q rast=$inmap 2>$stderr
 	exec r.out.ppm --q $inmap out=$tempfile 2>$stderr
 
-	set reg [exec g.region --q -g 2>$stderr]
+	set reg [exec g.region --q -gu 2>$stderr]
 	set reg [regsub -all {[\r\n]+} $reg { }]
 	set reg [regsub -all {=} $reg { }]
 	array set total $reg

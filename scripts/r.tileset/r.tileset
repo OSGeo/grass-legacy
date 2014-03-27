@@ -417,8 +417,8 @@ makeProjector SOURCE_PROJ $SOURCE_SCALE DEST_PROJ $DEST_SCALE SOURCE_TO_DEST
 makeProjector DEST_PROJ $DEST_SCALE SOURCE_PROJ $SOURCE_SCALE DEST_TO_SOURCE
 
 g.message "Getting destination region"
-if [ -z $GIS_OPT_REGION ] ; then
-	eval `g.region -g`
+if [ -z "$GIS_OPT_REGION" ] ; then
+	eval `g.region -gu`
 else
 	eval `g.region region=$GIS_OPT_REGION -g`
 fi

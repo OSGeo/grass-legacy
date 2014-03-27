@@ -119,8 +119,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 # set nsres and ewres (unneeded because functions in r.mapcalc)
-#nsres=`g.region -g | grep 'nsres=' | sed s/nsres=//`
-#ewres=`g.region -g | grep 'ewres=' | sed s/ewres=//`
+#nsres=`g.region -gu | grep 'nsres=' | sed s/nsres=//`
+#ewres=`g.region -gu | grep 'ewres=' | sed s/ewres=//`
 
 PROG=`basename "$0"`
 

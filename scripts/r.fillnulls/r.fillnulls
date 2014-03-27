@@ -161,7 +161,7 @@ r.mapcalc "$TMP1 = if(isnull(\"$GIS_OPT_INPUT\"),1,null())"
 # With just a single row of cells around the hole you often get gaps
 # around the edges when distance > mean (.5 of the time? diagonals? worse 
 # when ewres!=nsres).
-eval `g.region -gm | grep res`
+eval `g.region -gmu | grep res`
 # check-me: quoting ok?
 RES="`echo $nsres $ewres | awk '{printf "%f", ($1+$2) * 3. / 2.}'`"  # avg*3
 
@@ -276,7 +276,7 @@ else
       g.rename "$USERMASK",MASK --quiet
    fi
 
-   eval `g.region -g`
+   eval `g.region -gu`
    SIE=`echo "$ewres" | awk '{printf "%f", $1 * 3.}'`
    SIN=`echo "$nsres" | awk '{printf "%f", $1 * 3.}'`
 

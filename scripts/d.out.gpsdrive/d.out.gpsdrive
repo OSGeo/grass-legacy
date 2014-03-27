@@ -117,7 +117,7 @@ fi
 
 # GpsDrive scales maps named top_* as lat/lon (1:1) on-screen
 # GpsDrive scales maps named map_* as UTM-like (1:cos(lat) ) on-screen
-PROJ=`g.region -p | grep ^proj | cut -f2 -d' '`
+PROJ=`g.region -pu | grep ^proj | cut -f2 -d' '`
 if [ "$PROJ" -eq 3 ] ; then
    IS_LATLON=1
    TYPE="top"
@@ -132,7 +132,7 @@ else
 "Keeping the area small will lessen the error, but not eliminate it. "\
 "Consider output from a Lat/Lon location if the convergence angle is "\
 "more than a couple of degrees."
-      g.region -n
+      g.region -nu
 
 	# TODO: add a flag to correct for convergence angle with pnmrotate
    fi
@@ -193,21 +193,21 @@ if [ "$GIS_FLAG_J" -eq 1 ] ; then
    output="$out_jpeg"
 fi
 
-eval `g.region -g`
+eval `g.region -gu`
 
 FRAME_WIDTH="`echo $FRAME_DIMS | awk '{printf("%f", $2 - $1)}'`"
 FRAME_HEIGHT="`echo $FRAME_DIMS | awk '{printf("%f", $4 - $3)}'`"
 
 if [ $IS_LATLON -eq 0 ] ; then
-   LAT=`g.region -lg | grep 'center_lat' | cut -f2 -d'='`
-   LON=`g.region -lg | grep 'center_long' | cut -f2 -d'='`
+   LAT=`g.region -lgu | grep 'center_lat' | cut -f2 -d'='`
+   LON=`g.region -lgu | grep 'center_long' | cut -f2 -d'='`
 
    M_PER_PIXEL=`echo $e $w $FRAME_WIDTH | awk '{printf("%f", ($1 - $2) / $3)}'`
 else
-   LAT=`g.region -cg | grep 'northing' | cut -f2 -d'='`
-   LON=`g.region -cg | grep 'easting' | cut -f2 -d'='`
+   LAT=`g.region -cgu | grep 'northing' | cut -f2 -d'='`
+   LON=`g.region -cgu | grep 'easting' | cut -f2 -d'='`
 
-   EXTENT=`g.region -eg | grep 'ns_extent' | cut -f2 -d'='`
+   EXTENT=`g.region -egu | grep 'ns_extent' | cut -f2 -d'='`
    M_PER_PIXEL=`echo $EXTENT $FRAME_HEIGHT | awk '{printf("%f", ($1 * 1852*60.) / $2)}'`
 fi
 

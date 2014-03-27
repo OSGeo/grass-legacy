@@ -79,7 +79,7 @@ export LC_NUMERIC
 infile=`echo "$GIS_OPT_INPUT" | cut -f1 -d'@'`
 outfile="$GIS_OPT_OUTPUT"
 
-g.region -p | head -n 1 |grep 0 > /dev/null
+g.region -pu | head -n 1 |grep 0 > /dev/null
 if [ $? -eq 0 ] ; then
  g.message -e "xy-locations are not supported"
  g.message -e "Need projected data with grids in meter"

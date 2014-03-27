@@ -174,7 +174,7 @@ else
 fi
 
 #### setup projection params
-PROJ_TYPE=`g.region -p | grep '^proj' | cut -f2 -d" "`
+PROJ_TYPE=`g.region -pu | grep '^proj' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && ( [ $GIS_FLAG_I -eq 1 ] || [ $GIS_FLAG_O -eq 1 ] ) ; then
     g.message -e "Cannot project to or from a XY location." 
     exit 1

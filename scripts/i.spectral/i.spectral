@@ -282,7 +282,7 @@ echo "set style data lines" >> "$TMP_gnuplot"
 
 
 # check if we are in a lat/long location
-if [ `g.region -p | grep -w '^projection' | cut -f2 -d' '` = "3" ] ; then
+if [ `g.region -pu | grep -w '^projection' | cut -f2 -d' '` = "3" ] ; then
   LL=true
 else
   LL=false

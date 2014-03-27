@@ -72,7 +72,7 @@ if [ ! -x "`which gdalwarp`" ] ; then
 fi
 
 # It's impossible to reproject from an arbitrary XY location
-proj_code=`g.region -p | grep '^projection:' | cut -f2 -d' '`
+proj_code=`g.region -pu | grep '^projection:' | cut -f2 -d' '`
 if [ "$proj_code" -eq 0 ] ; then
     g.message -e "This module needs to be run in a projected location"
     exit 1

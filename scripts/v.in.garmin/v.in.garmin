@@ -265,7 +265,7 @@ OUT_PROJ=`g.proj -j | (
     echo "$OUT_PROJ"
 )`
 
-PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
+PROJ_TYPE=`g.region -pu | grep 'projection' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     g.message -e "Cannot project to a XY location."
     rm -f "$TEMPFILE"
