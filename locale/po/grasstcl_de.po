@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 15:18+0100\n"
-"PO-Revision-Date: 2011-05-14 22:32+0100\n"
+"PO-Revision-Date: 2014-03-24 16:27+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "Language: de_DE\n"
@@ -20,6 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
@@ -516,6 +517,12 @@ msgid ""
 "to non-latin letter encoding handling in MS-Windows, it's not possible to "
 "run GRASS if username contains non-latin letters."
 msgstr ""
+"\n"
+"\n"
+"Auf MS-Windowssystemen kann der Fehler in Non-Latin-Zeichen im GSIRC-"
+"Dateipfad liegen. Überprüfe, dass ihr Benutzername keinen Non-Latin-Zeichen "
+"beeinhaltet. Aufgrund des Non-Latin-Encoding in MS-Windows ist es nicht "
+"möglich, GRASS unter einem Benutzernamen mit Non-Latin-Zeichen zu starten."
 
 #: ../lib/init/gis_set.tcl:942
 msgid "ERROR: unable to read GISRC"
@@ -4067,7 +4074,7 @@ msgid "%  width"
 msgstr "%  Breite"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Legend width (% of display)"
 msgstr "Legend width (% of display)"
 
@@ -4480,12 +4487,11 @@ msgid "Not supported"
 msgstr "Nicht unterstützt"
 
 #: ../gui/tcltk/gis.m/gm.tcl:551
-#, fuzzy
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
 " You have to type 'exit' in terminal manually."
 msgstr ""
-"Ihre Shell unterstützt dieses leider nicht. \n"
+"Ihre Shell unterstützt dieses Feature leider nicht. \n"
 "Sie müssen 'exit' im Terminal eingeben."
 
 #: ../gui/tcltk/gis.m/gm.tcl:573
@@ -4996,7 +5002,7 @@ msgstr "Analysiere Patches"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:340
 msgid "Summary and display"
-msgstr ""
+msgstr "Zusammenfassung und Anzeige"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:346
 msgid "Landscape patch analysis"

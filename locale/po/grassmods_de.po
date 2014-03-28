@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 15:18+0100\n"
-"PO-Revision-Date: 2013-05-27 14:15+0200\n"
-"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
+"PO-Revision-Date: 2014-03-24 15:17+0100\n"
+"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: ../raster/r.out.pov/main.c:121 ../raster/r.out.ppm3/main.c:57
 #: ../raster/r.out.arc/main.c:60 ../raster/r.out.ppm/main.c:54
@@ -4951,7 +4951,6 @@ msgid "Inappropriate window size (too big or even)"
 msgstr "Ungeeignete Fenstergröße (zu groß oder gerade)."
 
 #: ../raster/r.param.scale/main.c:35
-#, fuzzy
 msgid "Lat/Long locations are not supported by this module"
 msgstr "Lat/Long Location wird nicht unterstützt"
 
@@ -9435,7 +9434,7 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:78
 msgid "Generates stream channels."
-msgstr ""
+msgstr "Erzeugt Flussbettlinien."
 
 #: ../raster/r.carve/main.c:79
 msgid ""
@@ -9459,14 +9458,12 @@ msgid "Name for output vector map for adjusted stream points"
 msgstr "Name der Vektorausgabekarte mit den angepassten Punkten im Fluss."
 
 #: ../raster/r.carve/main.c:102
-#, fuzzy
 msgid "Stream width (in meters)"
-msgstr "Zusätzlich: Flusstiefe in Meter."
+msgstr "Flusstiefe (in Meter)."
 
 #: ../raster/r.carve/main.c:103
-#, fuzzy
 msgid "Default is raster cell width"
-msgstr "Flussbreite in Meter (Standard ist die Rasterzellenbreite)."
+msgstr "Standard ist die Rasterzellenbreite."
 
 #: ../raster/r.carve/main.c:108
 msgid "Additional stream depth (in meters)"
@@ -9779,9 +9776,9 @@ msgid "CHILD[pid = %i]: unable to open <%s> mask ... continuing without!"
 msgstr "CHILD[pid = %i]: kann %s Maske nicht öffnen ... mache ohne weiter !"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:60
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of workers: [%s]"
-msgstr "Initiale Anzahl der Klassen: %s"
+msgstr "Ungültige Anzahl von Workers: [%s]"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:92
 msgid "Error in pipe creation"
@@ -10245,7 +10242,7 @@ msgstr "Schreibe die Ausgabe in Grad (Standard: Bogenmaß)."
 
 #: ../raster/r.horizon/main.c:343
 msgid "Can't read the coordinates from the \"coord\" option."
-msgstr ""
+msgstr "Kann die Koordinaten aus der \"coord\" Option nicht lesen."
 
 #: ../raster/r.horizon/main.c:361
 msgid "You didn't specify a direction value or step size. Aborting."
@@ -10286,7 +10283,7 @@ msgstr "Konnte die maximale Distanz nicht lesen. Breche ab."
 
 #: ../raster/r.horizon/main.c:429
 msgid "The distance value must be 0.5-1.5. Aborting."
-msgstr ""
+msgstr "Der Distanzwert muss zwischen 0.5 und 1.5 sein. Abbruch."
 
 #: ../raster/r.horizon/main.c:617 ../raster/r.sun/main.c:734
 #: ../raster/r.sun/main.c:741 ../raster/r.sun/main.c:748
@@ -12376,14 +12373,12 @@ msgid "Cannot create category file of <%s>"
 msgstr "Kann die Kategorie-Datei von <%s> nicht erzeugen."
 
 #: ../raster/r.reclass/main.c:49
-#, fuzzy
 msgid "raster, reclassification"
-msgstr "Bildverarbeitung, Klassifikation"
+msgstr "Raster, Klassifikation"
 
 #: ../raster/r.reclass/main.c:50
-#, fuzzy
 msgid "Reclassify raster map based on category values."
-msgstr "Fragt Rasterkartenwerte und Kategorielabel ab."
+msgstr "Reklassifiziere Rasterkarte auf Basis des Kategoriewerte."
 
 #: ../raster/r.reclass/main.c:52
 #, fuzzy
@@ -12418,19 +12413,19 @@ msgstr ""
 "Eingabe der Regeln, mit \"end\" beenden, \"help\" liefert eine Hilfe.\n"
 
 #: ../raster/r.reclass/main.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "FCELL: Data range is %.7g to %.7g\n"
-msgstr "Wertebereich ist %.7g to %.7g\n"
+msgstr "FCELL: Wertebereich ist %.7g to %.7g\n"
 
 #: ../raster/r.reclass/main.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "DCELL: Data range is %.15g to %.15g\n"
-msgstr "Wertebereich ist %.15g bis %.15g\n"
+msgstr "DCELL: Wertebereich ist %.15g bis %.15g\n"
 
 #: ../raster/r.reclass/main.c:114
-#, fuzzy, c-format
+#, c-format
 msgid "CELL: Data range is %ld to %ld\n"
-msgstr "Wertebereich ist %ld bis %ld\n"
+msgstr "CELL: Wertebereich ist %ld bis %ld\n"
 
 #: ../raster/r.reclass/main.c:122
 #, c-format
@@ -12794,14 +12789,11 @@ msgstr "Interaktive Änderung der Projektions-Einstellung der Location."
 
 #: ../general/g.setproj/main.c:91
 msgid "Reset the location's one line description with this text, then exit"
-msgstr ""
+msgstr "Setze die Beschreibung der Location mit diesem Text, dann beenden."
 
 #: ../general/g.setproj/main.c:96
-#, fuzzy
 msgid "Print the location's one line description and exit"
-msgstr ""
-"Gibt die Grenzen der Eingabekarte in der aktuellen Projektion aus und "
-"beendet sich."
+msgstr "Gibt die Beschreibung der Location aus une beendet sich."
 
 #: ../general/g.setproj/main.c:108
 msgid "You must be in the PERMANENT mapset to run g.setproj"
@@ -12811,7 +12803,7 @@ msgstr ""
 #: ../general/g.setproj/main.c:113
 #, c-format
 msgid "Text shortened to first %d characters"
-msgstr ""
+msgstr "Text gekürzt auf die ersten %d Zeichen."
 
 #: ../general/g.setproj/main.c:133
 msgid "PERMANENT: permission denied"
@@ -15908,9 +15900,8 @@ msgid "Percent to brighten"
 msgstr "Prozentuale Aufhellung."
 
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:5
-#, fuzzy
 msgid "Create raster map from result (optional)"
-msgstr "Name der Rasterkarte(n) mit Höhenwerten"
+msgstr "Erzeugt eine Rasterkarte vom Ergebnis (optional)."
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:1
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
@@ -23601,9 +23592,9 @@ msgstr "Klassen Distribution"
 #: ../imagery/i.cluster/open_files.c:17 ../imagery/i.maxlik/open.c:16
 #: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:47
 #: ../imagery/i.gensig/parse.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "Group <%s> not found in current mapset"
-msgstr "Rasterkarte <%s> im aktuellen Mapset nicht gefunden."
+msgstr "Gruppe <%s> im aktuellen Mapset nicht gefunden."
 
 #: ../imagery/i.cluster/open_files.c:21 ../imagery/i.maxlik/open.c:19
 #: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.gensigset/parse.c:50
@@ -24808,13 +24799,12 @@ msgid "Name for output raster map (saturation)"
 msgstr "Name der Ausgabe-Rasterkarte (Sättigung, saturation)."
 
 #: ../imagery/i.landsat.toar/main.c:67
-#, fuzzy
 msgid ""
 "Calculates top-of-atmosphere radiance or reflectance and temperature for "
 "Landsat MSS/TM/ETM+/OLI"
 msgstr ""
 "Berechnet top-of-atmosphere Strahlung oder Reflexion und Temperatur für "
-"Landsat MSS/TM/ETM+."
+"Landsat MSS/TM/ETM+/OLI."
 
 #: ../imagery/i.landsat.toar/main.c:69
 #, fuzzy
@@ -28071,9 +28061,8 @@ msgid "Unable to open SVG file <%s>"
 msgstr "Kann die SVG-Datei <%s> nicht öffnen."
 
 #: ../vector/v.out.svg/main.c:221
-#, fuzzy
 msgid "No areas found, skipping %"
-msgstr "Keine Flächen gefunden, überspringe den Typ poly."
+msgstr "Keine Flächen gefunden, überspringe %."
 
 #: ../vector/v.out.svg/main.c:262
 #, fuzzy, c-format
@@ -28081,9 +28070,9 @@ msgid "%d areas extracted"
 msgstr "Typen die extrahiert werden."
 
 #: ../vector/v.out.svg/main.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "No points found, skipping %s"
-msgstr "Keine Punkte gefunden, überspringe den Typ point."
+msgstr "Keine Punkte gefunden, überspringe %s."
 
 #: ../vector/v.out.svg/main.c:295
 #, fuzzy, c-format
@@ -28091,9 +28080,9 @@ msgid "%d points extracted"
 msgstr "%d Punkte geladen."
 
 #: ../vector/v.out.svg/main.c:302
-#, fuzzy, c-format
+#, c-format
 msgid "No lines found, skipping %s"
-msgstr "Keine Linien gefunden, überspringe den Typ Linie."
+msgstr "Keine Linien gefunden, überspringe %s."
 
 #: ../vector/v.out.svg/main.c:326
 #, fuzzy, c-format
@@ -30677,7 +30666,7 @@ msgstr "Wähle Typ aus: Linie oder Fläche"
 
 #: ../vector/v.split/main.c:43
 msgid "Split lines to shorter segments."
-msgstr ""
+msgstr "Trenne Linien in kleinere Abschnitte."
 
 #: ../vector/v.split/main.c:54
 #, fuzzy

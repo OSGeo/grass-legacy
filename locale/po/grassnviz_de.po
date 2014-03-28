@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 15:18+0100\n"
-"PO-Revision-Date: 2013-05-03 14:20+0200\n"
-"Last-Translator: Robert Nuske <robert.nuske nw-fva.de>\n"
+"PO-Revision-Date: 2014-03-24 15:19+0100\n"
+"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:197
 msgid "Show Panels"
@@ -110,7 +110,7 @@ msgstr "Scripting"
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:230
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
 msgid "On"
-msgstr "an"
+msgstr "An"
 
 #: ../visualization/nviz/scripts/nviz2.2_script:420
 msgid "Create New Scriptfile"
