@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector, geometry");
+    module->keywords = _("vector, geometry, buffer");
     module->description = _("Create parallel line to input lines");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
