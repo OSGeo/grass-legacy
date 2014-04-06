@@ -66,15 +66,8 @@ int main(int argc, char *argv[])
 
 int shannon(int fd, char **par, struct area_entry *ad, double *result)
 {
-    char *mapset;
     int ris = RLI_OK;
     double indice = 0;
-    struct Cell_head hd;
-
-    mapset = G_find_cell(ad->raster, "");
-    if (G_get_cellhd(ad->raster, mapset, &hd) == -1)
-	return RLI_ERRORE;
-
 
     switch (ad->data_type) {
     case CELL_TYPE:
