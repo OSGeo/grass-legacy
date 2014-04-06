@@ -66,7 +66,7 @@ void worker_init(char *r, rli_func *f, char **p)
     /* open raster map */
     mapset = G_find_cell(raster, "");
     fd = G_open_cell_old(raster, mapset);
-    if (G_get_cellhd(raster, mapset, &hd) == -1)
+    if (fd < 0)
 	    G_fatal_error(_("Cannot open raster map <%s>"), raster);
 
     /* get current window */
@@ -233,21 +233,11 @@ char *mask_preprocessing(char *mask, char *raster, struct area_entry *ad)
     G_debug(3, "daemon mask preproc: raster=[%s] mask=[%s]  rl=%d cl=%d",
 	    raster, mask, ad->rl, ad->cl);
 
-    /* mapset is used hold the mapset of input raster */
-    mapset = G_find_cell(raster, "");
-
-    /* open raster */
-    if (G_get_cellhd(raster, mapset, &cell) == -1)
-	return NULL;
-
-    mask_mapset = G_find_cell(mask, "");
-
-    /* open raster */
-    if (G_get_cellhd(mask, mask_mapset, &oldcell) == -1)
-	return NULL;
-
     tmp_file = G_tempfile();
     mask_fd = open(tmp_file, O_RDWR | O_CREAT, 0755);
+
+    /* mapset is used hold the mapset of input raster */
+    mask_mapset = G_find_cell(mask, "");
     old_fd = G_open_cell_old(mask, mask_mapset);
     old = G_allocate_cell_buf();
 
@@ -255,7 +245,7 @@ char *mask_preprocessing(char *mask, char *raster, struct area_entry *ad)
 
     for (i = 0; i < ad->rl; i++) {
 
-	G_get_map_row_nomask(old_fd, old, i + ad->y);
+	G_get_c_raster_row_nomask(old_fd, old, i + ad->y);
 	for (j = 0; j < ad->cl; j++) {
 
 	    /* NULL -> 0, else 1 */
