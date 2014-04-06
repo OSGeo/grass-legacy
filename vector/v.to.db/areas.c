@@ -40,7 +40,14 @@ int read_areas(struct Map_info *Map)
 	if ((options.option == O_COMPACT) || (options.option == O_FD) ||
 	    (options.option == O_PERIMETER)) {
 	    Vect_get_area_points(Map, area_num, Ppoints);
+	    Vect_line_prune(Ppoints);
 	    perimeter = Vect_line_geodesic_length(Ppoints);
+	    for (i = 0; i < Vect_get_area_num_isles(Map, area_num); i++) {
+		Vect_get_isle_points(Map, Vect_get_area_isle(Map, area_num, i),
+		                     Ppoints);
+		Vect_line_prune(Ppoints);
+		perimeter += Vect_line_geodesic_length(Ppoints);
+	    }
 	}
 
 	found = 0;
