@@ -226,9 +226,6 @@ int parseSetup(char *path, struct list *l, struct g_area *g, char *raster)
     mapset = G_find_cell(raster, "");
 /*    raster_fqn = G_fully_qualified_name(raster, mapset); */
    
-    if (G_get_cellhd(raster, mapset, &cellhd) == -1)
-	G_fatal_error(_("Cannot read raster header file"));
-
     /* use current region ! */
     G_get_window(&cellhd);
 
