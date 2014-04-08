@@ -72,8 +72,6 @@ int header(int unit1, int unit2)
 
 	divider("|");
 
-	label = nlayers > 1 ? "MAPS:" : "MAP:";
-
 	mask = maskinfo();
 	label = "MASK:";
 	len1 = strlen(label) + 1;

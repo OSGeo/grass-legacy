@@ -333,7 +333,7 @@ int main(int argc, char **argv)
 	if (bg_color == 0) /* ie color="none" */
 	    do_background = 0;
     } else
-       do_background = 0;
+	do_background = 0;
     set_color(opt.fgcolor->answer);
 
     orig_x = orig_y = 0;

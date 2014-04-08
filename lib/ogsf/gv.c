@@ -184,7 +184,7 @@ int gv_set_defaults(geovect * gv)
     if (!gv) {
 	return (-1);
     }
-    
+
     G_debug(5, "gv_set_defaults() id=%d", gv->gvect_id);
 
     gv->filename = NULL;

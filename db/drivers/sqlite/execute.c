@@ -82,11 +82,6 @@ int db__driver_execute_immediate(dbString * sql)
 	return DB_FAILED;
     }
 
-    /*
-       if ( rest )
-       G_free ( rest );
-     */
-
     return DB_OK;
 }
 

@@ -711,8 +711,7 @@ typbuff *gs_get_att_typbuff(geosurf * gs, int desc, int to_write)
    \param desc attribute id (descriptor)
    \param type buffer type (based on raster map type)
 
-   \return -1 on error
-   \return pointer to typbuff (casted)
+   \return 1 on success, -1 on failure
  */
 int gs_malloc_att_buff(geosurf * gs, int desc, int type)
 {

@@ -481,7 +481,8 @@ int free_data_buffs(dataset * ds, int typ)
 int gsds_alloc_typbuff(int id, int *dims, int ndims, int type)
 {
     dataset *ds;
-    int i, siz = 1;
+    int i;
+    size_t siz = 1;
 
     if ((ds = get_dataset(id))) {
 	/*
@@ -596,7 +597,7 @@ int gsds_alloc_typbuff(int id, int *dims, int ndims, int type)
 		"gsds_alloc_typbuff(): %f Kbytes allocated, current total = %f",
 		siz / 1000., Tot_mem / 1000.);
 
-	return (siz);
+	return (1);
     }
 
     return (-1);

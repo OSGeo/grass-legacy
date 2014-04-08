@@ -190,7 +190,7 @@ int exact_checks(GDALDataType export_datatype,
 				(int)nodataval, nodatakey);
 	else
 	    G_important_message(_("Input raster map contains cells with NULL-value (no-data). "
-				 "The value %f will be used to represent no-data values in the input map. "
+				 "The value %g will be used to represent no-data values in the input map. "
 				 "You can specify a nodata value with the %s option."),
 				nodataval, nodatakey);
     }

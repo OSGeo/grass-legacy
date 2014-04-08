@@ -199,8 +199,10 @@ int main(int argc, char *argv[])
     flag.i->key = 'i';
     flag.i->description = _("Read fp map as integer (use map's quant rules)");
 
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
 
     name = option.output->answer;
     if (name != NULL && strcmp(name, "-") != 0) {
@@ -240,7 +242,7 @@ int main(int argc, char *argv[])
     with_coordinates = flag.g->answer;
     with_xy = flag.x->answer;
     if (with_coordinates || with_xy)
-	raw_data = 1;
+	raw_data = TRUE;
 
     /* get field separator */
     strcpy(fs, " ");
@@ -276,6 +278,7 @@ int main(int argc, char *argv[])
 	fd[nfiles] = G_open_cell_old(name, mapset);
 	if (fd[nfiles] < 0)
 	    exit(1);
+
 	if (!as_int)
 	    is_fp[nfiles] = G_raster_map_is_fp(name, mapset);
 	else {

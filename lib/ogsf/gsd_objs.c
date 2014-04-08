@@ -1246,7 +1246,7 @@ int gsd_scalebar(float *pos2, float len, GLuint fontbase,
    \return 1
  */
 int gsd_scalebar_v2(float *pos, float len, GLuint fontbase,
-		 unsigned long bar_clr, unsigned long text_clr)
+		    unsigned long bar_clr, unsigned long text_clr)
 {
     float base[6][3];
     float Ntop[] = { 0.0, 0.0, 1.0 };
