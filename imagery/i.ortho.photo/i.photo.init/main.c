@@ -73,13 +73,13 @@ int main(int argc, char *argv[])
 *******************/
 
 
-    /* get initial camera exposure infor */
+    /* get initial camera exposure info */
     if (I_find_initial(group.name)) {
 	have_old = 1;
 	I_get_init_info(group.name, &group.camera_exp);
     }
 
-    /* modifiy infor */
+    /* modify info */
     mod_init_info(have_old, &group.camera_exp);
 
     /* save info */

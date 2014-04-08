@@ -57,14 +57,6 @@ static char CELL_DIR[100];
  * See Raster_Map_Layer_Support_Routines for routines which write
  * raster support files.
  *
- *  \param fd
- *  \return int
- */
-
-
-/*!
- * \brief 
- *
  * If the map is a new floating point, move the
  * <tt>.tmp</tt> file into the <tt>fcell</tt> element, create an empty file in the
  * <tt>cell</tt> directory; write the floating-point range file; write a default
@@ -73,6 +65,7 @@ static char CELL_DIR[100];
  * (for backwards compatibility). Move the <tt>.tmp</tt> NULL-value bitmap file to
  * the <tt>cell_misc</tt> directory.
  *
+ *  \param fd
  *  \return int
  */
 
@@ -269,7 +262,6 @@ static int close_new(int fd, int ok)
 			      fcb->mapset);
 	    remove(path);
 	    strcpy(CELL_DIR, "cell");
-	    close(fd);
 	}
     }				/* ok */
     /* NOW CLOSE THE FILE DESCRIPTOR */

@@ -4,7 +4,7 @@
 
 
 /* function prototypes */
-static int write_history(int, char *, double **, double *);
+static void write_history(int, char *, double **, double *);
 
 
 void write_support(int bands, char *outname, double **eigmat, double *eigval)
@@ -30,7 +30,7 @@ void write_support(int bands, char *outname, double **eigmat, double *eigval)
 }
 
 
-static int write_history(int bands, char *outname, double **eigmat, double *eigval)
+static void write_history(int bands, char *outname, double **eigmat, double *eigval)
 {
     int i, j;
     static int first_map = TRUE;     /* write to stderr? */
@@ -40,7 +40,7 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
     G_short_history(outname, "raster", &hist);
     sprintf(hist.edhist[0], "Eigen values, (vectors), and [percent importance]:");
 
-    if(first_map)
+    if (first_map)
 	G_message(_("Eigen values, (vectors), and [percent importance]:"));
 
     for (i = 0; i < bands; i++)

@@ -468,6 +468,7 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 /* Comparison of 2 rows */
 static int cur_cmp_table;
 static int cur_cmp_ocol;
+
 static int cmp_row_asc(const void *pa, const void *pb)
 {
     int *row1 = (int *)pa;
