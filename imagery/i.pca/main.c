@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
     if (!calc_mu_cov(inp_fd, covar, mu, stddev, bands))
 	G_fatal_error(_("No non-null values"));
 
-    G_math_d_copy(covar[0], eigmat[0], bands*bands);
+    G_math_d_copy(covar[0], eigmat[0], bands * bands);
     G_debug(1, "Calculating eigenvalues and eigenvectors...");
     G_math_eigen(eigmat, eigval, bands);
 

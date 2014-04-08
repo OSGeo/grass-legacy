@@ -64,6 +64,7 @@ int db__driver_fetch(dbCursor * cn, int position, int *more)
 	    c->row = -1;
 
 	ret = sqlite3_step(c->statement);
+
 	if (ret != SQLITE_ROW) {
 	    /* get real result code */
 	    ret = sqlite3_reset(c->statement);

@@ -848,7 +848,7 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
         psHooks->Error( "Failed to create file .shp file." );
 	free( pszFullname );
 	free( pszBasename );
-	return( NULL );
+        return( NULL );
     }
 
     sprintf( pszFullname, "%s.shx", pszBasename );

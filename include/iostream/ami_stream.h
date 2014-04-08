@@ -389,7 +389,7 @@ off_t AMI_STREAM<T>::stream_len(void) {
 #else
   struct stat buf;
   if (stat(path, &buf) == -1) {
-    perror("AMI_STREAM::stream_len(): fstat failed ");
+    perror("ERROR: AMI_STREAM::stream_len(): fstat failed ");
     DEBUG_ASSERT assert(0);
     exit(1);
   }

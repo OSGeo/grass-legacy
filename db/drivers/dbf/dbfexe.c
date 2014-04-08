@@ -453,7 +453,6 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 		dbval->d = val->d;
 	    else if (val->type == SQLP_S) {
 		char *tailptr;
-
 		double dval = strtod(val->s, &tailptr);
 
 		if (!(*tailptr)) {
@@ -468,7 +467,6 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 
 /* Comparison of 2 rows */
 static int cur_cmp_table;
-
 static int cur_cmp_ocol;
 
 static int cmp_row_asc(const void *pa, const void *pb)

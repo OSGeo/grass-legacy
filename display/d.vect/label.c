@@ -30,7 +30,7 @@ int label(struct Map_info *Map, int type,
 	    return 0;
 	}
 
-	if (!(type & ltype)&& !((type & GV_AREA) && (ltype & GV_CENTROID)))
+	if (!(type & ltype) && !((type & GV_AREA) && (ltype & GV_CENTROID)))
 	    continue;		/* used for both lines and labels */
 
 	R_RGB_color(lattr->color.R, lattr->color.G, lattr->color.B);

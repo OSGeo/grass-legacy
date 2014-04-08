@@ -23,7 +23,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
-#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -61,8 +60,8 @@ int Vect_copy_map_lines(struct Map_info *In, struct Map_info *Out)
     if (Vect_level(In) >= 2) {
 	nlines = Vect_get_num_lines(In);
 	for (i = 1; i <= nlines; i++) {
-            if (!Vect_line_alive(In, i))
-                continue;
+	    if (!Vect_line_alive(In, i))
+		continue;
 
 	    type = Vect_read_line(In, Points, Cats, i);
 	    if (type == -1) {
@@ -521,9 +520,9 @@ int Vect_delete(const char *map)
 	sprintf(buf, "%s/%s/vector/%s/%s", G_location_path(), G_mapset(), map,
 		ent->d_name);
 	G_debug(3, "delete file '%s'", buf);
-	ret = remove(buf);
+	ret = unlink(buf);
 	if (ret == -1) {
-	    G_warning(_("Unable to delete file '%s'. Reason: %s"), buf, strerror(errno));
+	    G_warning(_("Unable to delete file '%s'"), buf);
 	    closedir(dir);
 	    return -1;
 	}
@@ -540,7 +539,7 @@ int Vect_delete(const char *map)
     ret = rename(buf, tmp);
 
     if (ret == -1) {
-	G_warning(_("Unable to rename directory '%s' to '%s'. Reason: %s"), buf, tmp, strerror(errno));
+	G_warning(_("Unable to rename directory '%s' to '%s'"), buf, tmp);
 	return -1;
     }
 
@@ -548,7 +547,7 @@ int Vect_delete(const char *map)
     /* Warning: remove() fails on Windows */
     ret = rmdir(tmp);
     if (ret == -1) {
-	G_warning(_("Unable to remove directory '%s'. Reason: %s"), tmp, strerror(errno));
+	G_warning(_("Unable to remove directory '%s'"), tmp);
 	return -1;
     }
 

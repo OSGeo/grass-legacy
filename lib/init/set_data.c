@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     char version[80];
     char gisdbase[GPATH_MAX];
     char location_name[GMAPSET_MAX];
-    char location[GPATH_MAX+GMAPSET_MAX];
+    char location[GPATH_MAX + GMAPSET_MAX];
     char mapset[GMAPSET_MAX];
     int line;
     int yes;

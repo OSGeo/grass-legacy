@@ -1129,12 +1129,11 @@ int main(int argc, char *argv[])
     }
     G_percent(1, 1, 1);
 
-    double *p;
-
     if (dir == 1) {
 	G_message(_("Writing movement direction file %s..."), move_dir_layer);
 	for (row = 0; row < nrows; row++) {
-	    p = dir_cell;
+	    double *p = dir_cell;
+
 	    for (col = 0; col < ncols; col++) {
 		segment_get(&out_seg2, &cur_dir, row, col);
 		*(p + col) = cur_dir;

@@ -98,7 +98,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-
     if (unlock->answer)
 	run("release", "-f", unlock->answer);
 

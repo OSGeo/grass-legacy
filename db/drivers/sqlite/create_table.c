@@ -116,7 +116,9 @@ int db__driver_create_table(dbTable * table)
      * If the database schema has changed, sqlite can prepare a statement,
      * but sqlite can not step, the statement needs to be prepared anew again */
     while (1) {
-	ret = sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement, &rest);
+	ret =
+	    sqlite3_prepare(sqlite, db_get_string(&sql), -1, &statement,
+			    &rest);
 
 	if (ret != SQLITE_OK) {
 	    append_error("Cannot create table:\n");

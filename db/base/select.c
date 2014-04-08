@@ -198,6 +198,17 @@ static void parse_command_line(int argc, char **argv)
     table = G_define_standard_option(G_OPT_TABLE);
     table->guisection = _("Connection"); 
 
+    database = G_define_standard_option(G_OPT_DATABASE);
+    if ((db = db_get_default_database_name()))
+	database->answer = (char *) db;
+    database->guisection = _("Connection");
+
+    driver = G_define_standard_option(G_OPT_DRIVER);
+    driver->options = db_list_drivers();
+    if ((drv = db_get_default_driver_name()))
+	driver->answer = (char *) drv;
+    driver->guisection = _("Connection");
+
     sql = G_define_option();
     sql->key = "sql";
     sql->type = TYPE_STRING;
@@ -211,17 +222,6 @@ static void parse_command_line(int argc, char **argv)
     input->required = NO;
     input->description = _("Name of file with SQL select statement(s)");
     input->guisection = _("Query");
-
-    database = G_define_standard_option(G_OPT_DATABASE);
-    if ((db = db_get_default_database_name()))
-	database->answer = (char *) db;
-    database->guisection = _("Connection");
-
-    driver = G_define_standard_option(G_OPT_DRIVER);
-    driver->options = db_list_drivers();
-    if ((drv = db_get_default_driver_name()))
-	driver->answer = (char *) drv;
-    driver->guisection = _("Connection");
 
     fs = G_define_standard_option(G_OPT_F_SEP);
     fs->description = _("Output field separator");

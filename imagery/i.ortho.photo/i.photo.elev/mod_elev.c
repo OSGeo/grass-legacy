@@ -21,7 +21,7 @@ int mod_elev_data(void)
 	V_clear();
 	V_line(1, "Please check the elevation data convention:");
 	V_line(3,
-	       "ELEV_DATA  =  CELL FILE  [MAPSET  in  LOCATION] [MATH EXPERSION][UNITS]");
+	       "ELEV_DATA  =  CELL FILE  [MAPSET  in  LOCATION] [MATH EXPRESSION][UNITS]");
 
 	V_line(6, "CELL FILE :       ");
 	V_line(7, "MAPSET :          ");

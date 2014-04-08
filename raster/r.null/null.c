@@ -329,9 +329,6 @@ int doit(char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
     rast = G_allocate_raster_buf(map_type);
 
-    if (change_null)
-	G_debug(5, "new null=%.15g", new_null);
-
     G_verbose_message(_("Writing new data for raster map <%s>..."), name);
 
     /* the null file is written automatically */

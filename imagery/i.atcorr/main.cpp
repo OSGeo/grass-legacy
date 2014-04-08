@@ -470,10 +470,10 @@ static struct Options define_options(void)
     opts.iscl->guisection = _("Input");
 
     opts.ialt = G_define_standard_option(G_OPT_R_ELEV);
+    opts.ialt->key              = "ialt";
     opts.ialt->required	        = NO;
     opts.ialt->description      = _("Name of input elevation raster map (in m)");
     opts.ialt->guisection       = _("Input");
-    opts.ialt->key              = "ialt";
     
     opts.ivis = G_define_standard_option(G_OPT_R_INPUT);
     opts.ivis->key		= "ivis";
@@ -487,7 +487,7 @@ static struct Options define_options(void)
     opts.icnd->description	= _("Name of input text file with 6S parameters");
 
     opts.oimg = G_define_standard_option(G_OPT_R_OUTPUT);
-    opts.oimg->key = "oimg";
+    opts.oimg->key		= "oimg";
 
     opts.oscl = G_define_option();
     opts.oscl->key          = "oscl";

@@ -28,7 +28,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <grass/gis.h>
@@ -106,7 +105,6 @@ int G_unopen_cell(int fd)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
-    G_debug(5, "G_unopen_cell()");
     if (fd < 0 || fd >= G__.fileinfo_count || fcb->open_mode <= 0)
 	return -1;
     if (fcb->open_mode == OPEN_OLD)
@@ -189,13 +187,7 @@ static int close_new(int fd, int ok)
 	G__make_mapset_element_misc("cell_misc", fcb->name);
 	G__file_name_misc(path, "cell_misc", NULL_FILE, fcb->name,
 			  G_mapset());
-
-	if (access(path, F_OK) == 0) {
-	    if (remove(path) != 0) {
-		perror(path);
-		G_warning(_("Unable to delete prior null-cells file"));
-	    }
-	}
+	remove(path);
 
 	if (fcb->null_cur_row > 0) {
 	    /* if temporary NULL file exists, write it into cell_misc/name/null */
@@ -222,32 +214,21 @@ static int close_new(int fd, int ok)
 		    G__write_null_bits(null_fd, fcb->null_work_buf, row,
 				       fcb->cellhd.cols, fd);
 	    }
-	    if (close(null_fd) != 0)
-		G_warning(_("Unable to close the null-cells file"));
+	    close(null_fd);
 
 	    if (rename(fcb->null_temp_name, path)) {
 		G_warning(_("closecell: can't move [%s] to null-cells file [%s]"),
 			  fcb->null_temp_name, path);
 		stat = -1;
 	    }
-	    else { /* if the rename() was successful I'm not sure why there'd be anything left to remove() */
-		if (access(fcb->null_temp_name, F_OK) == 0) {
-		    if (remove(fcb->null_temp_name) != 0)
-			G_warning(_("Unable to delete the temporary null-cells file"));
-		}
+	    else {
+		remove(fcb->null_temp_name);
 	    }
 	}
-	else { /* no NULL data encountered */
-	    if (access(fcb->null_temp_name, F_OK) == 0) {
-		if (remove(fcb->null_temp_name) != 0)
-		    G_warning(_("Unable to delete the empty temporary null-cells file"));
-	    }
-	    if (access(path, F_OK) == 0) {
-		if (remove(path) != 0)  /* duplicate? */
-		    G_warning(_("Unable to delete the prior null-cells file"));
-	    }
-	}		/* null_cur_row > 0 */
-
+	else {
+	    remove(fcb->null_temp_name);
+	    remove(path);
+	}			/* null_cur_row > 0 */
 
 	if (fcb->open_mode == OPEN_NEW_COMPRESSED) {	/* auto compression */
 	    fcb->row_ptr[fcb->cellhd.rows] = lseek(fd, 0L, SEEK_CUR);
@@ -268,37 +249,23 @@ static int close_new(int fd, int ok)
 	    cell_fd =
 		creat(G__file_name(path, "cell", fcb->name, fcb->mapset),
 		      0666);
-	    if (close(cell_fd) != 0)
-		G_warning(_("Unable to close the 'cell' file"));
-
+	    close(cell_fd);
 	    strcpy(CELL_DIR, "fcell");
 	}
 	else {
-	    /* it's a CELL map, so remove fcell/name file if it exists */
+	    /* remove fcell/name file */
 	    G__file_name(path, "fcell", fcb->name, fcb->mapset);
-
-	    if (access(path, F_OK) == 0) {
-		if (remove(path) != 0)
-		    G_warning(_("Unable to delete prior 'fcell' file"));
-	    }
-
+	    remove(path);
 	    /* remove cell_misc/name/f_format */
 	    G__file_name_misc(path, "cell_misc", FORMAT_FILE, fcb->name,
 			      fcb->mapset);
-
-	    if (access(path, F_OK) == 0) {
-		if (remove(path) != 0)
-		    G_warning(_("Unable to delete the prior %s file"), FORMAT_FILE);
-	    }
-
+	    remove(path);
 	    strcpy(CELL_DIR, "cell");
 	}
-    }		/* if(ok) */
-
+    }				/* ok */
     /* NOW CLOSE THE FILE DESCRIPTOR */
-    if (close(fd) != 0)
-	G_warning(_("Unable to close file"));
 
+    close(fd);
     /* remember open_mode */
     open_mode = fcb->open_mode;
     fcb->open_mode = -1;
@@ -318,26 +285,15 @@ static int close_new(int fd, int ok)
      */
     stat = 1;
     if (ok && (fcb->temp_name != NULL)) {
-	G_debug(5, "Moving temporary cell map into main mapset...");
 	G__file_name(path, CELL_DIR, fcb->name, fcb->mapset);
-
-	if (access(path, F_OK) == 0) {
-	    if (remove(path) != 0) {
-		perror(path);
-		G_warning(_("Unable to delete the prior 'cell' file"));
-	    }
-	}
-
+	remove(path);
 	if (rename(fcb->temp_name, path)) {
 	    G_warning(_("closecell: can't move [%s] to cell file [%s]"),
 		      fcb->temp_name, path);
 	    stat = -1;
 	}
-	else { /* if the rename() was successful I'm not sure why there'd be anything left to remove() */
-	    if (access(fcb->temp_name, F_OK) == 0) {
-		if (remove(fcb->temp_name) != 0)
-		    G_warning(_("Unable to delete the temporary 'cell' file"));
-	    }
+	else {
+	    remove(fcb->temp_name);
 	}
     }
 
@@ -393,10 +349,7 @@ static int close_new(int fd, int ok)
 	    /* remove cell_misc/name/f_quant */
 	    G__file_name_misc(path, "cell_misc", QUANT_FILE, fcb->name,
 			      fcb->mapset);
-	    if (access(path, F_OK) == 0) {
-		if (remove(path) != 0)
-		    G_warning(_("Unable to delete the %s file"), QUANT_FILE);
-	    }
+	    remove(path);
 	}
 
 	/* create empty cats file */

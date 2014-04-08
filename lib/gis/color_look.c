@@ -243,7 +243,6 @@ int G__lookup_colors(const void *raster, unsigned char *red,
     int cell_type;
     int lookup, max_ind, min_ind, try;
     int (*lower) ();
-    size_t size = G_raster_size(data_type);
 
     if (mod)
 	cp = &colors->modular;
@@ -259,7 +258,7 @@ int G__lookup_colors(const void *raster, unsigned char *red,
     dmin = cp->min;
     dmax = cp->max;
     min = (CELL) dmin;
-    max = (CELL) dmax;
+    max = (CELL) dmax + 1;
 
     cell_type = (data_type == CELL_TYPE);
 
@@ -284,7 +283,7 @@ int G__lookup_colors(const void *raster, unsigned char *red,
 
     for (; n-- > 0;
 	 ptr =
-	 G_incr_void_ptr(ptr, size), red++, grn++, blu++,
+	 G_incr_void_ptr(ptr, G_raster_size(data_type)), red++, grn++, blu++,
 	 *set++ = found) {
 	/* if the cell is the same as last one, use the prev color values */
 	if (ptr != raster && G_raster_cmp(ptr, last_ptr, data_type) == 0) {

@@ -597,7 +597,7 @@ int gsds_alloc_typbuff(int id, int *dims, int ndims, int type)
 		"gsds_alloc_typbuff(): %f Kbytes allocated, current total = %f",
 		siz / 1000., Tot_mem / 1000.);
 
-	return (siz);
+	return (1);
     }
 
     return (-1);

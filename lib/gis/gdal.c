@@ -108,10 +108,8 @@ static void load_library(void)
 
     for (i = 0; candidates[i]; i++) {
 	try_load_library(candidates[i]);
-	if (library_h) {
-	    G_debug(3, "found %s", candidates[i]);
+	if (library_h)
 	    return;
-	}
     }
 
     G_fatal_error(_("Unable to load GDAL library"));
