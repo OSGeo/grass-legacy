@@ -84,6 +84,8 @@ int main(int argc, char *argv[])
 
     opt5 = G_define_standard_option(G_OPT_R_INPUT);
     opt5->key = "blocking";
+    opt5->label =
+	_("Name of input raster map blocking overland surface flow");
     opt5->description =
 	_("Input map: terrain blocking overland surface flow, for USLE");
     opt5->required = NO;
@@ -91,6 +93,7 @@ int main(int argc, char *argv[])
 
     opt8 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt8->key = "accumulation";
+    opt8->label = _("Name for output accumulation raster map");
     opt8->description =
 	_("Output map: number of cells that drain through each cell");
     opt8->required = NO;
@@ -105,7 +108,7 @@ int main(int argc, char *argv[])
     opt10 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt10->key = "basin";
     opt10->description =
-	_("Output map: unique label for each watershed basin");
+	_("Output map: basins raster map");
     opt10->required = NO;
     opt10->guisection = _("Output_options");
 
@@ -118,7 +121,7 @@ int main(int argc, char *argv[])
     opt12 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt12->key = "half.basin";
     opt12->description =
-	_("Output map: each half-basin is given a unique value");
+	_("Output map: half basins raster map");
     opt12->required = NO;
     opt12->guisection = _("Output_options");
 
@@ -131,6 +134,7 @@ int main(int argc, char *argv[])
 
     opt14 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt14->key = "length.slope";
+    opt14->label = _("Name for output slope length raster map");
     opt14->description =
 	_("Output map: slope length and steepness (LS) factor for USLE");
     opt14->required = NO;
@@ -138,7 +142,8 @@ int main(int argc, char *argv[])
 
     opt15 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt15->key = "slope.steepness";
-    opt15->description = _("Output map: slope steepness (S) factor for USLE");
+    opt15->label = _("Name for output slope steepness raster map");
+    opt15->description = _("Output map: Slope steepness (S) factor for USLE");
     opt15->required = NO;
     opt15->guisection = _("Output_options");
 
