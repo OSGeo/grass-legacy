@@ -116,9 +116,8 @@ int main(int argc, char *argv[])
 
     opt12 = G_define_standard_option(G_OPT_R_OUTPUT);
     opt12->key = "half.basin";
-    opt12->label = _("Name for output half basins raster map");
     opt12->description =
-	_("Each half-basin is given a unique value");
+	_("Name for output half basins raster map");
     opt12->required = NO;
     opt12->guisection = _("Outputs");
 
