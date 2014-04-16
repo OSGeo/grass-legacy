@@ -64,7 +64,8 @@ void worker_init(char *r, rli_func *f, char **p)
     func = f;
 
     /* open raster map */
-    mapset = G_find_cell(raster, "");
+    if (!(mapset = G_find_cell(raster, "")))
+        G_fatal_error(_("Raster map <%s> not found"), raster);
     fd = G_open_cell_old(raster, mapset);
     if (fd < 0)
 	    G_fatal_error(_("Cannot open raster map <%s>"), raster);
@@ -223,8 +224,7 @@ void worker_end(void)
 char *mask_preprocessing(char *mask, char *raster, struct area_entry *ad)
 {
     const char *tmp_file;
-    char *mapset, *mask_mapset;
-    struct Cell_head cell, oldcell;
+    char *mask_mapset;
     int mask_fd, old_fd, *buf, i, j;
     CELL *old;
 
