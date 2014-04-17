@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#========================
+#Spearfish tests
+# 7x7 moving window test
+# Brute-force testing in a loop
+
+# TODO: change to/add 3x3 example
+
+# created conf file as described in EXAMPLES, moving window, r.li.setup/description.html:
+echo "SAMPLINGFRAME 0|0|1|1
+SAMPLEAREA -1|-1|0.015021459227467811|0.011058451816745656
+MOVINGWINDOW" > $HOME/.r.li/history/movwindow7
+
+export GRASS_OVERWRITE=1
+g.region rast=landcover.30m -p
+r.mapcalc "forests = if(landcover.30m >= 41 && landcover.30m <= 43,1,null())"
+
+MEASURE="dominance edgedensity mpa mps padcv padrange padsd patchdensity patchnum pielou richness shannon shape simpson"
+for mymeasure in $MEASURE ; do
+  echo "====== $mymeasure: ========================"
+  r.li.${mymeasure} forests conf=movwindow7 out=forests_${mymeasure}_mov7
+  r.univar -g forests_${mymeasure}_mov7
+done
+
+# here also alpha:
+mymeasure=renyi
+echo "====== $mymeasure: ========================"
+r.li.renyi forests conf=movwindow7 out=forests_renyi_mov7_a06 alpha=0.6
+r.univar -g forests_renyi_mov7_a06
+
+echo "====== End of r.li tests ========================"
