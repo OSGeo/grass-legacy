@@ -634,7 +634,7 @@ def tidy_citizen():
                                        options['extension']) + EXT_SCT,
                                        inplace = True):
             line = line.replace("/scripts", "")
-            line = line.replace("%GISBASE%", options['prefix'])
+            line = line.replace("%GISBASE%", "%GRASS_ADDON_PATH%") # options['prefix'])
             if is_python_script:
                 line = line.replace("GRASS_SH", "GRASS_PYTHON")
             print line
