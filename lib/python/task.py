@@ -311,6 +311,10 @@ class processTask:
         """!Process module description
         """
         self.task.name = self.root.get('name', default = 'unknown')
+        # Python scripts are not really supported by GRASS6 - so we
+        # need to hack a bit
+        if sys.platform == 'win32' and self.task.name.endswith('.py'):
+            self.task.name = os.path.splitext(self.task.name)[0]
         
         # keywords
         for keyword in self._get_node_text(self.root, 'keywords').split(','):
