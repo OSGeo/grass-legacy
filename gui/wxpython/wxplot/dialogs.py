@@ -98,8 +98,7 @@ class ProfileRasterDialog(wx.Dialog):
     def OnSelection(self, event):
         """!Choose maps to profile. Convert these into a list
         """
-        self.rasterList = []
-        self.rasterList = event.GetString().split(',')
+        self.rasterList = self.FindWindowById(event.GetId()).GetValue().split(',')
         
 class PlotStatsFrame(wx.Frame):
     def __init__(self, parent, id, message = '', title = '',
