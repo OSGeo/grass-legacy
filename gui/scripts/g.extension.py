@@ -627,17 +627,17 @@ def tidy_citizen():
             shutil.move(os.path.join(options['prefix'], 'bin', options['extension']) + '.py' + EXT_SCT,
                         os.path.join(options['prefix'], options['extension']) + EXT_SCT)
             is_python_script = True
-
         # fix script path. may be it is better to just write out a new
-        #   windows_launch.bat template manually, since it's just a one-liner.
-        for line in fileinput.FileInput(os.path.join(options['prefix'],
-                                       options['extension']) + EXT_SCT,
-                                       inplace = True):
-            line = line.replace("/scripts", "")
-            line = line.replace("%GISBASE%", "%GRASS_ADDON_PATH%") # options['prefix'])
-            if is_python_script:
-                line = line.replace("GRASS_SH", "GRASS_PYTHON")
-            print line
+        # windows_launch.bat template manually, since it's just a one-liner.
+        if os.path.exists(os.path.join(options['prefix'], options['extension']) + EXT_SCT):
+            for line in fileinput.FileInput(os.path.join(options['prefix'],
+                                                         options['extension']) + EXT_SCT,
+                                            inplace = True):
+                line = line.replace("/scripts", "")
+                line = line.replace("%GISBASE%", "%GRASS_ADDON_PATH%") # options['prefix'])
+                if is_python_script:
+                    line = line.replace("GRASS_SH", "GRASS_PYTHON")
+                print line
     
     # move man/ into docs/
     if os.path.exists(os.path.join(options['prefix'], 'man', 'man1', options['extension'] + '.1')):
