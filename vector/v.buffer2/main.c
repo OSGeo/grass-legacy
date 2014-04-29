@@ -5,24 +5,28 @@
  * 
  * AUTHOR(S):    Radim Blazek
  *               Upgraded by Rosen Matev (Google Summer of Code 2008)
+ *               OGR support by Martin Landa <landa.martin gmail.com> (2009)
+ *               rewrite and GEOS added by Markus Metz
  *               
  * PURPOSE:      Vector buffer
  *               
- * COPYRIGHT:    (C) 2001-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2001-2012 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
+ *               This program is free software under the GNU General
+ *               Public License (>=v2). Read the file COPYING that
+ *               comes with GRASS for details.
  *
  **************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <math.h>
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 #define PI M_PI
 #ifndef MIN
@@ -32,6 +36,18 @@
 #define MAX(X,Y) ((X>Y)?X:Y)
 #endif
 
+/* return -1 if *p1 < *p2
+ * return  1 if *p1 > *p2
+ * return  0 if *p1 == *p2 */
+static int cmp(const void *pa, const void *pb)
+{
+    int *p1 = (int *)pa;
+    int *p2 = (int *)pb;
+
+    if (*p1 < *p2)
+	return -1;
+    return (*p1 > *p2);
+}
 
 /* returns 1 if unit_tolerance is adjusted, 0 otherwise */
 int adjust_tolerance(double *tolerance)
@@ -68,22 +84,21 @@ int db_CatValArray_get_value_di(dbCatValArray * cvarr, int cat, double *value)
     return DB_FAILED;
 }
 
-struct buf_contours
-{
-    int inner_count;
-    struct line_pnts *oPoints;
-    struct line_pnts **iPoints;
-};
-
-int point_in_buffer(struct buf_contours *arr_bc, SPATIAL_INDEX *si,
-		    double x, double y)
+int point_in_buffer(struct buf_contours *arr_bc, struct spatial_index *si,
+		    struct Map_info *Buf, double x, double y)
 {
     int i, j, ret, flag;
-    BOUND_BOX bbox;
+    struct bound_box bbox;
     static struct ilist *List = NULL;
+    static struct line_pnts *Points = NULL;
+    static struct line_cats *BCats = NULL;
 
     if (List == NULL)
 	List = Vect_new_list();
+    if (Points == NULL)
+	Points = Vect_new_line_struct();
+    if (BCats == NULL)
+	BCats = Vect_new_cats_struct();
 
     /* select outer contours overlapping with centroid (x, y) */
     bbox.W = bbox.E = x;
@@ -92,15 +107,20 @@ int point_in_buffer(struct buf_contours *arr_bc, SPATIAL_INDEX *si,
     bbox.B = -PORT_DOUBLE_MAX;
 
     Vect_spatial_index_select(si, &bbox, List);
-
+    
     for (i = 0; i < List->n_values; i++) {
-	ret = Vect_point_in_poly(x, y, arr_bc[List->value[i]].oPoints);
+	Vect_read_line(Buf, Points, BCats, arr_bc[List->value[i]].outer);
+	ret = Vect_point_in_poly(x, y, Points);
 	if (ret == 0)
 	    continue;
 
 	flag = 1;
 	for (j = 0; j < arr_bc[List->value[i]].inner_count; j++) {
-	    ret = Vect_point_in_poly(x, y, arr_bc[List->value[i]].iPoints[j]);
+	    if (arr_bc[List->value[i]].inner[j] < 1)
+		continue;
+
+	    Vect_read_line(Buf, Points, NULL, arr_bc[List->value[i]].inner[j]);
+	    ret = Vect_point_in_poly(x, y, Points);
 	    if (ret != 0) {	/* inside inner contour */
 		flag = 0;
 		break;
@@ -116,52 +136,239 @@ int point_in_buffer(struct buf_contours *arr_bc, SPATIAL_INDEX *si,
     return 0;
 }
 
+int buffer_cats(struct buf_contours *arr_bc, struct spatial_index *si,
+		    struct Map_info *Buf, double x, double y, struct line_cats *Cats)
+{
+    int i, j, ret, flag, inside;
+    struct bound_box bbox;
+    static struct ilist *List = NULL;
+    static struct line_pnts *Points = NULL;
+    static struct line_cats *BCats = NULL;
+
+    if (List == NULL)
+	List = Vect_new_list();
+    if (Points == NULL)
+	Points = Vect_new_line_struct();
+    if (BCats == NULL)
+	BCats = Vect_new_cats_struct();
+
+    /* select outer contours overlapping with centroid (x, y) */
+    bbox.W = bbox.E = x;
+    bbox.N = bbox.S = y;
+    bbox.T = PORT_DOUBLE_MAX;
+    bbox.B = -PORT_DOUBLE_MAX;
+
+    Vect_spatial_index_select(si, &bbox, List);
+    
+    Vect_reset_cats(Cats);
+    
+    inside = 0;
+    for (i = 0; i < List->n_values; i++) {
+	Vect_read_line(Buf, Points, BCats, arr_bc[List->value[i]].outer);
+	ret = Vect_point_in_poly(x, y, Points);
+	if (ret == 0)
+	    continue;
+
+	flag = 1;
+	for (j = 0; j < arr_bc[List->value[i]].inner_count; j++) {
+	    if (arr_bc[List->value[i]].inner[j] < 1)
+		continue;
+
+	    Vect_read_line(Buf, Points, NULL, arr_bc[List->value[i]].inner[j]);
+	    ret = Vect_point_in_poly(x, y, Points);
+	    if (ret != 0) {	/* inside inner contour */
+		flag = 0;
+		break;
+	    }
+	}
+
+	if (flag) {
+	    /* (x,y) is inside outer contour and outside inner contours of arr_bc[i] */
+	    inside = 1;
+	    for (j = 0; j < BCats->n_cats; j++)
+		Vect_cat_set(Cats, BCats->field[j], BCats->cat[j]);
+	}
+    }
+
+    return inside;
+}
+
+struct cat_list *cats_set_constraint(struct Map_info *Map, int layer,
+                                         char *where, char *catstr)
+{
+    struct cat_list *list = NULL;
+    int ret;
+
+    if (layer < 1) {
+	G_warning(_("Layer number must be > 0 for category constraints"));
+	/* no valid constraints, all categories qualify */
+	return list;
+    }
+
+    /* where has precedence over cats */
+    if (where) {
+	struct field_info *Fi = NULL;
+	dbDriver *driver = NULL;
+	int ncats, *cats = NULL;
+	int i, j;
+
+	if (catstr)
+	    G_warning(_("'%s' and '%s' parameters were supplied, cats will be ignored"), "where", "cats");
+
+	Fi = Vect_get_field(Map, layer);
+	if (!Fi) {
+	    G_fatal_error(_("Database connection not defined for layer %d"),
+			  layer);
+	}
+
+	G_verbose_message(_("Loading categories from table <%s>..."), Fi->table);
+
+	driver = db_start_driver_open_database(Fi->driver, Fi->database);
+	if (driver == NULL)
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+			  Fi->database, Fi->driver);
+	
+	ncats = db_select_int(driver, Fi->table, Fi->key, where,
+			      &cats);
+	if (ncats == -1)
+		G_fatal_error(_("Unable select records from table <%s>"),
+			      Fi->table);
+	G_verbose_message(_("%d categories loaded"), ncats);
+	    
+	db_close_database_shutdown_driver(driver);
+
+	/* sort */
+	qsort(cats, ncats, sizeof(int), cmp);
+	
+	/* remove duplicates */
+	j = 1;
+	for (i = 1; i < ncats; i++) {
+	    if (cats[i] != cats[j - 1]) {
+		cats[j] = cats[i];
+		j++;
+	    }
+	}
+	ncats = j;
+	
+	/* convert to cat list */
+	list = Vect_new_cat_list();
+	
+	ret = Vect_array_to_cat_list(cats, ncats, list);
+	if (ret == 0)
+	    G_warning(_("No categories selected with '%s' option"), "where");
+	
+	if (cats)
+	    G_free(cats);
+    }
+    else if (catstr) {
+	list = Vect_new_cat_list();
+
+	ret = Vect_str_to_cat_list(catstr, list);
+	if (ret > 0)
+	    G_warning(_("%d errors in '%s' option"), ret, "cats");
+    }
+    
+    if (list) {
+	if (list->n_ranges < 1) {
+	    Vect_destroy_cat_list(list);
+	    list = NULL;
+	}
+	else
+	    list->field = layer;
+    }
+	
+    return list;
+}
+
+int cats_in_constraint(struct line_cats *Cats, int layer,
+			      struct cat_list *list)
+{
+    int i;
+
+    if (layer < 1) {
+	G_warning(_("Layer number must be > 0 for category constraints"));
+	/* no valid constraint, all categories qualify */
+	return 1;
+    }
+
+    if (list) {
+	for (i = 0; i < Cats->n_cats; i++) {
+	    if (Cats->field[i] == layer &&
+		Vect_cat_in_cat_list(Cats->cat[i], list)) {
+		return 1;
+	    }
+	}
+	return 0;
+    }
+
+    for (i = 0; i < Cats->n_cats; i++) {
+	if (Cats->field[i] == layer)
+	    return 1;
+    }
+	
+    return 0;
+}
+
+
 int main(int argc, char *argv[])
 {
-    struct Map_info In, Out;
+    struct Map_info In, Out, Buf;
     struct line_pnts *Points;
-    struct line_cats *Cats, *BCats;
+    struct line_cats *Cats, *BCats, *CCats;
     char *mapset;
+    char bufname[GNAME_MAX];
     struct GModule *module;
     struct Option *in_opt, *out_opt, *type_opt, *dista_opt, *distb_opt,
-	*angle_opt, *buffer_opt, *debug_opt;
-    struct Flag *straight_flag, *nocaps_flag;
-    struct Option *tol_opt, *bufcol_opt, *scale_opt, *field_opt;
+	          *angle_opt;
+    struct Flag *straight_flag, *nocaps_flag, *cats_flag;
+    struct Option *tol_opt, *bufcol_opt, *scale_opt, *field_opt,
+		  *where_opt, *cats_opt;
 
+    struct cat_list *cat_list = NULL;
+    int verbose;
     double da, db, dalpha, tolerance, unit_tolerance;
     int type;
-    int i, j, ret, nareas, area, nlines, line;
+    int i, ret, nareas, area, nlines, line;
     char *Areas, *Lines;
     int field;
     struct buf_contours *arr_bc;
-    int buffers_count;
-    SPATIAL_INDEX si;
-    BOUND_BOX bbox;
+    int arr_bc_alloc;
+    struct buf_contours_pts arr_bc_pts;
+    int line_id, buffers_count = 0;
+    struct spatial_index si;
+    struct bound_box bbox;
 
     /* Attributes if sizecol is used */
     int nrec, ctype;
-    struct field_info *Fi;
+    struct field_info *Fi = NULL;
     dbDriver *Driver;
     dbCatValArray cvarr;
     double size_val, scale;
 
 
     module = G_define_module();
-    module->keywords = _("vector, buffer");
+    module->keywords = _("vector, buffer, geometry");
     module->description =
-	_("Creates a buffer around features of given type (areas must contain centroid).");
+	_("Creates a buffer around vector features of given type.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt->guisection = _("Selection");
+
+    cats_opt = G_define_standard_option(G_OPT_V_CATS);
+    cats_opt->guisection = _("Selection");
+    
+    where_opt = G_define_standard_option(G_OPT_WHERE);
+    where_opt->guisection = _("Selection");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options = "point,line,boundary,centroid,area";
     type_opt->answer = "point,line,area";
     type_opt->guisection = _("Selection");
 
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt->guisection = _("Selection");
-
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+    
     dista_opt = G_define_option();
     dista_opt->key = "distance";
     dista_opt->type = TYPE_DOUBLE;
@@ -209,24 +416,6 @@ int main(int argc, char *argv[])
 	_("Maximum distance between theoretical arc and polygon segments as multiple of buffer");
     tol_opt->guisection = _("Distance");
 
-    debug_opt = G_define_option();
-    debug_opt->key = "debug";
-    debug_opt->type = TYPE_STRING;
-    debug_opt->required = NO;
-    debug_opt->guisection = _("Unused");
-    debug_opt->description =
-	_("This does nothing. It is retained for backwards compatibility");
-
-    buffer_opt = G_define_option();
-    buffer_opt->key = "buffer";
-    buffer_opt->type = TYPE_DOUBLE;
-    buffer_opt->required = NO;
-    buffer_opt->label =
-	_("This is an alias to the distance option. "
-	  "It is retained for backwards compatibility");
-    buffer_opt->description = _("Buffer distance in map units");
-    buffer_opt->guisection = _("Unused");
-
     straight_flag = G_define_flag();
     straight_flag->key = 's';
     straight_flag->description = _("Make outside corners straight");
@@ -235,37 +424,52 @@ int main(int argc, char *argv[])
     nocaps_flag->key = 'c';
     nocaps_flag->description = _("Don't make caps at the ends of polylines");
 
+    cats_flag = G_define_flag();
+    cats_flag->key = 't';
+    cats_flag->description = _("Transfer categories and attributes");
+    cats_flag->guisection = _("Attributes");
+    
     G_gisinit(argv[0]);
     
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    verbose = G_verbose();
+
     type = Vect_option_to_types(type_opt);
 
-    if (((dista_opt->answer || buffer_opt->answer) && bufcol_opt->answer) ||
-	(!(dista_opt->answer || buffer_opt->answer || bufcol_opt->answer)))
+    if ((dista_opt->answer && bufcol_opt->answer) ||
+	(!(dista_opt->answer || bufcol_opt->answer)))
 	G_fatal_error(_("Select a buffer distance/minordistance/angle "
 			"or column, but not both."));
 
-    if (bufcol_opt->answer)
-	G_warning(_("The bufcol option may contain bugs during the cleaning "
-		    "step. If you encounter problems, use the debug "
-		    "option or clean manually with v.clean tool=break; "
-		    "v.category step=0; v.extract -d type=area"));
+    Vect_check_input_output_name(in_opt->answer, out_opt->answer, GV_FATAL_EXIT);
+
+    if ((mapset = G_find_vector2(in_opt->answer, "")) == NULL)
+	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
+
+    /* open input vector */
+    Vect_set_open_level(2); /* topology required */
+    Vect_open_old(&In, in_opt->answer, mapset);
 
     if (field_opt->answer)
-        field = atoi(field_opt->answer);
+	field = atoi(field_opt->answer);
     else
 	field = -1;
 
+    if ((cats_opt->answer || where_opt->answer) && field == -1) {
+        G_warning(_("Invalid layer number (%d). Parameter '%s' or '%s' specified, assuming layer '1'."),
+                  field, cats_opt->key, where_opt->key);
+        field = 1;
+    }
+
+    cat_list = NULL;
+    if (field > 0)
+	cat_list = cats_set_constraint(&In, field, where_opt->answer,
+                                            cats_opt->answer);
+	
     if (bufcol_opt->answer && field == -1)
 	G_fatal_error(_("The bufcol option requires a valid layer."));
-    
-    if (buffer_opt->answer)
-	G_warning(_("The buffer option has been replaced by the distance "
-		    "option and will be removed in future."));
-    if (buffer_opt->answer && dista_opt->answer)
-	G_fatal_error(_("Use the distance option instead of the buffer option."));
 
     tolerance = atof(tol_opt->answer);
     if (tolerance <= 0)
@@ -276,14 +480,11 @@ int main(int argc, char *argv[])
 
     scale = atof(scale_opt->answer);
     if (scale <= 0.0)
-	G_fatal_error("Illegal scale value");
+        G_fatal_error(_("Illegal scale value"));
 
-	da = db = dalpha = 0;
-    if (dista_opt->answer || buffer_opt->answer) {
-	if(buffer_opt->answer)
-	    da = atof(buffer_opt->answer);
-	if(dista_opt->answer)
-	    da = atof(dista_opt->answer);
+    da = db = dalpha = unit_tolerance = 0;
+    if (dista_opt->answer) {
+	da = atof(dista_opt->answer);
 
 	if (distb_opt->answer)
 	    db = atof(distb_opt->answer);
@@ -295,30 +496,25 @@ int main(int argc, char *argv[])
 	else
 	    dalpha = 0;
 
-	unit_tolerance = tolerance * MIN(da, db);
+	unit_tolerance = fabs(tolerance * MIN(da, db));
 	G_verbose_message(_("The tolerance in map units = %g"), unit_tolerance);
     }
 
-    Vect_check_input_output_name(in_opt->answer, out_opt->answer,
-				 GV_FATAL_EXIT);
-
+    Vect_open_new(&Out, out_opt->answer, WITHOUT_Z);
+    
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
     BCats = Vect_new_cats_struct();
-
-    /* open input vector */
-    if ((mapset = G_find_vector2(in_opt->answer, "")) == NULL)
-	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
-
-    Vect_set_open_level(2);
-
-    if (1 > Vect_open_old(&In, in_opt->answer, mapset))
-	G_fatal_error(_("Unable to open vector map <%s>"), in_opt->answer);
-
-    if (0 > Vect_open_new(&Out, out_opt->answer, WITHOUT_Z)) {
-	Vect_close(&In);
-	G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
+    CCats = Vect_new_cats_struct();
+    
+    /* open tmp vector for buffers, needed for cleaning */
+    sprintf(bufname, "%s_tmp_%d", out_opt->answer, getpid());
+    if (0 > Vect_open_new(&Buf, bufname, 0)) {
+        G_fatal_error(_("Unable to create vector map"));
     }
+    G_set_verbose(0);
+    Vect_build_partial(&Buf, GV_BUILD_BASE); /* switch to level 2 */
+    G_set_verbose(verbose);
 
     /* check and load attribute column data */
     if (bufcol_opt->answer) {
@@ -372,7 +568,7 @@ int main(int argc, char *argv[])
     /* Create buffers' boundaries */
     nlines = nareas = 0;
     if ((type & GV_POINTS) || (type & GV_LINES))
-	nlines += Vect_get_num_primitives(&In, type);
+	nlines = Vect_get_num_primitives(&In, type);
     if (type & GV_AREA)
 	nareas = Vect_get_num_areas(&In);
     
@@ -382,90 +578,29 @@ int main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
     }
 
+    /* init arr_bc */
     buffers_count = 1;
-    arr_bc = G_malloc((nlines + nareas + 1) * sizeof(struct buf_contours));
+    arr_bc_alloc = nlines + nareas + 1;
+    arr_bc = G_calloc(arr_bc_alloc, sizeof(struct buf_contours));
 
     Vect_spatial_index_init(&si);
 
-    /* Lines (and Points) */
-    if (nlines > 0) {
-	int ltype;
-
-	G_message(_("Buffering lines..."));
-
-	nlines = Vect_get_num_lines(&In);
-
-	for (line = 1; line <= nlines; line++) {
-	    int cat;
-
-	    G_debug(2, "line = %d", line);
-	    G_percent(line, nlines, 2);
-	    
-	    if (!Vect_line_alive(&In, line))
-		continue;
-
-	    ltype = Vect_read_line(&In, Points, Cats, line);
-	    if (!(ltype & type))
-		continue;
-
-	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
-		continue;
-
-	    if (bufcol_opt->answer) {
-		ret = db_CatValArray_get_value_di(&cvarr, cat, &size_val);
-		if (ret != DB_OK) {
-		    G_warning(_("No record for category %d in table <%s>"),
-			      cat, Fi->table);
-		    continue;
-		}
-
-		if (size_val < 0.0) {
-		    G_warning(_("Attribute is of invalid size (%.3f) for category %d"),
-			      size_val, cat);
-		    continue;
-		}
-
-		if (size_val == 0.0)
-		    continue;
-
-		da = size_val * scale;
-		db = da;
-		dalpha = 0;
-		unit_tolerance = tolerance * MIN(da, db);
-
-		G_debug(2, "    dynamic buffer size = %.2f", da);
-		G_debug(2, _("The tolerance in map units: %g"),
-			unit_tolerance);
-	    }
-	    
-	    Vect_line_prune(Points);
-	    if (ltype & GV_POINTS || Points->n_points == 1) {
-		Vect_point_buffer2(Points->x[0], Points->y[0], da, db, dalpha,
-				   !(straight_flag->answer), unit_tolerance,
-				   &(arr_bc[buffers_count].oPoints));
-		arr_bc[buffers_count].iPoints = NULL;
-		arr_bc[buffers_count].inner_count = 0;
-		buffers_count++;
-
-	    }
-	    else {
-		Vect_line_buffer2(Points, da, db, dalpha,
-				  !(straight_flag->answer),
-				  !(nocaps_flag->answer), unit_tolerance,
-				  &(arr_bc[buffers_count].oPoints),
-				  &(arr_bc[buffers_count].iPoints),
-				  &(arr_bc[buffers_count].inner_count));
-		buffers_count++;
-	    }
-	}
+#ifdef HAVE_GEOS
+    initGEOS(G_message, G_fatal_error);
+#else
+    if (da < 0. || db < 0.) {
+	G_warning(_("Negative distances for internal buffers are not supported "
+	            "and converted to positive values."));
+	da = fabs(da);
+	db = fabs(db);
     }
+#endif
 
     /* Areas */
-    if (type & GV_AREA) {
+    if (nareas > 0) {
 	int centroid;
 
-	if (nareas > 0) 
-	    G_message(_("Buffering areas..."));
+	G_message(_("Buffering areas..."));
 	for (area = 1; area <= nareas; area++) {
 	    int cat;
 
@@ -479,10 +614,20 @@ int main(int argc, char *argv[])
 		continue;
 
 	    Vect_read_line(&In, NULL, Cats, centroid);
-	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
+
+	    if (field > 0 && !cats_in_constraint(Cats, field, cat_list))
 		continue;
 
+	    Vect_reset_cats(CCats);
+	    for (i = 0; i < Cats->n_cats; i++) {
+		if (field < 0 || Cats->field[i] == field) {
+		    Vect_cat_set(CCats, Cats->field[i], Cats->cat[i]);
+		}
+	    }
+
 	    if (bufcol_opt->answer) {
+		Vect_cat_get(Cats, field, &cat);
+
 		ret = db_CatValArray_get_value_di(&cvarr, cat, &size_val);
 		if (ret != DB_OK) {
 		    G_warning(_("No record for category %d in table <%s>"),
@@ -502,43 +647,136 @@ int main(int argc, char *argv[])
 		da = size_val * scale;
 		db = da;
 		dalpha = 0;
-		unit_tolerance = tolerance * MIN(da, db);
+		unit_tolerance = fabs(tolerance * MIN(da, db));
 
 		G_debug(2, "    dynamic buffer size = %.2f", da);
 		G_debug(2, _("The tolerance in map units: %g"),
 			unit_tolerance);
 	    }
 
-	    Vect_area_buffer2(&In, area, da, db, dalpha,
-			      !(straight_flag->answer),
-			      !(nocaps_flag->answer), unit_tolerance,
-			      &(arr_bc[buffers_count].oPoints),
-			      &(arr_bc[buffers_count].iPoints),
-			      &(arr_bc[buffers_count].inner_count));
-	    buffers_count++;
+#ifdef HAVE_GEOS
+	    geos_buffer(&In, &Out, &Buf, area, GV_AREA, da,
+			&si, CCats, &arr_bc, &buffers_count, &arr_bc_alloc);
+#endif
 	}
     }
 
-    /* write all buffer contours */
-    G_message(_("Writing buffers..."));
-    for (i = 1; i < buffers_count; i++) {
-	G_percent(i, buffers_count, 2);
-	Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].oPoints, BCats);
+    /* Lines (and Points) */
+    if (nlines > 0) {
+	int ltype;
 
-	dig_line_box(arr_bc[i].oPoints, &bbox);
-	Vect_spatial_index_add_item(&si, i, &bbox);
+	G_message(_("Buffering features..."));
 	
-	for (j = 0; j < arr_bc[i].inner_count; j++)
-	    Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].iPoints[j], BCats);
+	if (da < 0 || db < 0) {
+	    G_warning(_("Negative distances are only supported for areas"));
+	    da = fabs(da);
+	    db = fabs(db);
+	}
+
+	nlines = Vect_get_num_lines(&In);
+	for (line = 1; line <= nlines; line++) {
+	    int cat;
+
+	    G_debug(2, "line = %d", line);
+	    G_percent(line, nlines, 2);
+	    
+	    if (!Vect_line_alive(&In, line))
+		continue;
+
+	    ltype = Vect_read_line(&In, Points, Cats, line);
+	    if (!(ltype & type))
+		continue;
+
+	    if (field > 0 && !cats_in_constraint(Cats, field, cat_list))
+		continue;
+
+	    Vect_reset_cats(CCats);
+	    for (i = 0; i < Cats->n_cats; i++) {
+		if (field < 0 || Cats->field[i] == field) {
+		    Vect_cat_set(CCats, Cats->field[i], Cats->cat[i]);
+		}
+	    }
+
+	    if (bufcol_opt->answer) {
+		Vect_cat_get(Cats, field, &cat);
+		ret = db_CatValArray_get_value_di(&cvarr, cat, &size_val);
+		if (ret != DB_OK) {
+		    G_warning(_("No record for category %d in table <%s>"),
+			      cat, Fi->table);
+		    continue;
+		}
+
+		if (size_val < 0.0) {
+		    G_warning(_("Attribute is of invalid size (%.3f) for category %d"),
+			      size_val, cat);
+		    continue;
+		}
+
+		if (size_val == 0.0)
+		    continue;
+
+		da = size_val * scale;
+		if (da < 0) {
+		    G_warning(_("Negative distances are only supported for areas"));
+		    da = fabs(da);
+		}
+		db = da;
+		dalpha = 0;
+		unit_tolerance = tolerance * MIN(da, db);
+
+		G_debug(2, "    dynamic buffer size = %.2f", da);
+		G_debug(2, _("The tolerance in map units: %g"),
+			unit_tolerance);
+	    }
+	    
+	    Vect_line_prune(Points);
+	    if (ltype & GV_POINTS || Points->n_points == 1) {
+		Vect_point_buffer2(Points->x[0], Points->y[0], da, db, dalpha,
+				   !(straight_flag->answer), unit_tolerance,
+				   &(arr_bc_pts.oPoints));
+
+		Vect_write_line(&Out, GV_BOUNDARY, arr_bc_pts.oPoints, BCats);
+		line_id = Vect_write_line(&Buf, GV_BOUNDARY, arr_bc_pts.oPoints, CCats);
+		Vect_destroy_line_struct(arr_bc_pts.oPoints);
+		/* add buffer to spatial index */
+		Vect_get_line_box(&Buf, line_id, &bbox);
+		Vect_spatial_index_add_item(&si, buffers_count, &bbox);
+		arr_bc[buffers_count].outer = line_id;
+		arr_bc[buffers_count].inner_count = 0;
+		arr_bc[buffers_count].inner = NULL;
+		buffers_count++;
+
+	    }
+	    else {
+#ifdef HAVE_GEOS
+		geos_buffer(&In, &Out, &Buf, line, type, da,
+			    &si, CCats, &arr_bc, &buffers_count, &arr_bc_alloc);
+#endif
+	    }
+	}
     }
-    G_percent(1, 1, 1);
 
-    /* Create areas */
+#ifdef HAVE_GEOS
+    finishGEOS();
+#endif
 
+    G_message(_("Cleaning buffers..."));
+    
     /* Break lines */
-    G_verbose_message(_("Building parts of topology..."));
+    G_message(_("Building parts of topology..."));
     Vect_build_partial(&Out, GV_BUILD_BASE);
 
+    /* Warning: snapping must be done, otherwise colinear boundaries are not broken and 
+     * topology cannot be built (the same angle). But snapping distance must be very, very 
+     * small, otherwise counterclockwise boundaries can appear in areas outside the buffer.
+     * I have done some tests on real data (projected) and threshold 1e-8 was not enough,
+     * Snapping threshold 1e-7 seems to work. Don't increase until we find example 
+     * where it is not sufficient. RB */
+
+    /* TODO: look at snapping threshold better, calculate some theoretical value to avoid
+     * the same angles of lines at nodes, don't forget about LongLat data, probably
+     * calculate different threshold for each map, depending on map's bounding box 
+     * and/or distance and tolerance */
     G_message(_("Snapping boundaries..."));
     Vect_snap_lines(&Out, GV_BOUNDARY, 1e-7, NULL);
 
@@ -562,107 +800,110 @@ int main(int argc, char *argv[])
     /* Dangles and bridges don't seem to be necessary if snapping is small enough. */
     /* Still needed for larger buffer distances ? */
 
-    /*
+    Vect_build_partial(&Out, GV_BUILD_AREAS);
     G_message(_("Removing dangles..."));
     Vect_remove_dangles(&Out, GV_BOUNDARY, -1, NULL);
 
     G_message (_("Removing bridges..."));
     Vect_remove_bridges(&Out, NULL);
-    */
 
     G_message(_("Attaching islands..."));
     Vect_build_partial(&Out, GV_BUILD_ATTACH_ISLES);
 
-    /* Calculate new centroids for all areas */
-    nareas = Vect_get_num_areas(&Out);
-    Areas = (char *)G_calloc(nareas + 1, sizeof(char));
-    G_message(_("Calculating centroids for areas..."));
-    G_percent(0, nareas, 2);
-    for (area = 1; area <= nareas; area++) {
-	double x, y;
+    if (!cats_flag->answer) {
+	/* Calculate new centroids for all areas */
+	nareas = Vect_get_num_areas(&Out);
+	Areas = (char *)G_calloc(nareas + 1, sizeof(char));
+	G_message(_("Calculating centroids for all areas..."));
+	G_percent(0, nareas, 2);
+	for (area = 1; area <= nareas; area++) {
+	    double x, y;
 
-	G_percent(area, nareas, 2);
+	    G_percent(area, nareas, 2);
 
-	G_debug(3, "area = %d", area);
+	    G_debug(3, "area = %d", area);
 
-	if (!Vect_area_alive(&Out, area))
-	    continue;
+	    if (!Vect_area_alive(&Out, area))
+		continue;
 
-	ret = Vect_get_point_in_area(&Out, area, &x, &y);
-	if (ret < 0) {
-	    G_warning(_("Cannot calculate area centroid"));
-	    continue;
-	}
-
-	ret = point_in_buffer(arr_bc, &si, x, y);
-
-	if (ret) {
-	    G_debug(3, "  -> in buffer");
-	    Areas[area] = 1;
-	}
-    }
-
-    /* Make a list of boundaries to be deleted (both sides inside) */
-    nlines = Vect_get_num_lines(&Out);
-    G_debug(3, "nlines = %d", nlines);
-    Lines = (char *)G_calloc(nlines + 1, sizeof(char));
-
-    G_message(_("Generating list of boundaries to be deleted..."));
-    for (line = 1; line <= nlines; line++) {
-	int j, side[2], areas[2];
-
-	G_percent(line, nlines, 2);
-
-	G_debug(3, "line = %d", line);
-
-	if (!Vect_line_alive(&Out, line))
-	    continue;
-
-	Vect_get_line_areas(&Out, line, &side[0], &side[1]);
-
-	for (j = 0; j < 2; j++) {
-	    if (side[j] == 0) {	/* area/isle not build */
-		areas[j] = 0;
+	    ret = Vect_get_point_in_area(&Out, area, &x, &y);
+	    if (ret < 0) {
+		G_warning(_("Cannot calculate area centroid"));
+		continue;
 	    }
-	    else if (side[j] > 0) {	/* area */
-		areas[j] = side[j];
-	    }
-	    else {		/* < 0 -> island */
-		areas[j] = Vect_get_isle_area(&Out, abs(side[j]));
+
+	    ret = point_in_buffer(arr_bc, &si, &Buf, x, y);
+
+	    if (ret) {
+		G_debug(3, "  -> in buffer");
+		Areas[area] = 1;
 	    }
 	}
 
-	G_debug(3, " areas = %d , %d -> Areas = %d, %d", areas[0], areas[1],
-		Areas[areas[0]], Areas[areas[1]]);
-	if (Areas[areas[0]] && Areas[areas[1]])
-	    Lines[line] = 1;
-    }
-    G_free(Areas);
+	/* Make a list of boundaries to be deleted (both sides inside) */
+	nlines = Vect_get_num_lines(&Out);
+	G_debug(3, "nlines = %d", nlines);
+	Lines = (char *)G_calloc(nlines + 1, sizeof(char));
 
-    /* Delete boundaries */
-    G_message(_("Deleting boundaries..."));
-    for (line = 1; line <= nlines; line++) {
-	G_percent(line, nlines, 2);
-	
-	if (!Vect_line_alive(&Out, line))
-	    continue;
+	G_message(_("Generating list of boundaries to be deleted..."));
+	for (line = 1; line <= nlines; line++) {
+	    int j, side[2], areas[2];
 
-	if (Lines[line]) {
-	    G_debug(3, " delete line %d", line);
-	    Vect_delete_line(&Out, line);
-	}
-	else {
-	    /* delete incorrect boundaries */
-	    int side[2];
+	    G_percent(line, nlines, 2);
+
+	    G_debug(3, "line = %d", line);
+
+	    if (!Vect_line_alive(&Out, line))
+		continue;
 
 	    Vect_get_line_areas(&Out, line, &side[0], &side[1]);
-	    
-	    if (!side[0] && !side[1])
-		Vect_delete_line(&Out, line);
-	}
-    }
 
-    G_free(Lines);
+	    for (j = 0; j < 2; j++) {
+		if (side[j] == 0) {	/* area/isle not build */
+		    areas[j] = 0;
+		}
+		else if (side[j] > 0) {	/* area */
+		    areas[j] = side[j];
+		}
+		else {		/* < 0 -> island */
+		    areas[j] = Vect_get_isle_area(&Out, abs(side[j]));
+		}
+	    }
+
+	    G_debug(3, " areas = %d , %d -> Areas = %d, %d", areas[0], areas[1],
+		    Areas[areas[0]], Areas[areas[1]]);
+	    if (Areas[areas[0]] && Areas[areas[1]])
+		Lines[line] = 1;
+	}
+	G_free(Areas);
+
+	/* Delete boundaries */
+	G_message(_("Deleting boundaries..."));
+	for (line = 1; line <= nlines; line++) {
+	    G_percent(line, nlines, 2);
+	    
+	    if (!Vect_line_alive(&Out, line))
+		continue;
+
+	    if (Lines[line]) {
+		G_debug(3, " delete line %d", line);
+		Vect_delete_line(&Out, line);
+	    }
+	    else {
+		/* delete incorrect boundaries */
+		int side[2];
+
+		Vect_get_line_areas(&Out, line, &side[0], &side[1]);
+
+		if (!side[0] && !side[1]) {
+                    G_debug(3, " delete line %d", line);
+		    Vect_delete_line(&Out, line);
+                }
+	    }
+	}
+
+	G_free(Lines);
+    }
 
     /* Create new centroids */
     Vect_reset_cats(Cats);
@@ -682,11 +923,14 @@ int main(int argc, char *argv[])
 
 	ret = Vect_get_point_in_area(&Out, area, &x, &y);
 	if (ret < 0) {
-	    G_warning(_("Cannot calculate area centroid"));
+            G_warning(_("Unable to calculate centroid for area %d"), area);
 	    continue;
 	}
 
-	ret = point_in_buffer(arr_bc, &si, x, y);
+	if (cats_flag->answer)
+	    ret = buffer_cats(arr_bc, &si, &Buf, x, y, Cats);
+	else
+	    ret = point_in_buffer(arr_bc, &si, &Buf, x, y);
 
 	if (ret) {
 	    Vect_reset_line(Points);
@@ -695,16 +939,12 @@ int main(int argc, char *argv[])
 	}
     }
 
-    /* free arr_bc[] */
-    /* will only slow down the module
-       for (i = 0; i < buffers_count; i++) {
-       Vect_destroy_line_struct(arr_bc[i].oPoints);
-       for (j = 0; j < arr_bc[i].inner_count; j++)
-       Vect_destroy_line_struct(arr_bc[i].iPoints[j]);
-       G_free(arr_bc[i].iPoints);
-       } */
-
     Vect_spatial_index_destroy(&si);
+    Vect_close(&Buf);
+    Vect_delete(bufname);
+    
+    if (cats_flag->answer)
+	Vect_copy_tables(&In, &Out, field);
 
     Vect_close(&In);
 
