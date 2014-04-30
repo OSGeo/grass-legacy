@@ -2,7 +2,6 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS = \
-	v.buffer2 \
 	v.build \
 	v.build.polylines \
 	v.category \
@@ -79,11 +78,19 @@ SUBDIRS = \
 	v.vect.stats \
 	v.voronoi \
 	v.what \
-	v.what.rast\
+	v.what.rast \
 	v.vol.rst \
 	lidar
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
+
+GEOSBASED=v.buffer2
+
+#compile if GEOS present:
+
+ifneq ($(USE_GEOS),)
+    SUBDIRS += $(GEOSBASED)
+endif
 
 OGRBASED = v.out.ogr v.in.ogr v.external
 
