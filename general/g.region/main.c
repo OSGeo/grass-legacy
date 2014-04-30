@@ -845,9 +845,6 @@ int main(int argc, char *argv[])
 	if(strlen(xmapset) && strcmp(G_mapset(), xmapset) != 0)
 	    G_fatal_error(_("You can only save to the current mapset"));
 
-	if (G_legal_filename(xname) < 0)
-	    G_fatal_error(_("<%s> is an illegal region name"), xname);
-
 	G_copy(&temp_window, &window, sizeof(window));
 	adjust_window(&temp_window, 0, 0, 0);
 
