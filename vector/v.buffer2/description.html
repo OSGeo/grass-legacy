@@ -8,11 +8,16 @@ vector segments are generated).
 
 <h2>NOTES</h2>
 
+Internal buffers for areas can be generated with negative distance 
+values ("inward buffer" or "negative buffer").
 <!-- Q: True?  A: Sure. if two point buffers overlap and are merged, which
      area's attribute is the one to use in the combined area? -->
 Attributes are not transferred due to potential buffer overlap, which
 cannot be resolved automatically.
 
+<p>
+Buffers for lines and areas are generated using the algorithms from
+the GEOS library.
 
 <h2>EXAMPLES</h2>
 
@@ -33,20 +38,7 @@ shown in black)
 <h3>Circles around input points</h3>
 
 <div class="code"><pre>
-v.buffer input=hospitals output=hospitals_circled type=point distance=1000 
-</pre></div>
-
-<h3>Overlapping circles around input points with attribute transfer</h3>
-
-<div class="code"><pre>
-v.buffer input=hospitals output=circles type=point distance=2000
-# change original points to centroids: 
-v.type in=hospitals out=hospital_centroids type=point,centroid 
-# patch circles and centroids: 
-v.patch in=hospital_centroids,circles out=circles_db 
-# attach attributes, either use db.copy or link to the original table: 
-v.db.connect map=circles_db table=hospitals layer=1 key=cat driver=dbf \
-     database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
+v.buffer input=hospitals output=hospitals_circled type=point distance=2000 
 </pre></div>
 
 <center>
@@ -54,6 +46,22 @@ v.db.connect map=circles_db table=hospitals layer=1 key=cat driver=dbf \
 Buffer of 2000m around the "hospitals" points (map subset, original points
 shown in black, new area centroids in red)
 </center>
+
+<h3>Overlapping circles around input points with attribute transfer</h3>
+
+<div class="code"><pre>
+# copy map to current mapset (for easier DB linking)
+g.copy vect=hospitals,myhospitals
+v.buffer input=myhospitals output=circles type=point distance=2000
+# change original points to centroids: 
+v.type in=myhospitals out=hospital_centroids type=point,centroid 
+# patch circles and centroids: 
+v.patch in=hospital_centroids,circles out=circles_db 
+# attach attributes, either use db.copy or link to the original table: 
+v.db.connect map=circles_db table=myhospitals layer=1 key=cat driver=dbf \
+     database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
+v.db.select circles_db
+</pre></div>
 
 <h3>Buffer around input areas</h3>
 
@@ -66,6 +74,12 @@ v.buffer input=lakes output=lakes_buffer type=area distance=100
 Buffer of 100m around the "lakes" polygons (map subset, original areas
 shown in black)
 </center>
+
+<h2>REFERENCE</h2>
+
+<ul>
+<li><a href="http://trac.osgeo.org/geos">GEOS Library</a></li>
+</ul>
 
 <h2>SEE ALSO</h2>
 
