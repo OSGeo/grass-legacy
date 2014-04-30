@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>GRASS variables and environment variables</title>
@@ -72,7 +72,7 @@ into GRASS, store them in:<br>
 </ul>
 
 
-<h2>Setting GRASS variables</h2>
+<h2>Setting GRASS gisenv variables</h2>
 
 Use <em><a href="g.gisenv.html">g.gisenv</a></em> within GRASS. This permanently
 predefines GRASS variables in the <tt>.grassrc6</tt> file.
@@ -120,15 +120,16 @@ text
     standard distribution.</dd>
   
   <dt>GRASS_BATCH_JOB</dt>
-  <dd>defines the name (path) of a shell script to be processed as batch job.</dd>
+  <dd>defines the name (path) of a shell script to be processed as
+  batch job.</dd>
 
   <dt>GIS_ERROR_LOG</dt>
-  <dd>If set, $GIS_ERROR_LOG should be the absolute path to the log file (a
-   relative path will be interpreted relative to the process' cwd, not
-   the cwd at the point the user set the variable). If not set,
-   $HOME/GIS_ERROR_LOG is used instead. The file will only be used if
-   it already exists.</dd>
- 
+  <dd>If set, GIS_ERROR_LOG should be the absolute path to the log
+   file (a relative path will be interpreted relative to the process'
+   cwd, not the cwd at the point the user set the variable). If not
+   set, <tt>$HOME/GIS_ERROR_LOG</tt> is used instead. The file will
+   only be used if it already exists.</dd>
+
   <dt>GRASS_ERROR_MAIL</dt>
   <dd>set to any value to send user mail on an error or warning that 
     happens while stderr is being redirected.</dd>
@@ -150,7 +151,7 @@ text
   
   <dt>GRASS_FONT_CAP</dt>
   <dd>[g.mkfontcap, d.font, display drivers]<br>
-    specifies an alternative location (to $GISBASE/etc/fontcap) for 
+    specifies an alternative location (to <tt>$GISBASE/etc/fontcap</tt>) for 
     the font configuration file.</dd>
   
   <dt>GRASS_HEIGHT</dt>
@@ -160,7 +161,7 @@ text
   <dt>GRASS_HTML_BROWSER</dt>
   <dd>[init.sh, d.m, gis.m]<br>
     defines name of HTML browser. For most platforms this should be
-    an executable in your PATH, or the full path to an executable.<br><br>
+    an executable in your PATH, or the full path to an executable.<br>
     Mac OS X runs applications differently from the CLI.
     Therefore, GRASS_HTML_BROWSER should be the application's signature,
     which is a domain-like name, just reversed, i.e. com.apple.Safari. To
@@ -223,7 +224,7 @@ text
   
   <dt>GRASS_PAGER</dt>
   <dd>[various modules]<br>
-    maybe set to either <tt>less</tt>, <tt>more</tt>, or <tt>cat</tt>.</dd>
+    it may be set to either <tt>less</tt>, <tt>more</tt>, or <tt>cat</tt>.</dd>
   
   <dt>GRASS_PERL</dt>
   <dd>[used during install process for generating man pages]<br>
@@ -295,6 +296,15 @@ text
   <dt>GRASS_NO_GLX_PIXMAPS</dt>
   <dd>[nviz]<br>
     Set to any value to disable the use of GLX Pixmaps.</dd>
+
+  <dt>TMPDIR, TEMP, TMP</dt>
+  <dd>[Various GRASS GIS commands and wxGUI]<br>
+  <!-- what about Windows %TEMP% and http://trac.osgeo.org/grass/ticket/560#comment:21 ? -->
+	The default wxGUI temporary directory is chosen from a 
+	platform-dependent list, but the user can control the selection of
+	this directory by setting one of the TMPDIR, TEMP or TMP
+	environment variables Hence the wxGUI uses $TMPDIR if it is set,
+	then $TEMP, otherwise /tmp.</dd>
 </dl>
 
 <a name="png"></a>
@@ -469,7 +479,6 @@ detailed list of the variables.
     GRASS_OVERWRITE environment variable or the OVERWRITE gisenv variable detailed
     below will cause maps with identical names to be overwritten.</dd>
   
-
   <dt>GRASS_VERBOSE</dt>
   <dd>[all modules]<br>
     toggles verbosity level
@@ -483,14 +492,12 @@ detailed list of the variables.
     so that the <tt>--verbose</tt> or <tt>--quiet</tt> flags will be inherited
     by dependent modules as the script runs.</dd>
   
-
   <dt>GRASS_REGION</dt>
   <dd>[libgis]<br>
     override region settings, separate parameters with a ";". Format
     is the same as in the WIND region settings file. Otherwise use is the same as
     WIND_OVERRIDE.</dd>
   
-
   <dt>WIND_OVERRIDE</dt>
   <dd>[libgis]<br>
     it causes programs to use the specified named region (created with
@@ -530,12 +537,10 @@ g.gisenv set=DEBUG=0
   <dt>GISDBASE</dt>
   <dd>initial database</dd>
 
-
   <dt>GIS_LOCK</dt>
   <dd>lock ID to prevent parallel GRASS use,
-  process id of the start-up shell script</dd>
+    <br>process id of the start-up shell script</dd>
   
-
   <dt>GRASS_DB_ENCODING</dt>
   <dd>[d.what.vect/forms library]<br>
     encoding of query form (utf-8, ascii, iso8859-1, koi8-r)</dd>
@@ -552,19 +557,15 @@ g.gisenv set=DEBUG=0
     startup, it will determine the GUI used. If it is not defined
     startup will default to the last GUI used.</dd>
   
-
   <dt>LOCATION</dt>
   <dd>full path to location directory</dd>
   
-
   <dt>LOCATION_NAME</dt>
   <dd>initial location name</dd>
   
-
   <dt>MAPSET</dt>
   <dd>initial mapset</dd>
   
-
   <dt>OVERWRITE</dt>
   <dd>[all modules]<br>
     toggles map overwrite.
@@ -585,7 +586,7 @@ g.gisenv set=DEBUG=0
 
 <dl>
   <dt>$HOME/.grassrc6</dt>
-  <dd>stores the GRASS variables (but not environment variables)</dd>
+  <dd>stores the GRASS gisenv variables (but not environment variables)</dd>
   
 
   <dt>$HOME/.grasslogin6</dt>
@@ -601,7 +602,7 @@ g.gisenv set=DEBUG=0
   
 </dl>
 
-<h3>SEE ALSO</h3>
+<h2>SEE ALSO</h2>
 
 <em>
   <a href="displaydrivers.html">Display drivers</a>
