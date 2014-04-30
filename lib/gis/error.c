@@ -3,7 +3,7 @@
  * 
  * \brief GIS Library: Error messages functions
  *
- * (C) 1999-2008 by the GRASS Development Team
+ * (C) 1999-2011 by the GRASS Development Team
  *
  * This program is free software under the GNU General Public
  * License (>=v2). Read the file COPYING that comes with GRASS
@@ -149,7 +149,12 @@ void G_important_message(const char *msg, ...)
  */
 int G_fatal_error(const char *msg, ...)
 {
+    static int busy;
     va_list ap;
+
+    if (busy)
+	exit(EXIT_FAILURE);
+    busy = 1;
 
     va_start(ap, msg);
     vfprint_error(ERR, msg, ap);
@@ -294,7 +299,7 @@ static int print_error(const char *msg, const int type)
 		mail_msg(msg, fatal);
 	    }
 	}
-	else {			/* GUI */
+	else {	/* GUI */
 	    print_sentence(stderr, type, msg);
 	}
     }
