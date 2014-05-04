@@ -91,6 +91,7 @@ static void load_library(void)
 	"libgdal1.7.0.so",
 # endif
 # ifdef _WIN32
+	"gdal111.dll",
 	"gdal110.dll",
 	"gdal19.dll",
 	"gdal18.dll",
@@ -108,8 +109,10 @@ static void load_library(void)
 
     for (i = 0; candidates[i]; i++) {
 	try_load_library(candidates[i]);
-	if (library_h)
+	if (library_h) {
+	    G_debug(3, "found %s", candidates[i]);
 	    return;
+	}
     }
 
     G_fatal_error(_("Unable to load GDAL library"));
