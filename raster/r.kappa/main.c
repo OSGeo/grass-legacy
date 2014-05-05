@@ -139,7 +139,7 @@ int main(int argc, char **argv)
     /* generate the error matrix, kappa and variance */
     calc_kappa();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 
