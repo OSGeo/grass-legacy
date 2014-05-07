@@ -889,7 +889,6 @@ int G_get_map_row(int fd, CELL * buf, int row)
  * \param data_type data type
  *
  * \return 1 on success
- * \return 0 row requested not within window
  * \return -1 on error
  */
 
