@@ -6,30 +6,30 @@ entered by the user. If no output shademap name is given, the new shaded
 relief map is named <em>&lt;input_map&gt;.shade</em>.
 The map is assigned a grey-scale color table.
 
-<p>
-The module then prompts the user to enter values for:
+<p>The parameters controlling the shading are:
 <ol>
-<li>The <b>altitude</b> of the sun in degrees above the horizon
-(a value between 0 and 90 degrees), and
-
-<li>The <b>azimuth</b> of the sun in degrees to the east of north
-(a value between 0 and 360 degrees).
-
-<li>The name of a raster map layer to provide elevation values for the 
-shaded relief map.  Typically, this would be a map layer of elevation;
+<li>A raster map layer to provide elevation values for the shaded 
+relief map.  Typically, this would be a map layer of elevation; 
 however, any raster map layer can be named.
 
-<li>The scaling parameter, which compensates for a different horizontal
-<b>scale</b> than vertical scale. If 'scale' is a number then the ewres 
-and nsres are multiplied by that scale to calculate the shading. (Default=1.0 
-for equivalent horizontal and vertical scales.)
+<li>The <b>altitude</b> of the sun in degrees above the horizon
+(a value between 0 and 90 degrees).
+
+<li>The <b>azimuth</b> of the sun in degrees to the east of north
+(a value between 0 and 360 degrees; clockwise from north).
+
+<li>The scaling parameter, which compensates for a different 
+horizontal <b>scale</b> than vertical scale. If <b>scale</b> is a 
+number, then the ewres and nsres are multiplied by that scale to 
+calculate the shading. (Default=1.0 for equivalent horizontal and 
+vertical scales.)
 
 <li>For the special case when a latitude-longitude projection is used with an
 elevation map measured in meters (e.g., SRTM, ETOPO2 etc.) or feet, the 
 <b>units</b> can be set to automatically set the horizontal scale to the the number of 
 meters (scale=111120) or feet (scale=370400) in a degree of latitude. The script scales
 latitude and longitude equally, so it's only approximately right, but for shading 
-it's close enough. It makes the difference between a usable and unusable shade.
+it is close enough. It makes the difference between a usable and unusable shade.
 The <b>units</b> parameter overrides the <b>scale</b> parameter.
 
 <li>The <b>zmult</b> exaggeration factor that changes the apparent relief
@@ -42,9 +42,8 @@ statement. Refer to the manual entry for <em>r.mapcalc</em> for an explanation
 of the filtering syntax shown in the above expression.
 See, for example, the section on "The Neighborhood Modifier".
 
-<p>
-<em>r.shaded.relief</em> then runs <em>r.colors</em>
-to assign a grey-scale color table to the new shaded relief map.
+<p><em>r.shaded.relief</em> assigns a grey-scale color table to the new 
+shaded relief map.
 
 <h2>NOTES</h2>
 
@@ -76,10 +75,10 @@ r.shaded.relief map=srtm shadedmap=srtm.shaded scale=111120
 
 "<i>r.mapcalc: An Algebra for GIS and Image Processing</i>", by Michael Shapiro
 and Jim Westervelt, U.S. Army Construction Engineering Research Laboratory
-(March/1991) (available from the GRASS web site).
+(March/1991) (<a href="http://grass.osgeo.org/gdp/raster/mapcalc-algebra.pdf">PDF</a>).
 
 <p>
-<!-- RGB version not ported to GRASS 6:
+<!-- RGB version not ported to GRASS 6 (why?):
   <em><a href="shade.clr.sh.html">shade.clr.sh</a></em><br>
  -->
 <em>
