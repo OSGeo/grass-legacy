@@ -663,7 +663,7 @@ static int G__open_raster_new(const char *name, int open_mode)
     tempname = G_tempfile();
     fd = creat(tempname, 0666);
     if (fd < 0) {
-	G_warning(_("G__open_raster_new(): no temp files available"));
+	G_warning(_("No temp files available: %s"), strerror(errno));
 	G_free(tempname);
 	G_free(map);
 	G_free(mapset);
