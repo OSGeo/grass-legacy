@@ -52,7 +52,7 @@ int G__gisinit(const char *version, const char *pgm)
 
     if (strcmp(version, GIS_H_VERSION) != 0)
 	G_fatal_error(_("Module built against version %s but "
-			"trying to use version %s."
+			"trying to use version %s. "
 			"You need to rebuild GRASS GIS or untangle multiple installations."),
                         version, GIS_H_VERSION);
 
@@ -90,7 +90,7 @@ int G__no_gisinit(const char *version)
 
     if (strcmp(version, GIS_H_VERSION) != 0)
 	G_fatal_error(_("Module built against version %s but "
-			"trying to use version %s."
+			"trying to use version %s. "
 			"You need to rebuild GRASS GIS or untangle multiple installations."),
                         version, GIS_H_VERSION);
     gisinit();
