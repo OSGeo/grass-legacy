@@ -360,20 +360,22 @@ fi
 
 # create SQL file for extended and normal statistics
 g.message -v "Creating SQL file ..."
+echo "BEGIN TRANSACTION;" > "$SQLTMP"
 if [ $GIS_FLAG_E -eq 1 ] ; then
     sed -e '1d' "$STATSTMP" | awk -F "|" \
       '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.15g , \
       '${col3}' = %.15g , '${col4}' = %.15g , '${col5}' = %.15g , '${col6}' = %.15g , \
       '${col7}' = %.15g , '${col8}' = %.15g , '${col9}' = %.15g , '${col10}' = %.15g , \
       '${col11}' = %.15g , '${col12}' = %2f , '${col13}' = %.15g \
-      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$1}' > "$SQLTMP"
+      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$1}' >> "$SQLTMP"
 else
     sed -e '1d' "$STATSTMP" | awk -F "|" \
       '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.15g , \
       '${col3}' = %.15g , '${col4}' = %.15g , '${col5}' = %.15g , '${col6}' = %.15g , \
       '${col7}' = %.15g , '${col8}' = %.15g , '${col9}' = %.15g \
-      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$1}' > "$SQLTMP"
+      WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$1}' >> "$SQLTMP"
 fi
+echo "COMMIT;" >> "$SQLTMP"
 
 g.message message="Updating the database ..."
 db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
