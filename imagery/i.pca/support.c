@@ -76,5 +76,5 @@ static void write_history(int bands, char *outname, double **eigmat, double *eig
     /* only write to stderr the first time (this fn runs for every output map) */
     first_map = FALSE;
 
-    return G_write_history(outname, &hist);
+    G_write_history(outname, &hist);
 }
