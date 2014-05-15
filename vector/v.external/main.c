@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     FILE *fd;
     struct Map_info Map;
     OGRDataSourceH Ogr_ds;
-    OGRSFDriverH Ogr_driver;
     OGRLayerH Ogr_layer;
     OGRFeatureDefnH Ogr_featuredefn;
     int nlayers;
@@ -43,22 +42,10 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
-    OGRRegisterAll();
-
-    /* Module options */
-    sprintf(buf, "Available drivers: ");
-    for (i = 0; i < OGRGetDriverCount(); i++) {
-	Ogr_driver = OGRGetDriver(i);
-	if (i == 0)
-	    sprintf(buf, "%s%s", buf, OGR_Dr_GetName(Ogr_driver));
-	else
-	    sprintf(buf, "%s,%s", buf, OGR_Dr_GetName(Ogr_driver));
-    }
     module = G_define_module();
     module->keywords = _("vector, external, import");
-    module->label =
+    module->description =
 	_("Creates a new vector as a read-only link to OGR layer.");
-    module->description = G_store(buf);
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
@@ -89,6 +76,8 @@ int main(int argc, char *argv[])
 
     if (!out_opt->answer && layer_opt->answer)
 	G_fatal_error(_("Output vector name was not specified"));
+
+    OGRRegisterAll();
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen(dsn_opt->answer, FALSE, NULL);
