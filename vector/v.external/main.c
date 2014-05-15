@@ -25,16 +25,20 @@
 #include <grass/glocale.h>
 #include "ogr_api.h"
 
+static int cmp(const void *, const void *);
+static void list_formats(void);
+static char **format_list(int *, size_t *);
+
 int main(int argc, char *argv[])
 {
     int i;
     struct GModule *module;
     struct Option *dsn_opt, *layer_opt, *out_opt;
+    struct Flag* format_flag;
     char buf[2000];
     FILE *fd;
     struct Map_info Map;
     OGRDataSourceH Ogr_ds;
-    OGRSFDriverH Ogr_driver;
     OGRLayerH Ogr_layer;
     OGRFeatureDefnH Ogr_featuredefn;
     int nlayers;
@@ -43,27 +47,14 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
-    OGRRegisterAll();
-
-    /* Module options */
-    sprintf(buf, "Available drivers: ");
-    for (i = 0; i < OGRGetDriverCount(); i++) {
-	Ogr_driver = OGRGetDriver(i);
-	if (i == 0)
-	    sprintf(buf, "%s%s", buf, OGR_Dr_GetName(Ogr_driver));
-	else
-	    sprintf(buf, "%s,%s", buf, OGR_Dr_GetName(Ogr_driver));
-    }
     module = G_define_module();
     module->keywords = _("vector, external, import");
-    module->label =
+    module->description =
 	_("Creates a new vector as a read-only link to OGR layer.");
-    module->description = G_store(buf);
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
     dsn_opt->type = TYPE_STRING;
-    dsn_opt->required = YES;
     dsn_opt->gisprompt = "old_file,file,dsn";
     dsn_opt->description = "OGR datasource name. Examples:\n"
 	"\t\tESRI Shapefile: directory containing shapefiles\n"
@@ -84,8 +75,24 @@ int main(int argc, char *argv[])
 	 "\t\tESRI Shapefile: shapefile name\n"
 	 "\t\tMapInfo File: mapinfo file name");
 
+    format_flag = G_define_flag();
+    format_flag->key = 'f';
+    format_flag->description = _("List supported formats and exit");
+    format_flag->guisection = _("Print");
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+    OGRRegisterAll();
+
+    if (format_flag->answer) {
+        /* list formats */
+        list_formats();
+        exit(EXIT_SUCCESS);
+    }
+
+    if (!dsn_opt)
+	G_fatal_error(_("Name of OGR data source not specified"));
 
     if (!out_opt->answer && layer_opt->answer)
 	G_fatal_error(_("Output vector name was not specified"));
@@ -121,7 +128,7 @@ int main(int argc, char *argv[])
 
     if (!layer_opt->answer) {
 	fprintf(stdout, "\n");
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
 
     if (layer == -1) {
@@ -162,4 +169,63 @@ int main(int argc, char *argv[])
     Vect_close(&Map);
 
     exit(EXIT_SUCCESS);
+}
+
+void list_formats(void)
+{
+    int i, count;
+    char **list;
+    
+    G_message(_("List of supported formats:"));
+
+    list = format_list(&count, NULL);
+    
+    for (i = 0; i < count; i++)
+	fprintf(stdout, "%s\n", list[i]);
+    fflush(stdout);
+
+    G_free(list);
+}
+
+char **format_list(int *count, size_t *len)
+{
+    int i;
+    char **list;
+
+    list = NULL;
+    *count = 0;
+    if (len)
+	*len = 0;
+
+    char buf[2000];
+    
+    OGRSFDriverH Ogr_driver;
+    
+    /* Open OGR DSN */
+    OGRRegisterAll();
+    G_debug(2, "driver count = %d", OGRGetDriverCount());
+    for (i = 0; i < OGRGetDriverCount(); i++) {
+	Ogr_driver = OGRGetDriver(i);
+	G_debug(2, "driver %d/%d : %s", i, OGRGetDriverCount(),
+		OGR_Dr_GetName(Ogr_driver));
+	
+	list = G_realloc(list, ((*count) + 1) * sizeof(char *));
+
+	/* chg white space to underscore in OGR driver names */
+	sprintf(buf, "%s", OGR_Dr_GetName(Ogr_driver));
+	G_strchg(buf, ' ', '_');
+	list[(*count)++] = G_store(buf);
+	if (len)
+	    *len += strlen(buf) + 1; /* + ',' */
+    }
+
+    /* order formats by name */
+    qsort(list, *count, sizeof(char *), cmp);
+
+    return list;
+}
+
+int cmp(const void *a, const void *b)
+{
+    return strcmp(*(char **)a, *(char **)b);
 }
