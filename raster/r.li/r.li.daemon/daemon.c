@@ -175,10 +175,10 @@ int calculateIndex(char *file, rli_func *f,
 	G_short_history(output, "raster", &history);
 	G_command_history(&history);
 	G_write_history(output, &history);
-	G_message(_("Raster map <%s> created."), output);
+	G_done_msg(_("Raster map <%s> created."), output);
     } else {
 	/* text file output */
-	G_message("Result written to ASCII file <%s>", out);
+	G_message("Result written to text file <%s>", out);
     }
 
     return 1;
