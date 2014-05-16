@@ -113,6 +113,10 @@ int main(int argc, char *argv[])
     Cats = Vect_new_cats_struct();
 
     /* open input vector */
+    if (G_find_vector2(map_opt->answer, G_mapset()) == NULL)
+        G_fatal_error(_("Vector map <%s> not found in the current mapset"),
+                         map_opt->answer);
+
     Vect_set_open_level(2);
     if (Vect_open_old(&Map, map_opt->answer, G_mapset()) < 2) {
 	G_fatal_error(_("Unable to open vector map <%s> at topological level %d"),
