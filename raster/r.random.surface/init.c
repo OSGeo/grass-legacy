@@ -11,6 +11,10 @@
 #include "ransurf.h"
 #include "local_proto.h"
 
+/* function prototypes */
+static void IsLegal(char *Name);
+
+
 void Init(int argc, char **argv)
 {
     struct Option *Output;
@@ -162,6 +166,7 @@ void Init(int argc, char **argv)
     NumMaps = 0;
     OutNames = (char **)G_malloc(sizeof(char *));
     for (i = 0; (Name = Output->answers[i]); i++) {
+	IsLegal(Name);
 	for (j = i - 1; j >= 0; j--) {
 	    if (strcmp(OutNames[j], Name) == 0)
 		G_fatal_error
@@ -411,4 +416,12 @@ void Init(int argc, char **argv)
 	BigF.F[i] = (double *)G_malloc(BigF.NumC * sizeof(double));
 
     AllMaxDist *= 2.0;
+}
+
+
+static void IsLegal(char *Name)
+{
+    if (G_legal_filename(Name) == -1)
+	G_fatal_error(_("<%s> is an illegal name"),
+		      Name);
 }

@@ -375,6 +375,35 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Raster map <%s> not found"), mois_layer);
     }
 
+    /*  Check if specified output layer names ARE LEGAL or EXISTS   */
+    if (G_legal_filename(out_layer) < 0)
+	G_fatal_error(_("<%s> is an illegal file name"), out_layer);
+
+    if (G_find_cell2(out_layer, G_mapset()))
+	G_fatal_error(
+	  _("Raster map <%s> already exists in mapset <%s>, select another name"),
+		out_layer, G_mapset());
+
+    if (x_out) {
+	if (G_legal_filename(x_out_layer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"), x_out_layer);
+
+	if (G_find_cell2(x_out_layer, G_mapset()))
+	    G_fatal_error(
+	      _("Raster map <%s> already exists in mapset <%s>, select another name"),
+		    x_out_layer, G_mapset());
+    }
+
+    if (y_out) {
+	if (G_legal_filename(y_out_layer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"), y_out_layer);
+
+	if (G_find_cell2(y_out_layer, G_mapset()))
+	    G_fatal_error(
+	      _("Raster map <%s> already exists in mapset <%s>, select another name"),
+		    y_out_layer, G_mapset());
+    }
+
     /*  Open input cell layers for reading  */
 
     max_fd = G_open_cell_old(max_layer, G_find_cell2(max_layer, ""));

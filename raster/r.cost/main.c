@@ -346,6 +346,16 @@ int main(int argc, char *argv[])
 	move_dir_mapset = G_find_cell2(move_dir_layer, search_mapset);
     }
 
+    /*  Check if specified output layer name is legal   */
+
+    if (G_legal_filename(cum_cost_layer) < 0)
+	G_fatal_error(_("<%s> is an illegal file name"), cum_cost_layer);
+
+    if (dir == 1) {
+	if (G_legal_filename(move_dir_layer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"), move_dir_layer);
+    }
+
     /*  Find number of rows and columns in window    */
 
     nrows = G_window_rows();

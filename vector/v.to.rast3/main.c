@@ -65,6 +65,9 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    if (G_legal_filename(out_opt->answer) < 0)
+	G_fatal_error(_("<%s> is an illegal file name"), out_opt->answer);
+
     G3d_getWindow(&region);
     G3d_readWindow(&region, NULL);
 
