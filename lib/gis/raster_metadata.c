@@ -113,6 +113,7 @@ int G__raster_misc_read_line(const char *elem, const char *name,
     }
     if (G_getl2(buff, sizeof(buff) - 1, fd) == 0) {
 	/* file is empty */
+	strcpy(str, "");
 	return fclose(fd);
     }
 
