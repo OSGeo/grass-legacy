@@ -98,14 +98,13 @@ int main(int argc, char *argv[])
     int out_fd;
     char *infile, *outmap;
     int xcol, ycol, zcol, max_col, percent;
-    int do_zfilter;
     int method = -1;
     int bin_n, bin_min, bin_max, bin_sum, bin_sumsq, bin_index;
     double zrange_min, zrange_max, d_tmp;
     char *fs;			/* field delim */
     off_t filesize;
     int linesize;
-    long estimated_lines;
+    unsigned long estimated_lines;
     int from_stdin;
     int can_seek;
 
@@ -296,14 +295,12 @@ int main(int argc, char *argv[])
     zscale = atof(zscale_opt->answer);
 
     /* parse zrange */
-    do_zfilter = FALSE;
     if (zrange_opt->answer != NULL) {
 	if (zrange_opt->answers[0] == NULL)
 	    G_fatal_error(_("Invalid zrange"));
 
 	sscanf(zrange_opt->answers[0], "%lf", &zrange_min);
 	sscanf(zrange_opt->answers[1], "%lf", &zrange_max);
-	do_zfilter = TRUE;
 
 	if (zrange_min > zrange_max) {
 	    d_tmp = zrange_max;
@@ -512,7 +509,7 @@ int main(int argc, char *argv[])
 	if (linesize < 6)	/* min possible: "0,0,0\n" */
 	    linesize = 6;
 	estimated_lines = filesize / linesize;
-	G_debug(2, "estimated number of lines in file: %ld", estimated_lines);
+	G_debug(2, "estimated number of lines in file: %lu", estimated_lines);
     }
     else
 	estimated_lines = -1;
