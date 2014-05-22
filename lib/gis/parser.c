@@ -64,14 +64,14 @@
  *    that the "map" option is required and also that the number 12 is
  *    out of range.  The acceptable range (or list) will be printed.
  *
- * (C) 2001-2009, 2011 by the GRASS Development Team
+ * (C) 2001-2014 by the GRASS Development Team
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
  * \author Original author CERL; enhancements: Radim Blazek
  *
- * \date 2003-2011
+ * \date 2003-2014
  *
  */
 
@@ -1762,7 +1762,7 @@ static void G_script(void)
     fprintf(fp, "# MODULE:       %s_wrapper\n", G_program_name());
     fprintf(fp, "# AUTHOR(S):    %s\n", G_whoami());
     fprintf(fp, "# PURPOSE:      \n");
-    fprintf(fp, "# COPYRIGHT:    (C) 2009 GRASS Development Team/%s\n",
+    fprintf(fp, "# COPYRIGHT:    (C) 2014 GRASS Development Team/%s\n",
 	    G_whoami());
     fprintf(fp, "#\n");
     fprintf(fp,
