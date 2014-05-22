@@ -11,6 +11,7 @@
 
 /* function prototypes */
 static int comp_array(const void *p1, const void *p2);
+static void IsLegal(char *Name);
 
 void Init(int argc, char **argv)
 {
@@ -87,6 +88,8 @@ void Init(int argc, char **argv)
 	}
 	CellCount = Rs * Cs;
     }
+
+    IsLegal(Output->answer);
     
     sscanf(Distance->answer, "%lf", &MaxDist);
     if (MaxDist < 0.0)
@@ -144,4 +147,12 @@ static int comp_array(const void *q1, const void *q2)
     if (p2->Value < p1->Value)
 	return (1);
     return (0);
+}
+
+
+static void IsLegal(char *Name)
+{
+    if (G_legal_filename(Name) == -1)
+	G_fatal_error(_("<%s> is an illegal name"),
+		      Name);
 }
