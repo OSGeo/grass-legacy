@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     option_opt->options = "add,del,chlayer,sum,report,print,layers";
     option_opt->answer = "add";
     option_opt->description = _("Action to be done");
-    option_opt->descriptions = _("add;add a new category;"
+    option_opt->descriptions = _("add;add a category to features without category in the given layer;"
 				 "del;delete all categories of given layer;"
 				 "chlayer;change layer number (e.g. layer=3,1 changes layer 3 to layer 1);"
 				 "sum;add the value specified by cat option to the current category value;"
