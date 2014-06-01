@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 17:34+0100\n"
-"PO-Revision-Date: 2014-04-04 09:14+0100\n"
+"PO-Revision-Date: 2014-06-01 00:12+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -3646,7 +3646,7 @@ msgid "There are classbreaks outside the range min-max. Number of classes reduce
 msgstr "Il y a des ruptures de classes en dehors de la plage min-max. Nombre de classes réduites à %i, mais utilisation des probabilités sur %i classes."
 
 #: ../lib/rst/interp_float/interp2d.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
 msgstr "Dépassement - augmentation de la tension suggérée. Le dépassement se produit à la cellule (%d,%d), valeur Z %f, zmin %f, zmax %f."
 
@@ -4174,9 +4174,8 @@ msgid "%d errors in category string."
 msgstr "%d erreurs dans la chaîne des catégories"
 
 #: ../lib/vector/Vlib/array.c:145 ../lib/vector/Vlib/array.c:269
-#, fuzzy
 msgid "Mixed area and other type requested for vector array"
-msgstr "Mélange de surface et d'autre type demandé pour le vecteur"
+msgstr "Demande d'un mélange de surface et d'autre type pour le vecteur"
 
 #: ../lib/vector/Vlib/array.c:155 ../lib/vector/Vlib/array.c:178
 #: ../lib/vector/Vlib/array.c:306 ../lib/vector/Vlib/array.c:339
@@ -5063,3 +5062,9 @@ msgstr "Outil de recherche inconnu"
 
 #~ msgid " The raster map %s@%s is empty"
 #~ msgstr "La couche raster %s@%s est vide"
+
+#~ msgid "No temp files available: %s"
+#~ msgstr "Pas de fichiers temporaires disponibles : %s"
+
+#~ msgid "Module built against version %s but trying to use version %s. You need to rebuild GRASS GIS or untangle multiple installations."
+#~ msgstr "Module compilé pour la version %s mais essayant d'utiliser la version %s. Vous devez recompiler GRASS GIS ou gérer les versions multiples."
