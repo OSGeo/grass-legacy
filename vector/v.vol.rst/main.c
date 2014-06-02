@@ -531,14 +531,14 @@ int main(int argc, char *argv[])
 
     if ((data =
 	 data_new(x_orig, y_orig, z_orig, n_rows, n_cols, n_levs, 0)) == NULL)
-	G_fatal_error("cannot create octdata");
+	G_fatal_error("Unable to create octdata");
     if ((functions =
 	 OT_functions_new(oct_compare, oct_divide_data, oct_add_data,
 			  oct_intersect, oct_division_check,
 			  oct_get_points)) == NULL)
-	G_fatal_error("cannot create octfunc");
+	G_fatal_error("Unable to create octfunc");
     if ((tree = OT_tree_new(data, NULL, NULL, functions, 0)) == NULL)
-	G_fatal_error("cannot create octtree");
+	G_fatal_error("Unable to create octtree");
 
     root = tree;
 
@@ -547,7 +547,7 @@ int main(int argc, char *argv[])
      */
     if (TESTOUT) {
 	if ((fd4 = fopen("testout", "w+")) == NULL)
-	    G_fatal_error("Cannot open testout");
+	    G_fatal_error("Unable to open testout");
     }
 
     Vect_set_open_level(1);
@@ -628,7 +628,8 @@ int main(int argc, char *argv[])
 		    clean_fatal_error
 			("Not enough disk space--cannot write temp files");
 	    }
-	}
+	} else
+	  G_warning("Unable to create cellout raster map without cellinp");
 	ertot = 0.;
 	if (per)
 	    fprintf(stderr, "Percent complete: ");
@@ -822,6 +823,8 @@ int main(int argc, char *argv[])
 
 		    G_command_history(&hist);
 		    G_write_history(cellout, &hist);
+		    G_message(_("Raster map <%s> created"), cellout);
+
 		    fclose(Tmp_fd_cell);
 		    unlink(Tmp_file_cell);
 		}
@@ -860,6 +863,7 @@ int main(int argc, char *argv[])
 		db_close_database_shutdown_driver(driver);
 		Vect_build(&Map);
 		Vect_close(&Map);
+		G_message(_("Vector map <%s> created"), cvdev);
 	    }
 
 	    fprintf(stderr, "\n");
@@ -874,12 +878,12 @@ int main(int argc, char *argv[])
 
 	}
 	else
-	    clean_fatal_error("Interp_call failed!");
+	    clean_fatal_error(_("Interpolation failed"));
     }
     else
-	clean_fatal_error("input failed!");
+	clean_fatal_error(_("Input failed"));
     if (fd4 != NULL)
 	fclose(fd4);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
