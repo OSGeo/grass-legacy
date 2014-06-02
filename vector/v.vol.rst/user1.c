@@ -467,7 +467,8 @@ int OUTGR()
 	if (G3d_closeCell(cf1) == 0) {
 	    sprintf(buff, "Error closing output file %s ", outz);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), outz);
     }
 
   /*** Write out the gradient results ***/
@@ -518,7 +519,8 @@ int OUTGR()
 	if (G3d_closeCell(cf2) == 0) {
 	    sprintf(buff, "Error closing output file %s ", gradient);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), gradient);
     }
 
   /*** Write out aspect1 results ***/
@@ -569,7 +571,8 @@ int OUTGR()
 	if (G3d_closeCell(cf3) == 0) {
 	    sprintf(buff, "Error closing output file %s ", aspect1);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), aspect1);
     }
 
   /*** Write out aspect2 results ***/
@@ -620,7 +623,8 @@ int OUTGR()
 	if (G3d_closeCell(cf4) == 0) {
 	    sprintf(buff, "Error closing output file %s ", aspect2);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), aspect2);
     }
 
   /*** Write out ncurv results ***/
@@ -671,7 +675,8 @@ int OUTGR()
 	if (G3d_closeCell(cf5) == 0) {
 	    sprintf(buff, "Error closing output file %s ", ncurv);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), ncurv);
     }
 
   /*** Write out gcurv results ***/
@@ -722,7 +727,8 @@ int OUTGR()
 	if (G3d_closeCell(cf6) == 0) {
 	    sprintf(buff, "Error closing output file %s ", gcurv);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), gcurv);
     }
 
   /*** Write mcurv results ***/
@@ -773,7 +779,8 @@ int OUTGR()
 	if (G3d_closeCell(cf7) == 0) {
 	    sprintf(buff, "Error closing output file %s ", mcurv);
 	    clean_fatal_error(buff);
-	}
+	} else
+            G_message(_("3D raster map <%s> created"), mcurv);
     }
 
     G_free(data);
