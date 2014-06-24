@@ -91,7 +91,10 @@ class Layer(object):
             tempfile_sfx = ".png"
         else:
             tempfile_sfx = ".ppm"
-        self.mapfile = tempfile.mkstemp(suffix = tempfile_sfx)[1]
+        mapfile = tempfile.NamedTemporaryFile(suffix=tempfile_sfx, delete=False)
+        # we don't want it open, we just need the name
+        self.mapfile = mapfile.name
+        mapfile.close()
         # do we need to `touch` the maskfile so it exists?
         self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
 
@@ -132,8 +135,10 @@ class Layer(object):
                 tempfile_sfx =".png"
             else:
                 tempfile_sfx =".ppm"
-            self.mapfile = tempfile.mkstemp(suffix = tempfile_sfx)[1]
-            # do we need to `touch` the maskfile so it exists?
+            mapfile = tempfile.NamedTemporaryFile(suffix=tempfile_sfx, delete=False)
+            # we don't want it open, we just need the name
+            self.mapfile = mapfile.name
+            mapfile.close()
             self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
 
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
@@ -384,7 +389,10 @@ class Map(object):
         self.gisrc = gisrc
         
         # generated file for g.pnmcomp output for rendering the map
-        self.mapfile = tempfile.mkstemp(suffix = '.ppm')[1]
+        mapfile = tempfile.NamedTemporaryFile(suffix='.ppm', delete=False)
+        # we don't want it open, we just need the name
+        self.mapfile = mapfile.name
+        mapfile.close()
         
         # setting some initial env. variables
         self._initGisEnv() # g.gisenv
