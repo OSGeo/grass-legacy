@@ -87,13 +87,17 @@ class Layer(object):
                         self.opacity, self.hidden))
         
         # generated file for each layer
-        self.gtemp = tempfile.mkstemp()[1]
-        self.maskfile = self.gtemp + ".pgm"
         if self.type == 'overlay':
-            self.mapfile  = self.gtemp + ".png"
+            tempfile_sfx = ".png"
         else:
-            self.mapfile  = self.gtemp + ".ppm"
-        
+            tempfile_sfx = ".ppm"
+        mapfile = tempfile.NamedTemporaryFile(suffix=tempfile_sfx, delete=False)
+        # we don't want it open, we just need the name
+        self.mapfile = mapfile.name
+        mapfile.close()
+        # do we need to `touch` the maskfile so it exists?
+        self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
+
     def __del__(self):
         Debug.msg (3, "Layer.__del__(): layer=%s, cmd='%s'" %
                    (self.name, self.GetCmd(string = True)))
@@ -124,34 +128,28 @@ class Layer(object):
         if self.type not in layertypes:
             raise GException(_("<%(name)s>: layer type <%(type)s> is not supported") % \
                                  {'type' : self.type, 'name' : self.name})
-        
-        # start monitor
-        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-#            os.environ["GRASS_CAIROFILE"] = self.mapfile
-#            if 'cairo' not in gcmd.RunCommand('d.mon',
-#                                              flags='p',
-#                                              read = True):
-#                gcmd.RunCommand('d.mon',
-#                                start = 'cairo')
-            if not self.mapfile:
-                self.gtemp = tempfile.mkstemp()[1]
-                self.maskfile = self.gtemp + ".pgm"
-                if self.type == 'overlay':
-                    self.mapfile  = self.gtemp + ".png"
-                else:
-                    self.mapfile  = self.gtemp + ".ppm"
 
+        # start monitor
+        if not self.mapfile:
+            if self.type == 'overlay':
+                tempfile_sfx =".png"
+            else:
+                tempfile_sfx =".ppm"
+            mapfile = tempfile.NamedTemporaryFile(suffix=tempfile_sfx, delete=False)
+            # we don't want it open, we just need the name
+            self.mapfile = mapfile.name
+            mapfile.close()
+            self.maskfile = self.mapfile.rsplit(".",1)[0] + ".pgm"
+
+        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             if self.mapfile:
                 os.environ["GRASS_CAIROFILE"] = self.mapfile
-        else:
-            if not self.mapfile:
-                self.gtemp = tempfile.mkstemp()[1]
-                self.maskfile = self.gtemp + ".pgm"
-                if self.type == 'overlay':
-                    self.mapfile  = self.gtemp + ".png"
-                else:
-                    self.mapfile  = self.gtemp + ".ppm"
 
+# FIXME: the second RunCommand() here locks up the GUI, need to use 'xkill' to recover.
+#        the first one works as expected.
+#            if 'cairo' not in RunCommand('d.mon', flags='p', read = True):
+#                RunCommand('d.mon', start = 'cairo', select = 'cairo')
+        else:
             if self.mapfile:
                 os.environ["GRASS_PNGFILE"] = self.mapfile
         
@@ -195,9 +193,14 @@ class Layer(object):
         
         # stop monitor
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-#            gcmd.RunCommand('d.mon',
-#                            stop = 'cairo')
+# FIXME:
+#            ret, msg = RunCommand('d.mon', stop = 'cairo', getErrorMsg = True)
+#            if ret != 0:
+#                sys.stderr.write(_("Closing Cairo driver failed\n"))
+#                if msg:
+#                    sys.stderr.write(_("Details: %s\n") % msg)
             del os.environ["GRASS_CAIROFILE"]
+
         elif "GRASS_PNGFILE" in os.environ:
             del os.environ["GRASS_PNGFILE"]
         
@@ -386,7 +389,10 @@ class Map(object):
         self.gisrc = gisrc
         
         # generated file for g.pnmcomp output for rendering the map
-        self.mapfile = tempfile.mkstemp(suffix = '.ppm')[1]
+        mapfile = tempfile.NamedTemporaryFile(suffix='.ppm', delete=False)
+        # we don't want it open, we just need the name
+        self.mapfile = mapfile.name
+        mapfile.close()
         
         # setting some initial env. variables
         self._initGisEnv() # g.gisenv
@@ -876,9 +882,9 @@ class Map(object):
         os.environ["GRASS_HEIGHT"] = str(self.height)
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             os.environ["GRASS_AUTO_WRITE"] = "TRUE"
+            # in GRASS 6, RENDER_IMMEDIATE always triggers the PNG driver
             if "GRASS_RENDER_IMMEDIATE" in os.environ:
                 del os.environ["GRASS_RENDER_IMMEDIATE"]
-            os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
