@@ -97,14 +97,14 @@ int main(int argc, char *argv[])
     FILE *in_fp;
     int out_fd;
     char *infile, *outmap;
-    int xcol, ycol, zcol, max_col, percent;
+    int xcol, ycol, zcol, max_col, percent, skip_lines;
     int method = -1;
     int bin_n, bin_min, bin_max, bin_sum, bin_sumsq, bin_index;
     double zrange_min, zrange_max, d_tmp;
     char *fs;			/* field delim */
     off_t filesize;
     int linesize;
-    unsigned long estimated_lines;
+    unsigned long estimated_lines, line;
     int from_stdin;
     int can_seek;
 
@@ -119,7 +119,6 @@ int main(int argc, char *argv[])
     int row, col;		/* counters */
 
     int pass, npasses;
-    unsigned long line;
     char buff[BUFFSIZE];
     double x, y, z;
     char **tokens;
@@ -147,7 +146,7 @@ int main(int argc, char *argv[])
     struct Option *input_opt, *output_opt, *delim_opt, *percent_opt,
 	*type_opt;
     struct Option *method_opt, *xcol_opt, *ycol_opt, *zcol_opt, *zrange_opt,
-	*zscale_opt;
+	*zscale_opt, *skip_opt;
     struct Option *trim_opt, *pth_opt;
     struct Flag *scan_flag, *shell_style, *skipline;
 
@@ -210,6 +209,16 @@ int main(int argc, char *argv[])
     zcol_opt->answer = "3";
     zcol_opt->description = _("Column number of data values in input file");
     zcol_opt->guisection = _("Input");
+
+    skip_opt = G_define_option();
+    skip_opt->key = "skip";
+    skip_opt->type = TYPE_INTEGER;
+    skip_opt->required = NO;
+    skip_opt->multiple = NO;
+    skip_opt->answer = "0";
+    skip_opt->description =
+	_("Number of header lines to skip at top of input file");
+    skip_opt->guisection = _("Input");
 
     zrange_opt = G_define_option();
     zrange_opt->key = "zrange";
@@ -293,6 +302,10 @@ int main(int argc, char *argv[])
 
     percent = atoi(percent_opt->answer);
     zscale = atof(zscale_opt->answer);
+
+    skip_lines = atoi(skip_opt->answer);
+    if (skip_lines < 0)
+	G_fatal_error(_("Please specify reasonable number of lines to skip"));
 
     /* parse zrange */
     if (zrange_opt->answer != NULL) {
@@ -476,6 +489,12 @@ int main(int argc, char *argv[])
 	npasses = 1;
     }
 
+    /* skip past header lines */
+    for (line = 0; line < (unsigned long)skip_lines; line++) {
+    	if (0 == G_getl2(buff, BUFFSIZE - 1, in_fp))
+    	    break;
+    }
+
     if (scan_flag->answer) {
 	if (zrange_opt->answer)
 	    G_warning(_("zrange will not be taken into account during scan"));
@@ -526,8 +545,15 @@ int main(int argc, char *argv[])
 	if (npasses > 1)
 	    G_message(_("Pass #%d (of %d) ..."), pass, npasses);
 
-	if (can_seek)
+	if (can_seek) {
 	    rewind(in_fp);
+
+	    /* skip past header lines again */
+	    for (line = 0; line < (unsigned long)skip_lines; line++) {
+		if (0 == G_getl2(buff, BUFFSIZE - 1, in_fp))
+		    break;
+	    }
+	}
 
 	/* figure out segmentation */
 	pass_north = region.north - (pass - 1) * rows * region.ns_res;
@@ -645,14 +671,14 @@ int main(int argc, char *argv[])
 	    }
 
 	    count++;
-	    /*          G_debug(5, "x: %f, y: %f, z: %f", x, y, z); */
+	    /* G_debug(5, "x: %f, y: %f, z: %f", x, y, z); */
 	    G_free_tokens(tokens);
 
 	    /* find the bin in the current array box */
 	    arr_row = (int)((pass_north - y) / region.ns_res);
 	    arr_col = (int)((x - region.west) / region.ew_res);
 
-	    /*          G_debug(5, "arr_row: %d   arr_col: %d", arr_row, arr_col); */
+	    /* G_debug(5, "arr_row: %d   arr_col: %d", arr_row, arr_col); */
 
 	    /* The range should be [0,cols-1]. We use (int) to round down,
 	       but if the point exactly on eastern edge arr_col will be /just/
@@ -1006,6 +1032,8 @@ int main(int argc, char *argv[])
 	    default:
 		G_fatal_error("?");
 	    }
+
+	    G_percent(row, rows, 5);
 
 	    /* write out line of raster data */
 	    if (1 != G_put_raster_row(out_fd, raster_row, rtype)) {
