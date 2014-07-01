@@ -1,5 +1,5 @@
 ?package(grass):needs="text"\
   section="Applications/Science/Geoscience"\
-  title="GRASS GIS"\
+  title="GRASS GIS 6"\
   command="/usr/bin/grass65"\
   icon="grass.xpm"
