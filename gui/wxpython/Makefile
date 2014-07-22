@@ -44,3 +44,5 @@ $(ETCDIR):
 
 #doxygen:
 DOXNAME=wxpython
+
+clean: cleansubdirs
