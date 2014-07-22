@@ -609,7 +609,7 @@ class AboutWindow(wx.Frame):
                 line = line.rstrip('\n')
                 try:
                     if extra:
-                        name, email, rfc2_agreed = line.split(',')
+                        name, email, country, rfc2_agreed = line.split(',')
                     else:
                         cvs_id, name, email, country, osgeo_id, rfc2_agreed = line.split(',')
                 except ValueError:
