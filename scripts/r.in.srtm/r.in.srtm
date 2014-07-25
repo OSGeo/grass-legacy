@@ -3,7 +3,7 @@
 #import of SRTM hgt files into GRASS
 # written by Markus Neteler 11/2003 neteler AT itc it
 #
-# COPYRIGHT:	(C) 2004, 2006 by the GRASS Development Team
+# COPYRIGHT:	(C) 2004-2014 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -16,6 +16,7 @@
 # June 2005: added flag to read in US 1-arcsec tiles (H. Bowman)
 # April 2006: links updated from ftp://e0dps01u.ecs.nasa.gov/srtm/             
 #             to current links below
+# July 2014: Support for SRTMv3 (H. Bowman)
 #########################
 #Derived from:
 # ftp://e0srp01u.ecs.nasa.gov/srtm/version1/Documentation/Notes_for_ARCInfo_users.txt
@@ -111,9 +112,9 @@ if [ "$PROJ_TYPE" -ne 3 ] ; then
 fi
 
 # use these from now on:
-FILE=`echo "$GIS_OPT_INPUT" | sed 's+.hgt++'| sed 's+.zip++'`
-TILE=`echo "$FILE" | sed 's+^.*/++'`
-FDIR=`echo "$FILE" | sed 's+[^/]*$++'`
+FILE=`echo "$GIS_OPT_INPUT" | sed -e 's+\.hgt++' -e 's+\.zip++'`
+TILE=`echo "$FILE" | sed -e 's+^.*/++' -e 's+\.SRTMGL[13]++'`
+FDIR=`echo "$FILE" | sed -e 's+[^/]*$++'`
 
 if [ -z "$GIS_OPT_OUTPUT" ] ; then
   TILEOUT="$TILE"
@@ -168,7 +169,7 @@ fi
 cd "$TMPDIR"
 
 
-if [ $IS_ZIP -eq 1 ] ; then
+if [ "$IS_ZIP" -eq 1 ] ; then
     #unzip & rename data file:
     g.message  "Extracting '$FILE'..."
     unzip "$FILE.hgt.zip"
@@ -179,30 +180,30 @@ if [ $IS_ZIP -eq 1 ] ; then
 fi
 
 g.message "Converting input file to BIL..."
-mv "$TILE.hgt" "${TMPDIR}/$TILE.bil"
+mv "$TILE.hgt" "$TMPDIR/$TILE.bil"
 
-LL_LATITUDE=`echo $TILE  | cut -b2-3`
-LL_LONGITUDE=`echo $TILE | cut -b5-7`
+LL_LATITUDE=`echo "$TILE" | cut -b2-3`
+LL_LONGITUDE=`echo "$TILE" | cut -b5-7`
 
 #are we on the southern hemisphere? If yes, make LATITUDE negative.
-NORTH=`echo $TILE  | sed 's+.hgt++g' | cut -b1`
+NORTH=`echo "$TILE" | sed -e 's+\.hgt++g' | cut -b1`
 if [ "$NORTH" = "S" ] ; then
-   LL_LATITUDE=`echo $LL_LATITUDE | awk '{printf "%.10f", $1 * -1 }'`
+   LL_LATITUDE=`echo "$LL_LATITUDE" | awk '{printf "%.10f", $1 * -1 }'`
 fi
 
 #are we west of Greenwich? If yes, make LONGITUDE negative.
-EAST=`echo $TILE  | sed 's+.hgt++g' | cut -b4`
+EAST=`echo "$TILE" | sed -e 's+\.hgt++g' | cut -b4`
 if [ "$EAST" = "W" ] ; then
-   LL_LONGITUDE=`echo $LL_LONGITUDE | awk '{printf "%.10f", $1 * -1 }'`
+   LL_LONGITUDE=`echo "$LL_LONGITUDE" | awk '{printf "%.10f", $1 * -1 }'`
 fi
 
 # Calculate Upper Left from Lower Left
-ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $1}'`
+ULXMAP=`echo "$LL_LONGITUDE" | awk '{printf "%.1f", $1}'`
 # SRTM90 tile size is 1 deg:
-ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $1 + 1.0}'`
+ULYMAP=`echo "$LL_LATITUDE" | awk '{printf "%.1f", $1 + 1.0}'`
 
 
-if [ $GIS_FLAG_1 -ne 1 ] ; then
+if [ "$GIS_FLAG_1" -ne 1 ] ; then
   echo "BYTEORDER M
 LAYOUT BIL
 NROWS 1201
@@ -243,7 +244,8 @@ echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TO
 r.in.gdal in="$TILE.bil" out="$TILEOUT"
 EXITCODE=$?
 
-\rm -f "$TILE.bil" "$TILE.hdr" "$TILE.prj" "$TILE.hgt.zip"
+rm -f "$TILE".*
+
 cd ..
 rmdir "$TMPDIR"
 
@@ -257,8 +259,8 @@ fi
 r.colors color=srtm map="$TILEOUT"
 #g.region rast=$TILEOUT
 
-# write cmd history:
-r.support $TILEOUT history="${CMDLINE}"
+# write cmd history
+r.support "$TILEOUT" history="$CMDLINE"
 
 g.message "Done: generated map $TILEOUT"
 g.message "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"
