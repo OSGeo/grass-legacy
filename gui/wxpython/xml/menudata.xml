@@ -2413,6 +2413,13 @@
               <command>v.rast.stats</command>
             </menuitem>
             <menuitem>
+              <label>Update area attributes from vector</label>
+              <help>Count points in areas, calculate statistics from point attributes.</help>
+              <keywords>vector,attribute table,database,univariate statistics,zonal statistics</keywords>
+              <handler>OnMenuCmd</handler>
+              <command>v.vect.stats</command>
+            </menuitem>
+            <menuitem>
               <label>Update point attributes from areas</label>
               <help>Uploads vector values at positions of vector points to the table.</help>
               <keywords>vector,database,attribute table</keywords>
