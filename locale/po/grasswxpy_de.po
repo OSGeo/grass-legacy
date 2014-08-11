@@ -1,26 +1,26 @@
 # translation of grasswxpy_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2008-2013 GRASS Development Team
+# Copyright (C) 2008-2014 GRASS Development Team
 #
 # Markus Neteler <neteler cealp it>, 2008.
 # Georg Lösel <georg*de-schorsch.de>, 2008.
 # Markus Neteler <neteler osgeo.org>, 2008, 2009, 2010.
 # Robert Nuske <rnuske gwdg.de>, 2009, 2010.
-# Robert Nuske <robert.nuske nw-fva.de>, 2011, 2012, 2013.
+# Robert Nuske <robert.nuske nw-fva.de>, 2011, 2012, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 17:34+0100\n"
-"PO-Revision-Date: 2014-03-24 16:24+0100\n"
-"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
+"PO-Revision-Date: 2014-08-10 14:04+0200\n"
+"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../gui/wxpython/gui_core/prompt.py:393
 #, python-format
@@ -1484,14 +1484,14 @@ msgstr ""
 "Einzelheiten: %(error)s"
 
 #: ../gui/wxpython/gui_core/goutput.py:676
-#, fuzzy, python-format
+#, python-format
 msgid "Command output saved into '%s'"
-msgstr "Befehlsausgabe in '%s' gespeichert"
+msgstr "Befehlsausgabe gespeichert in '%s'"
 
 #: ../gui/wxpython/gui_core/goutput.py:795
-#, fuzzy, python-format
+#, python-format
 msgid "Command log saved to '%s'"
-msgstr "Befehlsausgabe in '%s' gespeichert"
+msgstr "Befehlslog gespeichert in '%s'"
 
 #: ../gui/wxpython/gui_core/goutput.py:850
 #, python-format
@@ -2483,9 +2483,8 @@ msgid "Read projection and datum terms from a georeferenced data file"
 msgstr "Einlesen von Projektions- und Datumsinformationen aus georeferenzierter Datei"
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
-#, fuzzy
 msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
-msgstr "Einlesen von Projektions- und Datumsinformationen aus WKT oder PRJ Datei"
+msgstr "Lese Projektions- und Datumsinformationen aus Well Known Text (WKT) .prj-Datei"
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
 msgid "Specify projection and datum terms using custom PROJ.4 parameters"
@@ -2952,9 +2951,8 @@ msgid "Position is given:"
 msgstr "Position ist angegeben:"
 
 #: ../gui/wxpython/psmap/dialogs.py:221
-#, fuzzy
 msgid "relative to paper"
-msgstr "in Bezug auf Papier"
+msgstr "bezogen auf Papier"
 
 #: ../gui/wxpython/psmap/dialogs.py:222
 msgid "by map coordinates"
@@ -3822,9 +3820,9 @@ msgid "Ps.map exited with return code %s"
 msgstr "Ps.map beendet mit Rückgabewert %s"
 
 #: ../gui/wxpython/psmap/frame.py:320
-#, fuzzy, python-format
+#, python-format
 msgid "%(prg)s exited with return code %(code)s"
-msgstr "ps2pdf beendet mit Rückgabewert %s"
+msgstr "%(prg)s beendet mit Rückgabewert %(code)s"
 
 #: ../gui/wxpython/psmap/frame.py:323
 msgid "PDF generated"
@@ -6013,7 +6011,7 @@ msgstr "Gibt Farbwerte für eine Rasterkarte aus."
 
 #: ../gui/wxpython/menustrings.py:306
 msgid "Buffer rasters"
-msgstr "Rasterzellen buffern"
+msgstr "Rasterzellen puffern"
 
 #: ../gui/wxpython/menustrings.py:307
 msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
@@ -7080,11 +7078,11 @@ msgstr "Selektiert Objekte einer Vektorkarte (A) durch Objekte einer anderen Vek
 
 #: ../gui/wxpython/menustrings.py:587
 msgid "Buffer vectors"
-msgstr "Vektor buffern"
+msgstr "Vektor puffern"
 
 #: ../gui/wxpython/menustrings.py:588
 msgid "Creates a buffer around features of given type (areas must contain centroid)."
-msgstr "Erzeugt einen Buffer um Objekte bestimmten Typs (Flächen müssen Zentroide enthalten)."
+msgstr "Erzeugt einen Puffer um Objekte bestimmten Typs (Flächen müssen Zentroide enthalten)."
 
 #: ../gui/wxpython/menustrings.py:589
 msgid "Lidar analysis"
@@ -10116,7 +10114,7 @@ msgstr "Einstellungen für 3D-Ansicht gespeichert in Datei <%s>."
 
 #: ../gui/wxpython/nviz/mapwindow.py:207
 msgid "Opening 3D view was not successful. Please try to change the value of depth buffer in GUI Settings dialog > tab Map Display > Advanced and restart GUI."
-msgstr "Öffnen der 3D-Ansicht war nicht erfolgreich. Ändere den Wert des Tiefenbuffers in den GUI-Einstellungen > Map Display > Fortgeschritten und erneuter GUI-Start."
+msgstr "Öffnen der 3D-Ansicht war nicht erfolgreich. Ändere den Wert des Tiefenpuffers in den GUI-Einstellungen > Map Display > Fortgeschritten und erneuter GUI-Start."
 
 #: ../gui/wxpython/nviz/mapwindow.py:544
 #, python-format
@@ -14276,19 +14274,15 @@ msgstr ""
 #~ msgid "Attempt to import data source <%(name)s> as raster or vector failed. "
 #~ msgstr "Der Versuch die Datei <%(name)s> als raster oder Vektor zu importieren ist fehlgeschlagen."
 
-#, fuzzy
 #~ msgid "%(env)s: line skipped - unable to parse Reason: %(e)s\n"
-#~ msgstr ""
-#~ "%s: Zeilen übersprungen - kann '%s' nicht interpretieren\n"
-#~ "Grund: %s\n"
+#~ msgstr "%(env)s: Zeilen übersprungen - Grund für Interpretationsfehler: %(e)s\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Unable to open file <%(file)s> for writing.\n"
 #~ "Reason: %(e)s"
 #~ msgstr ""
-#~ "Kann die Datei <%s> nicht zum Schreiben öffnen.\n"
-#~ "Grund: %s"
+#~ "Kann die Datei <%(file)s> nicht zum Schreiben öffnen.\n"
+#~ "Grund: %(e)s"
 
 #~ msgid ""
 #~ "%(l)d files created:\n"
@@ -14297,9 +14291,20 @@ msgstr ""
 #~ "%(l)d Dateien erzeugt:\n"
 #~ "%(p)s"
 
-#, fuzzy
 #~ msgid "Invalid line in GISRC file (%(e)s):%(l)s\n"
-#~ msgstr "Fehlerhafte Zeile in GISRC Datei (%s):%s\n"
+#~ msgstr "Fehlerhafte Zeile in GISRC Datei (%(e)s):%(l)s\n"
 
 #~ msgid "Do you want to import data source <%(name)s> to created location? Default region will be set to match imported map."
 #~ msgstr "Möchten Sie die Location anhand der Datenquelle <%(name)s> erzeugen? Die Standardregion wird auf Grundlage der importierten Karte erstellt."
+
+#~ msgid "GRASS GIS %(version)s Map Display: %(name)s - Location: %(location)s"
+#~ msgstr "GRASS GIS %(version)s Kartenfenster: %(name)s  - Location: %(location)s"
+
+#~ msgid "GRASS GIS %(version)s Map Display: %(id)d  - Location: %(loc)s"
+#~ msgstr "GRASS GIS %(version)s Kartenfenster: %(id)d  - Location: %(loc)s"
+
+#~ msgid "GRASS GIS %s Layer Manager"
+#~ msgstr "GRASS GIS %s Ebenen-Manager"
+
+#~ msgid "GRASS GIS %(version) Map Display: %(name)s - Location: %(loc)s"
+#~ msgstr "GRASS GIS %(version) Kartenfenster: %(name)s  - Location: %(loc)s"

@@ -1,24 +1,24 @@
 # translation of grassmods_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004-2013 GRASS Development Team
+# Copyright (C) 2004-2014 GRASS Development Team
 #
 # Markus Neteler <neteler itc.it>, 2004.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
-# Robert Nuske <robert.nuske nw-fva.de>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
+# Robert Nuske <robert.nuske nw-fva.de>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 17:34+0100\n"
-"PO-Revision-Date: 2014-03-24 15:17+0100\n"
-"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
+"PO-Revision-Date: 2014-08-10 14:59+0200\n"
+"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../raster/r.out.pov/main.c:121 ../raster/r.out.ppm3/main.c:57
 #: ../raster/r.out.arc/main.c:60 ../raster/r.out.ppm/main.c:54
@@ -2270,9 +2270,8 @@ msgid "For USLE"
 msgstr ""
 
 #: ../raster/r.watershed/front/main.c:86
-#, fuzzy
 msgid "Name of input raster map blocking overland surface flow"
-msgstr "Eingabekarte mit Gelände, dass den Oberflächenabfluss blockiert, für USLE."
+msgstr "Eingabe-Rasterkarte: Flächen die Oberflächenabfluss blockieren"
 
 #: ../raster/r.watershed/front/main.c:88
 #, fuzzy
@@ -2280,9 +2279,8 @@ msgid "For USLE. All non-NULL and non-zero cells are considered as blocking terr
 msgstr "Alle Zellen, die nicht NULL sind oder den Wert Null haben werden als echte Hindernis aufgefasst."
 
 #: ../raster/r.watershed/front/main.c:94
-#, fuzzy
 msgid "Name for output accumulation raster map"
-msgstr "Name der Ausgabe-Expositions-Rasterkarte."
+msgstr "Name der Ausgabe-Akkumulations-Rasterkarte."
 
 #: ../raster/r.watershed/front/main.c:95
 #, fuzzy
@@ -2346,9 +2344,8 @@ msgid "Name for output raster map useful for visual display of results (DEPRECAT
 msgstr "Ausgabekarte die hilfreich für die visuelle Darstellung der Ergebnisse ist. VERALTET."
 
 #: ../raster/r.watershed/front/main.c:135
-#, fuzzy
 msgid "Name for output slope length raster map"
-msgstr "Name der Ausgabe-Neigungs-Rasterkarte."
+msgstr "Name der Ausgabe-Neigungslängen-Rasterkarte"
 
 #: ../raster/r.watershed/front/main.c:137
 #, fuzzy
@@ -2356,9 +2353,8 @@ msgid "Slope length and steepness (LS) factor for USLE"
 msgstr "Ausgabekarte der Hanglängen und -Neigungsfaktoren (LS) für USLE."
 
 #: ../raster/r.watershed/front/main.c:143
-#, fuzzy
 msgid "Name for output slope steepness raster map"
-msgstr "Name der Ausgabe-Neigungs-Rasterkarte."
+msgstr "Name der Ausgabe-Neigungs-Rasterkarte"
 
 #: ../raster/r.watershed/front/main.c:144
 #, fuzzy
@@ -2377,11 +2373,11 @@ msgstr "Eingabewert: Maximale Länge des Oberflächenabflusses in Karteneinheite
 
 #: ../raster/r.watershed/front/main.c:170
 msgid "Convergence factor for MFD (1-10)"
-msgstr "Umrechnungsfaktor für MFD (1-10)."
+msgstr "Umrechnungsfaktor für MFD (1-10)"
 
 #: ../raster/r.watershed/front/main.c:172
 msgid "1 = most diverging flow, 10 = most converging flow. Recommended: 5"
-msgstr "1 = der am meisten divergierende Fluss, 10 = der am meisten konvergierende Fluss. Empfohlen: 5."
+msgstr "1 = am meisten divergierende Fluss, 10 = am meisten konvergierende Fluss. Empfohlen: 5"
 
 #: ../raster/r.watershed/front/main.c:179
 msgid "Maximum memory to be used with -m flag (in MB)"
@@ -2857,17 +2853,16 @@ msgid "raster, geometry"
 msgstr "Raster, Geometrie"
 
 #: ../raster/r.grow.distance/main.c:150
-#, fuzzy
 msgid "Generates a raster map containing distances to nearest raster features."
-msgstr "Erzeugt eine Rasterkarte mit Distanzen zu Objekten in der Eingabekarte."
+msgstr "Erzeugt eine Rasterkarte mit Distanzen zu nächsten Raster-Objekten."
 
 #: ../raster/r.grow.distance/main.c:157
 msgid "Name for distance output map"
-msgstr "Name der Distanz-Ausgabekarte."
+msgstr "Name der Distanz-Ausgabekarte"
 
 #: ../raster/r.grow.distance/main.c:162
 msgid "Name for value output map"
-msgstr "Name der Wert-Ausgabekarte."
+msgstr "Name der Wert-Ausgabekarte"
 
 #: ../raster/r.grow.distance/main.c:168 ../raster/r.grow2/main.c:148
 msgid "Metric"
@@ -4583,11 +4578,11 @@ msgstr "%s: %s - ungültige Entfernungsangabe."
 
 #: ../raster/r.buffer/main.c:69
 msgid "raster, buffer"
-msgstr "Raster, Buffer"
+msgstr "Raster, Puffer"
 
 #: ../raster/r.buffer/main.c:71
 msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
-msgstr "Erzeugt eine Rasterkarte mit Bufferzonen um Pixel, die keine NULL-Werte haben."
+msgstr "Erzeugt eine Rasterkarte mit Pufferzonen um Pixel, die keine NULL-Werte haben."
 
 #: ../raster/r.buffer/main.c:83
 msgid "Distance zone(s)"
@@ -4612,7 +4607,7 @@ msgstr "Durchlauf %d (von %d)."
 
 #: ../raster/r.buffer/execute.c:34
 msgid "Finding buffer zones..."
-msgstr "Berechne Buffer-Zonen..."
+msgstr "Berechne Puffer-Zonen..."
 
 #: ../raster/r.buffer/read_map.c:53
 #, c-format
@@ -5366,9 +5361,8 @@ msgid "Raster map <%s> not found, and manin_val undefined, choose one to be allo
 msgstr "Rasterkarte <%s> nicht gefunden und manin_val undefiniert. Wählen Sie eine, welche prozessiert werden dürfen."
 
 #: ../raster/simwe/simlib/input.c:541
-#, fuzzy
 msgid "Zero value in Mannings n"
-msgstr "Nullwert in Manning's n."
+msgstr "Nullwert in Mannings n"
 
 #: ../raster/simwe/simlib/input.c:592
 msgid "Infiltration exceeds the rainfall rate everywhere! No overland flow."
@@ -5394,9 +5388,9 @@ msgid "Mean flow velocity \t= %f m/s\n"
 msgstr "Mittlere Fließgeschwindigkeit \t= %f m/s\n"
 
 #: ../raster/simwe/simlib/input.c:621
-#, fuzzy, c-format
+#, c-format
 msgid "Mean Mannings \t= %f\n"
-msgstr "Mittlerer Manning's \t= %f\n"
+msgstr "Mittlerer Mannings \t= %f\n"
 
 #: ../raster/simwe/simlib/input.c:625
 #, c-format
@@ -5427,9 +5421,9 @@ msgid "Unable to write et file"
 msgstr "Kann die et Datei nicht schreiben."
 
 #: ../raster/simwe/simlib/output.c:313 ../raster/simwe/simlib/output.c:321
-#, fuzzy, c-format
+#, c-format
 msgid "FP raster map <%s> not found"
-msgstr "3D-Rasterkarte <%s> nicht gefunden."
+msgstr "FP-Rasterkarte <%s> nicht gefunden."
 
 #: ../raster/r.region/main.c:56
 msgid "Sets the boundary definitions for a raster map."
@@ -6641,9 +6635,9 @@ msgid "Input raster map contains cells with NULL-value (no-data). The value %d w
 msgstr "Die Eingabe-Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der Wert %d wurde verwendet um NoData-Werte in der Eingabekarte zu kennzeichnen. Sie können NoData-Wert mit dem Parameter %s bestimmen."
 
 #: ../raster/r.out.gdal/export_band.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "Input raster map contains cells with NULL-value (no-data). The value %g will be used to represent no-data values in the input map. You can specify a nodata value with the %s option."
-msgstr "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der Wert %d wurde verwendet um Nodata-Werte in der Eingabekarte zu kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
+msgstr "Die Eingabe-Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der Wert %g wird verwendet, um NoData-Werte in der Eingabekarte zu kennzeichnen. Sie können NoData-Wert mit dem Parameter %s bestimmen."
 
 #: ../raster/r.out.gdal/export_band.c:202
 #, c-format
@@ -7474,7 +7468,6 @@ msgid "raster, conversion, vectorization"
 msgstr "Raster, Konvertieren, Vektorisieren"
 
 #: ../raster/r.to.vect/main.c:52
-#, fuzzy
 msgid "Converts a raster map into a vector map."
 msgstr "Konvertiert eine Rasterkarte in eine Vektorkarte."
 
@@ -7734,7 +7727,7 @@ msgstr "Erzeugt eine Rasterkarte mit kontinuierlich um eine Zelle gewachsenen Fl
 
 #: ../raster/r.grow2/main.c:141
 msgid "Radius of buffer in raster cells"
-msgstr "Radius des Buffers in Rasterzellen."
+msgstr "Radius des Puffers in Rasterzellen"
 
 #: ../raster/r.grow2/main.c:157
 msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
@@ -8803,9 +8796,8 @@ msgid "Name of input raster elevation map"
 msgstr "Eingabe-Rasterkarte, die Höhenwerte enthält."
 
 #: ../raster/r.carve/main.c:89
-#, fuzzy
 msgid "Name of input vector map containing stream(s)"
-msgstr "Namde der Eingabe-Vektorkarte mit Linien."
+msgstr "Name der Eingabe-Vektorkarte mit Flüssen"
 
 #: ../raster/r.carve/main.c:97
 msgid "Name for output vector map for adjusted stream points"
@@ -9184,30 +9176,26 @@ msgid "Cannot read setup file"
 msgstr "Kann Setup Datei nicht lesen."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:355
-#, fuzzy
 msgid "Unable to parse configuration file (sampling frame)"
-msgstr "Kann die Konfigurationsdatei nicht interpretieren."
+msgstr "Kann die Konfigurationsdatei nicht interpretieren (Stichprobenrahmen)"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:367
 msgid "Cannot read raster header file"
 msgstr "Kann Header der Rasterkarte nicht lesen."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:529
-#, fuzzy
 msgid "Irregular MASKEDOVERLAY areas definition"
-msgstr "Unregelmäßige maskedoverlay Flächen Definition."
+msgstr "Unregelmäßige MASKEDOVERLAY Flächen Definition."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:540
-#, fuzzy
 msgid "Unable to parse configuration file (sample area)"
-msgstr "Kann die Konfigurationsdatei nicht interpretieren."
+msgstr "Kann die Konfigurationsdatei nicht interpretieren (Stichprobenfläche)."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:575
 msgid "Too many units to place"
 msgstr "Zu viele Einheiten zu platzieren."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:644
-#, fuzzy
 msgid "Too many stratified random sample for raster map"
 msgstr "Zu viele Straten für diese Rasterkarte."
 
@@ -9325,11 +9313,11 @@ msgstr "Berechnet Kanten-Dichte-Index einer Rasterkarte, unter Verwendung eines 
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:55
 msgid "The value of the patch type"
-msgstr ""
+msgstr "Der Wert des Patch-Typs"
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:56
 msgid "It can be integer, double or float; it will be changed in function of map type"
-msgstr ""
+msgstr "Es kann Integer, Double oder Float sein. Es wird in Funktion des Kartentyps geändert."
 
 #: ../raster/r.li/r.li.pielou/pielou.c:59
 msgid "Calculates Pielou's diversity index on a raster map"
@@ -9361,7 +9349,7 @@ msgstr "Berechnet Kontrast gewichteten Kanten-Dichte-Index einer Rasterkarte."
 
 #: ../raster/r.li/r.li.cwed/cwed.c:59
 msgid "Name of file that contains the weight to calculate the index"
-msgstr ""
+msgstr "Name der Datei mit den Gewichten zur Berechnung des Index"
 
 #: ../raster/r.what/main.c:93
 msgid "Queries raster map layers on their category values and category labels."
@@ -9482,23 +9470,23 @@ msgstr "Richtung in der die Horizonthöhe berechnet werden soll."
 
 #: ../raster/r.horizon/main.c:251
 msgid "For horizon rasters, read from the DEM an extra buffer around the present region"
-msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Bufferbereich um die aktuelle Region herum ein."
+msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Pufferbereich um die aktuelle Region herum ein."
 
 #: ../raster/r.horizon/main.c:259
 msgid "For horizon rasters, read from the DEM an extra buffer eastward the present region"
-msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Bufferbereich östlich der aktuellen Region ein."
+msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Pufferbereich östlich der aktuellen Region ein."
 
 #: ../raster/r.horizon/main.c:267
 msgid "For horizon rasters, read from the DEM an extra buffer westward the present region"
-msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Bufferbereich westlich der aktuellen Region ein."
+msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Pufferbereich westlich der aktuellen Region ein."
 
 #: ../raster/r.horizon/main.c:275
 msgid "For horizon rasters, read from the DEM an extra buffer northward the present region"
-msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Bufferbereich nördlich der aktuellen Region ein."
+msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Pufferbereich nördlich der aktuellen Region ein."
 
 #: ../raster/r.horizon/main.c:283
 msgid "For horizon rasters, read from the DEM an extra buffer southward the present region"
-msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Bufferbereichsüdlich der aktuellen Region ein."
+msgstr "Für Horizont-Rasterkarten: Lese vom DGM einen extra Pufferbereichsüdlich der aktuellen Region ein."
 
 #: ../raster/r.horizon/main.c:291
 msgid "The maximum distance to consider when finding the horizon height"
@@ -9534,7 +9522,7 @@ msgstr "Sie haben kein Schrittgröße für den Winkel angegeben. Breche ab."
 
 #: ../raster/r.horizon/main.c:389
 msgid "Could not read bufferzone size. Aborting."
-msgstr "Konnte die Bufferzonengröße nicht lesen. Breche ab."
+msgstr "Konnte die Pufferzonengröße nicht lesen. Breche ab."
 
 #: ../raster/r.horizon/main.c:394 ../raster/r.horizon/main.c:400
 #: ../raster/r.horizon/main.c:407 ../raster/r.horizon/main.c:414
@@ -11459,7 +11447,7 @@ msgstr "Fehler beim Suchen in der Segment-Datei."
 
 #: ../raster/r.surf.fractal/process.c:53
 msgid "Unable to allocate data buffer. Check current region with g.region."
-msgstr "Kann keinen Speicher für Datenbuffer reservieren. Überprüfen Sie die aktuelle Region mit g.region."
+msgstr "Kann keinen Speicher für Datenpuffer reservieren. Überprüfen Sie die aktuelle Region mit g.region."
 
 #: ../raster/r.surf.fractal/spec_syn.c:61
 msgid "Preliminary surface calculations..."
@@ -11536,9 +11524,8 @@ msgid "Reclassify raster map based on category values."
 msgstr "Reklassifiziere Rasterkarte auf Basis des Kategoriewerte."
 
 #: ../raster/r.reclass/main.c:52
-#, fuzzy
 msgid "Creates a new raster map whose category values are based upon a reclassification of the categories in an existing raster map."
-msgstr "Erzeugt eine neue Karte, deren Kategoriewerte auf einer Reklassifikation der Kategorien einer existierenden Rasterkarte basieren."
+msgstr "Erzeugt eine neue Rasterkarte, deren Kategoriewerte auf einer Reklassifikation der Kategorien einer existierenden Rasterkarte basieren."
 
 #: ../raster/r.reclass/main.c:57
 msgid "Raster map to be reclassified"
@@ -13577,9 +13564,9 @@ msgstr "Standard-Datenbank ist nicht angegeben."
 
 #: ../db/base/columns.c:44 ../db/base/copy.c:100 ../db/base/select.c:53
 #: ../db/base/describe.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Table <%s> not found in database <%s> using driver <%s>"
-msgstr "Kann Datenbank <%s> nicht mit dem Treiber <%s> öffnen."
+msgstr "Tabelle <%s>  in der Datenbank <%s> mit dem Treiber <%s> nicht gefunden."
 
 #: ../db/base/columns.c:99
 msgid "List all columns for a given table."
@@ -14048,7 +14035,7 @@ msgstr "Rechne Koordinaten in Kurs und Distanz um."
 
 #: ../misc/m.cogo/main.c:248
 msgid "Repeat the starting coordinate at the end to close a loop"
-msgstr ""
+msgstr "Anfangs-Koordinaten am Ende wiederholen, um den Ring zu schließen."
 
 #: ../misc/m.cogo/main.c:263
 msgid "Starting coordinate pair"
@@ -14660,27 +14647,27 @@ msgstr "Höhe des neuen Grafikfensters in Pixel."
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:1
 msgid "Moves displayed maps to another monitor"
-msgstr "Verschiebt angezeigte Karten in ein anderes Grafikfenster."
+msgstr "Verschiebt angezeigte Karten in ein anderes Grafikfenster"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:3
 msgid "clear target monitor before moving"
-msgstr "Lösche das Ziel-Fenster vor dem Verschieben."
+msgstr "Lösche das Ziel-Fenster vor dem Verschieben"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:4
 msgid "stay with source monitor"
-msgstr "Bleib im Quell -Grafikfenster."
+msgstr "Bleib im Quell-Grafikfenster"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:5
 msgid "kill source monitor after moving"
-msgstr "Beende das Quell-Fenster nach dem Verschieben."
+msgstr "Beende das Quell-Fenster nach dem Verschieben"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:6
 msgid "Target monitor"
-msgstr "Ziel Grafikfenster."
+msgstr "Ziel Grafikfenster"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:7
 msgid "Source monitor"
-msgstr "Quell Grafikfenster."
+msgstr "Quell Grafikfenster"
 
 #: ../locale/scriptstrings/d.resize_to_translate.c:1
 msgid "Resizes active display monitor"
@@ -14830,13 +14817,12 @@ msgid "Path to rules file"
 msgstr "Pfad zur Regel-Datei."
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
-#, fuzzy
 msgid "Dummy raster map name containing color rules for use with d.legend"
-msgstr "Rasterkarte, die Werte für die Pfeillänge enthält."
+msgstr "Name für Dummy-Rasterkarte mit Farbregeln für d.legend"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Use with the -s flag (using this option implies -s)"
-msgstr ""
+msgstr "Verwende mit Schalter -s (Verwendung dieser Funktion impliziert -s)"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:18
 msgid "Save placeholder raster map for use with d.legend"
@@ -14878,9 +14864,8 @@ msgid "Layer from which to drop linked attribute table"
 msgstr "Layer aus dem die Attributtabelle gelöscht werden soll."
 
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
-#, fuzzy
 msgid "Drapes a color raster over a shaded relief map using d.his."
-msgstr "Drapiert eine Rasterkarte mit Farbwerten über Schummerungskarte unter Verwendung von d.his."
+msgstr "Drapiert eine Farb-Rasterkarte über eine Schummerungskarte mittels d.his."
 
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
 msgid "Name of shaded relief or aspect map"
@@ -15098,12 +15083,11 @@ msgstr ""
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:15
 msgid "Select multiple points"
-msgstr "Selektiere mehrere Punkte."
+msgstr "Selektiere mehrere Punkte"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:16
-#, fuzzy
 msgid "Show pick coordinates instead of numbering in the legend"
-msgstr "Beschrifte mit Koordinaten anstelle der Nummerierung."
+msgstr "Zeige gewählte Koordinaten anstelle der Nummerierung in der Legende"
 
 #: ../locale/scriptstrings/d.redraw_to_translate.c:1
 msgid "Redraws the current display frame in the GRASS monitor"
@@ -16122,21 +16106,19 @@ msgstr "Spalte, die aktualisiert werden soll"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:6
 msgid "Literal value to update the column with"
-msgstr ""
+msgstr "Wert mit dem die Spalte aktualisiert wird"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:7
-#, fuzzy
 msgid "Varchar values must be in single quotes, e.g. 'grass'"
-msgstr "Wert mit dem die Spalte aktualisiert werden soll (varchar-Werte müssen in einfachen Anführungszeichen angegeben werden, z.B. 'grass')."
+msgstr "varchar-Werte müssen in einfachen Anführungszeichen angegeben werden, z.B. 'grass'."
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:8
-#, fuzzy
 msgid "Name of attribute column to query"
-msgstr "Name der Attributespalte verwendet mit der 'query'-Option."
+msgstr "Name der abzufragenden Attributspalte"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:9
 msgid "Can be a combination of columns, e.g. col1+col2"
-msgstr ""
+msgstr "Kann eine Kombination von Spalten sein, z.B. col1+col2"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:10
 msgid "WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/col2>1)"
@@ -16359,9 +16341,8 @@ msgstr "Kleinerer-Wert-Option bestimmt das <= Flächengrenze [Hektar]."
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:8
-#, fuzzy
 msgid "Area"
-msgstr "Fläche:\n"
+msgstr "Fläche"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:7
 msgid "Greater value option that sets the >= area size limit [hectares]"
@@ -16576,14 +16557,12 @@ msgid "LANDSAT TM band 7."
 msgstr "LANDSAT TM Kanal 7."
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
-#, fuzzy
 msgid "Prints a graph of the correlation between raster maps (in pairs)."
-msgstr "Gibt eine Graphik der Korrelation zweier Karten (paarweise) aus."
+msgstr "Gibt eine Grafik der Korrelation zweier Rasterkarten (paarweise) aus."
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:2
-#, fuzzy
 msgid "display, correlation, scatterplot"
-msgstr "Darstellung, Raster"
+msgstr "Darstellung, Korrelation, Streudiagramm"
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:3
 #: ../locale/scriptstrings/d.correlate_to_translate.c:4
@@ -16594,7 +16573,7 @@ msgstr "Eingabe-Rasterkarte"
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:7
 msgid "Draw a trend line and calculate linear regression formula"
-msgstr ""
+msgstr "Zeichne Ausgleichsgerade und berechne lineare Regression"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:1
 msgid "Tool to maintain GRASS extensions in local GRASS installation."
@@ -18950,13 +18929,12 @@ msgid "Draw a scale bar only"
 msgstr "Zeichne nur eine Maßstabsleiste."
 
 #: ../display/d.barscale/main.c:96
-#, fuzzy
 msgid "Screen coordinates of the rectangle's top-left corner"
-msgstr "Die Bildschirmkoordinaten für die linke obere Ecke des Labels ([0,0] ist oben links)."
+msgstr "Bildschirmkoordinaten der linken oberen Ecke des Rechtecks"
 
 #: ../display/d.barscale/main.c:97
 msgid "(0,0) is top-left of the display frame"
-msgstr ""
+msgstr "(0,0) ist links oben im Fenster"
 
 #: ../display/d.barscale/main.c:105
 msgid "Font size"
@@ -20785,14 +20763,12 @@ msgid "illegal maploc request"
 msgstr "Ungültige Löschanfrage."
 
 #: ../ps/ps.map/r_instructions.c:139 ../ps/ps.map/r_instructions.c:335
-#, fuzzy
 msgid "no raster map selected yet"
-msgstr "Keine Rasterkarte angegeben."
+msgstr "Keine Rasterkarte ausgewählt"
 
 #: ../ps/ps.map/r_instructions.c:155
-#, fuzzy
 msgid "illegal value list"
-msgstr "%s: ungültiger Wert."
+msgstr "Liste ungültiger Werte"
 
 #: ../ps/ps.map/r_instructions.c:191
 #, fuzzy
@@ -20907,9 +20883,8 @@ msgid "illegal color request (colortable)"
 msgstr "Ungültige Farb-Anfrage (Farbtabelle)."
 
 #: ../ps/ps.map/r_colortable.c:157
-#, fuzzy
 msgid "illegal colortable sub-request"
-msgstr "Ungültige colortabe sub-request"
+msgstr "Ungültiger colortable sub-request"
 
 #: ../ps/ps.map/r_colortable.c:168
 msgid "No raster selected for colortable!"
@@ -22388,7 +22363,7 @@ msgstr "Kann die Maske (MASK) der 'CELL'-Karte nicht öffnen."
 
 #: ../imagery/i.class/signature.c:278
 msgid "Unable to allocate the cell buffer in display_signature()."
-msgstr "Kann keinen Speicher für Zellbuffer in display_signature() reservieren."
+msgstr "Kann keinen Speicher für Zellpuffer in display_signature() reservieren."
 
 #: ../imagery/i.class/signature.c:310
 msgid "Did not find input cell map MASK."
@@ -22609,7 +22584,7 @@ msgstr "Schreiben der Zeile %ld der Rasterkarte fehlgeschlagen."
 #: ../imagery/i.his.rgb/openfiles.c:27 ../imagery/i.rgb.his/openfiles.c:37
 #: ../imagery/i.rgb.his/openfiles.c:39 ../imagery/i.rgb.his/openfiles.c:41
 msgid "Unable to allocate the input row buffer"
-msgstr "Kann keinen Speicher für Eingabe-Zeilenbuffer reservieren."
+msgstr "Kann keinen Speicher für Eingabe-Zeilenpuffer reservieren."
 
 #: ../imagery/i.smap/bouman/interp.c:38
 msgid "pyramid constructed."
@@ -22844,7 +22819,6 @@ msgid "imagery, map management"
 msgstr "Bildverarbeitung, Kartenverwaltung"
 
 #: ../imagery/i.group/main.c:54
-#, fuzzy
 msgid "Creates, edits, and lists groups and subgroups of imagery data."
 msgstr "Erzeugt, editiert und listet Gruppen und Untergruppen von Bilddateien."
 
@@ -23255,9 +23229,8 @@ msgid "Calculates top-of-atmosphere radiance or reflectance and temperature for 
 msgstr "Berechnet top-of-atmosphere Strahlung oder Reflexion und Temperatur für Landsat MSS/TM/ETM+/OLI."
 
 #: ../imagery/i.landsat.toar/main.c:69
-#, fuzzy
 msgid "imagery, Landsat, radiance, reflectance, brightness temperature, atmospheric correction"
-msgstr "Bildbearbeitung, Landsat, top-of-atmosphere Strahlung, dos-type einfache atmosphärische Korrektion"
+msgstr "Bildbearbeitung, Landsat, Strahlung, Reflexion, Helligkeitstemperatur, atmosphärische Korrektion"
 
 #: ../imagery/i.landsat.toar/main.c:81
 msgid "Prefix for output raster maps"
@@ -23276,14 +23249,12 @@ msgid "Spacecraft sensor"
 msgstr "Raumfahrzeug Sensor"
 
 #: ../imagery/i.landsat.toar/main.c:98
-#, fuzzy
 msgid "Required only if 'metfile' not given (recommended for sanity)"
 msgstr "Nur notwendig, wenn 'metfile' nicht angegeben (vernünftigerweise)"
 
 #: ../imagery/i.landsat.toar/main.c:101
-#, fuzzy
 msgid "mss1;Landsat_1 MSS;mss2;Landsat_2 MSS;mss3;Landsat_3 MSS;mss4;Landsat_4 MSS;mss5;Landsat_5 MSS;tm4;Landsat_4 TM;tm5;Landsat_5 TM;tm7;Landsat_7 ETM+;oli8;Landsat_8 OLI/TIRS"
-msgstr "mss1;Landsat_1 MSS;mss2;Landsat_2 MSS;mss3;Landsat_3 MSS;mss4;Landsat_4 MSS;mss5;Landsat_5 MSS;tm4;Landsat_4 TM;tm5;Landsat_5 TM;tm7;Landsat_7 ETM+;ot8;Landsat_8 OLI/TIRS"
+msgstr "mss1;Landsat_1 MSS;mss2;Landsat_2 MSS;mss3;Landsat_3 MSS;mss4;Landsat_4 MSS;mss5;Landsat_5 MSS;tm4;Landsat_4 TM;tm5;Landsat_5 TM;tm7;Landsat_7 ETM+;oli8;Landsat_8 OLI/TIRS"
 
 #: ../imagery/i.landsat.toar/main.c:118 ../imagery/i.landsat.toar/main.c:119
 msgid "Atmospheric correction method"
@@ -23331,7 +23302,6 @@ msgid "Required only if 'method' is DOS3"
 msgstr "Nur notwendig, wenn 'method' ist DOS3"
 
 #: ../imagery/i.landsat.toar/main.c:189
-#, fuzzy
 msgid "Output at-sensor radiance instead of reflectance for all bands"
 msgstr "Ausgabe der Strahlung am Sensor anstatt der Reflexion für alle Kanäle"
 
@@ -23341,7 +23311,7 @@ msgstr "Eingabe-Rasterkarten verwenden die Nummer des Kanals anstatt des Codes"
 
 #: ../imagery/i.landsat.toar/main.c:198
 msgid "Print output metadata info"
-msgstr ""
+msgstr "Gebe Ausgabe Metadaten aus"
 
 #: ../imagery/i.landsat.toar/main.c:221 ../imagery/i.landsat.toar/main.c:229
 #, c-format
@@ -23358,9 +23328,8 @@ msgid "Lacking '%s' and/or '%s' for this satellite"
 msgstr "Vermisse '%s' und/oder '%s' für diesen Satelliten"
 
 #: ../imagery/i.landsat.toar/main.c:280
-#, fuzzy
 msgid "Landsat-7 requires band gain with 9 (H/L) characters"
-msgstr "Landsat-7 benötigt Kanal gain mit 9 (H/L) Daten"
+msgstr "Landsat-7 benötigt Kanal gain mit 9 (H/L) Zeichen"
 
 #: ../imagery/i.landsat.toar/main.c:300
 #, c-format
@@ -23368,9 +23337,9 @@ msgid "Unknown satellite type (defined by '%s')"
 msgstr "Unbekannter Satellitentyp (definiert von '%s')"
 
 #: ../imagery/i.landsat.toar/main.c:354 ../imagery/i.landsat.toar/main.c:500
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read data type of raster map <%s>"
-msgstr "Kann den Wertebereich der Rasterkarte <%s> nicht lesen."
+msgstr "Kann den Datentyp der Rasterkarte <%s> nicht lesen."
 
 #: ../imagery/i.landsat.toar/main.c:479
 msgid "Calculating..."
@@ -23441,7 +23410,7 @@ msgstr "Die originalen real und imaginär Fenster stimmen nicht überein."
 
 #: ../imagery/i.cca/transform.c:24
 msgid "Unable to allocate cell buffers."
-msgstr "Kann keinen Speicher für Zellbuffer reservieren."
+msgstr "Kann keinen Speicher für Zellpuffer reservieren."
 
 #: ../imagery/i.cca/transform.c:30
 msgid "Error reading cell map during transform."
@@ -24759,7 +24728,7 @@ msgstr "Spezifisch"
 
 #: ../vector/v.transform/main.c:92
 msgid "Swap coordinates x, y and then apply other parameters"
-msgstr ""
+msgstr "Tausche die Koordinaten x,y und wende weitere Parameter an"
 
 #: ../vector/v.transform/main.c:98
 msgid "Print the transformation matrix to stdout"
@@ -26211,9 +26180,9 @@ msgid "No areas found, skipping %"
 msgstr "Keine Flächen gefunden, überspringe %."
 
 #: ../vector/v.out.svg/main.c:262
-#, fuzzy, c-format
+#, c-format
 msgid "%d areas extracted"
-msgstr "Typen die extrahiert werden."
+msgstr "%d Flächen extrahiert"
 
 #: ../vector/v.out.svg/main.c:269
 #, c-format
@@ -26221,9 +26190,9 @@ msgid "No points found, skipping %s"
 msgstr "Keine Punkte gefunden, überspringe %s."
 
 #: ../vector/v.out.svg/main.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "%d points extracted"
-msgstr "%d Punkte geladen."
+msgstr "%d Punkte extrahiert"
 
 #: ../vector/v.out.svg/main.c:302
 #, c-format
@@ -26231,9 +26200,9 @@ msgid "No lines found, skipping %s"
 msgstr "Keine Linien gefunden, überspringe %s."
 
 #: ../vector/v.out.svg/main.c:326
-#, fuzzy, c-format
+#, c-format
 msgid "%d lines extracted"
-msgstr "%d Linien zusammengefasst"
+msgstr "%d Linien extrahiert"
 
 #: ../vector/v.out.svg/main.c:393
 #, c-format
@@ -26839,15 +26808,15 @@ msgstr "NEW_T_OLD Habe einen schlechten Code-Typ erhalten [%x]"
 
 #: ../vector/v.buffer2/main.c:150
 msgid "vector, buffer"
-msgstr "Vektor, Buffer"
+msgstr "Vektor, Puffer"
 
 #: ../vector/v.buffer2/main.c:152 ../vector/v.buffer/main.c:153
 msgid "Creates a buffer around features of given type (areas must contain centroid)."
-msgstr "Erzeugt einen Buffer um die Objekte mit gegebenen Typ (Flächen müssen Zentroide enthalten)."
+msgstr "Erzeugt einen Puffer um die Objekte mit gegebenen Typ (Flächen müssen Zentroide enthalten)."
 
 #: ../vector/v.buffer2/main.c:170
 msgid "Buffer distance along major axis in map units"
-msgstr "Bufferdistanz entlang der Hauptachse in Karteneinheiten."
+msgstr "Pufferdistanz entlang der Hauptachse in Karteneinheiten."
 
 #: ../vector/v.buffer2/main.c:171 ../vector/v.buffer2/main.c:179
 #: ../vector/v.buffer2/main.c:187 ../vector/v.buffer2/main.c:193
@@ -26857,7 +26826,7 @@ msgstr "Distanz"
 
 #: ../vector/v.buffer2/main.c:178
 msgid "Buffer distance along minor axis in map units"
-msgstr "Bufferdistanz entlang der Nebenachse in Karteneinheiten."
+msgstr "Pufferdistanz entlang der Nebenachse in Karteneinheiten."
 
 #: ../vector/v.buffer2/main.c:186 ../vector/v.parallel2/main.c:74
 msgid "Angle of major axis in degrees"
@@ -26865,7 +26834,7 @@ msgstr "Winkel der Hauptachse in Grad"
 
 #: ../vector/v.buffer2/main.c:192
 msgid "Name of column to use for buffer distances"
-msgstr "Name der Spalte mit den Bufferdistanzen"
+msgstr "Name der Spalte mit den Pufferdistanzen"
 
 #: ../vector/v.buffer2/main.c:200 ../vector/v.buffer/main.c:190
 msgid "Scaling factor for attribute column values"
@@ -26874,7 +26843,7 @@ msgstr "Skalierfaktor für die Werte der Attributspalte"
 #: ../vector/v.buffer2/main.c:209 ../vector/v.buffer/main.c:200
 #: ../vector/v.parallel/main.c:64
 msgid "Maximum distance between theoretical arc and polygon segments as multiple of buffer"
-msgstr "Maximale Distanz zwischen theoretischen Linien und Polygonsegmenten als Vielfaches des Buffers"
+msgstr "Maximale Distanz zwischen theoretischen Linien und Polygonsegmenten als Vielfaches des Puffers"
 
 #: ../vector/v.buffer2/main.c:225
 msgid "This is an alias to the distance option. It is retained for backwards compatibility"
@@ -26882,7 +26851,7 @@ msgstr "Dies ist ein Alias für die Distanz-Option. Es wurde nur für rückwärt
 
 #: ../vector/v.buffer2/main.c:227 ../vector/v.buffer/main.c:175
 msgid "Buffer distance in map units"
-msgstr "Bufferdistanz in Karteneinheiten"
+msgstr "Pufferdistanz in Karteneinheiten"
 
 #: ../vector/v.buffer2/main.c:232
 msgid "Make outside corners straight"
@@ -26894,7 +26863,7 @@ msgstr "Erzeuge keine Kappen an den Enden von Polylinien"
 
 #: ../vector/v.buffer2/main.c:247
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
-msgstr "Wählen Sie entweder die Buffer distance/minordistance/angle oder eine Spalte, aber nicht beides"
+msgstr "Wählen Sie entweder die Puffer distance/minordistance/angle oder eine Spalte, aber nicht beides"
 
 #: ../vector/v.buffer2/main.c:251
 msgid "The bufcol option may contain bugs during the cleaning step. If you encounter problems, use the debug option or clean manually with v.clean tool=break; v.category step=0; v.extract -d type=area"
@@ -26906,11 +26875,11 @@ msgstr "Die bufcol-Option benötigt einen gültigen Layer."
 
 #: ../vector/v.buffer2/main.c:265
 msgid "The buffer option has been replaced by the distance option and will be removed in future."
-msgstr "Die Buffer-Option wurde durch die Distanz-Option ersetzt und wird in Zukunft entfernt."
+msgstr "Die Puffer-Option wurde durch die Distanz-Option ersetzt und wird in Zukunft entfernt."
 
 #: ../vector/v.buffer2/main.c:268
 msgid "Use the distance option instead of the buffer option."
-msgstr "Verwende die Distanz-Option anstelle der Buffer-Option."
+msgstr "Verwende die Distanz-Option anstelle der Puffer-Option."
 
 #: ../vector/v.buffer2/main.c:272
 msgid "The tolerance must be > 0."
@@ -26933,7 +26902,7 @@ msgstr "Kann keine Daten der Tabelle <%s> selektieren"
 
 #: ../vector/v.buffer2/main.c:380 ../vector/v.buffer/main.c:292
 msgid "No features available for buffering. Check type option and features available in the input vector."
-msgstr "Keine Objekte zum Buffern vorhanden. Überprüfen Sie die Option type und die Objekte in der Eingabe-Vektorkarte."
+msgstr "Keine Objekte zum Puffern vorhanden. Überprüfen Sie die Option type und die Objekte in der Eingabe-Vektorkarte."
 
 #: ../vector/v.buffer2/main.c:394
 msgid "Buffering lines..."
@@ -26954,7 +26923,7 @@ msgstr "Toleranz in Karteneinheiten: %g"
 
 #: ../vector/v.buffer2/main.c:468
 msgid "Buffering areas..."
-msgstr "Buffere Flächen..."
+msgstr "Puffere Flächen..."
 
 #: ../vector/v.buffer2/main.c:523
 msgid "Writing buffers..."
@@ -27403,9 +27372,9 @@ msgid "Numeric column to give precedence in case of overlapping labels. The labe
 msgstr "Numerische Spalte mit Werten, um den Vorrang bei überlappenden Beschriftungen zu kären. Die Beschriftung mit dem geringeren Gewicht wird verdeckt."
 
 #: ../vector/v.label.sa/labels.c:74
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot allocate %lu bytes of memory"
-msgstr "Kann nicht %d Byte Speicher reservieren."
+msgstr "Kann nicht %lu Byte Speicher reservieren."
 
 #: ../vector/v.label.sa/labels.c:96
 #, c-format
@@ -27466,7 +27435,6 @@ msgid "Cleaning tool"
 msgstr "Säuberungswerkzeug"
 
 #: ../vector/v.clean/main.c:66
-#, fuzzy
 msgid "break;break lines at each intersection;rmdupl;remove duplicate geometry features (pay attention to categories!);rmdangle;remove dangles, threshold ignored if < 0;chdangle;change the type of boundary dangle to line, threshold ignored if < 0, input line type is ignored;rmbridge;remove bridges connecting area and island or 2 islands;chbridge;change the type of bridges connecting area and island or 2 islands from boundary to line;snap;snap lines to vertex in threshold;rmdac;remove duplicate area centroids ('type' option ignored);bpol;break (topologically clean) polygons (imported from non topological format, like ShapeFile). Boundaries are broken on each point shared between 2 and more polygons where angles of segments are different;prune;remove vertices in threshold from lines and boundaries, boundary is pruned only if topology is not damaged (new intersection, changed attachment of centroid), first and last segment of the boundary is never changed;rmarea;remove small areas, the longest boundary with adjacent area is removed;rmline;remove all lines or boundaries of zero length, threshold is ignored;rmsa;remove small angles between lines at nodes"
 msgstr "break;Teilt Linien an jeder Überschneidung;rmdupl;Entfernt doppelte Geometrie-Feature (Achten Sie auf die Kategorien!);rmdangle;Entfernt Überstände (dangles), Schwellwert wird ignoriert, wenn <0;chdangle;Ändert den Typ eines Überstands (dangle) zu einer Linie, Schwellwert wird ignoriert, wenn <0, Eingabe-Linien-Typ wird ignoriert;rmbridge;Entfernt Brücken, die eine Fläche und eine Insel oder 2 Inseln verbindet;chbridge;Ändert den Typ einer Brücke, die eine Fläche und eine Insel oder 2 Inseln verbindet von Grenze zu Linie;snap;Richtet Linien an Vertices innerhalb des Schwellwertes aus;rmdac;Entfernt doppelte Zentroide (Option 'type' wird ignoriert);bpol;Teilt (topologisch sauber) Polygone (importiert aus nicht topologischen Formaten, wie z.B. ShapeFile). Grenzen werden an jedem Punkt geteilt, der 2 oder mehr Polygonen gemeinsam ist und die Winkel der Segmente verschieden sind.;prune;Entfernt Vertices innerhalb des Schwellwertes von Linien und Grenzen. Grenzen werden nur gesäubert, wenn die Topologie nicht beschädigt wird (neue Überschneidungen, veränderte Zuordnung von Zentroiden), das erste und letzte Segment einer Grenze wird nie geändert;rmarea;Entfernt kleine Flächen, die längste Grenze mit einer benachbarten Fläche wird entfernt;rmline;Entfernt alle Linien und Grenzen mit der Länge null, Schwellwert wird ignoriert;rmsa;Entfernt spitze Winkel zwischen Linien an einem Knoten"
 
@@ -27715,7 +27683,7 @@ msgstr "Entferne unzulässige Linien aus der Ausgabe."
 #: ../vector/v.voronoi/sw_main.c:140
 #, c-format
 msgid "Found %d points/centroids in <%s>, but at least 2 are needed"
-msgstr ""
+msgstr "%d Punkte/Zentroide in <%s> gefunden, aber mindestens 2 werden benötigt"
 
 #: ../vector/v.voronoi/dt_main.c:149
 msgid "Cannot calculate area centroid z coordinate"
@@ -28144,7 +28112,7 @@ msgstr "Bufferdistanz in Karteneinheiten"
 
 #: ../vector/v.buffer/main.c:182
 msgid "Attribute column to use for buffer distances"
-msgstr "Attributspalte mit den Bufferdistanzen."
+msgstr "Attributspalte mit den Pufferdistanzen."
 
 #: ../vector/v.buffer/main.c:209
 msgid "Stop the process at a certain stage"
@@ -28577,14 +28545,12 @@ msgid "Split lines to shorter segments."
 msgstr "Trenne Linien in kleinere Abschnitte."
 
 #: ../vector/v.split/main.c:54
-#, fuzzy
 msgid "Maximum segment length"
-msgstr "Maximale Länge der Inputzeile: %d"
+msgstr "Maximale Segmentlänge"
 
 #: ../vector/v.split/main.c:61
-#, fuzzy
 msgid "Maximum number of vertices in segment"
-msgstr "Maximale Anzahl der Punkte auf einem Segment"
+msgstr "Maximale Anzahl der Vertices auf einem Segment"
 
 #: ../vector/v.distance/main.c:116
 msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
@@ -28647,9 +28613,8 @@ msgid "Column name of nearest feature (used with upload=to_attr)"
 msgstr "Spaltenname der nächstgelegenen Objekte (verwendet mit upload=to_attr)."
 
 #: ../vector/v.distance/main.c:214
-#, fuzzy
 msgid "Name of table created when the 'distance to all' flag is used"
-msgstr "Name der auszugebenden Tabelle, erzeugt wenn der Schalter 'Distanz zu Allen' gesetzt wurde."
+msgstr "Name der Tabelle, erzeugt wenn der Schalter 'Distanz zu Allen' gesetzt wurde."
 
 #: ../vector/v.distance/main.c:219
 msgid "Print output to stdout, don't update attribute table"
@@ -29270,7 +29235,7 @@ msgstr "Mache die äußeren Ecken rund."
 
 #: ../vector/v.parallel2/main.c:103
 msgid "Create buffer-like parallel lines"
-msgstr "Erzeuge Bufferähnliche parallele Linien."
+msgstr "Erzeuge Pufferähnliche parallele Linien."
 
 #: ../vector/v.net.flow/main.c:58
 msgid "vector, network, flow"
@@ -31625,7 +31590,7 @@ msgstr "Spaltentyp (%s) wird nicht unterstützt."
 
 #: ../vector/v.to.rast/support.c:514
 msgid "Cannot allocate memory for row buffer"
-msgstr "Kann keinen Speicher für Zeilenbuffer reservieren."
+msgstr "Kann keinen Speicher für Zeilenpuffer reservieren."
 
 #: ../vector/v.to.rast/support.c:584
 #, c-format
@@ -32925,6 +32890,9 @@ msgstr "Wertebereich ist %.7g to %.7g\n"
 msgid "Data range is %.15g to %.15g\n"
 msgstr "Wertebereich ist %.15g bis %.15g\n"
 
+msgid "Output map: slope steepness (S) factor for USLE"
+msgstr "Ausgabekarte der Hangneigungsfaktoren (S) für USLE."
+
 #~ msgid "The configuration file can be used only with \t\t\t%s rasterfile"
 #~ msgstr "Die Konfigurationsdatei kann nur verwendet werden mit \t\t\t%s Rasterkarte."
 
@@ -32932,10 +32900,10 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Ungültige Konfigurationsdatei (Stichprobenfläche)."
 
 #~ msgid "Group input"
-#~ msgstr "Eingabe-Gruppe "
+#~ msgstr "Eingabe-Gruppe"
 
 #~ msgid "Use image list and not group"
-#~ msgstr "Verwende eine Bild-Liste und keine Gruppe."
+#~ msgstr "Verwende eine Bild-Liste und keine Gruppe"
 
 #~ msgid "Subgroup <%s> not found"
 #~ msgstr "Untergruppe <%s> nicht gefunden."
@@ -33025,7 +32993,7 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Transformiere <%s>..."
 
 #~ msgid "Unable allocate memory for row buffer"
-#~ msgstr "Kann keinen Speicher für Zeilenbuffer reservieren."
+#~ msgstr "Kann keinen Speicher für Zeilenpuffer reservieren."
 
 #~ msgid "Current window size:"
 #~ msgstr "Aktuelle Fenstergröße:"
@@ -33076,7 +33044,7 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Berechne Zeile %d (von %d) der Kovarianz-Matrix..."
 
 #~ msgid "Unable to allocate memory for row buffer"
-#~ msgstr "Kann keinen Speicher für Zeilenbuffer reservieren."
+#~ msgstr "Kann keinen Speicher für Zeilenpuffer reservieren."
 
 #~ msgid "Threshold to calculate for method=threshold"
 #~ msgstr "Schwellenwert für method=threshold"
@@ -33640,19 +33608,19 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Lese Karte..."
 
 #~ msgid "Input map: elevation on which entire analysis is based"
-#~ msgstr "Eingabekarte mit Höheninformationen, welche die Grundlage der gesamten Analyse ist."
+#~ msgstr "Eingabekarte: Höheninformationen für die Analyse"
 
 #~ msgid "Input map: locations of real depressions"
-#~ msgstr "Eingabekarte mit Orten realer Senken im Gebiet."
+#~ msgstr "Eingabekarte: Orte realer Senken"
 
 #~ msgid "Input map or value: percent of disturbed land, for USLE"
-#~ msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, (für ABAG/USLE)."
+#~ msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, für USLE"
 
 #~ msgid "Output map: drainage direction"
-#~ msgstr "Ausgabekarte mit Abflussrichtung."
+#~ msgstr "Ausgabekarte: Abflussrichtung"
 
 #~ msgid "Output map: stream segments"
-#~ msgstr "Ausgabekarte der Flußsegmente. "
+#~ msgstr "Ausgabekarte: Flusssegmente"
 
 #~ msgid "Watershed basin creation program."
 #~ msgstr "Modul zur Berechnung von Wassereinzugsgebieten."
@@ -33716,13 +33684,13 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Gib mehr Kommentare aus (Standard=schweigsam)."
 
 #~ msgid "Could not read east bufferzone size. Aborting."
-#~ msgstr "Konnte die Ost-Bufferzonengröße nicht lesen. Breche ab."
+#~ msgstr "Konnte die Ost-Pufferzonengröße nicht lesen. Breche ab."
 
 #~ msgid "Could not read west bufferzone size. Aborting."
-#~ msgstr "Konnte die West-Bufferzonengröße nicht lesen. Breche ab."
+#~ msgstr "Konnte die West-Pufferzonengröße nicht lesen. Breche ab."
 
 #~ msgid "Could not read north bufferzone size. Aborting."
-#~ msgstr "Konnte die Nord-Bufferzonengröße nicht lesen. Breche ab."
+#~ msgstr "Konnte die Nord-Pufferzonengröße nicht lesen. Breche ab."
 
 #~ msgid "Name of the longitude input raster map [decimal degrees]"
 #~ msgstr "Eingabe-Rasterkarte mit Längengraden [in Dezimal-Grad]."
@@ -33748,10 +33716,10 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Berechnung der unbeschränkten Grundwasserfluss Schleife %i\n"
 
 #~ msgid "Input value: maximum length of surface flow, for USLE"
-#~ msgstr "Eingabewert: maximale Länge des Oberflächenabflusses für USLE."
+#~ msgstr "Eingabewert: Maximale Länge des Oberflächenabflusses für USLE"
 
 #~ msgid "Output map: useful for visual display of results"
-#~ msgstr "Ausgabekarte: hilfreich für die visuelle Darstellung der Ergebnisse."
+#~ msgstr "Ausgabekarte: Hilfreich für visuelle Darstellung der Ergebnisse"
 
 #~ msgid "unable to open new L map layer."
 #~ msgstr "Kann neue L-Karte nicht öffnen."
@@ -33851,13 +33819,13 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Schwellwert der Wassertiefe [m] (Diffusion steigt, nachdem diese Wassertiefe erreicht wurde)."
 
 #~ msgid "Input map: amount of overland flow per cell"
-#~ msgstr "Eingabekarte mit der Größe des Oberflächenabfluss pro Zelle."
+#~ msgstr "Eingabekarte: Größe des Oberflächenabfluss pro Zelle"
 
 #~ msgid "Input map: terrain blocking overland surface flow, for USLE"
-#~ msgstr "Eingabekarte mit Gelände, dass den Oberflächenabfluss blockiert, für USLE."
+#~ msgstr "Eingabekarte: Gelände, dass den Oberflächenabfluss blockiert, für USLE"
 
 #~ msgid "Output map: number of cells that drain through each cell"
-#~ msgstr "Ausgabekarte mit Anzahl der Zellen, die durch jede Zelle abfließt."
+#~ msgstr "Ausgabekarte: Anzahl der Zellen, die durch jede Zelle abfließt"
 
 #~ msgid "Output map: unique label for each watershed basin"
 #~ msgstr "Ausgabekarte mit eindeutiger Kennzeichnung jedes Einzugsgebietes."
@@ -33866,13 +33834,10 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Ausgabekarte mit Einzugsgebietshälften mit eindeutigen Wert."
 
 #~ msgid "Output map: slope length and steepness (LS) factor for USLE"
-#~ msgstr "Ausgabekarte der Hanglängen und -Neigungsfaktoren (LS) für USLE."
-
-#~ msgid "Output map: slope steepness (S) factor for USLE"
-#~ msgstr "Ausgabekarte der Hangneigungsfaktoren (S) für USLE."
+#~ msgstr "Ausgabekarte: Hanglängen und -Neigungsfaktoren (LS) für USLE."
 
 #~ msgid "Input value: minimum size of exterior watershed basin"
-#~ msgstr "Eingabewert: kleinste Größe des äußeren Wassereinzugsgebiets."
+#~ msgstr "Eingabewert: Minimale Größe des äußeren Wassereinzugsgebiets"
 
 #~ msgid "Output elevation raster map after filling"
 #~ msgstr "Ausgabehöhenkarte nach dem Füllen"
@@ -33946,7 +33911,7 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ " Versuche:\n"
 
 #~ msgid "Could not read south bufferzone size. Aborting."
-#~ msgstr "Konnte die Süd-Bufferzonengröße nicht lesen. Breche ab."
+#~ msgstr "Konnte die Süd-Pufferzonengröße nicht lesen. Breche ab."
 
 #~ msgid "Slower but accurate (applies to FP maps only"
 #~ msgstr "Langsamer aber genau (gilt nur für Fließkomma-Karten)"
@@ -33955,10 +33920,10 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgstr "Konvertiert eine GRASS Vektorkarte in ein OGR unterstütztes Vektorformat."
 
 #~ msgid "Lines buffers... "
-#~ msgstr "Linien-Buffer... "
+#~ msgstr "Linien-Puffer... "
 
 #~ msgid "Areas buffers... "
-#~ msgstr "Flächen-Buffer ..."
+#~ msgstr "Flächen-Puffer ..."
 
 #~ msgid "List paper formats ( name width height left right top bottom(margin) )"
 #~ msgstr "Gebe Liste der Papierformate aus (Name Breite Höhe links rechts oben unten(Rand) )."
@@ -34027,15 +33992,14 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #~ msgid "Use '-' to enter instructions from keyboard"
 #~ msgstr "Verwenden Sie '-' für eine Eingabe über die Tastatur"
 
-#, fuzzy
 #~ msgid "The password was stored in file (%s/.grasslogin64)"
-#~ msgstr "Das Passwort wurde in einer Datei gespeichert."
+#~ msgstr "Das Passwort wurde in der Datei  (%s/.grasslogin64) gespeichert."
 
 #~ msgid "Displays spectral response at user specified locations in group or images."
-#~ msgstr "Zeige die Farbempfindlichkeit an Benutzerdefinierten Stellen in der Gruppe oder in Bilderen."
+#~ msgstr "Zeige die Farbempfindlichkeit an benutzerdefinierten Stellen in Gruppe oder Bildern."
 
 #~ msgid "Write output to PNG image"
-#~ msgstr "Schreibe die Ausgabe in ein PNG-Bild."
+#~ msgstr "Schreibe die Ausgabe in ein PNG-Bild"
 
 #~ msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
 #~ msgstr "Kategoriewerte, die für die Maske verwendet werden (Format: 1 2 3 thru 7 *)."
@@ -34052,3 +34016,117 @@ msgstr "Wertebereich ist %.15g bis %.15g\n"
 #, fuzzy
 #~ msgid "Subgroup <%s> not found in current mapset"
 #~ msgstr "Rasterkarte <%s> im aktuellen Mapset nicht gefunden."
+
+#~ msgid "unable to open <%s> mask ... continuing without!"
+#~ msgstr "Kann Maske <%s> nicht öffnen ... mache ohne weiter !"
+
+#~ msgid "Calculates richness index on a raster map"
+#~ msgstr "Berechnet den Richness-Index einer Rasterkarte"
+
+#~ msgid "Row cache is too small"
+#~ msgstr "Zeilen-Cache ist zu klein"
+
+#~ msgid "Steps=%d"
+#~ msgstr "Schritte=%d"
+
+#~ msgid "Fractal dimension of [%.2lf] must be between 2 and 3."
+#~ msgstr "Fraktale Dimension von [%.2lf] muss zwischen 2 und 3 liegen."
+
+#~ msgid "Output map: basins raster map"
+#~ msgstr "Ausgabe-Rasterkarte: Einzugsgebiete"
+
+#~ msgid "Output map: half basins raster map"
+#~ msgstr "Ausgabe-Rasterkarte: Halbe Einzugsgebiete"
+
+#~ msgid "Output map: Slope steepness (S) factor for USLE"
+#~ msgstr "Ausgabekarte: Hangneigungsfaktoren (S) für USLE"
+
+#~ msgid "Invalid GEOS geometry!"
+#~ msgstr "Ungültige GEOS Geometrie!"
+
+#~ msgid "No coordinates in GEOS geometry (can be ok for negative distance)!"
+#~ msgstr "Keine Koordinaten in der GEIS Geometrie (kann bei negativer Distanz okay sein)!"
+
+#~ msgid "Invalid x coordinate %f"
+#~ msgstr "Ungültige X-Koordinate %f"
+
+#~ msgid "Invalid y coordinate %f"
+#~ msgstr "Ungültige Y-Koordinate %f"
+
+#~ msgid "Corrupt GEOS geometry"
+#~ msgstr "Kaputte GEOS Geometrie"
+
+#~ msgid "Unknown GEOS geometry type"
+#~ msgstr "Unbekannter GEOS Geometrie-Typ"
+
+#~ msgid "Buffering failed"
+#~ msgstr "Puffern fehlgeschlagen"
+
+#~ msgid "Layer number must be > 0 for category constraints"
+#~ msgstr "Layer Nummer muss > 0 sein für Kategorie-Bedingungen"
+
+#~ msgid "'%s' and '%s' parameters were supplied, cats will be ignored"
+#~ msgstr "'%s' und '%s' Parameter wurden angegeben, cats wird ignoriert"
+
+#~ msgid "Loading categories from table <%s>..."
+#~ msgstr "Lade Kategorien aus Tabelle <%s> ..."
+
+#~ msgid "%d categories loaded"
+#~ msgstr "%d Kategorien geladen"
+
+#~ msgid "No categories selected with '%s' option"
+#~ msgstr "Keine Kategorien mit der Option '%s' selektiert"
+
+#~ msgid "%d errors in '%s' option"
+#~ msgstr "%d Fehler in '%s' Option"
+
+#~ msgid "vector, buffer, geometry"
+#~ msgstr "Vektor, Puffer, Geometrie"
+
+#~ msgid "Creates a buffer around vector features of given type."
+#~ msgstr "Erzeugt einen Puffer um Objekte mit gegebenen Typ."
+
+#~ msgid "Transfer categories and attributes"
+#~ msgstr "Übertrage Kategorien und Attribute"
+
+#~ msgid "Note: In latitude-longitude coordinate system distances are in degree units"
+#~ msgstr "Beachte: In geographischen Koordinatensystem sind Distanzen in Grad"
+
+#~ msgid "Invalid layer number (%d). Parameter '%s' or '%s' specified, assuming layer '1'."
+#~ msgstr "Ungültige Layer-Nummer (%d). Parameter '%s' oder '%s' angegeben, vermute Layer '1'."
+
+#~ msgid "Illegal scale value"
+#~ msgstr "Ungültiger Maßstabswert"
+
+#~ msgid "Unable to create vector map"
+#~ msgstr "Kann die Vektorkarte nicht erzeugen"
+
+#~ msgid "Negative distances for internal buffers are not supported and converted to positive values."
+#~ msgstr "Negative Distanzen für interne Puffer sind nicht erlaubt und werden in positive Werte umgewandelt."
+
+#~ msgid "Buffering features..."
+#~ msgstr "Puffere Objekte..."
+
+#~ msgid "Negative distances are only supported for areas"
+#~ msgstr "Negative Distanzen sind nur für Flächen erlaubt"
+
+#~ msgid "Cleaning buffers..."
+#~ msgstr "Säubere Puffer..."
+
+#~ msgid "Removing dangles..."
+#~ msgstr "Entferne Überstände (dangles)..."
+
+#~ msgid "Removing bridges..."
+#~ msgstr "Entferne Brücken..."
+
+#~ msgid "Calculating centroids for all areas..."
+#~ msgstr "Berechne Zentroide für alle Flächen..."
+
+#~ msgid "Name of OGR data source not specified"
+#~ msgstr "Name der OGR-Quelle nicht angegeben"
+
+#~ msgid "List of supported formats:"
+#~ msgstr "Liste der unterstützten Dateiformate:"
+
+#~ msgid "No areas found, skipping %s"
+#~ msgstr "Keine Flächen gefunden, überspringe %s"

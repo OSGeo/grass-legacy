@@ -1,27 +1,27 @@
 # translation of grasslibs_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004-2013 GRASS Development Team
+# Copyright (C) 2004-2014 GRASS Development Team
 #
 # Markus Neteler <neteler itc.it>, 2004.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
 # Stephan Holl <stephan.holl intevation.de>, 2007.
 # Markus Neteler <neteler osgeo.org>, 2008.
-# Robert Nuske <robert.nuske nw-fva.de>, 2009, 2010, 2011, 2012, 2013.
+# Robert Nuske <robert.nuske nw-fva.de>, 2009, 2010, 2011, 2012, 2013, 2014.
 # Helmut Kudrnovsky <hellik web.de>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-03 17:34+0100\n"
-"PO-Revision-Date: 2014-03-24 13:45+0100\n"
-"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
+"PO-Revision-Date: 2014-08-10 13:37+0200\n"
+"Last-Translator: Robert Nuske <robert.nuske@nw-fva.de>\n"
 "Language-Team: German <grass-translations@lists.osgeo.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../lib/raster/rem_io.c:40
 #, c-format
@@ -326,7 +326,7 @@ msgstr "Fehler beim Bestimmen des Wertebereichs."
 #: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:208 ../lib/ogsf/Gs3.c:366
 #: ../lib/ogsf/Gs3.c:482 ../lib/ogsf/Gs3.c:587
 msgid "Unable to allocate memory for a null buffer"
-msgstr "Kann keinen Speicher reservieren für einen NULL-Buffer."
+msgstr "Kann keinen Speicher reservieren für einen NULL-Puffer."
 
 #: ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212 ../lib/ogsf/Gs3.c:370
 #: ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577 ../lib/gpde/N_arrays_io.c:68
@@ -1880,7 +1880,7 @@ msgstr "Fehler beim Lesen der NULL-Zeile %d."
 
 #: ../lib/gis/get_row.c:1115
 msgid "Unable to realloc buffer"
-msgstr "Kann Buffer nicht wieder reservieren."
+msgstr "Kann Puffer nicht wieder reservieren."
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
 msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
@@ -5127,3 +5127,9 @@ msgstr "G_realloc: Kann nicht %lu Byte auf %s:%d reservieren."
 
 #~ msgid "'%s' must be > 0 for '%s'"
 #~ msgstr "'%s' muss > 0 für '%s' sein"
+
+#~ msgid "No temp files available: %s"
+#~ msgstr "Keine temp Dateien vorhanden: %s"
+
+#~ msgid "Module built against version %s but trying to use version %s. You need to rebuild GRASS GIS or untangle multiple installations."
+#~ msgstr "Das Module wurde mit Version %s gebaut, aber versucht Version %s zu verwenden. Sie müssen GRASS erneut bauen oder verschiedene Installationen entwirren."
