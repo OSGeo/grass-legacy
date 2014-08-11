@@ -4,7 +4,7 @@ PGM = r.li.dominance
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
-LIB_NAME      = grass_rli
+LIB_NAME      = grass_rli.$(GRASS_VERSION_NUMBER)
 
 RLI_LIB = -l$(LIB_NAME)
 
