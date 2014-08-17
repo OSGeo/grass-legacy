@@ -6,17 +6,20 @@ with:
 <ul>
   <li><b>H</b>: Renyi entropy</li>
   <li><b>alpha</b>: order of the generalized entropy</li>
-  <li><b>i</b>: ith class</li>
-  <li><b>S</b>: number of classes</li>
-  <li><b>p<small>i</small></b>: proportion of the landscape occupied by class i</li>
+  <li><b>i</b>: patch type</li>
+  <li><b>S</b>: number of different patch types</li>
+  <li><b>p<small><small>i</small></small></b>: proportional abundance of 
+patch type <i>i</i> </li>
 </ul>
 
 <h2>NOTES</h2>
 
-Do not use absolute path names for the <b>output</b> map/file.
+Do not use absolute path names for the <b>config</b> and <b>output</b>
+file/map parameters.
 If the "moving window" method was selected in <b>r.li.setup</b>, then the
 output will be a raster map, otherwise an ASCII file will be generated in
-the <tt>$HOME/.r.li/output/</tt> folder.
+the folder <tt>C:\Users\normal\.r.li\output\</tt>
+(MS-Windows) or <tt>$HOME/.r.li/output/</tt> (GNU/Linux).
 <p>
 <!-- TODO: verify next: -->
 If the input raster map contains only NULL values then <em>r.li.renyi</em>

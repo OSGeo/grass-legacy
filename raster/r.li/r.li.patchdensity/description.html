@@ -18,10 +18,12 @@ are ignored when tracing a patch.
 
 <h2>NOTES</h2>
 
-Do not use absolute path names for the <b>output</b> map/file.
+Do not use absolute path names for the <b>config</b> and <b>output</b>
+file/map parameters.
 If the "moving window" method was selected in <b>r.li.setup</b>, then the
 output will be a raster map, otherwise an ASCII file will be generated in
-the <tt>$HOME/.r.li/output/</tt> folder.
+the folder <tt>C:\Users\normal\.r.li\output\</tt>
+(MS-Windows) or <tt>$HOME/.r.li/output/</tt> (GNU/Linux).
 <p>
 <!-- TODO: verify next: -->
 A map of NULL values is considered to have zero patches. <br>
@@ -74,6 +76,7 @@ Gen. Tech. Rep. PNW-351. (<a href="http://treesearch.fs.fed.us/pubs/3064">PDF</a
 Claudio Porta and Lucio Davide Spano, students of Computer Science 
 University of Pisa (Italy).<br>
 Commission from Faunalia Pontedera (PI) (www.faunalia.it)<br>
+Markus Metz (statistics)
 
 <p>
 <i>Last changed: $Date$</i>

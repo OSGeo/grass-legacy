@@ -19,13 +19,17 @@
 the landscape involving patch type k</li>
 <li> <b>Area</b>: total landscape area</li>
 </ul>
+<p>
+The unit is meters per hectare.
 
 <h2>NOTES</h2>
 
-Do not use absolute path names for the <b>output</b> map/file.
+Do not use absolute path names for the <b>config</b> and <b>output</b>
+file/map parameters.
 If the "moving window" method was selected in <b>r.li.setup</b>, then the
 output will be a raster map, otherwise an ASCII file will be generated in
-the <tt>$HOME/.r.li/output/</tt> folder.
+the folder <tt>C:\Users\normal\.r.li\output\</tt>
+(MS-Windows) or <tt>$HOME/.r.li/output/</tt> (GNU/Linux).
 <p>
 <!-- TODO: verify next: -->
 If the input raster map contains only NULL values then <em>r.li.edgedensity</em>
@@ -75,7 +79,8 @@ Gen. Tech. Rep. PNW-351. (<a href="http://treesearch.fs.fed.us/pubs/3064">PDF</a
 
 <h2>AUTHORS</h2>
 Serena Pallecchi student of Computer Science University of Pisa (Italy).<br>
-Commission from Faunalia Pontedera (PI), Italy (www.faunalia.it)
+Commission from Faunalia Pontedera (PI), Italy (www.faunalia.it)<br>
+Markus Metz
 
 <p>
 <i>Last changed: $Date$</i>
