@@ -15,7 +15,31 @@ because USGS quads are not exact rectangles.
 
 <h2>EXAMPLES</h2>
 
-Make a 4x3 grid, cells 20km a side, with lower left corner at 2716500,6447000:
+1) Create a grid in a latitude-longitude location (WGS84):
+
+<div class="code"><pre>
+# use g.region to easily calculate rows and column for 'grid':
+g.region n=90 s=-90 w=-180 e=180 res=10 -p
+projection: 3 (Latitude-Longitude)
+zone:       0
+datum:      wgs84
+ellipsoid:  wgs84
+north:      90N
+south:      90S
+west:       180W
+east:       180E
+nsres:      10
+ewres:      10
+rows:       18
+cols:       36
+cells:      648
+
+# create 10 degree size grid:
+v.mkgrid map=grid_10deg grid=18,36
+</pre></div>
+
+<p>
+2) Make a 4x3 grid, cells 20km a side, with lower left corner at 2716500,6447000:
 <div class="code"><pre>
 v.mkgrid map=coro_grid grid=4,3 position=coor coor=2716500,6447000 box=20000,20000
 </pre></div>
