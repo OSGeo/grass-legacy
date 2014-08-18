@@ -5,13 +5,13 @@
 #include "grid_structs.h"
 #include "local_proto.h"
 
-int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbreaks)
+int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbreaks, int out_type)
 {
 
     int i, k, j;
-    int rows, cols, x_cols;
+    int rows, cols;
     int num_v_rows, num_v_cols;
-    double x, y, x_len;
+    double x, y, x_len, y_len;
     double sx, sy;
     double width, length;
     double next_x, next_y;
@@ -35,12 +35,11 @@ int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbr
      * to make sure that each section of the grid
      * line is less than half way around the globe
      */
-    x_len = length / (1. * nbreaks);
-    x_cols = cols * (1. * nbreaks);
+     x_len = length / (1. * nbreaks + 1);
+     y_len = width / (1. * nbreaks + 1);
 
     /* write out all the vector lengths (x vectors) of the entire grid  */
     G_verbose_message(_("Writing out vector rows..."));
-
     y = grid_info->origin_y;
     for (i = 0; i < num_v_rows; ++i) {
 	double startx;
@@ -50,8 +49,9 @@ int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbr
 
 	for (k = 0; k < cols; k++) {
 	    x = startx;
-	    for (j = 0; j < nbreaks; j++) {
-		if (j < nbreaks -1)
+            j = 0;
+	    do {
+		if (j < nbreaks)
 		    next_x = x + x_len;
 		else
 		    next_x = startx + length;
@@ -65,11 +65,12 @@ int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbr
 		       angle);
 		rotate(&next_x, &dum, grid_info->origin_x,
 		       grid_info->origin_y, angle);
-		write_vect(x, y, next_x, dum, Map, Points);
+		write_vect(x, y, next_x, dum, Map, Points, out_type);
 
 		y = sy;
 		x = next_x = snext_x;
-	    }
+                j++;
+	    } while (j <= nbreaks);
 	    startx += length;
 	}
 	y += width;
@@ -78,27 +79,37 @@ int write_grid(struct grid_description *grid_info, struct Map_info *Map, int nbr
     /* write out all the vector widths (y vectors) of the entire grid  */
     G_verbose_message(_("Writing out vector columns..."));
     x = grid_info->origin_x;
-    for (k = 0; k < num_v_cols; ++k) {
-	y = grid_info->origin_y;
-	G_percent(k, num_v_cols, 2);
+    for (i = 0; i < num_v_cols; ++i) {
+        double starty;
+	starty = grid_info->origin_y;
+	G_percent(i, num_v_cols, 2);
 
-	for (i = 0; i < rows; ++i) {
-	    next_y = y + width;
+	for (k = 0; k < rows; k++) {
+	  y = starty;
+	  j = 0;
+	  do {
+	      if (j < nbreaks)
+		  next_y = y + y_len;
+	      else
+		  next_y = starty + width;
 
-	    sx = x;
-	    sy = y;
-	    snext_y = next_y;
-	    dum = x;
-	    rotate(&x, &y, grid_info->origin_x, grid_info->origin_y, angle);
-	    rotate(&dum, &next_y, grid_info->origin_x, grid_info->origin_y,
-		   angle);
+	      sx = x;
+	      sy = y;
+	      snext_y = next_y;
+	      dum = x;
+	      rotate(&x, &y, grid_info->origin_x, grid_info->origin_y, angle);
+	      rotate(&dum, &next_y, grid_info->origin_x, grid_info->origin_y,
+		    angle);
 
-	    write_vect(x, y, dum, next_y, Map, Points);
+	      write_vect(x, y, dum, next_y, Map, Points, out_type);
 
-	    x = sx;
-	    y = next_y = snext_y;
+	      x = sx;
+	      y = next_y = snext_y;
+	      j++;
+	  } while (j <= nbreaks);
+	  /* To get exactly the same coordinates as above, y+=width is wrong */
+	  starty += width;
 	}
-	/* To get exactly the same coordinates as above, x+=length is wrong */
 	x += length;
     }
 
@@ -114,7 +125,7 @@ static double yarray[10];
 #define  NUM_POINTS  2
 
 int write_vect(double x1, double y1, double x2, double y2,
-	       struct Map_info *Map, struct line_pnts *Points) /* new with Vlib */
+	       struct Map_info *Map, struct line_pnts *Points, int out_type)
 {
     static struct line_cats *Cats = NULL;
 
@@ -129,8 +140,7 @@ int write_vect(double x1, double y1, double x2, double y2,
 
     if (0 > Vect_copy_xyz_to_pnts(Points, xarray, yarray, NULL, NUM_POINTS))
 	G_fatal_error(_("Out of memory"));
-
-    Vect_write_line(Map, GV_BOUNDARY, Points, Cats);
+    Vect_write_line(Map, out_type, Points, Cats);
 
     return 0;
 }
