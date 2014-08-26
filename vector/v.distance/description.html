@@ -122,14 +122,36 @@ v.to.db map=vdistance_vectors option=length column=length
 v.univar vdistance_vectors column=length
 </pre></div>
 
+<h3>Print distance between points</h3>
+
+To be used in a Latitude-longitude location (EPSG 4326):
+<div class="code"><pre>
+# points along the equator
+echo "0|-60|1" | v.in.ascii output=pnt1
+echo "0|-59|1" | v.in.ascii output=pnt2
+
+v.distance from=pnt1 to=pnt2 upload=dist col=distance -p --q
+from_cat|distance
+1|111403.734218
+</pre></div>
+
 <h3>Print distance matrix</h3>
 
+Note: Matrix-style output is enabled only for flag <em>-a</em> and one
+given upload option.
+<p>
+Spearfish sample data location:
 <div class="code"><pre>
 v.distance -pa from=archsites to=archsites upload=dist col=dist
 </pre></div>
 
-Note: Matrix-like output is enabled only for flag <em>-a</em> and one
-given upload option.
+<p>
+North Carolina sample data location:
+
+<div class="code"><pre>
+v.distance -pa from=hospitals to=hospitals upload=dist col=dist
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
@@ -140,7 +162,7 @@ given upload option.
 </em>
 
 
-<h2>AUTHOR</h2>
+<h2>AUTHORS</h2>
 
 Janne Soimasuo 1994, University of Joensuu, Faculty of Forestry, Finland<br>
 Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<br>
