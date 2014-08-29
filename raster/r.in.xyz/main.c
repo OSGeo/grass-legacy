@@ -579,7 +579,7 @@ int main(int argc, char *argv[])
 	while (0 != G_getl2(buff, BUFFSIZE - 1, in_fp)) {
 	    line++;
 
-	    if (line % 10000 == 0) {	/* mod for speed */
+	    if (line % 100000 == 0) {	/* mod for speed */
 		if (!can_seek)
 		    G_clicker();
 		else if (line < estimated_lines)
