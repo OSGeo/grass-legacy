@@ -251,6 +251,7 @@ fi
 #### setup input file
 if [ -z "$GIS_OPT_INPUT" ] || [ "$GIS_OPT_INPUT" = "-" ] ; then
    # read from stdin to temp file
+   # FIXME: opening and closing the file to append each line of data individually is very inefficient
    EXITCODE=0
    while [ $EXITCODE -eq 0 ] ; do
       unset REPLY
