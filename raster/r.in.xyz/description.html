@@ -4,16 +4,24 @@ The <em>r.in.xyz</em> module will load and bin ungridded x,y,z ASCII data
 into a new raster map. The user may choose from a variety of statistical
 methods in creating the new raster. Gridded data provided as a stream of
 x,y,z points may also be imported.
-<p>
 
+<p>
+Please note that the current region extents and resolution are used for
+the import. It is therefore recommended to first use the <em>-s</em>
+flag to get the extents of the input points to be imported, then
+adjust the current region accordingly, and only then proceed with the
+actual import.
+
+<p>
 <em>r.in.xyz</em> is designed for processing massive point cloud datasets,
 for example raw LIDAR or sidescan sonar swath data. It has been tested with
 datasets as large as tens of billion of points (705GB in a single file).
  <!-- Doug Newcomb, US Fish & Wildlife Service -->
-<p>
 
-Available statistics for populating the raster are:<br>
-<ul>
+<p>
+Available statistics for populating the raster are:
+<p>
+<blockquote>
 <table>
 <tr><td><em>n</em></td>        <td>number of points in cell</td></tr>
 <tr><td><em>min</em></td>      <td>minimum value of points in cell</td></tr>
@@ -29,13 +37,14 @@ Available statistics for populating the raster are:<br>
    <td>p<sup><i>th</i></sup> percentile of points in cell</td></tr>
 <tr><td><em>skewness</em></td> <td>skewness of points in cell</td></tr>
 <tr><td><em>trimmean</em></td> <td>trimmed mean of points in cell</td></tr>
-</table><br>
+</table>
+</blockquote>
 
+<ul>
 <li><em>Variance</em> and derivatives use the biased estimator (n). [subject to change]
 <li><em>Coefficient of variance</em> is given in percentage and defined as
 <tt>(stddev/mean)*100</tt>.
 </ul>
-<br>
 
 
 <h2>NOTES</h2>
@@ -79,11 +88,11 @@ for use with arbitrarily large input files<!-- without a small value for percent
  but for the aggregate fns it will also depend on the number of data points. (?) -->
 
 <p>
-
 The default map <b>type</b>=<tt>FCELL</tt> is intended as compromise between
 preserving data precision and limiting system resource consumption.
 If reading data from a <tt>stdin</tt> stream, the program can only run using
 a single pass.
+
 
 <h3>Setting region bounds and resolution</h3>
 
@@ -95,20 +104,19 @@ A suitable resolution can be found by dividing the number of input points
 by the area covered. e.g.
 
 <div class="code"><pre>
-  wc -l inputfile.txt
-  g.region -p
-  # points_per_cell = n_points / (rows * cols)
+wc -l inputfile.txt
+g.region -p
+# points_per_cell = n_points / (rows * cols)
 
-  g.region -e
-  # UTM location:
-  # points_per_sq_m = n_points / (ns_extent * ew_extent)
+g.region -e
+# UTM location:
+# points_per_sq_m = n_points / (ns_extent * ew_extent)
 
-  # Lat/Lon location:
-  # points_per_sq_m = n_points / (ns_extent * ew_extent*cos(lat) * (1852*60)^2)
+# Lat/Lon location:
+# points_per_sq_m = n_points / (ns_extent * ew_extent*cos(lat) * (1852*60)^2)
 </pre></div>
 
 <p>
-
 If you only intend to interpolate the data with <em>r.to.vect</em> and
 <em>v.surf.rst</em>, then there is little point to setting the region
 resolution so fine that you only catch one data point per cell -- you might
@@ -126,21 +134,18 @@ Blank lines and comment lines starting with the hash symbol (<tt>#</tt>)
 will be skipped.
 
 <p>
-
 The <b>zrange</b> parameter may be used for filtering the input data by
 vertical extent. Example uses might include preparing multiple raster
 sections to be combined into a 3D raster array with <em>r.to.rast3</em>, or
 for filtering outliers on relatively flat terrain.
 
 <p>
-
 In varied terrain the user may find that <em>min</em> maps make for a good
 noise filter as most LIDAR noise is from premature hits. The <em>min</em> map
 may also be useful to find the underlying topography in a forested or urban
 environment if the cells are over sampled.
 
 <p>
-
 The user can use a combination of <em>r.in.xyz</em> <b>output</b> maps to create
 custom filters. e.g. use <em>r.mapcalc</em> to create a <tt>mean-(2*stddev)</tt>
 map. [In this example the user may want to include a lower bound filter in
@@ -166,46 +171,53 @@ Run <em>r.univar</em> on your raster map to check the number of non-NULL cells
 and adjust bounds and/or resolution as needed before proceeding.
 
 <p>
-
 Typical commands to create a DEM using a regularized spline fit:
 <div class="code"><pre>
-  r.univar lidar_min
-  r.to.vect -z feature=point in=lidar_min out=lidar_min_pt
-  v.surf.rst layer=0 in=lidar_min_pt elev=lidar_min.rst
+r.univar lidar_min
+r.to.vect -z feature=point in=lidar_min out=lidar_min_pt
+v.surf.rst layer=0 in=lidar_min_pt elev=lidar_min.rst
 </pre></div>
-<br>
+
 
 <h2>EXAMPLE</h2>
 
-Import the <a href="http://www.grassbook.org/data_menu2nd.phtml">Jockey's
-Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
+Import the <a href="http://www.grassbook.org/ncexternal/index.html">Jockey's
+Ridge, NC, LIDAR dataset</a> (compressed file "lidaratm2.txt.gz"), and process it
+into a clean DEM:
 
 <div class="code"><pre>
-    # scan and set region bounds
-  r.in.xyz -s fs=, in=lidaratm2.txt out=test
-  g.region n=35.969493 s=35.949693 e=-75.620999 w=-75.639999
-  g.region res=0:00:00.075 -a
-    # create "n" map containing count of points per cell for checking density
-  r.in.xyz in=lidaratm2.txt out=lidar_n fs=, method=n zrange=-2,50
-    # check point density [rho = n_sum / (rows*cols)]
-  r.univar lidar_n | grep sum
-    # create "min" map (elevation filtered for premature hits)
-  r.in.xyz in=lidaratm2.txt out=lidar_min fs=, method=min zrange=-2,50
-    # zoom to area of interest
-  g.region n=35:57:56.25N s=35:57:13.575N w=75:38:23.7W e=75:37:15.675W
-    # check number of non-null cells (try and keep under a few million)
-  r.univar lidar_min | grep '^n:'
-    # convert to points 
-  r.to.vect -z feature=point in=lidar_min out=lidar_min_pt
-    # interpolate using a regularized spline fit
-  v.surf.rst layer=0 in=lidar_min_pt elev=lidar_min.rst
-    # set color scale to something interesting
-  r.colors lidar_min.rst rule=bcyr -n -e
-    # prepare a 1:1:1 scaled version for NVIZ visualization (for lat/lon input)
-  r.mapcalc "lidar_min.rst_scaled = lidar_min.rst / (1852*60)"
-  r.colors lidar_min.rst_scaled rule=bcyr -n -e
+# scan and set region bounds
+r.in.xyz -s fs=, in=lidaratm2.txt out=test
+g.region n=35.969493 s=35.949693 e=-75.620999 w=-75.639999
+g.region res=0:00:00.075 -a
+
+# create "n" map containing count of points per cell for checking density
+r.in.xyz in=lidaratm2.txt out=lidar_n fs=, method=n zrange=-2,50
+
+# check point density [rho = n_sum / (rows*cols)]
+r.univar lidar_n | grep sum
+# create "min" map (elevation filtered for premature hits)
+r.in.xyz in=lidaratm2.txt out=lidar_min fs=, method=min zrange=-2,50
+
+# set computational region to area of interest
+g.region n=35:57:56.25N s=35:57:13.575N w=75:38:23.7W e=75:37:15.675W
+
+# check number of non-null cells (try and keep under a few million)
+r.univar lidar_min | grep '^n:'
+
+# convert to points 
+r.to.vect -z feature=point in=lidar_min out=lidar_min_pt
+
+# interpolate using a regularized spline fit
+v.surf.rst layer=0 in=lidar_min_pt elev=lidar_min.rst
+
+# set color scale to something interesting
+r.colors lidar_min.rst rule=bcyr -n -e
+
+# prepare a 1:1:1 scaled version for NVIZ visualization (for lat/lon input)
+r.mapcalc "lidar_min.rst_scaled = lidar_min.rst / (1852*60)"
+r.colors lidar_min.rst_scaled rule=bcyr -n -e
 </pre></div>
-<br>
 
 
 <h2>TODO</h2>
@@ -214,6 +226,7 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 <li> Support for multiple map output from a single run.<br>
      <tt>method=string[,string,...] output=name[,name,...]</tt>
 </ul>
+
 
 <h2>BUGS</h2>
 
@@ -224,7 +237,7 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 
 <li> <em>n</em> map <tt>percent=100</tt> and <tt>percent=xx</tt> maps
   differ slightly (point will fall above/below the segmentation line)
-  <br>Investigate with "<tt>r.mapcalc diff=bin_n.100 - bin_n.33</tt>" etc.
+  <br>Investigate with <tt>r.mapcalc "diff = bin_n.100 - bin_n.33"</tt> etc.
   <br>Cause unknown.
 
 <li> "<tt>nan</tt>" can leak into <em>coeff_var</em> maps.
@@ -235,33 +248,34 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 If you encounter any problems (or solutions!) please contact the GRASS
 Development Team.
 
+
 <h2>SEE ALSO</h2>
 
-<i>
-<a href="g.region.html">g.region</a><br>
-<a href="m.proj.html">m.proj</a><br>
-<a href="r.fillnulls.html">r.fillnulls</a><br>
-<a href="r.in.ascii.html">r.in.ascii</a><br>
-<a href="r.mapcalc.html">r.mapcalc</a><br>
-<a href="r.neighbors.html">r.neighbors</a><br>
-<a href="r.out.xyz.html">r.out.xyz</a><br>
-<a href="r.to.rast3.html">r.to.rast3</a><br>
-<a href="r.to.vect.html">r.to.vect</a><br>
-<a href="r.univar.html">r.univar</a><br>
-<a href="v.in.ascii.html">v.in.ascii</a><br>
-<a href="v.surf.rst.html">v.surf.rst</a><br>
-<br>
+<em>
+<a href="g.region.html">g.region</a>,
+<a href="m.proj.html">m.proj</a>,
+<a href="r.fillnulls.html">r.fillnulls</a>,
+<a href="r.in.ascii.html">r.in.ascii</a>,
+<a href="r.mapcalc.html">r.mapcalc</a>,
+<a href="r.neighbors.html">r.neighbors</a>,
+<a href="r.out.xyz.html">r.out.xyz</a>,
+<a href="r.to.rast3.html">r.to.rast3</a>,
+<a href="r.to.vect.html">r.to.vect</a>,
+<a href="r.univar.html">r.univar</a>,
+<a href="v.in.ascii.html">v.in.ascii</a>,
+<a href="v.surf.rst.html">v.surf.rst</a>
+</em>
+<p>
+<em>
 <a href="v.lidar.correction.html">v.lidar.correction</a>,
 <a href="v.lidar.edgedetection.html">v.lidar.edgedetection</a>,
 <a href="v.lidar.growing.html">v.lidar.growing</a>,
 <a href="v.outlier.html">v.outlier</a>,
 <a href="v.surf.bspline.html">v.surf.bspline</a>
-</i>
+</em>
 <p>
-<i><a href="http://www.ivarch.com/programs/pv.shtml">pv</a></i>
+<em><a href="http://www.ivarch.com/programs/pv.shtml">pv</a></em>
  - The UNIX pipe viewer utility
-<br><br>
-
 
 <h2>AUTHORS</h2>
 
@@ -273,6 +287,5 @@ New Zealand</i><br>
 Extended by Volker Wichmann to support the aggregate functions
 <i>median, percentile, skewness</i> and <i>trimmed mean</i>.
 
-<br>
 <p>
 <i>Last changed: $Date$</i>
