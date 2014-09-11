@@ -651,6 +651,16 @@ int main(int argc, char *argv[])
 
     /* Find nearest areas */
     if (to_type & GV_AREA) {
+
+        struct line_pnts *LLPoints;
+
+        if (G_projection() == PROJECTION_LL) {
+            LLPoints = Vect_new_line_struct();
+        }
+        else {
+            LLPoints = NULL;
+        }
+
 	G_verbose_message(_("Finding nearest areas..."));
 	for (fline = 1; fline <= nfrom; fline++) {
 	    G_debug(3, "fline = %d", fline);
@@ -719,6 +729,21 @@ int main(int argc, char *argv[])
 		    continue;	/* not in threshold */
 		Vect_get_area_cats(&To, area, TCats);
 		tmp_tcat = -1;
+                if (G_projection() == PROJECTION_LL) {
+                    /* calculate distances in meters not degrees (only 2D) */
+                    Vect_reset_line(LLPoints);
+                    Vect_append_point(LLPoints, FPoints->x[0], FPoints->y[0],
+                                      FPoints->z[0]);
+                    Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
+                    tmp_dist = Vect_line_geodesic_length(LLPoints);
+                    Vect_reset_line(LLPoints);
+                    for (k = 0; k < tseg; k++)
+                        Vect_append_point(LLPoints, TPoints->x[k],
+                                          TPoints->y[k], TPoints->z[k]);
+                    Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
+                    tmp_talong = Vect_line_geodesic_length(LLPoints);
+                }
+
 		/* TODO: all cats of given field ? */
 		for (j = 0; j < TCats->n_cats; j++) {
 		    if (TCats->field[j] == to_field) {
