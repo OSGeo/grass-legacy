@@ -388,7 +388,7 @@ proc cutplaneReset { BASE } {
 	cutplaneUpdateRotation2 $BASE
 	cutplaneUpdateTilt2 $BASE
 	
-	Nv_itemDrag $BASE.pos $Nv_(CPLANE_POS) 63 63
+	Nv_itemDrag $BASE.left.pos $Nv_(CPLANE_POS) 63 63
     }
 }
 
@@ -479,7 +479,7 @@ proc cutplaneSetTransFromEntry { BASE coord } {
 		if { [Nget_xyrange] > 0} {
 		set dis_x [expr int( ($new_x/([Nget_xyrange]/2))*63)+63]
 		set dis_y [expr int( ($new_y/([Nget_xyrange]/2))*63)+63]
-		Nv_itemDrag $BASE.pos $Nv_(CPLANE_POS) $dis_x $dis_y
+		Nv_itemDrag $BASE.left.pos $Nv_(CPLANE_POS) $dis_x $dis_y
 		}
 
 		# Finally set the translation
@@ -506,20 +506,4 @@ proc cutplaneSetTrans { w x y z } {
 		$curr draw
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
