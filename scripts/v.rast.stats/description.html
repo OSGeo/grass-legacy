@@ -14,7 +14,8 @@ median, 3rd quartile, and given percentile are also calculated.
 
 
 <h2>NOTES</h2>
-
+<em>v.rast.stats</em> is only meaningful for lines or polygons.
+<p> 
 The module may take a long time to run if the raster region contains a large
 number of cells. In this case the <b>--verbose</b> flag may be used to track
 progress.
@@ -56,7 +57,6 @@ v.info -c myzipcodes_wake
 v.db.select myzipcodes_wake
 v.univar myzipcodes_wake column=elev_range type=centroid
 </pre></div>
-
 
 <h2>SEE ALSO</h2>
 
