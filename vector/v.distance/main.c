@@ -692,6 +692,10 @@ int main(int argc, char *argv[])
 
 		area = List->value[i];
 		G_debug(4, "%d: area %d", i, area);
+		
+		if (Vect_get_area_centroid(&To, area) == 0)
+		    continue;
+
 		Vect_get_area_points(&To, area, TPoints);
 
 		/* Find the distance to this area */
@@ -736,12 +740,6 @@ int main(int argc, char *argv[])
                                       FPoints->z[0]);
                     Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
                     tmp_dist = Vect_line_geodesic_length(LLPoints);
-                    Vect_reset_line(LLPoints);
-                    for (k = 0; k < tseg; k++)
-                        Vect_append_point(LLPoints, TPoints->x[k],
-                                          TPoints->y[k], TPoints->z[k]);
-                    Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
-                    tmp_talong = Vect_line_geodesic_length(LLPoints);
                 }
 
 		/* TODO: all cats of given field ? */
