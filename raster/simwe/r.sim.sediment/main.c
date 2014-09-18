@@ -115,46 +115,46 @@ int main(int argc, char *argv[])
 
     parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
     parm.elevin->key = "elevin";
-    parm.elevin->description = _("Name of the elevation raster map [m]");
+    parm.elevin->description = _("Name of elevation raster map [m]");
     parm.elevin->guisection = _("Input");
 
     parm.wdepth = G_define_standard_option(G_OPT_R_INPUT);
     parm.wdepth->key = "wdepth";
-    parm.wdepth->description = _("Name of the water depth raster map [m]");
+    parm.wdepth->description = _("Name of water depth raster map [m]");
     parm.wdepth->guisection = _("Input");
 
     parm.dxin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dxin->key = "dxin";
-    parm.dxin->description = _("Name of the x-derivatives raster map [m/m]");
+    parm.dxin->description = _("Name of x-derivatives raster map [m/m]");
     parm.dxin->guisection = _("Input");
 
     parm.dyin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dyin->key = "dyin";
-    parm.dyin->description = _("Name of the y-derivatives raster map [m/m]");
+    parm.dyin->description = _("Name of y-derivatives raster map [m/m]");
     parm.dyin->guisection = _("Input");
 
     parm.detin = G_define_standard_option(G_OPT_R_INPUT);
     parm.detin->key = "detin";
     parm.detin->description =
-	_("Name of the detachment capacity coefficient raster map [s/m]");
+	_("Name of detachment capacity coefficient raster map [s/m]");
     parm.detin->guisection = _("Input");
 
     parm.tranin = G_define_standard_option(G_OPT_R_INPUT);
     parm.tranin->key = "tranin";
     parm.tranin->description =
-	_("Name of the transport capacity coefficient raster map [s]");
+	_("Name of transport capacity coefficient raster map [s]");
     parm.tranin->guisection = _("Input");
 
     parm.tauin = G_define_standard_option(G_OPT_R_INPUT);
     parm.tauin->key = "tauin";
     parm.tauin->description =
-	_("Name of the critical shear stress raster map [Pa]");
+	_("Name of critical shear stress raster map [Pa]");
     parm.tauin->guisection = _("Input");
 
     parm.manin = G_define_standard_option(G_OPT_R_INPUT);
     parm.manin->key = "manin";
     parm.manin->required = NO;
-    parm.manin->description = _("Name of the Manning's n raster map");
+    parm.manin->description = _("Name of Manning's n raster map");
     parm.manin->guisection = _("Input");
 
     parm.maninval = G_define_option();
@@ -165,46 +165,46 @@ int main(int argc, char *argv[])
     parm.maninval->description = _("Manning's n unique value");
     parm.maninval->guisection = _("Input");
 
-    /* needs to be updated to GRASS 6 vector format !! 
+/* needs to be updated to GRASS 6 vector format !! 
     parm.sfile = G_define_standard_option(G_OPT_V_INPUT);
     parm.sfile->key = "vector";
     parm.sfile->required = NO;
     parm.sfile->description =
-	_("Name of the sampling locations vector points map");
+	_("Name of sampling locations vector points map");
     parm.sfile->guisection = _("Input");
 */
 
     parm.tc = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.tc->key = "tc";
     parm.tc->required = NO;
-    parm.tc->description = _("Output transport capacity raster map [kg/ms]");
+    parm.tc->description = _("Name for output transport capacity raster map [kg/ms]");
     parm.tc->guisection = _("Output");
 
     parm.et = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.et->key = "et";
     parm.et->required = NO;
     parm.et->description =
-	_("Output transp.limited erosion-deposition raster map [kg/m2s]");
+	_("Name for output transport limited erosion-deposition raster map [kg/m2s]");
     parm.et->guisection = _("Output");
 
     parm.conc = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.conc->key = "conc";
     parm.conc->required = NO;
     parm.conc->description =
-	_("Output sediment concentration raster map [particle/m3]");
+	_("Name for output sediment concentration raster map [particle/m3]");
     parm.conc->guisection = _("Output");
 
     parm.flux = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.flux->key = "flux";
     parm.flux->required = NO;
-    parm.flux->description = _("Output sediment flux raster map [kg/ms]");
+    parm.flux->description = _("Name for output sediment flux raster map [kg/ms]");
     parm.flux->guisection = _("Output");
 
     parm.erdep = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.erdep->key = "erdep";
     parm.erdep->required = NO;
     parm.erdep->description =
-	_("Output erosion-deposition raster map [kg/m2s]");
+	_("Name for output erosion-deposition raster map [kg/m2s]");
     parm.erdep->guisection = _("Output");
 
     parm.nwalk = G_define_option();

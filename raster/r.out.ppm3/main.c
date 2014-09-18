@@ -82,7 +82,7 @@ int main(int argc, char **argv)
     ppm_file->multiple = NO;
     ppm_file->answer = NULL;
     ppm_file->description =
-	_("Name for new PPM file. (use out=- for stdout)");
+	_("Name for new PPM file. (use '-' for stdout)");
 
     /* please, remove before GRASS 7 released */
     bequiet = G_define_flag();

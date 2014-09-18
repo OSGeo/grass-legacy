@@ -81,7 +81,7 @@ int parse_command_line(int argc, char *argv[])
     parms.outfile->description =
 	_("Name of an output file to hold the report");
 
-    parms.nsteps = G_define_option();
+		    parms.nsteps = G_define_option();
     parms.nsteps->key = "nsteps";
     parms.nsteps->type = TYPE_INTEGER;
     parms.nsteps->required = NO;

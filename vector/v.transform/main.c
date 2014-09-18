@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
     zrot->required = NO;
     zrot->multiple = NO;
     zrot->description =
-	_("Rotation around z axis in degrees counterclockwise");
+	_("Rotation around z axis in degrees (counter-clockwise)");
     zrot->answer = "0.0";
     zrot->guisection = _("Custom");
 
