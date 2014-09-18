@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     val->key = "order";
     val->type = TYPE_INTEGER;
     val->required = YES;
-    val->description = _("Rectification polynom order (1-3)");
+    val->description = _("Rectification polynomial order (1-3)");
 
     tres = G_define_option();
     tres->key = "res";

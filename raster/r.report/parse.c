@@ -84,7 +84,7 @@ int parse_command_line(int argc, char *argv[])
 	_("If no output given report is printed to standard output");
     parms.outfile->guisection = _("Output settings");
 
-    parms.nsteps = G_define_option();
+		    parms.nsteps = G_define_option();
     parms.nsteps->key = "nsteps";
     parms.nsteps->type = TYPE_INTEGER;
     parms.nsteps->required = NO;

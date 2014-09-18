@@ -120,16 +120,20 @@ int main(int argc, char *argv[])
 	_("Overland flow hydrologic simulation using "
 	  "path sampling method (SIMWE).");
 
-    parm.elevin = G_define_standard_option(G_OPT_R_ELEV);
+    parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
     parm.elevin->key = "elevin";
+    parm.elevin->description = _("Name of elevation raster map [m]");
+    parm.elevin->guisection = _("Input");
 
     parm.dxin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dxin->key = "dxin";
     parm.dxin->description = _("Name of x-derivatives raster map [m/m]");
+    parm.dxin->guisection = _("Input");
 
     parm.dyin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dyin->key = "dyin";
     parm.dyin->description = _("Name of y-derivatives raster map [m/m]");
+    parm.dyin->guisection = _("Input");
 
     parm.rain = G_define_standard_option(G_OPT_R_INPUT);
     parm.rain->key = "rain";
@@ -137,7 +141,7 @@ int main(int argc, char *argv[])
     parm.rain->description =
 	_("Name of rainfall excess rate (rain-infilt) raster map [mm/hr]");
     parm.rain->guisection = _("Input");
-    
+
     parm.rainval = G_define_option();
     parm.rainval->key = "rain_val";
     parm.rainval->type = TYPE_DOUBLE;
@@ -166,7 +170,7 @@ int main(int argc, char *argv[])
     parm.manin = G_define_standard_option(G_OPT_R_INPUT);
     parm.manin->key = "manin";
     parm.manin->required = NO;
-    parm.manin->description = _("Name of the Manning's n raster map");
+    parm.manin->description = _("Name of Manning's n raster map");
     parm.manin->guisection = _("Input");
 
     parm.maninval = G_define_option();
@@ -184,13 +188,13 @@ int main(int argc, char *argv[])
 	_("Name of flow controls raster map (permeability ratio 0-1)");
     parm.traps->guisection = _("Input");
 
-/*
+/* needs to be updated to GRASS 6 vector format !! 
     parm.sfile = G_define_standard_option(G_OPT_V_INPUT);
     parm.sfile->key = "vector";
     parm.sfile->required = NO;
     parm.sfile->description =
-	_("Name of the sampling locations vector points map");
-    parm.sfile->guisection = _("Input_options");
+	_("Name of sampling locations vector points map");
+    parm.sfile->guisection = _("Input");
 */
 
     parm.depth = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -216,8 +220,8 @@ int main(int argc, char *argv[])
     parm.outwalk->key = "outwalk";
     parm.outwalk->required = NO;
     parm.outwalk->description =
-	_("Name of the output walkers vector points map");
-    parm.outwalk->guisection = _("Output_options");
+	_("Name for output walkers vector points map");
+    parm.outwalk->guisection = _("Output");
 */
 
     parm.nwalk = G_define_option();
@@ -225,7 +229,7 @@ int main(int argc, char *argv[])
     parm.nwalk->type = TYPE_INTEGER;
     parm.nwalk->required = NO;
     parm.nwalk->description =
-	_("Number of walkers, default is twice the no. of cells");
+	_("Number of walkers, default is twice the number of cells");
     parm.nwalk->guisection = _("Parameters");
 
     parm.niter = G_define_option();

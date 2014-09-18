@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     n_flag = G_define_flag();
     n_flag->key = 'n';
-    n_flag->description = _("Don't add quotes");
+    n_flag->description = _("Do not add quotes");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);

@@ -13,8 +13,8 @@
  *                GNU General Public License (>=v2). 
  *                Read the file COPYING that comes with GRASS
  *                for details.
- * 
- **************************************************************/
+ *
+ ****************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
