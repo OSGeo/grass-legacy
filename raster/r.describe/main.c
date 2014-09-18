@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
     flag.i = G_define_flag();
     flag.i->key = 'i';
-    flag.i->description = _("Read fp map as integer");
+    flag.i->description = _("Read floating-point map as integer");
 
     /* please, remove before GRASS 7 released */
     q_flag = G_define_flag();

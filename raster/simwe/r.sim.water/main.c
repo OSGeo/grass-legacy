@@ -122,24 +122,24 @@ int main(int argc, char *argv[])
 
     parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
     parm.elevin->key = "elevin";
-    parm.elevin->description = _("Name of the elevation raster map [m]");
+    parm.elevin->description = _("Name of elevation raster map [m]");
     parm.elevin->guisection = _("Input");
 
     parm.dxin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dxin->key = "dxin";
-    parm.dxin->description = _("Name of the x-derivatives raster map [m/m]");
+    parm.dxin->description = _("Name of x-derivatives raster map [m/m]");
     parm.dxin->guisection = _("Input");
 
     parm.dyin = G_define_standard_option(G_OPT_R_INPUT);
     parm.dyin->key = "dyin";
-    parm.dyin->description = _("Name of the y-derivatives raster map [m/m]");
+    parm.dyin->description = _("Name of y-derivatives raster map [m/m]");
     parm.dyin->guisection = _("Input");
 
     parm.rain = G_define_standard_option(G_OPT_R_INPUT);
     parm.rain->key = "rain";
     parm.rain->required = NO;
     parm.rain->description =
-	_("Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]");
+	_("Name of rainfall excess rate (rain-infilt) raster map [mm/hr]");
     parm.rain->guisection = _("Input");
 
     parm.rainval = G_define_option();
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
     parm.infil->key = "infil";
     parm.infil->required = NO;
     parm.infil->description =
-	_("Name of the runoff infiltration rate raster map [mm/hr]");
+	_("Name of runoff infiltration rate raster map [mm/hr]");
     parm.infil->guisection = _("Input");
 
     parm.infilval = G_define_option();
@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
     parm.manin = G_define_standard_option(G_OPT_R_INPUT);
     parm.manin->key = "manin";
     parm.manin->required = NO;
-    parm.manin->description = _("Name of the Manning's n raster map");
+    parm.manin->description = _("Name of Manning's n raster map");
     parm.manin->guisection = _("Input");
 
     parm.maninval = G_define_option();
@@ -185,34 +185,34 @@ int main(int argc, char *argv[])
     parm.traps->key = "traps";
     parm.traps->required = NO;
     parm.traps->description =
-	_("Name of the flow controls raster map (permeability ratio 0-1)");
+	_("Name of flow controls raster map (permeability ratio 0-1)");
     parm.traps->guisection = _("Input");
 
-/*
+/* needs to be updated to GRASS 6 vector format !! 
     parm.sfile = G_define_standard_option(G_OPT_V_INPUT);
     parm.sfile->key = "vector";
     parm.sfile->required = NO;
     parm.sfile->description =
-	_("Name of the sampling locations vector points map");
+	_("Name of sampling locations vector points map");
     parm.sfile->guisection = _("Input");
 */
 
     parm.depth = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.depth->key = "depth";
     parm.depth->required = NO;
-    parm.depth->description = _("Output water depth raster map [m]");
+    parm.depth->description = _("Name for output water depth raster map [m]");
     parm.depth->guisection = _("Output");
 
     parm.disch = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.disch->key = "disch";
     parm.disch->required = NO;
-    parm.disch->description = _("Output water discharge raster map [m3/s]");
+    parm.disch->description = _("Name for output water discharge raster map [m3/s]");
     parm.disch->guisection = _("Output");
 
     parm.err = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.err->key = "err";
     parm.err->required = NO;
-    parm.err->description = _("Output simulation error raster map [m]");
+    parm.err->description = _("Name for output simulation error raster map [m]");
     parm.err->guisection = _("Output");
 
 /*
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
     parm.outwalk->key = "outwalk";
     parm.outwalk->required = NO;
     parm.outwalk->description =
-	_("Name of the output walkers vector points map");
+	_("Name for output walkers vector points map");
     parm.outwalk->guisection = _("Output");
 */
 
@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
     parm.nwalk->type = TYPE_INTEGER;
     parm.nwalk->required = NO;
     parm.nwalk->description =
-	_("Number of walkers, default is twice the no. of cells");
+	_("Number of walkers, default is twice the number of cells");
     parm.nwalk->guisection = _("Parameters");
 
     parm.niter = G_define_option();
@@ -272,8 +272,9 @@ int main(int argc, char *argv[])
     parm.hmax->type = TYPE_DOUBLE;
     parm.hmax->answer = HMAX;
     parm.hmax->required = NO;
-    parm.hmax->description =
-	_("Threshold water depth [m] (diffusion increases after this water depth is reached)");
+    parm.hmax->label =
+	_("Threshold water depth [m]");
+    parm.hmax->description = _("Diffusion increases after this water depth is reached");
     parm.hmax->guisection = _("Parameters");
 
     parm.halpha = G_define_option();
@@ -296,7 +297,6 @@ int main(int argc, char *argv[])
     flag.tserie = G_define_flag();
     flag.tserie->key = 't';
     flag.tserie->description = _("Time-series output");
-
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);

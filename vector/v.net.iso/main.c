@@ -110,9 +110,9 @@ int main(int argc, char **argv)
     term_opt->key = "ccats";
     term_opt->required = YES;
     term_opt->description =
-	_("Categories of centres (points on nodes) to which net "
-	  "will be allocated. "
-	  "Layer for this categories is given by nlayer option.");
+	_("Categories of centers (points on nodes) to which net "
+	  "will be allocated, "
+	  "layer for this categories is given by nlayer option");
 
     cost_opt = G_define_option();
     cost_opt->key = "costs";

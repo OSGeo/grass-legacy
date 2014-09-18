@@ -8,7 +8,7 @@
  *               Hamish Bowman <hamish_b yahoo.com>,
  *               Markus Neteler <neteler itc.it>
  * PURPOSE:      
- * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2003-2006, 2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     get->description = _("GRASS variable to get");
     get->key_desc = "VARIABLE";
     get->required = NO;
+    get->guisection = _("Get");
 
     set = G_define_option();
     set->key = "set";
@@ -52,6 +53,7 @@ int main(int argc, char *argv[])
     set->description = _("GRASS variable to set");
     set->key_desc = "VARIABLE=value";
     set->required = NO;
+    set->guisection = _("Set");
 
     store_opt = G_define_option();
     store_opt->key = "store";
@@ -60,14 +62,17 @@ int main(int argc, char *argv[])
     store_opt->answer = "gisrc";
     store_opt->description = _("Where GRASS variable is stored");
     store_opt->required = NO;
+    store_opt->guisection = _("Set");
 
     flag_s = G_define_flag();
     flag_s->key = 's';
     flag_s->description = _("Use shell syntax (for \"eval\")");
+    flag_s->guisection = _("Format");
 
     flag_n = G_define_flag();
     flag_n->key = 'n';
-    flag_n->description = _("Don't use shell syntax");
+    flag_n->description = _("Do not use shell syntax");
+    flag_n->guisection = _("Format");
 
     if (argc > 1 && G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);

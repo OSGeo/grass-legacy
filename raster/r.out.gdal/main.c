@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
     createopt->label =
 	_("Creation option(s) to pass to the output format driver");
     createopt->description =
-	_("In the form of \"NAME=VALUE\", separate multiple entries with a comma.");
+	_("In the form of \"NAME=VALUE\", separate multiple entries with a comma");
     createopt->multiple = YES;
     createopt->required = NO;
 
