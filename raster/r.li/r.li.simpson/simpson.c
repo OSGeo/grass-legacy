@@ -121,7 +121,7 @@ int calculate(int fd, struct area_entry *ad, double *result)
     long area = 0;
 
     avl_tree albero = NULL;
-    AVL_table *array;
+    AVL_table array;
     generic_cell uc;
 
     uc.t = CELL_TYPE;
@@ -267,7 +267,7 @@ int calculate(int fd, struct area_entry *ad, double *result)
 	/* calculate simpson */
 	simpson = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)(array[i]->tot);
+	    t = (double)(array[i].tot);
 	    p = t / area;
 	    simpson += (p * p);
 	}
@@ -307,7 +307,7 @@ int calculateD(int fd, struct area_entry *ad, double *result)
     long area = 0;
 
     avl_tree albero = NULL;
-    AVL_table *array;
+    AVL_table array;
     generic_cell uc;
 
     uc.t = DCELL_TYPE;
@@ -453,7 +453,7 @@ int calculateD(int fd, struct area_entry *ad, double *result)
 	/* calculate simpson */
 	simpson = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)(array[i]->tot);
+	    t = (double)(array[i].tot);
 	    p = t / area;
 	    simpson += (p * p);
 	}
@@ -493,7 +493,7 @@ int calculateF(int fd, struct area_entry *ad, double *result)
     long area = 0;
 
     avl_tree albero = NULL;
-    AVL_table *array;
+    AVL_table array;
     generic_cell uc;
 
     uc.t = FCELL_TYPE;
@@ -639,7 +639,7 @@ int calculateF(int fd, struct area_entry *ad, double *result)
 	/* calculate simpson */
 	simpson = 0;
 	for (i = 0; i < m; i++) {
-	    t = (double)(array[i]->tot);
+	    t = (double)(array[i].tot);
 	    p = t / area;
 	    simpson += (p * p);
 	}
