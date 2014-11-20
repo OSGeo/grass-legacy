@@ -112,8 +112,6 @@ int main(int argc, char *argv[])
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-
     percentile = G_define_option();
     percentile->key = "percentile";
     percentile->type = TYPE_INTEGER;
