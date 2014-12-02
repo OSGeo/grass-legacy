@@ -4785,7 +4785,7 @@ msgstr ""
 msgid ""
 "nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
 msgstr ""
-"nm;vertice Nord-Ovest;ne;vertice Nord-Est;sw;vertice Sud-Ovest;se;vertice "
+"nw;vertice Nord-Ovest;ne;vertice Nord-Est;sw;vertice Sud-Ovest;se;vertice "
 "Sud-Est"
 
 #: ../misc/m.nviz.image/args.c:768
