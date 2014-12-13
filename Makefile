@@ -177,6 +177,7 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/demolocation/ 2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tools/       2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/share/       2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/AUTHORS ${ARCH_DISTDIR}/CHANGES ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/GPL.TXT \
 		${ARCH_DISTDIR}/contributors.csv ${ARCH_DISTDIR}/contributors_extra.csv  ${ARCH_DISTDIR}/translators.csv \
 		${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
