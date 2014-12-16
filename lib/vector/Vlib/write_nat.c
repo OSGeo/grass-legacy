@@ -400,15 +400,17 @@ long V1_rewrite_line_nat(struct Map_info *Map,
 			 struct line_pnts *points, struct line_cats *cats)
 {
     int old_type;
-    struct line_pnts *old_points;
-    struct line_cats *old_cats;
+    static struct line_pnts *old_points = NULL;
+    static struct line_cats *old_cats = NULL;
     long new_offset;
     
     /* TODO: enable points and cats == NULL  */
 
     /* First compare numbers of points and cats with tha old one */
-    old_points = Vect_new_line_struct();
-    old_cats = Vect_new_cats_struct();
+    if (!old_points) {
+	old_points = Vect_new_line_struct();
+	old_cats = Vect_new_cats_struct();
+    }
 
     old_type = V1_read_line_nat(Map, old_points, old_cats, offset);
     if (old_type == -1)
