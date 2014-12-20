@@ -1,6 +1,6 @@
 
-/**
- * \file asprintf.c
+/*!
+ * \file lib/gis/asprintf.c
  *
  * \brief GIS Library - GRASS implementation of asprintf().
  *
