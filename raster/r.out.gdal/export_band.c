@@ -267,11 +267,6 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 	G_get_fp_range_min_max(&sRange, &dfCellMin, &dfCellMax);
     }
 
-    /* suppress useless warnings */
-    CPLPushErrorHandler(CPLQuietErrorHandler);
-    GDALSetRasterColorInterpretation(hBand, GPI_RGB);
-    CPLPopErrorHandler();
-
     /* use default color rules if no color rules are given */
     if (G_read_colors(name, mapset, &sGrassColors) >= 0) {
 	int maxcolor, i;
