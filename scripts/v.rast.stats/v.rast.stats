@@ -360,7 +360,11 @@ fi
 
 # create SQL file for extended and normal statistics
 g.message -v "Creating SQL file ..."
-echo "BEGIN TRANSACTION;" > "$SQLTMP"
+if [ "$DBFDRIVER" -eq 1 ] ; then
+    echo "" > "$SQLTMP"
+else
+    echo "BEGIN TRANSACTION;" > "$SQLTMP"
+fi
 if [ $GIS_FLAG_E -eq 1 ] ; then
     sed -e '1d' "$STATSTMP" | awk -F "|" \
       '{printf "\nUPDATE '${TABLE}' SET '${col1}' = %i , '${col2}' = %.15g , \
@@ -375,8 +379,11 @@ else
       '${col7}' = %.15g , '${col8}' = %.15g , '${col9}' = %.15g \
       WHERE '${KEYCOL}' = %i;", $2,$3,$4,$5,$6,$7,$8,$9,$10,$1}' >> "$SQLTMP"
 fi
-echo "COMMIT;" >> "$SQLTMP"
-
+if [ "$DBFDRIVER" -eq 1 ] ; then
+    echo "" >> "$SQLTMP"
+else
+    echo "COMMIT;" >> "$SQLTMP"
+fi
 g.message message="Updating the database ..."
 db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
 EXITCODE=$?
