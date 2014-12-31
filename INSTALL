@@ -301,11 +301,7 @@ http://grass.osgeo.org/programming6/
 
 (N) CONTRIBUTING CODE AND PATCHES
 
-Please see ./SUBMITTING, ./SUBMITTING_DOCS, ./SUBMITTING_TCLTK
-./SUBMITTING_PYTHON and ./SUBMITTING_SCRIPTS in this directory.
-See also
 http://trac.osgeo.org/grass/wiki/Submitting
-
 
 (O) DRAFT TUTORIAL
 
