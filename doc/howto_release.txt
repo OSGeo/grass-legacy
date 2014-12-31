@@ -129,11 +129,9 @@ Contents
 
    # copy along with associated files:
      scp -p grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL \
-         REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
-         SUBMITTING_PYTHON SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@$SERVER1
+         REQUIREMENTS.html SUBMITTING neteler@$SERVER1
      scp -p grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL \
-         REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
-         SUBMITTING_PYTHON SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@$SERVER2
+         REQUIREMENTS.html SUBMITTING neteler@$SERVER2
 
  o update web site to new version: CMS
     - News section
