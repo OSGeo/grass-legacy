@@ -1,6 +1,6 @@
 # translation of grasswxpy_zh.po to Simplified Chinese
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2010, GRASS Development Team
+# Copyright (C) 2010, 2015 GRASS Development Team
 #
 # Shulin Yang <shulin.yang.9 gmail.com>
 msgid ""
@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-20 18:01+0200\n"
-"PO-Revision-Date: 2010-12-16 18:47+0800\n"
-"Last-Translator: Shulin Yang <shulin.yang.9@gmail.com>\n"
+"PO-Revision-Date: 2015-01-19 13:23-0600\n"
+"Last-Translator: \n"
 "Language-Team: Simplified Chinese <grass-translations@lists.osgeo.org>\n"
 "Language: zh_ZH\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Chinese\n"
 "X-Poedit-Country: CHINA\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: Poedit 1.6.9\n"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:47
 #, fuzzy
@@ -48,7 +48,7 @@ msgstr ""
 #: ../gui/wxpython/gmodeler/dialogs.py:494
 #: ../gui/wxpython/gui_core/preferences.py:817
 msgid "Command"
-msgstr ""
+msgstr "命令"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:205
 msgid ""
@@ -56,6 +56,9 @@ msgid ""
 "\n"
 "Unable to add new action to the model."
 msgstr ""
+"该命令未定义。\n"
+"\n"
+"无法将新动作添加到模型。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:211
 #, python-format
@@ -64,6 +67,9 @@ msgid ""
 "\n"
 "Unable to add new action to the model."
 msgstr ""
+"'%s'不是GRASS模块。\n"
+"\n"
+"无法将新动作添加到模块。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:246
 #, fuzzy
@@ -78,7 +84,7 @@ msgstr "要素类型"
 #: ../gui/wxpython/gmodeler/dialogs.py:265
 #: ../gui/wxpython/dbmgr/manager.py:951
 msgid "To"
-msgstr ""
+msgstr "到"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:307
 #, fuzzy, python-format
@@ -100,18 +106,24 @@ msgid ""
 "Relation doesn't start with data item.\n"
 "Unable to add relation."
 msgstr ""
+"关系没有开始于数据项作。\n"
+"无法添加。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:341
 msgid ""
 "Relation doesn't point to GRASS command.\n"
 "Unable to add relation."
 msgstr ""
+"关系与GRASS命令没有关联。\n"
+"无法添加。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:354
 msgid ""
 "No relevant option found.\n"
 "Unable to add relation."
 msgstr ""
+"没有找到相关选项。\n"
+"无法添加。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:385
 #, fuzzy
@@ -132,7 +144,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/ghelp.py:645 ../gui/wxpython/gui_core/ghelp.py:647
 #: ../gui/wxpython/gui_core/ghelp.py:707
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:410
 #, fuzzy
@@ -141,19 +153,19 @@ msgstr "要素类型"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:416
 msgid "List of items in loop"
-msgstr ""
+msgstr "循环中的项目。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:419
 msgid "Series"
-msgstr ""
+msgstr "系列"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:420
 msgid "Define map series as condition for the loop"
-msgstr ""
+msgstr "指定地图系列作为循环条件"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:464
 msgid "Define series of maps"
-msgstr ""
+msgstr "指定地图系列"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:479
 #, fuzzy
@@ -162,49 +174,47 @@ msgstr "要素类型"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:485
 msgid "List of items in 'if' block"
-msgstr ""
+msgstr "'if'语句块中的项目。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:490
 msgid "List of items in 'else' block"
-msgstr ""
+msgstr "'else'语句块中的项目。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:654
 #, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
-msgstr ""
+msgstr "变量<%s>已存在，添加失败。"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:683
 msgid "Do you want to delete all variables from the model?"
-msgstr ""
+msgstr "确定要删除模型中所有变量？"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:685
 msgid "Delete variables"
-msgstr ""
+msgstr "删除变量"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:724
 #: ../gui/wxpython/gmodeler/dialogs.py:898
 #: ../gui/wxpython/vdigit/dialogs.py:272
 msgid "Delete selected"
-msgstr ""
+msgstr "删除选中项目"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:725
 #: ../gui/wxpython/gmodeler/dialogs.py:899
 #: ../gui/wxpython/vdigit/dialogs.py:276
 msgid "Delete all"
-msgstr ""
+msgstr "全部删除"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:731
 #: ../gui/wxpython/gmodeler/dialogs.py:906
 #: ../gui/wxpython/vdigit/dialogs.py:278 ../gui/wxpython/dbmgr/manager.py:1156
 #: ../gui/wxpython/dbmgr/manager.py:1680
 msgid "Reload"
-msgstr ""
+msgstr "刷新"
 
 #: ../gui/wxpython/gmodeler/dialogs.py:848
 #, python-format
-msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
-"to delete them?"
+msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
 msgstr ""
 
 #: ../gui/wxpython/gmodeler/dialogs.py:851
@@ -227,7 +237,7 @@ msgstr "无法获取栅格行\n"
 #: ../gui/wxpython/vdigit/preferences.py:118
 #: ../gui/wxpython/gui_core/preferences.py:269
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #: ../gui/wxpython/gmodeler/preferences.py:50
 #, fuzzy
@@ -236,7 +246,7 @@ msgstr "要素类型"
 
 #: ../gui/wxpython/gmodeler/preferences.py:58
 msgid "Disabled:"
-msgstr ""
+msgstr "禁用："
 
 #: ../gui/wxpython/gmodeler/preferences.py:83
 #, fuzzy
@@ -264,13 +274,13 @@ msgstr "无效的区域：%s"
 
 #: ../gui/wxpython/gmodeler/preferences.py:130
 msgid "Running:"
-msgstr ""
+msgstr "运行中："
 
 #: ../gui/wxpython/gmodeler/preferences.py:150
 #: ../gui/wxpython/gmodeler/preferences.py:269
 #: ../gui/wxpython/gmodeler/preferences.py:354
 msgid "Shape size"
-msgstr ""
+msgstr "形状的大小"
 
 #: ../gui/wxpython/gmodeler/preferences.py:158
 #: ../gui/wxpython/gmodeler/preferences.py:277
@@ -279,7 +289,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/preferences.py:475
 #: ../gui/wxpython/gui_core/dialogs.py:2145
 msgid "Width:"
-msgstr ""
+msgstr "宽度："
 
 #: ../gui/wxpython/gmodeler/preferences.py:176
 #: ../gui/wxpython/gmodeler/preferences.py:295
@@ -289,7 +299,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/tools.py:1035 ../gui/wxpython/nviz/tools.py:1679
 #: ../gui/wxpython/gui_core/dialogs.py:2149
 msgid "Height:"
-msgstr ""
+msgstr "高度："
 
 #: ../gui/wxpython/gmodeler/preferences.py:202
 #: ../gui/wxpython/nviz/tools.py:87
@@ -319,7 +329,7 @@ msgstr "矢量地图"
 
 #: ../gui/wxpython/gmodeler/preferences.py:321
 msgid "Loop"
-msgstr ""
+msgstr "循环"
 
 #: ../gui/wxpython/gmodeler/preferences.py:421
 #: ../gui/wxpython/menustrings.py:890
@@ -330,7 +340,7 @@ msgstr "要素类型"
 #: ../gui/wxpython/gmodeler/preferences.py:428
 #: ../gui/wxpython/lmgr/layertree.py:431 ../gui/wxpython/lmgr/layertree.py:464
 msgid "Metadata"
-msgstr ""
+msgstr "元数据"
 
 #: ../gui/wxpython/gmodeler/preferences.py:430
 #, fuzzy
@@ -355,7 +365,7 @@ msgstr "要素类型"
 #: ../gui/wxpython/vdigit/preferences.py:58
 #: ../gui/wxpython/gui_core/preferences.py:93
 msgid "Close dialog and ignore changes"
-msgstr ""
+msgstr "仅关闭对话框，不保存改动"
 
 #: ../gui/wxpython/gmodeler/preferences.py:464
 #: ../gui/wxpython/gui_core/gselect.py:1229
@@ -363,7 +373,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1241
 #: ../gui/wxpython/gui_core/gselect.py:1380
 msgid "Name:"
-msgstr ""
+msgstr "名称："
 
 #: ../gui/wxpython/gmodeler/preferences.py:473
 #, fuzzy
@@ -372,15 +382,15 @@ msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/gmodeler/preferences.py:482
 msgid "Author(s):"
-msgstr ""
+msgstr "作者："
 
 #: ../gui/wxpython/gmodeler/model.py:58
 msgid "model"
-msgstr ""
+msgstr "模型"
 
 #: ../gui/wxpython/gmodeler/model.py:59
 msgid "Script generated by wxGUI Graphical Modeler."
-msgstr ""
+msgstr "wxGUI图形建模器生成的脚本"
 
 #: ../gui/wxpython/gmodeler/model.py:388 ../gui/wxpython/gmodeler/model.py:450
 #, fuzzy, python-format
@@ -393,7 +403,7 @@ msgstr "模型运行中..."
 
 #: ../gui/wxpython/gmodeler/model.py:502
 msgid "Model is empty. Nothing to run."
-msgstr ""
+msgstr "模型为空，不用运行。"
 
 #: ../gui/wxpython/gmodeler/model.py:511 ../gui/wxpython/gmodeler/frame.py:508
 msgid "Validating model..."
@@ -439,7 +449,7 @@ msgstr "矢量地图"
 #: ../gui/wxpython/gui_core/goutput.py:860
 #: ../gui/wxpython/gui_core/ghelp.py:486
 msgid "unknown"
-msgstr ""
+msgstr "未知"
 
 #: ../gui/wxpython/gmodeler/model.py:1242
 #, fuzzy
@@ -462,7 +472,7 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/model.py:1456
 msgid "if-else"
-msgstr ""
+msgstr "if-else"
 
 #: ../gui/wxpython/gmodeler/model.py:2150
 #, fuzzy
@@ -499,11 +509,11 @@ msgstr "  模型"
 
 #: ../gui/wxpython/gmodeler/frame.py:114
 msgid "Items"
-msgstr ""
+msgstr "项目"
 
 #: ../gui/wxpython/gmodeler/frame.py:116
 msgid "Python editor"
-msgstr ""
+msgstr "Python编辑器"
 
 #: ../gui/wxpython/gmodeler/frame.py:117 ../gui/wxpython/scripts/vkrige.py:108
 #: ../gui/wxpython/gui_core/forms.py:787
@@ -513,12 +523,12 @@ msgstr "命令运行结果输出"
 #: ../gui/wxpython/gmodeler/frame.py:186
 #: ../gui/wxpython/gui_core/goutput.py:1356
 msgid "Python script contains local modifications"
-msgstr ""
+msgstr "Python脚本含有本地改动"
 
 #: ../gui/wxpython/gmodeler/frame.py:188
 #: ../gui/wxpython/gmodeler/frame.py:1644
 msgid "Python script is up-to-date"
-msgstr ""
+msgstr "Python脚本已更新"
 
 #: ../gui/wxpython/gmodeler/frame.py:203
 #, fuzzy
@@ -527,15 +537,15 @@ msgstr "读取地图"
 
 #: ../gui/wxpython/gmodeler/frame.py:238
 msgid "Do you want to save changes in the model?"
-msgstr ""
+msgstr "保存对模型的改动？"
 
 #: ../gui/wxpython/gmodeler/frame.py:240
 msgid "Do you want to store current model settings to model file?"
-msgstr ""
+msgstr "将当前模型设置保存到模型文件？"
 
 #: ../gui/wxpython/gmodeler/frame.py:246
 msgid "Quit Graphical Modeler"
-msgstr ""
+msgstr "退出图形建模器"
 
 #: ../gui/wxpython/gmodeler/frame.py:307
 #, fuzzy
@@ -545,11 +555,11 @@ msgstr "产生的中间影像的数量"
 #: ../gui/wxpython/gmodeler/frame.py:311
 #, python-format
 msgid "Do you want to permanently delete data?%s"
-msgstr ""
+msgstr "永久删除数据%s?"
 
 #: ../gui/wxpython/gmodeler/frame.py:312
 msgid "Delete intermediate data?"
-msgstr ""
+msgstr "删除临时数据？"
 
 #: ../gui/wxpython/gmodeler/frame.py:326
 #, fuzzy, python-format
@@ -557,10 +567,8 @@ msgid "%d maps deleted from current mapset"
 msgstr "无法创建栅格地图 %s"
 
 #: ../gui/wxpython/gmodeler/frame.py:341 ../gui/wxpython/gmodeler/frame.py:456
-msgid ""
-"Current model is not empty. Do you want to store current settings to model "
-"file?"
-msgstr ""
+msgid "Current model is not empty. Do you want to store current settings to model file?"
+msgstr "当前模型非空，将当前模型开设保存到模型文件？"
 
 #: ../gui/wxpython/gmodeler/frame.py:344 ../gui/wxpython/gmodeler/frame.py:459
 #, fuzzy
@@ -580,7 +588,7 @@ msgstr "GRASS模型文件(*.gxm)|*.gxm"
 #: ../gui/wxpython/gmodeler/frame.py:389
 #, python-format
 msgid "%(items)d items (%(actions)d actions) loaded into model"
-msgstr ""
+msgstr "模型项目%(items)d和动作(%(actions)d actions)已载入"
 
 #: ../gui/wxpython/gmodeler/frame.py:396 ../gui/wxpython/gmodeler/frame.py:433
 #, fuzzy, python-format
@@ -609,7 +617,7 @@ msgstr "dig_att文件不存在。"
 
 #: ../gui/wxpython/gmodeler/frame.py:504
 msgid "Model is empty. Nothing to validate."
-msgstr ""
+msgstr "模型为空，无需验证。"
 
 #: ../gui/wxpython/gmodeler/frame.py:514
 #, fuzzy, python-format
@@ -621,13 +629,13 @@ msgstr "[%s] 的类别文件无效"
 
 #: ../gui/wxpython/gmodeler/frame.py:517
 msgid "Model is valid."
-msgstr ""
+msgstr "模型验证通过"
 
 #: ../gui/wxpython/gmodeler/frame.py:550 ../gui/wxpython/mapdisp/frame.py:576
 #: ../gui/wxpython/modules/histogram.py:416
 #: ../gui/wxpython/gcp/mapdisplay.py:456
 msgid "Choose a file name to save the image (no need to add extension)"
-msgstr ""
+msgstr "选择要保存图像的文件名(无需指定文件扩展名)"
 
 #: ../gui/wxpython/gmodeler/frame.py:578 ../gui/wxpython/gmodeler/frame.py:585
 #, fuzzy, python-format
@@ -636,7 +644,7 @@ msgstr "无法创建文件 [%s]"
 
 #: ../gui/wxpython/gmodeler/frame.py:713
 msgid "wxGUI Graphical Modeler"
-msgstr ""
+msgstr "wxGUI图形建模器"
 
 #: ../gui/wxpython/gmodeler/frame.py:716
 #, python-format
@@ -646,9 +654,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:717 ../gui/wxpython/psmap/frame.py:1058
-msgid ""
-"This program is free software under the GNU General Public License(>=v2). "
-"Read the file COPYING that comes with GRASS for details."
+msgid "This program is free software under the GNU General Public License(>=v2). Read the file COPYING that comes with GRASS for details."
 msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:815
@@ -660,11 +666,11 @@ msgstr ""
 
 #: ../gui/wxpython/gmodeler/frame.py:821
 msgid "Please wait, loading model..."
-msgstr ""
+msgstr "模型装载中，请稍候..."
 
 #: ../gui/wxpython/gmodeler/frame.py:881
 msgid "Writing current settings to model file failed."
-msgstr ""
+msgstr "将当前设置保存到模型文件时操作不成功。"
 
 #: ../gui/wxpython/gmodeler/frame.py:891 ../gui/wxpython/lmgr/frame.py:1123
 #, python-format
@@ -696,7 +702,7 @@ msgstr "错误"
 #: ../gui/wxpython/gmodeler/frame.py:1197
 #: ../gui/wxpython/lmgr/layertree.py:337
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: ../gui/wxpython/gmodeler/frame.py:1201
 #, fuzzy
@@ -720,16 +726,16 @@ msgstr "没有起始点"
 
 #: ../gui/wxpython/gmodeler/frame.py:1218
 msgid "Intermediate"
-msgstr ""
+msgstr "临时数据"
 
 #: ../gui/wxpython/gmodeler/frame.py:1229
 #: ../gui/wxpython/lmgr/layertree.py:351
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #: ../gui/wxpython/gmodeler/frame.py:1312
 msgid "List of variables - right-click to delete"
-msgstr ""
+msgstr "变量列表 - 点击鼠标右键以删除"
 
 #: ../gui/wxpython/gmodeler/frame.py:1315
 #: ../gui/wxpython/gmodeler/frame.py:1364
@@ -751,7 +757,7 @@ msgstr "默认值："
 #: ../gui/wxpython/location_wizard/wizard.py:1016
 #: ../gui/wxpython/location_wizard/wizard.py:1284
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: ../gui/wxpython/gmodeler/frame.py:1320
 #, fuzzy
@@ -760,27 +766,27 @@ msgstr "添加新项"
 
 #: ../gui/wxpython/gmodeler/frame.py:1324
 msgid "integer"
-msgstr ""
+msgstr "整数"
 
 #: ../gui/wxpython/gmodeler/frame.py:1325
 msgid "float"
-msgstr ""
+msgstr "浮点数"
 
 #: ../gui/wxpython/gmodeler/frame.py:1326
 msgid "string"
-msgstr ""
+msgstr "字串"
 
 #: ../gui/wxpython/gmodeler/frame.py:1327 ../gui/wxpython/psmap/dialogs.py:695
 #: ../gui/wxpython/lmgr/layertree.py:824 ../gui/wxpython/gcp/manager.py:313
 #: ../gui/wxpython/gui_core/dialogs.py:1201
 msgid "raster"
-msgstr ""
+msgstr "栅格"
 
 #: ../gui/wxpython/gmodeler/frame.py:1328 ../gui/wxpython/psmap/dialogs.py:696
 #: ../gui/wxpython/lmgr/layertree.py:845 ../gui/wxpython/gcp/manager.py:313
 #: ../gui/wxpython/gui_core/dialogs.py:1201
 msgid "vector"
-msgstr ""
+msgstr "矢量"
 
 #: ../gui/wxpython/gmodeler/frame.py:1329
 #, fuzzy
@@ -799,7 +805,7 @@ msgstr "设置 GRASS 变量"
 
 #: ../gui/wxpython/gmodeler/frame.py:1457
 msgid "List of items - right-click to delete"
-msgstr ""
+msgstr "项目列表 - 点击鼠标右键以删除"
 
 #: ../gui/wxpython/gmodeler/frame.py:1460
 msgid "In block"
@@ -816,7 +822,7 @@ msgstr "导出模型到Python脚本"
 
 #: ../gui/wxpython/gmodeler/frame.py:1498
 msgid "Run python script"
-msgstr ""
+msgstr "运行Python脚本"
 
 #: ../gui/wxpython/gmodeler/frame.py:1501
 #, fuzzy
@@ -828,6 +834,8 @@ msgid ""
 "Refresh python script based on the model.\n"
 "It will discards all local changes."
 msgstr ""
+"使用模型来刷新Python脚本。\n"
+"本地所作的改动不予保存。"
 
 #: ../gui/wxpython/gmodeler/frame.py:1542
 #, fuzzy, python-format
@@ -841,7 +849,7 @@ msgstr "拷贝表失败"
 
 #: ../gui/wxpython/gmodeler/frame.py:1569
 msgid "Python script (*.py)|*.py"
-msgstr ""
+msgstr "Python脚本 (*.py)|*.py"
 
 #: ../gui/wxpython/gmodeler/frame.py:1583
 #: ../gui/wxpython/wxplot/profile.py:343
@@ -855,14 +863,12 @@ msgid "Save file"
 msgstr "保存组文件"
 
 #: ../gui/wxpython/gmodeler/frame.py:1620
-msgid ""
-"Python script is locally modificated. Refresh will discard all changes. Do "
-"you really want to continue?"
-msgstr ""
+msgid "Python script is locally modificated. Refresh will discard all changes. Do you really want to continue?"
+msgstr "Python脚本已被改动，进行刷新操作将丢失所有改动。确定继续刷新？"
 
 #: ../gui/wxpython/gmodeler/frame.py:1623
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: ../gui/wxpython/wxplot/dialogs.py:34
 #, fuzzy
@@ -881,11 +887,11 @@ msgstr "包含结果的栅格图的名称"
 
 #: ../gui/wxpython/wxplot/dialogs.py:160
 msgid "C&opy"
-msgstr ""
+msgstr "拷贝(&C)"
 
 #: ../gui/wxpython/wxplot/dialogs.py:161
 msgid "Copy regression statistics the clipboard (Ctrl+C)"
-msgstr ""
+msgstr "将回归统计量拷贝到剪贴板(Ctrl+C)"
 
 #: ../gui/wxpython/wxplot/dialogs.py:190
 #, fuzzy
@@ -895,27 +901,27 @@ msgstr "'%s'已复制到剪贴板"
 #: ../gui/wxpython/wxplot/dialogs.py:246 ../gui/wxpython/wxplot/base.py:411
 #: ../gui/wxpython/wxplot/base.py:457
 msgid "Text settings"
-msgstr ""
+msgstr "文本设置"
 
 #: ../gui/wxpython/wxplot/dialogs.py:253
 msgid "Profile title:"
-msgstr ""
+msgstr "剖面图标题："
 
 #: ../gui/wxpython/wxplot/dialogs.py:263
 msgid "Title font size (pts):"
-msgstr ""
+msgstr "标题字号（磅）："
 
 #: ../gui/wxpython/wxplot/dialogs.py:274
 msgid "X-axis label:"
-msgstr ""
+msgstr "X轴标题："
 
 #: ../gui/wxpython/wxplot/dialogs.py:284
 msgid "Y-axis label:"
-msgstr ""
+msgstr "Y轴标签："
 
 #: ../gui/wxpython/wxplot/dialogs.py:294
 msgid "Label font size (pts):"
-msgstr ""
+msgstr "标签字号（磅）："
 
 #: ../gui/wxpython/wxplot/dialogs.py:309 ../gui/wxpython/psmap/dialogs.py:2787
 #: ../gui/wxpython/psmap/dialogs.py:3264 ../gui/wxpython/psmap/dialogs.py:3720
@@ -923,36 +929,35 @@ msgstr ""
 #: ../gui/wxpython/gui_core/preferences.py:579
 #: ../gui/wxpython/gui_core/preferences.py:1415
 msgid "Font settings"
-msgstr ""
+msgstr "字体设置"
 
 #: ../gui/wxpython/wxplot/dialogs.py:317
 msgid "Font family:"
-msgstr ""
+msgstr "字体系列："
 
 #: ../gui/wxpython/wxplot/dialogs.py:331
 msgid "Style:"
-msgstr ""
+msgstr "样式："
 
 #: ../gui/wxpython/wxplot/dialogs.py:345
 msgid "Weight:"
-msgstr ""
+msgstr "粗细："
 
 #: ../gui/wxpython/wxplot/dialogs.py:375 ../gui/wxpython/wxplot/dialogs.py:762
 #: ../gui/wxpython/gcp/manager.py:2370
 #: ../gui/wxpython/gui_core/preferences.py:88
 msgid "Apply changes for the current session"
-msgstr ""
+msgstr "将变动应用到当前会话"
 
 #: ../gui/wxpython/wxplot/dialogs.py:377 ../gui/wxpython/wxplot/dialogs.py:763
 msgid "Apply changes for the current session and close dialog"
-msgstr ""
+msgstr "将变动应用到当前会话并关闭对话框"
 
 #: ../gui/wxpython/wxplot/dialogs.py:380 ../gui/wxpython/wxplot/dialogs.py:764
 #: ../gui/wxpython/gcp/manager.py:2372
 #: ../gui/wxpython/gui_core/preferences.py:90
-msgid ""
-"Apply and save changes to user settings file (default for next sessions)"
-msgstr ""
+msgid "Apply and save changes to user settings file (default for next sessions)"
+msgstr "应用改动并保存到用户设置文件（作为下次启动的默认设置）"
 
 #: ../gui/wxpython/wxplot/dialogs.py:433
 #, fuzzy, python-format
@@ -962,13 +967,13 @@ msgstr "已有的MAT-File(v4)的名称"
 #: ../gui/wxpython/wxplot/dialogs.py:491
 #, fuzzy
 msgid "No map or image group selected to plot."
-msgstr "没有选中的图层"
+msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/wxplot/dialogs.py:492 ../gui/wxpython/core/gcmd.py:135
 #: ../gui/wxpython/core/workspace.py:1017
 #: ../gui/wxpython/mapdisp/mapwindow.py:1655
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: ../gui/wxpython/wxplot/dialogs.py:502 ../gui/wxpython/wxplot/base.py:415
 #: ../gui/wxpython/wxplot/base.py:471
@@ -978,40 +983,40 @@ msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/wxplot/dialogs.py:522
 msgid "Map/image plotted"
-msgstr ""
+msgstr "已绘制的地图/图像"
 
 #: ../gui/wxpython/wxplot/dialogs.py:534
 #, fuzzy
 msgid "Settings for selected map"
-msgstr "删除选中的地图集"
+msgstr "没有选中的图层"
 
 #: ../gui/wxpython/wxplot/dialogs.py:549
 msgid "Line color"
-msgstr ""
+msgstr "线条颜色"
 
 #: ../gui/wxpython/wxplot/dialogs.py:556
 #: ../gui/wxpython/vdigit/preferences.py:130
 msgid "Line width"
-msgstr ""
+msgstr "线条宽度"
 
 #: ../gui/wxpython/wxplot/dialogs.py:566 ../gui/wxpython/psmap/dialogs.py:2114
 #: ../gui/wxpython/psmap/dialogs.py:4896
 msgid "Line style"
-msgstr ""
+msgstr "线条样式"
 
 #: ../gui/wxpython/wxplot/dialogs.py:575 ../gui/wxpython/wxplot/dialogs.py:617
 #: ../gui/wxpython/psmap/toolbars.py:79
 msgid "Legend"
-msgstr ""
+msgstr "图例"
 
 #: ../gui/wxpython/wxplot/dialogs.py:589
 msgid "Transect segment marker settings"
-msgstr ""
+msgstr "截面分段标记设置"
 
 #: ../gui/wxpython/wxplot/dialogs.py:600 ../gui/wxpython/psmap/dialogs.py:1995
 #: ../gui/wxpython/psmap/dialogs.py:2706 ../gui/wxpython/psmap/dialogs.py:3470
 msgid "Size"
-msgstr ""
+msgstr "字号"
 
 #: ../gui/wxpython/wxplot/dialogs.py:609 ../gui/wxpython/psmap/dialogs.py:1795
 #: ../gui/wxpython/psmap/dialogs.py:1899
@@ -1021,19 +1026,19 @@ msgstr "文件(&F)"
 
 #: ../gui/wxpython/wxplot/dialogs.py:624 ../gui/wxpython/psmap/dialogs.py:3523
 msgid "Style"
-msgstr ""
+msgstr "样式"
 
 #: ../gui/wxpython/wxplot/dialogs.py:640
 msgid "Axis settings"
-msgstr ""
+msgstr "坐标轴设置"
 
 #: ../gui/wxpython/wxplot/dialogs.py:646
 msgid "X-Axis"
-msgstr ""
+msgstr "X-轴"
 
 #: ../gui/wxpython/wxplot/dialogs.py:647
 msgid "Y-Axis"
-msgstr ""
+msgstr "Y-轴"
 
 #: ../gui/wxpython/wxplot/dialogs.py:656
 #, fuzzy
@@ -1041,25 +1046,24 @@ msgid "Scale"
 msgstr "保存"
 
 #: ../gui/wxpython/wxplot/dialogs.py:661
-msgid ""
-"Automatic axis scaling, custom max and min, or scale matches data range (min)"
-msgstr ""
+msgid "Automatic axis scaling, custom max and min, or scale matches data range (min)"
+msgstr "自动调整坐标刻度，自定义极值，或根据数据范围调整（最小值）"
 
 #: ../gui/wxpython/wxplot/dialogs.py:666
 msgid "Custom min"
-msgstr ""
+msgstr "指定最小值"
 
 #: ../gui/wxpython/wxplot/dialogs.py:674
 msgid "Custom max"
-msgstr ""
+msgstr "指定最大值"
 
 #: ../gui/wxpython/wxplot/dialogs.py:682
 msgid "Log scale"
-msgstr ""
+msgstr "圣火刻度"
 
 #: ../gui/wxpython/wxplot/dialogs.py:706
 msgid "Grid and Legend settings"
-msgstr ""
+msgstr "网格和图例设置"
 
 #: ../gui/wxpython/wxplot/dialogs.py:711
 #, fuzzy
@@ -1068,15 +1072,15 @@ msgstr "边框颜色"
 
 #: ../gui/wxpython/wxplot/dialogs.py:718
 msgid "Show grid"
-msgstr ""
+msgstr "显示网格"
 
 #: ../gui/wxpython/wxplot/dialogs.py:724
 msgid "Legend font size"
-msgstr ""
+msgstr "图例字号"
 
 #: ../gui/wxpython/wxplot/dialogs.py:734
 msgid "Show legend"
-msgstr ""
+msgstr "显示图例"
 
 #: ../gui/wxpython/wxplot/dialogs.py:856
 #, fuzzy, python-format
@@ -1084,53 +1088,49 @@ msgid "Plot settings saved to file '%s'."
 msgstr "已有的MAT-File(v4)的名称"
 
 #: ../gui/wxpython/wxplot/profile.py:30 ../gui/wxpython/nviz/wxnviz.py:32
-msgid ""
-"This module requires the NumPy module, which could not be imported. It "
-"probably is not installed (it's not part of the standard Python "
-"distribution). See the Numeric Python site (http://numpy.scipy.org) for "
-"information on downloading source or binaries."
-msgstr ""
+msgid "This module requires the NumPy module, which could not be imported. It probably is not installed (it's not part of the standard Python distribution). See the Numeric Python site (http://numpy.scipy.org) for information on downloading source or binaries."
+msgstr "该模块需要使用的NumPy模块无法导入。可能没有安装该模块（非Python标准模块）。参见Numeric Python网站（http://numpy.scipy.org）查看下载源码或安装文件信息。"
 
 #: ../gui/wxpython/wxplot/profile.py:52
 msgid "GRASS Profile Analysis Tool"
-msgstr ""
+msgstr "Grass剖面分析工具"
 
 #: ../gui/wxpython/wxplot/profile.py:63 ../gui/wxpython/wxplot/profile.py:152
 msgid "Profile of"
-msgstr ""
+msgstr "剖面"
 
 #: ../gui/wxpython/wxplot/profile.py:77
 #, python-format
 msgid "Distance (%s)"
-msgstr ""
+msgstr "距离(%s)"
 
 #: ../gui/wxpython/wxplot/profile.py:79
 msgid "Distance along transect"
-msgstr ""
+msgstr "截面距离"
 
 #: ../gui/wxpython/wxplot/profile.py:80
 msgid "Cell values"
-msgstr ""
+msgstr "像素值"
 
 #: ../gui/wxpython/wxplot/profile.py:145
 msgid "Not all points of profile lie inside computational region."
-msgstr ""
+msgstr "剖面上一些点没有处于计算区域内."
 
 #: ../gui/wxpython/wxplot/profile.py:213
 msgid "Raster values"
-msgstr ""
+msgstr "栅格值"
 
 #: ../gui/wxpython/wxplot/profile.py:264
 msgid "You must draw a transect to profile in the map display window."
-msgstr ""
+msgstr "必需在地图窗口选定一个区域以进行剖析."
 
 #: ../gui/wxpython/wxplot/profile.py:265
 msgid "Nothing to profile"
-msgstr ""
+msgstr "没有可以进行剖析的内容"
 
 #: ../gui/wxpython/wxplot/profile.py:333
 msgid "Choose prefix for file(s) where to save profile values..."
-msgstr ""
+msgstr "选择剖析值文件保存路径..."
 
 #: ../gui/wxpython/wxplot/profile.py:335
 #, fuzzy
@@ -1168,7 +1168,7 @@ msgstr "报告栅格图层的统计数据"
 
 #: ../gui/wxpython/wxplot/base.py:35
 msgid "Draw/re-draw plot"
-msgstr ""
+msgstr "绘制/重绘图像"
 
 #: ../gui/wxpython/wxplot/base.py:37
 msgid "Draw transect in map display window to profile"
@@ -1201,7 +1201,7 @@ msgstr "左：创建新点"
 
 #: ../gui/wxpython/wxplot/base.py:428
 msgid "This feature is not yet functional"
-msgstr ""
+msgstr "该功能尚不可用"
 
 #: ../gui/wxpython/wxplot/base.py:429
 #, fuzzy
@@ -1213,13 +1213,13 @@ msgstr "无法创建表：%s"
 #: ../gui/wxpython/modules/histogram.py:445
 #: ../gui/wxpython/gcp/mapdisplay.py:485
 msgid "Page setup"
-msgstr ""
+msgstr "页面设置"
 
 #: ../gui/wxpython/wxplot/base.py:484 ../gui/wxpython/mapdisp/frame.py:609
 #: ../gui/wxpython/modules/histogram.py:449
 #: ../gui/wxpython/gcp/mapdisplay.py:489
 msgid "Print preview"
-msgstr ""
+msgstr "打印预览"
 
 #: ../gui/wxpython/wxplot/base.py:485 ../gui/wxpython/mapdisp/frame.py:613
 #: ../gui/wxpython/modules/histogram.py:453
@@ -1234,91 +1234,91 @@ msgstr "设置缺省地域范围和分辨率"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:83
 msgid "&Set region"
-msgstr ""
+msgstr "设置区域(&S)"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:113
 msgid "Invalid location selected."
-msgstr ""
+msgstr "选择了无效地点."
 
 #: ../gui/wxpython/location_wizard/dialogs.py:130
 msgid "Invalid region"
-msgstr ""
+msgstr "无效区域"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:160
 msgid "Click here to show 3D settings"
-msgstr ""
+msgstr "点击显示3D设置"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:161
 msgid "Click here to hide 3D settings"
-msgstr ""
+msgstr "点击关闭3D设置"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:184
 #: ../gui/wxpython/location_wizard/dialogs.py:465
 #, python-format
 msgid "Rows: %d"
-msgstr ""
+msgstr "行:%d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:185
 #: ../gui/wxpython/location_wizard/dialogs.py:466
 #, python-format
 msgid "Cols: %d"
-msgstr ""
+msgstr "列:%d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:186
 #: ../gui/wxpython/location_wizard/dialogs.py:467
 #, python-format
 msgid "Cells: %d"
-msgstr ""
+msgstr "像素:%d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:227
 #: ../gui/wxpython/location_wizard/dialogs.py:469
 #, python-format
 msgid "Depth: %d"
-msgstr ""
+msgstr "深度:%d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:228
 #: ../gui/wxpython/location_wizard/dialogs.py:470
 #, python-format
 msgid "3D Cells: %d"
-msgstr ""
+msgstr "3D像素:%d"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:231
 #: ../gui/wxpython/psmap/dialogs.py:384
 msgid "Top"
-msgstr ""
+msgstr "顶端"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:239
 #: ../gui/wxpython/psmap/dialogs.py:384
 msgid "Bottom"
-msgstr ""
+msgstr "底部"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:247
 msgid "T-B resolution"
-msgstr ""
+msgstr "顶到底分辨率"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:310
 msgid "North"
-msgstr ""
+msgstr "北"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:318
 msgid "West"
-msgstr ""
+msgstr "西"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:338
 msgid "East"
-msgstr ""
+msgstr "东"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:347
 msgid "South"
-msgstr ""
+msgstr "南"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:351
 msgid "N-S resolution"
-msgstr ""
+msgstr "南北向分辨率"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:359
 msgid "E-W resolution"
-msgstr ""
+msgstr "东西向分辨率"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:437
 #, python-format
@@ -1327,15 +1327,15 @@ msgstr "无效数值: %s"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:521
 msgid "Select datum transformation"
-msgstr ""
+msgstr "选择基准面转换"
 
 #: ../gui/wxpython/location_wizard/dialogs.py:546
 msgid "Select from list of datum transformations"
-msgstr ""
+msgstr "从基准面转换列表选择"
 
 #: ../gui/wxpython/location_wizard/wizard.py:94
 msgid "Define GRASS Database and Location Name"
-msgstr ""
+msgstr "定义GRASS数据库及地点名称"
 
 #: ../gui/wxpython/location_wizard/wizard.py:101
 #: ../gui/wxpython/location_wizard/wizard.py:1117
@@ -1352,16 +1352,16 @@ msgstr ""
 #: ../gui/wxpython/gui_core/gselect.py:1698
 #: ../gui/wxpython/gui_core/forms.py:1306
 msgid "Browse"
-msgstr ""
+msgstr "浏览"
 
 #: ../gui/wxpython/location_wizard/wizard.py:110
 #: ../gui/wxpython/gis_set.py:113
 msgid "GIS Data Directory:"
-msgstr ""
+msgstr "GIS数据目录:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:126
 msgid "Project Location"
-msgstr ""
+msgstr "投影位置"
 
 #: ../gui/wxpython/location_wizard/wizard.py:127
 #, fuzzy
@@ -1375,14 +1375,12 @@ msgstr "地点名称："
 
 #: ../gui/wxpython/location_wizard/wizard.py:139
 msgid "Optional location title, you can leave this field blank."
-msgstr ""
+msgstr "地点标签为选填项,可以为空."
 
 #: ../gui/wxpython/location_wizard/wizard.py:159
 #, python-format
-msgid ""
-"Name <%(name)s> is not a valid name for location. Please use only ASCII "
-"characters excluding %(chars)s and space."
-msgstr ""
+msgid "Name <%(name)s> is not a valid name for location. Please use only ASCII characters excluding %(chars)s and space."
+msgstr "地点名称<%(name)s>无效.请使用除(%(chars)s)之外的ASCII字及防空格命名."
 
 #: ../gui/wxpython/location_wizard/wizard.py:162
 #, fuzzy
@@ -1391,92 +1389,90 @@ msgstr "无效的区域：%s"
 
 #: ../gui/wxpython/location_wizard/wizard.py:177
 msgid "Choose GRASS data directory:"
-msgstr ""
+msgstr "选择GRASS数据目录:"
 
 #: ../gui/wxpython/location_wizard/wizard.py:188
 #: ../gui/wxpython/location_wizard/wizard.py:1993
 msgid "Location already exists in GRASS Database."
-msgstr ""
+msgstr "该地点已存在于GRASS数据库中."
 
 #: ../gui/wxpython/location_wizard/wizard.py:192
 msgid "Unable to create location"
-msgstr ""
+msgstr "无法创建地点"
 
 #: ../gui/wxpython/location_wizard/wizard.py:205
-msgid ""
-"Title of the location is limited only to one line and 256 characters. The "
-"rest of the text will be ignored."
-msgstr ""
+msgid "Title of the location is limited only to one line and 256 characters. The rest of the text will be ignored."
+msgstr "地点标签长度限制1行256个字符串。多出部分将被忽略。"
 
 #: ../gui/wxpython/location_wizard/wizard.py:212
 msgid "Choose method for creating a new location"
-msgstr ""
+msgstr "选择创建地点的方式"
 
 #: ../gui/wxpython/location_wizard/wizard.py:219
 msgid "Select coordinate system parameters from a list"
-msgstr ""
+msgstr "从列表中选择坐标系统参数"
 
 #: ../gui/wxpython/location_wizard/wizard.py:222
 msgid "Select EPSG code of spatial reference system"
-msgstr ""
+msgstr "选择空间参考系统EPSG代码"
 
 #: ../gui/wxpython/location_wizard/wizard.py:224
 msgid "Read projection and datum terms from a georeferenced data file"
-msgstr ""
+msgstr "从地理配准数据文件读取投影和基准面条件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:227
 msgid "Read projection and datum terms from a Well Known Text (WKT) .prj file"
-msgstr ""
+msgstr "从WKT .prj文件读取投影和基准面条件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:230
 msgid "Specify projection and datum terms using custom PROJ.4 parameters"
-msgstr ""
+msgstr "使用自定义PROJ. 4参数指定投影和基准面条件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:233
 msgid "Create a generic Cartesian coordinate system (XY)"
-msgstr ""
+msgstr "创建通用笛卡尔坐标系统(XY)"
 
 #: ../gui/wxpython/location_wizard/wizard.py:334
 msgid "Choose projection"
-msgstr ""
+msgstr "选择投影"
 
 #: ../gui/wxpython/location_wizard/wizard.py:350
 #: ../gui/wxpython/location_wizard/wizard.py:850
 #: ../gui/wxpython/location_wizard/wizard.py:1016
 #: ../gui/wxpython/location_wizard/wizard.py:1284
 msgid "Code"
-msgstr ""
+msgstr "代码"
 
 #: ../gui/wxpython/location_wizard/wizard.py:354
 msgid "Projection code:"
-msgstr ""
+msgstr "投影代码："
 
 #: ../gui/wxpython/location_wizard/wizard.py:362
 #: ../gui/wxpython/location_wizard/wizard.py:863
 #: ../gui/wxpython/location_wizard/wizard.py:1028
 msgid "Search in description:"
-msgstr ""
+msgstr "在描述中搜索："
 
 #: ../gui/wxpython/location_wizard/wizard.py:537
 #, python-format
 msgid "Unable to read list: %s"
-msgstr ""
+msgstr "无法读取列表：%s"
 
 #: ../gui/wxpython/location_wizard/wizard.py:640
 msgid "Choose projection parameters"
-msgstr ""
+msgstr "选择投影参数"
 
 #: ../gui/wxpython/location_wizard/wizard.py:654
 msgid "Select datum or ellipsoid (next page)"
-msgstr ""
+msgstr "指定基准面或椭球体（下一页）"
 
 #: ../gui/wxpython/location_wizard/wizard.py:661
 msgid "Datum with associated ellipsoid"
-msgstr ""
+msgstr "基准面及相关椭球体"
 
 #: ../gui/wxpython/location_wizard/wizard.py:664
 msgid "Ellipsoid only"
-msgstr ""
+msgstr "仅椭球体"
 
 #: ../gui/wxpython/location_wizard/wizard.py:721
 #, fuzzy, python-format
@@ -1487,67 +1483,67 @@ msgstr "您必须至少选择一个工具"
 #: ../gui/wxpython/location_wizard/wizard.py:751
 #, python-format
 msgid " Enter parameters for %s projection "
-msgstr ""
+msgstr "输入投影%s的参数"
 
 #: ../gui/wxpython/location_wizard/wizard.py:774
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: ../gui/wxpython/location_wizard/wizard.py:774
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: ../gui/wxpython/location_wizard/wizard.py:828
 msgid "Specify geodetic datum"
-msgstr ""
+msgstr "选择大地测量基准面"
 
 #: ../gui/wxpython/location_wizard/wizard.py:850
 msgid "Ellipsoid"
-msgstr ""
+msgstr "椭球体"
 
 #: ../gui/wxpython/location_wizard/wizard.py:854
 msgid "Datum code:"
-msgstr ""
+msgstr "基准面代码："
 
 #: ../gui/wxpython/location_wizard/wizard.py:993
 msgid "Specify ellipsoid"
-msgstr ""
+msgstr "指定椭球体"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1020
 msgid "Ellipsoid code:"
-msgstr ""
+msgstr "椭球体代码"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1110
 #: ../gui/wxpython/location_wizard/wizard.py:1170
 msgid "Select georeferenced file"
-msgstr ""
+msgstr "选择地理配准文件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1115
 msgid "Georeferenced file:"
-msgstr ""
+msgstr "地理配准文件："
 
 #: ../gui/wxpython/location_wizard/wizard.py:1184
 #: ../gui/wxpython/location_wizard/wizard.py:1241
 msgid "Select Well Known Text (WKT) .prj file"
-msgstr ""
+msgstr "选择WKT .prj文件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1189
 #, fuzzy
 msgid "WKT .prj file:"
-msgstr "保存组文件"
+msgstr "DXF文件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1258
 msgid "Choose EPSG Code"
-msgstr ""
+msgstr "选择EPSG代码"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1266
 msgid "Path to the EPSG-codes file:"
-msgstr ""
+msgstr "EPSG代码文件路径："
 
 #: ../gui/wxpython/location_wizard/wizard.py:1268
 #: ../gui/wxpython/gui_core/preferences.py:1129
 msgid "EPSG code:"
-msgstr ""
+msgstr "EPSG代码："
 
 #: ../gui/wxpython/location_wizard/wizard.py:1284
 msgid "Parameters"
@@ -1555,20 +1551,20 @@ msgstr "参数："
 
 #: ../gui/wxpython/location_wizard/wizard.py:1421
 msgid "Choose EPSG codes file"
-msgstr ""
+msgstr "选择EPSG代码文件"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1450
 #, python-format
 msgid "Unable to read EPGS codes: %s"
-msgstr ""
+msgstr "无法读取EPSG代码：%s"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1468
 msgid "Choose method of specifying georeferencing parameters"
-msgstr ""
+msgstr "选择定义地理配准参数的方式"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1476
 msgid "Enter PROJ.4 parameters string:"
-msgstr ""
+msgstr "输入PROJ.4参数字符串"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1531
 #: ../gui/wxpython/location_wizard/wizard.py:1535
@@ -1607,7 +1603,7 @@ msgstr "PROJ.4设置："
 #: ../gui/wxpython/location_wizard/wizard.py:1729
 #: ../gui/wxpython/psmap/dialogs.py:506 ../gui/wxpython/psmap/dialogs.py:527
 msgid "custom"
-msgstr ""
+msgstr "自定义"
 
 #: ../gui/wxpython/location_wizard/wizard.py:1739
 #, python-format
@@ -1643,12 +1639,8 @@ msgstr "无法创建新地点"
 
 #: ../gui/wxpython/location_wizard/wizard.py:2010
 #, fuzzy, python-format
-msgid ""
-"Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
-"need to change the default GIS data directory in the GRASS startup screen."
-msgstr ""
-"将在目录<%(dir)s>下创建新地点<%(loc)s>.如需改变缺省目录，请在GRASS启动时设"
-"置。"
+msgid "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will need to change the default GIS data directory in the GRASS startup screen."
+msgstr "将在目录<%(dir)s>下创建新地点<%(loc)s>.如需改变缺省目录，请在GRASS启动时设置。"
 
 #: ../gui/wxpython/location_wizard/wizard.py:2015
 msgid "New GIS data directory"
@@ -1667,7 +1659,7 @@ msgstr "未找到栅格图<%s>"
 #: ../gui/wxpython/core/render.py:125
 #, python-format
 msgid "<%(name)s>: layer type <%(type)s> is not supported"
-msgstr ""
+msgstr "<%(name)s>: 不支持图层类型 <%(type)s> 。"
 
 #: ../gui/wxpython/core/render.py:180
 #, fuzzy, python-format
@@ -1677,12 +1669,12 @@ msgstr "命令控制台"
 #: ../gui/wxpython/core/render.py:182
 #, fuzzy, python-format
 msgid "Details: %s\n"
-msgstr "要素类型"
+msgstr "读取 %s ..."
 
 #: ../gui/wxpython/core/render.py:280
 #, python-format
 msgid "Unsupported map layer type '%s'"
-msgstr ""
+msgstr "不支持地图层类型'%s'"
 
 #: ../gui/wxpython/core/render.py:421
 msgid "GISBASE not set. You must be in GRASS GIS to run this program."
@@ -1691,17 +1683,17 @@ msgstr ""
 #: ../gui/wxpython/core/render.py:434 ../gui/wxpython/gui_core/mapdisp.py:84
 #, python-format
 msgid "GRASS module '%s' not found. Unable to start map display window."
-msgstr ""
+msgstr "没有找到GRASS模块'%s'，无法启动地图显示窗口。"
 
 #: ../gui/wxpython/core/render.py:466
 #, python-format
 msgid "Error: Unable to open '%(file)s'. Reason: %(ret)s. wxGUI exited.\n"
-msgstr ""
+msgstr "错误：无法打开'%(file)s'。原因：%(ret)s. 退出wxGUI。\n"
 
 #: ../gui/wxpython/core/render.py:566
 #, fuzzy, python-format
 msgid "Invalid map size %d,%d\n"
-msgstr "无效数值: %s"
+msgstr "无效的区域：%s"
 
 #: ../gui/wxpython/core/render.py:641
 #, fuzzy, python-format
@@ -1711,7 +1703,7 @@ msgstr "无法创建栅格地图 %s"
 #: ../gui/wxpython/core/render.py:642 ../gui/wxpython/core/render.py:645
 #: ../gui/wxpython/core/gcmd.py:388
 msgid "Details:"
-msgstr ""
+msgstr "细节："
 
 #: ../gui/wxpython/core/render.py:644
 #, fuzzy, python-format
@@ -1719,10 +1711,8 @@ msgid "Unable to zoom to vector map <%s>."
 msgstr "无法找到矢量地图 [%s]"
 
 #: ../gui/wxpython/core/render.py:647
-msgid ""
-"Unable to get current geographic extent. Force quiting wxGUI. Please "
-"manually run g.region to fix the problem."
-msgstr ""
+msgid "Unable to get current geographic extent. Force quiting wxGUI. Please manually run g.region to fix the problem."
+msgstr "无法获取当前地理范围。强制退出wxGUI。请手动运行g.region以解决该问题。"
 
 #: ../gui/wxpython/core/render.py:930
 #, fuzzy, python-format
@@ -1732,12 +1722,12 @@ msgstr "读取dig文件...\n"
 #: ../gui/wxpython/core/render.py:979 ../gui/wxpython/core/render.py:1063
 #, python-format
 msgid "Unable to render map layer <%s>."
-msgstr ""
+msgstr "无法渲染地图层<%s>。"
 
 #: ../gui/wxpython/core/render.py:1172 ../gui/wxpython/core/render.py:1211
 #, python-format
 msgid "Unable to render overlay <%s>."
-msgstr ""
+msgstr "无法渲染层<%s>。"
 
 #: ../gui/wxpython/core/gcmd.py:82
 #, fuzzy, python-format
@@ -1757,21 +1747,21 @@ msgstr "消息"
 
 #: ../gui/wxpython/core/gcmd.py:385
 msgid "Execution failed:"
-msgstr ""
+msgstr "操作失败："
 
 #: ../gui/wxpython/core/gcmd.py:390 ../gui/wxpython/core/gcmd.py:394
 msgid "Error: "
-msgstr ""
+msgstr "错误："
 
 #: ../gui/wxpython/core/gcmd.py:469
 #, python-format
 msgid "Unable to exectute command: '%s'"
-msgstr ""
+msgstr "无法执行命令：'%s'"
 
 #: ../gui/wxpython/core/workspace.py:1000
 #, python-format
 msgid "Unable to open file <%s> for reading."
-msgstr ""
+msgstr "无法打开并读取文件<%s>。"
 
 #: ../gui/wxpython/core/workspace.py:1013
 #, python-format
@@ -1785,7 +1775,7 @@ msgstr ""
 #: ../gui/wxpython/core/workspace.py:1231
 #, python-format
 msgid " row %d:"
-msgstr ""
+msgstr "行 %d："
 
 #: ../gui/wxpython/core/settings.py:447
 msgid "Segment break"
@@ -1798,51 +1788,52 @@ msgstr "MPEG-1动画"
 
 #: ../gui/wxpython/core/settings.py:695
 msgid "Collapse all except PERMANENT and current"
-msgstr ""
+msgstr "除PERMANENT和current外全部收起"
 
 #: ../gui/wxpython/core/settings.py:696
 msgid "Collapse all except PERMANENT"
-msgstr ""
+msgstr "除PERMANENT外全部收起"
 
 #: ../gui/wxpython/core/settings.py:697
 msgid "Collapse all except current"
-msgstr ""
+msgstr "除current外全部收起"
 
 #: ../gui/wxpython/core/settings.py:698
 msgid "Collapse all"
-msgstr ""
+msgstr "全部收起"
 
 #: ../gui/wxpython/core/settings.py:699
 msgid "Expand all"
-msgstr ""
+msgstr "展开全部"
 
 #: ../gui/wxpython/core/settings.py:702 ../gui/wxpython/dbmgr/manager.py:1127
 msgid "Edit selected record"
-msgstr ""
+msgstr "编辑选中的记录"
 
 #: ../gui/wxpython/core/settings.py:703
 msgid "Display selected"
-msgstr ""
+msgstr "显示选中项目"
 
 #: ../gui/wxpython/core/settings.py:713
 msgid "Classic (labels only)"
-msgstr ""
+msgstr "经典（仅标签）"
 
 #: ../gui/wxpython/core/settings.py:714
 msgid "Combined (labels and module names)"
-msgstr ""
+msgstr "混合（标签和模块名称）"
 
 #: ../gui/wxpython/core/settings.py:715
 msgid "Professional (module names only)"
 msgstr ""
 
 #: ../gui/wxpython/core/settings.py:722
+#, fuzzy
 msgid "Zoom and recenter"
-msgstr ""
+msgstr "没有起始点"
 
 #: ../gui/wxpython/core/settings.py:723
 msgid "Zoom to mouse cursor"
-msgstr ""
+msgstr "缩放到鼠标光标"
 
 #: ../gui/wxpython/core/settings.py:724
 #, fuzzy
@@ -1851,7 +1842,7 @@ msgstr "未找到任何记录。\n"
 
 #: ../gui/wxpython/core/settings.py:725
 msgid "Scroll forward to zoom in"
-msgstr ""
+msgstr "向前滚动以放大"
 
 #: ../gui/wxpython/core/settings.py:726
 #, fuzzy
@@ -1860,31 +1851,31 @@ msgstr "要放大地栅格图"
 
 #: ../gui/wxpython/core/settings.py:759
 msgid "box"
-msgstr ""
+msgstr "框"
 
 #: ../gui/wxpython/core/settings.py:760
 msgid "sphere"
-msgstr ""
+msgstr "球体"
 
 #: ../gui/wxpython/core/settings.py:761
 msgid "cube"
-msgstr ""
+msgstr "立方体"
 
 #: ../gui/wxpython/core/settings.py:762
 msgid "diamond"
-msgstr ""
+msgstr "钻石"
 
 #: ../gui/wxpython/core/settings.py:763
 msgid "aster"
-msgstr ""
+msgstr "星形"
 
 #: ../gui/wxpython/core/settings.py:764
 msgid "gyro"
-msgstr ""
+msgstr "陀螺"
 
 #: ../gui/wxpython/core/settings.py:765
 msgid "histogram"
-msgstr ""
+msgstr "直方图"
 
 #: ../gui/wxpython/core/settings.py:802
 #, fuzzy, python-format
@@ -1914,7 +1905,7 @@ msgstr ""
 
 #: ../gui/wxpython/core/settings.py:980
 msgid "Unable to set "
-msgstr ""
+msgstr "无法设置"
 
 #: ../gui/wxpython/core/settings.py:1006 ../gui/wxpython/core/settings.py:1012
 #, fuzzy, python-format
@@ -1963,13 +1954,15 @@ msgstr "未知的类型"
 
 #: ../gui/wxpython/psmap/dialogs.py:197
 msgid "Units:"
-msgstr ""
+msgstr "单位："
 
 #: ../gui/wxpython/psmap/dialogs.py:206
 msgid ""
 "Position of the top left corner\n"
 "from the top left edge of the paper"
 msgstr ""
+"左上角位置\n"
+"从纸张的左上角边缘开始"
 
 #: ../gui/wxpython/psmap/dialogs.py:207
 #, fuzzy
@@ -2001,6 +1994,8 @@ msgid ""
 "Position from the top left\n"
 "edge of the paper"
 msgstr ""
+"从左上角开始的位置\n"
+"纸张边缘"
 
 #: ../gui/wxpython/psmap/dialogs.py:290
 #, fuzzy
@@ -2010,7 +2005,7 @@ msgstr "OGR 格式"
 #: ../gui/wxpython/psmap/dialogs.py:291 ../gui/wxpython/psmap/dialogs.py:3554
 #: ../gui/wxpython/gui_core/preferences.py:1463
 msgid "Font size:"
-msgstr ""
+msgstr "字号："
 
 #: ../gui/wxpython/psmap/dialogs.py:304
 #, fuzzy
@@ -2019,15 +2014,15 @@ msgstr "选择要运行的模型"
 
 #: ../gui/wxpython/psmap/dialogs.py:352
 msgid "Close dialog and apply changes"
-msgstr ""
+msgstr "关闭对话框并使改动生效"
 
 #: ../gui/wxpython/psmap/dialogs.py:358 ../gui/wxpython/vdigit/dialogs.py:142
 msgid "Apply changes"
-msgstr ""
+msgstr "使改动生效"
 
 #: ../gui/wxpython/psmap/dialogs.py:383
 msgid "Units"
-msgstr ""
+msgstr "单位"
 
 #: ../gui/wxpython/psmap/dialogs.py:383
 #, fuzzy
@@ -2051,7 +2046,7 @@ msgstr " 右键： 退出\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:384
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: ../gui/wxpython/psmap/dialogs.py:384
 #, fuzzy
@@ -2077,7 +2072,7 @@ msgstr "输入文件"
 
 #: ../gui/wxpython/psmap/dialogs.py:450
 msgid "Margins"
-msgstr ""
+msgstr "边缘"
 
 #: ../gui/wxpython/psmap/dialogs.py:454
 #, fuzzy
@@ -2086,7 +2081,7 @@ msgstr "PostScript 输出文件"
 
 #: ../gui/wxpython/psmap/dialogs.py:454
 msgid "Landscape"
-msgstr ""
+msgstr "横向"
 
 #: ../gui/wxpython/psmap/dialogs.py:556
 #, fuzzy
@@ -2126,7 +2121,7 @@ msgstr "不更新当前区域"
 
 #: ../gui/wxpython/psmap/dialogs.py:683
 msgid "fixed scale and map center"
-msgstr ""
+msgstr "固定的比例和地图中心位置"
 
 #: ../gui/wxpython/psmap/dialogs.py:691 ../gui/wxpython/psmap/dialogs.py:859
 #, fuzzy
@@ -2135,7 +2130,7 @@ msgstr "投影管理"
 
 #: ../gui/wxpython/psmap/dialogs.py:699 ../gui/wxpython/psmap/dialogs.py:1283
 msgid "Map:"
-msgstr ""
+msgstr "地图："
 
 #: ../gui/wxpython/psmap/dialogs.py:699
 #, fuzzy
@@ -2149,7 +2144,7 @@ msgstr "显示比例尺和指北针"
 
 #: ../gui/wxpython/psmap/dialogs.py:723
 msgid "Center:"
-msgstr ""
+msgstr "中心："
 
 #: ../gui/wxpython/psmap/dialogs.py:724
 #, fuzzy
@@ -2168,7 +2163,7 @@ msgstr "保存"
 
 #: ../gui/wxpython/psmap/dialogs.py:729
 msgid "1 :"
-msgstr ""
+msgstr "1 :"
 
 #: ../gui/wxpython/psmap/dialogs.py:749
 #, fuzzy
@@ -2182,7 +2177,7 @@ msgstr "边框颜色"
 
 #: ../gui/wxpython/psmap/dialogs.py:766
 msgid "draw border around map frame"
-msgstr ""
+msgstr "绘制地图框架外边框"
 
 #: ../gui/wxpython/psmap/dialogs.py:772
 #, fuzzy
@@ -2191,13 +2186,15 @@ msgstr "边框颜色"
 
 #: ../gui/wxpython/psmap/dialogs.py:773
 msgid "border width (pts):"
-msgstr ""
+msgstr "边框宽度(pts)："
 
 #: ../gui/wxpython/psmap/dialogs.py:867
 msgid ""
 "Region is set to match this map,\n"
 "raster or vector map must be added later"
 msgstr ""
+"区域已设置为与该地图匹配，\n"
+"稍后须添加栅格或矢量地图"
 
 #: ../gui/wxpython/psmap/dialogs.py:874
 #, fuzzy
@@ -2242,7 +2239,7 @@ msgstr "栅格值"
 #: ../gui/wxpython/psmap/dialogs.py:1210 ../gui/wxpython/psmap/frame.py:580
 #: ../gui/wxpython/psmap/frame.py:603
 msgid "Please, create map frame first."
-msgstr ""
+msgstr "请先创建地图框架"
 
 #: ../gui/wxpython/psmap/dialogs.py:1279
 #, fuzzy
@@ -2271,7 +2268,7 @@ msgstr "要素类型"
 
 #: ../gui/wxpython/psmap/dialogs.py:1292
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: ../gui/wxpython/psmap/dialogs.py:1304
 #, fuzzy
@@ -2285,7 +2282,7 @@ msgstr "将 3D 栅格图转化为 2D 栅格图"
 
 #: ../gui/wxpython/psmap/dialogs.py:1314 ../gui/wxpython/psmap/dialogs.py:2636
 msgid "Up"
-msgstr ""
+msgstr "向上"
 
 #: ../gui/wxpython/psmap/dialogs.py:1315 ../gui/wxpython/psmap/dialogs.py:2637
 #, fuzzy
@@ -2344,7 +2341,7 @@ msgstr "反向清扫完成"
 
 #: ../gui/wxpython/psmap/dialogs.py:1675
 msgid "Database connection is not defined in DB file."
-msgstr ""
+msgstr "DB文件没有定义数据连接"
 
 #: ../gui/wxpython/psmap/dialogs.py:1676
 #, fuzzy
@@ -2353,7 +2350,7 @@ msgstr "选择颜色"
 
 #: ../gui/wxpython/psmap/dialogs.py:1699
 msgid "list of categories (e.g. 1,3,5-7)"
-msgstr ""
+msgstr "类别列表（例如：1,3,5-7）"
 
 #: ../gui/wxpython/psmap/dialogs.py:1726 ../gui/wxpython/nviz/tools.py:784
 #: ../gui/wxpython/nviz/tools.py:2276 ../gui/wxpython/menustrings.py:312
@@ -2377,12 +2374,12 @@ msgstr "文本颜色"
 
 #: ../gui/wxpython/psmap/dialogs.py:1755 ../gui/wxpython/psmap/dialogs.py:1859
 msgid "draw outline"
-msgstr ""
+msgstr "绘制轮廓"
 
 #: ../gui/wxpython/psmap/dialogs.py:1758 ../gui/wxpython/psmap/dialogs.py:1863
 #: ../gui/wxpython/psmap/dialogs.py:3749 ../gui/wxpython/psmap/dialogs.py:3754
 msgid "Width (pts):"
-msgstr ""
+msgstr "宽度(pts)："
 
 #: ../gui/wxpython/psmap/dialogs.py:1776 ../gui/wxpython/psmap/dialogs.py:1879
 #: ../gui/wxpython/nviz/tools.py:1142 ../gui/wxpython/nviz/tools.py:1701
@@ -2391,7 +2388,7 @@ msgstr ""
 #: ../gui/wxpython/nviz/preferences.py:544 ../gui/wxpython/gcp/manager.py:2436
 #: ../gui/wxpython/gui_core/preferences.py:982
 msgid "Color:"
-msgstr ""
+msgstr "颜色："
 
 #: ../gui/wxpython/psmap/dialogs.py:1799
 #, fuzzy
@@ -2405,11 +2402,11 @@ msgstr " nv color\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:1814 ../gui/wxpython/psmap/dialogs.py:1918
 msgid "color from map table column:"
-msgstr ""
+msgstr "从地图表格列选择颜色"
 
 #: ../gui/wxpython/psmap/dialogs.py:1861
 msgid "No effect for fill color from table column"
-msgstr ""
+msgstr "地图表格列没有设置填充颜色效果"
 
 #: ../gui/wxpython/psmap/dialogs.py:1903
 #, fuzzy
@@ -2426,7 +2423,7 @@ msgstr "坡度和方位"
 #: ../gui/wxpython/vdigit/preferences.py:80
 #: ../gui/wxpython/gcp/manager.py:2396
 msgid "Symbology"
-msgstr ""
+msgstr "符号样式"
 
 #: ../gui/wxpython/psmap/dialogs.py:1958 ../gui/wxpython/nviz/tools.py:1366
 #, fuzzy
@@ -2440,7 +2437,7 @@ msgstr "保存组文件"
 
 #: ../gui/wxpython/psmap/dialogs.py:1971 ../gui/wxpython/psmap/dialogs.py:2160
 msgid "Type filename or click browse to choose file"
-msgstr ""
+msgstr "输入或点击浏览选择文件名称"
 
 #: ../gui/wxpython/psmap/dialogs.py:1972 ../gui/wxpython/psmap/dialogs.py:2161
 #, fuzzy
@@ -2454,7 +2451,7 @@ msgstr "块大小："
 
 #: ../gui/wxpython/psmap/dialogs.py:2002
 msgid "size from map table column:"
-msgstr ""
+msgstr "地图表格列大小："
 
 #: ../gui/wxpython/psmap/dialogs.py:2004
 #, fuzzy
@@ -2468,11 +2465,11 @@ msgstr "** 错误的颜色规范 **\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:2042
 msgid "rotate symbols:"
-msgstr ""
+msgstr "旋转符号"
 
 #: ../gui/wxpython/psmap/dialogs.py:2043
 msgid "counterclockwise in degrees:"
-msgstr ""
+msgstr "逆时针度数"
 
 #: ../gui/wxpython/psmap/dialogs.py:2045
 #, fuzzy
@@ -2486,7 +2483,7 @@ msgstr "设定线宽（像素）"
 
 #: ../gui/wxpython/psmap/dialogs.py:2097
 msgid "multiply width by category value"
-msgstr ""
+msgstr "宽度乘以类别值"
 
 #: ../gui/wxpython/psmap/dialogs.py:2118
 #, fuzzy
@@ -2505,7 +2502,7 @@ msgstr "平移"
 
 #: ../gui/wxpython/psmap/dialogs.py:2158
 msgid "use pattern:"
-msgstr ""
+msgstr "保用模式"
 
 #: ../gui/wxpython/psmap/dialogs.py:2159
 #, fuzzy
@@ -2559,7 +2556,7 @@ msgstr "输入图层的名称"
 
 #: ../gui/wxpython/psmap/dialogs.py:2527
 msgid "discrete legend (categorical maps)"
-msgstr ""
+msgstr "离散图例（类别地图）"
 
 #: ../gui/wxpython/psmap/dialogs.py:2529
 #, fuzzy
@@ -2573,11 +2570,11 @@ msgstr "改变光线设置"
 
 #: ../gui/wxpython/psmap/dialogs.py:2544
 msgid "draw \"no data\" box"
-msgstr ""
+msgstr "绘制\"no data\"框"
 
 #: ../gui/wxpython/psmap/dialogs.py:2550
 msgid "draw ticks across color table"
-msgstr ""
+msgstr "在颜色表上绘制刻度"
 
 #: ../gui/wxpython/psmap/dialogs.py:2561
 #: ../gui/wxpython/modules/colorrules.py:834
@@ -2594,7 +2591,7 @@ msgstr "矢量地图 %s - 未发现"
 
 #: ../gui/wxpython/psmap/dialogs.py:2602
 msgid "Show vector legend"
-msgstr ""
+msgstr "显示矢量图例"
 
 #: ../gui/wxpython/psmap/dialogs.py:2608
 #, fuzzy
@@ -2616,13 +2613,12 @@ msgid "Label"
 msgstr "图层 %d"
 
 #: ../gui/wxpython/psmap/dialogs.py:2638 ../gui/wxpython/psmap/dialogs.py:2944
-#, fuzzy
 msgid "Edit label"
-msgstr "添加标注"
+msgstr "编辑标注"
 
 #: ../gui/wxpython/psmap/dialogs.py:2657
 msgid "draw border around legend"
-msgstr ""
+msgstr "绘制图例边框"
 
 #: ../gui/wxpython/psmap/dialogs.py:2694
 #, fuzzy
@@ -2641,13 +2637,15 @@ msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:2728
 msgid "Leave the edit field empty, to use default values."
-msgstr ""
+msgstr "不填写编辑字段，系统将使用默认值。"
 
 #: ../gui/wxpython/psmap/dialogs.py:2750
 msgid ""
 "Width of the color symbol (for lines)\n"
 "in front of the legend text"
 msgstr ""
+"线条颜色符号宽度 \n"
+"显示于图例文字前"
 
 #: ../gui/wxpython/psmap/dialogs.py:2756 ../gui/wxpython/psmap/dialogs.py:2861
 #, fuzzy
@@ -2664,10 +2662,12 @@ msgid ""
 "Column separation distance between the left edges\n"
 "of two columns in a multicolumn legend"
 msgstr ""
+"列间距（左边缘到左边缘）\n"
+"多列图例中的两个列"
 
 #: ../gui/wxpython/psmap/dialogs.py:2944
 msgid "Edit legend label:"
-msgstr ""
+msgstr "编辑图例标签："
 
 #: ../gui/wxpython/psmap/dialogs.py:2985
 #, fuzzy
@@ -2704,6 +2704,8 @@ msgid ""
 "Units of current projection are not supported,\n"
 " meters will be used!"
 msgstr ""
+"当前投影不支持该单位，\n"
+"将使用米作为单位！"
 
 #: ../gui/wxpython/psmap/dialogs.py:3430
 #, fuzzy
@@ -2722,7 +2724,7 @@ msgstr "离散化错误 (地图单位)"
 
 #: ../gui/wxpython/psmap/dialogs.py:3482
 msgid "Scalebar height is real height on paper"
-msgstr ""
+msgstr "比例尺高度即为纸张上的实际高度"
 
 #: ../gui/wxpython/psmap/dialogs.py:3484
 #, fuzzy
@@ -2741,7 +2743,7 @@ msgstr "输入图层的名称"
 
 #: ../gui/wxpython/psmap/dialogs.py:3548
 msgid "Label every "
-msgstr ""
+msgstr "标签间隔"
 
 #: ../gui/wxpython/psmap/dialogs.py:3549
 #, fuzzy
@@ -2766,7 +2768,7 @@ msgstr "文本"
 #: ../gui/wxpython/psmap/dialogs.py:3712
 #: ../gui/wxpython/gui_core/dialogs.py:700
 msgid "Enter text:"
-msgstr ""
+msgstr "输入文字："
 
 #: ../gui/wxpython/psmap/dialogs.py:3738
 #, fuzzy
@@ -2785,15 +2787,15 @@ msgstr "高亮"
 
 #: ../gui/wxpython/psmap/dialogs.py:3751
 msgid "text border"
-msgstr ""
+msgstr "文字边缘"
 
 #: ../gui/wxpython/psmap/dialogs.py:3828
 msgid "Offset"
-msgstr ""
+msgstr "偏移量"
 
 #: ../gui/wxpython/psmap/dialogs.py:3831
 msgid "horizontal (pts):"
-msgstr ""
+msgstr "水平(pts)："
 
 #: ../gui/wxpython/psmap/dialogs.py:3832
 #, fuzzy
@@ -2817,7 +2819,7 @@ msgstr "各向异性角度 (度，从东开始逆时针方向计算)"
 
 #: ../gui/wxpython/psmap/dialogs.py:3950
 msgid "No text entered!"
-msgstr ""
+msgstr "尚未输入文字！"
 
 #: ../gui/wxpython/psmap/dialogs.py:4060 ../gui/wxpython/psmap/dialogs.py:4108
 #: ../gui/wxpython/psmap/toolbars.py:83
@@ -2843,7 +2845,7 @@ msgstr "列的类型不支持"
 #: ../gui/wxpython/psmap/dialogs.py:4160
 #, fuzzy
 msgid "Scale And Rotation"
-msgstr "保存并关闭"
+msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:4191 ../gui/wxpython/psmap/dialogs.py:4653
 #, fuzzy
@@ -2852,13 +2854,15 @@ msgstr "各向异性角度(单位：度)"
 
 #: ../gui/wxpython/psmap/dialogs.py:4200 ../gui/wxpython/psmap/dialogs.py:4662
 msgid "Counterclockwise rotation in degrees"
-msgstr ""
+msgstr "逆时针旋转度数"
 
 #: ../gui/wxpython/psmap/dialogs.py:4298
 msgid ""
 "PIL\n"
 "missing"
 msgstr ""
+"PIL\n"
+"没有找到"
 
 #: ../gui/wxpython/psmap/dialogs.py:4318
 #, fuzzy, python-format
@@ -2868,7 +2872,7 @@ msgstr "无法创建栅格地图 %s"
 #: ../gui/wxpython/psmap/dialogs.py:4377
 #, python-format
 msgid "size: %(width)s x %(height)s pts"
-msgstr ""
+msgstr "大小：%(width)s x %(height)s pts"
 
 #: ../gui/wxpython/psmap/dialogs.py:4399
 #, fuzzy
@@ -2878,7 +2882,7 @@ msgstr "没有选中的图层"
 #: ../gui/wxpython/psmap/dialogs.py:4493 ../gui/wxpython/psmap/toolbars.py:85
 #: ../gui/wxpython/mapdisp/toolbars.py:35 ../gui/wxpython/nviz/tools.py:1858
 msgid "North Arrow"
-msgstr ""
+msgstr "指北针"
 
 #: ../gui/wxpython/psmap/dialogs.py:4496
 #, fuzzy
@@ -2913,7 +2917,7 @@ msgstr ""
 #: ../gui/wxpython/psmap/dialogs.py:4601 ../gui/wxpython/psmap/dialogs.py:4855
 #, fuzzy
 msgid "Outline color:"
-msgstr "文本颜色"
+msgstr " nv color\n"
 
 #: ../gui/wxpython/psmap/dialogs.py:4603 ../gui/wxpython/psmap/dialogs.py:4618
 #: ../gui/wxpython/psmap/dialogs.py:4857 ../gui/wxpython/psmap/dialogs.py:4878
@@ -2944,12 +2948,12 @@ msgstr "标签大小 (点)"
 #: ../gui/wxpython/psmap/dialogs.py:4820
 #, fuzzy
 msgid "Rectangle settings"
-msgstr "无法获取栅格行\n"
+msgstr "改变区域设置"
 
 #: ../gui/wxpython/psmap/dialogs.py:4822
 #, fuzzy
 msgid "Line settings"
-msgstr "无法获取栅格行\n"
+msgstr "改变区域设置"
 
 #: ../gui/wxpython/psmap/dialogs.py:4899 ../gui/wxpython/gcp/manager.py:2527
 #, fuzzy
@@ -3070,7 +3074,7 @@ msgstr ""
 
 #: ../gui/wxpython/psmap/frame.py:1366
 msgid "Click and drag to resize object"
-msgstr ""
+msgstr "点击并拖动以改变大小"
 
 #: ../gui/wxpython/psmap/instructions.py:133
 #, fuzzy, python-format
@@ -3149,16 +3153,12 @@ msgstr "无法读取行 %i\n"
 #: ../gui/wxpython/psmap/instructions.py:811
 #: ../gui/wxpython/psmap/instructions.py:1693
 #, python-format
-msgid ""
-"Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding "
-"which is required by module ps.map."
+msgid "Characters on position %s are not supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
 msgstr ""
 
 #: ../gui/wxpython/psmap/instructions.py:815
 #: ../gui/wxpython/psmap/instructions.py:1697
-msgid ""
-"Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is "
-"required by module ps.map."
+msgid "Not all characters are supported by ISO-8859-1 (Latin 1) encoding which is required by module ps.map."
 msgstr ""
 
 #: ../gui/wxpython/psmap/instructions.py:931
@@ -3168,7 +3168,7 @@ msgstr "无法读取行 %i\n"
 
 #: ../gui/wxpython/psmap/utils.py:92
 msgid "inch"
-msgstr ""
+msgstr "英寸"
 
 #: ../gui/wxpython/psmap/utils.py:93 ../gui/wxpython/modules/vclean.py:194
 #, fuzzy
@@ -3207,11 +3207,11 @@ msgstr "文件(&F)"
 
 #: ../gui/wxpython/psmap/utils.py:100 ../gui/wxpython/psmap/utils.py:104
 msgid "nautical miles"
-msgstr ""
+msgstr "海里"
 
 #: ../gui/wxpython/psmap/utils.py:102
 msgid "pixel"
-msgstr ""
+msgstr "像素"
 
 #: ../gui/wxpython/psmap/utils.py:103
 #, fuzzy
@@ -3220,7 +3220,7 @@ msgstr "参数："
 
 #: ../gui/wxpython/psmap/utils.py:105
 msgid "degree"
-msgstr ""
+msgstr "度数"
 
 #: ../gui/wxpython/psmap/utils.py:345
 #, fuzzy
@@ -3229,11 +3229,11 @@ msgstr "无法创建栅格地图 %s"
 
 #: ../gui/wxpython/psmap/toolbars.py:52
 msgid "Generate text file with mapping instructions"
-msgstr ""
+msgstr "使用地图绘制指令生成文本文件"
 
 #: ../gui/wxpython/psmap/toolbars.py:54
 msgid "Load text file with mapping instructions"
-msgstr ""
+msgstr "使用地图绘制指令载入文本文件"
 
 #: ../gui/wxpython/psmap/toolbars.py:56
 #, fuzzy
@@ -3242,11 +3242,11 @@ msgstr "PostScript 输出文件"
 
 #: ../gui/wxpython/psmap/toolbars.py:58
 msgid "Generate PDF output"
-msgstr ""
+msgstr "生成PDF输出"
 
 #: ../gui/wxpython/psmap/toolbars.py:61
 msgid "Specify paper size, margins and orientation"
-msgstr ""
+msgstr "设定纸张大小，边框和模式"
 
 #: ../gui/wxpython/psmap/toolbars.py:63
 #, fuzzy
@@ -3255,11 +3255,11 @@ msgstr "完全输出"
 
 #: ../gui/wxpython/psmap/toolbars.py:64
 msgid "Zoom to full extent"
-msgstr ""
+msgstr "缩放到全图范围"
 
 #: ../gui/wxpython/psmap/toolbars.py:67
 msgid "Click and drag to place map frame"
-msgstr ""
+msgstr "点击并拖动到合适位置放置地图框架"
 
 #: ../gui/wxpython/psmap/toolbars.py:69
 #, fuzzy
@@ -3273,7 +3273,7 @@ msgstr "查看模型属性"
 
 #: ../gui/wxpython/psmap/toolbars.py:73
 msgid "Quit Cartographic Composer"
-msgstr ""
+msgstr "退出地图绘制"
 
 #: ../gui/wxpython/psmap/toolbars.py:77
 #, fuzzy
@@ -3283,7 +3283,7 @@ msgstr "添加地图元素"
 #: ../gui/wxpython/psmap/toolbars.py:81 ../gui/wxpython/nviz/tools.py:1900
 #, fuzzy
 msgid "Scale bar"
-msgstr "添加测地线层"
+msgstr "添加格网值图层"
 
 #: ../gui/wxpython/psmap/toolbars.py:87
 msgid "Add simple graphics"
@@ -3295,8 +3295,9 @@ msgid "Line"
 msgstr "线"
 
 #: ../gui/wxpython/psmap/toolbars.py:93
+#, fuzzy
 msgid "Rectangle"
-msgstr ""
+msgstr "移除 [%s] 的空文件...\n"
 
 #: ../gui/wxpython/icons/icon.py:83
 #, fuzzy, python-format
@@ -3308,6 +3309,8 @@ msgid ""
 "There was a problem printing.\n"
 "Perhaps your current printer is not set correctly?"
 msgstr ""
+"打印时出现问题。\n"
+"可能是您的打印机设置不正确？"
 
 #: ../gui/wxpython/mapdisp/main.py:117
 #, fuzzy, python-format
@@ -3322,7 +3325,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/main.py:131
 #, fuzzy, python-format
 msgid "Stopping map display <%s>..."
-msgstr "创建新地图"
+msgstr "非法的输出文件名"
 
 #: ../gui/wxpython/mapdisp/mapwindow.py:439
 #: ../gui/wxpython/modules/histogram.py:177
@@ -3354,7 +3357,7 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:64
 msgid "GRASS GIS - Map display"
-msgstr ""
+msgstr "GRASS GIS - 地图显示"
 
 #: ../gui/wxpython/mapdisp/frame.py:202
 #, python-format
@@ -3369,7 +3372,7 @@ msgstr ""
 #: ../gui/wxpython/mapdisp/frame.py:269 ../gui/wxpython/mapdisp/frame.py:416
 #: ../gui/wxpython/mapdisp/toolbars.py:78
 msgid "2D view"
-msgstr ""
+msgstr "2D视图"
 
 #: ../gui/wxpython/mapdisp/frame.py:209
 #, fuzzy
@@ -3398,7 +3401,7 @@ msgstr "写入新文件...\n"
 
 #: ../gui/wxpython/mapdisp/frame.py:298
 msgid "Please wait, loading data..."
-msgstr ""
+msgstr "数据装载中，请稍候..."
 
 #: ../gui/wxpython/mapdisp/frame.py:354
 #, fuzzy
@@ -3444,12 +3447,14 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:961
+#, fuzzy
 msgid "Measuring distance"
-msgstr ""
+msgstr "测量距离"
 
 #: ../gui/wxpython/mapdisp/frame.py:964
+#, fuzzy
 msgid "Measuring distance:"
-msgstr ""
+msgstr "测量距离"
 
 #: ../gui/wxpython/mapdisp/frame.py:974
 #, python-format
@@ -3492,11 +3497,11 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/frame.py:1278 ../gui/wxpython/gcp/mapdisplay.py:582
 msgid "Zoom to default region"
-msgstr ""
+msgstr "缩放到默认区域"
 
 #: ../gui/wxpython/mapdisp/frame.py:1282 ../gui/wxpython/gcp/mapdisplay.py:586
 msgid "Zoom to saved region"
-msgstr ""
+msgstr "缩放到保存的区域"
 
 #: ../gui/wxpython/mapdisp/frame.py:1286
 #, fuzzy
@@ -3505,34 +3510,31 @@ msgstr "从指定的区域设置当前区域"
 
 #: ../gui/wxpython/mapdisp/frame.py:1290 ../gui/wxpython/gcp/mapdisplay.py:594
 msgid "Save display geometry to named region"
-msgstr ""
+msgstr "将显示范围保存到已命名的区域"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:357
 msgid "Render"
-msgstr ""
+msgstr "渲染"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:363
 msgid "Enable/disable auto-rendering"
-msgstr ""
+msgstr "激活/禁用自动渲染"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:385
 msgid "Show comp. extent"
-msgstr ""
+msgstr "显示计算范围"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:388
 msgid "Show computational extent"
-msgstr ""
+msgstr "显示计算范围"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:392
-msgid ""
-"Show/hide computational region extent (set with g.region). Display region "
-"drawn as a blue box inside the computational region, computational region "
-"inside a display region as a red box)."
+msgid "Show/hide computational region extent (set with g.region). Display region drawn as a blue box inside the computational region, computational region inside a display region as a red box)."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:432
 msgid "Display mode"
-msgstr ""
+msgstr "显示模式"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:435
 #: ../gui/wxpython/gui_core/preferences.py:687
@@ -3541,9 +3543,7 @@ msgid "Align region extent based on display size"
 msgstr "基于新的数据集扩展区域的范围"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:439
-msgid ""
-"Align region extent based on display size from center point. Default value "
-"for new map displays can be set up in 'User GUI settings' dialog."
+msgid "Align region extent based on display size from center point. Default value for new map displays can be set up in 'User GUI settings' dialog."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:452
@@ -3557,31 +3557,27 @@ msgid "Constrain display resolution to computational settings"
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:459
-msgid ""
-"Constrain display resolution to computational region settings. Default value "
-"for new map displays can be set up in 'User GUI settings' dialog."
+msgid "Constrain display resolution to computational region settings. Default value for new map displays can be set up in 'User GUI settings' dialog."
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:483
 msgid "Map scale"
-msgstr ""
+msgstr "地图比例"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:497
-msgid ""
-"As everyone's monitors and resolutions are set differently these values are "
-"not true map scales, but should get you into the right neighborhood."
-msgstr ""
+msgid "As everyone's monitors and resolutions are set differently these values are not true map scales, but should get you into the right neighborhood."
+msgstr "由于不同显示器的分辨率有差异，这些值并非真实的地图比例，但该值应该能够显示合适的区域。"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:550
 msgid "Go to"
-msgstr ""
+msgstr "转到"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:571
 #: ../gui/wxpython/mapdisp/statusbar.py:635
 #: ../gui/wxpython/mapdisp/statusbar.py:809
 #: ../gui/wxpython/mapdisp/statusbar.py:875
 msgid "Projection not defined (check the settings)"
-msgstr ""
+msgstr "投影未定义（检查设置）"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:649
 #: ../gui/wxpython/mapdisp/statusbar.py:822
@@ -3602,9 +3598,7 @@ msgid "Use defined projection"
 msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:695
-msgid ""
-"Reproject coordinates displayed in the statusbar. Projection can be defined "
-"in GUI preferences dialog (tab 'Projection')"
+msgid "Reproject coordinates displayed in the statusbar. Projection can be defined in GUI preferences dialog (tab 'Projection')"
 msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:720
@@ -3613,15 +3607,15 @@ msgstr ""
 
 #: ../gui/wxpython/mapdisp/statusbar.py:764
 msgid "Display geometry"
-msgstr ""
+msgstr "显示形状"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:780
 msgid "Coordinates"
-msgstr ""
+msgstr "坐标"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:834
 msgid "Extent"
-msgstr ""
+msgstr "范围"
 
 #: ../gui/wxpython/mapdisp/statusbar.py:929
 msgid "Comp. region"
@@ -3667,7 +3661,7 @@ msgstr "分析地图"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:38
 msgid "Measuring, profiling, histogramming, ..."
-msgstr ""
+msgstr "测量，概括，绘制直方图，..."
 
 #: ../gui/wxpython/mapdisp/toolbars.py:40
 msgid "Measure distance"
@@ -3675,7 +3669,7 @@ msgstr "测量距离"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:42
 msgid "Profile surface map"
-msgstr ""
+msgstr "表面图概括"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:44
 #, fuzzy
@@ -3689,7 +3683,7 @@ msgstr "创建图像或栅格文件的直方图"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:53
 msgid "Rotate 3D scene"
-msgstr ""
+msgstr "旋转三维场景"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:54
 #, fuzzy
@@ -3699,12 +3693,11 @@ msgstr "用鼠标拖动平移"
 #: ../gui/wxpython/mapdisp/toolbars.py:56
 #: ../gui/wxpython/nviz/preferences.py:208
 msgid "Fly-through mode"
-msgstr ""
+msgstr "飞越模式"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:57
-msgid ""
-"Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
-msgstr ""
+msgid "Drag with mouse, hold Ctrl down for different mode or Shift to accelerate"
+msgstr "使用鼠标绘制，按键盘Ctrl键可选择模式，Shift键可加速"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:59
 #, fuzzy
@@ -3733,18 +3726,13 @@ msgstr "读取 %s ..."
 
 #: ../gui/wxpython/mapdisp/toolbars.py:90
 #, fuzzy
-msgid ""
-"Note that the wxGUI's 3D view mode is currently disabled on MS Windows "
-"(hopefully this will be fixed soon). Please keep an eye out for updated "
-"versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
-msgstr ""
-"wxGUI适量数字化暂不可用(希望能尽快恢复)，请随时检查GRASS更新版本。目前您可以"
-"从建立矢量地图菜单下使用\"v.digit\" 。"
+msgid "Note that the wxGUI's 3D view mode is currently disabled on MS Windows (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
+msgstr "wxGUI适量数字化暂不可用(希望能尽快恢复)，请随时检查GRASS更新版本。目前您可以从建立矢量地图菜单下使用\"v.digit\" 。"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:98
 #: ../gui/wxpython/vdigit/toolbars.py:695
 msgid "Digitize"
-msgstr ""
+msgstr "数字化"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:105
 #, fuzzy
@@ -3752,18 +3740,13 @@ msgid "Vector digitizer not available"
 msgstr "矢量文件 [%s] 不可用"
 
 #: ../gui/wxpython/mapdisp/toolbars.py:107
-msgid ""
-"Note that the wxGUI's vector digitizer is currently disabled (hopefully this "
-"will be fixed soon). Please keep an eye out for updated versions of GRASS. "
-"In the meantime you can use \"v.digit\" from the Develop Vector menu."
-msgstr ""
-"wxGUI适量数字化暂不可用(希望能尽快恢复)，请随时检查GRASS更新版本。目前您可以"
-"从建立矢量地图菜单下使用\"v.digit\" 。"
+msgid "Note that the wxGUI's vector digitizer is currently disabled (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"v.digit\" from the Develop Vector menu."
+msgstr "wxGUI适量数字化暂不可用(希望能尽快恢复)，请随时检查GRASS更新版本。目前您可以从建立矢量地图菜单下使用\"v.digit\" 。"
 
 #: ../gui/wxpython/nviz/tools.py:83 ../gui/wxpython/nviz/preferences.py:55
 #: ../gui/wxpython/nviz/preferences.py:60
 msgid "View"
-msgstr ""
+msgstr "察看"
 
 #: ../gui/wxpython/nviz/tools.py:91
 #: ../gui/wxpython/gui_core/preferences.py:400
@@ -3783,7 +3766,7 @@ msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/nviz/tools.py:218
 msgid "Control View"
-msgstr ""
+msgstr "控制视图"
 
 #: ../gui/wxpython/nviz/tools.py:239
 msgid "Adjusts the distance and angular perspective of the image viewpoint"
@@ -3791,7 +3774,7 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:244 ../gui/wxpython/nviz/preferences.py:68
 msgid "Perspective:"
-msgstr ""
+msgstr "方位："
 
 #: ../gui/wxpython/nviz/tools.py:252
 #, fuzzy
@@ -3800,12 +3783,10 @@ msgstr "A：太阳高度，单位：度"
 
 #: ../gui/wxpython/nviz/tools.py:256 ../gui/wxpython/nviz/tools.py:1019
 msgid "Tilt:"
-msgstr ""
+msgstr "倾斜："
 
 #: ../gui/wxpython/nviz/tools.py:263
-msgid ""
-"Adjusts the viewing height above the surface (angle of view automatically "
-"adjusts to maintain the same center of view)"
+msgid "Adjusts the viewing height above the surface (angle of view automatically adjusts to maintain the same center of view)"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:268
@@ -3814,20 +3795,18 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:282 ../gui/wxpython/nviz/preferences.py:149
 msgid "Z-exag:"
-msgstr ""
+msgstr "X-exag:"
 
 #: ../gui/wxpython/nviz/tools.py:295
 msgid "Look:"
-msgstr ""
+msgstr "看："
 
 #: ../gui/wxpython/nviz/tools.py:298
 msgid "here"
-msgstr ""
+msgstr "此处"
 
 #: ../gui/wxpython/nviz/tools.py:301
-msgid ""
-"Allows you to select a point on the surface that becomes the new center of "
-"view. Click on the button and then on the surface."
+msgid "Allows you to select a point on the surface that becomes the new center of view. Click on the button and then on the surface."
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:307
@@ -3841,52 +3820,48 @@ msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:314
 msgid "top"
-msgstr ""
+msgstr "顶部"
 
 #: ../gui/wxpython/nviz/tools.py:317
-msgid ""
-"Sets the viewer directly over the scene's center position. This top view "
-"orients approximately north south."
+msgid "Sets the viewer directly over the scene's center position. This top view orients approximately north south."
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:321
 msgid "reset"
-msgstr ""
+msgstr "重置"
 
 #: ../gui/wxpython/nviz/tools.py:322
 msgid "Reset to default view"
-msgstr ""
+msgstr "重置为默认视图"
 
 #: ../gui/wxpython/nviz/tools.py:339 ../gui/wxpython/nviz/preferences.py:171
 msgid "Image Appearance"
-msgstr ""
+msgstr "图像外观"
 
 #: ../gui/wxpython/nviz/tools.py:346 ../gui/wxpython/nviz/preferences.py:178
 #: ../gui/wxpython/gui_core/preferences.py:668
 msgid "Background color:"
-msgstr ""
+msgstr "背景色："
 
 #: ../gui/wxpython/nviz/tools.py:384
-msgid ""
-"Press 'Record' button and start changing the view. It is recommended to use "
-"fly-through mode (Map Display toolbar) to achieve smooth motion."
+msgid "Press 'Record' button and start changing the view. It is recommended to use fly-through mode (Map Display toolbar) to achieve smooth motion."
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:395
 msgid "Record"
-msgstr ""
+msgstr "录制"
 
 #: ../gui/wxpython/nviz/tools.py:397
 msgid "Play"
-msgstr ""
+msgstr "播放"
 
 #: ../gui/wxpython/nviz/tools.py:399
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: ../gui/wxpython/nviz/tools.py:401
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: ../gui/wxpython/nviz/tools.py:413
 #, fuzzy
@@ -3895,11 +3870,11 @@ msgstr "面：%d  岛的数量：%d\n"
 
 #: ../gui/wxpython/nviz/tools.py:417
 msgid "Frame rate (FPS):"
-msgstr ""
+msgstr "帧率(FPS)："
 
 #: ../gui/wxpython/nviz/tools.py:423
 msgid "Frames are recorded with given frequency (FPS). "
-msgstr ""
+msgstr "使用认定的频率(FPS)录制。"
 
 #: ../gui/wxpython/nviz/tools.py:466
 #, fuzzy
@@ -3917,9 +3892,8 @@ msgid "File prefix:"
 msgstr "要素类型"
 
 #: ../gui/wxpython/nviz/tools.py:482
-msgid ""
-"Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
-msgstr ""
+msgid "Generated files names will look like this: prefix_1.ppm, prefix_2.ppm, ..."
+msgstr "生成如下形式的文件：前缀_1.ppm, 前缀_2.ppm, ..."
 
 #: ../gui/wxpython/nviz/tools.py:483
 #, fuzzy
@@ -3939,7 +3913,7 @@ msgstr "指定点的数量"
 
 #: ../gui/wxpython/nviz/tools.py:552 ../gui/wxpython/nviz/preferences.py:462
 msgid "Vector"
-msgstr ""
+msgstr "矢量"
 
 #: ../gui/wxpython/nviz/tools.py:558
 #, fuzzy
@@ -3948,11 +3922,11 @@ msgstr "列名"
 
 #: ../gui/wxpython/nviz/tools.py:593 ../gui/wxpython/nviz/preferences.py:252
 msgid "Lighting"
-msgstr ""
+msgstr "照明"
 
 #: ../gui/wxpython/nviz/tools.py:598
 msgid "Fringe"
-msgstr ""
+msgstr "边缘"
 
 #: ../gui/wxpython/nviz/tools.py:605
 #, fuzzy
@@ -3967,46 +3941,46 @@ msgstr "拷贝表失败"
 #: ../gui/wxpython/nviz/tools.py:670 ../gui/wxpython/nviz/tools.py:1472
 #: ../gui/wxpython/nviz/preferences.py:367
 msgid "Draw"
-msgstr ""
+msgstr "绘制"
 
 #: ../gui/wxpython/nviz/tools.py:676 ../gui/wxpython/nviz/tools.py:1479
 #: ../gui/wxpython/nviz/preferences.py:373
 msgid "Mode:"
-msgstr ""
+msgstr "模式："
 
 #: ../gui/wxpython/nviz/tools.py:679 ../gui/wxpython/nviz/preferences.py:376
 msgid "coarse"
-msgstr ""
+msgstr "粗糙"
 
 #: ../gui/wxpython/nviz/tools.py:680 ../gui/wxpython/nviz/preferences.py:377
 msgid "fine"
-msgstr ""
+msgstr "精细"
 
 #: ../gui/wxpython/nviz/tools.py:681 ../gui/wxpython/nviz/preferences.py:378
 msgid "both"
-msgstr ""
+msgstr "兼备"
 
 #: ../gui/wxpython/nviz/tools.py:690 ../gui/wxpython/nviz/tools.py:952
 #: ../gui/wxpython/nviz/tools.py:1493
 msgid "Shading:"
-msgstr ""
+msgstr "暗影："
 
 #: ../gui/wxpython/nviz/tools.py:693 ../gui/wxpython/nviz/tools.py:1252
 #: ../gui/wxpython/nviz/tools.py:1496
 msgid "flat"
-msgstr ""
+msgstr "无特效直出"
 
 #: ../gui/wxpython/nviz/tools.py:694 ../gui/wxpython/nviz/tools.py:1497
 msgid "gouraud"
-msgstr ""
+msgstr "高洛德明暗绘制"
 
 #: ../gui/wxpython/nviz/tools.py:702
 msgid "Set to all"
-msgstr ""
+msgstr "选中所有"
 
 #: ../gui/wxpython/nviz/tools.py:703
 msgid "Use draw settings for all loaded surfaces"
-msgstr ""
+msgstr "绘制设置用于所有已装载的面"
 
 #: ../gui/wxpython/nviz/tools.py:711 ../gui/wxpython/nviz/preferences.py:405
 #, fuzzy
@@ -4018,7 +3992,7 @@ msgstr "详细模式"
 #: ../gui/wxpython/nviz/preferences.py:409
 #, fuzzy
 msgid "resolution:"
-msgstr "相关性"
+msgstr "非法的输出文件名"
 
 #: ../gui/wxpython/nviz/tools.py:727 ../gui/wxpython/nviz/preferences.py:421
 #, fuzzy
@@ -4027,11 +4001,11 @@ msgstr "要素类型"
 
 #: ../gui/wxpython/nviz/tools.py:730 ../gui/wxpython/nviz/preferences.py:424
 msgid "wire"
-msgstr ""
+msgstr "线"
 
 #: ../gui/wxpython/nviz/tools.py:731 ../gui/wxpython/nviz/preferences.py:425
 msgid "surface"
-msgstr ""
+msgstr "面"
 
 #: ../gui/wxpython/nviz/tools.py:743
 #, fuzzy
@@ -4041,40 +4015,40 @@ msgstr " nv color\n"
 #: ../gui/wxpython/nviz/tools.py:750 ../gui/wxpython/nviz/preferences.py:388
 #, fuzzy
 msgid "Fine mode:"
-msgstr "运行模型"
+msgstr "安静模式"
 
 #: ../gui/wxpython/nviz/tools.py:776
 msgid "Surface attributes"
-msgstr ""
+msgstr "表面特征"
 
 #: ../gui/wxpython/nviz/tools.py:785 ../gui/wxpython/nviz/tools.py:2277
 msgid "Transparency"
-msgstr ""
+msgstr "透明"
 
 #: ../gui/wxpython/nviz/tools.py:786 ../gui/wxpython/nviz/tools.py:2278
 msgid "Shininess"
-msgstr ""
+msgstr "闪亮"
 
 #: ../gui/wxpython/nviz/tools.py:792 ../gui/wxpython/nviz/tools.py:2289
 msgid "map"
-msgstr ""
+msgstr "地图"
 
 #: ../gui/wxpython/nviz/tools.py:795 ../gui/wxpython/nviz/tools.py:2294
 msgid "unset"
-msgstr ""
+msgstr "取消设置"
 
 #: ../gui/wxpython/nviz/tools.py:800 ../gui/wxpython/nviz/tools.py:2299
 msgid "constant"
-msgstr ""
+msgstr "恒定"
 
 #: ../gui/wxpython/nviz/tools.py:857
 msgid "Changes the x, y, and z position of the current surface"
-msgstr ""
+msgstr "改动当前面的x, y和z的位置"
 
 #: ../gui/wxpython/nviz/tools.py:867 ../gui/wxpython/nviz/tools.py:1054
 #: ../gui/wxpython/nviz/tools.py:1602 ../gui/wxpython/nviz/tools.py:2459
 msgid "Reset"
-msgstr ""
+msgstr "重置"
 
 #: ../gui/wxpython/nviz/tools.py:868 ../gui/wxpython/nviz/tools.py:1603
 #, fuzzy
@@ -4083,7 +4057,7 @@ msgstr "从默认区域设置"
 
 #: ../gui/wxpython/nviz/tools.py:942
 msgid "Active cutting plane:"
-msgstr ""
+msgstr "激活的切割平面："
 
 #: ../gui/wxpython/nviz/tools.py:954
 #, fuzzy
@@ -4102,15 +4076,15 @@ msgstr "选择要运行的模型"
 
 #: ../gui/wxpython/nviz/tools.py:957
 msgid "blend"
-msgstr ""
+msgstr "混合"
 
 #: ../gui/wxpython/nviz/tools.py:958
 msgid "shaded"
-msgstr ""
+msgstr "阴影效果"
 
 #: ../gui/wxpython/nviz/tools.py:970
 msgid "Horizontal X:"
-msgstr ""
+msgstr "水平X:"
 
 #: ../gui/wxpython/nviz/tools.py:972
 #, fuzzy
@@ -4119,7 +4093,7 @@ msgstr "一行一个坐标对。"
 
 #: ../gui/wxpython/nviz/tools.py:986
 msgid "Horizontal Y:"
-msgstr ""
+msgstr "水平Y："
 
 #: ../gui/wxpython/nviz/tools.py:988
 #, fuzzy
@@ -4128,20 +4102,18 @@ msgstr "一行一个坐标对。"
 
 #: ../gui/wxpython/nviz/tools.py:1003 ../gui/wxpython/gui_core/dialogs.py:716
 msgid "Rotation:"
-msgstr ""
+msgstr "旋转："
 
 #: ../gui/wxpython/nviz/tools.py:1005
 msgid "Rotates the current cutting plane about vertical axis"
-msgstr ""
+msgstr "围绕垂直轴旋转当前切面"
 
 #: ../gui/wxpython/nviz/tools.py:1021
 msgid "Rotates the current cutting plane about horizontal axis"
-msgstr ""
+msgstr "围绕水平轴旋转当前切面"
 
 #: ../gui/wxpython/nviz/tools.py:1037
-msgid ""
-"Sets the Z coordinate of the current cutting plane (only meaningful when "
-"tilt is not 0)"
+msgid "Sets the Z coordinate of the current cutting plane (only meaningful when tilt is not 0)"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:1089 ../gui/wxpython/menustrings.py:4
@@ -4152,7 +4124,7 @@ msgstr "新建"
 #: ../gui/wxpython/nviz/tools.py:1106
 #, fuzzy
 msgid "Fine resolution:"
-msgstr "相关性"
+msgstr "非法的输出文件名"
 
 #: ../gui/wxpython/nviz/tools.py:1118
 msgid "Value:"
@@ -4342,8 +4314,9 @@ msgid "Animation already axists"
 msgstr "dig_att文件不存在。"
 
 #: ../gui/wxpython/nviz/tools.py:2128
+#, fuzzy
 msgid "No file prefix given."
-msgstr ""
+msgstr "没有指定数据地图"
 
 #: ../gui/wxpython/nviz/tools.py:2132
 #, fuzzy, python-format
@@ -4361,8 +4334,9 @@ msgid "Isosurface attributes"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:2268
+#, fuzzy
 msgid "toggle normal direction"
-msgstr ""
+msgstr "无法获取栅格行\n"
 
 #: ../gui/wxpython/nviz/tools.py:2274
 #, fuzzy
@@ -4512,9 +4486,7 @@ msgid "Adjusts the distance and direction of the image viewpoint"
 msgstr ""
 
 #: ../gui/wxpython/nviz/tools.py:4902
-msgid ""
-"Adjusts the light direction. Click and drag the puck to change the light "
-"direction."
+msgid "Adjusts the light direction. Click and drag the puck to change the light direction."
 msgstr ""
 
 #: ../gui/wxpython/nviz/preferences.py:31
@@ -4594,16 +4566,12 @@ msgid "3D view settings saved to file <%s>."
 msgstr "已有的MAT-File(v4)的名称"
 
 #: ../gui/wxpython/nviz/mapwindow.py:207
-msgid ""
-"Opening 3D view was not successful. Please try to change the value of depth "
-"buffer in GUI Settings dialog > tab Map Display > Advanced and restart GUI."
+msgid "Opening 3D view was not successful. Please try to change the value of depth buffer in GUI Settings dialog > tab Map Display > Advanced and restart GUI."
 msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:543
 #, python-format
-msgid ""
-"Image is too large, your OpenGL implementation supports maximum texture size "
-"%d px."
+msgid "Image is too large, your OpenGL implementation supports maximum texture size %d px."
 msgstr ""
 
 #: ../gui/wxpython/nviz/mapwindow.py:1039
@@ -4865,7 +4833,7 @@ msgstr "重命名"
 
 #: ../gui/wxpython/lmgr/layertree.py:349
 msgid "Change opacity level"
-msgstr ""
+msgstr "改变透明度"
 
 #: ../gui/wxpython/lmgr/layertree.py:359
 #, fuzzy
@@ -5019,7 +4987,7 @@ msgstr ""
 #: ../gui/wxpython/lmgr/layertree.py:1469
 #, python-format
 msgid "Map <%s> not found."
-msgstr ""
+msgstr "找不到地图<%s>。"
 
 #: ../gui/wxpython/lmgr/frame.py:83
 #, fuzzy, python-format
@@ -5154,9 +5122,7 @@ msgstr "脚本'%s'不存在，操作已取消。"
 
 #: ../gui/wxpython/lmgr/frame.py:623
 #, python-format
-msgid ""
-"Script <%s> is not executable. Do you want to set the permissions that "
-"allows you to run this script (note that you must be the owner of the file)?"
+msgid "Script <%s> is not executable. Do you want to set the permissions that allows you to run this script (note that you must be the owner of the file)?"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:628
@@ -5171,9 +5137,7 @@ msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/lmgr/frame.py:648
 #, python-format
-msgid ""
-"Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this "
-"directory to GRASS_ADDON_PATH?"
+msgid "Directory '%s' is not defined in GRASS_ADDON_PATH. Do you want add this directory to GRASS_ADDON_PATH?"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:651
@@ -5228,9 +5192,7 @@ msgid "Platform"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:836
-msgid ""
-"Current workspace is not empty. Do you want to store current settings to "
-"workspace file?"
+msgid "Current workspace is not empty. Do you want to store current settings to workspace file?"
 msgstr "当前工作区非空，是否将当前设置保存到工作区文件？"
 
 #: ../gui/wxpython/lmgr/frame.py:839
@@ -5312,9 +5274,7 @@ msgid "Unsupported map layer type <%s>."
 msgstr "无法读取 [%s] 的文件头"
 
 #: ../gui/wxpython/lmgr/frame.py:1648
-msgid ""
-"Note that cell values can only be displayed for regions of less than 10,000 "
-"cells."
+msgid "Note that cell values can only be displayed for regions of less than 10,000 cells."
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:1730
@@ -5349,10 +5309,7 @@ msgid "No map layer selected. Operation canceled."
 msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/lmgr/frame.py:1843
-msgid ""
-"Display resolution is currently not constrained to computational settings. "
-"It's suggested to constrain map to region geometry. Do you want to constrain "
-"the resolution?"
+msgid "Display resolution is currently not constrained to computational settings. It's suggested to constrain map to region geometry. Do you want to constrain the resolution?"
 msgstr ""
 
 #: ../gui/wxpython/lmgr/frame.py:1852
@@ -5646,8 +5603,7 @@ msgid "Select only features inside of selection bounding box"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:220
-msgid ""
-"By default are selected all features overlapping selection bounding box "
+msgid "By default are selected all features overlapping selection bounding box "
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:223
@@ -5774,9 +5730,7 @@ msgid "perimeter"
 msgstr "参数："
 
 #: ../gui/wxpython/vdigit/preferences.py:484
-msgid ""
-"Note: These settings are stored in the workspace not in the vector digitizer "
-"preferences."
+msgid "Note: These settings are stored in the workspace not in the vector digitizer preferences."
 msgstr ""
 
 #: ../gui/wxpython/vdigit/preferences.py:512
@@ -5874,10 +5828,7 @@ msgstr ""
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:869
 #, python-format
-msgid ""
-"Topology for vector map <%s> is not available. Topology is required by "
-"digitizer. Do you want to rebuild topology (takes some time) and open the "
-"vector map for editing?"
+msgid "Topology for vector map <%s> is not available. Topology is required by digitizer. Do you want to rebuild topology (takes some time) and open the vector map for editing?"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/wxdisplay.py:873
@@ -5926,8 +5877,7 @@ msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/vdigit/wxdigit.py:97
 #, fuzzy, python-format
-msgid ""
-"Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
+msgid "Unable to open database <%(db)s> by driver <%(driver)s>. Operation canceled."
 msgstr "无法打开数据库%s，通过驱动%s"
 
 #: ../gui/wxpython/vdigit/wxdigit.py:105
@@ -5983,9 +5933,7 @@ msgid "Digitize new centroid"
 msgstr "数字化新形心"
 
 #: ../gui/wxpython/vdigit/toolbars.py:96
-msgid ""
-"Digitize new area (composition of boundaries without category and one "
-"centroid with category)"
+msgid "Digitize new area (composition of boundaries without category and one centroid with category)"
 msgstr ""
 
 #: ../gui/wxpython/vdigit/toolbars.py:99
@@ -6138,7 +6086,7 @@ msgstr "正在打开矢量地图<%s>，请稍候..."
 #: ../gui/wxpython/vdigit/toolbars.py:731
 #, python-format
 msgid "Do you want to save changes in vector map <%s>?"
-msgstr "保存对矢量地图<%s>所作的发动?"
+msgstr "保存对矢量地图<%s>所作的改动?"
 
 #: ../gui/wxpython/vdigit/toolbars.py:733
 msgid "Save changes?"
@@ -6229,9 +6177,7 @@ msgid "&Location wizard"
 msgstr "位置名称"
 
 #: ../gui/wxpython/gis_set.py:143
-msgid ""
-"Start location wizard. After location is created successfully, GRASS session "
-"is started."
+msgid "Start location wizard. After location is created successfully, GRASS session is started."
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:147
@@ -6280,9 +6226,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:412
 #, python-format
-msgid ""
-"Do you want to import data source <%(name)s> to created location? Default "
-"region will be set to match imported map."
+msgid "Do you want to import data source <%(name)s> to created location? Default region will be set to match imported map."
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:416
@@ -6383,8 +6327,7 @@ msgstr ""
 #: ../gui/wxpython/gis_set.py:605
 #, python-format
 msgid ""
-"Do you want to continue with deleting mapset <%(mapset)s> from location <"
-"%(location)s>?\n"
+"Do you want to continue with deleting mapset <%(mapset)s> from location <%(location)s>?\n"
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
@@ -6442,8 +6385,7 @@ msgid ""
 "\n"
 "Concurrent use not allowed.\n"
 "\n"
-"Do you want to try to remove .gislock (note that you need permission for "
-"this operation) and continue?"
+"Do you want to try to remove .gislock (note that you need permission for this operation) and continue?"
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:845 ../gui/wxpython/gis_set.py:857
@@ -6455,8 +6397,7 @@ msgstr "未找到任何记录。\n"
 msgid ""
 "ARE YOU REALLY SURE?\n"
 "\n"
-"If you really are running another GRASS session doing this could corrupt "
-"your data. Have another look in the processor manager just to be sure..."
+"If you really are running another GRASS session doing this could corrupt your data. Have another look in the processor manager just to be sure..."
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:868
@@ -6469,9 +6410,7 @@ msgstr "无法找到矢量地图 [%s]"
 
 #: ../gui/wxpython/gis_set.py:918
 #, python-format
-msgid ""
-"Name <%(name)s> is not a valid name for location or mapset. Please use only "
-"ASCII characters excluding %(chars)s and space."
+msgid "Name <%(name)s> is not a valid name for location or mapset. Please use only ASCII characters excluding %(chars)s and space."
 msgstr ""
 
 #: ../gui/wxpython/gis_set.py:921
@@ -6484,13 +6423,8 @@ msgid "Starting GRASS for the first time"
 msgstr "第一次运行GRASS"
 
 #: ../gui/wxpython/gis_set.py:986
-msgid ""
-"GRASS needs a directory in which to store its data. Create one now if you "
-"have not already done so. A popular choice is \"grassdata\", located in your "
-"home directory."
-msgstr ""
-"需为GRASS设置数据存贮目录。若尚未设置，请新建一个目录。较流行的做法是在用户"
-"home目录新建目录\"grassdata\"。"
+msgid "GRASS needs a directory in which to store its data. Create one now if you have not already done so. A popular choice is \"grassdata\", located in your home directory."
+msgstr "需为GRASS设置数据存贮目录。若尚未设置，请新建一个目录。较流行的做法是在用户home目录新建目录\"grassdata\"。"
 
 #: ../gui/wxpython/menustrings.py:2 ../gui/wxpython/menustrings.py:857
 msgid "&File"
@@ -6610,9 +6544,7 @@ msgid "ASCII x,y,z point import and gridding"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:33
-msgid ""
-"Create a raster map from an assemblage of many coordinates using univariate "
-"statistics."
+msgid "Create a raster map from an assemblage of many coordinates using univariate statistics."
 msgstr "使用单元统计从多点座标集创建栅格地图"
 
 #: ../gui/wxpython/menustrings.py:34
@@ -6645,9 +6577,7 @@ msgid "ESRI ASCII grid import"
 msgstr "导入ESRI ASCII网格"
 
 #: ../gui/wxpython/menustrings.py:41
-msgid ""
-"Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
-"map layer."
+msgid "Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer."
 msgstr "将ESRI ARC/INFO ASCII形式的栅格文件(GRID)转换为(二元)栅格图层。"
 
 #: ../gui/wxpython/menustrings.py:42
@@ -6687,9 +6617,7 @@ msgid "Terra ASTER HDF import"
 msgstr "导入Terra ASTER HDF"
 
 #: ../gui/wxpython/menustrings.py:51
-msgid ""
-"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-"using gdalwarp."
+msgid "Georeference, rectify and import Terra-ASTER imagery and relative DEM's using gdalwarp."
 msgstr "用gdalwarp对Terra-ASTER图像及相应数字高程数据进行地理参照、矫正并导入"
 
 #: ../gui/wxpython/menustrings.py:52
@@ -6703,7 +6631,7 @@ msgstr "从WMS服务器下载并倒入数据"
 #: ../gui/wxpython/menustrings.py:54
 #, fuzzy
 msgid "Unpack raster map"
-msgstr "栅格地图"
+msgstr "输入的栅格图"
 
 #: ../gui/wxpython/menustrings.py:55
 msgid "Unpacks a raster map packed with r.pack."
@@ -6750,10 +6678,8 @@ msgstr "导入旧版GRASS矢量数据"
 
 #: ../gui/wxpython/menustrings.py:66
 #, fuzzy
-msgid ""
-"Converts all older versions of GRASS vector maps in current mapset to "
-"current format."
-msgstr "将当前地图集所有GRASS 5.7版本前的矢量图转化为当前版本格式"
+msgid "Converts all older versions of GRASS vector maps in current mapset to current format."
+msgstr "导入旧版GRASS矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:67
 msgid "DXF import"
@@ -6784,9 +6710,7 @@ msgid "Garmin GPS import"
 msgstr "导入Garmin GPS数据"
 
 #: ../gui/wxpython/menustrings.py:74
-msgid ""
-"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
-"vector map."
+msgid "Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map."
 msgstr "从Garmin GPS接收器将路点、路线和航迹导入为矢量地图"
 
 #: ../gui/wxpython/menustrings.py:75
@@ -6794,9 +6718,7 @@ msgid "GPSBabel GPS import"
 msgstr "导入GPSBabel数据"
 
 #: ../gui/wxpython/menustrings.py:76
-msgid ""
-"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
-"file into a vector map."
+msgid "Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map."
 msgstr "从GPS接收器或GPS下载文件将路点、路线和航迹导入为矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:77
@@ -6812,9 +6734,7 @@ msgid "GEOnet import"
 msgstr "导入GEOnet数据"
 
 #: ../gui/wxpython/menustrings.py:80
-msgid ""
-"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
-"points map."
+msgid "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map."
 msgstr "将US-NGA GEOnet Names Server (GNS) country文件导入为GRASS点数据地图。"
 
 #: ../gui/wxpython/menustrings.py:81
@@ -6823,9 +6743,8 @@ msgid "Matlab array or Mapgen format import"
 msgstr "Matlab数组和MapGen文件导入"
 
 #: ../gui/wxpython/menustrings.py:82
-#, fuzzy
 msgid "Imports Mapgen or Matlab-ASCII vector maps into GRASS."
-msgstr "将Mapgen或Matlab矢量地图导入到GRASS。"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:83
 msgid "Import 3D raster data"
@@ -6837,8 +6756,7 @@ msgstr "导入三维ASCII数据"
 
 #: ../gui/wxpython/menustrings.py:85
 #, fuzzy
-msgid ""
-"Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
+msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map layer."
 msgstr "将 3D ASCII 栅格文本文件转化为 (二进制) 3D 栅格图层"
 
 #: ../gui/wxpython/menustrings.py:86
@@ -6847,9 +6765,7 @@ msgstr "导入Vis5D数据"
 
 #: ../gui/wxpython/menustrings.py:87
 #, fuzzy
-msgid ""
-"Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 "
-"time step)."
+msgid "Imports 3-dimensional Vis5D files (i.e. the V5D file with 1 variable and 1 time step)."
 msgstr "导入三维Vis5D文件（如含一个变量和一个时间戳的v5d文件）"
 
 #: ../gui/wxpython/menustrings.py:88
@@ -6861,8 +6777,9 @@ msgid "Multiple import formats using OGR"
 msgstr "使用OGR导入不同格式数据"
 
 #: ../gui/wxpython/menustrings.py:90
+#, fuzzy
 msgid "Imports attribute tables in various formats."
-msgstr "导入多种格式的属性表格"
+msgstr "%d 个类别从矢量中加载"
 
 #: ../gui/wxpython/menustrings.py:91
 msgid "Export raster map"
@@ -6890,8 +6807,7 @@ msgid "ASCII x,y,z points export"
 msgstr "导出ASCII x,y,z数据"
 
 #: ../gui/wxpython/menustrings.py:97
-msgid ""
-"Export a raster map to a text file as x,y,z values based on cell centers."
+msgid "Export a raster map to a text file as x,y,z values based on cell centers."
 msgstr "将栅格数据像元中心导出为x,y,z值形式的文本文件。"
 
 #: ../gui/wxpython/menustrings.py:98
@@ -6951,9 +6867,7 @@ msgstr "导出PPM格式数据"
 
 #: ../gui/wxpython/menustrings.py:111
 #, fuzzy
-msgid ""
-"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
-"the currently defined region."
+msgid "Converts a GRASS raster map to a PPM image file at the pixel resolution of the currently defined region."
 msgstr "以当前区域的像素分辨率，将GRASS栅格文件输出为PPM影像文件。"
 
 #: ../gui/wxpython/menustrings.py:112
@@ -6961,9 +6875,7 @@ msgid "PPM from RGB export"
 msgstr "从RGB导出为PPM格式"
 
 #: ../gui/wxpython/menustrings.py:113
-msgid ""
-"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
-"resolution of the CURRENTLY DEFINED REGION."
+msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
 msgstr "将3个GRASS栅格图层(R,G,B)以当前区域的像素分辨率转化为PPM影像文件。"
 
 #: ../gui/wxpython/menustrings.py:114 ../gui/wxpython/menustrings.py:133
@@ -6979,9 +6891,7 @@ msgid "TIFF export"
 msgstr "导出为TIFF格式"
 
 #: ../gui/wxpython/menustrings.py:117
-msgid ""
-"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
-"resolution of the currently defined region."
+msgid "Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel resolution of the currently defined region."
 msgstr "以当前区域的像素分辨率，将GRASS栅格文件输出为8/24bit的TIFF图像文件。"
 
 #: ../gui/wxpython/menustrings.py:118
@@ -7004,7 +6914,7 @@ msgstr "将栅格地图转化为 VTK-Ascii 格式"
 #: ../gui/wxpython/menustrings.py:122
 #, fuzzy
 msgid "Pack raster map"
-msgstr "基础栅格图"
+msgstr "栅格地图"
 
 #: ../gui/wxpython/menustrings.py:123
 msgid "Packs up a raster map and support files for copying."
@@ -7040,8 +6950,7 @@ msgid "Multiple GPS export formats using GPSBabel"
 msgstr "用GPSBabel导出多种GSP数据格式"
 
 #: ../gui/wxpython/menustrings.py:132
-msgid ""
-"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgid "Exports a vector map to a GPS receiver or file format supported by GpsBabel."
 msgstr "将矢量图导出到GPS接收器或GpsBabel支持的文件格式"
 
 #: ../gui/wxpython/menustrings.py:134
@@ -7097,8 +7006,9 @@ msgid "Common export formats using OGR"
 msgstr "常用导出格式"
 
 #: ../gui/wxpython/menustrings.py:148
+#, fuzzy
 msgid "Exports attribute tables into various formats."
-msgstr "属性表导出"
+msgstr "打开属性表"
 
 #: ../gui/wxpython/menustrings.py:149
 #, fuzzy
@@ -7123,13 +7033,8 @@ msgstr "复制"
 
 #: ../gui/wxpython/menustrings.py:156
 #, fuzzy
-msgid ""
-"Copies available data files in the user's current mapset search path and "
-"location to the appropriate element directories under the user's current "
-"mapset."
-msgstr ""
-"将用户当前地图集搜索路径和地点下可用数据文件拷贝到用户当前地图集下适当的组成"
-"目录。"
+msgid "Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset."
+msgstr "将用户当前地图集搜索路径和地点下可用数据文件拷贝到用户当前地图集下适当的组成目录。"
 
 #: ../gui/wxpython/menustrings.py:157
 msgid "List"
@@ -7146,9 +7051,7 @@ msgstr "显示正则过滤结果"
 
 #: ../gui/wxpython/menustrings.py:160
 #, fuzzy
-msgid ""
-"Lists available GRASS data base files of the user-specified data type "
-"optionally using the search pattern."
+msgid "Lists available GRASS data base files of the user-specified data type optionally using the search pattern."
 msgstr "在标准输出列举用户所选的数据类型下可用的GRASS基础数据文件"
 
 #: ../gui/wxpython/menustrings.py:162
@@ -7207,9 +7110,7 @@ msgid "Vector to volume"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:177 ../gui/wxpython/menustrings.py:582
-msgid ""
-"Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
-"raster map layer."
+msgid "Converts a binary GRASS vector map (only points) layer into a 3D GRASS raster map layer."
 msgstr "将二进制的 GRASS 矢量图层 (点) 转化为 3D GRASS 栅格图层。"
 
 #: ../gui/wxpython/menustrings.py:178 ../gui/wxpython/menustrings.py:583
@@ -7282,9 +7183,7 @@ msgid "Bearing/distance to coordinates"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:195
-msgid ""
-"A simple utility for converting bearing and distance measurements to "
-"coordinates and vice versa."
+msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:197
@@ -7408,7 +7307,7 @@ msgstr "无法创建表：%s"
 #: ../gui/wxpython/menustrings.py:228
 #, fuzzy
 msgid "Creates new mapset in the current location, changes current mapset."
-msgstr "改变当前地点和地图集"
+msgstr "在当前路径访问其他地图集"
 
 #: ../gui/wxpython/menustrings.py:229
 msgid "Version"
@@ -7437,9 +7336,7 @@ msgid "Manage projections"
 msgstr "投影管理"
 
 #: ../gui/wxpython/menustrings.py:235
-msgid ""
-"Prints and manipulates GRASS projection information files (in various co-"
-"ordinate system descriptions)."
+msgid "Prints and manipulates GRASS projection information files (in various co-ordinate system descriptions)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:236
@@ -7514,9 +7411,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:252
 #, fuzzy
-msgid ""
-"Interactive tool used to draw and save vector features on a graphics monitor "
-"using a pointing device (mouse) and save to a raster map."
+msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse) and save to a raster map."
 msgstr "交互式工具，使用定点设备(鼠标)在图形监视器上绘制矢量要素并存储下来。"
 
 #: ../gui/wxpython/menustrings.py:253
@@ -7594,13 +7489,8 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:270
 #, fuzzy
-msgid ""
-"Reinterpolates and optionally computes topographic analysis from input "
-"raster map to a new raster map (possibly with different resolution) using "
-"regularized spline with tension and smoothing."
-msgstr ""
-"使用拉伸和平滑的规则样条，对输入的栅格文件进行重新插值和地形分析，生成一个新"
-"的栅格文件(可能有不同的分辨率)。"
+msgid "Reinterpolates and optionally computes topographic analysis from input raster map to a new raster map (possibly with different resolution) using regularized spline with tension and smoothing."
+msgstr "使用拉伸和平滑的规则样条，对输入的栅格文件进行重新插值和地形分析，生成一个新的栅格文件(可能有不同的分辨率)。"
 
 #: ../gui/wxpython/menustrings.py:271 ../gui/wxpython/menustrings.py:544
 msgid "Support file maintenance"
@@ -7634,9 +7524,7 @@ msgid "Tiling"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:278
-msgid ""
-"Produces tilings of the source projection for use in the destination region "
-"and projection."
+msgid "Produces tilings of the source projection for use in the destination region and projection."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:279 ../gui/wxpython/menustrings.py:563
@@ -7692,8 +7580,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:291
 #, fuzzy
-msgid ""
-"Combines red, green and blue raster maps into a single composite raster map."
+msgid "Combines red, green and blue raster maps into a single composite raster map."
 msgstr "将红、绿、蓝图层合并为一个复合图层"
 
 #: ../gui/wxpython/menustrings.py:292 ../gui/wxpython/menustrings.py:713
@@ -7702,11 +7589,8 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:293
 #, fuzzy
-msgid ""
-"Generates red, green and blue raster map layers combining hue, intensity and "
-"saturation (HIS) values from user-specified input raster map layers."
-msgstr ""
-"对于用户指定的输入栅格图层，合并色调、亮度和饱和度值，生成红、绿、蓝栅格图层"
+msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
+msgstr "对于用户指定的输入栅格图层，合并色调、亮度和饱和度值，生成红、绿、蓝栅格图层"
 
 #: ../gui/wxpython/menustrings.py:294
 msgid "Query raster maps"
@@ -7734,9 +7618,7 @@ msgid "Buffer rasters"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:307
-msgid ""
-"Creates a raster map layer showing buffer zones surrounding cells that "
-"contain non-NULL category values."
+msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
 msgstr "创建一个栅格图层，显示非空值像元的缓冲区。"
 
 #: ../gui/wxpython/menustrings.py:308
@@ -7757,9 +7639,8 @@ msgid "Locates the closest points between objects in two raster maps."
 msgstr "确定两幅栅格图上目标间最近的点"
 
 #: ../gui/wxpython/menustrings.py:313
-#, fuzzy
 msgid "Creates a MASK for limiting raster operation."
-msgstr "在当前路径访问其他地图集"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:314
 #, fuzzy
@@ -7777,26 +7658,18 @@ msgstr "最近邻分析"
 
 #: ../gui/wxpython/menustrings.py:317
 msgid "Moving window"
-msgstr ""
+msgstr "移动窗口"
 
 #: ../gui/wxpython/menustrings.py:318
-msgid ""
-"Makes each cell category value a function of the category values assigned to "
-"the cells around it, and stores new cell values in an output raster map "
-"layer."
-msgstr ""
-"对一个像元周围的像元值进行函数计算，将得到的值赋予该像元，并将新的像元值存储"
-"在输出栅格图层中。"
+msgid "Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer."
+msgstr "对一个像元周围的像元值进行函数计算，将得到的值赋予该像元，并将新的像元值存储在输出栅格图层中。"
 
 #: ../gui/wxpython/menustrings.py:319
 msgid "Neighborhood points"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:320
-msgid ""
-"Makes each cell value a function of the attribute values assigned to the "
-"vector points or centroids around it, and stores new cell values in an "
-"output raster map layer."
+msgid "Makes each cell value a function of the attribute values assigned to the vector points or centroids around it, and stores new cell values in an output raster map layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:321
@@ -7808,9 +7681,7 @@ msgid "Cross product"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:323
-msgid ""
-"Creates a cross product of the category values from multiple raster map "
-"layers."
+msgid "Creates a cross product of the category values from multiple raster map layers."
 msgstr "创建多个栅格图层类别值的叉乘。"
 
 #: ../gui/wxpython/menustrings.py:324
@@ -7818,9 +7689,7 @@ msgid "Raster series"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:325
-msgid ""
-"Makes each output cell value a function of the values assigned to the "
-"corresponding cells in the input raster map layers."
+msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
 msgstr "对输入图层的像元进行函数计算，并将得到的结果赋予输出的像元。"
 
 #: ../gui/wxpython/menustrings.py:326
@@ -7828,12 +7697,8 @@ msgid "Patch raster maps"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:327
-msgid ""
-"Creates a composite raster map layer by using known category values from one "
-"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr ""
-"使用一个（或多个）图层已知的类别值来填充另一个图层的无数据区域，生成一幅合成"
-"栅格图层。"
+msgid "Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgstr "使用一个（或多个）图层已知的类别值来填充另一个图层的无数据区域，生成一幅合成栅格图层。"
 
 #: ../gui/wxpython/menustrings.py:328
 msgid "Statistical overlay"
@@ -7862,8 +7727,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:334
 #, fuzzy
-msgid ""
-"Calculates cast shadow areas from sun position and elevation raster map."
+msgid "Calculates cast shadow areas from sun position and elevation raster map."
 msgstr "无法关闭新的 g3d 地图"
 
 #: ../gui/wxpython/menustrings.py:335
@@ -7885,24 +7749,15 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:339
 #, fuzzy
-msgid ""
-"Creates a raster map showing the cumulative cost of moving between different "
-"geographic locations on an input raster map whose cell category values "
-"represent cost."
-msgstr ""
-"输出一个栅格图层来显示在输入栅格图上不同位置间移动时的累计成本，输入栅格图的"
-"像元类别值表示成本。"
+msgid "Creates a raster map showing the cumulative cost of moving between different geographic locations on an input raster map whose cell category values represent cost."
+msgstr "输出一个栅格图层来显示在输入栅格图上不同位置间移动时的累计成本，输入栅格图的像元类别值表示成本。"
 
 #: ../gui/wxpython/menustrings.py:340
 msgid "Cumulative movement costs"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:341
-msgid ""
-"Outputs a raster map layer showing the anisotropic cumulative cost of moving "
-"between different geographic locations on an input elevation raster map "
-"layer whose cell category values represent elevation combined with an input "
-"raster map layer whose cell values represent friction cost."
+msgid "Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:342
@@ -7929,12 +7784,8 @@ msgstr "坡度和方位"
 
 #: ../gui/wxpython/menustrings.py:347
 #, fuzzy
-msgid ""
-"Generates raster maps of slope, aspect, curvatures and partial derivatives "
-"from a elevation raster map."
-msgstr ""
-"根据栅格图层的实际高程值，生成坡度、坡向、曲率和偏导数。坡向从东边开始逆时针"
-"计算。"
+msgid "Generates raster maps of slope, aspect, curvatures and partial derivatives from a elevation raster map."
+msgstr "根据栅格图层的实际高程值，生成坡度、坡向、曲率和偏导数。坡向从东边开始逆时针计算。"
 
 #: ../gui/wxpython/menustrings.py:348
 msgid "Terrain parameters"
@@ -7990,9 +7841,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:360
 #, fuzzy
-msgid ""
-"Recategorizes data in a raster map by grouping cells that form physically "
-"discrete areas into unique categories."
+msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
 msgstr "将离散区域的像元值组织到一个独立类别中，以此来重分类栅格图层中的数据。"
 
 #: ../gui/wxpython/menustrings.py:361
@@ -8022,9 +7871,7 @@ msgid "Carve stream channels"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:367
-msgid ""
-"Takes vector stream data, transforms it to raster and subtracts depth from "
-"the output DEM."
+msgid "Takes vector stream data, transforms it to raster and subtracts depth from the output DEM."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:368
@@ -8041,9 +7888,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:371
 #, fuzzy
-msgid ""
-"Filters and generates a depressionless elevation map and a flow direction "
-"map from a given elevation raster map."
+msgid "Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map."
 msgstr "将一个高程图层过滤并生成一幅无洼地的高程图和一幅流向图"
 
 #: ../gui/wxpython/menustrings.py:372
@@ -8059,9 +7904,7 @@ msgid "Flow lines"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:375
-msgid ""
-"Construction of slope curves (flowlines), flowpath lengths, and flowline "
-"densities (upslope areas) from a raster digital elevation model (DEM)."
+msgid "Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:376
@@ -8095,9 +7938,7 @@ msgid "Groundwater modeling"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:383
-msgid ""
-"Numerical calculation program for transient, confined and unconfined "
-"groundwater flow in two dimensions."
+msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:384
@@ -8113,9 +7954,7 @@ msgid "SIMWE Sediment flux modeling"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:387
-msgid ""
-"Sediment transport and erosion/deposition simulation using path sampling "
-"method (SIMWE)."
+msgid "Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:388
@@ -8144,9 +7983,7 @@ msgid "Set up (requires XTerm)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:394
-msgid ""
-"Interactive tool used to setup the sampling and analysis framework that will "
-"be used by the other r.le programs."
+msgid "Interactive tool used to setup the sampling and analysis framework that will be used by the other r.le programs."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:395
@@ -8154,9 +7991,7 @@ msgid "Analyze landscape"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:396
-msgid ""
-"Contains a set of measures for attributes, diversity, texture, "
-"juxtaposition, and edge."
+msgid "Contains a set of measures for attributes, diversity, texture, juxtaposition, and edge."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:397
@@ -8164,9 +7999,7 @@ msgid "Analyze patches"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:398
-msgid ""
-"Calculates attribute, patch size, core (interior) size, shape, fractal "
-"dimension, and perimeter measures for sets of patches in a landscape."
+msgid "Calculates attribute, patch size, core (interior) size, shape, fractal dimension, and perimeter measures for sets of patches in a landscape."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:399
@@ -8174,10 +8007,7 @@ msgid "Summary and display (requires XTerm)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:400
-msgid ""
-"Displays the boundary of each r.le patch and shows how the boundary is "
-"traced, displays the attribute, size, perimeter and shape indices for each "
-"patch and saves the data in an output file."
+msgid "Displays the boundary of each r.le patch and shows how the boundary is traced, displays the attribute, size, perimeter and shape indices for each patch and saves the data in an output file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:401
@@ -8198,8 +8028,7 @@ msgid "Edge density"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:405
-msgid ""
-"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:406
@@ -8216,9 +8045,7 @@ msgid "Patch area mean"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:409
-msgid ""
-"Calculates mean patch size index on a raster map, using a 4 neighbour "
-"algorithm"
+msgid "Calculates mean patch size index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:410
@@ -8253,8 +8080,7 @@ msgid "Patch density"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:417
-msgid ""
-"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:418
@@ -8263,8 +8089,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:419
 #, fuzzy
-msgid ""
-"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
+msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
 msgstr "无法关闭新的 g3d 地图"
 
 #: ../gui/wxpython/menustrings.py:420
@@ -8316,23 +8141,15 @@ msgid "Rate of spread"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:432
-msgid ""
-"Generates three, or four raster map layers showing 1) the base "
-"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
-"direction of the maximum ROS, and optionally 4) the maximum potential "
-"spotting distance."
-msgstr ""
-"生成3至4幅栅格图来显示 1) 基础(垂直的)蔓延速率(ROS)， 2)最大(推进的)ROS， 3) "
-"最大ROS的方向，以及可选的 4)最大可能的测定点距离。"
+msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
+msgstr "生成3至4幅栅格图来显示 1) 基础(垂直的)蔓延速率(ROS)， 2)最大(推进的)ROS， 3) 最大ROS的方向，以及可选的 4)最大可能的测定点距离。"
 
 #: ../gui/wxpython/menustrings.py:433
 msgid "Least-cost spread paths"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:434
-msgid ""
-"Recursively traces the least cost path backwards to cells from which the "
-"cumulative cost was determined."
+msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
 msgstr "反向追踪最低成本的路径，得到一组像元，这些像元确定了累计成本。"
 
 #: ../gui/wxpython/menustrings.py:435
@@ -8341,14 +8158,8 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:436
 #, fuzzy
-msgid ""
-"Simulates elliptically anisotropic spread on a graphics window and generates "
-"a raster map of the cumulative time of spread, given raster maps containing "
-"the rates of spread (ROS), the ROS directions and the spread origins."
-msgstr ""
-"在图形窗口上模拟椭圆形的各向异性蔓延，生成累计蔓延时间的栅格图，输入栅格图包"
-"含蔓延速率(Rates of spread - ROS)、ROS方向和火源。它也可以生成反向链接UTM坐标"
-"的栅格图，以此来追踪蔓延路径。"
+msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."
+msgstr "在图形窗口上模拟椭圆形的各向异性蔓延，生成累计蔓延时间的栅格图，输入栅格图包含蔓延速率(Rates of spread - ROS)、ROS方向和火源。它也可以生成反向链接UTM坐标的栅格图，以此来追踪蔓延路径。"
 
 #: ../gui/wxpython/menustrings.py:437
 msgid "Change category values and labels"
@@ -8368,9 +8179,7 @@ msgid "Reclassify by size"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:441
-msgid ""
-"Reclasses a raster map greater or less than user specified area size (in "
-"hectares)."
+msgid "Reclasses a raster map greater or less than user specified area size (in hectares)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:442 ../gui/wxpython/menustrings.py:648
@@ -8379,9 +8188,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:443
 #, fuzzy
-msgid ""
-"Creates a new map layer whose category values are based upon a "
-"reclassification of the categories in an existing raster map layer."
+msgid "Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer."
 msgstr "创建一个新的图层，它的类别值基于用户对一个已有栅格图层类别的重分类。"
 
 #: ../gui/wxpython/menustrings.py:444
@@ -8407,9 +8214,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:449
 #, fuzzy
-msgid ""
-"Rescales histogram equalized the range of category values in a raster map "
-"layer."
+msgid "Rescales histogram equalized the range of category values in a raster map layer."
 msgstr "重新调整栅格图层的直方图，均等地划分类别值。"
 
 #: ../gui/wxpython/menustrings.py:450
@@ -8430,9 +8235,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:454
 #, fuzzy
-msgid ""
-"Creates a raster map layer and vector point map containing randomly located "
-"points."
+msgid "Creates a raster map layer and vector point map containing randomly located points."
 msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:455
@@ -8452,9 +8255,7 @@ msgid "Gaussian kernel density surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:459
-msgid ""
-"Generates a raster density map from vector point data using a moving kernel "
-"or optionally generates a vector density map on a vector network."
+msgid "Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:460
@@ -8462,19 +8263,12 @@ msgid "Gaussian deviates surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:461
-msgid ""
-"GRASS module to produce a raster map layer of gaussian deviates whose mean "
-"and standard deviation can be expressed by the user. It uses a gaussian "
-"random number generator."
-msgstr ""
-"产生具有高斯偏差的栅格图层，它的平均和标准偏差可以由用户输入。该模块使用高斯"
-"随机数生成器。"
+msgid "GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator."
+msgstr "产生具有高斯偏差的栅格图层，它的平均和标准偏差可以由用户输入。该模块使用高斯随机数生成器。"
 
 #: ../gui/wxpython/menustrings.py:463
 #, fuzzy
-msgid ""
-"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
-"point."
+msgid "Creates raster plane map given dip (inclination), aspect (azimuth) and one point."
 msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:464
@@ -8483,9 +8277,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:465
 #, fuzzy
-msgid ""
-"Produces a raster map of uniform random deviates whose range can be "
-"expressed by the user."
+msgid "Produces a raster map of uniform random deviates whose range can be expressed by the user."
 msgstr "产生一个有一致随机偏离的栅格图层，随机偏离的范围能够由用户输入。"
 
 #: ../gui/wxpython/menustrings.py:466
@@ -8538,9 +8330,7 @@ msgid "IDW from vector points"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:478
-msgid ""
-"Surface interpolation from vector point data by Inverse Distance Squared "
-"Weighting."
+msgid "Surface interpolation from vector point data by Inverse Distance Squared Weighting."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:479
@@ -8556,10 +8346,7 @@ msgid "Regularized spline tension"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:482
-msgid ""
-"Spatial approximation and topographic analysis from given point or isoline "
-"data in vector format to floating point raster format using regularized "
-"spline with tension."
+msgid "Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:483
@@ -8599,9 +8386,7 @@ msgstr "管理边界定义"
 
 #: ../gui/wxpython/menustrings.py:491
 #, fuzzy
-msgid ""
-"Manages category values and labels associated with user-specified raster map "
-"layers."
+msgid "Manages category values and labels associated with user-specified raster map layers."
 msgstr "打印用户指定的栅格图层的类别值和标签"
 
 #: ../gui/wxpython/menustrings.py:492
@@ -8649,9 +8434,7 @@ msgid "Statistics for clumped cells"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:503
-msgid ""
-"Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
-"vector points map containing the calculated centroids of these clumps."
+msgid "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS vector points map containing the calculated centroids of these clumps."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:504
@@ -8663,8 +8446,7 @@ msgid "Surface area estimation for rasters."
 msgstr "栅格的表面区域评价"
 
 #: ../gui/wxpython/menustrings.py:507
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
 msgstr "计算栅格地图中非空像元的一元统计值"
 
 #: ../gui/wxpython/menustrings.py:508
@@ -8680,8 +8462,7 @@ msgid "Sample transects (bearing/distance)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:511
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
 msgstr "依据用户定义的横断线，输出栅格图层上的值"
 
 #: ../gui/wxpython/menustrings.py:512
@@ -8689,9 +8470,7 @@ msgid "Covariance/correlation"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:513
-msgid ""
-"Outputs a covariance/correlation matrix for user-specified raster map "
-"layer(s)."
+msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
 msgstr "输出用户指定栅格图层的协方差/相关矩阵。"
 
 #: ../gui/wxpython/menustrings.py:514
@@ -8708,9 +8487,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:517
 #, fuzzy
-msgid ""
-"Tabulates the mutual occurrence (coincidence) of categories for two raster "
-"map layers."
+msgid "Tabulates the mutual occurrence (coincidence) of categories for two raster map layers."
 msgstr "重新调整栅格图层的类别值范围。"
 
 #: ../gui/wxpython/menustrings.py:518
@@ -8745,9 +8522,7 @@ msgid "Edit vector map (non-interactively)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:525
-msgid ""
-"Edits a vector map, allows adding, deleting and modifying selected vector "
-"features."
+msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:526
@@ -8773,11 +8548,8 @@ msgid "Dissolve boundaries"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:531
-#, fuzzy
-msgid ""
-"Dissolves boundaries between adjacent areas sharing a common category number "
-"or attribute."
-msgstr "未找到属性表 -> 使用唯一的类别值作为属性"
+msgid "Dissolves boundaries between adjacent areas sharing a common category number or attribute."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:532
 msgid "Create 3D vector over raster"
@@ -8786,8 +8558,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:533
 #, fuzzy
 msgid "Converts vector map to 3D by sampling of elevation raster map."
-msgstr ""
-"通过对高程栅格的采样，将 2D 矢量转换为 3D 矢量。默认采样方法为最邻近采样"
+msgstr "通过对高程栅格的采样，将 2D 矢量转换为 3D 矢量。默认采样方法为最邻近采样"
 
 #: ../gui/wxpython/menustrings.py:534
 msgid "Extrude 3D vector map"
@@ -8820,9 +8591,7 @@ msgid "Reposition vector map"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:541
-msgid ""
-"Performs an affine transformation (shift, scale and rotate, or GPCs) on "
-"vector map."
+msgid "Performs an affine transformation (shift, scale and rotate, or GPCs) on vector map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:542
@@ -8861,7 +8630,7 @@ msgstr "矢量文件读取错误"
 #: ../gui/wxpython/menustrings.py:550
 #, fuzzy
 msgid "Rebuilds topology on all vector maps in the current mapset."
-msgstr "未找到矢量文件 %s"
+msgstr "矢量文件读取错误"
 
 #: ../gui/wxpython/menustrings.py:551
 msgid "Build polylines"
@@ -8911,13 +8680,11 @@ msgid "Add centroids"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:562
-#, fuzzy
 msgid "Adds missing centroids to closed boundaries."
-msgstr "无法更新边界"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:565
-msgid ""
-"Set color rules for features in a vector using a numeric attribute column."
+msgid "Set color rules for features in a vector using a numeric attribute column."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:567
@@ -8931,8 +8698,9 @@ msgid "Query vector map"
 msgstr "写入 %s ... "
 
 #: ../gui/wxpython/menustrings.py:569
+#, fuzzy
 msgid "Query with coordinate(s)"
-msgstr ""
+msgstr "通过坐标系查询"
 
 #: ../gui/wxpython/menustrings.py:570
 #, fuzzy
@@ -8959,9 +8727,7 @@ msgid "Attribute query"
 msgstr "无法创建属性表"
 
 #: ../gui/wxpython/menustrings.py:575
-msgid ""
-"Selects vector objects from an existing vector map and creates a new map "
-"containing only the selected objects."
+msgid "Selects vector objects from an existing vector map and creates a new map containing only the selected objects."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:576
@@ -8969,8 +8735,7 @@ msgid "Spatial query"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:577
-msgid ""
-"Selects features from vector map (A) by features from other vector map (B)."
+msgid "Selects features from vector map (A) by features from other vector map (B)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:587
@@ -8979,8 +8744,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:588
 #, fuzzy
-msgid ""
-"Creates a buffer around features of given type (areas must contain centroid)."
+msgid "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr "创建指定类型的要素的缓冲区 (面必须有质心)。"
 
 #: ../gui/wxpython/menustrings.py:589
@@ -9000,9 +8764,7 @@ msgid "Detect interiors"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:593
-msgid ""
-"Building contour determination and Region Growing algorithm for determining "
-"the building inside"
+msgid "Building contour determination and Region Growing algorithm for determining the building inside"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:594
@@ -9010,9 +8772,7 @@ msgid "Correct and reclassify objects"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:595
-msgid ""
-"Correction of the v.lidar.growing output. It is the last of the three "
-"algorithms for LIDAR filtering."
+msgid "Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:596
@@ -9043,9 +8803,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:602
 #, fuzzy
-msgid ""
-"Creates points/segments from input lines, linear reference system and "
-"positions read from stdin or a file."
+msgid "Creates points/segments from input lines, linear reference system and positions read from stdin or a file."
 msgstr "沿着输入的线创建点。"
 
 #: ../gui/wxpython/menustrings.py:603
@@ -9053,9 +8811,7 @@ msgid "Find line id and offset"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:604
-msgid ""
-"Finds line id and real km+offset for given points in vector map using linear "
-"reference system."
+msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:605
@@ -9063,9 +8819,7 @@ msgid "Nearest features"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:606
-msgid ""
-"Finds the nearest element in vector map 'to' for elements in vector map "
-"'from'."
+msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:607
@@ -9110,9 +8864,7 @@ msgid "Shortest path for sets of features"
 msgstr "平滑转角"
 
 #: ../gui/wxpython/menustrings.py:617
-msgid ""
-"Computes shortest distance via the network between the given sets of "
-"features."
+msgid "Computes shortest distance via the network between the given sets of features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:618
@@ -9179,9 +8931,7 @@ msgid "Centrality"
 msgstr "对比"
 
 #: ../gui/wxpython/menustrings.py:633
-msgid ""
-"Computes degree, centrality, betweeness, closeness and eigenvector "
-"centrality measures in the network."
+msgid "Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:634
@@ -9240,9 +8990,7 @@ msgid "Attach, delete or report vector categories to map geometry."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:649
-msgid ""
-"Changes vector category values for an existing vector map according to "
-"results of SQL queries or a value in attribute table column."
+msgid "Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:650 ../gui/wxpython/dbmgr/dialogs.py:112
@@ -9255,9 +9003,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:652
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from a raster map based on vector polygons "
-"and uploads statistics to new attribute columns."
+msgid "Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns."
 msgstr "计算栅格地图中非空像元的一元统计值"
 
 #: ../gui/wxpython/menustrings.py:653
@@ -9321,9 +9067,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:667
 #, fuzzy
-msgid ""
-"Creates a Delaunay triangulation from an input vector map containing points "
-"or centroids."
+msgid "Creates a Delaunay triangulation from an input vector map containing points or centroids."
 msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:668
@@ -9332,9 +9076,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:669
 #, fuzzy
-msgid ""
-"Creates a Voronoi diagram from an input vector map containing points or "
-"centroids."
+msgid "Creates a Voronoi diagram from an input vector map containing points or centroids."
 msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
 
 #: ../gui/wxpython/menustrings.py:670
@@ -9356,8 +9098,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:674
 #, fuzzy
-msgid ""
-"Creates new vector (points) map from database table containing coordinates."
+msgid "Creates new vector (points) map from database table containing coordinates."
 msgstr "从包含坐标的数据库表创建新的矢量 (点)"
 
 #: ../gui/wxpython/menustrings.py:675
@@ -9439,9 +9180,7 @@ msgid "Univariate attribute statistics for points"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:693
-msgid ""
-"Calculates univariate statistics for attribute. Variance and standard "
-"deviation is calculated only for points if specified."
+msgid "Calculates univariate statistics for attribute. Variance and standard deviation is calculated only for points if specified."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:694
@@ -9450,9 +9189,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:695
 #, fuzzy
-msgid ""
-"Calculates univariate statistics on selected table column for a GRASS vector "
-"map."
+msgid "Calculates univariate statistics on selected table column for a GRASS vector map."
 msgstr "计算栅格地图中非空像元的一元统计值"
 
 #: ../gui/wxpython/menustrings.py:696
@@ -9522,15 +9259,11 @@ msgid "HIS to RGB"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:712
-msgid ""
-"Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
-"RGB (Red-Green-Blue) color space."
+msgid "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to RGB (Red-Green-Blue) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:714
-msgid ""
-"Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
-"Intensity-Saturation) color space."
+msgid "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-Intensity-Saturation) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:715
@@ -9538,9 +9271,7 @@ msgid "Rectify image or raster"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:716
-msgid ""
-"Rectifies an image by computing a coordinate transformation for each pixel "
-"in the image based on the control points."
+msgid "Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:718
@@ -9552,8 +9283,7 @@ msgid "Spectral response"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:720
-msgid ""
-"Displays spectral response at user specified locations in group or images."
+msgid "Displays spectral response at user specified locations in group or images."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:721
@@ -9561,8 +9291,7 @@ msgid "Brovey sharpening"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:722
-msgid ""
-"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgid "Brovey transform to merge multispectral and high-res panchromatic channels"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:723
@@ -9574,9 +9303,7 @@ msgid "Clustering input for unsupervised classification"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:725
-msgid ""
-"Generates spectral signatures for land cover types in an image using a "
-"clustering algorithm."
+msgid "Generates spectral signatures for land cover types in an image using a clustering algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:726
@@ -9601,9 +9328,7 @@ msgid "Interactive input for supervised classification (requires Xterm)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:731
-msgid ""
-"Generates spectral signatures for an image by allowing the user to outline "
-"regions of interest."
+msgid "Generates spectral signatures for an image by allowing the user to outline regions of interest."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:732
@@ -9620,9 +9345,7 @@ msgid "Sequential maximum a posteriori classification (SMAP)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:735
-msgid ""
-"Performs contextual image classification using sequential maximum a "
-"posteriori (SMAP) estimation."
+msgid "Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:736
@@ -9692,9 +9415,7 @@ msgid "Landsat DN to radiance/reflectance"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:752
-msgid ""
-"Calculates top-of-atmosphere radiance or reflectance and temperature for "
-"Landsat MSS/TM/ETM+."
+msgid "Calculates top-of-atmosphere radiance or reflectance and temperature for Landsat MSS/TM/ETM+."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:753
@@ -9756,9 +9477,7 @@ msgid "Kappa analysis"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:768
-msgid ""
-"Calculate error matrix and kappa parameter for accuracy assessment of "
-"classification result."
+msgid "Calculate error matrix and kappa parameter for accuracy assessment of classification result."
 msgstr "为分类结果的精确评估计算错误矩阵和K曲线参数。"
 
 #: ../gui/wxpython/menustrings.py:769
@@ -9818,15 +9537,11 @@ msgid "Cross section"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:785
-msgid ""
-"Creates cross section 2D raster map from 3D raster map based on 2D elevation "
-"map."
+msgid "Creates cross section 2D raster map from 3D raster map based on 2D elevation map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:787
-msgid ""
-"Calculates numerically transient, confined groundwater flow in three "
-"dimensions."
+msgid "Calculates numerically transient, confined groundwater flow in three dimensions."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:788
@@ -9834,9 +9549,7 @@ msgid "Interpolate volume from points"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:789
-msgid ""
-"Interpolates point data to a 3D raster map using regularized spline with "
-"tension (RST) algorithm."
+msgid "Interpolates point data to a 3D raster map using regularized spline with tension (RST) algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:790
@@ -9866,9 +9579,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:796
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from the non-null 3d cells of a raster3d "
-"map."
+msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
 msgstr "计算栅格地图中非空像元的一元统计值"
 
 #: ../gui/wxpython/menustrings.py:797
@@ -9941,7 +9652,7 @@ msgstr "栅格图的名称"
 #: ../gui/wxpython/menustrings.py:813
 #, fuzzy
 msgid "Drops an attribute table."
-msgstr "无法创建属性表"
+msgstr "打开属性表"
 
 #: ../gui/wxpython/menustrings.py:814
 msgid "Copy table"
@@ -10000,11 +9711,8 @@ msgid "New table"
 msgstr "新表"
 
 #: ../gui/wxpython/menustrings.py:829
-#, fuzzy
-msgid ""
-"Creates and connects a new attribute table to a given layer of an existing "
-"vector map."
-msgstr "已有输入栅格文件大的名称"
+msgid "Creates and connects a new attribute table to a given layer of an existing vector map."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:830
 msgid "Remove table"
@@ -10030,27 +9738,20 @@ msgid "Add columns"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:835
-#, fuzzy
-msgid ""
-"Adds one or more columns to the attribute table connected to a given vector "
-"map."
-msgstr "已有输入栅格文件大的名称"
+msgid "Adds one or more columns to the attribute table connected to a given vector map."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:837
-#, fuzzy
-msgid ""
-"Drops a column from the attribute table connected to a given vector map."
-msgstr "已有输入栅格文件大的名称"
+msgid "Drops a column from the attribute table connected to a given vector map."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:838 ../gui/wxpython/dbmgr/manager.py:931
 msgid "Rename column"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:839
-#, fuzzy
-msgid ""
-"Renames a column in the attribute table connected to a given vector map."
-msgstr "已有输入栅格文件大的名称"
+msgid "Renames a column in the attribute table connected to a given vector map."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:840
 msgid "Change values"
@@ -10058,8 +9759,7 @@ msgstr "更改值"
 
 #: ../gui/wxpython/menustrings.py:841
 #, fuzzy
-msgid ""
-"Allows to update a column in the attribute table connected to a vector map."
+msgid "Allows to update a column in the attribute table connected to a vector map."
 msgstr "已有输入栅格文件大的名称"
 
 #: ../gui/wxpython/menustrings.py:842
@@ -10248,7 +9948,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:899
 msgid "Help"
-msgstr ""
+msgstr "帮助"
 
 #: ../gui/wxpython/menustrings.py:900
 msgid "Display the HTML man pages of Graphical modeler"
@@ -10268,8 +9968,7 @@ msgstr "显示活动xmonitor信息"
 msgid ""
 "No attribute table found.\n"
 "\n"
-"Do you want to create a new attribute table and defined a link to vector map "
-"<%s>?"
+"Do you want to create a new attribute table and defined a link to vector map <%s>?"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/dialogs.py:74
@@ -10411,9 +10110,7 @@ msgstr "读取地图"
 
 #: ../gui/wxpython/dbmgr/manager.py:152
 #, python-format
-msgid ""
-"Attribute table <%s> not found. For creating the table switch to 'Manage "
-"layers' tab."
+msgid "Attribute table <%s> not found. For creating the table switch to 'Manage layers' tab."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:163
@@ -10426,9 +10123,9 @@ msgid "Can display only 256 columns."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:247
-#, python-format
+#, fuzzy, python-format
 msgid "Inconsistent number of columns in the table <%(table)s>."
-msgstr ""
+msgstr "列数"
 
 #: ../gui/wxpython/dbmgr/manager.py:257
 msgid "Viewing limit: 100000 records."
@@ -10452,8 +10149,7 @@ msgstr ""
 #: ../gui/wxpython/dbmgr/manager.py:313
 #, python-format
 msgid ""
-"Error loading attribute data. Record number: %(rec)d. Unable to convert "
-"value '%(val)s' in key column (%(key)s) to integer.\n"
+"Error loading attribute data. Record number: %(rec)d. Unable to convert value '%(val)s' in key column (%(key)s) to integer.\n"
 "\n"
 "Details: %(detail)s"
 msgstr ""
@@ -10515,9 +10211,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:602
 #, python-format
-msgid ""
-"Database connection for vector map <%s> is not defined in DB file. You can "
-"define new connection in 'Manage layers' tab."
+msgid "Database connection for vector map <%s> is not defined in DB file. You can define new connection in 'Manage layers' tab."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:628
@@ -10569,7 +10263,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:742
 msgid "Advanced"
-msgstr ""
+msgstr "高级"
 
 #: ../gui/wxpython/dbmgr/manager.py:869
 #, python-format
@@ -10646,16 +10340,12 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1188
 #, python-format
-msgid ""
-"Selected data records (%d) will be permanently deleted from table. Do you "
-"want to delete them?"
+msgid "Selected data records (%d) will be permanently deleted from table. Do you want to delete them?"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1234
 #, python-format
-msgid ""
-"All data records (%d) will be permanently deleted from table. Do you want to "
-"delete them?"
+msgid "All data records (%d) will be permanently deleted from table. Do you want to delete them?"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1392
@@ -10697,16 +10387,12 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1632
 #, python-format
-msgid ""
-"Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
-"exists in the table <%(table)s>."
+msgid "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already exists in the table <%(table)s>."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1648
 #, python-format
-msgid ""
-"Unable to rename column. Column <%(column)s> doesn't exist in the table <"
-"%(table)s>."
+msgid "Unable to rename column. Column <%(column)s> doesn't exist in the table <%(table)s>."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1675
@@ -10719,9 +10405,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1693
 #, python-format
-msgid ""
-"Selected column '%s' will PERMANENTLY removed from table. Do you want to "
-"drop the column?"
+msgid "Selected column '%s' will PERMANENTLY removed from table. Do you want to drop the column?"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:1696 ../gui/wxpython/dbmgr/manager.py:1733
@@ -10801,9 +10485,7 @@ msgid "Key"
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2397
-msgid ""
-"Unknown default DB connection. Please define DB connection using db.connect "
-"module."
+msgid "Unknown default DB connection. Please define DB connection using db.connect module."
 msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2416
@@ -10887,9 +10569,7 @@ msgstr ""
 
 #: ../gui/wxpython/dbmgr/manager.py:2938
 #, python-format
-msgid ""
-"Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
-"exists."
+msgid "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already exists."
 msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:71
@@ -10913,7 +10593,7 @@ msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:369
 msgid "Select raster map:"
-msgstr ""
+msgstr "选择栅格地图："
 
 #: ../gui/wxpython/modules/colorrules.py:371
 msgid "Select vector map:"
@@ -11053,7 +10733,7 @@ msgstr "高程的比例因子"
 #: ../gui/wxpython/modules/colorrules.py:959
 #, fuzzy
 msgid "Load size from column:"
-msgstr "地图东向和北向格网坐标的起点"
+msgstr "列数"
 
 #: ../gui/wxpython/modules/colorrules.py:959
 #, fuzzy
@@ -11088,28 +10768,22 @@ msgstr "色彩表类型"
 
 #: ../gui/wxpython/modules/colorrules.py:1096
 #, fuzzy, python-format
-msgid ""
-"Database connection for vector map <%s> is not defined in DB file.  Do you "
-"want to create and connect new attribute table?"
+msgid "Database connection for vector map <%s> is not defined in DB file.  Do you want to create and connect new attribute table?"
 msgstr "数据库连接未定义"
 
 #: ../gui/wxpython/modules/colorrules.py:1099
 #, fuzzy
 msgid "No database connection defined"
-msgstr "数据库位置"
+msgstr "数据库连接未定义"
 
 #: ../gui/wxpython/modules/colorrules.py:1171
 #, fuzzy, python-format
-msgid ""
-"Selected map <%(map)s> is not in current mapset <%(mapset)s>. Color rules "
-"cannot be edited."
+msgid "Selected map <%(map)s> is not in current mapset <%(mapset)s>. Color rules cannot be edited."
 msgstr "未发现矢量地图<%s>"
 
 #: ../gui/wxpython/modules/colorrules.py:1176
 #, fuzzy, python-format
-msgid ""
-"Selected map <%(map)s> is not in current mapset <%(mapset)s>. Attribute "
-"table cannot be edited."
+msgid "Selected map <%(map)s> is not in current mapset <%(mapset)s>. Attribute table cannot be edited."
 msgstr "未发现矢量地图<%s>"
 
 #: ../gui/wxpython/modules/colorrules.py:1318
@@ -11124,9 +10798,7 @@ msgstr "请稍候，属性数据加载中..."
 
 #: ../gui/wxpython/modules/colorrules.py:1411
 #, python-format
-msgid ""
-"Number of loaded records reached %d, displaying all the records will be time-"
-"consuming and may lead to computer freezing, do you still want to continue?"
+msgid "Number of loaded records reached %d, displaying all the records will be time-consuming and may lead to computer freezing, do you still want to continue?"
 msgstr ""
 
 #: ../gui/wxpython/modules/colorrules.py:1415
@@ -11317,11 +10989,7 @@ msgstr "输入的 2D 矢量地图的名称"
 #: ../gui/wxpython/modules/vclean.py:457
 #, fuzzy
 msgid "Name for output vector map"
-msgstr ""
-"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
-"输出栅格图的名称\n"
-"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
-"输出栅格文件的名称"
+msgstr "输出矢量文件的名称"
 
 #: ../gui/wxpython/modules/vclean.py:458
 msgid "Tools"
@@ -11343,7 +11011,7 @@ msgid ""
 "Some parameters not defined. Operation canceled.\n"
 "\n"
 "%s"
-msgstr "未发现区域<%s>"
+msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/modules/vclean.py:468
 #, fuzzy
@@ -11383,7 +11051,7 @@ msgstr ""
 #: ../gui/wxpython/gcp/manager.py:2374
 #: ../gui/wxpython/gui_core/dialogs.py:1479
 msgid "Close dialog"
-msgstr ""
+msgstr "关闭对话框"
 
 #: ../gui/wxpython/modules/ogc_services.py:79
 #, fuzzy
@@ -11408,9 +11076,7 @@ msgid "Import selected layers"
 msgstr ""
 
 #: ../gui/wxpython/modules/ogc_services.py:167
-msgid ""
-"The 'xml2' parser is required, please install it first. You may also try "
-"running r.in.wms directly from the command line."
+msgid "The 'xml2' parser is required, please install it first. You may also try running r.in.wms directly from the command line."
 msgstr ""
 
 #: ../gui/wxpython/modules/ogc_services.py:251
@@ -11880,7 +11546,7 @@ msgstr "设定地面控制点"
 #: ../gui/wxpython/gcp/manager.py:950
 #, fuzzy, python-format
 msgid "At least %d GCPs required. Operation canceled."
-msgstr "非三维矢量地图，操作已取消。"
+msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/gcp/manager.py:1037
 #, fuzzy
@@ -11934,8 +11600,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1305
 msgid ""
-"Insufficient points defined and active (checked) for selected rectification "
-"method.\n"
+"Insufficient points defined and active (checked) for selected rectification method.\n"
 "3+ points needed for 1st order,\n"
 "6+ points for 2nd order, and\n"
 "10+ points for 3rd order."
@@ -11957,8 +11622,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1443
 #, python-format
-msgid ""
-"Vector map <%s> already exists. Change extension name and georectify again."
+msgid "Vector map <%s> already exists. Change extension name and georectify again."
 msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1453
@@ -12011,7 +11675,7 @@ msgstr ""
 
 #: ../gui/wxpython/gcp/manager.py:1924 ../gui/wxpython/gcp/manager.py:1941
 msgid "use"
-msgstr ""
+msgstr "使用"
 
 #: ../gui/wxpython/gcp/manager.py:1925 ../gui/wxpython/gcp/manager.py:1942
 #, fuzzy
@@ -12298,9 +11962,7 @@ msgstr "无法为色彩条读取颜色"
 
 #: ../gui/wxpython/gui_core/dialogs.py:384
 #, python-format
-msgid ""
-"Vector map <%s> already exists in the current mapset. Do you want to "
-"overwrite it?"
+msgid "Vector map <%s> already exists in the current mapset. Do you want to overwrite it?"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:387
@@ -12326,9 +11988,7 @@ msgid "Set size and position"
 msgstr "保存并关闭"
 
 #: ../gui/wxpython/gui_core/dialogs.py:534
-msgid ""
-"Click and drag on the map display to set legend size and position and then "
-"press OK"
+msgid "Click and drag on the map display to set legend size and position and then press OK"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/dialogs.py:544
@@ -12358,7 +12018,7 @@ msgstr "最短路径"
 #: ../gui/wxpython/gui_core/preferences.py:422
 #: ../gui/wxpython/gui_core/preferences.py:594
 msgid "Set font"
-msgstr ""
+msgstr "设置字体"
 
 #: ../gui/wxpython/gui_core/dialogs.py:740
 msgid ""
@@ -12442,7 +12102,7 @@ msgstr "成功创建表"
 #: ../gui/wxpython/gui_core/dialogs.py:1060
 #, fuzzy, python-format
 msgid "Creating of new group <%s> failed."
-msgstr "写入新文件...\n"
+msgstr "创建新组文件"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1062
 #, python-format
@@ -12481,7 +12141,7 @@ msgstr ""
 #: ../gui/wxpython/gui_core/dialogs.py:1236
 #, fuzzy
 msgid "Pattern:"
-msgstr "平移"
+msgstr "栅格值"
 
 #: ../gui/wxpython/gui_core/dialogs.py:1248
 msgid "List of maps:"
@@ -12619,11 +12279,12 @@ msgstr "无法获取栅格行\n"
 #: ../gui/wxpython/gui_core/gselect.py:1107
 #, fuzzy
 msgid "Source settings"
-msgstr "无法获取栅格行\n"
+msgstr "打开设置"
 
 #: ../gui/wxpython/gui_core/gselect.py:1118
+#, fuzzy
 msgid "Native"
-msgstr ""
+msgstr "保存"
 
 #: ../gui/wxpython/gui_core/gselect.py:1122
 #: ../gui/wxpython/gui_core/forms.py:1305
@@ -12715,7 +12376,7 @@ msgstr "选项设置"
 #: ../gui/wxpython/gui_core/gselect.py:1369
 #, fuzzy, python-format
 msgid "Settings <%s> not found"
-msgstr "未发现区域<%s>"
+msgstr "矢量地图 '%s' 未找到"
 
 #: ../gui/wxpython/gui_core/gselect.py:1381
 #: ../gui/wxpython/gui_core/gselect.py:1402
@@ -12739,7 +12400,7 @@ msgstr "栅格地图 %i 文件名成： %s 已经存在。它将被覆盖！\n"
 #: ../gui/wxpython/gui_core/gselect.py:1422
 #, fuzzy
 msgid "No settings is defined. Operation canceled."
-msgstr "未发现区域<%s>"
+msgstr "没有选择图层，操作已取消。"
 
 #: ../gui/wxpython/gui_core/gselect.py:1441
 #, fuzzy
@@ -12822,9 +12483,7 @@ msgid "Save current window layout as default"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:376
-msgid ""
-"Save current position and size of Layer Manager window and opened Map "
-"Display window(s) and use as default for next sessions."
+msgid "Save current position and size of Layer Manager window and opened Map Display window(s) and use as default for next sessions."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:417
@@ -12896,8 +12555,9 @@ msgid "Mouse wheel action:"
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:754
+#, fuzzy
 msgid "Mouse scrolling direction:"
-msgstr ""
+msgstr "新GIS数据目录"
 
 #: ../gui/wxpython/gui_core/preferences.py:780
 #, fuzzy
@@ -12981,12 +12641,9 @@ msgstr "退出。当前设定未改变"
 #: ../gui/wxpython/gui_core/preferences.py:1114
 msgid ""
 "\n"
-"Note: This only controls the coordinates displayed in the lower-left of the "
-"Map Display\n"
-"window's status bar. It is purely cosmetic and does not affect the working "
-"location's\n"
-"projection in any way. You will need to enable the Projection check box in "
-"the drop-down\n"
+"Note: This only controls the coordinates displayed in the lower-left of the Map Display\n"
+"window's status bar. It is purely cosmetic and does not affect the working location's\n"
+"projection in any way. You will need to enable the Projection check box in the drop-down\n"
 "menu located at the bottom of the Map Display window.\n"
 msgstr ""
 
@@ -13000,9 +12657,7 @@ msgid "EPSG file:"
 msgstr "DXF文件"
 
 #: ../gui/wxpython/gui_core/preferences.py:1177
-msgid ""
-"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
-"directly."
+msgid "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string directly."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/preferences.py:1185
@@ -13113,9 +12768,7 @@ msgid "&Log file"
 msgstr "VRML文件"
 
 #: ../gui/wxpython/gui_core/goutput.py:270
-msgid ""
-"Toggle to save list of executed commands into a file; content saved when "
-"switching off."
+msgid "Toggle to save list of executed commands into a file; content saved when switching off."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/goutput.py:486
@@ -13129,9 +12782,7 @@ msgstr "无法找到矢量地图 [%s]"
 
 #: ../gui/wxpython/gui_core/goutput.py:524
 #, python-format
-msgid ""
-"Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
-"layer instead."
+msgid "Command '%s' not yet implemented in the WxGUI. Try adding it as a command layer instead."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/goutput.py:571
@@ -13172,7 +12823,7 @@ msgid ""
 "Unable to write file '%(path)s'.\n"
 "\n"
 "Details: %(error)s"
-msgstr "无法找到矢量地图 [%s]"
+msgstr "无法创建文件 [%s]"
 
 #: ../gui/wxpython/gui_core/goutput.py:679
 #, fuzzy, python-format
@@ -13193,25 +12844,24 @@ msgstr "命令运行结果输出"
 #: ../gui/wxpython/gui_core/goutput.py:853
 #, python-format
 msgid "%d sec"
-msgstr ""
+msgstr "%d 秒"
 
 #: ../gui/wxpython/gui_core/goutput.py:856
-#, python-format
+#, fuzzy, python-format
 msgid "%(min)d min %(sec)d sec"
-msgstr ""
+msgstr "%s在%s中： %s"
 
 #: ../gui/wxpython/gui_core/goutput.py:864
-msgid ""
-"Please note that the data are left in inconsistent state and may be corrupted"
-msgstr ""
+msgid "Please note that the data are left in inconsistent state and may be corrupted"
+msgstr "当前数据状态不匹配，可能导致损坏"
 
 #: ../gui/wxpython/gui_core/goutput.py:866
 msgid "Command aborted"
-msgstr ""
+msgstr "终止命令"
 
 #: ../gui/wxpython/gui_core/goutput.py:868
 msgid "Command finished"
-msgstr ""
+msgstr "命令完成"
 
 #: ../gui/wxpython/gui_core/ghelp.py:57 ../gui/wxpython/gui_core/ghelp.py:65
 #, fuzzy
@@ -13361,9 +13011,7 @@ msgid "Add created map(s) into layer tree"
 msgstr "将创建的地图加入层列表"
 
 #: ../gui/wxpython/gui_core/forms.py:514
-msgid ""
-"Close dialog when command is successfully finished. Change this settings in "
-"Preferences dialog ('Command' tab)."
+msgid "Close dialog when command is successfully finished. Change this settings in Preferences dialog ('Command' tab)."
 msgstr ""
 
 #: ../gui/wxpython/gui_core/forms.py:685
@@ -13524,7 +13172,7 @@ msgstr "选择字体"
 
 #: ../gui/wxpython/gui_core/toolbars.py:64
 msgid "Show manual"
-msgstr ""
+msgstr "显示手册"
 
 #: ../gui/wxpython/gui_core/toolbars.py:68
 #, fuzzy
@@ -13548,11 +13196,3 @@ msgstr "添加比例尺或图例等元素到地图"
 #, fuzzy
 msgid "Create histogram with d.histogram"
 msgstr "创建图像或栅格文件的直方图"
-
-#, fuzzy
-#~ msgid "Display on surface(s):"
-#~ msgstr "纹理特征"
-
-#, fuzzy
-#~ msgid "Field separator:"
-#~ msgstr "输出字段分隔符"
