@@ -4,26 +4,25 @@
 or imagery group, from any GDAL supported raster map format, with an optional 
 title. The imported file may also be optionally used to create a new location.
 
-<!--<h2>OPTIONS</h2>
-
+<!--
 Extended explanations:
-
-<h3>Flags:</h3>
 
 <dt><b>-e</b>
 <dd>Extend the DEFAULT_WIND in PERMANENT mapset to include the region of
 the new map layer.  Old resolution is preserved, but the region, and rows/cols
 are updated.  This will fail if the user doesn't have write access to the
 PERMANENT mapset.
-</dl>-->
+</dl>
+-->
 
 <h3>GDAL supported raster formats</h3>
 
-Full details on GDAL supported formats are available at:<p>
-
-<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a><p>
-
+Full details on GDAL supported formats are available at:
+<p>
+<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a>
+<p>
 Selected formats of the more than 80 supported formats:
+
 <div class="code"><pre>
 
 Long Format Name                                        Code                    Creation        Georeferencing          Maximum File Size
@@ -94,7 +93,6 @@ system of the source data and the current location, they may pass the
 <b>-o</b> flag to override the projection check. 
 
 <p>
-
 If the user wishes to import the data with the full projection definition,
 it is possible to have r.in.gdal automatically create a new location based
 on the projection and extents of the file being read.  This is accomplished
@@ -103,13 +101,14 @@ parameter.  Upon completion of the command, a new location will have been
 created (with only a PERMANENT mapset), and the raster will have been
 imported with the indicated <b>output</b> name into the PERMANENT mapset.
 
-<p>
-Support for GCPs: In case the image contains GCPs they are written to a
+<h3>Support for GCPs</h3>
+In case the image contains GCPs they are written to a
 POINTS file within an imagery group. They can directly be used for 
-<a href=i.rectify.html>i.rectify</a>. The <b>target</b> option allows you to
-automatically re-project the GCPs from their own projection into another
-projection read from the PROJ_INFO file of the location name
-<b>target</b>.
+<a href="i.rectify.html">i.rectify</a>.
+<p>
+The <b>target</b> option allows you to automatically re-project the GCPs
+from their own projection into another projection read from the
+PROJ_INFO file of the location name <b>target</b>.
 
 <h2>NOTES</h2>
 
@@ -121,7 +120,6 @@ The <em>r.in.gdal</em> command does support the following features, as long as
 the underlying format driver supports it:
 
 <p>
-
 <dl>
 
 <dt> Color Table
@@ -232,10 +230,11 @@ with <em>r.colors</em>.
 
 <h3>GLOBE DEM</h3>
 
-To import <a href="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
+To import <a href="http://www.ngdc.noaa.gov/mgg/topo/elev/">GLOBE DEM tiles</a>
 (approx 1km resolution, better than GTOPO30 DEM data), the user has to download
-additionally the related <a href="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
+additionally the related <a href="http://www.ngdc.noaa.gov/mgg/topo/elev/esri/hdr/">HDR file(s)</a>.
 Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
+See also their <a href="http://www.ngdc.noaa.gov/mgg/dem/demportal.html">DEM portal</a>.
 
 <h3>Worldclim.org</h3>
 To import <a href="http://www.worldclim.org">Worldclim</a> data, the following
@@ -273,6 +272,8 @@ r.in.gdal HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_
 <a href="r.in.bin.html">r.in.bin</a>,
 <a href="r.null.html">r.null</a>
 </em>
+<p>
+GRASS GIS Wiki page: Import of <a href="http://grasswiki.osgeo.org/wiki/Global_datasets">Global datasets</a>
 
 <h2>REFERENCES</h2>
 
