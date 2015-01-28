@@ -1,6 +1,6 @@
 # translation of grassmods_es.po to Español
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004-2014 GRASS Development Team
+# Copyright (C) 2004-2015 GRASS Development Team
 #
 # el bueno <manzano_jm@yahoo.es>, 2005.
 # Luis Izquierdo <luisizq2002@hotmail.com>, 2005.
@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-20 18:01+0200\n"
-"PO-Revision-Date: 2015-01-12 22:12-0600\n"
-"Last-Translator: Daniel Torres <nobeeakon@gmail.com>\n"
+"PO-Revision-Date: 2015-01-23 20:45-0600\n"
+"Last-Translator: \n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -1594,7 +1594,7 @@ msgstr "Color desconocido: [%s]"
 
 #: ../display/d.thematic.area/main.c:328
 msgid "You gave both manual breaks and a classification algorithm or a number of classes. The manual breaks have precedence and will thus be used."
-msgstr ""
+msgstr "Ha dado tanto cortes manualmente como ha dado un algoritmo de clasificación o un número de clases. Los cortes manuales tienen precedencia y serán usados."
 
 #: ../display/d.thematic.area/main.c:365
 msgid "You must either give classbreaks or a classification algorithm"
@@ -3047,9 +3047,8 @@ msgid "Layer number (if -1, all layers are displayed)"
 msgstr "Número de capa (si es -1, se muestran todas las capas)"
 
 #: ../display/d.vect/main.c:122
-#, fuzzy
 msgid "Feature color"
-msgstr "Color de la franja"
+msgstr "Color del elemento"
 
 #: ../display/d.vect/main.c:126 ../display/d.vect/main.c:136
 #: ../display/d.vect/main.c:239 ../display/d.vect/main.c:249
@@ -3906,9 +3905,9 @@ msgstr "Lista todas las tablas para una base de datos dada."
 
 #: ../db/base/columns.c:44 ../db/base/select.c:53 ../db/base/copy.c:100
 #: ../db/base/describe.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Table <%s> not found in database <%s> using driver <%s>"
-msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
+msgstr "Tabla <%s> no encontrada en la base de datos <%s> usando el controlador <%s>"
 
 #: ../db/base/columns.c:99
 msgid "List all columns for a given table."
@@ -4041,7 +4040,7 @@ msgstr "Sentencia selección completa (sólo, si no se usan 'from_table' y 'wher
 
 #: ../db/base/copy.c:88
 msgid "E.g.: SELECT dedek FROM starobince WHERE obec = 'Frimburg'"
-msgstr ""
+msgstr "Por ejemplo: SELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 
 #: ../db/base/copy.c:96
 msgid "Cannot combine 'from_table' and 'select' options"
@@ -5296,8 +5295,9 @@ msgid "Print data types"
 msgstr "Imprimir tipos de datos"
 
 #: ../general/g.mlist/main.c:144
+#, fuzzy
 msgid "Print fully-qualified map names (including mapsets)"
-msgstr ""
+msgstr "Mostar nombres de los mapas totalmente cualificado (incluyendo directorios de mapas)"
 
 #: ../general/g.mlist/main.c:149
 msgid "Pretty printing in human readable format"
@@ -6119,14 +6119,14 @@ msgid "Unable to determine mapset permissions"
 msgstr "No se pueden determinar los permisos del directorio de mapas"
 
 #: ../general/g.proj/datumtrans.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid datum code <%s>"
-msgstr "Mapa no válido <%s>"
+msgstr "Código del datum inválido <%s>"
 
 #: ../general/g.proj/datumtrans.c:77
-#, fuzzy, c-format
+#, c-format
 msgid "Datum set to <%s>"
-msgstr "Escala fijada a %s."
+msgstr "Definir datum a <%s>"
 
 #: ../general/g.proj/datumtrans.c:79
 #, c-format
@@ -6143,9 +6143,8 @@ msgid "Prints and manipulates GRASS projection information files (in various co-
 msgstr ""
 
 #: ../general/g.proj/main.c:69
-#, fuzzy
 msgid "Can also be used to create new GRASS locations."
-msgstr "También puede ser utilizado para crear localizaciones GRASS."
+msgstr "También puede ser utilizado para crear nuevas localizaciones GRASS."
 
 #: ../general/g.proj/main.c:72
 #, fuzzy
@@ -6158,9 +6157,8 @@ msgid "Print projection information in conventional GRASS format"
 msgstr "Imprimir información de proyección (en formato convencional GRASS)"
 
 #: ../general/g.proj/main.c:85
-#, fuzzy
 msgid "Print projection information in shell script style"
-msgstr "Imprimir información de proyección en formato WKT"
+msgstr "Muestra información de proyección en formato de script de la consola"
 
 #: ../general/g.proj/main.c:91
 msgid "Verify datum information and print transformation parameters"
@@ -6184,28 +6182,24 @@ msgstr "Usar formato tipo ESRI (sólo aplicable a salida WKT)"
 
 #: ../general/g.proj/main.c:126 ../general/g.proj/main.c:135
 #: ../general/g.proj/main.c:145 ../general/g.proj/main.c:155
-#, fuzzy
 msgid "Specification"
-msgstr "Selección"
+msgstr "Especificación"
 
 #: ../general/g.proj/main.c:127
-#, fuzzy
 msgid "Name of georeferenced data file to read projection information from"
-msgstr "Archivo georreferenciado del que leer la información de proyección"
+msgstr "Nombre del archivo georreferenciado del cual leer la información de proyección"
 
 #: ../general/g.proj/main.c:136
-#, fuzzy
 msgid "Name of ASCII file containing a WKT projection description"
-msgstr "Archivo ASCII que contiene una descripción de proyección WKT (- para stdin)"
+msgstr "Nombre del archivo ASCII que contiene una descripción de proyección WKT"
 
 #: ../general/g.proj/main.c:138 ../general/g.proj/main.c:147
 msgid "'-' for standard input"
 msgstr "'-' para entrada estándar"
 
 #: ../general/g.proj/main.c:146
-#, fuzzy
 msgid "PROJ.4 projection description"
-msgstr "Descripción de proyección PROJ.4 (- para stdin)"
+msgstr "Descripción de proyección PROJ.4"
 
 #: ../general/g.proj/main.c:156
 msgid "EPSG projection code"
@@ -6261,9 +6255,9 @@ msgid "Projection files missing"
 msgstr "Faltan los archivos de proyección"
 
 #: ../general/g.proj/main.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "Only one of -%c, -%c, -%c, -%c, -%c or -%c flags may be specified"
-msgstr "Sólo se puede especificar una de las opciones '%s', '%s', '%s' o '%s'"
+msgstr "Sólo se puede especificar una de las opciones -%c, -%c, -%c, -%c, -%c o -%c"
 
 #: ../general/g.proj/main.c:306
 #, c-format
@@ -6281,9 +6275,9 @@ msgid "Location <%s> created"
 msgstr "Localización <%s> creada"
 
 #: ../general/g.proj/create.c:17
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create location <%s>: %s"
-msgstr "No se puede crear la localización: %s"
+msgstr "No se puede crear la localización <%s>: %s"
 
 #: ../general/g.proj/create.c:20
 #, c-format
@@ -6314,18 +6308,17 @@ msgid "Default region was updated to the new projection, but if you have multipl
 msgstr "N.B. La región por omisión se actualizó a la nueva proyección, pero si tiene múltiples directorios de mapas debería ejecutar g.mapset -d en cada uno para actualizar la región a partir de la predeterminada."
 
 #: ../general/g.proj/create.c:67
-#, fuzzy
 msgid "Projection information updated"
-msgstr "¡Información de la proyección actualizada!"
+msgstr "Información de la proyección actualizada"
 
 #: ../general/g.proj/input.c:91
 msgid "Error reading WKT projection description"
 msgstr "Error al leer la descripción de la proyección WKT"
 
 #: ../general/g.proj/input.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file '%s' for reading"
-msgstr "No se puede abrir el archivo [%s] para lectura"
+msgstr "No se puede abrir el archivo '%s' para lectura"
 
 #: ../general/g.proj/input.c:143
 msgid "Can't parse PROJ.4-style parameter string"
@@ -8785,9 +8778,8 @@ msgstr "Opción de valor menor que establece el <= límite de tamaño de área [
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:8
-#, fuzzy
 msgid "Area"
-msgstr "Área\n"
+msgstr "Área"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:7
 msgid "Greater value option that sets the >= area size limit [hectares]"
@@ -9032,7 +9024,7 @@ msgstr ""
 #: ../imagery/i.landsat.acca/algorithm.c:126
 #, c-format
 msgid "* Snow cover: %.2lf %%"
-msgstr ""
+msgstr "* Cobertura de la nieve: %.2lf %%"
 
 #: ../imagery/i.landsat.acca/algorithm.c:127
 #, c-format
@@ -9046,17 +9038,17 @@ msgstr "* Temperatura de las nubes:"
 #: ../imagery/i.landsat.acca/algorithm.c:129
 #, c-format
 msgid "** Maximum: %.2lf K"
-msgstr ""
+msgstr "** Máximo: %.2lf K"
 
 #: ../imagery/i.landsat.acca/algorithm.c:130
 #, c-format
 msgid "** Mean (%s cloud): %.2lf K"
-msgstr ""
+msgstr "** Media (nube %s): %.2lf K "
 
 #: ../imagery/i.landsat.acca/algorithm.c:132
 #, c-format
 msgid "** Minimum: %.2lf K"
-msgstr ""
+msgstr "** Mínimo: %.2lf K"
 
 #: ../imagery/i.landsat.acca/algorithm.c:142
 msgid "Histogram cloud signature:"
@@ -9065,17 +9057,17 @@ msgstr ""
 #: ../imagery/i.landsat.acca/algorithm.c:148
 #, c-format
 msgid "* Mean temperature: %.2lf K"
-msgstr ""
+msgstr "* Temperatura media: %.2lf K"
 
 #: ../imagery/i.landsat.acca/algorithm.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "* Standard deviation: %.2lf"
-msgstr "Desviación estándar"
+msgstr "*Desviación estándar: %.2lf"
 
 #: ../imagery/i.landsat.acca/algorithm.c:150
 #, c-format
 msgid "* Skewness: %.2lf"
-msgstr ""
+msgstr "* Asimetría: %.2lf"
 
 #: ../imagery/i.landsat.acca/algorithm.c:151
 #, c-format
@@ -9098,9 +9090,8 @@ msgid "* 83.50 percentile: %.2lf K"
 msgstr "* Percentil 83.50: %.2lf K"
 
 #: ../imagery/i.landsat.acca/algorithm.c:186
-#, fuzzy
 msgid "Maximum temperature:"
-msgstr "Valor aleatorio máximo"
+msgstr "Temperatura máxima:"
 
 #: ../imagery/i.landsat.acca/algorithm.c:187
 #, c-format
@@ -9121,19 +9112,16 @@ msgid "Result: Scene cloud free"
 msgstr "Resultado: Escena sin nubes"
 
 #: ../imagery/i.landsat.acca/algorithm.c:238
-#, fuzzy
 msgid "Processing first pass..."
-msgstr "Procesando áreas..."
+msgstr "Procesando el primer paso..."
 
 #: ../imagery/i.landsat.acca/algorithm.c:400
-#, fuzzy
 msgid "Removing ambiguous pixels..."
-msgstr "Eliminando duplicados..."
+msgstr "Eliminando pixeles ambiguos..."
 
 #: ../imagery/i.landsat.acca/algorithm.c:402
-#, fuzzy
 msgid "Pass two processing..."
-msgstr "Procesando..."
+msgstr "Paso dos procesando..."
 
 #: ../imagery/i.landsat.acca/algorithm.c:448
 #, fuzzy, c-format
@@ -9161,7 +9149,7 @@ msgstr "Nombre bae para los mapas raster de salida"
 
 #: ../imagery/i.landsat.acca/main.c:112 ../imagery/i.landsat.toar/main.c:75
 msgid "Example: 'B.' for B.1, B.2, ..."
-msgstr ""
+msgstr "Ejemplo: 'B.' para B.1, B.2, ..."
 
 #: ../imagery/i.landsat.acca/main.c:122
 msgid "B56composite (step 6)"
@@ -9178,9 +9166,8 @@ msgstr "Número de clases para tema de intervalo (entero)"
 
 #: ../imagery/i.landsat.acca/main.c:139 ../imagery/i.landsat.acca/main.c:154
 #: ../imagery/i.landsat.acca/main.c:160 ../imagery/i.landsat.acca/main.c:165
-#, fuzzy
 msgid "Cloud settings"
-msgstr "general, configuraciones"
+msgstr "Configuraciones de nubes"
 
 #: ../imagery/i.landsat.acca/main.c:143
 msgid "Data is Landsat-5 TM"
@@ -9188,11 +9175,11 @@ msgstr ""
 
 #: ../imagery/i.landsat.acca/main.c:144
 msgid "I.e. Thermal band is '.6' not '.61')"
-msgstr ""
+msgstr "Es decir la banda térmica es '.6' no '.61')"
 
 #: ../imagery/i.landsat.acca/main.c:149
 msgid "Apply post-processing filter to remove small holes"
-msgstr ""
+msgstr "Aplicar filtro de post procesado para remover los huecos pequeños"
 
 #: ../imagery/i.landsat.acca/main.c:153
 msgid "Always use cloud signature (step 14)"
@@ -9204,7 +9191,7 @@ msgstr ""
 
 #: ../imagery/i.landsat.acca/main.c:164
 msgid "Include a category for cloud shadows"
-msgstr ""
+msgstr "Incluir una categoría para sombras de las nubes"
 
 #: ../imagery/i.cca/transform.c:18
 msgid "Unable to allocate cell buffers."
@@ -9236,9 +9223,8 @@ msgid "Name of input imagery subgroup"
 msgstr "Nombre del subgrupo de imaginería de entrada"
 
 #: ../imagery/i.cca/main.c:99
-#, fuzzy
 msgid "File containing spectral signatures"
-msgstr "Archivo ASCII que contiene firmas espectrales"
+msgstr "Archivo que contiene firmas espectrales"
 
 #: ../imagery/i.cca/main.c:102
 msgid "Output raster map prefix name"
@@ -9420,9 +9406,9 @@ msgstr "Ejecutar en modo silencioso"
 #: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.maxlik/open.c:16
 #: ../imagery/i.gensig/parse.c:41 ../imagery/i.cluster/open_files.c:17
 #: ../imagery/i.gensigset/parse.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "Group <%s> not found in current mapset"
-msgstr "No se ha encontrado el mapa ráster <%s> en el directorio de mapas actual"
+msgstr "El grupo <%s> no fue encontrado en el directorio de mapas actual"
 
 #: ../imagery/i.smap/shapiro/parse.c:61 ../imagery/i.maxlik/open.c:19
 #: ../imagery/i.gensig/parse.c:44 ../imagery/i.cluster/open_files.c:21
@@ -9509,11 +9495,11 @@ msgstr "Prefijo para el mapa(s) raster de salida"
 
 #: ../imagery/i.landsat.toar/main.c:83
 msgid "Example: 'B.toar.' generates B.toar.1, B.toar.2, ..."
-msgstr ""
+msgstr "Ejemplo: 'B.toar.' genera B.toar.1, B.toar.2, ..."
 
 #: ../imagery/i.landsat.toar/main.c:90
 msgid "Name of Landsat metadata file (.met or MTL.txt)"
-msgstr ""
+msgstr "Nombre del archivo metafile de Landsat (.met o MTL.txt)"
 
 #: ../imagery/i.landsat.toar/main.c:91 ../imagery/i.landsat.toar/main.c:111
 #: ../imagery/i.landsat.toar/main.c:121 ../imagery/i.landsat.toar/main.c:130
@@ -9546,7 +9532,7 @@ msgstr "Fecha de adquisición de la imagen (aaaa-mm-dd)"
 #: ../imagery/i.landsat.toar/main.c:129 ../imagery/i.landsat.toar/main.c:137
 #: ../imagery/i.landsat.toar/main.c:146 ../imagery/i.landsat.toar/main.c:154
 msgid "Required only if 'metfile' not given"
-msgstr ""
+msgstr "Requerida solo si no se da un 'metfile'"
 
 #: ../imagery/i.landsat.toar/main.c:136
 #, fuzzy
@@ -9575,7 +9561,7 @@ msgstr ""
 
 #: ../imagery/i.landsat.toar/main.c:180
 msgid "Rayleigh atmosphere (diffuse sky irradiance)"
-msgstr ""
+msgstr "Atmósfera Rayleigh (irradiancia del cielo difusa)"
 
 #: ../imagery/i.landsat.toar/main.c:181
 msgid "Required only if 'method' is DOS3"
@@ -9756,7 +9742,7 @@ msgstr ""
 
 #: ../imagery/i.topo.corr/main.c:121
 msgid "Topographic correction method"
-msgstr ""
+msgstr "Método de corrección topográfica"
 
 #: ../imagery/i.topo.corr/main.c:126
 #, fuzzy
@@ -9765,11 +9751,11 @@ msgstr "Mapa ráster de salida de saturación"
 
 #: ../imagery/i.topo.corr/main.c:132
 msgid "Solar azimuth is necessary to calculate illumination terrain model"
-msgstr ""
+msgstr "Es necesario el azimut solar para calcular el modelo de iluminación del terreno"
 
 #: ../imagery/i.topo.corr/main.c:135
 msgid "Reflectance maps are necessary to make topographic correction"
-msgstr ""
+msgstr "Son necesarios los mapas de reflectancia para hacer la corrección topográfica"
 
 #: ../imagery/i.topo.corr/main.c:167
 #, fuzzy
@@ -9783,7 +9769,7 @@ msgstr "Método no válido: %s"
 
 #: ../imagery/i.topo.corr/main.c:201
 msgid "Illumination model is of CELL type"
-msgstr ""
+msgstr "Modelo de iluminación es de tipo CELL"
 
 #: ../imagery/i.topo.corr/main.c:208
 #, fuzzy, c-format
@@ -9843,7 +9829,7 @@ msgstr "Rescalar"
 
 #: ../imagery/i.pca/main.c:97
 msgid "Normalize (center and scale) input maps"
-msgstr ""
+msgstr "Normaliza (centra y estandariza) mapas de entrada"
 
 #: ../imagery/i.pca/main.c:107
 msgid "Sorry, at least 2 input bands must be provided"
@@ -10156,7 +10142,7 @@ msgstr "Escribiendo versiones visibles de datos transformados..."
 
 #: ../imagery/i.fft/fftmain.c:265
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.fft/save_fft.c:17 ../imagery/i.fft/save_fft.c:22
 msgid "Unable to open file in the 'cell_misc' directory"
@@ -10914,13 +10900,13 @@ msgstr "%d filas, %d cols (%ld celdas) terminadas en"
 #: ../imagery/i.ortho.photo/i.photo.rectify/report.c:23
 #, c-format
 msgid "%d:%02d:%02ld hours"
-msgstr ""
+msgstr "%d:%02d:%02ld horas"
 
 #: ../imagery/i.rectify/report.c:25
 #: ../imagery/i.ortho.photo/i.photo.rectify/report.c:25
 #, c-format
 msgid "%d:%02ld minutes"
-msgstr ""
+msgstr "%d:%02ld minutos"
 
 #: ../imagery/i.rectify/report.c:27
 #: ../imagery/i.ortho.photo/i.photo.rectify/report.c:27
@@ -14793,9 +14779,8 @@ msgstr "¡Información de la proyección actualizada!"
 
 #: ../raster/r.external/main.c:267 ../raster/r.in.gdal/main.c:633
 #: ../vector/v.in.ogr/main.c:1263
-#, fuzzy
 msgid "Region for the current mapset updated"
-msgstr "<%s> ya es el directorio de mapas actual"
+msgstr "Actualizada la región para el directorio de mapas actual"
 
 #: ../raster/r.external/main.c:310
 msgid "Complex types not supported"
@@ -19940,9 +19925,8 @@ msgid "Computing bins"
 msgstr "Calculando bins"
 
 #: ../raster/r.quantile/main.c:133
-#, fuzzy
 msgid "Binning data"
-msgstr "Escaneando datos..."
+msgstr ""
 
 #: ../raster/r.quantile/main.c:178
 #, fuzzy
@@ -20869,7 +20853,7 @@ msgstr "Descartar <trim> porcentaje de las menores y <trim> porcentaje de las ma
 
 #: ../raster/r.in.xyz/main.c:256
 msgid "Scan data file for extent then exit"
-msgstr "Escanear archivo de datos para la extensión y luego salir"
+msgstr "Explorar archivo de datos para la extensión y luego salir"
 
 #: ../raster/r.in.xyz/main.c:261
 msgid "In scan mode, print using shell script style"
@@ -26281,7 +26265,7 @@ msgstr "Seed para la generación aleatoria de números"
 
 #: ../vector/v.perturb/main.c:137 ../vector/v.perturb/main.c:144
 msgid "Error scanning arguments"
-msgstr "Error al escanear argumentos"
+msgstr "Error al explorar argumentos"
 
 #: ../vector/v.perturb/main.c:140
 msgid "Maximum of uniform distribution must be >= zero"
@@ -27020,14 +27004,14 @@ msgid "Sorry, <%s> driver is not allowed for vector output in this module. Try w
 msgstr "Lo siento, el controlador <%s> no está permitido para salida vectorial en este módulo. Pruebe con una salida ráster u otro controlador."
 
 #: ../vector/lidar/v.surf.bspline/main.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "Points in input vector map <%s> will be interpolated"
-msgstr "No se creará ningún dato vectorial."
+msgstr "Los puntos en el mapa vectorial de entrada <%s> serán interpolados"
 
 #: ../vector/lidar/v.surf.bspline/main.c:320
-#, fuzzy, c-format
+#, c-format
 msgid "Cells for raster map <%s> will be interpolated"
-msgstr "No se creará ningún dato vectorial."
+msgstr "Celdas para mapa ráster <%s> serán interpoladas"
 
 #: ../vector/lidar/v.surf.bspline/main.c:329
 msgid "Cannot read field info"
@@ -30583,7 +30567,7 @@ msgid "Column type not supported (%s)"
 msgstr "Tipo de columna no soportado (%s)"
 
 #: ../vector/v.in.ogr/main.c:786
-#, fuzzy, c-format
+#, c-format
 msgid "Unable open database <%s> by driver <%s>"
 msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
 
@@ -31129,9 +31113,8 @@ msgid "Cleaning boundaries at nodes..."
 msgstr "Limpiando límites y nodos..."
 
 #: ../vector/v.overlay/area_area.c:153 ../vector/v.overlay/line_area.c:71
-#, fuzzy
 msgid "Merging lines..."
-msgstr "Realizando buffer a las líneas..."
+msgstr "Uniendo las líneas..."
 
 #: ../vector/v.overlay/area_area.c:181
 #, c-format
@@ -31532,7 +31515,7 @@ msgstr "Abrir una fuente de datos existentes para actualizar"
 
 #: ../vector/v.out.ogr/main.c:167
 msgid "Skip export of GRASS category ID ('cat') attribute"
-msgstr ""
+msgstr "Saltar exportación del atributo de la categoría GRASS ID ('cat')"
 
 #: ../vector/v.out.ogr/main.c:171
 msgid "Export features with category (labeled) only. Otherwise all features are exported"
@@ -31668,7 +31651,7 @@ msgstr "La capa OGR <%s> ya existe y será sobrescrita"
 
 #: ../vector/v.out.ogr/main.c:567
 msgid "Overriding existing user-defined 'SHPT=' LCO."
-msgstr ""
+msgstr "Anulando 'SHPT=' LCO existente definida por el usuario."
 
 #: ../vector/v.out.ogr/main.c:583
 #, c-format
@@ -31972,9 +31955,8 @@ msgid "Operator defines required relation between features"
 msgstr "El operador define la relación exigida entre elementos"
 
 #: ../vector/v.select/args.c:47
-#, fuzzy
 msgid "A feature is written to output if the result of operation 'ainput operator binput' is true. An input feature is considered to be true, if category of given layer is defined."
-msgstr "El elemento se escribe en la salida si el resultado de la operación 'entrada A operador entrada B' es verdadero. Un elemento de entrada se considera verdadero si se define la categoría de la capa dada."
+msgstr "El elemento se escribe en la salida si el resultado de la operación 'ainput operator binput' es verdadero. Un elemento de entrada se considera verdadero, si la categoría de la capa dada está definida."
 
 #: ../vector/v.select/args.c:53
 msgid "overlap;features partially or completely overlap"
@@ -32174,9 +32156,9 @@ msgid "Method '%s' did not preserve last point"
 msgstr ""
 
 #: ../vector/v.generalize/main.c:495
-#, fuzzy, c-format
+#, c-format
 msgid "%d boundaries were not modified because modification would damage topology"
-msgstr "%d contornos no recortados porque el recorte dañaría la topología"
+msgstr "%d contornos no fueron modificados porque la modificación recorte dañaría la topología"
 
 #: ../vector/v.generalize/main.c:498
 #, c-format
