@@ -423,15 +423,17 @@ fi
 # First time user - GISRC is defined in the GRASS script
 if [ ! -f "$GISRC" ] ; then
 
-    if [ ! -f "$GISBASE/locale/$LCL/etc/grass_intro" ] ; then
-	cat "$ETC/grass_intro"
-    else
-	cat "$GISBASE/locale/$LCL/etc/grass_intro"
-    fi
+    if [ -z "$GRASS_BATCH_JOB" ] ; then
+	if [ ! -f "$GISBASE/locale/$LCL/etc/grass_intro" ] ; then
+	    cat "$ETC/grass_intro"
+	else
+	    cat "$GISBASE/locale/$LCL/etc/grass_intro"
+	fi
 
-    echo
-    echo "Hit RETURN to continue"
-    read ans
+	echo
+	echo "Hit RETURN to continue"
+	read ans
+    fi
 
     #for convenience, define pwd as GISDBASE:
     echo "GISDBASE: $HOME" > "$GISRC"
