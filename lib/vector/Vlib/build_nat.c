@@ -313,6 +313,10 @@ int Vect_attach_isles(struct Map_info *Map, BOUND_BOX * box)
 
     for (i = 0; i < List->n_values; i++) {
 	isle = List->value[i];
+	if (plus->Isle[isle]->area > 0) {
+	    dig_area_del_isle(plus, plus->Isle[isle]->area, isle);
+	    plus->Isle[isle]->area = 0;
+	}
 	Vect_attach_isle(Map, isle);
     }
     return 0;
@@ -364,10 +368,6 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
      * to check if original area exist, unregister centroid from previous area.
      * To simplify code, this is implemented so that centroid is always firs unregistered 
      * and if new area is found, it is registered again.
-     *
-     * This problem can be avoided altogether if properly attached centroids
-     * are skipped
-     * MM 2009
      */
 
     Vect_select_lines_by_box(Map, box, GV_CENTROID, List);
@@ -378,15 +378,14 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 	centr = List->value[i];
 	Line = plus->Line[centr];
 
-	/* only attach unregistered and duplicate centroids because 
-	 * 1) all properly attached centroids are properly attached, really! Don't touch.
-	 * 2) Vect_find_area() below does not always return the correct area
-	 * 3) it's faster
-	 */
-	if (Line->left > 0)
-	    continue; 
-
+	/* Unregister centroid */
 	orig_area = Line->left;
+	if ( orig_area > 0 ) {
+	    if ( plus->Area[orig_area] != NULL ) {
+		plus->Area[orig_area]->centroid = 0;
+	    }
+	}
+	Line->left = 0;
 
 	sel_area = Vect_find_area(Map, Line->E, Line->N);
 	G_debug(3, "  centroid %d is in area %d", centr, sel_area);
