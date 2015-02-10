@@ -497,10 +497,10 @@ int main(int argc, char *argv[])
 	    total_output += after;
 	}
 	if (not_modified_boundaries > 0)
-	    G_message(_("%d boundaries were not modified because modification would damage topology"),
+	    G_warning(_("%d boundaries were not modified because modification would damage topology"),
 		      not_modified_boundaries);
 	if (n_oversimplified > 0)
-	    G_message(_("%d lines/boundaries were not modified due to over-simplification"),
+	    G_warning(_("%d lines/boundaries were not modified due to over-simplification"),
 		      n_oversimplified);
 	G_message("-----------------------------------------------------");
 
@@ -515,12 +515,12 @@ int main(int argc, char *argv[])
 
     G_message("-----------------------------------------------------");
     if (total_input != 0 && total_input != total_output)
-	G_message(_("Number of vertices for selected lines %s from %d to %d (%d%%)."),
-		  simplification ? _("reduced") : _("changed"), 
-		  total_input, total_output,
-		  (total_output * 100) / total_input);
-
-    G_done_msg(" ");
+	G_done_msg(_("Number of vertices for selected features %s from %d to %d (%d%% remaining)"),
+                   simplification ? _("reduced") : _("changed"), 
+                   total_input, total_output,
+                   (total_output * 100) / total_input);
+    else
+        G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }
