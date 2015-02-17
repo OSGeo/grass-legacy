@@ -47,6 +47,7 @@ pot:
 		echo "Build GRASS before running 'make pot'" >&2 ; \
 		exit 1 ; \
 	fi
+	@rm -f ./templates/*.pot
 	@echo "Generating $(LIBDOMAIN)..."
 	xgettext -k_ -o ./templates/$(LIBDOMAIN).pot `$(LIB_POTFILES)`
 	@echo "Generating $(MODDOMAIN)..."
@@ -86,6 +87,7 @@ verify:
 		echo "----- $$po:" ; \
 		msgfmt -c $$po; \
 	done
+	@rm -f po/messages.mo
 
 libs_FILES := $(patsubst po/grasslibs_%.po,$(MO_DIR)/%/LC_MESSAGES/grasslibs.mo,$(wildcard po/grasslibs_*.po)) 
 $(MO_DIR)/%/LC_MESSAGES/grasslibs.mo: po/grasslibs_%.po 

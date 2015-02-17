@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-20 18:01+0200\n"
+"POT-Creation-Date: 2015-02-17 12:00+0100\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -17,150 +17,1036 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../lib/driver/command.c:508
+#: ../lib/raster/rem_io.c:40
 #, c-format
-msgid "Unknown command: %d last: %d"
+msgid "ERROR %s from graphics driver.\n"
 msgstr ""
 
-#: ../lib/driver/command.c:547
-msgid "Monitor: get_command: Premature EOF"
-msgstr ""
-
-#: ../lib/driver/main.c:90
+#: ../lib/raster/rem_io.c:167
 #, c-format
-msgid "Graphics driver [%s] started"
-msgstr ""
+msgid "Unable to allocate memory\n"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
 
-#: ../lib/driver/parse_ftcap.c:32
+#: ../lib/raster/rem_io.c:217
 #, c-format
-msgid "%s: Unable to read font definition file; use the default"
-msgstr ""
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "خطا - نهاية الملف من شاشة العرض\n"
 
-#: ../lib/driver/parse_ftcap.c:38
+#: ../lib/raster/rem_io.c:237
 #, c-format
-msgid "%s: No font definition file"
+msgid "Warning - no response from graphics monitor <%s>.\n"
 msgstr ""
 
-#: ../lib/display/tran_colr.c:129 ../lib/display/tran_colr.c:131
+#: ../lib/raster/rem_io.c:239
 #, c-format
-msgid "[%s]: No such color"
+msgid "Check to see if the mouse is still active.\n"
 msgstr ""
 
-#: ../lib/db/dbmi_base/login.c:98
-msgid "Login file corrupted"
+#: ../lib/raster/rem_io.c:244
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr ""
 
-#: ../lib/db/dbmi_base/default_name.c:127
-msgid "Programmer error"
+#: ../lib/raster/io_sock.c:63
+#, fuzzy
+msgid "No graphics monitor has been selected for output."
+msgstr "لم يتم اختيار شاشة العرض\n"
+
+#: ../lib/raster/io_sock.c:64
+#, fuzzy
+msgid "Please run \"d.mon\" to select a graphics monitor."
+msgstr " <%s> بدء عرض الشاشة\n"
+
+#: ../lib/raster/io_sock.c:72
+#, c-format
+msgid "Failed to get socket name for monitor <%s>."
 msgstr ""
 
-#: ../lib/db/dbmi_base/legal_dbname.c:25
-#, fuzzy, c-format
-msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "يجب أن لا يحوى نقطة أو قيمة معدومة <%s> اسم ماف فيكتورى غير سليم\n"
-
-#: ../lib/db/dbmi_base/legal_dbname.c:33
-#, fuzzy, c-format
-msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير سليم \n"
-
-#: ../lib/db/dbmi_base/legal_dbname.c:43
-#, fuzzy, c-format
-msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
+#: ../lib/raster/io_sock.c:81
+#, c-format
+msgid "No socket to connect to for monitor <%s>."
 msgstr ""
-"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
-#: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
-#: ../lib/db/dbmi_client/db.c:41
-#, fuzzy, c-format
-msgid "Unable to start driver <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
+#: ../lib/raster/io_sock.c:98
+msgid "Socket is already in use or not accepting connections."
+msgstr ""
 
-#: ../lib/db/dbmi_client/copy_tab.c:105 ../lib/db/dbmi_client/copy_tab.c:126
-#: ../lib/db/dbmi_client/db.c:46 ../lib/sites/sites.c:372
-#: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
-#: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:271
-#: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
-#: ../lib/vector/Vlib/net.c:186 ../lib/vector/Vlib/net.c:356
-#: ../lib/vector/Vlib/array.c:284
-#, fuzzy, c-format
-msgid "Unable to open database <%s> by driver <%s>"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
+#: ../lib/raster/io_sock.c:99
+msgid "Use d.mon to select a monitor"
+msgstr ""
 
-#: ../lib/db/dbmi_client/copy_tab.c:144
-#, fuzzy, c-format
-msgid "Unable to get list tables in database <%s>"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
+#: ../lib/raster/io_sock.c:105
+#, fuzzy
+msgid "Trying to connect to something not a socket."
+msgstr ""
+"محاولة اتصال خاطئة\n"
+"\n"
 
-#: ../lib/db/dbmi_client/copy_tab.c:157
-#, fuzzy, c-format
-msgid "Table <%s> already exists in database <%s>"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
+#: ../lib/raster/io_sock.c:106
+msgid "Probably program error."
+msgstr ""
 
-#: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
-#: ../lib/db/dbmi_client/table.c:110 ../lib/sites/sites.c:381
+#: ../lib/raster/io_sock.c:111
+msgid "Connect attempt timed out."
+msgstr ""
+
+#: ../lib/raster/io_sock.c:112
+#, fuzzy
+msgid "Probably an error with the server."
+msgstr "محاولة الإتصال استغرقت وقت طويل- ربما يوجد خطا من السيرفر\n"
+
+#: ../lib/raster/io_sock.c:120
+#, fuzzy
+msgid "Connection failed."
+msgstr "فشل الإتصال\n"
+
+#: ../lib/ogsf/GVL2.c:248
 #, fuzzy, c-format
-msgid "Unable to open select cursor: '%s'"
+msgid "Loading 3d raster map <%s>..."
+msgstr " فارغة %s@%s الخريطة الراسترية"
+
+#: ../lib/ogsf/gk.c:322
+msgid "Need at least 3 keyframes for spline"
+msgstr ""
+
+#: ../lib/ogsf/gk.c:624
+msgid "Need at least 2 keyframes for interpolation"
+msgstr ""
+
+#: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109 ../lib/vector/Vlib/map.c:327
+#: ../lib/vector/Vlib/legal_vname.c:118 ../lib/vector/Vlib/legal_vname.c:121
+#: ../lib/vector/Vlib/open.c:168
+#, fuzzy, c-format
+msgid "Vector map <%s> not found"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115 ../lib/vector/Vlib/open.c:199
+#, fuzzy, c-format
+msgid "Unable to open vector map <%s>"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/db/dbmi_client/copy_tab.c:231
-#, fuzzy, c-format
-msgid "Column <%s> is not integer"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
-
-#: ../lib/db/dbmi_client/copy_tab.c:248 ../lib/rst/interp_float/vinput2d.c:94
-#: ../lib/rst/interp_float/vinput2d.c:108
-#, fuzzy, c-format
-msgid "Column <%s> not found"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
-
-#: ../lib/db/dbmi_client/copy_tab.c:251
-#, fuzzy, c-format
-msgid "Unable to create table <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/db/dbmi_client/copy_tab.c:295
-#, fuzzy, c-format
-msgid "Unable to fetch data from table <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/db/dbmi_client/copy_tab.c:351
+#: ../lib/ogsf/Gv3.c:249
 #, c-format
-msgid "Unknown column type (column <%s>)"
+msgid "No features from vector map <%s> fall within current region"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
-#: ../lib/db/dbmi_client/select.c:288
-msgid "Missing column name"
-msgstr ""
-
-#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
-msgid "Missing key column name"
-msgstr ""
-
-#: ../lib/db/dbmi_client/select.c:317
+#: ../lib/ogsf/Gv3.c:254
 #, fuzzy, c-format
-msgid "Unable select records from table <%s>"
+msgid "Vector map <%s> loaded (%d features)"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/gvl_file.c:104
+msgid "Maximum number of datafiles exceeded"
+msgstr ""
+
+#: ../lib/ogsf/gvl_file.c:428 ../lib/ogsf/Gvl3.c:39
+#: ../lib/gpde/N_arrays_io.c:296
+#, fuzzy, c-format
+msgid "3D raster map <%s> not found"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/gvl_file.c:437 ../lib/gpde/N_arrays_io.c:304
+#, fuzzy, c-format
+msgid "Unable to open 3D raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gvl_file.c:443
+#, fuzzy, c-format
+msgid "Unable to read range of 3D raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gvl_file.c:471
+#, fuzzy, c-format
+msgid "Unable to close 3D raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/Gp3.c:54 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
+#: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
+#: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
+#: ../lib/ogsf/Gs3.c:767 ../lib/ogsf/Gs3.c:837 ../lib/ogsf/gsd_legend.c:238
+#: ../lib/gpde/N_arrays_io.c:56 ../lib/gis/legal_name.c:94
+#: ../lib/gis/legal_name.c:97 ../lib/gis/opencell.c:1011
+#, fuzzy, c-format
+msgid "Raster map <%s> not found"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
+#: ../lib/vector/Vlib/map.c:84
+#, fuzzy, c-format
+msgid "Unable to read vector map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/Gp3.c:206
+#, c-format
+msgid "No points from vector map <%s> fall within current region"
+msgstr ""
+
+#: ../lib/ogsf/Gp3.c:211
+#, fuzzy, c-format
+msgid "Vector map <%s> loaded (%d points)"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/trans.c:180
+msgid "Out of matrix stack space"
+msgstr ""
+
+#: ../lib/ogsf/trans.c:200
+msgid "Tried to pop an empty stack"
+msgstr ""
+
+#: ../lib/ogsf/GK2.c:219 ../lib/ogsf/gsd_img_ppm.c:53
+#: ../lib/ogsf/gsd_img_ppm.c:96 ../lib/ogsf/gsd_img_tif.c:64
+#, fuzzy, c-format
+msgid "Unable to open file <%s> for writing"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/ogsf/GK2.c:275 ../lib/ogsf/GK2.c:288
+msgid "Check no. of frames requested and keyframes marked"
+msgstr ""
+
+#: ../lib/ogsf/gsds.c:109
+msgid "Maximum number of datasets exceeded"
+msgstr ""
+
+#: ../lib/ogsf/gsdrape.c:207
+#, fuzzy
+msgid "Unable to process vector map - out of memory"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gsd_label.c:58
+msgid "Max. number of labels reached!"
+msgstr ""
+
+#: ../lib/ogsf/gsd_img_mpeg.c:73
+#, fuzzy
+msgid "Unable to allocate stream"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:176
+#, fuzzy
+msgid "Video codec not found"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:186
+#, fuzzy
+msgid "Unable to open codec"
+msgstr " %s لم يمكن فتح"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:205
+#, fuzzy
+msgid "Unable to allocate picture"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:216
+#, fuzzy
+msgid "Unable to allocate temporary picture"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:283
+#, fuzzy
+msgid "Error while writing video frame"
+msgstr "خطا فى كتابة ملف الطبوغرافية\n"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:329
+#, c-format
+msgid "Opening MPEG stream <%s>..."
+msgstr ""
+
+#: ../lib/ogsf/gsd_img_mpeg.c:341
+msgid "Unable to deduce output format from file extension: using MPEG"
+msgstr ""
+
+#: ../lib/ogsf/gsd_img_mpeg.c:349
+#, fuzzy
+msgid "Unable to find suitable output format"
+msgstr "لم يمكن تخمين التشكيل"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:356 ../lib/rst/interp_float/interp2d.c:119
+#: ../lib/rst/interp_float/interp2d.c:125
+#: ../lib/rst/interp_float/segmen2d.c:175
+#: ../lib/rst/interp_float/segmen2d.c:181
+#: ../lib/rst/interp_float/segmen2d.c:187
+#: ../lib/rst/interp_float/segmen2d.c:197 ../lib/vector/neta/spanningtree.c:99
+#: ../lib/vector/neta/flow.c:64 ../lib/vector/neta/flow.c:178
+#: ../lib/vector/neta/timetables.c:69 ../lib/vector/neta/timetables.c:168
+#: ../lib/vector/neta/timetables.c:178 ../lib/vector/neta/timetables.c:191
+#: ../lib/vector/neta/timetables.c:278 ../lib/vector/neta/timetables.c:413
+#: ../lib/vector/neta/timetables.c:425 ../lib/vector/neta/path.c:134
+#: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/centrality.c:63
+#: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/allpairs.c:50
+#: ../lib/vector/neta/articulation_point.c:60
+#: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
+#: ../lib/vector/Vlib/line.c:62
+#, fuzzy
+msgid "Out of memory"
+msgstr "لم يمكن توفير ذاكرة"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:380
+#, fuzzy
+msgid "Invalid output format parameters"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:402
+#, fuzzy, c-format
+msgid "Unable to open <%s>"
+msgstr " %s لم يمكن فتح"
+
+#: ../lib/ogsf/gsd_img_mpeg.c:415
+msgid "OGSF library has not been built with MPEG output support"
+msgstr ""
+
+#: ../lib/ogsf/gsd_prim.c:146
+#, c-format
+msgid "Color Material: %d"
+msgstr ""
+
+#: ../lib/ogsf/gsd_prim.c:630
+#, c-format
+msgid ""
+"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
+"advise GRASS developers of this error"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1207
+#, c-format
+msgid "no category info"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1226
+#, c-format
+msgid "no data"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1651
+#, fuzzy, c-format
+msgid "Raster map <%s> is outside of current region. Load failed."
+msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
+
+#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
+#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
+#: ../lib/ogsf/GS2.c:1818
+msgid "GS_load_att_map(): Out of memory. Unable to load map"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1846
+#, fuzzy
+msgid "Loading failed"
+msgstr "فشل الإتصال\n"
+
+#: ../lib/ogsf/GS2.c:1850
+msgid "Error finding range"
+msgstr ""
+
+#: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:208 ../lib/ogsf/Gs3.c:366
+#: ../lib/ogsf/Gs3.c:482 ../lib/ogsf/Gs3.c:587
+#, fuzzy
+msgid "Unable to allocate memory for a null buffer"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212 ../lib/ogsf/Gs3.c:370
+#: ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577 ../lib/gpde/N_arrays_io.c:68
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:215 ../lib/ogsf/Gs3.c:378
+#: ../lib/ogsf/Gs3.c:494 ../lib/ogsf/Gs3.c:590
+#, fuzzy, c-format
+msgid "Loading raster map <%s>..."
+msgstr " فارغة %s@%s الخريطة الراسترية"
+
+#: ../lib/ogsf/Gs3.c:647
+#, c-format
+msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
+msgstr ""
+
+#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
+#, fuzzy, c-format
+msgid "Translating colors from raster map <%s>..."
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/ogsf/Gs3.c:1020
+msgid "View not saved by this program,there may be some inconsistancies"
+msgstr ""
+
+#: ../lib/ogsf/gs_bm.c:124
+msgid "Bitmap mismatch"
+msgstr ""
+
+#: ../lib/ogsf/gsd_surf.c:1742
+msgid "Cut-plane points mis-match between surfaces. Check resolution(s)."
+msgstr ""
+
+#: ../lib/ogsf/gsd_legend.c:245
+#, fuzzy, c-format
+msgid "Unable to read color file of raster map <%s>"
 msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
 
-#: ../lib/db/dbmi_client/select.c:333
+#: ../lib/ogsf/gsd_legend.c:251
+#, fuzzy, c-format
+msgid "Unable to read category file of raster map <%s>"
+msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
+
+#: ../lib/ogsf/gsd_legend.c:268
+#, fuzzy, c-format
+msgid "Unable to read fp range of raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gsd_legend.c:280
+#, fuzzy, c-format
+msgid "Unable to read range of raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/ogsf/gsd_legend.c:294
+msgid "Range request error for legend"
+msgstr ""
+
+#: ../lib/ogsf/gsd_legend.c:384
 #, fuzzy
-msgid "Key column type is not integer"
+msgid "Unable to show discrete FP range (use list)"
 msgstr "لم يتم كتابة روابط قاعدة البيانات"
 
-#: ../lib/db/dbmi_client/column.c:114
+#: ../lib/ogsf/gsd_legend.c:500
+#, fuzzy
+msgid "Too many categories to show as discrete!"
+msgstr "[%s فى %s]فئات معادة التصنيف متعددة "
+
+#: ../lib/ogsf/gsd_legend.c:502
+msgid "Try using smaller font!"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:97
 #, fuzzy, c-format
-msgid "Unable to describe table <%s>"
+msgid "Reading raster map <%s> into memory"
+msgstr " فارغة %s@%s الخريطة الراسترية"
+
+#: ../lib/gpde/N_arrays_io.c:104
+#, fuzzy
+msgid "Could not get raster row"
+msgstr "'%s' لم يمكن رصد بيانات الملف"
+
+#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
+#, fuzzy
+msgid "Unable to close input map"
+msgstr " %s لم يمكن فتح"
+
+#: ../lib/gpde/N_arrays_io.c:191
+msgid "N_array_2d * array is empty"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:203
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/gpde/N_arrays_io.c:212
+#, c-format
+msgid "Write 2d array to raster map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
+#: ../lib/gpde/N_arrays_io.c:238
+#, fuzzy, c-format
+msgid "Unable to write raster row %i"
+msgstr "لم يتم انشاء عملية جديدة"
+
+#: ../lib/gpde/N_arrays_io.c:332
+#, c-format
+msgid "Read g3d map <%s> into the memory"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
+msgid "Error closing g3d file"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:446
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:448
+#, c-format
+msgid "Write 3d array to g3d map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_classic_iter.c:57
+#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers.c:55
+#: ../lib/gpde/N_solvers.c:93 ../lib/gpde/N_solvers.c:160
+#: ../lib/gpde/N_solvers_krylov.c:78 ../lib/gpde/N_solvers_krylov.c:255
+#: ../lib/gpde/N_solvers_krylov.c:423 ../lib/gpde/N_solvers_krylov.c:832
+msgid "The linear equation system is not quadratic"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_classic_iter.c:152
+#, c-format
+msgid "sparse Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_classic_iter.c:154
+#, c-format
+msgid "sparse SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_classic_iter.c:197
+#, c-format
+msgid "Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_classic_iter.c:235
+#, c-format
+msgid "SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:49
+msgid "Choose the unit tests to run"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:56
+msgid "Choose the integration tests to run"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:61
+msgid "Run all unit tests"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:65
+msgid "Run all integration tests"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:69
+msgid "Run all unit and integration tests"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:85
+msgid "test, gpde"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:87
+msgid "Performs unit and integration tests for gpde library"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:43
+msgid ""
+"\n"
+"++ Running gwflow integration tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:45
+msgid "\t 1. testing 2d gwflow"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:48
+msgid "\t 2. testing 3d gwflow"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:52
+msgid ""
+"\n"
+"-- gwflow integration tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:54
+msgid ""
+"\n"
+"-- gwflow integration tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:48
+msgid ""
+"\n"
+"++ Running array unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:50
+msgid "\t 1. testing 2d arrays"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:53
+msgid "\t 2. testing 3d arrays"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:57
+msgid ""
+"\n"
+"-- Array unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:59
+msgid ""
+"\n"
+"-- Array unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_tools.c:34
+msgid ""
+"\n"
+"++ Running math tool unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_tools.c:39
+msgid ""
+"\n"
+"-- math tool unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_tools.c:41
+msgid ""
+"\n"
+"-- math tool unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:42
+msgid ""
+"\n"
+"++ Running assembling unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:44
+msgid "\t 1. testing 2d assembling"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:47
+msgid "\t 2. testing 3d assembling"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:51
+msgid ""
+"\n"
+"-- Assembling unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:53
+msgid ""
+"\n"
+"-- Assembling unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:33
+msgid ""
+"\n"
+"++ Running heat flow integration tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:35
+msgid "\t 1. testing 2d heat flow"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:37
+msgid "\t 2. testing 3d heat flow"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:40
+msgid ""
+"\n"
+"-- heat flow integration tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:42
+msgid ""
+"\n"
+"-- heat flow integration tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_geom.c:36
+msgid ""
+"\n"
+"++ Running geom_data unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_geom.c:41
+msgid ""
+"\n"
+"-- geom_data unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_geom.c:43
+msgid ""
+"\n"
+"-- geom_data unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_gradient.c:42
+msgid ""
+"\n"
+"++ Running gradient unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_gradient.c:44
+msgid "\t 1. testing 2d gradient"
+msgstr ""
+
+#: ../lib/gpde/test/test_gradient.c:47
+msgid "\t 2. testing 3d gradient"
+msgstr ""
+
+#: ../lib/gpde/test/test_gradient.c:51
+msgid ""
+"\n"
+"-- Gradient unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_gradient.c:53
+msgid ""
+"\n"
+"-- Gradient unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:37
+msgid ""
+"\n"
+"++ Running solver unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:42
+msgid ""
+"\n"
+"-- Solver unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:44
+msgid ""
+"\n"
+"-- Solver unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_solute_transport.c:43
+msgid ""
+"\n"
+"++ Running solute_transport integration tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_solute_transport.c:45
+msgid "\t 1. testing 2d solute_transport"
+msgstr ""
+
+#: ../lib/gpde/test/test_solute_transport.c:48
+msgid "\t 2. testing 3d solute_transport"
+msgstr ""
+
+#: ../lib/gpde/test/test_solute_transport.c:52
+msgid ""
+"\n"
+"-- solute_transport integration tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_solute_transport.c:54
+msgid ""
+"\n"
+"-- solute_transport integration tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:34
+msgid ""
+"\n"
+"++ Running les creation unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:39
+msgid ""
+"\n"
+"-- les creation unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:41
+msgid ""
+"\n"
+"-- les creation unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:95
+msgid "\t * testing les creation in parallel\n"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:126
+msgid "\t * testing les creation in serial\n"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:59
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:71
+msgid "The type of solver which should solve the linear equation system"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:80
+msgid "Maximum number of iteration used to solver the linear equation system"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:89
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:98
+msgid ""
+"The relaxation parameter used by the jacobi and sor solver for speedup or "
+"stabilizing"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:106
+msgid "The calculation time in seconds"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:50
+msgid "The gauss elimination solver does not work with sparse matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:60
+msgid "Starting direct gauss elimination solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:88
+msgid "The lu solver does not work with sparse matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:98
+msgid "Starting direct lu decomposition solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:155
+msgid "The cholesky solver does not work with sparse matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:166 ../lib/gpde/N_solvers_krylov.c:84
+#: ../lib/gpde/N_solvers_krylov.c:261
+#, fuzzy
+msgid "Matrix is not symmetric!"
+msgstr "لم يحدد المشغل الأساسى"
+
+#: ../lib/gpde/N_solvers.c:170
+msgid "Starting cholesky decomposition solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:173 ../lib/gpde/N_solvers_krylov.c:190
+#: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
+msgid "Unable to solve the linear equation system"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:198
+#, c-format
+msgid "Sparse PCG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:200
+#, c-format
+msgid "PCG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:365
+#, c-format
+msgid "Sparse CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:367
+#, c-format
+msgid "CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:530
+#, c-format
+msgid "Sparse BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers_krylov.c:533
+#, c-format
+msgid "BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:150
+#, c-format
+msgid "Invalid zone %s specified"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:230
+msgid "Unable to initialise PROJ.4 with the following parameter list:"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:238
+#, c-format
+msgid "The error message: %s"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:296
+msgid "Option input overflowed option table"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:327
+#, fuzzy, c-format
+msgid "Unable to initialize pj cause: %s"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/db/dbmi_client/delete_tab.c:40 ../lib/db/dbmi_client/table.c:46
-#, fuzzy, c-format
-msgid "Unable open database <%s> by driver <%s>"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
+#: ../lib/proj/get_proj.c:403
+msgid "Input Projection Parameters"
+msgstr ""
 
-#: ../lib/db/dbmi_client/delete_tab.c:53
+#: ../lib/proj/get_proj.c:406
+msgid "Input Unit Factor"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:416
+msgid "Output Projection Parameters"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:419
+msgid "Output Unit Factor"
+msgstr ""
+
+#: ../lib/proj/datum.c:250
+#, fuzzy
+msgid "Unable to open temporary file"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/proj/datum.c:344 ../lib/gis/get_projname.c:52
+#: ../lib/gis/get_datum_name.c:58 ../lib/gis/get_ell_name.c:45
+#, c-format
+msgid "Hit RETURN to cancel request\n"
+msgstr "RETURN أضغط   لألغاء الأمر\n"
+
+#: ../lib/proj/datum.c:418 ../lib/proj/datum.c:498
 #, fuzzy, c-format
-msgid "Unable to drop table: '%s'"
+msgid "Unable to open datum table file <%s>"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/proj/datum.c:431 ../lib/proj/datum.c:512
+#, fuzzy, c-format
+msgid "Error in datum table file <%s>, line %d"
+msgstr "datum  فى ملف جدول %d يوجد خطأ فى الخط "
+
+#: ../lib/proj/ellipse.c:75
+#, fuzzy, c-format
+msgid "Invalid ellipsoid <%s> in file"
+msgstr ""
+"\n"
+"ellipsoid غير صالح\n"
+
+#: ../lib/proj/ellipse.c:98
+msgid "No secondary ellipsoid descriptor (rf, es or b) in file"
+msgstr ""
+
+#: ../lib/proj/ellipse.c:102
+msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
+msgstr ""
+
+#: ../lib/proj/ellipse.c:115
+msgid "No ellipsoid info given in file"
+msgstr ""
+
+#: ../lib/proj/ellipse.c:215 ../lib/gis/get_ellipse.c:283
+#, fuzzy, c-format
+msgid "Unable to open ellipsoid table file <%s>"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/proj/ellipse.c:268 ../lib/gis/get_ellipse.c:338
+#, c-format
+msgid "Line%s of ellipsoid table file <%s> is invalid"
+msgstr ""
+
+#: ../lib/proj/ellipse.c:269 ../lib/gis/get_ellipse.c:336
+#, c-format
+msgid "Lines%s of ellipsoid table file <%s> are invalid"
+msgstr ""
+
+#: ../lib/proj/convert.c:110
+msgid "Unable parse GRASS PROJ_INFO file"
+msgstr ""
+
+#: ../lib/proj/convert.c:115
+msgid "Unable get PROJ.4-style parameter string"
+msgstr ""
+
+#: ../lib/proj/convert.c:127
+#, c-format
+msgid ""
+"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:133
+#, c-format
+msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:390
+msgid "No projection name! Projection parameters likely to be meaningless."
+msgstr ""
+
+#: ../lib/proj/convert.c:426
+#, c-format
+msgid "Datum <%s> not recognised by GRASS and no parameters found"
+msgstr ""
+
+#: ../lib/proj/convert.c:442
+#, c-format
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
+msgstr ""
+
+#: ../lib/proj/convert.c:446
+#, c-format
+msgid ""
+"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
+msgstr ""
+
+#: ../lib/proj/do_proj.c:106 ../lib/proj/do_proj.c:180
+#, c-format
+msgid "pj_transform() failed: %s"
+msgstr ""
+
+#: ../lib/nviz/position.c:56
+#, fuzzy
+msgid "Unable to set focus"
+msgstr " %s لم يمكن فتح"
+
+#: ../lib/nviz/render.c:105
+msgid "Bad server connection"
+msgstr ""
+
+#: ../lib/nviz/render.c:114
+#, fuzzy
+msgid "Unable to create rendering context"
+msgstr "لم يتم انشاء عملية جديدة"
+
+#: ../lib/nviz/nviz.c:126
+#, c-format
+msgid "Invalid color (%s), using \"white\" as default"
+msgstr ""
+
+#: ../lib/nviz/map_obj.c:59
+msgid "Maximum surfaces loaded!"
+msgstr ""
+
+#: ../lib/nviz/map_obj.c:88
+msgid "Maximum vector line maps loaded!"
+msgstr ""
+
+#: ../lib/nviz/map_obj.c:97 ../lib/nviz/map_obj.c:128
+#, fuzzy, c-format
+msgid "Error loading vector map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/nviz/map_obj.c:116
+msgid "Maximum vector point maps loaded!"
+msgstr ""
+
+#: ../lib/nviz/map_obj.c:143
+msgid "Maximum volumes loaded!"
+msgstr ""
+
+#: ../lib/nviz/map_obj.c:152
+#, fuzzy, c-format
+msgid "Error loading 3d raster map <%s>"
+msgstr "للخرائط الراسترية الموجودة %d\n"
+
+#: ../lib/nviz/map_obj.c:160
+msgid "Nviz_new_map_obj(): unsupported data type"
+msgstr ""
+
+#: ../lib/nviz/lights.c:171
+#, fuzzy
+msgid "Unable to define new light"
 msgstr "لم يمكن فتحه %s فى %s"
 
 #: ../lib/sites/sites.c:97
@@ -190,6 +1076,23 @@ msgid ""
 "updated to GRASS 6 vector library)"
 msgstr ""
 
+#: ../lib/sites/sites.c:372 ../lib/db/dbmi_client/copy_tab.c:105
+#: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
+#: ../lib/rst/interp_float/vinput2d.c:88 ../lib/vector/neta/timetables.c:133
+#: ../lib/vector/neta/utils.c:116 ../lib/vector/Vlib/map.c:271
+#: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/net.c:186
+#: ../lib/vector/Vlib/net.c:356
+#, fuzzy, c-format
+msgid "Unable to open database <%s> by driver <%s>"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/sites/sites.c:381 ../lib/db/dbmi_client/table.c:110
+#: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
+#, fuzzy, c-format
+msgid "Unable to open select cursor: '%s'"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
 #: ../lib/sites/sites.c:397
 #, fuzzy
 msgid "Cannot fetch row"
@@ -209,14 +1112,465 @@ msgstr "لم يتم كتابة روابط قاعدة البيانات"
 msgid "Cannot select attributes"
 msgstr "لم يمكن محو الخط"
 
-#: ../lib/gis/system.c:85
-#, fuzzy
-msgid "Can not create a new process!"
-msgstr "لم يتم انشاء عملية جديدة"
+#: ../lib/db/dbmi_base/legal_dbname.c:25
+#, fuzzy, c-format
+msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
+msgstr "يجب أن لا يحوى نقطة أو قيمة معدومة <%s> اسم ماف فيكتورى غير سليم\n"
 
-#: ../lib/gis/unix_socks.c:102
-msgid "Unable to get GIS_LOCK environment variable value"
+#: ../lib/db/dbmi_base/legal_dbname.c:33
+#, fuzzy, c-format
+msgid "Illegal table map name <%s>. Must start with a letter.\n"
+msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير سليم \n"
+
+#: ../lib/db/dbmi_base/legal_dbname.c:43
+#, fuzzy, c-format
+msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
 msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
+
+#: ../lib/db/dbmi_base/login.c:98
+msgid "Login file corrupted"
+msgstr ""
+
+#: ../lib/db/dbmi_base/default_name.c:127
+msgid "Programmer error"
+msgstr ""
+
+#: ../lib/db/dbmi_client/table.c:46 ../lib/db/dbmi_client/delete_tab.c:40
+#, fuzzy, c-format
+msgid "Unable open database <%s> by driver <%s>"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
+#: ../lib/db/dbmi_client/db.c:41
+#, fuzzy, c-format
+msgid "Unable to start driver <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/db/dbmi_client/copy_tab.c:144
+#, fuzzy, c-format
+msgid "Unable to get list tables in database <%s>"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/db/dbmi_client/copy_tab.c:157
+#, fuzzy, c-format
+msgid "Table <%s> already exists in database <%s>"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/db/dbmi_client/copy_tab.c:231
+#, fuzzy, c-format
+msgid "Column <%s> is not integer"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/db/dbmi_client/copy_tab.c:248 ../lib/rst/interp_float/vinput2d.c:94
+#: ../lib/rst/interp_float/vinput2d.c:108
+#, fuzzy, c-format
+msgid "Column <%s> not found"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/db/dbmi_client/copy_tab.c:251
+#, fuzzy, c-format
+msgid "Unable to create table <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/db/dbmi_client/copy_tab.c:295
+#, fuzzy, c-format
+msgid "Unable to fetch data from table <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/db/dbmi_client/copy_tab.c:351
+#, c-format
+msgid "Unknown column type (column <%s>)"
+msgstr ""
+
+#: ../lib/db/dbmi_client/column.c:114
+#, fuzzy, c-format
+msgid "Unable to describe table <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:221
+#: ../lib/db/dbmi_client/select.c:288
+msgid "Missing column name"
+msgstr ""
+
+#: ../lib/db/dbmi_client/select.c:216 ../lib/db/dbmi_client/select.c:283
+msgid "Missing key column name"
+msgstr ""
+
+#: ../lib/db/dbmi_client/select.c:317
+#, fuzzy, c-format
+msgid "Unable select records from table <%s>"
+msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
+
+#: ../lib/db/dbmi_client/select.c:333
+#, fuzzy
+msgid "Key column type is not integer"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/db/dbmi_client/delete_tab.c:53
+#, fuzzy, c-format
+msgid "Unable to drop table: '%s'"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
+
+#: ../lib/display/tran_colr.c:129 ../lib/display/tran_colr.c:131
+#, c-format
+msgid "[%s]: No such color"
+msgstr ""
+
+#: ../lib/symbol/read.c:211
+#, c-format
+msgid "Cannot read symbol line coordinates: %s"
+msgstr ""
+
+#: ../lib/symbol/read.c:259
+#, c-format
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr ""
+
+#: ../lib/symbol/read.c:283
+#, fuzzy, c-format
+msgid "Cannot find/open symbol: '%s'"
+msgstr "'%s' لم يتم العثور على الخريطة المدخلة"
+
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
+#, c-format
+msgid "Incorrect symbol color: '%s', using default."
+msgstr ""
+
+#: ../lib/driver/main.c:90
+#, c-format
+msgid "Graphics driver [%s] started"
+msgstr ""
+
+#: ../lib/driver/parse_ftcap.c:32
+#, c-format
+msgid "%s: Unable to read font definition file; use the default"
+msgstr ""
+
+#: ../lib/driver/parse_ftcap.c:38
+#, c-format
+msgid "%s: No font definition file"
+msgstr ""
+
+#: ../lib/driver/command.c:508
+#, c-format
+msgid "Unknown command: %d last: %d"
+msgstr ""
+
+#: ../lib/driver/command.c:547
+msgid "Monitor: get_command: Premature EOF"
+msgstr ""
+
+#: ../lib/vask/V_support.c:60
+#, fuzzy, c-format
+msgid "Unable to open file %s"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/gmath/del2g.c:50
+msgid "    taking FFT of image..."
+msgstr ""
+
+#: ../lib/gmath/del2g.c:56
+msgid "    computing del**2 g..."
+msgstr ""
+
+#: ../lib/gmath/del2g.c:59
+msgid "    taking FFT of del**2 g..."
+msgstr ""
+
+#: ../lib/gmath/del2g.c:63
+msgid "    multiplying transforms..."
+msgstr ""
+
+#: ../lib/gmath/del2g.c:66
+msgid "    taking inverse FFT..."
+msgstr ""
+
+#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
+#, fuzzy
+msgid "Matrix dimensions out of range"
+msgstr "دليل الأبعاد خارج النطاق"
+
+#: ../lib/gmath/la.c:149
+msgid "Matrix is not initialised fully."
+msgstr ""
+
+#: ../lib/gmath/la.c:154
+#, fuzzy
+msgid "Unable to allocate space for matrix copy"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/gmath/la.c:243
+msgid "First scalar multiplier must be non-zero"
+msgstr ""
+
+#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
+msgid "One or both input matrices uninitialised"
+msgstr ""
+
+#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
+msgid "Matrix order does not match"
+msgstr ""
+
+#: ../lib/gmath/la.c:268
+#, fuzzy
+msgid "Unable to allocate space for matrix sum"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/gmath/la.c:332
+#, fuzzy
+msgid "Unable to allocate space for matrix product"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/gmath/la.c:444
+msgid "Input: one or both data matrices uninitialised"
+msgstr ""
+
+#: ../lib/gmath/la.c:449
+msgid "Principal matrix is not properly dimensioned"
+msgstr ""
+
+#: ../lib/gmath/la.c:454
+msgid "Input: you must have at least one array to solve"
+msgstr ""
+
+#: ../lib/gmath/la.c:460
+msgid "Could not allocate space for solution matrix"
+msgstr ""
+
+#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
+msgid "Could not allocate space for working matrix"
+msgstr ""
+
+#: ../lib/gmath/la.c:527
+msgid "Matrix (or submatrix is singular). Solution undetermined"
+msgstr ""
+
+#: ../lib/gmath/la.c:531
+msgid "Problem in LA routine."
+msgstr ""
+
+#: ../lib/gmath/la.c:538
+msgid "Procedure not yet available for selected matrix type"
+msgstr ""
+
+#: ../lib/gmath/la.c:572
+msgid "Matrix is not square. Cannot determine inverse"
+msgstr ""
+
+#: ../lib/gmath/la.c:577
+#, fuzzy
+msgid "Unable to allocate space for matrix"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/gmath/la.c:594
+msgid "Matrix is singular"
+msgstr ""
+
+#: ../lib/gmath/la.c:599
+msgid "Problem in LA procedure."
+msgstr ""
+
+#: ../lib/gmath/la.c:687
+msgid "Element array has not been allocated"
+msgstr ""
+
+#: ../lib/gmath/la.c:692
+msgid "Specified element is outside array bounds"
+msgstr ""
+
+#: ../lib/gmath/la.c:746
+msgid "Specified matrix column index is outside range"
+msgstr ""
+
+#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
+#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
+msgid "Matrix is not initialised"
+msgstr ""
+
+#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
+msgid "Could not allocate space for vector structure"
+msgstr ""
+
+#: ../lib/gmath/la.c:787
+msgid "Specified matrix row index is outside range"
+msgstr ""
+
+#: ../lib/gmath/la.c:827
+msgid "Specified row index is outside range"
+msgstr ""
+
+#: ../lib/gmath/la.c:832
+msgid "Specified column index is outside range"
+msgstr ""
+
+#: ../lib/gmath/la.c:852
+#, fuzzy
+msgid "Unknown vector type."
+msgstr "مسقط غير معروف"
+
+#: ../lib/gmath/la.c:977
+msgid "Output vector is uninitialized"
+msgstr ""
+
+#: ../lib/gmath/la.c:982
+msgid "Vectors are not of the same type"
+msgstr ""
+
+#: ../lib/gmath/la.c:987
+msgid "Output vector is of incorrect type"
+msgstr ""
+
+#: ../lib/gmath/la.c:992
+msgid "Matrices not allowed"
+msgstr ""
+
+#: ../lib/gmath/la.c:998
+msgid "Vectors have differing dimensions"
+msgstr ""
+
+#: ../lib/gmath/la.c:1004
+msgid "Output vector has incorrect dimension"
+msgstr ""
+
+#: ../lib/gmath/la.c:1050
+#, fuzzy
+msgid "Vector dimensions out of range"
+msgstr "دليل الأبعاد خارج النطاق"
+
+#: ../lib/gmath/la.c:1055
+msgid "Row/column out of range"
+msgstr ""
+
+#: ../lib/gmath/la.c:1270
+msgid "Vector structure is not initialised"
+msgstr ""
+
+#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
+msgid "Input format error"
+msgstr ""
+
+#: ../lib/g3d/g3dhistory.c:42 ../lib/gis/history.c:132
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:20
+msgid "G3d_openCellOldNoHeader: error in G3d_maskOpenOld"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:26
+msgid "G3d_openCellOldNoHeader: error in G3d_malloc"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:45
+msgid "G3d_openCellOldNoHeader: error in G_open_old"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:99
+msgid "G3d_openCellOld: error in G3d_openCellOldNoHeader"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:104
+msgid "G3d_openCellOld: can't rewind file"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:116
+msgid "G3d_openCellOld: error in G3d_readHeader"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:124
+msgid "G3d_openCellOld: projection does not match window projection"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:128
+msgid "G3d_openCellOld: zone does not match window zone"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:140 ../lib/g3d/g3dopen.c:157
+msgid "G3d_openCellOld: can't read header"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:146
+msgid "G3d_openCellOld: index does not fit into long"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:150
+msgid "G3d_openCellOld: error in G3d_malloc"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:176
+msgid "G3d_openCellOld: error in G3d_fillHeader"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:223
+msgid "G3d_openCellNew: error in G3d_maskOpenOld"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:232
+msgid "G3d_openCellNew: error in G3d_malloc"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:245
+msgid "G3d_openCellNew: could not open file"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:290 ../lib/g3d/g3dopen.c:295
+msgid "G3d_openCellNew: can't write header"
+msgstr ""
+
+#: ../lib/g3d/g3dopen.c:318
+msgid "G3d_openCellNew: error in G3d_fillHeader"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:52
+msgid "Data type used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:61
+msgid "Precision used in the output file (default, max, or 0 to 52)"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:71
+msgid "The compression method used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:81
+msgid "The dimensions of the tiles used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:116
+msgid "G3d_getStandard3dParams: precision value invalid"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:149
+msgid "G3d_getStandard3dParams: tile dimension value invalid"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:173
+#, fuzzy
+msgid "Window replacing the default"
+msgstr "لقبول الأساس المخزن"
 
 #: ../lib/gis/debug.c:74
 #, fuzzy, c-format
@@ -251,12 +1605,6 @@ msgstr ""
 msgid "Enter 'list' for the list of available projections\n"
 msgstr ""
 
-#: ../lib/gis/get_projname.c:52 ../lib/gis/get_datum_name.c:58
-#: ../lib/gis/get_ell_name.c:45 ../lib/proj/datum.c:344
-#, c-format
-msgid "Hit RETURN to cancel request\n"
-msgstr "RETURN أضغط   لألغاء الأمر\n"
-
 #: ../lib/gis/get_projname.c:74
 #, c-format
 msgid ""
@@ -264,666 +1612,13 @@ msgid ""
 "invalid projection\n"
 msgstr ""
 
-#: ../lib/gis/spawn.c:385
-#, c-format
-msgid "CreateProcess() failed: error = %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:416
-#, c-format
-msgid "G_spawn: unable to redirect descriptor %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
-#, c-format
-msgid "G_spawn: unable to open file %s"
-msgstr ""
-
-#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
-#, fuzzy
-msgid "Unable to execute command"
-msgstr "لم يتم تنفيذ الأمر"
-
-#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
-#, c-format
-msgid "G_spawn: unable to restore signal %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:557
-#, c-format
-msgid "G_spawn: unable to reset signal %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:566
-#, c-format
-msgid "G_spawn: unable to ignore signal %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:577
-#, c-format
-msgid "G_spawn: unable to block signal %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:585
-#, c-format
-msgid "G_spawn: unable to unblock signal %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
-#, c-format
-msgid "G_spawn: unable to duplicate descriptor %d to %d"
-msgstr ""
-
-#: ../lib/gis/spawn.c:656
-#, fuzzy
-msgid "Unable to create a new process"
-msgstr "لم يتم انشاء عملية جديدة"
-
-#: ../lib/gis/spawn.c:671
-#, fuzzy, c-format
-msgid "Unable to change directory to %s"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gis/mapset.c:39
-msgid "MAPSET is not set"
-msgstr "لم يتم اختير مجموعة الخريط"
-
-#: ../lib/gis/mapset.c:57
-#, c-format
-msgid "MAPSET %s not found"
-msgstr "MAPSET %s غير موجودة"
-
-#: ../lib/gis/myname.c:50
-msgid "This location has no description."
-msgstr ""
-
-#: ../lib/gis/ls.c:96
-#, fuzzy, c-format
-msgid "Unable to open directory %s"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gis/get_datum_name.c:53
-#, c-format
-msgid ""
-"\n"
-"Please specify datum name\n"
-msgstr ""
-"\n"
-"datum تحديد اسم ال \n"
-
-#: ../lib/gis/get_datum_name.c:55
-#, c-format
-msgid "Enter 'list' for the list of available datums\n"
-msgstr "'list' لعرض ما هو متاح أكتب\n"
-
-#: ../lib/gis/get_datum_name.c:57
-#, c-format
-msgid "or 'custom' if you wish to enter custom parameters\n"
-msgstr ""
-
-#: ../lib/gis/get_datum_name.c:97
-#, c-format
-msgid ""
-"\n"
-"invalid datum\n"
-msgstr ""
-"\n"
-"datum غير صالح\n"
-
-#: ../lib/gis/get_row.c:46 ../lib/gis/get_row.c:1048
-#, c-format
-msgid "Reading raster map <%s@%s> request for row %d is outside region"
-msgstr ""
-
-#: ../lib/gis/get_row.c:324
-#, c-format
-msgid "cell_values_float: xdr_float failed for index %d"
-msgstr ""
-
-#: ../lib/gis/get_row.c:365
-#, c-format
-msgid "cell_values_double: xdr_double failed for index %d"
-msgstr ""
-
-#: ../lib/gis/get_row.c:621
-#, fuzzy, c-format
-msgid "Error reading compressed map <%s@%s>, row %d"
-msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
-
-#: ../lib/gis/get_row.c:624
-#, fuzzy, c-format
-msgid "Error reading map <%s@%s>, row %d"
-msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
-
-#: ../lib/gis/get_row.c:1030 ../lib/gis/get_row.c:1035
-#, fuzzy, c-format
-msgid "Error reading null row %d"
-msgstr "%d خطأ فى كتابة الصف المنعدم"
-
-#: ../lib/gis/get_row.c:1114
-#, fuzzy
-msgid "Unable to realloc buffer"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/gis/get_window.c:67 ../lib/gis/get_window.c:85
-#, c-format
-msgid ""
-"region for current mapset %s\n"
-"run \"g.region\""
-msgstr ""
-
-#: ../lib/gis/get_window.c:120
-#, c-format
-msgid "default region %s"
-msgstr ""
-
-#: ../lib/gis/get_window.c:141
-msgid "is not set"
-msgstr ""
-
-#: ../lib/gis/get_window.c:150
-#, c-format
-msgid ""
-"is invalid\n"
-"%s"
-msgstr ""
-
-#: ../lib/gis/gishelp.c:45
-#, c-format
-msgid "one moment...\n"
-msgstr ""
-
-#: ../lib/gis/gishelp.c:49
-#, c-format
-msgid "No help available for command [%s]\n"
-msgstr ""
-
-#: ../lib/gis/opencell.c:105
-#, fuzzy, c-format
-msgid "Unable to open raster map <%s@%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gis/opencell.c:171
-#, fuzzy, c-format
-msgid "Unable to find <%s@%s>"
-msgstr "[%s] لم يتم ايجاد"
-
-#: ../lib/gis/opencell.c:188
-#, c-format
-msgid ""
-"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
-"%s> which does not exist"
-msgstr ""
-
-#: ../lib/gis/opencell.c:212
-#, fuzzy, c-format
-msgid "Raster map <%s@%s>: format field in header file invalid"
-msgstr "[%s in %s] الملف الرئيسى غير صالح للخريطة الأساس\n"
-
-#: ../lib/gis/opencell.c:219
-#, c-format
-msgid ""
-"Raster map <%s@%s> is in different projection than current region. Found "
-"raster map <%s@%s>, should be <%s>."
-msgstr ""
-
-#: ../lib/gis/opencell.c:226
-#, c-format
-msgid "Raster map <%s@%s> is in different zone (%d) than current region (%d)"
-msgstr ""
-
-#: ../lib/gis/opencell.c:233
-#, fuzzy, c-format
-msgid "Raster map <%s@%s>: bytes per cell (%d) too large"
-msgstr "[%s] فى [%s] - بيتة لكل خلية (%d) قيم كبيرة"
-
-#: ../lib/gis/opencell.c:262
-#, c-format
-msgid "map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"
-msgstr ""
-
-#: ../lib/gis/opencell.c:642
-#, fuzzy, c-format
-msgid "Raster map <%s> is not in the current mapset (%s)"
-msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
-
-#: ../lib/gis/opencell.c:649
-#, fuzzy, c-format
-msgid "<%s> is an illegal file name"
-msgstr "%s اسم ملف غير صحيح"
-
-#: ../lib/gis/opencell.c:655
-#, fuzzy, c-format
-msgid "<%s>: bad mapset"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/opencell.c:666
-#, fuzzy, c-format
-msgid "No temp files available: %s"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/opencell.c:736
-#, fuzzy
-msgid ""
-"Unable to write embedded null values for raster map open for random access"
-msgstr "لم يمكن كتابة قيم منعدمة لخريطة مفتوحة لاتصال عشوائى"
-
-#: ../lib/gis/opencell.c:767
-msgid "G__open_raster_new(): no temp files available"
-msgstr ""
-
-#: ../lib/gis/opencell.c:941
-msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
-msgstr ""
-
-#: ../lib/gis/opencell.c:976 ../lib/gis/opencell.c:1064
-#, fuzzy, c-format
-msgid "Unable to find '%s' in '%s'"
-msgstr "[%s] لم يتم ايجاد"
-
-#: ../lib/gis/opencell.c:1009
-#, fuzzy, c-format
-msgid "Raster map <%s> not found in mapset <%s>"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/gis/opencell.c:1011 ../lib/gis/legal_name.c:94
-#: ../lib/gis/legal_name.c:97 ../lib/gpde/N_arrays_io.c:56
-#: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
-#: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
-#: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
-#: ../lib/ogsf/Gs3.c:767 ../lib/ogsf/Gs3.c:837 ../lib/ogsf/Gp3.c:54
-#, fuzzy, c-format
-msgid "Raster map <%s> not found"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/gis/opencell.c:1070
-#, fuzzy, c-format
-msgid "Unable to find '%s'"
-msgstr "[%s] لم يتم ايجاد"
-
-#: ../lib/gis/opencell.c:1075
-#, fuzzy, c-format
-msgid "Unable to open '%s'"
-msgstr " %s لم يمكن فتح"
-
-#: ../lib/gis/opencell.c:1085
-#, fuzzy, c-format
-msgid "Invalid type: field '%s' in file '%s'"
-msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
-
-#: ../lib/gis/opencell.c:1099
-#, fuzzy, c-format
-msgid "Raster map <%s> is not xdr: byte_order: %s"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/gis/opencell.c:1179
-msgid ""
-"G_set_quant_rules() can be called only for raster maps opened for reading"
-msgstr ""
-
-#: ../lib/gis/proj3.c:64 ../lib/vector/Vlib/header.c:512
-msgid "Unknown projection"
-msgstr "مسقط غير معروف"
-
-#: ../lib/gis/put_cellhd.c:26
-#, c-format
-msgid "Unable to create header file for [%s]"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gis/raster_metadata.c:111
-#, fuzzy, c-format
-msgid "Can't read %s for [%s in %s]"
-msgstr "لم يمكن قراءة الملف الرئيسى [%s in %s]\n"
-
-#: ../lib/gis/raster_metadata.c:144
-#, fuzzy, c-format
-msgid "Can't create %s metadata file for [%s in %s]"
-msgstr "لم يمكن قراءة الملف الرئيسى [%s in %s]\n"
-
-#: ../lib/gis/env.c:242
-msgid "GISRC - variable not set"
-msgstr "GISRC - المتغير لم يحدد بشكل صحيح"
-
-#: ../lib/gis/env.c:274
-#, fuzzy, c-format
-msgid "G_getenv(): Variable %s not set"
-msgstr "GISRC - المتغير لم يحدد بشكل صحيح"
-
-#: ../lib/gis/env.c:300
-#, c-format
-msgid "%s not set"
-msgstr "%s لم يحدد"
-
-#: ../lib/gis/color_read.c:116
-#, c-format
-msgid "color support for [%s] in mapset [%s] %s"
-msgstr "دعم اللون [%s] مجموعة الخرائط [%s] %s"
-
-#: ../lib/gis/quant_io.c:89
-#, c-format
-msgid "The floating data range for %s@%s is empty"
-msgstr "فارغة %s@%s نطاق البيانات العشرية ل"
-
-#: ../lib/gis/quant_io.c:99
-#, c-format
-msgid "The integer data range for %s@%s is empty"
-msgstr "فارغة %s@%s نطاق البيانات الصحيحة ل"
-
-#: ../lib/gis/quant_io.c:168
-#, c-format
-msgid "quantization file [%s] in mapset [%s] %s"
-msgstr "[%s] ملف التقسيم الكمى [%s]فى مجموعة الخرائط %s"
-
-#: ../lib/gis/get_cellhd.c:71 ../lib/gis/get_cellhd.c:100
-#, fuzzy, c-format
-msgid "Unable to read header file for raster map <%s@%s>."
-msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
-
-#: ../lib/gis/get_cellhd.c:74
-#, fuzzy, c-format
-msgid " It is a reclass of raster map <%s@%s> "
-msgstr "أعادة تصنيف [%s in %s]"
-
-#: ../lib/gis/get_cellhd.c:78
-#, fuzzy, c-format
-msgid "which is missing."
-msgstr "وهى مفقودة"
-
-#: ../lib/gis/get_cellhd.c:80
-#, fuzzy, c-format
-msgid "whose header file can't be opened."
-msgstr "ولا يمكن فتح ملفها الرئيسى"
-
-#: ../lib/gis/get_cellhd.c:88
-#, fuzzy, c-format
-msgid "Unable to open header file for raster map <%s@%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/gis/get_cellhd.c:105
-#, fuzzy, c-format
-msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr "[%s in %s] الملف الرئيسى غير صالح للخريطة الأساس\n"
-
-#: ../lib/gis/get_cellhd.c:109
-#, fuzzy, c-format
-msgid " Invalid format."
-msgstr "تشكيل غير صالح\n"
-
-#: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
-#: ../lib/gis/ask_cell.c:96
-msgid "with titles"
-msgstr "بعناوين"
-
-#: ../lib/gis/ask_cell.c:110
-msgid "(no title)"
-msgstr "(بدون عنوان)"
-
-#: ../lib/gis/put_title.c:29
-#, c-format
-msgid "category information for [%s] in [%s] missing or invalid"
-msgstr "[%s] بيانات الفئة مفقودة  أو غير صالحة ل [%s] فى"
-
-#: ../lib/gis/put_title.c:39
-#, c-format
-msgid "G_put_title - can't create a temp file"
-msgstr "لم يمكن أنشاء ملف مؤقت"
-
-#: ../lib/gis/put_title.c:56
-#, c-format
-msgid "category information for [%s] in [%s] invalid"
-msgstr "[%s] بيانات الفئة  غير صالحة ل [%s] فى"
-
-#: ../lib/gis/put_title.c:64
-#, c-format
-msgid "G_put_title - can't reopen temp file"
-msgstr "لم يمكن أعادة قراءة الملف المؤقت"
-
-#: ../lib/gis/put_title.c:72
-#, c-format
-msgid "can't write category information for [%s] in [%s]"
-msgstr "[%s] لم يمكن كتابة بيانات الفئة  ل [%s] فى"
-
-#: ../lib/gis/sample.c:71
-#, fuzzy
-msgid "Unknown interpolation type"
-msgstr "مسقط غير معروف"
-
-#: ../lib/gis/sample.c:284
-msgid "\"no data\" label found; setting to zero"
-msgstr ""
-
-#: ../lib/gis/sample.c:299
-#, fuzzy
-msgid "Problem reading raster map"
-msgstr "للخرائط الراسترية الموجودة %d\n"
-
-#: ../lib/gis/location.c:44
-#, fuzzy, c-format
-msgid "LOCATION << %s >> not available"
-msgstr "غير متاح << %s >> الموقع"
-
-#: ../lib/gis/get_ell_name.c:42
-#, c-format
-msgid ""
-"\n"
-"Please specify ellipsoid name\n"
-msgstr ""
-"\n"
-"ellipsoid تحديد اسم ال \n"
-
-#: ../lib/gis/get_ell_name.c:44
-#, c-format
-msgid "Enter 'list' for the list of available ellipsoids\n"
-msgstr "'list' لعرض ما هو متاح أكتب\n"
-
-#: ../lib/gis/get_ell_name.c:67
-#, c-format
-msgid ""
-"\n"
-"invalid ellipsoid\n"
-msgstr ""
-"\n"
-"ellipsoid غير صالح\n"
-
-#: ../lib/gis/put_row.c:215
-#, c-format
-msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
-msgstr ""
-
-#: ../lib/gis/put_row.c:251
-#, c-format
-msgid "%s: map [%s] not open for write - request ignored"
-msgstr ""
-
-#: ../lib/gis/put_row.c:259
-#, c-format
-msgid "%s: map [%s] not open for random write - request ignored"
-msgstr ""
-
-#: ../lib/gis/put_row.c:266
-#, c-format
-msgid "%s: map [%s] not open for sequential write - request ignored"
-msgstr ""
-
-#: ../lib/gis/put_row.c:270
-#, c-format
-msgid "%s: unopened file descriptor - request ignored"
-msgstr ""
-
-#: ../lib/gis/put_row.c:310
-#, c-format
-msgid "map [%s] - unable to write row %d"
-msgstr "[%s]للخريطة-  %d لم يمكن كتابة الصف "
-
-#: ../lib/gis/put_row.c:393
-#, c-format
-msgid "xdr_float failed for index %d of row %d"
-msgstr ""
-
-#: ../lib/gis/put_row.c:419
-#, c-format
-msgid "xdr_double failed for index %d of row %d"
-msgstr ""
-
-#: ../lib/gis/put_row.c:754
-#, fuzzy, c-format
-msgid "unable to find a temporary null file %s"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
-
-#: ../lib/gis/put_row.c:776 ../lib/gis/put_row.c:781
-#, c-format
-msgid "error writing null row %d"
-msgstr "%d خطأ فى كتابة الصف المنعدم"
-
-#: ../lib/gis/error.c:262
-msgid "WARNING: "
-msgstr "تحذير:"
-
-#: ../lib/gis/error.c:263
-msgid "ERROR: "
-msgstr "خطــــأ:"
-
-#: ../lib/gis/timestamp.c:282
-#, c-format
-msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr ""
-
-#: ../lib/gis/timestamp.c:291
-#, c-format
-msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr ""
-
-#: ../lib/gis/timestamp.c:313
-#, c-format
-msgid "Can't open timestamp file for %s map %s in mapset %s"
-msgstr ""
-
-#: ../lib/gis/timestamp.c:322
-#, c-format
-msgid "Invalid timestamp file for %s map %s in mapset %s"
-msgstr ""
-
-#: ../lib/gis/open_misc.c:45
-#, c-format
-msgid "G__open_misc(read): mapset <%s> doesn't match xmapset <%s>"
-msgstr ""
-
-#: ../lib/gis/open_misc.c:67
-#, c-format
-msgid "G__open_misc(write): xmapset <%s> != G_mapset() <%s>"
-msgstr ""
-
-#: ../lib/gis/reclass.c:145
-#, c-format
-msgid "Too many reclass categories for [%s in %s]"
-msgstr "[%s فى %s]فئات معادة التصنيف متعددة "
-
-#: ../lib/gis/reclass.c:148
-#, c-format
-msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr "[%s فى %s]تشكيل أعادة التصنيف غير صحيح فى ملف العنوان الرئيسى"
-
-#: ../lib/gis/reclass.c:238
-msgid "Illegal reclass request"
-msgstr "طلب اعادة تصنيف غير صحيح"
-
-#: ../lib/gis/reclass.c:243
-msgid "Illegal reclass type"
-msgstr "نوع اعادة تصنيف غير صحيح"
-
-#: ../lib/gis/reclass.c:249
-#, c-format
-msgid "Unable to create header file for [%s in %s]"
-msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
-
-#: ../lib/gis/reclass.c:297
-#, c-format
-msgid "Unable to create dependency file in [%s in %s]"
-msgstr "[%s فى %s]لم يمكن انشاء ملف الأستقلال "
-
-#: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:92
-#, c-format
-msgid ""
-"Module built against version %s but trying to use version %s. You need to "
-"rebuild GRASS GIS or untangle multiple installations."
-msgstr ""
-
-#: ../lib/gis/gisinit.c:65
-#, c-format
-msgid "MAPSET %s - permission denied"
-msgstr "MAPSET %s - غير مصرح"
-
-#: ../lib/gis/gisinit.c:68
-#, fuzzy, c-format
-msgid "MAPSET %s not found at %s"
-msgstr "MAPSET %s غير موجودة"
-
-#: ../lib/gis/gisinit.c:113
-#, fuzzy
-msgid "System not initialized. Programmer forgot to call G_gisinit()."
-msgstr " خطأ: لم يبدأ النظام. معد البرنامج نسي إستدعاء برنامج بدءالنظام ()\n"
-
-#: ../lib/gis/get_projinfo.c:33 ../lib/gis/get_projinfo.c:60
-#, c-format
-msgid "<%s> file not found for location <%s>"
-msgstr ""
-
-#: ../lib/gis/get_projinfo.c:39 ../lib/gis/get_projinfo.c:66
-#, c-format
-msgid "ERROR in reading <%s> file for location <%s>"
-msgstr ""
-
-#: ../lib/gis/cats.c:381
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
-
-#: ../lib/gis/cats.c:417
-#, c-format
-msgid "category support for vector map [%s] in mapset [%s] %s"
-msgstr "دعم الفئة لملف فيكتورى [%s] مجموعة الخرائط [%s] %s"
-
-#: ../lib/gis/history.c:132 ../lib/g3d/g3dhistory.c:42
-#, c-format
-msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-
-#: ../lib/gis/history.c:180
-#, c-format
-msgid "can't write history information for [%s]"
-msgstr ""
-
-#: ../lib/gis/history.c:263
-msgid "Not enough room in history file to record command line."
-msgstr ""
-
-#: ../lib/gis/history.c:285
-msgid "Not enough room in history file for command line (truncated)."
-msgstr ""
-
-#: ../lib/gis/mapset_msc.c:60
-#, fuzzy, c-format
-msgid "Unable to make mapset element %s (%s): %s"
-msgstr "لم يتم عمل عنصر مجموعة الخرائط%s (%s)"
-
-#: ../lib/gis/mapset_msc.c:64
-#, fuzzy, c-format
-msgid "Unable to access mapset element %s (%s): %s"
-msgstr "لم يتم عمل عنصر مجموعة الخرائط%s (%s)"
-
-#: ../lib/gis/home.c:39
-msgid "unable to determine user's home directory"
-msgstr "لم يمكن تحديد مكان ملفات المستخدم"
-
-#: ../lib/gis/gdal.c:66
-#, fuzzy, c-format
-msgid "Unable to locate symbol <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/gis/gdal.c:118
-#, fuzzy
-msgid "Unable to load GDAL library"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+#: ../lib/gis/proj2.c:46
+msgid "Latitude-Longitude"
+msgstr "خطوط الطول والعرض"
+
+#: ../lib/gis/proj2.c:48
+msgid "Other Projection"
+msgstr "مساقط أخرى"
 
 #: ../lib/gis/color_rules.c:110
 msgid "syntax error"
@@ -964,219 +1659,160 @@ msgstr ""
 msgid "Unable to load color rules <%s>"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/gis/list.c:114
-#, fuzzy, c-format
-msgid "no %s files available in current mapset\n"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/list.c:117
-#, fuzzy, c-format
-msgid "no %s files available in mapset <%s>\n"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/list.c:132
-#, c-format
-msgid "hit RETURN to continue -->"
-msgstr ""
-
-#: ../lib/gis/list.c:183
-#, fuzzy, c-format
-msgid "%s files available in mapset <%s>:\n"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/list.c:254
+#: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
 #, fuzzy
-msgid "G_list: Unknown element type"
-msgstr "مسقط غير معروف"
+msgid "Unable to seek"
+msgstr " %s لم يمكن فتح"
 
-#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#: ../lib/gis/seek.c:56
+#, fuzzy
+msgid "Seek offset out of range"
+msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
+
+#: ../lib/gis/color_read.c:116
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr "دعم اللون [%s] مجموعة الخرائط [%s] %s"
+
+#: ../lib/gis/put_title.c:29
+#, c-format
+msgid "category information for [%s] in [%s] missing or invalid"
+msgstr "[%s] بيانات الفئة مفقودة  أو غير صالحة ل [%s] فى"
+
+#: ../lib/gis/put_title.c:39
+#, c-format
+msgid "G_put_title - can't create a temp file"
+msgstr "لم يمكن أنشاء ملف مؤقت"
+
+#: ../lib/gis/put_title.c:56
+#, c-format
+msgid "category information for [%s] in [%s] invalid"
+msgstr "[%s] بيانات الفئة  غير صالحة ل [%s] فى"
+
+#: ../lib/gis/put_title.c:64
+#, c-format
+msgid "G_put_title - can't reopen temp file"
+msgstr "لم يمكن أعادة قراءة الملف المؤقت"
+
+#: ../lib/gis/put_title.c:72
+#, c-format
+msgid "can't write category information for [%s] in [%s]"
+msgstr "[%s] لم يمكن كتابة بيانات الفئة  ل [%s] فى"
+
+#: ../lib/gis/get_row.c:46 ../lib/gis/get_row.c:1048
+#, c-format
+msgid "Reading raster map <%s@%s> request for row %d is outside region"
+msgstr ""
+
+#: ../lib/gis/get_row.c:324
+#, c-format
+msgid "cell_values_float: xdr_float failed for index %d"
+msgstr ""
+
+#: ../lib/gis/get_row.c:365
+#, c-format
+msgid "cell_values_double: xdr_double failed for index %d"
+msgstr ""
+
+#: ../lib/gis/get_row.c:621
 #, fuzzy, c-format
-msgid "Current region rows: %d, cols: %d"
-msgstr "هو الصف المنعدم الحالى فى الذاكرة %d\n"
+msgid "Error reading compressed map <%s@%s>, row %d"
+msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
 
-#: ../lib/gis/alloc.c:45
-#, c-format
-msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
-msgstr ""
+#: ../lib/gis/get_row.c:624
+#, fuzzy, c-format
+msgid "Error reading map <%s@%s>, row %d"
+msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
 
-#: ../lib/gis/alloc.c:85
-#, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
-msgstr ""
+#: ../lib/gis/get_row.c:1030 ../lib/gis/get_row.c:1035
+#, fuzzy, c-format
+msgid "Error reading null row %d"
+msgstr "%d خطأ فى كتابة الصف المنعدم"
 
-#: ../lib/gis/alloc.c:128
-#, c-format
-msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
-msgstr ""
+#: ../lib/gis/get_row.c:1114
+#, fuzzy
+msgid "Unable to realloc buffer"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
 
-#: ../lib/gis/closecell.c:221
+#: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:92
 #, c-format
 msgid ""
-"closecell: can't move %s\n"
-"to null file %s"
+"Module built against version %s but trying to use version %s. You need to "
+"rebuild GRASS GIS or untangle multiple installations."
 msgstr ""
 
-#: ../lib/gis/closecell.c:243
+#: ../lib/gis/gisinit.c:65
 #, c-format
-msgid "Error writing floating point format file for map %s"
-msgstr ""
+msgid "MAPSET %s - permission denied"
+msgstr "MAPSET %s - غير مصرح"
 
-#: ../lib/gis/closecell.c:292
+#: ../lib/gis/gisinit.c:68
+#, fuzzy, c-format
+msgid "MAPSET %s not found at %s"
+msgstr "MAPSET %s غير موجودة"
+
+#: ../lib/gis/gisinit.c:113
+#, fuzzy
+msgid "System not initialized. Programmer forgot to call G_gisinit()."
+msgstr " خطأ: لم يبدأ النظام. معد البرنامج نسي إستدعاء برنامج بدءالنظام ()\n"
+
+#: ../lib/gis/mapset_msc.c:60
+#, fuzzy, c-format
+msgid "Unable to make mapset element %s (%s): %s"
+msgstr "لم يتم عمل عنصر مجموعة الخرائط%s (%s)"
+
+#: ../lib/gis/mapset_msc.c:64
+#, fuzzy, c-format
+msgid "Unable to access mapset element %s (%s): %s"
+msgstr "لم يتم عمل عنصر مجموعة الخرائط%s (%s)"
+
+#: ../lib/gis/reclass.c:145
 #, c-format
-msgid ""
-"closecell: can't move %s\n"
-"to cell file %s"
-msgstr ""
+msgid "Too many reclass categories for [%s in %s]"
+msgstr "[%s فى %s]فئات معادة التصنيف متعددة "
 
-#: ../lib/gis/closecell.c:347
-#, fuzzy
-msgid "unable to write quant file!"
-msgstr "لم يتم انشاء عملية جديدة"
+#: ../lib/gis/reclass.c:148
+#, c-format
+msgid "Illegal reclass format in header file for [%s in %s]"
+msgstr "[%s فى %s]تشكيل أعادة التصنيف غير صحيح فى ملف العنوان الرئيسى"
 
-#: ../lib/gis/closecell.c:398
-#, fuzzy
-msgid "unable to write f_format file for CELL maps"
+#: ../lib/gis/reclass.c:238
+msgid "Illegal reclass request"
+msgstr "طلب اعادة تصنيف غير صحيح"
+
+#: ../lib/gis/reclass.c:243
+msgid "Illegal reclass type"
+msgstr "نوع اعادة تصنيف غير صحيح"
+
+#: ../lib/gis/reclass.c:249
+#, c-format
+msgid "Unable to create header file for [%s in %s]"
+msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
+
+#: ../lib/gis/reclass.c:297
+#, c-format
+msgid "Unable to create dependency file in [%s in %s]"
+msgstr "[%s فى %s]لم يمكن انشاء ملف الأستقلال "
+
+#: ../lib/gis/put_cellhd.c:26
+#, c-format
+msgid "Unable to create header file for [%s]"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/gis/rd_cellhd.c:143
-msgid "duplicate projection field"
-msgstr "مضاعفة حقل الأسقاط"
+#: ../lib/gis/ls.c:96
+#, fuzzy, c-format
+msgid "Unable to open directory %s"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/gis/rd_cellhd.c:153
-msgid "duplicate zone field"
-msgstr "مضاعفة حقل النطاق"
-
-#: ../lib/gis/rd_cellhd.c:163
-msgid "projection field missing"
-msgstr "حقل الأسقاط مفقود"
-
-#: ../lib/gis/rd_cellhd.c:165
-msgid "zone field missing"
-msgstr "حقل النطاق مفقود"
-
-#: ../lib/gis/rd_cellhd.c:187
-msgid "duplicate north field"
-msgstr "مضاعفة حقل الشمال"
-
-#: ../lib/gis/rd_cellhd.c:195
-msgid "duplicate south field"
-msgstr "مضاعفة حقل الجنوب"
-
-#: ../lib/gis/rd_cellhd.c:203
-msgid "duplicate east field"
-msgstr "مضاعفة حقل الشرق"
-
-#: ../lib/gis/rd_cellhd.c:211
-msgid "duplicate west field"
-msgstr "مضاعفة حقل الغرب"
-
-#: ../lib/gis/rd_cellhd.c:219
-msgid "duplicate top field"
-msgstr "مضاعفة حقل القمة"
-
-#: ../lib/gis/rd_cellhd.c:227
-msgid "duplicate bottom field"
-msgstr "مضاعفة حقل القاع"
-
-#: ../lib/gis/rd_cellhd.c:235
-msgid "duplicate e-w resolution field"
-msgstr "مضاعفة حقل  دقة وضوح الشرق-غرب"
-
-#: ../lib/gis/rd_cellhd.c:245
-msgid "duplicate 3D e-w resolution field"
-msgstr "مضاعفة حقل  دقة وضوح الشرق-غرب الثلاثية الأبعاد "
-
-#: ../lib/gis/rd_cellhd.c:255
-msgid "duplicate n-s resolution field"
-msgstr "مضاعفة حقل  دقة وضوح الشمال-جنوب"
-
-#: ../lib/gis/rd_cellhd.c:265
-msgid "duplicate 3D n-s resolution field"
-msgstr "مضاعفة حقل  دقة وضوح الشمال-جنوب الثلاثية الأبعاد"
-
-#: ../lib/gis/rd_cellhd.c:275
-msgid "duplicate t-b resolution field"
-msgstr "مضاعفة حقل  دقة وضوح القمة-قاع"
-
-#: ../lib/gis/rd_cellhd.c:285
-msgid "duplicate rows field"
-msgstr "مضاعفة حقل  الصفوف"
-
-#: ../lib/gis/rd_cellhd.c:295
-msgid "duplicate 3D rows field"
-msgstr "مضاعفة حقل  الصفوف ثلاثية الأبعاد"
-
-#: ../lib/gis/rd_cellhd.c:305
-msgid "duplicate cols field"
-msgstr "مضاعفة حقل  الأعمدة "
-
-#: ../lib/gis/rd_cellhd.c:315
-msgid "duplicate 3D cols field"
-msgstr "مضاعفة حقل  الأعمدة ثلاثية الأبعاد"
-
-#: ../lib/gis/rd_cellhd.c:325
-msgid "duplicate depths field"
-msgstr "مضاعفة حقل  الأعماق"
-
-#: ../lib/gis/rd_cellhd.c:335
-msgid "duplicate format field"
-msgstr "مضاعفة حقل"
-
-#: ../lib/gis/rd_cellhd.c:343
-msgid "duplicate compressed field"
-msgstr "مضاعفة الحقل المضغوط"
-
-#: ../lib/gis/rd_cellhd.c:354
-msgid "north field missing"
-msgstr "حقل الشمال مفقود"
-
-#: ../lib/gis/rd_cellhd.c:356
-msgid "south field missing"
-msgstr "حقل الجنوب مفقود"
-
-#: ../lib/gis/rd_cellhd.c:358
-msgid "west field missing"
-msgstr "حقل الغرب مفقود"
-
-#: ../lib/gis/rd_cellhd.c:360
-msgid "east field missing"
-msgstr "حقل الشرق مفقود"
-
-#: ../lib/gis/rd_cellhd.c:362
-msgid "cols field missing"
-msgstr "حقل الأعمدة مفقود"
-
-#: ../lib/gis/rd_cellhd.c:364
-msgid "rows field missing"
-msgstr "حقل الصفوف مفقود"
-
-#: ../lib/gis/rd_cellhd.c:375
-msgid "ewres3 field missing"
-msgstr "حقل دقة وضوح الشرق-غرب مفقود"
-
-#: ../lib/gis/rd_cellhd.c:377
-msgid "nsres3 field missing"
-msgstr "حقل دقة وضوح الشمال-جنوب مفقود"
-
-#: ../lib/gis/rd_cellhd.c:379
-msgid "cols3 field missing"
-msgstr "حقل الأعمدة مفقود"
-
-#: ../lib/gis/rd_cellhd.c:381
-msgid "rows3 field missing"
-msgstr "حقل الصفوف مفقود"
-
-#: ../lib/gis/rd_cellhd.c:438
+#: ../lib/gis/datum.c:160
 #, c-format
-msgid "line %d: <%s>"
-msgstr "خط %d: <%s>"
+msgid "unable to open datum table file: %s"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
 
-#: ../lib/gis/distance.c:160
+#: ../lib/gis/datum.c:181
 #, c-format
-msgid ""
-"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
-"%f)(%f,%f)"
-msgstr ""
+msgid "error in datum table file, line %d"
+msgstr "datum  فى ملف جدول %d يوجد خطأ فى الخط "
 
 #: ../lib/gis/ask.c:341
 msgid "to cancel request"
@@ -1261,175 +1897,15 @@ msgstr ""
 msgid "ask: can't happen"
 msgstr "لا يمكن حدوثه"
 
-#: ../lib/gis/proj2.c:46
-msgid "Latitude-Longitude"
-msgstr "خطوط الطول والعرض"
-
-#: ../lib/gis/proj2.c:48
-msgid "Other Projection"
-msgstr "مساقط أخرى"
-
-#: ../lib/gis/set_window.c:76
-msgid ""
-"G_set_window(): projection/zone differs from that of currently open raster "
-"maps"
-msgstr ""
-
-#: ../lib/gis/get_ellipse.c:85
-#, fuzzy, c-format
-msgid "Unable to open file %s in <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/gis/get_ellipse.c:283 ../lib/proj/ellipse.c:215
-#, fuzzy, c-format
-msgid "Unable to open ellipsoid table file <%s>"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
-
-#: ../lib/gis/get_ellipse.c:336 ../lib/proj/ellipse.c:269
+#: ../lib/gis/cats.c:381
 #, c-format
-msgid "Lines%s of ellipsoid table file <%s> are invalid"
-msgstr ""
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
 
-#: ../lib/gis/get_ellipse.c:338 ../lib/proj/ellipse.c:268
+#: ../lib/gis/cats.c:417
 #, c-format
-msgid "Line%s of ellipsoid table file <%s> is invalid"
-msgstr ""
-
-#: ../lib/gis/get_ellipse.c:358 ../lib/gis/get_ellipse.c:384
-#, fuzzy, c-format
-msgid "Invalid a: field '%s' in file %s in <%s>"
-msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
-
-#: ../lib/gis/get_ellipse.c:371
-#, fuzzy, c-format
-msgid "Invalid ellipsoid '%s' in file %s in <%s>"
-msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
-
-#: ../lib/gis/get_ellipse.c:388
-#, fuzzy, c-format
-msgid "Invalid es: field '%s' in file %s in <%s>"
-msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
-
-#: ../lib/gis/get_ellipse.c:402
-#, fuzzy, c-format
-msgid "No ellipsoid info given in file %s in <%s>"
-msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
-
-#: ../lib/gis/null_val.c:91
-msgid "EmbedGivenNulls: wrong data type!"
-msgstr ""
-
-#: ../lib/gis/null_val.c:112
-msgid "Null values have not been initialized. "
-msgstr ""
-
-#: ../lib/gis/null_val.c:113
-msgid "G_gisinit() must be called first. "
-msgstr ""
-
-#: ../lib/gis/null_val.c:114
-msgid "Please advise GRASS developers of this error.\n"
-msgstr ""
-
-#: ../lib/gis/null_val.c:223
-msgid "G_set_null_value: wrong data type!"
-msgstr ""
-
-#: ../lib/gis/make_colr.c:40
-#, fuzzy, c-format
-msgid "The raster map <%s@%s> is empty"
-msgstr " فارغة %s@%s الخريطة الراسترية"
-
-#: ../lib/gis/make_colr.c:48
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Color table needed for file [%s] in mapset [%s].\n"
-msgstr ""
-
-#: ../lib/gis/make_colr.c:51
-#, c-format
-msgid ""
-"\n"
-"Please identify the type desired:\n"
-msgstr ""
-
-#: ../lib/gis/make_colr.c:52
-#, c-format
-msgid "    1:  Random colors\n"
-msgstr "    1: ألوان عشوائية \n"
-
-#: ../lib/gis/make_colr.c:53
-#, c-format
-msgid "    2:  Red, green, and blue color ramps\n"
-msgstr "    2:  أحمر, أخضر, أزرق\n"
-
-#: ../lib/gis/make_colr.c:54
-#, c-format
-msgid "    3:  Color wave\n"
-msgstr "    3:  موجات لونية\n"
-
-#: ../lib/gis/make_colr.c:55
-#, c-format
-msgid "    4:  Gray scale\n"
-msgstr "    4:  مقياس رمادى\n"
-
-#: ../lib/gis/make_colr.c:56
-#, c-format
-msgid "    5:  Aspect\n"
-msgstr "    5:  لون رصاصى أتجاهى\n"
-
-#: ../lib/gis/make_colr.c:57
-#, c-format
-msgid "    6:  Rainbow colors\n"
-msgstr "    6:  ألوان قوس قزح\n"
-
-#: ../lib/gis/make_colr.c:58
-#, c-format
-msgid "    7:  Red through yellow to green\n"
-msgstr ""
-
-#: ../lib/gis/make_colr.c:59
-#, c-format
-msgid "    8:  Green through yellow to red\n"
-msgstr ""
-
-#: ../lib/gis/make_colr.c:60
-#, c-format
-msgid "RETURN  quit\n"
-msgstr "RETURN للخروج اضغط\n"
-
-#: ../lib/gis/make_colr.c:90
-#, c-format
-msgid ""
-"\n"
-"%s invalid; Try again > "
-msgstr ""
-
-#: ../lib/gis/open.c:62
-#, c-format
-msgid "G__open(read): mapset <%s> doesn't match xmapset <%s>"
-msgstr ""
-
-#: ../lib/gis/open.c:84
-#, c-format
-msgid "G__open(write): xmapset <%s> != G_mapset() <%s>"
-msgstr ""
-
-#: ../lib/gis/find_file.c:74
-#, c-format
-msgid "'%s/%s' was found in more mapsets (also found in <%s>)"
-msgstr ""
-
-#: ../lib/gis/find_file.c:82
-#, fuzzy, c-format
-msgid "Using <%s@%s>"
-msgstr "[%s] لم يتم ايجاد"
-
-#: ../lib/gis/auto_mask.c:64
-msgid "Unable to open automatic MASK file"
-msgstr "لم يمكن فتح ملف القناع الأتوماتيكى"
+msgid "category support for vector map [%s] in mapset [%s] %s"
+msgstr "دعم الفئة لملف فيكتورى [%s] مجموعة الخرائط [%s] %s"
 
 #: ../lib/gis/quant_rw.c:206
 #, c-format
@@ -1441,10 +1917,9 @@ msgstr "صحيحة فلا يمكن كتابة قواعد التقسيم %s أع�
 msgid "Cannot write quant rules for map %s"
 msgstr "لم يمكن كتابة قواعد التقسيم لها %s"
 
-#: ../lib/gis/format.c:157
-#, c-format
-msgid "Fail of initial read of compressed file [%s in %s]"
-msgstr "خطأ قراءة ملف مضغوط [%s in %s]"
+#: ../lib/gis/unix_socks.c:102
+msgid "Unable to get GIS_LOCK environment variable value"
+msgstr ""
 
 #: ../lib/gis/adj_cellhd.c:47 ../lib/gis/adj_cellhd.c:199
 msgid "Illegal n-s resolution value"
@@ -1535,6 +2010,40 @@ msgstr "قيمة أعماق غير صحيحة"
 msgid "Top must be larger than Bottom"
 msgstr "الشمال يجب أن يكون أكبر من الجنوب"
 
+#: ../lib/gis/set_window.c:76
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"maps"
+msgstr ""
+
+#: ../lib/gis/home.c:39
+msgid "unable to determine user's home directory"
+msgstr "لم يمكن تحديد مكان ملفات المستخدم"
+
+#: ../lib/gis/null_val.c:91
+msgid "EmbedGivenNulls: wrong data type!"
+msgstr ""
+
+#: ../lib/gis/null_val.c:112
+msgid "Null values have not been initialized. "
+msgstr ""
+
+#: ../lib/gis/null_val.c:113
+msgid "G_gisinit() must be called first. "
+msgstr ""
+
+#: ../lib/gis/null_val.c:114
+msgid "Please advise GRASS developers of this error.\n"
+msgstr ""
+
+#: ../lib/gis/null_val.c:223
+msgid "G_set_null_value: wrong data type!"
+msgstr ""
+
+#: ../lib/gis/proj3.c:64 ../lib/vector/Vlib/header.c:512
+msgid "Unknown projection"
+msgstr "مسقط غير معروف"
+
 #: ../lib/gis/view.c:177
 #, c-format
 msgid "Unable to open %s for writing"
@@ -1560,6 +2069,628 @@ msgstr ""
 msgid ""
 " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
+
+#: ../lib/gis/error.c:262
+msgid "WARNING: "
+msgstr "تحذير:"
+
+#: ../lib/gis/error.c:263
+msgid "ERROR: "
+msgstr "خطــــأ:"
+
+#: ../lib/gis/legal_name.c:39
+#, c-format
+msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgstr ""
+
+#: ../lib/gis/legal_name.c:47
+#, fuzzy, c-format
+msgid "Illegal filename. Character <%c> not allowed.\n"
+msgstr " غير مسموح به والاسم غير صحيح <%c> الحرف"
+
+#: ../lib/gis/legal_name.c:77 ../lib/gis/legal_name.c:81
+#, fuzzy, c-format
+msgid "Output raster map name <%s> is not valid map name"
+msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
+
+#: ../lib/gis/legal_name.c:118 ../lib/gis/legal_name.c:122
+#, fuzzy, c-format
+msgid "Output raster map <%s> is used as input"
+msgstr "مستخدم كمدخل '%s' الفيكتور المخرج"
+
+#: ../lib/gis/mask_info.c:40
+#, c-format
+msgid "<%s> in mapset <%s>"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/mask_info.c:43
+msgid "none"
+msgstr "لاشىء"
+
+#: ../lib/gis/mask_info.c:46
+msgid "not known"
+msgstr "غير معروف"
+
+#: ../lib/gis/spawn.c:385
+#, c-format
+msgid "CreateProcess() failed: error = %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:416
+#, c-format
+msgid "G_spawn: unable to redirect descriptor %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:424 ../lib/gis/spawn.c:609
+#, c-format
+msgid "G_spawn: unable to open file %s"
+msgstr ""
+
+#: ../lib/gis/spawn.c:493 ../lib/gis/spawn.c:679
+#, fuzzy
+msgid "Unable to execute command"
+msgstr "لم يتم تنفيذ الأمر"
+
+#: ../lib/gis/spawn.c:518 ../lib/gis/spawn.c:526
+#, c-format
+msgid "G_spawn: unable to restore signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:557
+#, c-format
+msgid "G_spawn: unable to reset signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:566
+#, c-format
+msgid "G_spawn: unable to ignore signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:577
+#, c-format
+msgid "G_spawn: unable to block signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:585
+#, c-format
+msgid "G_spawn: unable to unblock signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:614 ../lib/gis/spawn.c:623
+#, c-format
+msgid "G_spawn: unable to duplicate descriptor %d to %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:656
+#, fuzzy
+msgid "Unable to create a new process"
+msgstr "لم يتم انشاء عملية جديدة"
+
+#: ../lib/gis/spawn.c:671
+#, fuzzy, c-format
+msgid "Unable to change directory to %s"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/gis/system.c:85
+#, fuzzy
+msgid "Can not create a new process!"
+msgstr "لم يتم انشاء عملية جديدة"
+
+#: ../lib/gis/alloc.c:42 ../lib/gis/alloc.c:82 ../lib/gis/alloc.c:125
+#, fuzzy, c-format
+msgid "Current region rows: %d, cols: %d"
+msgstr "هو الصف المنعدم الحالى فى الذاكرة %d\n"
+
+#: ../lib/gis/alloc.c:45
+#, c-format
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
+msgstr ""
+
+#: ../lib/gis/alloc.c:85
+#, c-format
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
+msgstr ""
+
+#: ../lib/gis/alloc.c:128
+#, c-format
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
+msgstr ""
+
+#: ../lib/gis/sample.c:71
+#, fuzzy
+msgid "Unknown interpolation type"
+msgstr "مسقط غير معروف"
+
+#: ../lib/gis/sample.c:284
+msgid "\"no data\" label found; setting to zero"
+msgstr ""
+
+#: ../lib/gis/sample.c:299
+#, fuzzy
+msgid "Problem reading raster map"
+msgstr "للخرائط الراسترية الموجودة %d\n"
+
+#: ../lib/gis/done_msg.c:38
+#, fuzzy, c-format
+msgid "%s complete. %s"
+msgstr "%s تم أنهاء %s\n"
+
+#: ../lib/gis/env.c:242
+msgid "GISRC - variable not set"
+msgstr "GISRC - المتغير لم يحدد بشكل صحيح"
+
+#: ../lib/gis/env.c:274
+#, fuzzy, c-format
+msgid "G_getenv(): Variable %s not set"
+msgstr "GISRC - المتغير لم يحدد بشكل صحيح"
+
+#: ../lib/gis/env.c:300
+#, c-format
+msgid "%s not set"
+msgstr "%s لم يحدد"
+
+#: ../lib/gis/put_row.c:215
+#, c-format
+msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
+msgstr ""
+
+#: ../lib/gis/put_row.c:251
+#, c-format
+msgid "%s: map [%s] not open for write - request ignored"
+msgstr ""
+
+#: ../lib/gis/put_row.c:259
+#, c-format
+msgid "%s: map [%s] not open for random write - request ignored"
+msgstr ""
+
+#: ../lib/gis/put_row.c:266
+#, c-format
+msgid "%s: map [%s] not open for sequential write - request ignored"
+msgstr ""
+
+#: ../lib/gis/put_row.c:270
+#, c-format
+msgid "%s: unopened file descriptor - request ignored"
+msgstr ""
+
+#: ../lib/gis/put_row.c:310
+#, c-format
+msgid "map [%s] - unable to write row %d"
+msgstr "[%s]للخريطة-  %d لم يمكن كتابة الصف "
+
+#: ../lib/gis/put_row.c:393
+#, c-format
+msgid "xdr_float failed for index %d of row %d"
+msgstr ""
+
+#: ../lib/gis/put_row.c:419
+#, c-format
+msgid "xdr_double failed for index %d of row %d"
+msgstr ""
+
+#: ../lib/gis/put_row.c:754
+#, fuzzy, c-format
+msgid "unable to find a temporary null file %s"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/gis/put_row.c:776 ../lib/gis/put_row.c:781
+#, c-format
+msgid "error writing null row %d"
+msgstr "%d خطأ فى كتابة الصف المنعدم"
+
+#: ../lib/gis/range.c:192
+#, c-format
+msgid "can't read f_range file for [%s in %s]"
+msgstr "لم يمكن قراءة ملف النطاف العشرى [%s فى %s]"
+
+#: ../lib/gis/range.c:308
+#, c-format
+msgid "can't read range file for [%s in %s]"
+msgstr "لم يمكن قراءة ملف النطاف [%s فى %s]"
+
+#: ../lib/gis/range.c:359 ../lib/gis/range.c:412
+#, c-format
+msgid "can't write range file for [%s in %s]"
+msgstr "لم يمكن كتابة ملف النطاف [%s فى %s]"
+
+#: ../lib/gis/list.c:114
+#, fuzzy, c-format
+msgid "no %s files available in current mapset\n"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/list.c:117
+#, fuzzy, c-format
+msgid "no %s files available in mapset <%s>\n"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/list.c:132
+#, c-format
+msgid "hit RETURN to continue -->"
+msgstr ""
+
+#: ../lib/gis/list.c:183
+#, fuzzy, c-format
+msgid "%s files available in mapset <%s>:\n"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/list.c:254
+#, fuzzy
+msgid "G_list: Unknown element type"
+msgstr "مسقط غير معروف"
+
+#: ../lib/gis/mapset.c:39
+msgid "MAPSET is not set"
+msgstr "لم يتم اختير مجموعة الخريط"
+
+#: ../lib/gis/mapset.c:57
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "MAPSET %s غير موجودة"
+
+#: ../lib/gis/make_colr.c:40
+#, fuzzy, c-format
+msgid "The raster map <%s@%s> is empty"
+msgstr " فارغة %s@%s الخريطة الراسترية"
+
+#: ../lib/gis/make_colr.c:48
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Color table needed for file [%s] in mapset [%s].\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:51
+#, c-format
+msgid ""
+"\n"
+"Please identify the type desired:\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:52
+#, c-format
+msgid "    1:  Random colors\n"
+msgstr "    1: ألوان عشوائية \n"
+
+#: ../lib/gis/make_colr.c:53
+#, c-format
+msgid "    2:  Red, green, and blue color ramps\n"
+msgstr "    2:  أحمر, أخضر, أزرق\n"
+
+#: ../lib/gis/make_colr.c:54
+#, c-format
+msgid "    3:  Color wave\n"
+msgstr "    3:  موجات لونية\n"
+
+#: ../lib/gis/make_colr.c:55
+#, c-format
+msgid "    4:  Gray scale\n"
+msgstr "    4:  مقياس رمادى\n"
+
+#: ../lib/gis/make_colr.c:56
+#, c-format
+msgid "    5:  Aspect\n"
+msgstr "    5:  لون رصاصى أتجاهى\n"
+
+#: ../lib/gis/make_colr.c:57
+#, c-format
+msgid "    6:  Rainbow colors\n"
+msgstr "    6:  ألوان قوس قزح\n"
+
+#: ../lib/gis/make_colr.c:58
+#, c-format
+msgid "    7:  Red through yellow to green\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:59
+#, c-format
+msgid "    8:  Green through yellow to red\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:60
+#, c-format
+msgid "RETURN  quit\n"
+msgstr "RETURN للخروج اضغط\n"
+
+#: ../lib/gis/make_colr.c:90
+#, c-format
+msgid ""
+"\n"
+"%s invalid; Try again > "
+msgstr ""
+
+#: ../lib/gis/history.c:180
+#, c-format
+msgid "can't write history information for [%s]"
+msgstr ""
+
+#: ../lib/gis/history.c:263
+msgid "Not enough room in history file to record command line."
+msgstr ""
+
+#: ../lib/gis/history.c:285
+msgid "Not enough room in history file for command line (truncated)."
+msgstr ""
+
+#: ../lib/gis/opencell.c:105
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s@%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/gis/opencell.c:171
+#, fuzzy, c-format
+msgid "Unable to find <%s@%s>"
+msgstr "[%s] لم يتم ايجاد"
+
+#: ../lib/gis/opencell.c:188
+#, c-format
+msgid ""
+"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@"
+"%s> which does not exist"
+msgstr ""
+
+#: ../lib/gis/opencell.c:212
+#, fuzzy, c-format
+msgid "Raster map <%s@%s>: format field in header file invalid"
+msgstr "[%s in %s] الملف الرئيسى غير صالح للخريطة الأساس\n"
+
+#: ../lib/gis/opencell.c:219
+#, c-format
+msgid ""
+"Raster map <%s@%s> is in different projection than current region. Found "
+"raster map <%s@%s>, should be <%s>."
+msgstr ""
+
+#: ../lib/gis/opencell.c:226
+#, c-format
+msgid "Raster map <%s@%s> is in different zone (%d) than current region (%d)"
+msgstr ""
+
+#: ../lib/gis/opencell.c:233
+#, fuzzy, c-format
+msgid "Raster map <%s@%s>: bytes per cell (%d) too large"
+msgstr "[%s] فى [%s] - بيتة لكل خلية (%d) قيم كبيرة"
+
+#: ../lib/gis/opencell.c:262
+#, c-format
+msgid "map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"
+msgstr ""
+
+#: ../lib/gis/opencell.c:642
+#, fuzzy, c-format
+msgid "Raster map <%s> is not in the current mapset (%s)"
+msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
+
+#: ../lib/gis/opencell.c:649
+#, fuzzy, c-format
+msgid "<%s> is an illegal file name"
+msgstr "%s اسم ملف غير صحيح"
+
+#: ../lib/gis/opencell.c:655
+#, fuzzy, c-format
+msgid "<%s>: bad mapset"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/opencell.c:666
+#, fuzzy, c-format
+msgid "No temp files available: %s"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/gis/opencell.c:736
+#, fuzzy
+msgid ""
+"Unable to write embedded null values for raster map open for random access"
+msgstr "لم يمكن كتابة قيم منعدمة لخريطة مفتوحة لاتصال عشوائى"
+
+#: ../lib/gis/opencell.c:767
+msgid "G__open_raster_new(): no temp files available"
+msgstr ""
+
+#: ../lib/gis/opencell.c:941
+msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
+msgstr ""
+
+#: ../lib/gis/opencell.c:976 ../lib/gis/opencell.c:1064
+#, fuzzy, c-format
+msgid "Unable to find '%s' in '%s'"
+msgstr "[%s] لم يتم ايجاد"
+
+#: ../lib/gis/opencell.c:1009
+#, fuzzy, c-format
+msgid "Raster map <%s> not found in mapset <%s>"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/gis/opencell.c:1070
+#, fuzzy, c-format
+msgid "Unable to find '%s'"
+msgstr "[%s] لم يتم ايجاد"
+
+#: ../lib/gis/opencell.c:1075
+#, fuzzy, c-format
+msgid "Unable to open '%s'"
+msgstr " %s لم يمكن فتح"
+
+#: ../lib/gis/opencell.c:1085
+#, fuzzy, c-format
+msgid "Invalid type: field '%s' in file '%s'"
+msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
+
+#: ../lib/gis/opencell.c:1099
+#, fuzzy, c-format
+msgid "Raster map <%s> is not xdr: byte_order: %s"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/gis/opencell.c:1179
+msgid ""
+"G_set_quant_rules() can be called only for raster maps opened for reading"
+msgstr ""
+
+#: ../lib/gis/auto_mask.c:64
+msgid "Unable to open automatic MASK file"
+msgstr "لم يمكن فتح ملف القناع الأتوماتيكى"
+
+#: ../lib/gis/raster_metadata.c:111
+#, fuzzy, c-format
+msgid "Can't read %s for [%s in %s]"
+msgstr "لم يمكن قراءة الملف الرئيسى [%s in %s]\n"
+
+#: ../lib/gis/raster_metadata.c:145
+#, fuzzy, c-format
+msgid "Can't create %s metadata file for [%s in %s]"
+msgstr "لم يمكن قراءة الملف الرئيسى [%s in %s]\n"
+
+#: ../lib/gis/find_file.c:74
+#, c-format
+msgid "'%s/%s' was found in more mapsets (also found in <%s>)"
+msgstr ""
+
+#: ../lib/gis/find_file.c:82
+#, fuzzy, c-format
+msgid "Using <%s@%s>"
+msgstr "[%s] لم يتم ايجاد"
+
+#: ../lib/gis/get_cellhd.c:71 ../lib/gis/get_cellhd.c:100
+#, fuzzy, c-format
+msgid "Unable to read header file for raster map <%s@%s>."
+msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
+
+#: ../lib/gis/get_cellhd.c:74
+#, fuzzy, c-format
+msgid " It is a reclass of raster map <%s@%s> "
+msgstr "أعادة تصنيف [%s in %s]"
+
+#: ../lib/gis/get_cellhd.c:78
+#, fuzzy, c-format
+msgid "which is missing."
+msgstr "وهى مفقودة"
+
+#: ../lib/gis/get_cellhd.c:80
+#, fuzzy, c-format
+msgid "whose header file can't be opened."
+msgstr "ولا يمكن فتح ملفها الرئيسى"
+
+#: ../lib/gis/get_cellhd.c:88
+#, fuzzy, c-format
+msgid "Unable to open header file for raster map <%s@%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/gis/get_cellhd.c:105
+#, fuzzy, c-format
+msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
+msgstr "[%s in %s] الملف الرئيسى غير صالح للخريطة الأساس\n"
+
+#: ../lib/gis/get_cellhd.c:109
+#, fuzzy, c-format
+msgid " Invalid format."
+msgstr "تشكيل غير صالح\n"
+
+#: ../lib/gis/gishelp.c:45
+#, c-format
+msgid "one moment...\n"
+msgstr ""
+
+#: ../lib/gis/gishelp.c:49
+#, c-format
+msgid "No help available for command [%s]\n"
+msgstr ""
+
+#: ../lib/gis/closecell.c:221
+#, c-format
+msgid ""
+"closecell: can't move %s\n"
+"to null file %s"
+msgstr ""
+
+#: ../lib/gis/closecell.c:243
+#, c-format
+msgid "Error writing floating point format file for map %s"
+msgstr ""
+
+#: ../lib/gis/closecell.c:292
+#, c-format
+msgid ""
+"closecell: can't move %s\n"
+"to cell file %s"
+msgstr ""
+
+#: ../lib/gis/closecell.c:347
+#, fuzzy
+msgid "unable to write quant file!"
+msgstr "لم يتم انشاء عملية جديدة"
+
+#: ../lib/gis/closecell.c:398
+#, fuzzy
+msgid "unable to write f_format file for CELL maps"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/gis/get_datum_name.c:53
+#, c-format
+msgid ""
+"\n"
+"Please specify datum name\n"
+msgstr ""
+"\n"
+"datum تحديد اسم ال \n"
+
+#: ../lib/gis/get_datum_name.c:55
+#, c-format
+msgid "Enter 'list' for the list of available datums\n"
+msgstr "'list' لعرض ما هو متاح أكتب\n"
+
+#: ../lib/gis/get_datum_name.c:57
+#, c-format
+msgid "or 'custom' if you wish to enter custom parameters\n"
+msgstr ""
+
+#: ../lib/gis/get_datum_name.c:97
+#, c-format
+msgid ""
+"\n"
+"invalid datum\n"
+msgstr ""
+"\n"
+"datum غير صالح\n"
+
+#: ../lib/gis/location.c:44
+#, fuzzy, c-format
+msgid "LOCATION << %s >> not available"
+msgstr "غير متاح << %s >> الموقع"
+
+#: ../lib/gis/open_misc.c:45
+#, c-format
+msgid "G__open_misc(read): mapset <%s> doesn't match xmapset <%s>"
+msgstr ""
+
+#: ../lib/gis/open_misc.c:67
+#, c-format
+msgid "G__open_misc(write): xmapset <%s> != G_mapset() <%s>"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:85
+#, fuzzy, c-format
+msgid "Unable to open file %s in <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/gis/get_ellipse.c:358 ../lib/gis/get_ellipse.c:384
+#, fuzzy, c-format
+msgid "Invalid a: field '%s' in file %s in <%s>"
+msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
+
+#: ../lib/gis/get_ellipse.c:371
+#, fuzzy, c-format
+msgid "Invalid ellipsoid '%s' in file %s in <%s>"
+msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
+
+#: ../lib/gis/get_ellipse.c:388
+#, fuzzy, c-format
+msgid "Invalid es: field '%s' in file %s in <%s>"
+msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
+
+#: ../lib/gis/get_ellipse.c:402
+#, fuzzy, c-format
+msgid "No ellipsoid info given in file %s in <%s>"
+msgstr " %s ellipsoid لا يوجد حقل  %s فى %s الملف"
 
 #: ../lib/gis/parser.c:340
 msgid "WHERE conditions of SQL statement without 'where' keyword"
@@ -2025,20 +3156,244 @@ msgstr " هل هذا صحيح؟"
 msgid "to accept the default"
 msgstr "لقبول الأساس المخزن"
 
-#: ../lib/gis/range.c:192
+#: ../lib/gis/get_ell_name.c:42
 #, c-format
-msgid "can't read f_range file for [%s in %s]"
-msgstr "لم يمكن قراءة ملف النطاف العشرى [%s فى %s]"
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+"\n"
+"ellipsoid تحديد اسم ال \n"
 
-#: ../lib/gis/range.c:308
+#: ../lib/gis/get_ell_name.c:44
 #, c-format
-msgid "can't read range file for [%s in %s]"
-msgstr "لم يمكن قراءة ملف النطاف [%s فى %s]"
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr "'list' لعرض ما هو متاح أكتب\n"
 
-#: ../lib/gis/range.c:359 ../lib/gis/range.c:412
+#: ../lib/gis/get_ell_name.c:67
 #, c-format
-msgid "can't write range file for [%s in %s]"
-msgstr "لم يمكن كتابة ملف النطاف [%s فى %s]"
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+"\n"
+"ellipsoid غير صالح\n"
+
+#: ../lib/gis/quant_io.c:89
+#, c-format
+msgid "The floating data range for %s@%s is empty"
+msgstr "فارغة %s@%s نطاق البيانات العشرية ل"
+
+#: ../lib/gis/quant_io.c:99
+#, c-format
+msgid "The integer data range for %s@%s is empty"
+msgstr "فارغة %s@%s نطاق البيانات الصحيحة ل"
+
+#: ../lib/gis/quant_io.c:168
+#, c-format
+msgid "quantization file [%s] in mapset [%s] %s"
+msgstr "[%s] ملف التقسيم الكمى [%s]فى مجموعة الخرائط %s"
+
+#: ../lib/gis/get_window.c:67 ../lib/gis/get_window.c:85
+#, c-format
+msgid ""
+"region for current mapset %s\n"
+"run \"g.region\""
+msgstr ""
+
+#: ../lib/gis/get_window.c:120
+#, c-format
+msgid "default region %s"
+msgstr ""
+
+#: ../lib/gis/get_window.c:141
+msgid "is not set"
+msgstr ""
+
+#: ../lib/gis/get_window.c:150
+#, c-format
+msgid ""
+"is invalid\n"
+"%s"
+msgstr ""
+
+#: ../lib/gis/format.c:157
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr "خطأ قراءة ملف مضغوط [%s in %s]"
+
+#: ../lib/gis/rd_cellhd.c:143
+msgid "duplicate projection field"
+msgstr "مضاعفة حقل الأسقاط"
+
+#: ../lib/gis/rd_cellhd.c:153
+msgid "duplicate zone field"
+msgstr "مضاعفة حقل النطاق"
+
+#: ../lib/gis/rd_cellhd.c:163
+msgid "projection field missing"
+msgstr "حقل الأسقاط مفقود"
+
+#: ../lib/gis/rd_cellhd.c:165
+msgid "zone field missing"
+msgstr "حقل النطاق مفقود"
+
+#: ../lib/gis/rd_cellhd.c:187
+msgid "duplicate north field"
+msgstr "مضاعفة حقل الشمال"
+
+#: ../lib/gis/rd_cellhd.c:195
+msgid "duplicate south field"
+msgstr "مضاعفة حقل الجنوب"
+
+#: ../lib/gis/rd_cellhd.c:203
+msgid "duplicate east field"
+msgstr "مضاعفة حقل الشرق"
+
+#: ../lib/gis/rd_cellhd.c:211
+msgid "duplicate west field"
+msgstr "مضاعفة حقل الغرب"
+
+#: ../lib/gis/rd_cellhd.c:219
+msgid "duplicate top field"
+msgstr "مضاعفة حقل القمة"
+
+#: ../lib/gis/rd_cellhd.c:227
+msgid "duplicate bottom field"
+msgstr "مضاعفة حقل القاع"
+
+#: ../lib/gis/rd_cellhd.c:235
+msgid "duplicate e-w resolution field"
+msgstr "مضاعفة حقل  دقة وضوح الشرق-غرب"
+
+#: ../lib/gis/rd_cellhd.c:245
+msgid "duplicate 3D e-w resolution field"
+msgstr "مضاعفة حقل  دقة وضوح الشرق-غرب الثلاثية الأبعاد "
+
+#: ../lib/gis/rd_cellhd.c:255
+msgid "duplicate n-s resolution field"
+msgstr "مضاعفة حقل  دقة وضوح الشمال-جنوب"
+
+#: ../lib/gis/rd_cellhd.c:265
+msgid "duplicate 3D n-s resolution field"
+msgstr "مضاعفة حقل  دقة وضوح الشمال-جنوب الثلاثية الأبعاد"
+
+#: ../lib/gis/rd_cellhd.c:275
+msgid "duplicate t-b resolution field"
+msgstr "مضاعفة حقل  دقة وضوح القمة-قاع"
+
+#: ../lib/gis/rd_cellhd.c:285
+msgid "duplicate rows field"
+msgstr "مضاعفة حقل  الصفوف"
+
+#: ../lib/gis/rd_cellhd.c:295
+msgid "duplicate 3D rows field"
+msgstr "مضاعفة حقل  الصفوف ثلاثية الأبعاد"
+
+#: ../lib/gis/rd_cellhd.c:305
+msgid "duplicate cols field"
+msgstr "مضاعفة حقل  الأعمدة "
+
+#: ../lib/gis/rd_cellhd.c:315
+msgid "duplicate 3D cols field"
+msgstr "مضاعفة حقل  الأعمدة ثلاثية الأبعاد"
+
+#: ../lib/gis/rd_cellhd.c:325
+msgid "duplicate depths field"
+msgstr "مضاعفة حقل  الأعماق"
+
+#: ../lib/gis/rd_cellhd.c:335
+msgid "duplicate format field"
+msgstr "مضاعفة حقل"
+
+#: ../lib/gis/rd_cellhd.c:343
+msgid "duplicate compressed field"
+msgstr "مضاعفة الحقل المضغوط"
+
+#: ../lib/gis/rd_cellhd.c:354
+msgid "north field missing"
+msgstr "حقل الشمال مفقود"
+
+#: ../lib/gis/rd_cellhd.c:356
+msgid "south field missing"
+msgstr "حقل الجنوب مفقود"
+
+#: ../lib/gis/rd_cellhd.c:358
+msgid "west field missing"
+msgstr "حقل الغرب مفقود"
+
+#: ../lib/gis/rd_cellhd.c:360
+msgid "east field missing"
+msgstr "حقل الشرق مفقود"
+
+#: ../lib/gis/rd_cellhd.c:362
+msgid "cols field missing"
+msgstr "حقل الأعمدة مفقود"
+
+#: ../lib/gis/rd_cellhd.c:364
+msgid "rows field missing"
+msgstr "حقل الصفوف مفقود"
+
+#: ../lib/gis/rd_cellhd.c:375
+msgid "ewres3 field missing"
+msgstr "حقل دقة وضوح الشرق-غرب مفقود"
+
+#: ../lib/gis/rd_cellhd.c:377
+msgid "nsres3 field missing"
+msgstr "حقل دقة وضوح الشمال-جنوب مفقود"
+
+#: ../lib/gis/rd_cellhd.c:379
+msgid "cols3 field missing"
+msgstr "حقل الأعمدة مفقود"
+
+#: ../lib/gis/rd_cellhd.c:381
+msgid "rows3 field missing"
+msgstr "حقل الصفوف مفقود"
+
+#: ../lib/gis/rd_cellhd.c:438
+#, c-format
+msgid "line %d: <%s>"
+msgstr "خط %d: <%s>"
+
+#: ../lib/gis/timestamp.c:282
+#, c-format
+msgid "Can't create timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:291
+#, c-format
+msgid "Invalid timestamp specified for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:313
+#, c-format
+msgid "Can't open timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:322
+#, c-format
+msgid "Invalid timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/get_projinfo.c:33 ../lib/gis/get_projinfo.c:60
+#, c-format
+msgid "<%s> file not found for location <%s>"
+msgstr ""
+
+#: ../lib/gis/get_projinfo.c:39 ../lib/gis/get_projinfo.c:66
+#, c-format
+msgid "ERROR in reading <%s> file for location <%s>"
+msgstr ""
+
+#: ../lib/gis/gdal.c:66
+#, fuzzy, c-format
+msgid "Unable to locate symbol <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/gis/gdal.c:118
+#, fuzzy
+msgid "Unable to load GDAL library"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
 #: ../lib/gis/histogram.c:57
 #, c-format
@@ -2060,252 +3415,83 @@ msgstr ""
 msgid "can't create histogram for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/datum.c:160
+#: ../lib/gis/myname.c:50
+msgid "This location has no description."
+msgstr ""
+
+#: ../lib/gis/ask_cell.c:54 ../lib/gis/ask_cell.c:72 ../lib/gis/ask_cell.c:91
+#: ../lib/gis/ask_cell.c:96
+msgid "with titles"
+msgstr "بعناوين"
+
+#: ../lib/gis/ask_cell.c:110
+msgid "(no title)"
+msgstr "(بدون عنوان)"
+
+#: ../lib/gis/open.c:62
 #, c-format
-msgid "unable to open datum table file: %s"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
+msgid "G__open(read): mapset <%s> doesn't match xmapset <%s>"
+msgstr ""
 
-#: ../lib/gis/datum.c:181
+#: ../lib/gis/open.c:84
 #, c-format
-msgid "error in datum table file, line %d"
-msgstr "datum  فى ملف جدول %d يوجد خطأ فى الخط "
+msgid "G__open(write): xmapset <%s> != G_mapset() <%s>"
+msgstr ""
 
-#: ../lib/gis/done_msg.c:38
-#, fuzzy, c-format
-msgid "%s complete. %s"
-msgstr "%s تم أنهاء %s\n"
-
-#: ../lib/gis/legal_name.c:39
+#: ../lib/gis/distance.c:160
 #, c-format
-msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgid ""
+"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,"
+"%f)(%f,%f)"
 msgstr ""
 
-#: ../lib/gis/legal_name.c:47
-#, fuzzy, c-format
-msgid "Illegal filename. Character <%c> not allowed.\n"
-msgstr " غير مسموح به والاسم غير صحيح <%c> الحرف"
+#: ../lib/arraystats/class.c:21
+msgid "Discont algorithm currently not available because of bugs"
+msgstr ""
 
-#: ../lib/gis/legal_name.c:77 ../lib/gis/legal_name.c:81
-#, fuzzy, c-format
-msgid "Output raster map name <%s> is not valid map name"
-msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
-
-#: ../lib/gis/legal_name.c:118 ../lib/gis/legal_name.c:122
-#, fuzzy, c-format
-msgid "Output raster map <%s> is used as input"
-msgstr "مستخدم كمدخل '%s' الفيكتور المخرج"
-
-#: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
-#, fuzzy
-msgid "Unable to seek"
-msgstr " %s لم يمكن فتح"
-
-#: ../lib/gis/seek.c:56
-#, fuzzy
-msgid "Seek offset out of range"
-msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
-
-#: ../lib/gis/mask_info.c:40
+#: ../lib/arraystats/class.c:23
 #, c-format
-msgid "<%s> in mapset <%s>"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/gis/mask_info.c:43
-msgid "none"
-msgstr "لاشىء"
-
-#: ../lib/gis/mask_info.c:46
-msgid "not known"
-msgstr "غير معروف"
-
-#: ../lib/gmath/la.c:60 ../lib/gmath/la.c:116
-#, fuzzy
-msgid "Matrix dimensions out of range"
-msgstr "دليل الأبعاد خارج النطاق"
-
-#: ../lib/gmath/la.c:149
-msgid "Matrix is not initialised fully."
+msgid "%s: Unknown algorithm"
 msgstr ""
 
-#: ../lib/gmath/la.c:154
-#, fuzzy
-msgid "Unable to allocate space for matrix copy"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/gmath/la.c:243
-msgid "First scalar multiplier must be non-zero"
+#: ../lib/arraystats/class.c:26
+#, c-format
+msgid "%s: Error in classification algorithm"
 msgstr ""
 
-#: ../lib/gmath/la.c:249 ../lib/gmath/la.c:257 ../lib/gmath/la.c:322
-msgid "One or both input matrices uninitialised"
+#: ../lib/arraystats/class.c:221
+#, c-format
+msgid ""
+"There are classbreaks outside the range min-max. Number of classes reduced "
+"to %i, but using probabilities for %i classes."
 msgstr ""
 
-#: ../lib/gmath/la.c:262 ../lib/gmath/la.c:327
-msgid "Matrix order does not match"
+#: ../lib/rst/interp_float/interp2d.c:212
+#, c-format
+msgid ""
+"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
+"cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
-#: ../lib/gmath/la.c:268
-#, fuzzy
-msgid "Unable to allocate space for matrix sum"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/gmath/la.c:332
-#, fuzzy
-msgid "Unable to allocate space for matrix product"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/gmath/la.c:444
-msgid "Input: one or both data matrices uninitialised"
+#: ../lib/rst/interp_float/segmen2d.c:111
+msgid ""
+"Taking too long to find points for interpolation - please change the region "
+"to area where your points are. Continuing calculations..."
 msgstr ""
 
-#: ../lib/gmath/la.c:449
-msgid "Principal matrix is not properly dimensioned"
-msgstr ""
-
-#: ../lib/gmath/la.c:454
-msgid "Input: you must have at least one array to solve"
-msgstr ""
-
-#: ../lib/gmath/la.c:460
-msgid "Could not allocate space for solution matrix"
-msgstr ""
-
-#: ../lib/gmath/la.c:466 ../lib/gmath/la.c:474
-msgid "Could not allocate space for working matrix"
-msgstr ""
-
-#: ../lib/gmath/la.c:527
-msgid "Matrix (or submatrix is singular). Solution undetermined"
-msgstr ""
-
-#: ../lib/gmath/la.c:531
-msgid "Problem in LA routine."
-msgstr ""
-
-#: ../lib/gmath/la.c:538
-msgid "Procedure not yet available for selected matrix type"
-msgstr ""
-
-#: ../lib/gmath/la.c:572
-msgid "Matrix is not square. Cannot determine inverse"
-msgstr ""
-
-#: ../lib/gmath/la.c:577
-#, fuzzy
-msgid "Unable to allocate space for matrix"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/gmath/la.c:594
-msgid "Matrix is singular"
-msgstr ""
-
-#: ../lib/gmath/la.c:599
-msgid "Problem in LA procedure."
-msgstr ""
-
-#: ../lib/gmath/la.c:687
-msgid "Element array has not been allocated"
-msgstr ""
-
-#: ../lib/gmath/la.c:692
-msgid "Specified element is outside array bounds"
-msgstr ""
-
-#: ../lib/gmath/la.c:746
-msgid "Specified matrix column index is outside range"
-msgstr ""
-
-#: ../lib/gmath/la.c:751 ../lib/gmath/la.c:792 ../lib/gmath/la.c:1105
-#: ../lib/gmath/la.c:1157 ../lib/gmath/la.c:1232
-msgid "Matrix is not initialised"
-msgstr ""
-
-#: ../lib/gmath/la.c:756 ../lib/gmath/la.c:797
-msgid "Could not allocate space for vector structure"
-msgstr ""
-
-#: ../lib/gmath/la.c:787
-msgid "Specified matrix row index is outside range"
-msgstr ""
-
-#: ../lib/gmath/la.c:827
-msgid "Specified row index is outside range"
-msgstr ""
-
-#: ../lib/gmath/la.c:832
-msgid "Specified column index is outside range"
-msgstr ""
-
-#: ../lib/gmath/la.c:852
-#, fuzzy
-msgid "Unknown vector type."
-msgstr "مسقط غير معروف"
-
-#: ../lib/gmath/la.c:977
-msgid "Output vector is uninitialized"
-msgstr ""
-
-#: ../lib/gmath/la.c:982
-msgid "Vectors are not of the same type"
-msgstr ""
-
-#: ../lib/gmath/la.c:987
-msgid "Output vector is of incorrect type"
-msgstr ""
-
-#: ../lib/gmath/la.c:992
-msgid "Matrices not allowed"
-msgstr ""
-
-#: ../lib/gmath/la.c:998
-msgid "Vectors have differing dimensions"
-msgstr ""
-
-#: ../lib/gmath/la.c:1004
-msgid "Output vector has incorrect dimension"
-msgstr ""
-
-#: ../lib/gmath/la.c:1050
-#, fuzzy
-msgid "Vector dimensions out of range"
-msgstr "دليل الأبعاد خارج النطاق"
-
-#: ../lib/gmath/la.c:1055
-msgid "Row/column out of range"
-msgstr ""
-
-#: ../lib/gmath/la.c:1270
-msgid "Vector structure is not initialised"
-msgstr ""
-
-#: ../lib/gmath/la.c:1391 ../lib/gmath/la.c:1399 ../lib/gmath/la.c:1404
-msgid "Input format error"
-msgstr ""
-
-#: ../lib/gmath/del2g.c:50
-msgid "    taking FFT of image..."
-msgstr ""
-
-#: ../lib/gmath/del2g.c:56
-msgid "    computing del**2 g..."
-msgstr ""
-
-#: ../lib/gmath/del2g.c:59
-msgid "    taking FFT of del**2 g..."
-msgstr ""
-
-#: ../lib/gmath/del2g.c:63
-msgid "    multiplying transforms..."
-msgstr ""
-
-#: ../lib/gmath/del2g.c:66
-msgid "    taking inverse FFT..."
-msgstr ""
-
-#: ../lib/vask/V_support.c:60
+#: ../lib/rst/interp_float/input2d.c:47
 #, fuzzy, c-format
-msgid "Unable to open file %s"
-msgstr "لم يمكن فتحه %s فى %s"
+msgid "Mask raster map <%s> not found"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/rst/interp_float/input2d.c:69
+msgid "Bitmap mask created"
+msgstr ""
+
+#: ../lib/rst/interp_float/output2d.c:125
+#, c-format
+msgid "First change your cols number to nsizc %d %d"
+msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:73
 #, fuzzy, c-format
@@ -2319,8 +3505,8 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:79 ../lib/vector/Vlib/map.c:243
 #: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
 #: ../lib/vector/Vlib/map.c:588 ../lib/vector/Vlib/map.c:686
-#: ../lib/vector/Vlib/net.c:180 ../lib/vector/Vlib/net.c:351
-#: ../lib/vector/Vlib/array.c:278
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/net.c:180
+#: ../lib/vector/Vlib/net.c:351
 #, c-format
 msgid "Database connection not defined for layer %d"
 msgstr ""
@@ -2420,836 +3606,6 @@ msgstr "لم يمكن توفير ذاكرة كافية\n"
 msgid "Unable to insert %f,%f,%f a = %d"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/rst/interp_float/input2d.c:47
-#, fuzzy, c-format
-msgid "Mask raster map <%s> not found"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/rst/interp_float/input2d.c:69
-msgid "Bitmap mask created"
-msgstr ""
-
-#: ../lib/rst/interp_float/output2d.c:125
-#, c-format
-msgid "First change your cols number to nsizc %d %d"
-msgstr ""
-
-#: ../lib/rst/interp_float/interp2d.c:119
-#: ../lib/rst/interp_float/interp2d.c:125
-#: ../lib/rst/interp_float/segmen2d.c:175
-#: ../lib/rst/interp_float/segmen2d.c:181
-#: ../lib/rst/interp_float/segmen2d.c:187
-#: ../lib/rst/interp_float/segmen2d.c:197 ../lib/ogsf/gsd_img_mpeg.c:356
-#: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/centrality.c:63
-#: ../lib/vector/neta/centrality.c:145 ../lib/vector/neta/path.c:134
-#: ../lib/vector/neta/spanningtree.c:99 ../lib/vector/neta/flow.c:64
-#: ../lib/vector/neta/flow.c:178 ../lib/vector/neta/timetables.c:69
-#: ../lib/vector/neta/timetables.c:168 ../lib/vector/neta/timetables.c:178
-#: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
-#: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
-#: ../lib/vector/neta/bridge.c:59 ../lib/vector/neta/articulation_point.c:60
-#: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
-#: ../lib/vector/Vlib/line.c:62
-#, fuzzy
-msgid "Out of memory"
-msgstr "لم يمكن توفير ذاكرة"
-
-#: ../lib/rst/interp_float/interp2d.c:212
-#, c-format
-msgid ""
-"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
-"cell. Z-value %f, zmin %f, zmax %f."
-msgstr ""
-
-#: ../lib/rst/interp_float/segmen2d.c:111
-msgid ""
-"Taking too long to find points for interpolation - please change the region "
-"to area where your points are. Continuing calculations..."
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:78 ../lib/gpde/N_solvers_krylov.c:255
-#: ../lib/gpde/N_solvers_krylov.c:423 ../lib/gpde/N_solvers_krylov.c:832
-#: ../lib/gpde/N_solvers.c:55 ../lib/gpde/N_solvers.c:93
-#: ../lib/gpde/N_solvers.c:160 ../lib/gpde/N_solvers_classic_iter.c:57
-#: ../lib/gpde/N_solvers_classic_iter.c:94
-msgid "The linear equation system is not quadratic"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:84 ../lib/gpde/N_solvers_krylov.c:261
-#: ../lib/gpde/N_solvers.c:166
-#, fuzzy
-msgid "Matrix is not symmetric!"
-msgstr "لم يحدد المشغل الأساسى"
-
-#: ../lib/gpde/N_solvers_krylov.c:190 ../lib/gpde/N_solvers_krylov.c:357
-#: ../lib/gpde/N_solvers_krylov.c:481 ../lib/gpde/N_solvers.c:173
-msgid "Unable to solve the linear equation system"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:198
-#, c-format
-msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:200
-#, c-format
-msgid "PCG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:365
-#, c-format
-msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:367
-#, c-format
-msgid "CG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:530
-#, c-format
-msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:533
-#, c-format
-msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:50
-msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:60
-msgid "Starting direct gauss elimination solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:88
-msgid "The lu solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:98
-msgid "Starting direct lu decomposition solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:155
-msgid "The cholesky solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:170
-msgid "Starting cholesky decomposition solver"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:59
-msgid ""
-"The type of solver which should solve the symmetric linear equation system"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:71
-msgid "The type of solver which should solve the linear equation system"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:80
-msgid "Maximum number of iteration used to solver the linear equation system"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:89
-msgid ""
-"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:98
-msgid ""
-"The relaxation parameter used by the jacobi and sor solver for speedup or "
-"stabilizing"
-msgstr ""
-
-#: ../lib/gpde/N_parse_options.c:106
-msgid "The calculation time in seconds"
-msgstr ""
-
-#: ../lib/gpde/test/test_solute_transport.c:43
-msgid ""
-"\n"
-"++ Running solute_transport integration tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_solute_transport.c:45
-msgid "\t 1. testing 2d solute_transport"
-msgstr ""
-
-#: ../lib/gpde/test/test_solute_transport.c:48
-msgid "\t 2. testing 3d solute_transport"
-msgstr ""
-
-#: ../lib/gpde/test/test_solute_transport.c:52
-msgid ""
-"\n"
-"-- solute_transport integration tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_solute_transport.c:54
-msgid ""
-"\n"
-"-- solute_transport integration tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_les.c:34
-msgid ""
-"\n"
-"++ Running les creation unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_les.c:39
-msgid ""
-"\n"
-"-- les creation unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_les.c:41
-msgid ""
-"\n"
-"-- les creation unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_les.c:95
-msgid "\t * testing les creation in parallel\n"
-msgstr ""
-
-#: ../lib/gpde/test/test_les.c:126
-msgid "\t * testing les creation in serial\n"
-msgstr ""
-
-#: ../lib/gpde/test/test_solvers.c:37
-msgid ""
-"\n"
-"++ Running solver unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_solvers.c:42
-msgid ""
-"\n"
-"-- Solver unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_solvers.c:44
-msgid ""
-"\n"
-"-- Solver unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_assemble.c:42
-msgid ""
-"\n"
-"++ Running assembling unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_assemble.c:44
-msgid "\t 1. testing 2d assembling"
-msgstr ""
-
-#: ../lib/gpde/test/test_assemble.c:47
-msgid "\t 2. testing 3d assembling"
-msgstr ""
-
-#: ../lib/gpde/test/test_assemble.c:51
-msgid ""
-"\n"
-"-- Assembling unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_assemble.c:53
-msgid ""
-"\n"
-"-- Assembling unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_arrays.c:48
-msgid ""
-"\n"
-"++ Running array unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_arrays.c:50
-msgid "\t 1. testing 2d arrays"
-msgstr ""
-
-#: ../lib/gpde/test/test_arrays.c:53
-msgid "\t 2. testing 3d arrays"
-msgstr ""
-
-#: ../lib/gpde/test/test_arrays.c:57
-msgid ""
-"\n"
-"-- Array unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_arrays.c:59
-msgid ""
-"\n"
-"-- Array unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_gradient.c:42
-msgid ""
-"\n"
-"++ Running gradient unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_gradient.c:44
-msgid "\t 1. testing 2d gradient"
-msgstr ""
-
-#: ../lib/gpde/test/test_gradient.c:47
-msgid "\t 2. testing 3d gradient"
-msgstr ""
-
-#: ../lib/gpde/test/test_gradient.c:51
-msgid ""
-"\n"
-"-- Gradient unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_gradient.c:53
-msgid ""
-"\n"
-"-- Gradient unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_heat.c:33
-msgid ""
-"\n"
-"++ Running heat flow integration tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_heat.c:35
-msgid "\t 1. testing 2d heat flow"
-msgstr ""
-
-#: ../lib/gpde/test/test_heat.c:37
-msgid "\t 2. testing 3d heat flow"
-msgstr ""
-
-#: ../lib/gpde/test/test_heat.c:40
-msgid ""
-"\n"
-"-- heat flow integration tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_heat.c:42
-msgid ""
-"\n"
-"-- heat flow integration tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_geom.c:36
-msgid ""
-"\n"
-"++ Running geom_data unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_geom.c:41
-msgid ""
-"\n"
-"-- geom_data unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_geom.c:43
-msgid ""
-"\n"
-"-- geom_data unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:49
-msgid "Choose the unit tests to run"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:56
-msgid "Choose the integration tests to run"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:61
-msgid "Run all unit tests"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:65
-msgid "Run all integration tests"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:69
-msgid "Run all unit and integration tests"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:85
-msgid "test, gpde"
-msgstr ""
-
-#: ../lib/gpde/test/test_main.c:87
-msgid "Performs unit and integration tests for gpde library"
-msgstr ""
-
-#: ../lib/gpde/test/test_gwflow.c:43
-msgid ""
-"\n"
-"++ Running gwflow integration tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_gwflow.c:45
-msgid "\t 1. testing 2d gwflow"
-msgstr ""
-
-#: ../lib/gpde/test/test_gwflow.c:48
-msgid "\t 2. testing 3d gwflow"
-msgstr ""
-
-#: ../lib/gpde/test/test_gwflow.c:52
-msgid ""
-"\n"
-"-- gwflow integration tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_gwflow.c:54
-msgid ""
-"\n"
-"-- gwflow integration tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/test/test_tools.c:34
-msgid ""
-"\n"
-"++ Running math tool unit tests ++"
-msgstr ""
-
-#: ../lib/gpde/test/test_tools.c:39
-msgid ""
-"\n"
-"-- math tool unit tests failure --"
-msgstr ""
-
-#: ../lib/gpde/test/test_tools.c:41
-msgid ""
-"\n"
-"-- math tool unit tests finished successfully --"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:68 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
-#: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
-#, fuzzy, c-format
-msgid "Unable to open raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gpde/N_arrays_io.c:97
-#, fuzzy, c-format
-msgid "Reading raster map <%s> into memory"
-msgstr " فارغة %s@%s الخريطة الراسترية"
-
-#: ../lib/gpde/N_arrays_io.c:104
-#, fuzzy
-msgid "Could not get raster row"
-msgstr "'%s' لم يمكن رصد بيانات الملف"
-
-#: ../lib/gpde/N_arrays_io.c:162 ../lib/gpde/N_arrays_io.c:244
-#, fuzzy
-msgid "Unable to close input map"
-msgstr " %s لم يمكن فتح"
-
-#: ../lib/gpde/N_arrays_io.c:191
-msgid "N_array_2d * array is empty"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:203
-#, fuzzy, c-format
-msgid "Unable to create raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gpde/N_arrays_io.c:212
-#, c-format
-msgid "Write 2d array to raster map <%s>"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:228 ../lib/gpde/N_arrays_io.c:233
-#: ../lib/gpde/N_arrays_io.c:238
-#, fuzzy, c-format
-msgid "Unable to write raster row %i"
-msgstr "لم يتم انشاء عملية جديدة"
-
-#: ../lib/gpde/N_arrays_io.c:296 ../lib/ogsf/gvl_file.c:428
-#: ../lib/ogsf/Gvl3.c:39
-#, fuzzy, c-format
-msgid "3D raster map <%s> not found"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/gpde/N_arrays_io.c:304 ../lib/ogsf/gvl_file.c:437
-#, fuzzy, c-format
-msgid "Unable to open 3D raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/gpde/N_arrays_io.c:332
-#, c-format
-msgid "Read g3d map <%s> into the memory"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:387 ../lib/gpde/N_arrays_io.c:487
-msgid "Error closing g3d file"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:446
-#, c-format
-msgid "Error opening g3d map <%s>"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:448
-#, c-format
-msgid "Write 3d array to g3d map <%s>"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:152
-#, c-format
-msgid "sparse Jacobi -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:154
-#, c-format
-msgid "sparse SOR -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:197
-#, c-format
-msgid "Jacobi -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:235
-#, c-format
-msgid "SOR -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/proj/ellipse.c:75
-#, fuzzy, c-format
-msgid "Invalid ellipsoid <%s> in file"
-msgstr ""
-"\n"
-"ellipsoid غير صالح\n"
-
-#: ../lib/proj/ellipse.c:98
-msgid "No secondary ellipsoid descriptor (rf, es or b) in file"
-msgstr ""
-
-#: ../lib/proj/ellipse.c:102
-msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
-msgstr ""
-
-#: ../lib/proj/ellipse.c:115
-msgid "No ellipsoid info given in file"
-msgstr ""
-
-#: ../lib/proj/do_proj.c:106 ../lib/proj/do_proj.c:180
-#, c-format
-msgid "pj_transform() failed: %s"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:150
-#, c-format
-msgid "Invalid zone %s specified"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:230
-msgid "Unable to initialise PROJ.4 with the following parameter list:"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:238
-#, c-format
-msgid "The error message: %s"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:296
-msgid "Option input overflowed option table"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:327
-#, fuzzy, c-format
-msgid "Unable to initialize pj cause: %s"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/proj/get_proj.c:403
-msgid "Input Projection Parameters"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:406
-msgid "Input Unit Factor"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:416
-msgid "Output Projection Parameters"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:419
-msgid "Output Unit Factor"
-msgstr ""
-
-#: ../lib/proj/convert.c:110
-msgid "Unable parse GRASS PROJ_INFO file"
-msgstr ""
-
-#: ../lib/proj/convert.c:115
-msgid "Unable get PROJ.4-style parameter string"
-msgstr ""
-
-#: ../lib/proj/convert.c:127
-#, c-format
-msgid ""
-"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
-msgstr ""
-
-#: ../lib/proj/convert.c:133
-#, c-format
-msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
-msgstr ""
-
-#: ../lib/proj/convert.c:390
-msgid "No projection name! Projection parameters likely to be meaningless."
-msgstr ""
-
-#: ../lib/proj/convert.c:426
-#, c-format
-msgid "Datum <%s> not recognised by GRASS and no parameters found"
-msgstr ""
-
-#: ../lib/proj/convert.c:442
-#, c-format
-msgid ""
-"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
-"want to look into this."
-msgstr ""
-
-#: ../lib/proj/convert.c:446
-#, c-format
-msgid ""
-"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
-"transform parameters unspecified."
-msgstr ""
-
-#: ../lib/proj/datum.c:250
-#, fuzzy
-msgid "Unable to open temporary file"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/proj/datum.c:418 ../lib/proj/datum.c:498
-#, fuzzy, c-format
-msgid "Unable to open datum table file <%s>"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
-
-#: ../lib/proj/datum.c:431 ../lib/proj/datum.c:512
-#, fuzzy, c-format
-msgid "Error in datum table file <%s>, line %d"
-msgstr "datum  فى ملف جدول %d يوجد خطأ فى الخط "
-
-#: ../lib/nviz/position.c:56
-#, fuzzy
-msgid "Unable to set focus"
-msgstr " %s لم يمكن فتح"
-
-#: ../lib/nviz/nviz.c:126
-#, c-format
-msgid "Invalid color (%s), using \"white\" as default"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:59
-msgid "Maximum surfaces loaded!"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:88
-msgid "Maximum vector line maps loaded!"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:97 ../lib/nviz/map_obj.c:128
-#, fuzzy, c-format
-msgid "Error loading vector map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/nviz/map_obj.c:116
-msgid "Maximum vector point maps loaded!"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:143
-msgid "Maximum volumes loaded!"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:152
-#, fuzzy, c-format
-msgid "Error loading 3d raster map <%s>"
-msgstr "للخرائط الراسترية الموجودة %d\n"
-
-#: ../lib/nviz/map_obj.c:160
-msgid "Nviz_new_map_obj(): unsupported data type"
-msgstr ""
-
-#: ../lib/nviz/lights.c:171
-#, fuzzy
-msgid "Unable to define new light"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/nviz/render.c:105
-msgid "Bad server connection"
-msgstr ""
-
-#: ../lib/nviz/render.c:114
-#, fuzzy
-msgid "Unable to create rendering context"
-msgstr "لم يتم انشاء عملية جديدة"
-
-#: ../lib/arraystats/class.c:21
-msgid "Discont algorithm currently not available because of bugs"
-msgstr ""
-
-#: ../lib/arraystats/class.c:23
-#, c-format
-msgid "%s: Unknown algorithm"
-msgstr ""
-
-#: ../lib/arraystats/class.c:26
-#, c-format
-msgid "%s: Error in classification algorithm"
-msgstr ""
-
-#: ../lib/arraystats/class.c:221
-#, c-format
-msgid ""
-"There are classbreaks outside the range min-max. Number of classes reduced "
-"to %i, but using probabilities for %i classes."
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:20
-msgid "G3d_openCellOldNoHeader: error in G3d_maskOpenOld"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:26
-msgid "G3d_openCellOldNoHeader: error in G3d_malloc"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:45
-msgid "G3d_openCellOldNoHeader: error in G_open_old"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:99
-msgid "G3d_openCellOld: error in G3d_openCellOldNoHeader"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:104
-msgid "G3d_openCellOld: can't rewind file"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:116
-msgid "G3d_openCellOld: error in G3d_readHeader"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:124
-msgid "G3d_openCellOld: projection does not match window projection"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:128
-msgid "G3d_openCellOld: zone does not match window zone"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:140 ../lib/g3d/g3dopen.c:157
-msgid "G3d_openCellOld: can't read header"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:146
-msgid "G3d_openCellOld: index does not fit into long"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:150
-msgid "G3d_openCellOld: error in G3d_malloc"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:176
-msgid "G3d_openCellOld: error in G3d_fillHeader"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:223
-msgid "G3d_openCellNew: error in G3d_maskOpenOld"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:232
-msgid "G3d_openCellNew: error in G3d_malloc"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:245
-msgid "G3d_openCellNew: could not open file"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:290 ../lib/g3d/g3dopen.c:295
-msgid "G3d_openCellNew: can't write header"
-msgstr ""
-
-#: ../lib/g3d/g3dopen.c:318
-msgid "G3d_openCellNew: error in G3d_fillHeader"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:52
-msgid "Data type used in the output file"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:61
-msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:71
-msgid "The compression method used in the output file"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:81
-msgid "The dimensions of the tiles used in the output file"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:116
-msgid "G3d_getStandard3dParams: precision value invalid"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:149
-msgid "G3d_getStandard3dParams: tile dimension value invalid"
-msgstr ""
-
-#: ../lib/g3d/g3dparam.c:173
-#, fuzzy
-msgid "Window replacing the default"
-msgstr "لقبول الأساس المخزن"
-
-#: ../lib/imagery/list_subgp.c:36
-#, c-format
-msgid "subgroup <%s> of group <%s> is empty\n"
-msgstr ""
-
-#: ../lib/imagery/list_subgp.c:48
-#, c-format
-msgid "subgroup <%s> of group <%s> references the following raster maps\n"
-msgstr ""
-
-#: ../lib/imagery/points.c:124
-#, fuzzy, c-format
-msgid "Unable to open control point file for group [%s in %s]"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/imagery/points.c:132
-#, fuzzy, c-format
-msgid "Bad format in control point file for group [%s in %s]"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/imagery/points.c:159
-#, fuzzy, c-format
-msgid "Unable to create control point file for group [%s in %s]"
-msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
-
-#: ../lib/imagery/list_gp.c:34
-#, c-format
-msgid "group <%s> is empty\n"
-msgstr ""
-
-#: ../lib/imagery/list_gp.c:44
-#, c-format
-msgid "group <%s> references the following raster maps\n"
-msgstr ""
-
 #: ../lib/imagery/fopen.c:23
 #, fuzzy, c-format
 msgid "Unable to create file [%s] of group [%s in %s]"
@@ -3285,6 +3641,16 @@ msgstr ""
 msgid "Unable to read target file for group [%s]"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
+#: ../lib/imagery/list_subgp.c:36
+#, c-format
+msgid "subgroup <%s> of group <%s> is empty\n"
+msgstr ""
+
+#: ../lib/imagery/list_subgp.c:48
+#, c-format
+msgid "subgroup <%s> of group <%s> references the following raster maps\n"
+msgstr ""
+
 #: ../lib/imagery/sigsetfile.c:41
 #, fuzzy, c-format
 msgid ""
@@ -3302,395 +3668,29 @@ msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيس�
 msgid "Unable to open signature file <%s> for subgroup <%s> of group <%s@%s>"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/cairodriver/Draw_bitmap.c:47
-msgid "Cairo_draw_bitmap: Failed to create source"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:63
-#, fuzzy
-msgid "No graphics monitor has been selected for output."
-msgstr "لم يتم اختيار شاشة العرض\n"
-
-#: ../lib/raster/io_sock.c:64
-#, fuzzy
-msgid "Please run \"d.mon\" to select a graphics monitor."
-msgstr " <%s> بدء عرض الشاشة\n"
-
-#: ../lib/raster/io_sock.c:72
-#, c-format
-msgid "Failed to get socket name for monitor <%s>."
-msgstr ""
-
-#: ../lib/raster/io_sock.c:81
-#, c-format
-msgid "No socket to connect to for monitor <%s>."
-msgstr ""
-
-#: ../lib/raster/io_sock.c:98
-msgid "Socket is already in use or not accepting connections."
-msgstr ""
-
-#: ../lib/raster/io_sock.c:99
-msgid "Use d.mon to select a monitor"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:105
-#, fuzzy
-msgid "Trying to connect to something not a socket."
-msgstr ""
-"محاولة اتصال خاطئة\n"
-"\n"
-
-#: ../lib/raster/io_sock.c:106
-msgid "Probably program error."
-msgstr ""
-
-#: ../lib/raster/io_sock.c:111
-msgid "Connect attempt timed out."
-msgstr ""
-
-#: ../lib/raster/io_sock.c:112
-#, fuzzy
-msgid "Probably an error with the server."
-msgstr "محاولة الإتصال استغرقت وقت طويل- ربما يوجد خطا من السيرفر\n"
-
-#: ../lib/raster/io_sock.c:120
-#, fuzzy
-msgid "Connection failed."
-msgstr "فشل الإتصال\n"
-
-#: ../lib/raster/rem_io.c:40
-#, c-format
-msgid "ERROR %s from graphics driver.\n"
-msgstr ""
-
-#: ../lib/raster/rem_io.c:167
-#, c-format
-msgid "Unable to allocate memory\n"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/raster/rem_io.c:217
-#, c-format
-msgid "ERROR - eof from graphics monitor.\n"
-msgstr "خطا - نهاية الملف من شاشة العرض\n"
-
-#: ../lib/raster/rem_io.c:237
-#, c-format
-msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr ""
-
-#: ../lib/raster/rem_io.c:239
-#, c-format
-msgid "Check to see if the mouse is still active.\n"
-msgstr ""
-
-#: ../lib/raster/rem_io.c:244
-#, c-format
-msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr ""
-
-#: ../lib/ogsf/gsd_img_ppm.c:53 ../lib/ogsf/gsd_img_ppm.c:96
-#: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
+#: ../lib/imagery/points.c:124
 #, fuzzy, c-format
-msgid "Unable to open file <%s> for writing"
+msgid "Unable to open control point file for group [%s in %s]"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/ogsf/gsds.c:109
-msgid "Maximum number of datasets exceeded"
-msgstr ""
-
-#: ../lib/ogsf/gsd_img_mpeg.c:73
-#, fuzzy
-msgid "Unable to allocate stream"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:176
-#, fuzzy
-msgid "Video codec not found"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:186
-#, fuzzy
-msgid "Unable to open codec"
-msgstr " %s لم يمكن فتح"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:205
-#, fuzzy
-msgid "Unable to allocate picture"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:216
-#, fuzzy
-msgid "Unable to allocate temporary picture"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:283
-#, fuzzy
-msgid "Error while writing video frame"
-msgstr "خطا فى كتابة ملف الطبوغرافية\n"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:329
-#, c-format
-msgid "Opening MPEG stream <%s>..."
-msgstr ""
-
-#: ../lib/ogsf/gsd_img_mpeg.c:341
-msgid "Unable to deduce output format from file extension: using MPEG"
-msgstr ""
-
-#: ../lib/ogsf/gsd_img_mpeg.c:349
-#, fuzzy
-msgid "Unable to find suitable output format"
-msgstr "لم يمكن تخمين التشكيل"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:380
-#, fuzzy
-msgid "Invalid output format parameters"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/gsd_img_mpeg.c:402
+#: ../lib/imagery/points.c:132
 #, fuzzy, c-format
-msgid "Unable to open <%s>"
-msgstr " %s لم يمكن فتح"
+msgid "Bad format in control point file for group [%s in %s]"
+msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/ogsf/gsd_img_mpeg.c:415
-msgid "OGSF library has not been built with MPEG output support"
-msgstr ""
-
-#: ../lib/ogsf/gk.c:322
-msgid "Need at least 3 keyframes for spline"
-msgstr ""
-
-#: ../lib/ogsf/gk.c:624
-msgid "Need at least 2 keyframes for interpolation"
-msgstr ""
-
-#: ../lib/ogsf/gsd_prim.c:146
-#, c-format
-msgid "Color Material: %d"
-msgstr ""
-
-#: ../lib/ogsf/gsd_prim.c:630
-#, c-format
-msgid ""
-"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
-"advise GRASS developers of this error"
-msgstr ""
-
-#: ../lib/ogsf/GVL2.c:248
+#: ../lib/imagery/points.c:159
 #, fuzzy, c-format
-msgid "Loading 3d raster map <%s>..."
-msgstr " فارغة %s@%s الخريطة الراسترية"
-
-#: ../lib/ogsf/GS2.c:1207
-#, c-format
-msgid "no category info"
-msgstr ""
-
-#: ../lib/ogsf/GS2.c:1226
-#, c-format
-msgid "no data"
-msgstr ""
-
-#: ../lib/ogsf/GS2.c:1651
-#, fuzzy, c-format
-msgid "Raster map <%s> is outside of current region. Load failed."
-msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
-
-#: ../lib/ogsf/GS2.c:1729 ../lib/ogsf/GS2.c:1735 ../lib/ogsf/GS2.c:1743
-#: ../lib/ogsf/GS2.c:1752 ../lib/ogsf/GS2.c:1760 ../lib/ogsf/GS2.c:1770
-#: ../lib/ogsf/GS2.c:1818
-msgid "GS_load_att_map(): Out of memory. Unable to load map"
-msgstr ""
-
-#: ../lib/ogsf/GS2.c:1846
-#, fuzzy
-msgid "Loading failed"
-msgstr "فشل الإتصال\n"
-
-#: ../lib/ogsf/GS2.c:1850
-msgid "Error finding range"
-msgstr ""
-
-#: ../lib/ogsf/gvl_file.c:104
-msgid "Maximum number of datafiles exceeded"
-msgstr ""
-
-#: ../lib/ogsf/gvl_file.c:443
-#, fuzzy, c-format
-msgid "Unable to read range of 3D raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/gvl_file.c:471
-#, fuzzy, c-format
-msgid "Unable to close 3D raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/gsd_label.c:58
-msgid "Max. number of labels reached!"
-msgstr ""
-
-#: ../lib/ogsf/trans.c:180
-msgid "Out of matrix stack space"
-msgstr ""
-
-#: ../lib/ogsf/trans.c:200
-msgid "Tried to pop an empty stack"
-msgstr ""
-
-#: ../lib/ogsf/gsd_legend.c:245
-#, fuzzy, c-format
-msgid "Unable to read color file of raster map <%s>"
+msgid "Unable to create control point file for group [%s in %s]"
 msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
 
-#: ../lib/ogsf/gsd_legend.c:251
-#, fuzzy, c-format
-msgid "Unable to read category file of raster map <%s>"
-msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
-
-#: ../lib/ogsf/gsd_legend.c:268
-#, fuzzy, c-format
-msgid "Unable to read fp range of raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/gsd_legend.c:280
-#, fuzzy, c-format
-msgid "Unable to read range of raster map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/gsd_legend.c:294
-msgid "Range request error for legend"
-msgstr ""
-
-#: ../lib/ogsf/gsd_legend.c:384
-#, fuzzy
-msgid "Unable to show discrete FP range (use list)"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
-
-#: ../lib/ogsf/gsd_legend.c:500
-#, fuzzy
-msgid "Too many categories to show as discrete!"
-msgstr "[%s فى %s]فئات معادة التصنيف متعددة "
-
-#: ../lib/ogsf/gsd_legend.c:502
-msgid "Try using smaller font!"
-msgstr ""
-
-#: ../lib/ogsf/gsdrape.c:207
-#, fuzzy
-msgid "Unable to process vector map - out of memory"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109 ../lib/vector/Vlib/map.c:327
-#: ../lib/vector/Vlib/legal_vname.c:118 ../lib/vector/Vlib/legal_vname.c:121
-#: ../lib/vector/Vlib/open.c:168
-#, fuzzy, c-format
-msgid "Vector map <%s> not found"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115 ../lib/vector/Vlib/open.c:199
-#, fuzzy, c-format
-msgid "Unable to open vector map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/Gv3.c:249
+#: ../lib/imagery/list_gp.c:34
 #, c-format
-msgid "No features from vector map <%s> fall within current region"
+msgid "group <%s> is empty\n"
 msgstr ""
 
-#: ../lib/ogsf/Gv3.c:254
-#, fuzzy, c-format
-msgid "Vector map <%s> loaded (%d features)"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:208 ../lib/ogsf/Gs3.c:366
-#: ../lib/ogsf/Gs3.c:482 ../lib/ogsf/Gs3.c:587
-#, fuzzy
-msgid "Unable to allocate memory for a null buffer"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:215 ../lib/ogsf/Gs3.c:378
-#: ../lib/ogsf/Gs3.c:494 ../lib/ogsf/Gs3.c:590
-#, fuzzy, c-format
-msgid "Loading raster map <%s>..."
-msgstr " فارغة %s@%s الخريطة الراسترية"
-
-#: ../lib/ogsf/Gs3.c:647
+#: ../lib/imagery/list_gp.c:44
 #, c-format
-msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
-msgstr ""
-
-#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
-#, fuzzy, c-format
-msgid "Translating colors from raster map <%s>..."
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/ogsf/Gs3.c:1020
-msgid "View not saved by this program,there may be some inconsistancies"
-msgstr ""
-
-#: ../lib/ogsf/Gp3.c:145 ../lib/vector/Vlib/map.c:68
-#: ../lib/vector/Vlib/map.c:84
-#, fuzzy, c-format
-msgid "Unable to read vector map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/ogsf/Gp3.c:206
-#, c-format
-msgid "No points from vector map <%s> fall within current region"
-msgstr ""
-
-#: ../lib/ogsf/Gp3.c:211
-#, fuzzy, c-format
-msgid "Vector map <%s> loaded (%d points)"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/ogsf/gs_bm.c:124
-msgid "Bitmap mismatch"
-msgstr ""
-
-#: ../lib/ogsf/GK2.c:275 ../lib/ogsf/GK2.c:288
-msgid "Check no. of frames requested and keyframes marked"
-msgstr ""
-
-#: ../lib/ogsf/gsd_surf.c:1742
-msgid "Cut-plane points mis-match between surfaces. Check resolution(s)."
-msgstr ""
-
-#: ../lib/symbol/read.c:211
-#, c-format
-msgid "Cannot read symbol line coordinates: %s"
-msgstr ""
-
-#: ../lib/symbol/read.c:259
-#, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr ""
-
-#: ../lib/symbol/read.c:283
-#, fuzzy, c-format
-msgid "Cannot find/open symbol: '%s'"
-msgstr "'%s' لم يتم العثور على الخريطة المدخلة"
-
-#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
-#: ../lib/symbol/read.c:434
-#, c-format
-msgid "Incorrect symbol color: '%s', using default."
-msgstr ""
-
-#: ../lib/init/lock.c:38
-#, c-format
-msgid "Usage: %s file pid"
-msgstr ""
-
-#: ../lib/init/lock.c:42
-msgid "Concurrent mapset locking is not supported on Windows"
-msgstr ""
-
-#: ../lib/init/lock.c:60
-#, c-format
-msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgid "group <%s> references the following raster maps\n"
 msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
@@ -3698,83 +3698,6 @@ msgstr ""
 msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node %d, line %d"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
-#: ../lib/vector/diglib/plus_area.c:683
-#, c-format
-msgid "Line %d already has area/isle %d to left"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:217
-#, c-format
-msgid "Line %d already has area/isle %d to right"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:299
-msgid "Attempt to delete isle from dead area"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:316
-#, c-format
-msgid "Attempt to delete not registered isle %d from area %d"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:354
-msgid "Attempt to delete dead area"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:394
-#, c-format
-msgid "Dead centroid %d registered for area (bug in the vector library)"
-msgstr ""
-
-#: ../lib/vector/diglib/plus_area.c:418
-#, fuzzy, c-format
-msgid "Attempt to delete area %d info from dead isle %d"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/diglib/plus_area.c:773
-#, fuzzy, c-format
-msgid "Attempt to delete isle %d info from dead area %d"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/diglib/spindex.c:248
-#, fuzzy, c-format
-msgid "Unable to delete node %d from spatial index"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/diglib/spindex.c:288
-#, fuzzy, c-format
-msgid "Unable to delete line %d from spatial index"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/diglib/spindex.c:314
-#, fuzzy
-msgid "Attempt to delete sidx for dead area"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/diglib/spindex.c:327
-#, fuzzy, c-format
-msgid "Unable to delete area %d from spatial index"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/diglib/spindex.c:362
-#, fuzzy, c-format
-msgid "Unable to delete isle %d from spatial index"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/diglib/file.c:157
-msgid "Writing to file loaded to memory not supported"
-msgstr ""
-
-#: ../lib/vector/diglib/file.c:200
-#, fuzzy
-msgid "Unable to load file to memory, file not open"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/diglib/file.c:215
-msgid "Vector memory mode not supported, using 'AUTO'"
 msgstr ""
 
 #: ../lib/vector/diglib/plus.c:288
@@ -3842,9 +3765,82 @@ msgstr "لم يتم انشاء عملية جديدة"
 msgid "Unable to write isles to plus file"
 msgstr "لم يتم انشاء عملية جديدة"
 
-#: ../lib/vector/neta/allpairs.c:53
-msgid "Computing all pairs shortest paths..."
+#: ../lib/vector/diglib/spindex.c:248
+#, fuzzy, c-format
+msgid "Unable to delete node %d from spatial index"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/diglib/spindex.c:288
+#, fuzzy, c-format
+msgid "Unable to delete line %d from spatial index"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/diglib/spindex.c:314
+#, fuzzy
+msgid "Attempt to delete sidx for dead area"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/diglib/spindex.c:327
+#, fuzzy, c-format
+msgid "Unable to delete area %d from spatial index"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/diglib/spindex.c:362
+#, fuzzy, c-format
+msgid "Unable to delete isle %d from spatial index"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/diglib/file.c:157
+msgid "Writing to file loaded to memory not supported"
 msgstr ""
+
+#: ../lib/vector/diglib/file.c:200
+#, fuzzy
+msgid "Unable to load file to memory, file not open"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/diglib/file.c:215
+msgid "Vector memory mode not supported, using 'AUTO'"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
+#, c-format
+msgid "Line %d already has area/isle %d to left"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:217
+#, c-format
+msgid "Line %d already has area/isle %d to right"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:299
+msgid "Attempt to delete isle from dead area"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:316
+#, c-format
+msgid "Attempt to delete not registered isle %d from area %d"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:354
+msgid "Attempt to delete dead area"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:394
+#, c-format
+msgid "Dead centroid %d registered for area (bug in the vector library)"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:418
+#, fuzzy, c-format
+msgid "Attempt to delete area %d info from dead isle %d"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/diglib/plus_area.c:773
+#, fuzzy, c-format
+msgid "Attempt to delete isle %d info from dead area %d"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
 #: ../lib/vector/neta/spanningtree.c:104
 msgid "Computing minimum spanning tree..."
@@ -3880,225 +3876,49 @@ msgstr "لم يتم اضافة رابط قاعدة البيانات"
 msgid "Problem loading category values"
 msgstr "للخرائط الراسترية الموجودة %d\n"
 
-#: ../lib/vector/vedit/select.c:232
-#, fuzzy
-msgid "Unknown query tool"
-msgstr "مسقط غير معروف"
+#: ../lib/vector/neta/allpairs.c:53
+msgid "Computing all pairs shortest paths..."
+msgstr ""
 
-#: ../lib/vector/vedit/cats.c:63
-#, fuzzy, c-format
-msgid "Unable to set category %d for (feature id %d)"
-msgstr "لم يمكن فتح ملف مؤقت"
+#: ../lib/vector/Vlib/snap.c:148
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
 
-#: ../lib/vector/Vlib/poly.c:235
-#, fuzzy
-msgid "Unable to find point in polygon"
-msgstr "[%s] لم يتم ايجاد [%s] فى"
+#: ../lib/vector/Vlib/snap.c:202
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
 
-#: ../lib/vector/Vlib/poly.c:649
-#, fuzzy
-msgid "conditions failed"
-msgstr "فشل الإتصال\n"
+#: ../lib/vector/Vlib/snap.c:271
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
 
-#: ../lib/vector/Vlib/header.c:95 ../lib/vector/Vlib/header.c:143
-#, fuzzy, c-format
-msgid "Unable to open header file of vector <%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/header.c:151
+#: ../lib/vector/Vlib/snap.c:451
 #, c-format
-msgid "Corrupted row in head: %s"
+msgid "Snapped vertices: %d"
 msgstr ""
 
-#: ../lib/vector/Vlib/header.c:189
+#: ../lib/vector/Vlib/snap.c:452
 #, fuzzy, c-format
-msgid "Unknown keyword %s in vector head"
-msgstr "مسقط غير معروف"
+msgid "New vertices: %d"
+msgstr "عدد النقاط    :   %d\n"
 
-#: ../lib/vector/Vlib/geos.c:53 ../lib/vector/Vlib/read.c:99
-#, fuzzy
-msgid "vector map is not opened"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/vector/Vlib/geos.c:56
-#, c-format
-msgid ""
-"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
-"vector map <%s>: %d)"
+#: ../lib/vector/Vlib/intersect.c:127
+msgid "3D not supported by Vect_segment_intersection()"
 msgstr ""
 
-#: ../lib/vector/Vlib/geos.c:61
-msgid "only native format supported"
+#: ../lib/vector/Vlib/intersect.c:313
+msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
 msgstr ""
 
-#: ../lib/vector/Vlib/geos.c:66 ../lib/vector/Vlib/geos.c:256
-#: ../lib/vector/Vlib/read_nat.c:136
-#, fuzzy
-msgid "Attempt to read dead line"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/Vlib/geos.c:91
-#, c-format
-msgid "Vect_read_area_geos(): unable to read area id %d"
+#: ../lib/vector/Vlib/intersect.c:407
+msgid "Vect_segment_intersection() ERROR (collinear non vertical segments)"
 msgstr ""
 
-#: ../lib/vector/Vlib/geos.c:105
-#, c-format
-msgid "Vect_read_area_geos(): unable to read isle id %d of area id %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/geos.c:203
-#, fuzzy, c-format
-msgid "Unable to read line offset %ld"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/Vlib/geos.c:410
-#, fuzzy, c-format
-msgid "Attempt to read points of nonexistent area id %d"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/Vlib/geos.c:470
-#, fuzzy, c-format
-msgid "Unable to read feature id %d"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/Vlib/cindex.c:31
-msgid "Category index is not up to date"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:61 ../lib/vector/Vlib/cindex.c:125
-#: ../lib/vector/Vlib/cindex.c:143 ../lib/vector/Vlib/cindex.c:166
-msgid "Invalid layer index (index >= number of layers)"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:107
-msgid "Invalid layer index (index < 0 or index >= number of layers)"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:232
-#, fuzzy
-msgid "Layer or category index out of range"
-msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
-
-#: ../lib/vector/Vlib/cindex.c:283
-#, fuzzy
-msgid "Layer index out of range"
-msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
-
-#: ../lib/vector/Vlib/cindex.c:461
-#, fuzzy, c-format
-msgid "Unable to open cidx file <%s> for write"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/Vlib/cindex.c:469
-#, fuzzy, c-format
-msgid "Error writing out category index file <%s>"
-msgstr "خطا فى كتابة الدليل الفراغى\n"
-
-#: ../lib/vector/Vlib/cindex.c:512
-#, fuzzy, c-format
-msgid "Unable to open category index file for vector map <%s@%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/merge_lines.c:233
-#, c-format
-msgid "%d boundaries merged"
-msgstr ""
-
-#: ../lib/vector/Vlib/merge_lines.c:234
-#, c-format
-msgid "%d new boundaries"
-msgstr ""
-
-#: ../lib/vector/Vlib/level.c:38
-msgid "Map structure was never initialized"
-msgstr ""
-
-#: ../lib/vector/Vlib/level.c:40
-msgid "Map structure has been closed"
-msgstr ""
-
-#: ../lib/vector/Vlib/open_ogr.c:54
-msgid "OGR format cannot be updated"
-msgstr ""
-
-#: ../lib/vector/Vlib/open_ogr.c:66
-#, fuzzy, c-format
-msgid "Unable to open OGR data source '%s'"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/vector/Vlib/open_ogr.c:86
-#, fuzzy, c-format
-msgid "Unable to open layer <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/Vlib/open_ogr.c:139
-#, fuzzy, c-format
-msgid "Unable to open fidx file for vector map <%s@%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/open_ogr.c:157
-#, c-format
-msgid ""
-"Feature index format version %d.%d is not supported by this release. Try to "
-"rebuild topology or upgrade GRASS."
-msgstr ""
-
-#: ../lib/vector/Vlib/open_ogr.c:162
-#, c-format
-msgid ""
-"Your GRASS version does not fully support feature index format %d.%d of the "
-"vector. Consider to rebuild topology or upgrade GRASS."
-msgstr ""
-
-#: ../lib/vector/Vlib/remove_areas.c:96
-msgid "Area is composed of dead boundary"
-msgstr ""
-
-#: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
-#, c-format
-msgid "%s: Area %d does not exist"
-msgstr ""
-
-#: ../lib/vector/Vlib/write_nat.c:640
-#, fuzzy
-msgid "Attempt to delete dead feature"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/Vlib/write_nat.c:885
-#, fuzzy
-msgid "Attempt to restore alive feature"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/Vlib/sindex.c:97
-msgid "not implemented"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:109
-#, fuzzy, c-format
-msgid "Unable to delete item %d from spatial index"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/Vlib/sindex.c:127
-msgid ""
-"Unable to build spatial index from topology, vector map is not opened at "
-"topo level 2"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:168
-msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:180
-msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:199
-msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:218
-msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
+#: ../lib/vector/Vlib/intersect.c:1059 ../lib/vector/Vlib/intersect.c:1065
+#: ../lib/vector/Vlib/intersect.c:1067 ../lib/vector/Vlib/intersect.c:1115
+#: ../lib/vector/Vlib/intersect.c:1124 ../lib/vector/Vlib/intersect.c:1145
+#: ../lib/vector/Vlib/intersect.c:1162
+msgid "Error while adding point to array. Out of memory"
 msgstr ""
 
 #: ../lib/vector/Vlib/map.c:55
@@ -4195,52 +4015,87 @@ msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 msgid "Unable to add database link for vector map <%s>"
 msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
 
-#: ../lib/vector/Vlib/open_nat.c:145
+#: ../lib/vector/Vlib/read_nat.c:136 ../lib/vector/Vlib/geos.c:66
+#: ../lib/vector/Vlib/geos.c:256
+#, fuzzy
+msgid "Attempt to read dead line"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/Vlib/array.c:99
 #, c-format
-msgid ""
-"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
-"excess)"
+msgid "%d errors in category string."
 msgstr ""
 
-#: ../lib/vector/Vlib/open_nat.c:149
-#, c-format
-msgid ""
-"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
-"missing)."
+#: ../lib/vector/Vlib/array.c:145 ../lib/vector/Vlib/array.c:269
+msgid "Mixed area and other type requested for vector array"
 msgstr ""
 
-#: ../lib/vector/Vlib/break_lines.c:374
+#: ../lib/vector/Vlib/array.c:155 ../lib/vector/Vlib/array.c:178
+#: ../lib/vector/Vlib/array.c:306 ../lib/vector/Vlib/array.c:339
+msgid "Not enough space in vector array"
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:294
 #, fuzzy, c-format
-msgid "Intersections: %5d"
-msgstr "مساقط أخرى"
+msgid "Unable to select record from table <%s> (key %s, where %s)"
+msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
 
-#: ../lib/vector/Vlib/read_ogr.c:120 ../lib/vector/Vlib/read_ogr.c:306
-#: ../lib/vector/Vlib/build_ogr.c:309
-#, c-format
-msgid "OGR feature type %d not supported"
+#: ../lib/vector/Vlib/legal_vname.c:48
+#, fuzzy, c-format
+msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
+msgstr "يجب أن لا يحوى نقطة أو قيمة معدومة <%s> اسم ماف فيكتورى غير سليم\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:55
+#, fuzzy, c-format
+msgid "Illegal vector map name <%s>. Must start with a letter."
+msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير سليم \n"
+
+#: ../lib/vector/Vlib/legal_vname.c:63
+#, fuzzy, c-format
+msgid "Illegal vector map name <%s>. Character '%c' not allowed."
 msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
-#: ../lib/vector/Vlib/read_ogr.c:178
-msgid "OGR feature without ID"
-msgstr ""
-
-#: ../lib/vector/Vlib/read_ogr.c:378 ../lib/vector/Vlib/read_ogr.c:386
-#, c-format
-msgid "Unable to get feature geometry, FID %ld"
-msgstr ""
-
-#: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
-#: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/build.c:31
-#: ../lib/vector/Vlib/close.c:38 ../lib/vector/Vlib/open.c:40
-#: ../lib/vector/Vlib/rewind.c:35
-msgid "Requested format is not compiled in this version"
-msgstr "الشكل المطلوب غير متاح فى هذا الأصدار"
-
-#: ../lib/vector/Vlib/read.c:102
-#, c-format
+#: ../lib/vector/Vlib/legal_vname.c:70
+#, fuzzy, c-format
 msgid ""
-"Vect_read_line(): feature id %d is not reasonable (max features in vector "
-"map <%s>: %d)"
+"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgstr ""
+"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
+#, fuzzy, c-format
+msgid "Output vector map name <%s> is not valid map name"
+msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
+
+#: ../lib/vector/Vlib/legal_vname.c:142 ../lib/vector/Vlib/legal_vname.c:146
+#, fuzzy, c-format
+msgid "Output vector map <%s> is used as input"
+msgstr "مستخدم كمدخل '%s' الفيكتور المخرج"
+
+#: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
+#, c-format
+msgid "%s: Area %d does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/write_nat.c:642
+#, fuzzy
+msgid "Attempt to delete dead feature"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/Vlib/write_nat.c:887
+#, fuzzy
+msgid "Attempt to restore alive feature"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/Vlib/merge_lines.c:233
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:234
+#, c-format
+msgid "%d new boundaries"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:122
@@ -4325,6 +4180,231 @@ msgstr ""
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
+#: ../lib/vector/Vlib/field.c:93
+#, fuzzy
+msgid "Layer number must be 1 or greater"
+msgstr "رقم الحقل يجب ان يكون 1 او اكثر"
+
+#: ../lib/vector/Vlib/field.c:98
+#, fuzzy
+msgid "Unable to add database link, map is not opened in WRITE mode"
+msgstr ""
+"لم يتم اضافة رابط قاعدة البيانات حيث ان الخريطة غير مفتوحة على وضع الكتابة"
+
+#: ../lib/vector/Vlib/field.c:104
+#, fuzzy
+msgid "Unable to add database link"
+msgstr "لم يتم اضافة رابط قاعدة البيانات"
+
+#: ../lib/vector/Vlib/field.c:110 ../lib/vector/Vlib/field.c:155
+#, fuzzy
+msgid "Unable to write database links"
+msgstr "لم يتم كتابة روابط قاعدة البيانات"
+
+#: ../lib/vector/Vlib/field.c:223
+#, fuzzy, c-format
+msgid "Layer number %d or name <%s> already exists"
+msgstr "موجود بالفعل <%d> ورقم الحقل <%s> الأسم"
+
+#: ../lib/vector/Vlib/field.c:302
+#, c-format
+msgid ""
+"Default driver / database set to:\n"
+"driver: %s\n"
+"database: %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:309
+msgid "Default driver is not set"
+msgstr "لم يحدد المشغل الأساسى"
+
+#: ../lib/vector/Vlib/field.c:312
+msgid "Default database is not set"
+msgstr "لم تحدد قاعدة البيانات الأساس"
+
+#: ../lib/vector/Vlib/field.c:371
+#, c-format
+msgid "Requested dblink %d, maximum link number %d"
+msgstr "رابط قاعدة البيانات المطلوب %d, القيمة العظمى للرابط %d"
+
+#: ../lib/vector/Vlib/field.c:512
+#, fuzzy
+msgid "Unable to open OGR DBMI driver"
+msgstr "OGR DBMI لم يمكن فتح مشغل"
+
+#: ../lib/vector/Vlib/field.c:551
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:606
+#, c-format
+msgid "Don't know how to read links for format %d"
+msgstr " %d لم يمكن قراءة الروابط للتشكيل"
+
+#: ../lib/vector/Vlib/field.c:639
+#, c-format
+msgid "Error in rule on row %d in %s"
+msgstr " %s فى  %d خطا فى القاعدة على الصف"
+
+#: ../lib/vector/Vlib/field.c:709
+#, fuzzy, c-format
+msgid "Unable to open vector database definition file '%s'"
+msgstr "datum لم يمكن فتح ملف جدول : %s"
+
+#: ../lib/vector/Vlib/field.c:804
+#, fuzzy
+msgid "Bug: attempt to update map which is not in current mapset"
+msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
+
+#: ../lib/vector/Vlib/graph.c:143
+#, fuzzy
+msgid "Unable to add network arc"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/Vlib/build_nat.c:93
+#, fuzzy
+msgid "Unable to add area (map closed, topo saved)"
+msgstr "لم يمكن اضافة مساحة, تم قفل الخريطة وحفظت الطبوغرافية"
+
+#: ../lib/vector/Vlib/build_nat.c:102
+#, fuzzy
+msgid "Unable to add isle (map closed, topo saved)"
+msgstr "لم يمكن اضافة جزيرة, تم قفل الخريطة وحفظت الطبوغرافية"
+
+#: ../lib/vector/Vlib/build_nat.c:112
+msgid "Area of size = 0.0 ignored"
+msgstr "المساحة بحجم= 0.0 أهملت"
+
+#: ../lib/vector/Vlib/build_nat.c:148
+msgid "Request to find area outside nonexistent isle"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:515
+#, fuzzy
+msgid "Registering primitives..."
+msgstr ":تسجيل الخطوط"
+
+#: ../lib/vector/Vlib/build_nat.c:524
+#, fuzzy
+msgid "Unable to read vector map"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/vector/Vlib/build_nat.c:568
+#, c-format
+msgid "%d primitives registered"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:569
+#, c-format
+msgid "%d vertices registered"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:580
+#, fuzzy
+msgid "Building areas..."
+msgstr "يتم الان بناء الطبولوجى ...\n"
+
+#: ../lib/vector/Vlib/build_nat.c:603
+#, fuzzy, c-format
+msgid "%d areas built"
+msgstr "تم بناء الطبولوجى\n"
+
+#: ../lib/vector/Vlib/build_nat.c:604
+#, fuzzy, c-format
+msgid "%d isles built"
+msgstr "تم بناء الطبولوجى\n"
+
+#: ../lib/vector/Vlib/build_nat.c:613
+#, fuzzy
+msgid "Attaching islands..."
+msgstr ": توصيل الجزر"
+
+#: ../lib/vector/Vlib/build_nat.c:628
+#, fuzzy
+msgid "Attaching centroids..."
+msgstr " : توصيل اشباه المراكز"
+
+#: ../lib/vector/Vlib/open_nat.c:145
+#, c-format
+msgid ""
+"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
+"excess)"
+msgstr ""
+
+#: ../lib/vector/Vlib/open_nat.c:149
+#, c-format
+msgid ""
+"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
+"missing)."
+msgstr ""
+
+#: ../lib/vector/Vlib/cats.c:47
+#, fuzzy
+msgid "Vect_new_cats_struct(): Out of memory"
+msgstr "لم يمكن توفير ذاكرة"
+
+#: ../lib/vector/Vlib/cats.c:131
+#, c-format
+msgid "Too many categories (%d), unable to set cat %d (layer %d)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cats.c:410
+#, c-format
+msgid "Unable to convert category string '%s' (from '%s') to category range"
+msgstr ""
+
+#: ../lib/vector/Vlib/remove_areas.c:96
+msgid "Area is composed of dead boundary"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:97
+msgid "not implemented"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:109
+#, fuzzy, c-format
+msgid "Unable to delete item %d from spatial index"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/Vlib/sindex.c:127
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:168
+msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:180
+msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:199
+msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:218
+msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/read_ogr.c:120 ../lib/vector/Vlib/read_ogr.c:306
+#: ../lib/vector/Vlib/build_ogr.c:309
+#, c-format
+msgid "OGR feature type %d not supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/read_ogr.c:178
+msgid "OGR feature without ID"
+msgstr ""
+
+#: ../lib/vector/Vlib/read_ogr.c:378 ../lib/vector/Vlib/read_ogr.c:386
+#, c-format
+msgid "Unable to get feature geometry, FID %ld"
+msgstr ""
+
 #: ../lib/vector/Vlib/line.c:201 ../lib/vector/Vlib/line.c:233
 #, fuzzy
 msgid "Index out of range in"
@@ -4334,57 +4414,243 @@ msgstr "دليل الخواص المضاعفة القيمة خارج النطا�
 msgid "Segment outside line, no segment created"
 msgstr ""
 
-#: ../lib/vector/Vlib/array.c:99
+#: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/read.c:30
+#: ../lib/vector/Vlib/close.c:38 ../lib/vector/Vlib/write.c:53
+#: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/open.c:40
+#: ../lib/vector/Vlib/build.c:31
+msgid "Requested format is not compiled in this version"
+msgstr "الشكل المطلوب غير متاح فى هذا الأصدار"
+
+#: ../lib/vector/Vlib/read.c:99 ../lib/vector/Vlib/geos.c:53
+#, fuzzy
+msgid "vector map is not opened"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid "%d errors in category string."
-msgstr ""
-
-#: ../lib/vector/Vlib/array.c:145 ../lib/vector/Vlib/array.c:269
-msgid "Mixed area and other type requested for vector array"
-msgstr ""
-
-#: ../lib/vector/Vlib/array.c:155 ../lib/vector/Vlib/array.c:178
-#: ../lib/vector/Vlib/array.c:306 ../lib/vector/Vlib/array.c:339
-msgid "Not enough space in vector array"
-msgstr ""
-
-#: ../lib/vector/Vlib/array.c:294
-#, fuzzy, c-format
-msgid "Unable to select record from table <%s> (key %s, where %s)"
-msgstr "[%s فى %s]لم يمكن انشاء ملف العنوان الرئيسى"
-
-#: ../lib/vector/Vlib/legal_vname.c:48
-#, fuzzy, c-format
-msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
-msgstr "يجب أن لا يحوى نقطة أو قيمة معدومة <%s> اسم ماف فيكتورى غير سليم\n"
-
-#: ../lib/vector/Vlib/legal_vname.c:55
-#, fuzzy, c-format
-msgid "Illegal vector map name <%s>. Must start with a letter."
-msgstr " يجب أن يبدأ بحرف <%s> اسم ماف فيكتورى غير سليم \n"
-
-#: ../lib/vector/Vlib/legal_vname.c:63
-#, fuzzy, c-format
-msgid "Illegal vector map name <%s>. Character '%c' not allowed."
-msgstr ""
-"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
-
-#: ../lib/vector/Vlib/legal_vname.c:70
-#, fuzzy, c-format
 msgid ""
-"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+"Vect_read_line(): feature id %d is not reasonable (max features in vector "
+"map <%s>: %d)"
 msgstr ""
-"غير صالح <%s>  غير مسموح بها و بالتالى اسم الفيكتور المعطى <%c> حروف ك\n"
 
-#: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
-#, fuzzy, c-format
-msgid "Output vector map name <%s> is not valid map name"
-msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
+#: ../lib/vector/Vlib/area.c:53
+#, fuzzy
+msgid "Attempt to read points of nonexistent area"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
-#: ../lib/vector/Vlib/legal_vname.c:142 ../lib/vector/Vlib/legal_vname.c:146
+#: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
-msgid "Output vector map <%s> is used as input"
-msgstr "مستخدم كمدخل '%s' الفيكتور المخرج"
+msgid "Unable to read line %d"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/Vlib/area.c:164 ../lib/vector/Vlib/area.c:193
+#: ../lib/vector/Vlib/area.c:257 ../lib/vector/Vlib/area.c:286
+#, fuzzy, c-format
+msgid "Attempt to read topo for dead area (%d)"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/Vlib/area.c:313
+#, fuzzy, c-format
+msgid "Attempt to read topo for dead isle (%d)"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/Vlib/geos.c:56
+#, c-format
+msgid ""
+"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+"vector map <%s>: %d)"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:61
+msgid "only native format supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:91
+#, c-format
+msgid "Vect_read_area_geos(): unable to read area id %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:105
+#, c-format
+msgid "Vect_read_area_geos(): unable to read isle id %d of area id %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:203
+#, fuzzy, c-format
+msgid "Unable to read line offset %ld"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/Vlib/geos.c:410
+#, fuzzy, c-format
+msgid "Attempt to read points of nonexistent area id %d"
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#: ../lib/vector/Vlib/geos.c:470
+#, fuzzy, c-format
+msgid "Unable to read feature id %d"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
+#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
+#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
+#, fuzzy, c-format
+msgid "Vector map <%s> is not open on level >= 2"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/vector/Vlib/build_ogr.c:272
+#, fuzzy, c-format
+msgid "Unable to calculate centroid for area %d"
+msgstr "لم يمكن توفير ذاكرة كافية\n"
+
+#: ../lib/vector/Vlib/build_ogr.c:333
+msgid "Partial build for OGR is not supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:342
+msgid ""
+"Random read is not supported by OGR for this layer, cannot build support"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:349
+msgid "Feature: "
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:361
+#, c-format
+msgid "Feature %d without geometry ignored"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:368
+msgid "OGR feature without ID ignored"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:31
+msgid "Category index is not up to date"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:61 ../lib/vector/Vlib/cindex.c:125
+#: ../lib/vector/Vlib/cindex.c:143 ../lib/vector/Vlib/cindex.c:166
+msgid "Invalid layer index (index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:107
+msgid "Invalid layer index (index < 0 or index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:232
+#, fuzzy
+msgid "Layer or category index out of range"
+msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
+
+#: ../lib/vector/Vlib/cindex.c:283
+#, fuzzy
+msgid "Layer index out of range"
+msgstr "دليل الخواص المضاعفة القيمة خارج النطاق"
+
+#: ../lib/vector/Vlib/cindex.c:461
+#, fuzzy, c-format
+msgid "Unable to open cidx file <%s> for write"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/Vlib/cindex.c:469
+#, fuzzy, c-format
+msgid "Error writing out category index file <%s>"
+msgstr "خطا فى كتابة الدليل الفراغى\n"
+
+#: ../lib/vector/Vlib/cindex.c:512
+#, fuzzy, c-format
+msgid "Unable to open category index file for vector map <%s@%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/close.c:134
+#, fuzzy, c-format
+msgid "Unable to close vector <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/vector/Vlib/overlay.c:74
+#, fuzzy
+msgid "unknown operator"
+msgstr "مسقط غير معروف"
+
+#: ../lib/vector/Vlib/overlay.c:123
+msgid "Overlay: line/boundary types not supported by AND operator"
+msgstr ""
+
+#: ../lib/vector/Vlib/overlay.c:126
+msgid "Overlay: area x area types not supported by AND operator"
+msgstr ""
+
+#: ../lib/vector/Vlib/open_ogr.c:54
+msgid "OGR format cannot be updated"
+msgstr ""
+
+#: ../lib/vector/Vlib/open_ogr.c:66
+#, fuzzy, c-format
+msgid "Unable to open OGR data source '%s'"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/vector/Vlib/open_ogr.c:86
+#, fuzzy, c-format
+msgid "Unable to open layer <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/Vlib/open_ogr.c:139
+#, fuzzy, c-format
+msgid "Unable to open fidx file for vector map <%s@%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/open_ogr.c:157
+#, c-format
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/open_ogr.c:162
+#, c-format
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/level.c:38
+msgid "Map structure was never initialized"
+msgstr ""
+
+#: ../lib/vector/Vlib/level.c:40
+msgid "Map structure has been closed"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_lines.c:374
+#, fuzzy, c-format
+msgid "Intersections: %5d"
+msgstr "مساقط أخرى"
+
+#: ../lib/vector/Vlib/buffer2.c:364
+#, fuzzy
+msgid "Line is not looped"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/vector/Vlib/buffer2.c:598 ../lib/vector/Vlib/buffer2.c:609
+msgid "Next edge was visited but it is not the first one !!! breaking loop"
+msgstr ""
+
+#: ../lib/vector/Vlib/buffer2.c:657
+msgid "side != 0 feature not implemented"
+msgstr ""
+
+#: ../lib/vector/Vlib/buffer2.c:899 ../lib/vector/Vlib/buffer2.c:946
+msgid "zero area size"
+msgstr ""
+
+#: ../lib/vector/Vlib/buffer2.c:905 ../lib/vector/Vlib/buffer2.c:952
+#, fuzzy
+msgid "Line was not closed"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/vector/Vlib/buffer2.c:918 ../lib/vector/Vlib/buffer2.c:969
+msgid "Vect_get_point_in_poly() failed"
+msgstr ""
 
 #: ../lib/vector/Vlib/write.c:27 ../lib/vector/Vlib/write.c:33
 #: ../lib/vector/Vlib/write.c:39 ../lib/vector/Vlib/write.c:46
@@ -4445,31 +4711,94 @@ msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بو�
 msgid "Unable to restore feature %d from vector map <%s>"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/vector/Vlib/buffer2.c:364
+#: ../lib/vector/Vlib/header.c:95 ../lib/vector/Vlib/header.c:143
+#, fuzzy, c-format
+msgid "Unable to open header file of vector <%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/header.c:151
+#, c-format
+msgid "Corrupted row in head: %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/header.c:189
+#, fuzzy, c-format
+msgid "Unknown keyword %s in vector head"
+msgstr "مسقط غير معروف"
+
+#: ../lib/vector/Vlib/poly.c:235
 #, fuzzy
-msgid "Line is not looped"
-msgstr "غير موجود'%s' الفيكتور"
+msgid "Unable to find point in polygon"
+msgstr "[%s] لم يتم ايجاد [%s] فى"
 
-#: ../lib/vector/Vlib/buffer2.c:598 ../lib/vector/Vlib/buffer2.c:609
-msgid "Next edge was visited but it is not the first one !!! breaking loop"
-msgstr ""
-
-#: ../lib/vector/Vlib/buffer2.c:657
-msgid "side != 0 feature not implemented"
-msgstr ""
-
-#: ../lib/vector/Vlib/buffer2.c:899 ../lib/vector/Vlib/buffer2.c:946
-msgid "zero area size"
-msgstr ""
-
-#: ../lib/vector/Vlib/buffer2.c:905 ../lib/vector/Vlib/buffer2.c:952
+#: ../lib/vector/Vlib/poly.c:649
 #, fuzzy
-msgid "Line was not closed"
-msgstr "غير موجود'%s' الفيكتور"
+msgid "conditions failed"
+msgstr "فشل الإتصال\n"
 
-#: ../lib/vector/Vlib/buffer2.c:918 ../lib/vector/Vlib/buffer2.c:969
-msgid "Vect_get_point_in_poly() failed"
-msgstr ""
+#: ../lib/vector/Vlib/open.c:100
+#, fuzzy, c-format
+msgid "Programmer requested unknown open level %d"
+msgstr "تحذير: المبرمج طلب مستوى  غير معروف\n"
+
+#: ../lib/vector/Vlib/open.c:179
+#, fuzzy
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
+msgstr "الخريطة لا يمكن فتحها للتحديث"
+
+#: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
+#: ../lib/vector/Vlib/open.c:299
+#, fuzzy, c-format
+msgid ""
+"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
+"by v.build."
+msgstr "%d على مستوى %s لم يمكن فتح فيكتور قديم "
+
+#: ../lib/vector/Vlib/open.c:214
+#, fuzzy
+msgid "Unable to read head file"
+msgstr "لم يمكن فتح ملف مؤقت"
+
+#: ../lib/vector/Vlib/open.c:236
+#, fuzzy, c-format
+msgid "Unable to open topology file for vector map <%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/open.c:262
+#, fuzzy, c-format
+msgid "Unable to open category index file for vector map <%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/open.c:353 ../lib/vector/Vlib/open.c:576
+#, fuzzy, c-format
+msgid "Unable to open history file for vector map <%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
+
+#: ../lib/vector/Vlib/open.c:531
+#, fuzzy, c-format
+msgid "%s is not in the current mapset (%s)"
+msgstr "<%s> فى مجموعة الخريطة <%s>"
+
+#: ../lib/vector/Vlib/open.c:566
+#, fuzzy, c-format
+msgid "Unable to create vector map <%s>"
+msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#: ../lib/vector/Vlib/open.c:622
+#, fuzzy, c-format
+msgid "Unable to stat file <%s>"
+msgstr "لم يمكن فتحه %s فى %s"
+
+#: ../lib/vector/Vlib/open.c:731
+#, fuzzy
+msgid "Size of 'coor' file differs from value saved in topology file"
+msgstr "حجم ملف الأحداثيات مختلف عن القيم المحفوظة فى ملف الطبوغرافية"
+
+#: ../lib/vector/Vlib/open.c:742
+#, fuzzy, c-format
+msgid "Please rebuild topology for vector map <%s@%s>"
+msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
 
 #: ../lib/vector/Vlib/build.c:123
 #, fuzzy, c-format
@@ -4581,344 +4910,15 @@ msgstr "%s: لم يمكن فتح ملف الدليل الفراغى للكتاب
 msgid "Error writing out spatial index file"
 msgstr "خطا فى كتابة الدليل الفراغى\n"
 
-#: ../lib/vector/Vlib/cats.c:47
-#, fuzzy
-msgid "Vect_new_cats_struct(): Out of memory"
-msgstr "لم يمكن توفير ذاكرة"
-
-#: ../lib/vector/Vlib/cats.c:131
-#, c-format
-msgid "Too many categories (%d), unable to set cat %d (layer %d)"
-msgstr ""
-
-#: ../lib/vector/Vlib/cats.c:410
-#, c-format
-msgid "Unable to convert category string '%s' (from '%s') to category range"
-msgstr ""
-
-#: ../lib/vector/Vlib/snap.c:148
-msgid "Snap vertices Pass 1: select points"
-msgstr ""
-
-#: ../lib/vector/Vlib/snap.c:202
-msgid "Snap vertices Pass 2: assign anchor vertices"
-msgstr ""
-
-#: ../lib/vector/Vlib/snap.c:271
-msgid "Snap vertices Pass 3: snap to assigned points"
-msgstr ""
-
-#: ../lib/vector/Vlib/snap.c:451
-#, c-format
-msgid "Snapped vertices: %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/snap.c:452
+#: ../lib/vector/vedit/cats.c:63
 #, fuzzy, c-format
-msgid "New vertices: %d"
-msgstr "عدد النقاط    :   %d\n"
+msgid "Unable to set category %d for (feature id %d)"
+msgstr "لم يمكن فتح ملف مؤقت"
 
-#: ../lib/vector/Vlib/build_ogr.c:272
-#, fuzzy, c-format
-msgid "Unable to calculate centroid for area %d"
-msgstr "لم يمكن توفير ذاكرة كافية\n"
-
-#: ../lib/vector/Vlib/build_ogr.c:333
-msgid "Partial build for OGR is not supported"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:342
-msgid ""
-"Random read is not supported by OGR for this layer, cannot build support"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:349
-msgid "Feature: "
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:361
-#, c-format
-msgid "Feature %d without geometry ignored"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:368
-msgid "OGR feature without ID ignored"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:93
+#: ../lib/vector/vedit/select.c:232
 #, fuzzy
-msgid "Layer number must be 1 or greater"
-msgstr "رقم الحقل يجب ان يكون 1 او اكثر"
-
-#: ../lib/vector/Vlib/field.c:98
-#, fuzzy
-msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr ""
-"لم يتم اضافة رابط قاعدة البيانات حيث ان الخريطة غير مفتوحة على وضع الكتابة"
-
-#: ../lib/vector/Vlib/field.c:104
-#, fuzzy
-msgid "Unable to add database link"
-msgstr "لم يتم اضافة رابط قاعدة البيانات"
-
-#: ../lib/vector/Vlib/field.c:110 ../lib/vector/Vlib/field.c:155
-#, fuzzy
-msgid "Unable to write database links"
-msgstr "لم يتم كتابة روابط قاعدة البيانات"
-
-#: ../lib/vector/Vlib/field.c:223
-#, fuzzy, c-format
-msgid "Layer number %d or name <%s> already exists"
-msgstr "موجود بالفعل <%d> ورقم الحقل <%s> الأسم"
-
-#: ../lib/vector/Vlib/field.c:302
-#, c-format
-msgid ""
-"Default driver / database set to:\n"
-"driver: %s\n"
-"database: %s"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:309
-msgid "Default driver is not set"
-msgstr "لم يحدد المشغل الأساسى"
-
-#: ../lib/vector/Vlib/field.c:312
-msgid "Default database is not set"
-msgstr "لم تحدد قاعدة البيانات الأساس"
-
-#: ../lib/vector/Vlib/field.c:371
-#, c-format
-msgid "Requested dblink %d, maximum link number %d"
-msgstr "رابط قاعدة البيانات المطلوب %d, القيمة العظمى للرابط %d"
-
-#: ../lib/vector/Vlib/field.c:512
-#, fuzzy
-msgid "Unable to open OGR DBMI driver"
-msgstr "OGR DBMI لم يمكن فتح مشغل"
-
-#: ../lib/vector/Vlib/field.c:551
-msgid ""
-"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
-"available in OGR DB table"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:606
-#, c-format
-msgid "Don't know how to read links for format %d"
-msgstr " %d لم يمكن قراءة الروابط للتشكيل"
-
-#: ../lib/vector/Vlib/field.c:639
-#, c-format
-msgid "Error in rule on row %d in %s"
-msgstr " %s فى  %d خطا فى القاعدة على الصف"
-
-#: ../lib/vector/Vlib/field.c:709
-#, fuzzy, c-format
-msgid "Unable to open vector database definition file '%s'"
-msgstr "datum لم يمكن فتح ملف جدول : %s"
-
-#: ../lib/vector/Vlib/field.c:804
-#, fuzzy
-msgid "Bug: attempt to update map which is not in current mapset"
-msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
-
-#: ../lib/vector/Vlib/intersect.c:127
-msgid "3D not supported by Vect_segment_intersection()"
-msgstr ""
-
-#: ../lib/vector/Vlib/intersect.c:313
-msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
-msgstr ""
-
-#: ../lib/vector/Vlib/intersect.c:407
-msgid "Vect_segment_intersection() ERROR (collinear non vertical segments)"
-msgstr ""
-
-#: ../lib/vector/Vlib/intersect.c:1059 ../lib/vector/Vlib/intersect.c:1065
-#: ../lib/vector/Vlib/intersect.c:1067 ../lib/vector/Vlib/intersect.c:1115
-#: ../lib/vector/Vlib/intersect.c:1124 ../lib/vector/Vlib/intersect.c:1145
-#: ../lib/vector/Vlib/intersect.c:1162
-msgid "Error while adding point to array. Out of memory"
-msgstr ""
-
-#: ../lib/vector/Vlib/overlay.c:74
-#, fuzzy
-msgid "unknown operator"
+msgid "Unknown query tool"
 msgstr "مسقط غير معروف"
-
-#: ../lib/vector/Vlib/overlay.c:123
-msgid "Overlay: line/boundary types not supported by AND operator"
-msgstr ""
-
-#: ../lib/vector/Vlib/overlay.c:126
-msgid "Overlay: area x area types not supported by AND operator"
-msgstr ""
-
-#: ../lib/vector/Vlib/close.c:134
-#, fuzzy, c-format
-msgid "Unable to close vector <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/vector/Vlib/open.c:100
-#, fuzzy, c-format
-msgid "Programmer requested unknown open level %d"
-msgstr "تحذير: المبرمج طلب مستوى  غير معروف\n"
-
-#: ../lib/vector/Vlib/open.c:179
-#, fuzzy
-msgid ""
-"Vector map which is not in the current mapset cannot be opened for update"
-msgstr "الخريطة لا يمكن فتحها للتحديث"
-
-#: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
-#: ../lib/vector/Vlib/open.c:299
-#, fuzzy, c-format
-msgid ""
-"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
-"by v.build."
-msgstr "%d على مستوى %s لم يمكن فتح فيكتور قديم "
-
-#: ../lib/vector/Vlib/open.c:214
-#, fuzzy
-msgid "Unable to read head file"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/Vlib/open.c:236
-#, fuzzy, c-format
-msgid "Unable to open topology file for vector map <%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/open.c:262
-#, fuzzy, c-format
-msgid "Unable to open category index file for vector map <%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/open.c:353 ../lib/vector/Vlib/open.c:576
-#, fuzzy, c-format
-msgid "Unable to open history file for vector map <%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/open.c:531
-#, fuzzy, c-format
-msgid "%s is not in the current mapset (%s)"
-msgstr "<%s> فى مجموعة الخريطة <%s>"
-
-#: ../lib/vector/Vlib/open.c:566
-#, fuzzy, c-format
-msgid "Unable to create vector map <%s>"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/vector/Vlib/open.c:622
-#, fuzzy, c-format
-msgid "Unable to stat file <%s>"
-msgstr "لم يمكن فتحه %s فى %s"
-
-#: ../lib/vector/Vlib/open.c:731
-#, fuzzy
-msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr "حجم ملف الأحداثيات مختلف عن القيم المحفوظة فى ملف الطبوغرافية"
-
-#: ../lib/vector/Vlib/open.c:742
-#, fuzzy, c-format
-msgid "Please rebuild topology for vector map <%s@%s>"
-msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
-
-#: ../lib/vector/Vlib/area.c:53
-#, fuzzy
-msgid "Attempt to read points of nonexistent area"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/Vlib/area.c:125
-#, fuzzy, c-format
-msgid "Unable to read line %d"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/Vlib/area.c:164 ../lib/vector/Vlib/area.c:193
-#: ../lib/vector/Vlib/area.c:257 ../lib/vector/Vlib/area.c:286
-#, fuzzy, c-format
-msgid "Attempt to read topo for dead area (%d)"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
-
-#: ../lib/vector/Vlib/area.c:313
-#, fuzzy, c-format
-msgid "Attempt to read topo for dead isle (%d)"
-msgstr "لم يمكن فتح ملف مؤقت"
-
-#: ../lib/vector/Vlib/build_nat.c:93
-#, fuzzy
-msgid "Unable to add area (map closed, topo saved)"
-msgstr "لم يمكن اضافة مساحة, تم قفل الخريطة وحفظت الطبوغرافية"
-
-#: ../lib/vector/Vlib/build_nat.c:102
-#, fuzzy
-msgid "Unable to add isle (map closed, topo saved)"
-msgstr "لم يمكن اضافة جزيرة, تم قفل الخريطة وحفظت الطبوغرافية"
-
-#: ../lib/vector/Vlib/build_nat.c:112
-msgid "Area of size = 0.0 ignored"
-msgstr "المساحة بحجم= 0.0 أهملت"
-
-#: ../lib/vector/Vlib/build_nat.c:148
-msgid "Request to find area outside nonexistent isle"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:516
-#, fuzzy
-msgid "Registering primitives..."
-msgstr ":تسجيل الخطوط"
-
-#: ../lib/vector/Vlib/build_nat.c:525
-#, fuzzy
-msgid "Unable to read vector map"
-msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
-
-#: ../lib/vector/Vlib/build_nat.c:569
-#, c-format
-msgid "%d primitives registered"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:570
-#, c-format
-msgid "%d vertices registered"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:581
-#, fuzzy
-msgid "Building areas..."
-msgstr "يتم الان بناء الطبولوجى ...\n"
-
-#: ../lib/vector/Vlib/build_nat.c:604
-#, fuzzy, c-format
-msgid "%d areas built"
-msgstr "تم بناء الطبولوجى\n"
-
-#: ../lib/vector/Vlib/build_nat.c:605
-#, fuzzy, c-format
-msgid "%d isles built"
-msgstr "تم بناء الطبولوجى\n"
-
-#: ../lib/vector/Vlib/build_nat.c:614
-#, fuzzy
-msgid "Attaching islands..."
-msgstr ": توصيل الجزر"
-
-#: ../lib/vector/Vlib/build_nat.c:629
-#, fuzzy
-msgid "Attaching centroids..."
-msgstr " : توصيل اشباه المراكز"
-
-#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
-#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
-#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
-#, fuzzy, c-format
-msgid "Vector map <%s> is not open on level >= 2"
-msgstr "غير موجود'%s' الفيكتور"
-
-#: ../lib/vector/Vlib/graph.c:143
-#, fuzzy
-msgid "Unable to add network arc"
-msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
 #, fuzzy
 #~ msgid "Unable to open driver <%s>"
