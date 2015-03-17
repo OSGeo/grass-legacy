@@ -493,7 +493,7 @@ int Vect_get_proj(struct Map_info *Map)
 
    \param Map vector map
 
-   \return poiter to projection name
+   \return pointer to projection name
  */
 
 const char *Vect_get_proj_name(struct Map_info *Map)
