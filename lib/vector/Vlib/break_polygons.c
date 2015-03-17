@@ -36,9 +36,11 @@ typedef struct
 static int fpoint;
 
 /* Function called from RTreeSearch for point found */
-void srch(int id, int *arg)
+int srch(int id, int *arg)
 {
     fpoint = id;
+    
+    return 0;
 }
 
 /*!
