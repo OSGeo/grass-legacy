@@ -380,8 +380,8 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 
 	/* Unregister centroid */
 	orig_area = Line->left;
-	if ( orig_area > 0 ) {
-	    if ( plus->Area[orig_area] != NULL ) {
+	if (orig_area > 0) {
+	    if (plus->Area[orig_area] != NULL) {
 		plus->Area[orig_area]->centroid = 0;
 	    }
 	}
@@ -409,8 +409,7 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 		    dig_line_add_updated(plus, centr);
 	    }
 	}
-
-	if (sel_area != orig_area && plus->do_uplist)
+	else if (orig_area != 0 && plus->do_uplist)
 	    dig_line_add_updated(plus, centr);
     }
 

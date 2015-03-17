@@ -493,7 +493,7 @@ int Vect_get_proj(struct Map_info *Map)
 
    \param Map vector map
 
-   \return poiter to projection name
+   \return pointer to projection name
  */
 
 const char *Vect_get_proj_name(struct Map_info *Map)
@@ -508,8 +508,13 @@ const char *Vect_get_proj_name(struct Map_info *Map)
     case PROJECTION_SP:
 	return G__projection_name(n);
     }
+
+    /* Vect_get_proj() didn't return a useful result,
+       fallback to G_database_projection_name() */
+    /* (is this behavior desirable?) */
     if (!lookup(PROJECTION_FILE, "name", name, sizeof(name)))
 	strcpy(name, _("Unknown projection"));
+
     return G_store(name);
 }
 
