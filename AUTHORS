@@ -7,21 +7,20 @@ $Date$
 Many people have contributed to GRASS GIS. Without any one of them the
 project would not exist in its current form.
 
-The authors of the individual programs are listed at the end of their 
-manual page in the GRASS users manuals or in the source code. However, 
-numerous authors of bug fixes and enhancements as well as people who 
-have been working on coordination, integration, translation, 
-documentation and testing are not mentioned. Therefore, this 
-page is an attempt to acknowledge those who contributed to GRASS 
-development.
+The authors of the individual programs are listed at the end of their
+manual page in the GRASS users manuals or in the source code. However,
+numerous authors of bug fixes and enhancements as well as people who
+have been working on coordination, integration, translation,
+documentation and testing are not mentioned. Therefore, this page is
+an attempt to acknowledge those who contributed to GRASS development.
 
-Please allow us to extend our most cordial thanks to all of you. If you 
-contributed to GRASS at any point during its existence, please let us 
-know your name and e-mail address so we can add your name.
+Please allow us to extend our most cordial thanks to all of you. If
+you contributed to GRASS at any point during its existence, please let
+us know your name and e-mail address so we can add your name.
 
-Active parts of the program have authors dating back to GRASS's 
-inception in 1982. Please check the GRASS 1.x - 5.0 credits list at:
- http://grass.osgeo.org/devel/grasscredits.html
+Active parts of the program have authors dating back to GRASS's
+inception in 1982. Please check the GRASS 1.x - 6.x credits list at:
+ http://grass.osgeo.org/home/credits/
 
 
 GRASS 6.0 was made up of entirely new code for much of the vector and 
@@ -105,7 +104,6 @@ Source code Quality assessment system
 
 Power user tester:
    Maciej "Maciek" Sieczka <msieczka at sieczka.org>
-
 
 
 GRASS 6.0 - 6.2 major project contributers
@@ -243,7 +241,7 @@ GRASS GIS 5.4 Author List
 -------------------------
 
 Please check additionally the GRASS 1.x-5.0 credits list at:
- http://grass.osgeo.org/devel/grasscredits.html
+ http://grass.osgeo.org/home/credits/
 
 While it is impossible for us to give credit to everyone (past 
 and present) who has contributed to GRASS, the following is the 
@@ -271,7 +269,7 @@ GRASS 5 Core Team (most have CVS write access):
                                                 interpolation (RST) 
                                                 and erosion modeling)
  Helena Mitasova <hmitaso unity.ncsu.edu>      (interpolation modules, NVIZ,
-                                                G3D, erosion modelling)
+                                                RASTER3D, erosion modelling)
  Eric G. Miller  <egm2 jps.net>                (sites format, new autoconf 
                                                 system, bugfixes etc.)
  Roger S. Miller <rgrmill rt66.com>            (raster modules, r.drain etc.)
@@ -331,13 +329,13 @@ Former GRASS 4.2.0 development:
 Former GRASS 4 development (1984 to 1995):
    U.S. Army Construction Engineering Research Laboratories  (CERL)
    Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, David Gerdes, ...
-   See: http://grass.osgeo.org/devel/grasscredits.html
+   See: http://grass.osgeo.org/home/credits/
 
 Former Institutions
  - University of Illinois at Urbana-Champaign, USA
-   Helena Mitasova <hmitaso unity.ncsu.edu> (interpolation modules, NVIZ, G3D)
+   Helena Mitasova <hmitaso unity.ncsu.edu> (interpolation modules, NVIZ, RASTER3D)
    William Brown   <brown gis.uiuc.edu>     (libraries, interpolation modules, 
-					     NVIZ, G3D)
+					     NVIZ, RASTER3D)
 
  - National Center for Supercomputing Applications, USA
    Lubos Mitas (multivariate spline interpolation (RST) and erosion modeling)
@@ -354,12 +352,11 @@ Contact:
  GRASS Development Team
  c/o Markus Neteler
  Fondazione Edmund Mach (FEM)
- IASMA Research and Innovation Centre
+ Research and Innovation Centre
  38010 S. Michele all'Adige (Trento), Italy
- markus.neteler AT iasma.it
+ neteler AT osgeo.org
 
 Internet:  http://grass.osgeo.org/   (main site)
-           http://grass.ibiblio.org/ (mirror)
-           http://grass.osgeo.org/mirrors.php (list of mirrors)
+           http://grass.osgeo.org/mirrors/ (list of mirrors)
 
 with a worldwide distribution network.
