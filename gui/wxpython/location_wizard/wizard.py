@@ -72,6 +72,8 @@ class TitledPage(BaseClass, wiz.WizardPageSimple):
         # main sizers
         self.pagesizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer = wx.GridBagSizer(vgap = 0, hgap = 0)
+        self.sizer.SetCols(5)
+        self.sizer.SetRows(6)
         
     def DoLayout(self):
         """!Do page layout"""
@@ -1168,7 +1170,7 @@ class GeoreferencedFilePage(TitledPage):
         """!Choose file"""
         dlg = wx.FileDialog(self,
                             _("Select georeferenced file"),
-                            os.getcwd(), "", "*.*", wx.OPEN)
+                            os.getcwd(), "", "*.*", wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             self.tfile.SetValue(path)
@@ -1241,7 +1243,7 @@ class WKTPage(TitledPage):
                             message = _("Select Well Known Text (WKT) .prj file"),
                             defaultDir = os.getcwd(),
                             wildcard = "PRJ files (*.prj)|*.prj|Files (*.*)|*.*",
-                            style = wx.OPEN)
+                            style = wx.FD_OPEN)
 
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -1419,7 +1421,7 @@ class EPSGPage(TitledPage):
             path = os.getcwd()
         
         dlg = wx.FileDialog(parent = self, message = _("Choose EPSG codes file"),
-                            defaultDir = path, defaultFile = "", wildcard = "*", style = wx.OPEN)
+                            defaultDir = path, defaultFile = "", wildcard = "*", style = wx.FD_OPEN)
         
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()

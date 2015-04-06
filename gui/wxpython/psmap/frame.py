@@ -392,7 +392,7 @@ class PsMapFrame(wx.Frame):
         filename = ''
         dlg = wx.FileDialog(self, message = _("Save file as"), defaultDir = "", 
                             defaultFile = mapName, wildcard = wildcard,
-                            style = wx.CHANGE_DIR | wx.SAVE | wx.OVERWRITE_PROMPT)
+                            style = wx.FD_CHANGE_DIR | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
         if dlg.ShowModal() == wx.ID_OK:
             filename = dlg.GetPath()
             suffix = suffix[dlg.GetFilterIndex()]
@@ -417,7 +417,7 @@ class PsMapFrame(wx.Frame):
         filename = ''
         dlg = wx.FileDialog(self, message = "Find instructions file", defaultDir = "", 
                             defaultFile = '', wildcard = "All files (*.*)|*.*",
-                            style = wx.CHANGE_DIR|wx.OPEN)
+                            style = wx.FD_CHANGE_DIR|wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             filename = dlg.GetPath()
         dlg.Destroy()
@@ -2220,7 +2220,8 @@ def main():
     gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
     
     app = wx.PySimpleApp()
-    wx.InitAllImageHandlers()
+    if not globalvar.CheckWxVersion([2, 9]):
+        wx.InitAllImageHandlers()
     frame = PsMapFrame()
     frame.Show()
     

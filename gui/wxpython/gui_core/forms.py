@@ -1296,9 +1296,9 @@ class CmdPanel(wx.Panel):
                 # file selector
                 elif p.get('prompt','') !=  'color' and p.get('element', '') ==  'file':
                     if p.get('age', 'new_file') == 'new_file':
-                        fmode = wx.SAVE
+                        fmode = wx.FD_SAVE
                     else:
-                        fmode = wx.OPEN
+                        fmode = wx.FD_OPEN
                     fbb = filebrowse.FileBrowseButton(parent = which_panel, id = wx.ID_ANY, fileMask = '*',
                                                       size = globalvar.DIALOG_GSELECT_SIZE, labelText = '',
                                                       dialogTitle = _('Choose %s') % \
@@ -1549,7 +1549,7 @@ class CmdPanel(wx.Panel):
         dlg = wx.FileDialog(parent = self,
                             message = _("Save input as..."),
                             defaultDir = os.getcwd(),
-                            style = wx.SAVE | wx.FD_OVERWRITE_PROMPT)
+                            style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
 
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()

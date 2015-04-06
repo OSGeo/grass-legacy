@@ -32,7 +32,7 @@ import grass.script as grass
 
 def CheckWxVersion(version = [2, 8, 11, 0]):
     """!Check wx version"""
-    ver = wx.version().split(' ')[0]
+    ver = wx.__version__
     if map(int, ver.split('.')) < version:
         return False
     
@@ -53,7 +53,7 @@ def CheckForWx():
         # wxversion.select(str(minVersion[0]) + '.' + str(minVersion[1]))
         wxversion.ensureMinimal(str(minVersion[0]) + '.' + str(minVersion[1]))
         import wx
-        version = wx.version().split(' ')[0]
+        version = wx.__version__
         
         if map(int, version.split('.')) < minVersion:
             raise ValueError('Your wxPython version is %s.%s.%s.%s' % tuple(version.split('.')))
