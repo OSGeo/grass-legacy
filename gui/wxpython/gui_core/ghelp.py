@@ -88,6 +88,7 @@ class SearchModuleWindow(wx.Panel):
         """!Do layout"""
         sizer = wx.StaticBoxSizer(self.box, wx.HORIZONTAL)
         gridSizer = wx.GridBagSizer(hgap = 3, vgap = 3)
+        gridSizer.SetCols(2)
         
         gridSizer.Add(item = self.searchBy,
                       flag = wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
@@ -397,6 +398,7 @@ class AboutWindow(wx.Frame):
         infoTxt.SetupScrolling()
         infoSizer = wx.BoxSizer(wx.VERTICAL)
         infoGridSizer = wx.GridBagSizer(vgap = 5, hgap = 5)
+        infoGridSizer.SetCols(2)
         logo = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass-64x64.png")
         logoBitmap = wx.StaticBitmap(parent = infoTxt, id = wx.ID_ANY,
                                      bitmap = wx.Bitmap(name = logo,

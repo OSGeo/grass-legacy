@@ -551,7 +551,7 @@ class ModelFrame(wx.Frame):
                             defaultDir = "",
                             defaultFile = "",
                             wildcard = filetype,
-                            style=wx.SAVE | wx.FD_OVERWRITE_PROMPT)
+                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
         
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -1657,7 +1657,8 @@ def main():
     gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode = True)
     
     app = wx.PySimpleApp()
-    wx.InitAllImageHandlers()
+    if not globalvar.CheckWxVersion([2, 9]):
+        wx.InitAllImageHandlers()
     frame = ModelFrame(parent = None)
     if len(sys.argv) > 1:
         frame.LoadModelFile(sys.argv[1])

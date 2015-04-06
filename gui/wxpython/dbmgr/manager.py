@@ -3101,9 +3101,10 @@ def main(argv = None):
     if len(argv) != 2:
         print >> sys.stderr, __doc__
         sys.exit()
-    
+
     #some applications might require image handlers
-    wx.InitAllImageHandlers()
+    if not globalvar.CheckWxVersion([2, 9]):
+        wx.InitAllImageHandlers()
     
     app = wx.PySimpleApp()
     f = AttributeManager(parent = None, id = wx.ID_ANY,
