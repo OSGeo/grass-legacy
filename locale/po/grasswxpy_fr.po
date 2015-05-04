@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-17 12:00+0100\n"
-"PO-Revision-Date: 2015-04-07 08:07+0100\n"
+"PO-Revision-Date: 2015-05-04 00:56+0100\n"
 "Last-Translator: Sylvain Maillard <sylvain.maillard@gmail.com>\n"
 "Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "Language: fr\n"
@@ -10257,9 +10257,8 @@ msgid "Plot settings"
 msgstr "Paramètres de graphique"
 
 #: ../gui/wxpython/wxplot/base.py:428
-#, fuzzy
 msgid "This feature is not yet functional"
-msgstr "Cette option n'est encore fonctionnelle"
+msgstr "Cette fonction n'est encore utilisable"
 
 #: ../gui/wxpython/wxplot/base.py:429
 msgid "Under Construction"
