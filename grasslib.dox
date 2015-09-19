@@ -1,4 +1,4 @@
-/*! \mainpage GRASS 6 Programmer's Manual
+/*! \mainpage GRASS GIS 6 Programmer's Manual
 <!-- * doxygenized from "GRASS 5 Programmer's Manual"
        by M. Neteler 2/2004
      * updated 8/2005, 2006, 2007, 2008
@@ -22,7 +22,10 @@ an international team of programmers,
 GRASS module authors are cited within their module's source code and the 
 contributed manual pages.
 
-&copy; 2000-2013 GRASS Development Team<br>
+<b>An up-to-date version of this Programmer's Manual is available at 
+<a href="http://grass.osgeo.org/programming7/">http://grass.osgeo.org/programming7/</a></b>
+
+&copy; 2000-2015 GRASS Development Team<br>
 Published under GNU Free Documentation License (GFDL)
 http://www.fsf.org/copyleft/fdl.html
 
