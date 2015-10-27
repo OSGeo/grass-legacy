@@ -122,6 +122,16 @@ c        97  B0 band of VGT2 (SPOT5)  ( 0.400-0.550 )                  c
 c        98  B2       "               ( 0.580-0.780 )                  c
 c        99  B3       "               ( 0.700-1.000 )                  c
 c        100 MIR      "               ( 1.450-1.800 )                  c
+c        115 Coastal Aerosol of LS8   ( 0.427-0.459 )                  c
+c        116 Blue     "               ( 0.436-0.527 )                  c 
+c        117 Green    "               ( 0.512-0.610 )                  c 
+c        118 Red      "               ( 0.625-0.691 )                  c 
+c        119 Pan      "               ( 0.488-0.692 )                  c 
+c        120 NIR      "               ( 0.829-0.900 )                  c 
+c        121 Cirrus   "               ( 1.340-1.409 )                  c  
+c        122 SWIR1    "               ( 1.515-1.697 )                  c 
+c        123 SWIR2    "               ( 2.037-2.037 )                  c 
+c                                                                      c
 c  note: wl has to be in micrometer                                    c
 c**********************************************************************/
 
@@ -163,7 +173,9 @@ private:
 	void rapideye(int iwa);
 	void vgt1_spot4(int iwa);
 	void vgt2_spot5(int iwa);
-
+/*	void worldview2(int iwa);
+	void quickbird2(int iwa); */
+	void landsat_8(int iwa);
 
 public:
 	/* To compute the equivalent wavelength needed for the calculation of the

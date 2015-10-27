@@ -166,6 +166,27 @@ the ascendant node at equator</td>
 <td><b>VGT2 (SPOT5)</b></td>
 <td>enter month,day,hh.ddd,long.,lat. *</td>
 </tr>
+
+<!-- not backported from G7
+<tr>
+<td>16</td>
+<td><b>WorldView 2</b></td>
+<td>enter month,day,hh.ddd,long.,lat. *</td>
+</tr>
+
+<tr>
+<td>17</td>
+<td><b>QuickBird</b></td>
+<td>enter month,day,hh.ddd,long.,lat. *</td>
+</tr>
+-->
+
+<tr>
+<td>18</td>
+<td><b>LandSat 8</b></td>
+<td>enter month,day,hh.ddd,long.,lat. *</td>
+</tr>
+
 </table>
 
 <blockquote>
@@ -566,6 +587,38 @@ Pre-defined satellite bands:
 <tr><td>98</td><td>VGT2 (SPOT5) band 2 (0.580-0.780)</td></tr>
 <tr><td>99</td><td>VGT2 (SPOT5) band 3 (0.700-1.000)</td></tr>
 <tr><td>100</td><td>VGT2 (SPOT5) MIR band (1.450-1.800)</td></tr>
+
+<!-- not backported from G7
+<tr><td>101</td><td>WorldView 2 Panchromatic band (0.447-0.808)</td></tr>
+<tr><td>102</td><td>WorldView 2 Coastal Blue band (0.396-0.458)</td></tr>
+<tr><td>103</td><td>WorldView 2 Blue band (0.442-0.515)</td></tr>
+<tr><td>104</td><td>WorldView 2 Green band (0.506-0.586)</td></tr>
+<tr><td>105</td><td>WorldView 2 Yellow band (0.584-0.632)</td></tr>
+<tr><td>106</td><td>WorldView 2 Red band (0.624-0.694)</td></tr>
+<tr><td>107</td><td>WorldView 2 Red Edge band (0.699-0.749)</td></tr>
+<tr><td>108</td><td>WorldView 2 NIR1 band (0.765-0.901)</td></tr>
+<tr><td>109</td><td>WorldView 2 NIR2 band (0.856-0.1043)</td></tr>
+
+<tr><td>110</td><td><b>QuickBird</b> Panchromatic band (0.405-1.053)</td></tr>
+<tr><td>111</td><td>QuickBird Blue band (0.430-0.545)</td></tr>
+<tr><td>112</td><td>QuickBird Green band (0.466-0.620)</td></tr>
+<tr><td>113</td><td>QuickBird Red band (0.590-0.710)</td></tr>
+<tr><td>114</td><td>QuickBird NIR1 band (0.715-0.918)</td></tr>
+-->
+
+<tr><td>115</td><td><b>Landsat 8 </b> Coastal Aerosol Band (0.427nm - 0.459nm)</td></tr>
+<tr><td>116</td><td>Landsat 8 Blue Band  (436nm - 527nm)</td></tr>
+<tr><td>117</td><td>Landsat 8 Green Band (512nm-610nm)</td></tr>
+<tr><td>118</td><td>Landsat 8 Red Band (625nm-691nm)</td></tr>
+<tr><td>119</td><td>Landsat 8 Panchromatic Band (488nm-692nm)</td></tr>
+<tr><td>120</td><td>Landsat 8 NIR Band (829nm-900nm)</td></tr>
+<tr><td>121</td><td>Landsat 8 Cirrus Band (1340nm-1409nm)</td></tr>
+<tr><td>122</td><td>Landsat 8 SWIR1 Band (1515nm - 1697nm)</td></tr>
+<tr><td>123</td><td>Landsat 8 SWIR2 Band (2037nm - 2355nm)</td></tr>
+
+
+
+
 </table>
 
 <h2>EXAMPLES</h2>
@@ -622,7 +675,7 @@ LMIN&lambda; and LMAX&lambda; are the radiances related to the minimal and maxim
 in the metadata file for each image, or in the table 1. High gain or low gain is also reported
 in the metadata file of each Landsat image. The minimal DN value (QCALMIN) is 1 for Landsat ETM+
 images (see
-<a href="http://landsathandbook.gsfc.nasa.gov/handbook/handbook_htmls/chapter11/chapter11.html">Landsat handbook</a>),
+<a href="http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf">Landsat handbook</a>, see chapter 11),
 and the maximal DN value (QCALMAX) is 255. QCAL is the DN value for every
 separate pixel in the Landsat image.
 <p>
@@ -640,7 +693,7 @@ Conversion to radiance (this calculation is done for band 4, for the other bands
 need to be replaced with their related values):
 
 <div class="code"><pre>
-r.mapcalc "lsat7_2002_40_rad=((241.1 - (-5.1)) / (255.0 - 1.0)) * (lsat7_2002_40 - 1.0) + (-5.1)"
+r.mapcalc "lsat7_2002_40_rad = ((241.1 - (-5.1)) / (255.0 - 1.0)) * (lsat7_2002_40 - 1.0) + (-5.1)"
 </pre></div>
 
 
@@ -678,7 +731,7 @@ the raster elevation values are used from the map.
 Note that the process is computationally intensive.<br>
 Note also, that <em>i.atcorr</em> reports solar elevation angle above horizon rather than solar zenith angle.
 
-<h2><font color="red">REMAINING DOCUMENTATION ISSUES</font></h2>
+<h2>REMAINING DOCUMENTATION ISSUES</h2>
 1. The influence and importance of the visibility value or map should be 
 explained, also how to obtain an estimate for either visibility or aerosol 
 optical depth at 550nm.
@@ -709,7 +762,8 @@ overview., IEEE Trans. Geosc. and Remote Sens. 35(3):675-686.
 <li> 6S Manual: <a href="http://www.rsgis.ait.ac.th/~honda/textbooks/advrs/6smanv2.0_P1.pdf">PDF1</a>, 
      <a href="http://www.rsgis.ait.ac.th/~honda/textbooks/advrs/6smanv2.0_P2.pdf">PDF2</a>, 
      and <a href="http://www.rsgis.ait.ac.th/~honda/textbooks/advrs/6smanv2.0_P3.pdf">PDF3</a>
-<li>RapidEye sensors have been provided by <a href="http://www.rapideye.de/">RapidEye AG, Germany</a>
+<li>RapidEye sensors have been provided by <a href="http://www.rapideye.com/">RapidEye AG, Germany</a>
+<li> Julia A. Barsi, Brian L. Markham and Jeffrey A. Pedelty  "The operational land imager: spectral response and spectral uniformity", Proc. SPIE 8153, 81530G (2011); doi:10.1117/12.895438
 </ul>
 
 
@@ -735,6 +789,10 @@ overview., IEEE Trans. Geosc. and Remote Sens. 35(3):675-686.
 
 <p><em>VGT1 and VGT2 sensors addition from <a href="http://6s.ltdri.org/">6SV-1.1 sources</a>, addition 07/2011:</em>
 <br>Alfredo Alessandrini, Anne Ghisla
+
+<p><em>Added Landsat 8 from <a href="http://landsat.gsfc.nasa.gov/?p=5779">NASA sources</a>, addition 05/2014:</em>
+<br>Nikolaos Ves
+
 
 <p>
 <i>Last changed: $Date$</i>
