@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 	    "create table %s(cat integer%s)", Fi->table, db_get_string(&tmp));
 
     db_set_string(&sql, buf);
-    G_debug(2, db_get_string(&sql));
+    G_debug(2, "%s", db_get_string(&sql));
 
     if (db_execute_immediate(driver, &sql) != DB_OK) {
 	db_close_database_shutdown_driver(driver);

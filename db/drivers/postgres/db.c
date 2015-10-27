@@ -23,7 +23,7 @@ int db__driver_open_database(dbHandle * handle)
 	name = connection.databaseName;
 
     G_debug(3,
-	    "db_driver_open_database() driver=pg database definition = '%s'",
+	    "db_driver_open_database(): driver=pg database definition = '%s'",
 	    name);
 
     if (parse_conn(name, &pgconn) == DB_FAILED) {

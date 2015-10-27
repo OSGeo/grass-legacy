@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 	    Fi->table);
 
     db_set_string(&sql, buf);
-    G_debug(2, db_get_string(&sql));
+    G_debug(2, "%s", db_get_string(&sql));
 
     if (db_execute_immediate(driver, &sql) != DB_OK) {
 	db_close_database_shutdown_driver(driver);
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
 		    tcat, cost);
 
 	    db_set_string(&sql, buf);
-	    G_debug(3, db_get_string(&sql));
+	    G_debug(3, "%s", db_get_string(&sql));
 	    if (db_execute_immediate(driver, &sql) != DB_OK) {
 		db_close_database_shutdown_driver(driver);
 		G_fatal_error(_("Cannot insert new record: %s"),

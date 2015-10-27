@@ -19,13 +19,13 @@ int read_range(void)
     for (i = 0; i < noi; i++) {
 	if (G_read_fp_range(name[i], mapset[i], &drange) <= 0) {
 	    sprintf(buff, "Can't read f_range for map %s", name[i]);
-	    G_fatal_error(buff);
+	    G_fatal_error("%s", buff);
 	}
 	G_get_fp_range_min_max(&drange, &tmp_dmin, &tmp_dmax);
 
 	if (G_read_range(name[i], mapset[i], &range) <= 0) {
 	    sprintf(buff, "Can't read range for map %s", name[i]);
-	    G_fatal_error(buff);
+	    G_fatal_error("%s", buff);
 	}
 	G_get_range_min_max(&range, &tmp_min, &tmp_max);
 	if (!i || tmp_max > old_max || G_is_c_null_value(&old_max))

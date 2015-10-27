@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 	sprintf(formatbuff, _("[Along Track Dist.(m)] [Elevation]"));
     if (clr)
 	strcat(formatbuff, _(" [RGB Color]"));
-    G_message(formatbuff);
+    G_message("%s", formatbuff);
 
     /* Get Profile Start Coords */
     if (!parm.profile->answer && !parm.i->answer) {

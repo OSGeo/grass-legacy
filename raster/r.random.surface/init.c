@@ -207,7 +207,7 @@ void Init(int argc, char **argv)
 		Seeds[i] = Seeds[i] % SEED_MAX;
 		sprintf(msg2, _(" seed is set to %d"), Seeds[i]);
 		strcat(msg, msg2);
-		G_warning(msg);
+		G_warning("%s", msg);
 	    }
 	    else if (Seeds[i] < SEED_MIN) {
 		sprintf(msg, _("Seed (%d) smaller than minimum (%d)"),
@@ -216,7 +216,7 @@ void Init(int argc, char **argv)
 		    Seeds[i] += SEED_MAX - SEED_MIN;
 		sprintf(msg2, _(" seed is set to %d"), Seeds[i]);
 		strcat(msg, msg2);
-		G_warning(msg);
+		G_warning("%s", msg);
 	    }
 	}			/* /for */
     }				/* /else */

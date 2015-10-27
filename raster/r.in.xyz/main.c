@@ -1059,7 +1059,7 @@ int main(int argc, char *argv[])
 
 
     sprintf(buff, _("%lu points found in region."), count_total);
-    G_done_msg(buff);
+    G_done_msg("%s", buff);
     G_debug(1, "Processed %lu lines.", line);
 
     exit(EXIT_SUCCESS);
