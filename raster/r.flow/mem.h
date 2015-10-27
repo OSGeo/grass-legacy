@@ -37,7 +37,7 @@ void put_row_seg( /* l, row */ );
 		   segment_get_row(l.seg, l.buf[row] - l.col_offset, \
 				          row + l.row_offset) < 1)) ? \
 	(sprintf(string, "r.flow: cannot write segment file for %s", l.name),\
-	 G_fatal_error(string), (DCELL *) NULL) : \
+	 G_fatal_error("%s", string), (DCELL *) NULL) :                  \
 	l.buf[row])
 
 /*   This was is Astley's version 12...

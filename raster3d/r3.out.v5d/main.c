@@ -54,7 +54,7 @@ void fatalError(char *errorMsg)
 	    fatalError(_("Unable to close 3D raster map"));
     }
 
-    G3d_fatalError(errorMsg);
+    G3d_fatalError("%s", errorMsg);
 }
 
 /*---------------------------------------------------------------------------*/
