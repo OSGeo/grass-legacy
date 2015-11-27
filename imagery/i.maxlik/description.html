@@ -145,25 +145,52 @@ along with all required options, it will overwrite the
 classified raster map without prompting if this map
 existed.
 
+<p>
+The optional name of a <b>reject</b> raster map holds the reject
+threshold results. This is the result of a chi square test on each
+discriminant result at various threshold levels of confidence to
+determine at what confidence level each cell classified
+(categorized). It is the reject threshold map layer, and contains the
+index to one calculated confidence level for each classified cell in
+the classified image. 16 confidence intervals are predefined, and the
+reject map is to be interpreted as 1 = keep and 16 = reject. One of
+the possible uses for this map layer is as a mask, to identify cells
+in the classified image that have a low probability (high reject
+index) of being assigned to the correct class.
+
 <h2>EXAMPLE</h2>
 
-Completion of the unsupervised classification of
-a LANDSAT subscene (VIZ, NIR, MIR channels) in North Carolina
-(see <em>i.cluster</em> manual page for the first part):
+Second part of the unsupervised classification of a LANDSAT subscene
+(VIZ, NIR, MIR channels) in North Carolina (see
+<em><a href="i.cluster.html">i.cluster</a></em> manual page for the first
+part of the example):
 
 <div class="code"><pre>
+# using here the signaturefile created by i.cluster
 i.maxlik group=my_lsat7_2002 subgroup=my_lsat7_2002 sigfile=sig_clust_lsat2002 \
           class=lsat7_2002_clust_classes reject=lsat7_2002_clust_classes.rej
 
-# Visually check result
+# visually check result
 d.mon x0
 d.rast.leg lsat7_2002_clust_classes
 d.rast.leg lsat7_2002_clust_classes.rej
+
+# see how many pixels were rejected at given levels
+r.report lsat7_2002_clust_classes.rej units=k,p
+
+# optionally, filter out pixels with high level of rejection
+# here we remove pixels of at least 90% of rejection probability, i.e. categories 12-16
+r.mapcalc "lsat7_2002_cluster_classes_filtered = \
+           if(lsat7_2002_clust_classes.rej\ &lt;= 12, lsat7_2002_cluster_classes, null())"
 </pre></div>
 
 <h2>SEE ALSO</h2>
 
-The GRASS 4 <em>
+<a href="http://grasswiki.osgeo.org/wiki/Image_processing">Image processing</a>
+and
+<a href="http://grasswiki.osgeo.org/wiki/Image_classification">Image classification</a>
+wiki pages and for historical reference also
+the GRASS GIS 4<em>
 <a href="http://grass.osgeo.org/gdp/imagery/grass4_image_processing.pdf">Image
 Processing manual</a></em>
 
