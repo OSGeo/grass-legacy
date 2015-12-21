@@ -198,7 +198,7 @@ int do_cum_mfd(void)
 			stream_cells++;
 
 		    is_worked = FLAG_GET(worked, r_nbr, c_nbr);
-		    if (is_worked == 0) {
+		    if (!is_worked) {
 			is_null = G_is_c_null_value(&ele_nbr);
 			edge = is_null;
 			if (ele_nbr != ele)
@@ -225,6 +225,8 @@ int do_cum_mfd(void)
 			    if (dr == r_nbr && dc == c_nbr) {
 				astar_not_set = 0;
 			    }
+			    if (value < 0 && valued > 0)
+				wat[nbr_index] = -valued;
 			}
 		    }
 		    if (dr == r_nbr && dc == c_nbr)

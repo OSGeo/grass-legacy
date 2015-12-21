@@ -241,6 +241,10 @@ int do_cum_mfd(void)
 			    if (dr == r_nbr && dc == c_nbr) {
 				astar_not_set = 0;
 			    }
+			    if (value < 0 && wat_nbr[ct_dir] > 0) {
+				valued = -wat_nbr[ct_dir];
+				dseg_put(&wat, &valued, r_nbr, c_nbr);
+			    }
 			}
 		    }
 		    if (dr == r_nbr && dc == c_nbr)
