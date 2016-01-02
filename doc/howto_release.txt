@@ -58,7 +58,7 @@ Contents
 6
 4
 6RC1
-2015
+2016
       rm -f include/VERSION~
 
     - Update additionally the winGRASS version
