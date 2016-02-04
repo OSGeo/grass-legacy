@@ -66,6 +66,9 @@ Contents
       grass-addons/tools/wingrass-packager/grass_addons.sh
       grass-addons/tools/wingrass-packager/grass_copy_wwwroot.sh
 
+    - Update OSGeo4W setup.hint file
+      mswindows/osgeo4w/setup.hint
+
      #version:
      MAJOR=`cat include/VERSION | head -1 | tail -1`
      MINOR=`cat include/VERSION | head -2 | tail -1`
@@ -147,7 +150,11 @@ Contents
 
      write announcement
       - store in trac: http://trac.osgeo.org/grass/wiki/Release/6.XX.YY-News
+      - update version in https://grasswiki.osgeo.org/wiki/GRASS-Wiki
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html <- how? with protected PHP upload page?
+
+     full release:
+      - update trac milesstone/add next: https://trac.osgeo.org/grass/admin/ticket/milestones
 
  o upload user HTML manual in case of *final release* from compiled English
    version at (warning: needs stuff to be compiled).
@@ -161,8 +168,8 @@ Contents
                    release tag for the differences
 
  o Trac updates:
-      - Set "complete" flag in https://trac.osgeo.org/grass/milestone/6.0.x
-        and batch-migrate assigned tickets to next milestone
+      - Set "complete" flag in https://trac.osgeo.org/grass/milestone/6.0.x --> Edit Milestone
+        this batch-migrates assigned tickets to next milestone
       - Add release to https://trac.osgeo.org/grass/admin/ticket/versions
 
  o WinGRASS notes:
