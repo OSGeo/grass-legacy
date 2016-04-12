@@ -1783,7 +1783,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 
 	/* Time offset due to timezone as input by user */
 
-	locTimeOffset += civilTime;
+	locTimeOffset = civilTime - locTimeOffset; /* fix from #2876 */
 	setTimeOffset(locTimeOffset);
     }
     else {
