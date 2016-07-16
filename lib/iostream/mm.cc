@@ -1,20 +1,38 @@
 /****************************************************************************
  * 
- *  MODULE:	iostream
+ *  MODULE:     iostream
  *
+
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
+ * 
+
+ *  Iostream is a library that implements streams, external memory
+ *  sorting on streams, and an external memory priority queue on
+ *  streams. These are the fundamental components used in external
+ *  memory algorithms.  
+
+ * Credits: The library was developed by Laura Toma.  The kernel of
+ * class STREAM is based on the similar class existent in the GPL TPIE
+ * project developed at Duke University. The sorting and priority
+ * queue have been developed by Laura Toma based on communications
+ * with Rajiv Wickremesinghe. The library was developed as part of
+ * porting Terraflow to GRASS in 2001.  PEARL upgrades in 2003 by
+ * Rajiv Wickremesinghe as part of the Terracost project.
+
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
+
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *****************************************************************************/
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.  *
+ *  **************************************************************************/
+
 
 
 // A simple registration based memory manager.
@@ -256,7 +274,11 @@ MM_err MM_register::register_deallocation(size_t sz) {
 
  
 /* ************************************************************ */
-void* operator new[] (size_t sz) throw(std::bad_alloc) {
+#ifdef GRASS_MM_USE_EXCEPTION_SPECIFIER
+void* operator new[] (size_t sz) throw (std::bad_alloc) {
+#else
+void* operator new[] (size_t sz) {
+#endif /* GRASS_MM_USE_EXCEPTION_SPECIFIER */
   void *p;
   
   MM_DEBUG cout << "new: sz=" << sz << ", register " 
@@ -307,7 +329,11 @@ void* operator new[] (size_t sz) throw(std::bad_alloc) {
 
  
 /* ************************************************************ */
-void* operator new (size_t sz) throw(std::bad_alloc) {
+#ifdef GRASS_MM_USE_EXCEPTION_SPECIFIER
+void* operator new (size_t sz) throw (std::bad_alloc) {
+#else
+void* operator new (size_t sz) {
+#endif /* GRASS_MM_USE_EXCEPTION_SPECIFIER */
   void *p;
   
   MM_DEBUG cout << "new: sz=" << sz << ", register " 
@@ -359,7 +385,11 @@ void* operator new (size_t sz) throw(std::bad_alloc) {
 
 
 /* ---------------------------------------------------------------------- */
+#ifdef GRASS_MM_USE_EXCEPTION_SPECIFIER
 void operator delete (void *ptr) throw() {
+#else
+void operator delete (void *ptr) noexcept {
+#endif /* GRASS_MM_USE_EXCEPTION_SPECIFIER */
   size_t sz;
   void *p;
   
@@ -399,7 +429,11 @@ void operator delete (void *ptr) throw() {
 
 
 /* ---------------------------------------------------------------------- */
+#ifdef GRASS_MM_USE_EXCEPTION_SPECIFIER
 void operator delete[] (void *ptr) throw() {
+#else
+void operator delete[] (void *ptr) noexcept {
+#endif /* GRASS_MM_USE_EXCEPTION_SPECIFIER */
   size_t sz;
   void *p;
   
