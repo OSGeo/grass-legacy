@@ -36,7 +36,6 @@
 #define __EMPQ_IMPL_H
 
 #include <ostream>
-using namespace std;
 
 #include "empq.h"
 

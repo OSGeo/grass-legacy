@@ -32,7 +32,12 @@
 
 #include <cstring>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::cerr;
+using std::endl;
+using std::ostream;
+using std::ofstream;
+using std::istream;
 
 #include <grass/config.h>
 
