@@ -3,5 +3,5 @@ ldesc: "Geographic Resources Analysis Support System (GRASS GIS) - old stable re
 category: Desktop
 requires: libintl msys msys-grass tcltk
 maintainer: MartinLanda
-curr: 6.4.4-1
-prev: 6.4.4-1
+curr: 6.4.6-1
+prev: 6.4.6-1
