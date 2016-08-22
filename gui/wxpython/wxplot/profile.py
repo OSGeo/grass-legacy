@@ -20,7 +20,12 @@ import sys
 import math
 
 import wx
-import wx.lib.plot as plot
+
+from core.globalvar import CheckWxVersion
+if CheckWxVersion(version=[3, 0, 0]):
+    import gui_core.wxlibplot as plot
+else:
+    import wx.lib.plot as plot
 
 import grass.script as grass
 
