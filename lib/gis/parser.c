@@ -967,7 +967,7 @@ int G_parser(int argc, char **argv)
 	    }
 
 	    /* If we see the non valid argument (no "=", just argument) */
-	    else if (contains(ptr, '=') == 0) {
+	    else {
 		fprintf(stderr, _("Sorry <%s> is not a valid option\n"), ptr);
 		error = 1;
 	    }
