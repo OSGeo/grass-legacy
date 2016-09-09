@@ -9,14 +9,14 @@
 
 <h2>REQUIREMENTS to compile GRASS GIS 6</h2>
 
-A workstation running some flavor of UNIX like Solaris, IRIX,
-GNU/Linux, BSD, Mac OS X, Cygwin or MinGW (on Win32). Ideally, you
-should have at least 500 Mb. The source code package needs around 80
-MB uncompressed.  The resulting binaries may need between 20 MB and
-180 MB depending on your platform. During a full compilation you may
-need temporarily up to 550MB including the source code.
+A workstation running some flavor of UNIX including GNU/Linux, Solaris, IRIX, BSD,
+Mac OSX, Cygwin or MinGW (on Win32/Win64). Ideally, you should have at least 800 MB of
+free disk space. The source code package needs disk space of around 26 MB compressed
+and 440MB uncompressed. The resulting binaries may need between 20 MB and 180 MB
+depending on your platform and compiler flags. During a full compilation you may need
+temporarily up to 550MB including the source code.
 <p>
-To disable features please read the <a href="INSTALL">INSTALL</a> file.
+To enable and disable features please read the <a href="INSTALL">INSTALL</a> file.
 
 <h3>General requirements:</h3>
 
@@ -75,6 +75,9 @@ map formats<br>
 </ul>
 
 <h3>Optional requirements:</h3>
+
+Note: also the respective development packages (commonly named xxx-dev or xxx-devel) need
+to be installed.
 
 <ul>
 <li><b>Tcl/Tk 8.x libraries</b> (including the 'wish' program) to use the GRASS GUI
@@ -177,9 +180,10 @@ gui/wxpython/README)<br>
 <a href="http://numpy.scipy.org">http://numpy.scipy.org</a>
 </li>
 
-<li><b>Python Imaging Library</b> (for wxGUI Cartographic Composer (preview mode), see
+<li><b>Python Imaging Library or PILLOW</b> (for wxGUI Cartographic Composer (preview mode), see
  file gui/wxpython/README)<br>
-<a href="http://www.pythonware.com/products/pil">http://www.pythonware.com/products/pil</a>
+<a href="http://www.pythonware.com/products/pil">http://www.pythonware.com/products/pil</a>,
+newer versions are named "python-pillow"
 </li>
 
 <li><b>FFMPEG</b> (for direct rendering of animations from NVIZ),
@@ -235,7 +239,7 @@ gui/wxpython/README)<br>
 <a href="http://www.info-zip.org/UnZip.html">http://www.info-zip.org/UnZip.html</a><br>
 </li>
 
-<li><b>Netpbmnm toolkit</b> (pngtopnm and pnmtojpeg for d.out.gpsdrive)<br>
+<li><b>Netpbm toolkit</b> (pngtopnm and pnmtojpeg for d.out.gpsdrive)<br>
 <a href="http://netpbm.sourceforge.net/">http://netpbm.sourceforge.net/</a><br>
 </li>
 
@@ -256,10 +260,12 @@ gui/wxpython/README)<br>
 
 <h3>Note:</h3>
 
+<!-- since 2014 no longer supported: -->
 SUN Solaris users may go here to download precompiled libraries etc.:
 <br><a href="http://www.sunfreeware.com">http://www.sunfreeware.com</a>
 
 <p>
+<!-- no longer supported: -->
 SGI IRIX users may go here to download precompiled libraries etc.:
 <br><a href="http://freeware.sgi.com">http://freeware.sgi.com</a>
 
@@ -270,7 +276,7 @@ MacOSX users may go here to download precompiled libraries etc.:
 <p>
 
 <hr width="100%">
-<i>&copy; GRASS Development Team 2001-2016</i>
+<i>&copy; GRASS Development Team 1997-2016</i>
 <p>Please report bugs here:
 <br><a href="http://grass.osgeo.org/development/bug-tracking/">http://grass.osgeo.org/development/bug-tracking/</a>
 
