@@ -21,8 +21,8 @@ HTMLDIRS = \
 default: $(ETCICONS) $(HTMLICONS)
 	$(MKDIR) $(ARCH_DISTDIR)/share/applications
 	$(INSTALL_DATA) grass.desktop $(ARCH_DISTDIR)/share/applications
-	$(MKDIR) $(ARCH_DISTDIR)/share/appdata
-	$(INSTALL_DATA) grass.appdata.xml $(ARCH_DISTDIR)/share/appdata
+	$(MKDIR) $(ARCH_DISTDIR)/share/metainfo
+	$(INSTALL_DATA) grass.appdata.xml $(ARCH_DISTDIR)/share/metainfo/org.osgeo.grass.appdata.xml
 
 $(ETC)/gui/icons/%: % | $(ETCDIRS)
 	$(INSTALL_DATA) $< $@
